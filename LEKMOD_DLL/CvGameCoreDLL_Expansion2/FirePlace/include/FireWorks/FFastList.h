@@ -158,7 +158,7 @@ public:
 	////////////////////////////////////////////////////////////////////////
 	explicit FFastList() : BASE_TYPE() {};
 	explicit FFastList( unsigned int uiCapacity ) : BASE_TYPE(uiCapacity) {};
-	explicit TYPE( const TYPE& rhs ) : BASE_TYPE( rhs ) {};
+	FFastList( const TYPE& rhs ) : BASE_TYPE( rhs ) {};
 
 	//Copy operator
 	const TYPE& operator = ( const TYPE& rhs ){  
@@ -284,17 +284,18 @@ public:
 	// Base iterator class which defined all iterator-ness except whether
 	// access is const or non-const.
 	////////////////////////////////////////////////////////////////////////
-	template< class TAIL >
+	template< class IteratorTail >
 	class base_iterator : 
 		public std::iterator<std::bidirectional_iterator_tag, MultiListNodePolicy<T> >, 
-		public TAIL
+		public IteratorTail
 	{
 	public:
-		explicit base_iterator() : m_uiCurrPos( ANCHOR_NODE_INDEX ), TAIL(NULL) {};
+		explicit base_iterator() : m_uiCurrPos( ANCHOR_NODE_INDEX ), IteratorTail(NULL) {};
 		explicit base_iterator( unsigned int uiPos, TYPE* pVec )
-			: m_uiCurrPos( uiPos ), TAIL( pVec ) {};
+			: m_uiCurrPos( uiPos ), IteratorTail( pVec ) {};
 		explicit base_iterator( unsigned int uiPos, const TYPE* pVec )
-			: m_uiCurrPos( uiPos ), TAIL( pVec ) {};
+			: m_uiCurrPos( uiPos ), IteratorTail( pVec ) {};
+		using IteratorTail::m_pFastList;
 
 		~base_iterator(){};
 
@@ -365,7 +366,7 @@ public:
 
 	protected:
 		unsigned int m_uiCurrPos;
-		friend class TYPE;
+		friend TYPE;
 	};
 
 	////////////////////////////////////////////////////////////////////////
@@ -1135,7 +1136,7 @@ protected:
 		unsigned int m_uiCurrList;
 		unsigned int m_uiCurrPos;
 		const TYPE* m_pFastList;
-		friend class TYPE;
+		friend TYPE;
 	};
 
 public:

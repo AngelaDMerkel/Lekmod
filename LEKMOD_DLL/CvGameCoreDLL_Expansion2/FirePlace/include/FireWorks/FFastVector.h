@@ -241,11 +241,11 @@ protected:
 	unsigned int m_uiCurrSize;		//The current number of elements in the vector
 	unsigned int m_uiCurrMaxSize;	//The maximum number of elements which can be stored in the current memory store.
 
-	template< class T, bool bPODType, unsigned int AllocPool, unsigned int nSubID, class FAST_VEC_ALLOC >
-	friend void* operator new( size_t uiSize, FFastVector< T, bPODType, AllocPool, nSubID, FAST_VEC_ALLOC >& kVector );
+	template< class U, bool bUIsPOD, unsigned int UPool, unsigned int USubID, class UAllocator >
+	friend void* operator new( size_t uiSize, FFastVector< U, bUIsPOD, UPool, USubID, UAllocator >& kVector );
 
-	template< class T, unsigned int L, bool bPODType, unsigned int AllocPool, unsigned int nSubID >
-	friend void* operator new( size_t uiSize, FStaticVector< T, L, bPODType, AllocPool, nSubID >& kVector );
+	template< class U, unsigned int ULength, bool bUIsPOD, unsigned int UPool, unsigned int USubID >
+	friend void* operator new( size_t uiSize, FStaticVector< U, ULength, bUIsPOD, UPool, USubID >& kVector );
 };
 
 /////////////////////////////////////////////////////////////////////////////////////
@@ -282,11 +282,18 @@ public:
     typedef const TYPE* const_iterator;
     typedef TYPE& reference;
     typedef const TYPE& const_reference;
-    typedef BASE_TYPE::size_type size_type;
+	typedef typename BASE_TYPE::size_type size_type;
     typedef size_type difference_type;
     typedef TYPE value_type;
     typedef T* pointer;
-    typedef const T* const_pointer;
+	typedef const T* const_pointer;
+	using BASE_TYPE::Alloc;
+	using BASE_TYPE::Copy;
+	using BASE_TYPE::Destroy;
+	using BASE_TYPE::Free;
+	using BASE_TYPE::m_pData;
+	using BASE_TYPE::m_uiCurrMaxSize;
+	using BASE_TYPE::m_uiCurrSize;
 
 
 
@@ -523,8 +530,8 @@ protected:
 	unsigned int m_nResizeTimes;
 #endif
 
-	template< class T, bool bPODType, unsigned int AllocPool, unsigned int nSubID, class FAST_VEC_ALLOC >
-	friend void* operator new( size_t uiSize, THIS_TYPE& kVector );
+	template< class U, bool bUIsPOD, unsigned int UPool, unsigned int USubID, class UAllocator >
+	friend void* operator new( size_t uiSize, FFastVector< U, bUIsPOD, UPool, USubID, UAllocator >& kVector );
 };
 
 // Placement new on a FFastVector allows you to call a constructor directly on memory internal to the vector.
@@ -819,8 +826,8 @@ protected:
 	unsigned char m_iNumResized;
 #endif
 
-	template< class T, unsigned int L, bool bPODType, unsigned int AllocPool, unsigned int nSubID >
-	friend void* operator new( size_t uiSize, FStaticVector< T, L, bPODType, AllocPool, nSubID >& kVector );
+	template< class U, unsigned int ULength, bool bUIsPOD, unsigned int UPool, unsigned int USubID >
+	friend void* operator new( size_t uiSize, FStaticVector< U, ULength, bUIsPOD, UPool, USubID >& kVector );
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1366,11 +1373,10 @@ protected:
 		FFREEALIGNED( (unsigned char*)pVal );
 	};
 
-	template< class T, bool bPODType, unsigned int AllocPool, unsigned int nSubID >
-	friend void* operator new( size_t uiSize, FFixedVector< T, bPODType, AllocPool, nSubID >& kVector );
+	template< class U, bool bUIsPOD, unsigned int UPool, unsigned int USubID >
+	friend void* operator new( size_t uiSize, FFixedVector< U, bUIsPOD, UPool, USubID >& kVector );
 };
 
 #if defined(_WIN32) || defined(_WIN64)
 #pragma warning( pop )
 #endif
-

@@ -169,8 +169,8 @@ namespace Database{
 		std::string m_strMemoryStats;
 
 		//! Hash map of count statements indexed by table name.
-		std::tr1::unordered_map<std::string, sqlite3_stmt*> m_hshCountStatements;
-		std::tr1::unordered_map<std::string, int> m_hshCountValues;
+		std::unordered_map<std::string, sqlite3_stmt*> m_hshCountStatements;
+		std::unordered_map<std::string, int> m_hshCountValues;
 
 		static char ms_pPageCacheBuffer[DB_PAGECACHE_SIZE * DB_NUM_PAGES];
 		static char ms_pScratchBuffer[DB_PAGECACHE_SIZE * DB_NUM_THREADS * 6];	

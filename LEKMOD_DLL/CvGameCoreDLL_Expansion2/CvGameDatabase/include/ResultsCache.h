@@ -35,7 +35,7 @@ private:
 
 	Database::Connection& m_db;
 
-	typedef std::tr1::unordered_map<std::string, Results*> ResultsMap;
+	typedef std::unordered_map<std::string, Results*> ResultsMap;
 	ResultsMap m_storedResults;
 };
 
