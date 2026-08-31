@@ -18,16 +18,20 @@ PRESERVED_FILES = (
 def copy_template(source: Path, destination: Path, name: str | None = None) -> None:
     if not source.is_file():
         return
-    output_name = name or source.name.removesuffix(".ignore")
+    output_name = name or source.name[: -len(".ignore")]
     shutil.copy2(source, destination / output_name)
 
 
 def copy_standard_templates(source_root: Path, destination: Path) -> None:
-    for source in sorted(source_root.rglob("*.ignore")):
+    for source in sorted(
+        path
+        for path in source_root.rglob("*")
+        if path.is_file() and path.name.lower().endswith(".ignore")
+    ):
         # Aspyr's MainMenu hierarchy differs from the Windows XML. The Lekmod
         # Lua override works with Aspyr's native XML; replacing the XML crashes
         # while TTManager constructs the frontend controls.
-        if source.relative_to(source_root).as_posix() == "FrontEnd/MainMenu.xml.ignore":
+        if source.relative_to(source_root).as_posix().lower() == "frontend/mainmenu.xml.ignore":
             continue
         copy_template(source, destination)
 
@@ -77,6 +81,8 @@ def configure_eui(eui_root: Path, template_root: Path, destination: Path) -> Non
         ("ToolTips/InfoTooltipInclude.lua", "ToolTips/InfoTooltipInclude.lua.ignore", None),
         ("ToolTips/TechButtonInclude.lua", "ToolTips/TechButtonInclude.lua.ignore", None),
         ("TopPanel/TopPanel.lua", "TopPanel.lua.ignore", None),
+        ("TopPanel/TopPanel.lua", "TopPanel.xml.IGNORE", None),
+        ("Improvements/YieldIconManager.lua", "Improvements/YieldIconManager.lua.IGNORE", None),
         ("UnitFlagManager/UnitFlagManager.lua", "UnitFlagManager/UnitFlagManager.lua.ignore", None),
         ("UnitFlagManager/UnitFlagManager.lua", "UnitFlagManager/UnitFlagManager.xml.ignore", None),
         ("UnitPanel/UnitPanel.lua", "UnitPanel/UnitPanel.lua.ignore", None),
