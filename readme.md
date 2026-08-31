@@ -40,6 +40,5 @@ We welcome contributions to LEKMOD! If you have improvements, bugfixes, or new f
 
 ## Known Issues & Limitations
 - **Linux Support**: While LEKMOD can be run on Linux using Proton, some features may not work as intended and some linux distributions may have compatibility issues.
-- **Mac Support**: LEKMOD does not support macOS. Users attempting to run the mod on Mac may encounter significant issues or may not be able to run it at all.
+- **Mac Support**: The Aspyr 64-bit Steam build is supported through the native x86_64 GameCore port. Apple silicon uses Rosetta 2 because Civilization V itself is Intel-only.
 - **EUI/UI Support**: LEKMOD v33 and up requires the ui_check.bat file to be ran. Users with EUI v1.29 or higher may experience compatibility issues.
-

@@ -287,10 +287,8 @@ public:
     typedef TYPE value_type;
     typedef T* pointer;
 	typedef const T* const_pointer;
-	using BASE_TYPE::Alloc;
 	using BASE_TYPE::Copy;
 	using BASE_TYPE::Destroy;
-	using BASE_TYPE::Free;
 	using BASE_TYPE::m_pData;
 	using BASE_TYPE::m_uiCurrMaxSize;
 	using BASE_TYPE::m_uiCurrSize;
@@ -591,6 +589,11 @@ public:
     typedef T value_type;
     typedef T* pointer;
     typedef const T* const_pointer;
+	using BASE_TYPE::Copy;
+	using BASE_TYPE::Destroy;
+	using BASE_TYPE::m_pData;
+	using BASE_TYPE::m_uiCurrMaxSize;
+	using BASE_TYPE::m_uiCurrSize;
 
     /////////////////////////////////////////////////////////////////////////////////////
 	// Default constructor, copy constructor, destructor and operator=
@@ -1182,6 +1185,10 @@ public:
     typedef T value_type;
     typedef T* pointer;
     typedef const T* const_pointer;
+	using BASE_TYPE::Destroy;
+	using BASE_TYPE::m_pData;
+	using BASE_TYPE::m_uiCurrMaxSize;
+	using BASE_TYPE::m_uiCurrSize;
 
     /////////////////////////////////////////////////////////////////////////////////////
 	// Default constructor, copy constructor, destructor and operator=

@@ -121,6 +121,7 @@ public:
 	typedef FFastList< T, AllocPool, SubID > TYPE;
 	typedef FFastAllocator< MultiListNodePolicy< T >, false, AllocPool, SubID > ALLOC_TYPE;
 	typedef FCustomList< MultiListNodePolicy< T >, ALLOC_TYPE > BASE_TYPE;
+	using BASE_TYPE::m_uiFirst;
 
 
 	////////////////////////////////////////////////////////////////////////
@@ -243,8 +244,8 @@ public:
 	const T& get_element( unsigned int i ) const{ return BASE_TYPE::get_element( i ).data; };
 
 
-	const ALLOC_TYPE& get_allocator() const{ return m_kAllocator; };
-	ALLOC_TYPE& get_allocator(){ return m_kAllocator; };
+	const ALLOC_TYPE& get_allocator() const{ return BASE_TYPE::get_allocator(); };
+	ALLOC_TYPE& get_allocator(){ return BASE_TYPE::get_allocator(); };
 
 };
 
@@ -264,6 +265,7 @@ template< class T, class T_ALLOCATOR, class TAIL >class FCustomList_Core : publi
 {
 public:
 	typedef FCustomList_Core< T, T_ALLOCATOR, TAIL > TYPE;
+	using TAIL::get_allocator;
 
 	////////////////////////////////////////////////////////////////////////
 	// iterator tail determines whether the iterator has const or non-const access
@@ -375,6 +377,8 @@ public:
 	class iterator : public base_iterator< base_iterator_tail >{
 	public:
 		typedef base_iterator< base_iterator_tail > BASE;
+		using BASE::m_pFastList;
+		using BASE::m_uiCurrPos;
 
 		explicit iterator(){};
 		explicit iterator( unsigned int uiPos, TYPE* pVec )
@@ -395,6 +399,8 @@ public:
 	class const_iterator : public base_iterator< base_iterator_tail_const >{
 	public:
 		typedef base_iterator< base_iterator_tail_const > BASE;
+		using BASE::m_pFastList;
+		using BASE::m_uiCurrPos;
 
 		explicit const_iterator(){};
 		explicit const_iterator( unsigned int uiPos, const TYPE* pVec )

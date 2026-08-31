@@ -4050,11 +4050,6 @@ int JoinLandmass(CvAStarNode* parent, CvAStarNode* node, int data, const void* p
 /// Constructor
 CvTwoLayerPathFinder::CvTwoLayerPathFinder()
 {
-#ifdef AUI_WARNING_FIXES
-	this->CvAStar::CvAStar();
-#else
-	CvAStar::CvAStar();
-#endif
 	m_ppaaPartialMoveNodes = NULL;
 }
 

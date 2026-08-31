@@ -1,5 +1,5 @@
 /*	-------------------------------------------------------------------------------------------------------
-	© 1991-2012 Take-Two Interactive Software and its subsidiaries.  Developed by Firaxis Games.  
+	Â© 1991-2012 Take-Two Interactive Software and its subsidiaries.  Developed by Firaxis Games.
 	Sid Meier's Civilization V, Civ, Civilization, 2K Games, Firaxis Games, Take-Two Interactive Software 
 	and their respective logos are all trademarks of Take-Two interactive Software, Inc.  
 	All other marks and trademarks are the property of their respective owners.  
@@ -15,11 +15,31 @@
 #include "LintFree.h"
 
 //------------------------------------------------------------------------------
+#if defined(__APPLE__)
+extern "C" __attribute__((visibility("default"))) ICvGameContext1* DllGetGameContext()
+#else
 extern "C" ICvGameContext1* DllGetGameContext()
+#endif
 {
 	return CvDllGameContext::GetSingleton();
 }
 //------------------------------------------------------------------------------
+#if defined(__APPLE__)
+__attribute__((constructor)) static void LekmodMacInitialize()
+{
+	timeBeginPeriod(1);
+	CvDllGameContext::InitializeSingleton();
+}
+
+__attribute__((destructor)) static void LekmodMacTerminate()
+{
+	timeEndPeriod(1);
+	CvDllGameContext::DestroySingleton();
+	GC.setDLLIFace(NULL);
+}
+#endif
+//------------------------------------------------------------------------------
+#if !defined(__APPLE__)
 BOOL APIENTRY DllMain(HANDLE hModule,
                       DWORD  ul_reason_for_call,
                       LPVOID)
@@ -58,3 +78,4 @@ BOOL APIENTRY DllMain(HANDLE hModule,
 
 	return TRUE;	// success
 }
+#endif

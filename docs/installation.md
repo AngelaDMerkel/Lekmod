@@ -10,13 +10,14 @@
     1. [Linux](#linux)
         1. [LEKMOD v33 and higher - (Currently Unavailable)](#a-lekmod-v33-and-higher---eui-and-standard-ui-support---currently-unavailable)
         1. [LEKMOD v32 and lower](#b-lekmod-v32-and-lower---no-specific-ui-support)
-1. [Lekmap Installation](#lekmap-installation-windowslinux)
+    1. [macOS](#macos)
+1. [Lekmap Installation](#lekmap-installation)
 
 ## Requirements
 1. OS
     1. **Windows 7+** - Full Support
     1. **Linux** - Limited/Untested Support
-    1. **MacOS** - **NOT SUPPORTED**
+    1. **macOS 10.11.6+** - Aspyr 64-bit Steam build; Rosetta 2 required on Apple silicon
 1. Game: Sid Meier's Civilization V - All available DLC's except for map packs.
 1. Standard UI or EUI (Enhanced User Interface) - LEKMOD v33 and higher support both UIs, Note EUI v 1.29 or higher is currently not supported.
 
@@ -76,12 +77,37 @@ Usually under: `~/.steam/steam/steamapps/common/Sid Meier's Civilization V/Asset
 To find your game folder, right click Civilization V in your Steam library, select Properties, go to the Local Files tab, and click Browse Local Files. <br/>The final path should look like this: <br/> `.../Sid Meier's Civilization V/Assets/DLC/LEKMODvXX_X/`
 1. Launch the game. You should see "LEKMOD" in your multiplayer lobby.
 
+### macOS
 
-## Lekmap Installation (Windows/Linux)
+The macOS port targets Aspyr's 64-bit Intel Steam build. Quit Civilization V,
+clone or extract the repository, and run:
+
+```sh
+cd LEKMOD_DLL/macos
+./install-macos.sh
+```
+
+The installer builds and validates the native GameCore library, installs the
+Lekmod DLC files inside the app bundle, configures standard UI or an existing
+EUI installation, and backs up Aspyr's original library. For a non-default Steam
+location, pass `--app "/path/to/Civilization V.app"`.
+
+To remove Lekmod and restore the stock library:
+
+```sh
+./install-macos.sh --uninstall
+```
+
+Steam file verification restores the stock GameCore library. Rerun the installer
+after verifying the game.
+
+
+## Lekmap Installation
 1. Download Lekmap
 1. Extract the contents of the zip file
 1. Copy the extracted folder into your MAPS folder
     For Windows, usually under: `C:\Program Files (x86)\Steam\steamapps\common\Sid Meier's Civilization V\Assets\Maps` <br/>
+    For macOS, use `Civilization V.app/Contents/Assets/Assets/Maps`.<br/>
     To find your game folder, right click Civilization V in your Steam library, select Properties, go to the Local Files tab, and click Browse Local Files.
     The final path should look like this: <br/>
     `...\Sid Meier's Civilization V\Assets\Maps\Lekmap vX_X\`

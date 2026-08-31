@@ -6628,10 +6628,10 @@ void CvUnit::DoAttrition()
 					if (pPlot && pPlot->GetActiveFogOfWarMode() == FOGOFWARMODE_OFF)
 #endif
 					{
-						Localization::String string = GetLocalizedText("TXT_KEY_MISC_YOU_UNIT_WAS_DAMAGED_ATTRITION");
+						CvString string = GetLocalizedText("TXT_KEY_MISC_YOU_UNIT_WAS_DAMAGED_ATTRITION");
 
 						char text[256];
-						sprintf_s (text, "%s [COLOR_WHITE]-%d [ICON_PEACE][ENDCOLOR]", string.toUTF8(), iStrengthLoss);
+						sprintf_s (text, "%s [COLOR_WHITE]-%d [ICON_PEACE][ENDCOLOR]", string.c_str(), iStrengthLoss);
 						float fDelay = 0.0f;
 						DLLUI->AddPopupText(getX(), getY(), text, fDelay);
 					}

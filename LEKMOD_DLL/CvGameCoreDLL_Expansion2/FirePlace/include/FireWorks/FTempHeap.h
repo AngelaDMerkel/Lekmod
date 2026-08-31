@@ -121,7 +121,13 @@ protected:
 
 
 #ifdef FXS_IS_DLL
+#if defined(__APPLE__)
+extern "C" {
+#endif
 extern TempHeap* GetTempHeap();
+#if defined(__APPLE__)
+}
+#endif
 //extern void BindTempHeapProc();
 #else
 extern "C" {
@@ -209,5 +215,4 @@ private:
 
 
 #endif
-
 

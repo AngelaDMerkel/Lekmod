@@ -1,19 +1,41 @@
-# Lekmod macOS native DLL port
+# Lekmod macOS native port
 
-This directory contains the macOS-specific source and build glue for Lekmod's
-`CvGameCoreDLL_Expansion2` implementation. It belongs in the Lekmod repository,
-not in MPPatch.
+This directory builds and installs Lekmod for Aspyr's 64-bit Steam release of
+Civilization V. The game itself is Intel-only, so the library intentionally
+targets `x86_64`; Apple silicon runs both through Rosetta 2.
 
-The target is the Aspyr 64-bit Intel Civilization V runtime. The resulting
-Mach-O library must export `DllGetGameContext` and use the same C++ ABI as the
-game's stock `libCvGameCoreDLL_Expansion2_DLL.dylib`. The shipped game executable
-provides the engine, database, localization, Lua, heap, file, and timing symbols;
-the port links those with `-undefined dynamic_lookup`.
+The port matches the stock `libCvGameCoreDLL_Expansion2_DLL.dylib` ABI:
 
-Status: experimental and not installable yet. The platform ABI shim and native
-constructor/destructor entry points are present. The legacy Firaxis containers
-are being made acceptable to Clang without changing their object layout.
+- deployment target macOS 10.11.6;
+- install name and dylib version 1.0.0;
+- `DllGetGameContext` as the only exported symbol;
+- Aspyr's legacy TR1 container sizes and macOS-only `ICvPreGame1` slot;
+- the complete GameCore and Lua source list used by the Windows project.
 
-Run `./build-macos.sh` from this directory. Output is written to
-`build/macos/libCvGameCoreDLL_Expansion2_DLL.dylib`.
+## Build and validate
 
+```sh
+./build-macos.sh
+./validate-macos.sh --app "/path/to/Civilization V.app"
+```
+
+Output is written to
+`build/macos/libCvGameCoreDLL_Expansion2_DLL.dylib`. To create a redistributable
+directory under `build/macos/package`, run `./package-macos.sh`.
+
+## Install
+
+Quit Civilization V, then run:
+
+```sh
+./install-macos.sh
+```
+
+The installer finds the default Steam app, configures standard UI or detects
+EUI, installs the Lekmod DLC data, backs up Aspyr's original GameCore library,
+and ad-hoc signs the replacement. Use `--app` for a non-default location,
+`--standard` or `--eui` to force a UI mode, and `--uninstall` to restore the
+original library.
+
+Steam's “Verify integrity” operation restores Aspyr's library, so rerun the
+installer afterward.

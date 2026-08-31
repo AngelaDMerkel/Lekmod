@@ -11147,7 +11147,7 @@ void CvGame::Write(FDataStream& kStream) const
 			CvAssertMsg(false,"Saved game database exists, but could not open it!");
 		}
 
-		long nilSize = 0;
+			INT32 nilSize = 0;
 		kStream << nilSize;
 	}
 
@@ -13773,4 +13773,3 @@ void CvGame::SetLastTurnAICivsProcessed()
 	return false;
 }
 */
-

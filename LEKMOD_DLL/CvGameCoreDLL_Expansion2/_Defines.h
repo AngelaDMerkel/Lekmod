@@ -1394,7 +1394,9 @@ Diversify Spain and Australia's NW Discovery bonus
 
 // -- Debug minidump
 
+#if !defined(__APPLE__)
 #define AUI_MINIDUMPS
+#endif
 #define MINIDUMP_ADDITIONAL_INFOS
 //Firstmove fix, still allowing 1 move on turn load. Immos version of LEKMOD_FIRSTMOVE_FIX
 
@@ -1518,7 +1520,7 @@ Diversify Spain and Australia's NW Discovery bonus
   CvString sRef;  \
   CvString::format(sRef, "[%s:%d]: ", __FUNCTION__, __LINE__);  \
   CvString sMsg;  \
-  CvString::format(sMsg, sFmt, __VA_ARGS__);  \
+	  CvString::format(sMsg, sFmt, ##__VA_ARGS__);  \
   sRef+= sMsg; \
   LOGFILEMGR.GetLog("PATCH.log", FILogFile::kDontTimeStamp)->Msg(sRef.c_str());  \
 }
@@ -1537,4 +1539,3 @@ Diversify Spain and Australia's NW Discovery bonus
 //#define NO_LEADER_SCREEN
 // Also adds a new leader screen exit lua method called with Game.ExitLeaderScreen. This will run lExitLeaderscreen in here.
 //#define LUAAPIEXTN(method, type, ...) static int l##method(lua_State* L)
-

@@ -1,5 +1,5 @@
 /*	-------------------------------------------------------------------------------------------------------
-	© 1991-2012 Take-Two Interactive Software and its subsidiaries.  Developed by Firaxis Games.  
+	Â© 1991-2012 Take-Two Interactive Software and its subsidiaries.  Developed by Firaxis Games.
 	Sid Meier's Civilization V, Civ, Civilization, 2K Games, Firaxis Games, Take-Two Interactive Software 
 	and their respective logos are all trademarks of Take-Two interactive Software, Inc.  
 	All other marks and trademarks are the property of their respective owners.  
@@ -271,8 +271,10 @@ void CvBarbarians::Read(FDataStream& kStream, uint uiParentVersion)
 	ArrayWrapper<int> kWrapper2(iWorldNumPlots, m_aiPlotBarbCampNumUnitsSpawned);
 	kStream >> kWrapper2;
 #else
-	kStream >> ArrayWrapper<short>(iWorldNumPlots, m_aiPlotBarbCampSpawnCounter);
-	kStream >> ArrayWrapper<short>(iWorldNumPlots, m_aiPlotBarbCampNumUnitsSpawned);
+	ArrayWrapper<short> kWrapper1(iWorldNumPlots, m_aiPlotBarbCampSpawnCounter);
+	kStream >> kWrapper1;
+	ArrayWrapper<short> kWrapper2(iWorldNumPlots, m_aiPlotBarbCampNumUnitsSpawned);
+	kStream >> kWrapper2;
 #endif
 }
 

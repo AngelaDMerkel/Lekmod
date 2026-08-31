@@ -72,3 +72,20 @@ jobs:
         with:
           name: Lekmod-CI-Win32-${{ matrix.config }}
           path: artifact
+
+  build-macos:
+    name: Build macOS port
+    runs-on: macos-14
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Build, validate, and package
+        run: LEKMOD_DLL/macos/package-macos.sh
+
+      - name: Upload artifact
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: Lekmod-CI-macOS-x86_64
+          path: build/macos/package

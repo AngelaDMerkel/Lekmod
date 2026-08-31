@@ -89,10 +89,10 @@ public:
 	CvPlot* addFreeUnit(UnitTypes eUnit, UnitAITypes eUnitAI = NO_UNITAI);
 
 	CvCity* initCity(int iX, int iY, bool bBumpUnits = true, bool bInitialFounding = true);
-#if !defined
-	void acquireCity(CvCity* pCity, bool bConquest, bool bGift, bool bPurchased = false);
-#else
+#if !defined(LEKMOD_MERCHANT_BUYOUT_NOT_NOANNEXING)
 	void acquireCity(CvCity* pCity, bool bConquest, bool bGift);
+#else
+	void acquireCity(CvCity* pCity, bool bConquest, bool bGift, bool bPurchased = false);
 #endif
 	void killCities();
 	CvString getNewCityName() const;

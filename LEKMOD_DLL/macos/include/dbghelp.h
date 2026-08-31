@@ -2,8 +2,8 @@
 
 #include <Windows.h>
 
-struct EXCEPTION_POINTERS;
-struct CONTEXT;
+struct _EXCEPTION_POINTERS;
+struct _CONTEXT;
 
 typedef struct _MINIDUMP_EXCEPTION_INFORMATION {
   DWORD ThreadId;
@@ -42,4 +42,3 @@ inline LPTOP_LEVEL_EXCEPTION_FILTER SetUnhandledExceptionFilter(
     LPTOP_LEVEL_EXCEPTION_FILTER) {
   return nullptr;
 }
-
