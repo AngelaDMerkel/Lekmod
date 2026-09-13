@@ -1641,9 +1641,9 @@ CivPanel
 			<Label ID="ResearchAgreement" Anchor="C,C" Offset="-21,17" String="[ICON_RESEARCH]" />
 			<Label ID="DefenseAgreement" Anchor="C,C" Offset="21,-2" String="[ICON_STRENGTH]" />
 			<Label ID="TheirBordersClosed" Anchor="C,C" Offset="-22,-18" Font="TwCenMT16" FontStyle="Stroke" Color0="255,0,0,255" Color1="Black,155" String=">" />
-			<Label ID="OurBordersClosed" Anchor="C,C" Offset="-22,-4" Font="TwCenMT16" FontStyle="Stroke" Color0="255,0,0,255" Color1="Black,155" String="<" />
+			<Label ID="OurBordersClosed" Anchor="C,C" Offset="-22,-4" Font="TwCenMT16" FontStyle="Stroke" Color0="255,0,0,255" Color1="Black,155" String="&lt;" />
 			<Label ID="TheirBordersOpen" Anchor="C,C" Offset="-22,-18" Font="TwCenMT16" FontStyle="Stroke" Color0="0,255,0,255" Color1="Black,155" String=">" />
-			<Label ID="OurBordersOpen" Anchor="C,C" Offset="-22,-4" Font="TwCenMT16" FontStyle="Stroke" Color0="0,255,0,255" Color1="Black,155" String="<" />
+			<Label ID="OurBordersOpen" Anchor="C,C" Offset="-22,-4" Font="TwCenMT16" FontStyle="Stroke" Color0="0,255,0,255" Color1="Black,155" String="&lt;" />
 			<Label ID="ActivePlayer" Anchor="C,C" Offset="-21,-17" String="[ICON_CAPITAL]" />
 			<Label ID="TeamIcon" Anchor="C,C" Offset="21,18" String="[ICON_TEAM_1]" />
 			<Label ID="War" Anchor="C,C" Offset="-21,17" String="[ICON_WAR]" />
@@ -1660,7 +1660,7 @@ CivPanel
 		</Button>
 	</Instance>
 	
-	<!-- LeaderButtonInstance -- Left Anchor -->
+	<!-- LeaderButtonInstance: Left Anchor -->
 	<Instance Name="LeaderButtonInstanceL" >
 		<Button ID="Button" Anchor="L,B" Size="64,64" Offset="-4,0" Texture="64x64FrameButtons.dds" >
 
@@ -1690,9 +1690,9 @@ CivPanel
 			<Label ID="ResearchAgreement" Anchor="C,C" Offset="-21,17" String="[ICON_RESEARCH]" />
 			<Label ID="DefenseAgreement" Anchor="C,C" Offset="21,-2" String="[ICON_STRENGTH]" />
 			<Label ID="TheirBordersClosed" Anchor="C,C" Offset="-22,-18" Font="TwCenMT16" FontStyle="Stroke" Color0="255,0,0,255" Color1="Black,155" String=">" />
-			<Label ID="OurBordersClosed" Anchor="C,C" Offset="-22,-4" Font="TwCenMT16" FontStyle="Stroke" Color0="255,0,0,255" Color1="Black,155" String="<" />
+			<Label ID="OurBordersClosed" Anchor="C,C" Offset="-22,-4" Font="TwCenMT16" FontStyle="Stroke" Color0="255,0,0,255" Color1="Black,155" String="&lt;" />
 			<Label ID="TheirBordersOpen" Anchor="C,C" Offset="-22,-18" Font="TwCenMT16" FontStyle="Stroke" Color0="0,255,0,255" Color1="Black,155" String=">" />
-			<Label ID="OurBordersOpen" Anchor="C,C" Offset="-22,-4" Font="TwCenMT16" FontStyle="Stroke" Color0="0,255,0,255" Color1="Black,155" String="<" />
+			<Label ID="OurBordersOpen" Anchor="C,C" Offset="-22,-4" Font="TwCenMT16" FontStyle="Stroke" Color0="0,255,0,255" Color1="Black,155" String="&lt;" />
 			<Label ID="ActivePlayer" Anchor="C,C" Offset="-21,-17" String="[ICON_CAPITAL]" />
 			<Label ID="TeamIcon" Anchor="C,C" Offset="21,18" String="[ICON_TEAM_1]" />
 			<Label ID="War" Anchor="C,C" Offset="-21,17" String="[ICON_WAR]" />

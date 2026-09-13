@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import shutil
 from pathlib import Path
+from typing import Optional, Tuple
 
 
 PRESERVED_FILES = (
@@ -15,7 +16,7 @@ PRESERVED_FILES = (
 )
 
 
-def copy_template(source: Path, destination: Path, name: str | None = None) -> None:
+def copy_template(source: Path, destination: Path, name: Optional[str] = None) -> None:
     if not source.is_file():
         return
     output_name = name or source.name[: -len(".ignore")]
@@ -85,7 +86,6 @@ def configure_eui(eui_root: Path, template_root: Path, destination: Path) -> Non
         ("Improvements/YieldIconManager.lua", "Improvements/YieldIconManager.lua.IGNORE", None),
         ("UnitFlagManager/UnitFlagManager.lua", "UnitFlagManager/UnitFlagManager.lua.ignore", None),
         ("UnitFlagManager/UnitFlagManager.lua", "UnitFlagManager/UnitFlagManager.xml.ignore", None),
-        ("UnitPanel/UnitPanel.lua", "UnitPanel/UnitPanel.lua.ignore", None),
     )
     for trigger, template, output_name in conditional_overlays:
         if (eui_root / trigger).is_file():
@@ -93,14 +93,23 @@ def configure_eui(eui_root: Path, template_root: Path, destination: Path) -> Non
 
     eui_city_view = eui_root / "CityView" / "CityView.lua"
     if contains(eui_city_view, "-- coded by bc1 from 1.0.3.276 brave new world code"):
-        copy_template(template_root / "CityView" / "CityView.lua.ignore", destination)
+        for name in ("CityView.lua.ignore", "CityView.xml.IGNORE", "CityView_small.xml.IGNORE"):
+            copy_template(template_root / "CityView" / name, destination)
+
+    eui_unit_panel = eui_root / "UnitPanel" / "UnitPanel.lua"
+    if contains(eui_unit_panel, "-- modified by bc1 from Civ V 1.0.3.276 code"):
+        copy_template(template_root / "UnitPanel" / "UnitPanel.lua.ignore", destination)
 
     if (eui_root / "CityView" / "ProductionPopup.lua").is_file():
         for name in ("ProductionPopup.lua", "ProductionPopup.xml"):
             (destination / name).unlink(missing_ok=True)
 
 
-def configure(lekmod_dir: Path, mode: str, eui_dir: Path | None) -> int:
+def configure(
+    lekmod_dir: Path,
+    mode: str,
+    eui_dir: Optional[Path],
+) -> Tuple[int, str]:
     lua_dir = lekmod_dir / "Lua"
     standard_templates = lua_dir / "tmp" / "ui"
     eui_templates = lua_dir / "tmp" / "eui"
@@ -146,7 +155,7 @@ def configure(lekmod_dir: Path, mode: str, eui_dir: Path | None) -> int:
             encoding="utf-8",
         )
 
-    return len(tuple(destination.iterdir()))
+    return len(tuple(destination.iterdir())), mode
 
 
 def main() -> None:
@@ -155,8 +164,12 @@ def main() -> None:
     parser.add_argument("--mode", choices=("auto", "standard", "eui"), default="auto")
     parser.add_argument("--eui-dir", type=Path)
     args = parser.parse_args()
-    count = configure(args.lekmod_dir.resolve(), args.mode, args.eui_dir)
-    print(f"Configured {count} Lekmod UI files for {args.mode} UI")
+    count, resolved_mode = configure(
+        args.lekmod_dir.resolve(),
+        args.mode,
+        args.eui_dir,
+    )
+    print(f"Configured {count} Lekmod UI files for {resolved_mode} UI")
 
 
 if __name__ == "__main__":

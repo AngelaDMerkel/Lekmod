@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Lekmod TechTree: BNW sizes + unlock icon scroll + modest letterbox -->
+<!-- Lekmod TechTree: Aspyr-safe vertical geometry + unlock icon scroll -->
 <Context ColorSet="Beige_Black_Alpha" >
 
   <!--Black background-->
   <Box Anchor="C,C" Size="Full,Full" Color="0,0,0,220" ConsumeMouse="1"/>
 
-  <Box Anchor="C,C" Size="Full,1020" Color="0,0,0,0" ID="TechTreePanel" >
+  <Box Anchor="C,C" Size="Full,740" Color="0,0,0,0" ID="TechTreePanel" >
     <Box Anchor="C,B" AnchorSide="O.I" Size="Full,18" Color="0,0,0,255" />
     <Box Anchor="C,B" AnchorSide="O.O" Size="Full,Full" Color="0,0,0,255" />
     <Box Anchor="C,T" AnchorSide="O.O" Size="Full,Full" Color="0,0,0,255" />
   </Box>
 
-  <ScrollPanel Anchor="L,C" Size="Full,985" Vertical="0" ID="TechTreeScrollPanel">
+  <ScrollPanel Anchor="L,C" Size="Full,705" Vertical="0" ID="TechTreeScrollPanel">
 
     <!--Stack of Era boxes-->
     <Stack Anchor="L,C" StackGrowth="Right" Padding="0" ID="EraStack" />
@@ -250,12 +250,12 @@
   </Instance>
 
   <Instance Name="EraBlockInstance" >
-    <Box Anchor="C,C" Size="1650,1020" Color="0,0,0,0" ID="EraBlock">
+    <Box Anchor="C,C" Size="1650,740" Color="0,0,0,0" ID="EraBlock">
 
-      <Image Anchor="R,T" AnchorSide="I,I" Offset="-1,0" Color="White.32" Texture="Assets/UI/Art/Controls/9 Grids/Divider4.dds" Size="4,1000" Hidden="0"/>
+      <Image Anchor="R,T" AnchorSide="I,I" Offset="-1,0" Color="White.32" Texture="Assets/UI/Art/Controls/9 Grids/Divider4.dds" Size="4,722" Hidden="0"/>
 
       <!-- Old Gold style-->
-      <Grid Anchor="L,T" Offset="0,0" Color="White.32" Size="1650,1000" Padding="0,0" Style="GridGlassGold16" Hidden="1" ID="OldBar">
+      <Grid Anchor="L,T" Offset="0,0" Color="White.32" Size="1650,722" Padding="0,0" Style="GridGlassGold16" Hidden="1" ID="OldBar">
         <Grid Anchor="C,T" AnchorSide="I,I" Offset="0,0"  Style="WindowGridGold"  Size="1650,20" ID="OldBlock">
           <Label Anchor="C,C" AnchorSide="I,O" Offset="0,-3" Font="TwCenMT18" Color0="111,51,0,222" Color1="255,222,22,255" Color2="229,118,22,255" FontStyle="SoftShadow" String="TXT_KEY_ANCIENT_ERA" ID="OldLabel"/>
         </Grid>
@@ -263,7 +263,7 @@
 
       <!--Current Blue style-->
       <AlphaAnim  Anchor="C,T" Offset="0,0" Size="1650,736" TextureOffset="0.0"  Pause="0" Cycle="Bounce" Speed=".5" AlphaStart=".25" AlphaEnd=".75" Hidden="0" ID="CurrentBlock">
-        <Grid Anchor="C,T" Offset="0,0" Color="White.255" Size="1650,1000" Padding="0,0" Style="GridGlass16" ID="CurrentBlock2"/>
+        <Grid Anchor="C,T" Offset="0,0" Color="White.255" Size="1650,722" Padding="0,0" Style="GridGlass16" ID="CurrentBlock2"/>
       </AlphaAnim>
 
       <Grid Anchor="C,T" AnchorSide="I,I" Offset="0,0" Style="WindowGrid" Size="1650.20" Hidden="0" ID="CurrentTop">
