@@ -32,6 +32,10 @@ local function player(id, units, options)
     function p:IsHuman() return false end
     function p:GetTeam() return self.options.team or self.id end
     function p:GetID() return self.id end
+    function p:GetCivilizationType() return self.options.civilization or 100 end
+    function p:GetCurrentResearch() return self.options.research or -1 end
+    function p:GetOverflowResearch() return self.options.overflow or 0 end
+    function p:ChangeOverflowResearch(amount) self.options.overflow=self:GetOverflowResearch()+amount end
     function p:Units()
         local i=0
         return function() i=i+1; return self.units[i] end
@@ -54,6 +58,8 @@ end
 local function reset()
     Players={}
     for id=0,3 do Players[id]=player(id, {}, {dead=true}) end
+    Teams={}
+    LekmodUtilities.get_random_between=function() return 3 end
 end
 local tests={}
 local function test(name, body) tests[#tests+1]={name,body} end
@@ -125,6 +131,25 @@ test("battalion-minor-does-not-index-major-array",function()
     Players[4]=player(4,{u},{minor=true}); Players[5]=player(5,{}, {minor=true,friendly=true})
     lekmod_new_zealand_uu_batallion(4)
     assert(Players[5].influence==0, "city-state received major-only influence")
+end)
+test("new-zealand-science-without-research",function()
+    local calls={}
+    local techs={ChangeResearchProgress=function(_,tech,amount,owner) calls[#calls+1]={tech,amount,owner} end}
+    Teams[7]={GetTeamTechs=function() return techs end}
+    local p=player(0,{}, {team=7,overflow=80})
+    lekmod_new_zealand_ua_award_bonus(p,player(1,{}))
+    assert(p:GetOverflowResearch()==92, "science reward was not added to overflow")
+    assert(#calls==0, "overflow amount was used as a technology ID")
+end)
+test("new-zealand-science-with-research",function()
+    local calls={}
+    local techs={ChangeResearchProgress=function(_,tech,amount,owner) calls[#calls+1]={tech,amount,owner} end}
+    Teams[7]={GetTeamTechs=function() return techs end}
+    local p=player(0,{}, {team=7,overflow=80,research=42})
+    lekmod_new_zealand_ua_award_bonus(p,player(1,{}))
+    assert(#calls==1 and calls[1][1]==42 and calls[1][2]==12 and calls[1][3]==0,
+        "science reward did not reach the selected team technology")
+    assert(p:GetOverflowResearch()==80, "selected research incorrectly changed overflow")
 end)
 local failed=0
 for _,entry in ipairs(tests) do

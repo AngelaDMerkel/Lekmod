@@ -515,6 +515,7 @@ protected:
 
 	static int lGetMaxConscript(lua_State* L);
 	static int lGetOverflowResearch(lua_State* L);
+	static int lChangeOverflowResearch(lua_State* L);
 	static int lGetExpInBorderModifier(lua_State* L);
 
 	static int lGetLevelExperienceModifier(lua_State* L);

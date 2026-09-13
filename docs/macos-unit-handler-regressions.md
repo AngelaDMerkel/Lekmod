@@ -33,3 +33,18 @@ launch Civ V or change installed files. These are isolated behavior regressions,
 not a claim that every gifted/captured unique-unit situation has been exercised
 in the native game. Native verification of the final packaged payload remains
 part of the release validation work.
+
+## New Zealand science reward with no selected technology
+
+A separate regression used the current research-overflow **amount** as the
+technology ID passed to `ChangeResearchProgress` when no technology was selected.
+The intended 12 science was not added to overflow and could target an unrelated
+or invalid technology. An actual-Lua test with overflow 80 reproduced the loss;
+the selected-research branch passed its existing behavior check.
+
+The correction adds the small `Player:ChangeOverflowResearch` Lua binding to the
+existing engine operation and calls it from that branch. The engine retains its
+hundredths-based storage and adds the award without losing a fractional remainder.
+Both reward cases now pass, bringing the Lua suite to 17 cases. A full native
+GameCore rebuild and ABI validation passed. Native runtime verification of the
+new binding and a matched binary/payload package are required before release.

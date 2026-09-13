@@ -26,7 +26,7 @@ function lekmod_new_zealand_ua_award_bonus(player, other_player)
    if rewards[random].method == "ChangeResearchProgress" then
       -- if the player is not currently researching anything, add the science to the overflow
       if player:GetCurrentResearch() == -1 then
-         Teams[player:GetTeam()]:GetTeamTechs():ChangeResearchProgress(player:GetOverflowResearch(), rewards[random].reward, player:GetID())
+         player:ChangeOverflowResearch(rewards[random].reward)
       else
          Teams[player:GetTeam()]:GetTeamTechs():ChangeResearchProgress(player:GetCurrentResearch(), rewards[random].reward, player:GetID())
       end
