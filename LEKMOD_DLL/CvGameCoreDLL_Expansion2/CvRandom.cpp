@@ -18,6 +18,7 @@
 
 // include this after all other headers!
 #include "LintFree.h"
+#include "CvRandomSeed.h"
 
 #ifndef AUI_USE_SFMT_RNG
 #ifdef AUI_RANDOM_FIX_CONSTANTS_SET_TO_MODULUS_2_POW_32
@@ -150,7 +151,7 @@ void CvRandom::reset(unsigned long ulSeed)
 	m_ulCallCount = 0;
 	m_ulRandomSeed = uiSeed;
 #else
-	m_ulRandomSeed = ulSeed;
+	m_ulRandomSeed = CvNormalizeRandomSeed(ulSeed);
 #endif
 	m_ulResetCount++;
 }
@@ -173,7 +174,7 @@ unsigned short CvRandom::get(unsigned short usNum, const char* pszLog)
 	recordCallStack();
 	m_ulCallCount++;
 
-	unsigned long ulNewSeed = ((RANDOM_A * m_ulRandomSeed) + RANDOM_C);
+	unsigned long ulNewSeed = CvNextRandomSeed(m_ulRandomSeed, RANDOM_A, RANDOM_C);
 #ifdef AUI_WARNING_FIXES
 	unsigned short us = ((unsigned short)((((ulNewSeed >> RANDOM_SHIFT) & MAX_UNSIGNED_SHORT) * (uiNum)) / (MAX_UNSIGNED_SHORT + 1)));
 #else
@@ -277,7 +278,7 @@ unsigned int CvRandom::getBinom(unsigned int uiNum, const char* pszLog)
 		for (unsigned int uiI = 1; uiI < uiNum; uiI++) // starts at 1 because the generation is not inclusive (so we need one less cycle than normal)
 		{
 			// no need to worry about masking with MAX_UNSIGNED_SHORT, max cycle number takes care of it
-			ulNewSeed = (RANDOM_A * ulNewSeed) + RANDOM_C;
+			ulNewSeed = CvNextRandomSeed(ulNewSeed, RANDOM_A, RANDOM_C);
 			uiRet += (ulNewSeed >> BINOM_SHIFT) & 1; // need the shift so results only repeat after 2^BINOM_SHIFT iterations
 		}
 	}
@@ -374,7 +375,7 @@ void CvRandom::reseed(unsigned long ulNewValue)
 	m_MersenneTwister.sfmt_init_gen_rand(uiNewSeed);
 	m_ulRandomSeed = uiNewSeed;
 #else
-	m_ulRandomSeed = ulNewValue;
+	m_ulRandomSeed = CvNormalizeRandomSeed(ulNewValue);
 #endif
 }
 
