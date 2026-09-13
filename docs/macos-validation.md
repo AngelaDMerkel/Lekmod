@@ -1,5 +1,11 @@
 # macOS validation status
 
+For another task resuming this work, start with
+[the testing handoff](macos-testing-handoff.md) and
+[the test-tool guide](../LEKMOD_DLL/macos/TESTING.md). The tooling and its required
+diagnostic/configuration dependencies are now committed; remaining uncommitted
+product changes are inventoried separately in the handoff.
+
 ## Scope and acceptance
 
 The user accepted the accumulated turn-testing evidence as sufficient on
