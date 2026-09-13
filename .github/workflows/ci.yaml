@@ -99,4 +99,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Lekmod-CI-macOS-x86_64
-          path: build/macos/package
+          path: build/macos/Lekmod-native.zip

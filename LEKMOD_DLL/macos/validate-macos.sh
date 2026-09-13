@@ -23,37 +23,12 @@ fail() { echo "validation error: $*" >&2; exit 1; }
 if (( installed )) && [[ -z "$app_path" ]]; then
   fail "--installed requires --app"
 fi
-file "$binary" | grep -q 'Mach-O 64-bit.*x86_64' || fail "dylib is not x86_64 Mach-O"
-[[ "$(nm -gU "$binary" | awk '{print $3}')" == "_DllGetGameContext" ]] || \
-  fail "DllGetGameContext is not the sole exported symbol"
-otool -D "$binary" | grep -qx '/libCvGameCoreDLL_Expansion2_DLL.dylib' || \
-  fail "incorrect dylib install name"
-otool -l "$binary" | grep -A3 'LC_VERSION_MIN_MACOSX' | grep -q 'version 10.11.6' || \
-  fail "incorrect deployment target"
+compat="$(python3 "$port_dir/bootstrap-compat.py" "$port_dir/compat.lock.json")"
+validation_args=(--binary "$binary")
+[[ -z "$app_path" ]] || validation_args+=(--app "$app_path")
+python3 "$compat/tools/validate.py" "${validation_args[@]}"
 
 if [[ -n "$app_path" ]]; then
-  exe="$app_path/Contents/MacOS/Civilization V"
-  stock="$app_path/Contents/MacOS/libCvGameCoreDLL_Expansion2_DLL.dylib"
-  if [[ -f "$stock.lekmod-original" ]]; then
-    stock="$stock.lekmod-original"
-  fi
-  [[ -f "$exe" && -f "$stock" ]] || fail "invalid Civilization V app bundle"
-
-  extras="$(comm -13 <(nm -u "$stock" | sort -u) <(nm -u "$binary" | sort -u))"
-  exe_exports="$(mktemp "${TMPDIR:-/tmp}/civ5-exports.XXXXXX")"
-  trap 'rm -f "$exe_exports"' EXIT
-  nm -gU "$exe" | awk '{print $3}' | sort -u > "$exe_exports"
-  while IFS= read -r symbol; do
-    [[ -z "$symbol" ]] && continue
-    if grep -Fqx "$symbol" "$exe_exports"; then
-      continue
-    fi
-    case "$symbol" in
-      __ZNSt*|__ZNKSt*|__ZTISt*|__ZTVSt*|__ZTVNSt*|__ZSt*|__ZTv*|___cxa_*|___gxx_*|___Unwind_*|___stack_*|dyld_stub_binder|_atan*|_ceil*|_fflush|_flockfile|_floor*|_fopen|_fprintf|_free|_funlockfile|_getenv|_log*|_malloc|_memcmp|_memcpy|_memmove|_memset*|_pow|_setvbuf|_snprintf|_sprintf|_strcase*|_strcmp|_strcpy|_strdup|_strlen|_strncase*|_strncmp|_vsnprintf|_wcscmp|_wcslen|_wmemchr) ;;
-      *) fail "unresolved symbol is absent from the Aspyr executable: $symbol" ;;
-    esac
-  done <<< "$extras"
-
   if (( installed )); then
     target_mod="$app_path/Contents/Assets/Assets/DLC/LEKMOD"
     ui_dir="$target_mod/Lua/UI"

@@ -79,29 +79,34 @@ To find your game folder, right click Civilization V in your Steam library, sele
 
 ### macOS
 
-The macOS port targets Aspyr's 64-bit Intel Steam build. Quit Civilization V,
-clone or extract the repository, and run:
+Native macOS installation, updates, switching between Lekmod and Vox Populi,
+and stock restoration are owned by **Wir Schaffen DLC**.
+
+Build a verified artifact from this repository with:
 
 ```sh
-cd LEKMOD_DLL/macos
-./install-macos.sh
+export CIV5_COMPAT_SOURCE=/path/to/civ5-macos-gamecore-compat
+LEKMOD_DLL/macos/package-macos.sh /path/to/new-release.zip
 ```
 
-The installer builds and validates the native GameCore library, installs the
-Lekmod DLC files inside the app bundle, configures standard UI or an existing
-EUI installation, retains Aspyr's native main menu, and backs up Aspyr's
-original library. A packaged macOS artifact uses its bundled binary and data
-without requiring repository sources. For a non-default Steam location, pass
-`--app "/path/to/Civilization V.app"`.
-
-To remove Lekmod and restore the stock library:
+Use the SHA-256 printed by packaging when installing with Wir Schaffen DLC:
 
 ```sh
-./install-macos.sh --uninstall
+wir-schaffen-dlc --gamecore lekmod --gamecore-package /path/to/release.zip --gamecore-sha256 SHA256
+wir-schaffen-dlc --gamecore status
+wir-schaffen-dlc --gamecore stock
 ```
 
-Steam file verification restores the stock GameCore library. Rerun the installer
-after verifying the game.
+Add `--dry-run` to inspect a planned install. Quit Civilization V before an
+actual change. Use `--game-app` for a non-default Steam application location.
+The installer verifies the artifact and known stock game, retains one stock
+backup outside the application bundle, and updates the binary and DLC together.
+Steam integrity restoration is detected by `--gamecore status`.
+
+The old `install-macos.sh` entry point is retired. The shared repository and
+new native artifacts have not yet been published; this workflow currently uses
+local pinned checkouts and locally verified artifacts. See
+[the native build documentation](../LEKMOD_DLL/macos/README.md).
 
 
 ## Lekmap Installation

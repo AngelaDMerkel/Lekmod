@@ -5,12 +5,14 @@ Current acceptance and remaining work are tracked in
 the long turn campaign; do not restart a 100-turn quota. Historical test details
 below are not a claim of full-port certification.
 
-This directory builds and installs Lekmod for Aspyr's 64-bit Steam release of
-Civilization V. The game itself is Intel-only, so the library intentionally
-targets `x86_64`; Apple silicon runs both through Rosetta 2.
+This directory builds Lekmod for Aspyr's 64-bit Intel Steam release.
+Apple Silicon runs the game through Rosetta 2. Wir Schaffen DLC is the sole
+installer and owns a canonical stock backup outside the app bundle.
 
-Source builds require Xcode Command Line Tools. Repository and packaged
-installs require Python 3 for deterministic standard/EUI configuration.
+Source builds require Xcode Command Line Tools and Python 3. The exact shared
+compatibility revision is recorded in `compat.lock.json`. Until the shared
+repository is published, set `CIV5_COMPAT_SOURCE` to its local checkout.
+Bootstrap uses an isolated checkout of that commit and rejects tampering.
 
 The port matches the stock `libCvGameCoreDLL_Expansion2_DLL.dylib` ABI:
 
@@ -33,32 +35,38 @@ python3 ./test-configure-ui.py
 ./validate-macos.sh --app "/path/to/Civilization V.app"
 ```
 
-Output is written to
-`build/macos/libCvGameCoreDLL_Expansion2_DLL.dylib`. To create a redistributable
-directory under `build/macos/package`, run `./package-macos.sh`.
-The resulting directory is self-contained: its installer uses the bundled
-GameCore and `LEKMOD` payload rather than looking for repository sources. Run
-`install-macos.sh --verify-payload` inside an artifact to verify that layout.
+Output is written to `build/macos/libCvGameCoreDLL_Expansion2_DLL.dylib`.
+`./package-macos.sh /path/to/new-release.zip` produces a self-contained ZIP
+with a manifest, binary, configured standard-UI DLC, licensing information,
+and SHA256SUMS. Its printed archive SHA-256 is the independent trust anchor.
+No installer or shared-source checkout is bundled in the archive.
 
-## Install
+## Install, update, switch, and restore
 
-Quit Civilization V, then run:
+Quit Civilization V and use Wir Schaffen DLC:
 
 ```sh
-./install-macos.sh
+wir-schaffen-dlc --gamecore lekmod --gamecore-package /path/to/release.zip --gamecore-sha256 SHA256 --dry-run
+wir-schaffen-dlc --gamecore lekmod --gamecore-package /path/to/release.zip --gamecore-sha256 SHA256
+wir-schaffen-dlc --gamecore status
+wir-schaffen-dlc --gamecore stock
 ```
 
-The installer finds the default Steam app, configures standard UI or detects
-EUI, installs the Lekmod DLC data, backs up Aspyr's original GameCore library,
-ad-hoc signs the replacement, and validates the installed UI and binary. It
-deliberately retains Aspyr's native MainMenu XML because installing a DLC
-override for that context crashes the macOS frontend; Lekmod's extra main-menu
-buttons are therefore unavailable on macOS. Use `--app` for a non-default
-location, `--standard` or `--eui` to force a UI mode, and `--uninstall` to
-restore the original library.
+Replace `SHA256` with the independently recorded archive digest. Repeating
+installation with a newer verified archive updates the product. Selecting
+`vox-populi` switches both binary and matching content transactionally.
+`--game-app` and `--user-data` select non-default locations.
 
-Steam's “Verify integrity” operation restores Aspyr's library, so rerun the
-installer afterward.
+`install-macos.sh` is retired and only prints migration instructions. The
+checkpoint branch preserves its original implementation. No new
+`.lekmod-original` or `.vp-original` backups are created. Wir Schaffen DLC can
+import the previously recorded, hash-verified legacy installation; modified
+or unknown legacy files require review and are never assumed to be stock.
+
+The package retains Aspyr's native MainMenu XML and uses the standard UI.
+Existing turn-stability evidence below predates this repository extraction.
+The shared build passes ABI and source regressions; no new game runtime test
+or installation has been performed as part of the extraction.
 
 The turn-stability evidence has been accepted by the user; broader single-player
 validation is still pending. Earlier hidden-AI visualization and turn-status

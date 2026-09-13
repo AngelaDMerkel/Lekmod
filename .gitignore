@@ -74,3 +74,6 @@ desktop.ini
 
 # Build artifacts
 *.exe (except in releases)
+# Exact shared macOS compatibility checkout and native build outputs
+.compat/
+build/
