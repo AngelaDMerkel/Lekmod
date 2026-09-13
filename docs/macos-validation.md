@@ -3,8 +3,14 @@
 For another task resuming this work, start with
 [the testing handoff](macos-testing-handoff.md) and
 [the test-tool guide](../LEKMOD_DLL/macos/TESTING.md). The tooling and its required
-diagnostic/configuration dependencies are now committed; remaining uncommitted
-product changes are inventoried separately in the handoff.
+diagnostic/configuration dependencies are committed. At this resumption the
+previous fourteen product/documentation edits had already been committed in
+`0952b9e5`, followed by the shared compatibility extraction. Those commits and
+the installed handoff binary are preserved.
+
+The [resumed single-player evidence](macos-single-player-20260913.md) separates
+physical mouse actions, scripted commands, gameplay outcomes, and incomplete
+sessions. The user renewed foreground-testing permission for this task.
 
 ## Scope and acceptance
 
@@ -46,15 +52,16 @@ checks. Multiplayer, including hotseat and PBEM, is deferred and untested.
 | Area | Status |
 | --- | --- |
 | Remove experimental AI rendering/turn-status suppression and smoke-test | Passed focused native smoke: turns 111–113, 12 majors/40 city-states; no synchronization errors, Lua runtime errors, or new diagnostics |
-| Actual mouse interaction, screen bounds and production UI | Foreground native clicks opened research, opened the tech tree, and closed it through its visible Close button. Broader mouse coverage, other resolutions and background-only control remain untested. Prior native captures also show production Back fully visible |
+| Actual mouse interaction, screen bounds and production UI | Actual clicks cover research/tech-tree open and close, Rome city entry, Worker selection, Workshop specialist assignment/removal, Walls purchase, queue append/reorder, and normal exit. Captures are at 2836×1898; other resolutions and background-only input remain untested |
 | Standard UI and claimed EUI support | Standard callback/screenshot coverage below; no EUI installation found, so EUI runtime compatibility remains untested |
-| Unit, building, wonder and process production | All four normal standard ProductionPopup selection callbacks reached the expected city queue in the Modern-era fixture. Actual clicks and production completion remain pending |
-| Save, quit, reload | Passed callback-driven local save → normal exit (code 0, no kill) → reload and logical-state comparison, then another normal exit. Physical menu clicks remain untested |
+| Unit, building, wonder and process production | All four selection callbacks passed. Worker selection and Water Mill queue append/reorder also passed by mouse. Bounded scripted orders produced a Worker on turn 215 and Water Mill on 217, with engine production events and final-state checks. Wonder completion and sustained process-income outcomes remain pending |
+| Purchasing and queue removal | Walls purchase by mouse reduced gold 134 → 14, added building 22 and increased displayed defense 56 → 61. Unit/faith purchases and queue removal remain unverified |
+| Save, quit, reload | Passed callback-driven local save → normal exit → reload/logical-state comparison. Physical Escape → exit → Yes also exited with code 0 and no supervisor stop in two sessions. Physical save/load menu paths remain untested |
 | Extra Lekmod main-menu features | Known parity gap; native Aspyr XML currently retained |
-| City focus and avoid-growth | All nine real CityView focus callbacks (including golden-age focus) and avoid-growth toggle/restore pass. Controls are visible in the native capture. Physical clicks, specialist/tile controls and detailed yield accounting remain pending |
+| City focus, specialists and yields | All nine focus callbacks and avoid-growth toggle/restore pass. A real Workshop-slot click added an engineer, removed worked plot 1 and changed production 9.9 → 11 and gross food 11 → 10; removal restored both. Broader specialist/tile controls, physical focus buttons and yield accounting remain pending |
 | Religion, espionage and trade routes | Pending |
 | Diplomacy and World Congress | Some normal callbacks exercised; full functional checks pending |
-| Later-game mechanics | Modern-era setup fixture validates the selected callbacks, not a naturally progressed late-game campaign. Broader mechanics remain pending |
+| Later-game mechanics | Required Freedom ideology selection through the normal network command was verified in the Modern fixture. This is not mouse/ideology-popup coverage or a naturally progressed late-game campaign. Broader mechanics remain pending |
 | Multiplayer, cross-platform, hotseat, PBEM | Deferred by user; untested |
 
 Native-control recheck (`build/macos/playtests/20260913T023845Z`): service
@@ -77,6 +84,14 @@ does not yet isolate foregrounding from removal of the background guard.
 
 Keep confirmed fixes in focused commits. Preserve unrelated worktree changes,
 keep experiments separate, and do not push without authorization.
+
+Resumed test-tool fixes (`82a57031`) allow engine-legal civilian/military
+stacking moves and resolve/verify the required ideology choice. The new bounded
+completion harness and CityView observer are in `13f9c622`. These are driver
+fixes, not new GameCore fixes. The no-intervention replay is
+`build/macos/playtests/20260913T210313Z/report.json`; the preceding run retains
+its driver failure and live-refresh history. The generic improvement-adjacency
+table warning remains an open issue described in the resumed evidence.
 
 ## Focused native functionality evidence
 

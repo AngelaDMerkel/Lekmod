@@ -5,21 +5,38 @@ claim that the macOS port is fully certified. No new task or schedule was create
 
 ## Start here
 
-Workspace: `/Users/duffy/Documents/GitHub/Lekmod`, branch `main`.
+Workspace: `/Users/duffy/Documents/GitHub/Lekmod`. The original handoff used
+`main`; the current existing branch is `codex/shared-macos-gamecore`, checked
+out by the intervening task. The resumed testing did not switch branches.
+At the resumed 2026-09-13 inspection, `HEAD` was `ef173459` and the worktree
+was clean. Another task had committed the fourteen changes below in `0952b9e5`,
+then extracted/pinned the shared compatibility layer in `ee1f207f`/`ef173459`.
+Those commits are preserved. The installed GameCore and both fixture hashes
+still match this handoff; the current local build hash is
+`c4c149630d34260bd4a30647c8f89c3313ee35175da4d3a5096f3a067e1beb78` and has
+not been installed or runtime-certified by these resumed tests.
+
+The user explicitly renewed foreground-testing permission in the resumed
+conversation. The runner's 180-second foreground cap remains in force. The
+original one-off permission and original dirty-file inventory below describe
+the earlier handoff state, not the current checkout or authorization.
+
 Read this document, [validation status](macos-validation.md), and the
 [test-tool operator guide](../LEKMOD_DLL/macos/TESTING.md) before taking actions.
-The historical `LEKMOD_DLL/macos/README.md` has uncommitted, partly stale narrative;
-its old 100-turn requirements do not override this handoff or the user's decisions.
+The historical 100-turn requirements do not override the user's decisions;
+the README's stale instructions have now been corrected.
 
 Suggested prompt for the next task:
 
 > Resume the remaining Lekmod macOS single-player testing in
 > /Users/duffy/Documents/GitHub/Lekmod. First read docs/macos-testing-handoff.md,
-> docs/macos-validation.md, and LEKMOD_DLL/macos/TESTING.md. Preserve the dirty
-> worktree. Do not resume the completed long turn campaign, test multiplayer,
+> docs/macos-validation.md, docs/macos-single-player-20260913.md, and
+> LEKMOD_DLL/macos/TESTING.md. Preserve the current checkout and existing edits.
+> Do not resume the completed long turn campaign, test multiplayer,
 > restart Docker, change Steam's channel, or enable a schedule. The one-off
-> foreground attachment permission was already used; obtain new approval before
-> another foreground session. Use evidence-backed checks and commit verified
+> foreground permission in the original handoff was later renewed for that task;
+> check the current conversation's authorization before another foreground session.
+> Use evidence-backed checks and commit verified
 > fixes in focused local commits without pushing.
 
 ### Non-negotiable scope and permission boundaries
@@ -29,10 +46,10 @@ Suggested prompt for the next task:
   and is not claimed as passed. Do not reinstate it or start another long run.
 - Remaining work is single-player functionality. Network/cross-platform
   multiplayer, hotseat, and PBEM are explicitly deferred and untested.
-- Keep Steam and Civ V in the background by default. The user approved **one
-  brief foreground attachment test**; it is complete. The subsequent request
-  for a longer foreground session has not been approved. A CLI flag is not
-  authorization. Ask before further foreground interaction.
+- Keep Steam and Civ V in the background by default. Foreground testing is now
+  authorized for this resumed task; retain the existing 180-second session cap.
+  A CLI flag or this historical handoff alone is not authorization for a new
+  unrelated task.
 - Do not disrupt Docker, alter Steam's channel, or undo the accepted Steam
   workaround casually. Do not bypass synchronization checks, clear GameCore
   wait flags, or dismiss required gameplay decisions to manufacture progress.
@@ -43,7 +60,7 @@ Suggested prompt for the next task:
 - Commit confirmed changes; do not push. Preserve unrelated edits and manual
   saves. Do not use blanket staging, resetting, or cleaning of the worktree.
 
-## State at handoff
+## State at original handoff
 
 - Civ V and the Python test supervisor are closed. Last native run's temporary
   configuration/UI hooks were restored, and a source scan found no leftover
@@ -156,12 +173,12 @@ Do not rewrite old reports as passes. Use accompanying notes/screenshots.
 1. Read current user instructions and the three documents linked above. Check
    `git status`, process state, desktop lock state, and the installed binary hash.
    Do not assume saved PIDs or foreground approval remain valid.
-2. Review the 14 remaining dirty files listed below before changing anything
-   overlapping them. In particular, decide how to handle the older Lua exclusions
+2. Review the fourteen historical edits and later commits listed below before
+   changing anything overlapping them. In particular, handle the older Lua exclusions
    separately from the already removed C++ rendering suppressions.
 3. Continue remaining single-player coverage with an explicit fixture and
-   assertions. Seek new approval for foreground-only work. Without it, use
-   offline or background-safe work; do not bypass the activation guard silently.
+   assertions. Foreground work is authorized in the resumed conversation;
+   preserve its 180-second cap and do not infer permission in an unrelated task.
 4. Record exact game/UI configuration, observed input or callback path, expected
    result, actual result, artifacts, errors, and cleanup. Commit each verified
    defect correction and update the validation checklist.
@@ -180,8 +197,8 @@ python3 LEKMOD_DLL/macos/automated-playtest.py \
 
 For genuine mouse input, use `ui-interaction`: it loads the fixture but only
 observes state, without invoking gameplay callbacks. The existing foreground
-exception is capped at 180 seconds and requires renewed permission. Do not lift
-the cap as an implied consequence of this handoff. About 50–60 seconds of prior
+exception is capped at 180 seconds; permission was renewed in the resumed task.
+Do not lift the cap as an implied consequence of this handoff. About 50–80 seconds of prior
 runs were spent starting/loading; leave shutdown time inside any approved window.
 
 Use the native computer-use tool for UI actions. In the successful foreground
@@ -192,11 +209,17 @@ are a game defect. Do not call `getApp` after quitting: it may start a launcher.
 
 ## Remaining single-player coverage
 
-- Broader real mouse hitboxes and multiple resolutions; production selection
-  and **completion**, queue changes, and buying units/buildings are not all proven
-  by the four callback-selection tests.
-- Specialist/tile assignments and detailed yield accounting; focus enum changes
-  alone do not prove correct yield effects.
+See [the resumed evidence](macos-single-player-20260913.md) and the current
+validation table for the narrow gaps closed since the original handoff.
+
+- Broader real mouse hitboxes and multiple resolutions; Worker/Water Mill
+  selection, queue append/reorder, and Walls purchase have physical-input
+  evidence. Queue removal, unit/faith purchase and other production categories'
+  mouse paths remain open. Worker/Water Mill completion has a bounded scripted
+  gameplay pass; wonder completion remains open.
+- Broader specialist/tile assignments and yield accounting. One Workshop
+  engineer add/remove has physical-input and matching yield evidence; focus
+  enum changes alone do not prove correct yield effects in other cases.
 - Supported EUI installation (up to v1.28 is the repository claim), isolated with
   backups. The callback adapters currently target standard UI. No EUI is installed
   locally and no native EUI pass exists.
@@ -207,10 +230,11 @@ are a game defect. Do not call `getApp` after quitting: it may start a launcher.
   214 played turns. That fixture has religion disabled.
 - Multiplayer remains outside the current assignment.
 
-## Remaining uncommitted work (preserve; do not stage wholesale)
+## Original uncommitted work (now preserved in `0952b9e5`)
 
-There are 14 modified tracked files and no untracked testing sources after the
-tool commits. This is intentional, not a clean release checkout:
+At the original handoff there were 14 modified tracked files and no untracked
+testing sources after the tool commits. Review this historical inventory and
+the later shared-compatibility commits before changing overlapping code:
 
 | Files | Remaining changes |
 | --- | --- |

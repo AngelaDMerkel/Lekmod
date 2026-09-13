@@ -86,12 +86,13 @@ original 32-bit LCG state without changing class layout or the public ABI.
 Corrected human turns advance without the forced resync; the user accepted the
 accumulated turn testing, and the rendering-workaround removal is smoke-tested.
 
-## Unattended native test
+## Bounded native tests
 
-With Steam signed in and Civ V closed, run:
+Read [`TESTING.md`](TESTING.md) for current modes and evidence limits. With
+Steam signed in and Civ V closed, a focused background callback check is:
 
 ```sh
-python3 ./automated-playtest.py --mode human-turns --turns 100 --minors 40 --timeout 7200
+python3 ./automated-playtest.py --mode single-player-smoke --turns 3 --timeout 300 --stall-seconds 180 --start-era ERA_MODERN --city-controls --save-and-exit
 ```
 
 The runner requires Steam to already be running with a confirmed signed-in
@@ -103,8 +104,10 @@ configuration, logs, and single-player autosaves under
 `build/macos/playtests/<UTC timestamp>`, temporarily appends backed-up Lua
 test hooks to the loaded menu/UI scripts, and launches the installed game
 with a process-only background activation guard. It must not foreground its
-windows. The default stress scenario is a huge map, 12 major civilizations,
-40 city-states, 100 turns, with a two-hour time budget. It counts
+windows unless a foreground UI test is explicitly authorized. The historical
+defaults are a huge map, 12 major civilizations, 40 city-states, 100 turns,
+and two hours; always specify a bounded mode and budget. The accepted long
+turn campaign must not be restarted. Turn modes count
 consecutive `game-turn.end` records from the diagnostic GameCore, rejecting
 duplicate/decreasing turn numbers. It captures a process sample on a stall or
 timeout and restores configuration and UI files after stopping only its test
@@ -141,21 +144,24 @@ remain failures. The overall time budget is still bounded.
 
 `--load-save <Civ5Save>` resumes a preserved test save in human mode. `--turns`
 means that many additional consecutive completed turns, not a target turn
-number; loading turn 20 with `--turns 100` targets 100 completions through turn
-120. A save load and subsequent progression have been observed with the RNG fix.
+number. A save load and subsequent progression have been observed with the RNG
+fix. Functional and UI-interaction modes do not use `--turns` to advance play.
 
 On 2026-09-12, a small-map AI-only harness check completed turns 1–10. A huge-map
 12-major/24-city-state observer run completed turns 1–7 in four minutes, then
 exhausted its time budget without a rollback or crash report. Neither result
-establishes that the reported human end-turn hang is fixed. The requested
-100-turn, 40-city-state stress test remains to be completed.
+established that the reported human end-turn hang was fixed. These early results
+were superseded by the RNG regression and accepted human-turn evidence in
+[`docs/macos-validation.md`](../../docs/macos-validation.md).
 
 The corrected RNG build subsequently completed 16 consecutive human turns with
 12 majors and 40 verified city-states, with production/research/policy choices
 and no RNG resync or rollback. The run stopped on the ordinary Who's Winning
 dialog; that dialog has since been added to the temporary test adapter. A
 separate Lua binding correction now returns the real `CanMoveOrAttackInto`
-result instead of discarding it. The combined build still needs the full run.
+result instead of discarding it. Later runs completed 72 consecutive human
+turns and a separate reload continuation; the user accepted that accumulated
+evidence and closed the phase without claiming the old uninterrupted quota.
 
 Steam's startup blockage was traced to its synchronous `lsof` socket lookup
 walking Docker's large regular-file descriptor table. The separate
@@ -164,8 +170,8 @@ stable client without restarting Docker. It is not a Lekmod gameplay fix.
 
 ## Release smoke matrix
 
-Current user-directed sequence: finish the large turn runs and removal/retest of
-experimental suppressions, then complete the remaining single-player checks.
+Current user-directed sequence: continue the remaining single-player checks.
+Long turn testing and C++ rendering-suppression cleanup are complete and accepted.
 Multiplayer (including hotseat, cross-platform play, and PBEM) is deferred by the
 user and must remain marked untested; do not treat it as a passed release gate.
 
