@@ -51,6 +51,14 @@ checks. Multiplayer, including hotseat and PBEM, is deferred and untested.
 | Later-game mechanics | Modern-era setup fixture validates the selected callbacks, not a naturally progressed late-game campaign. Broader mechanics remain pending |
 | Multiplayer, cross-platform, hotseat, PBEM | Deferred by user; untested |
 
+Native-control recheck (`build/macos/playtests/20260913T023845Z`): service
+inventory requests now respond, but attachment to the running Civ V bundle ID
+still times out. macOS independently reports the game registered and inactive;
+the sampled frontmost application remained Codex. No physical input was sent.
+The supervisor closed its fixture and restored settings/hooks. This narrows the
+blocker to game attachment, rather than establishing that the service is disabled;
+whether background-only operation contributes is not yet established.
+
 Keep confirmed fixes in focused commits. Preserve unrelated worktree changes,
 keep experiments separate, and do not push without authorization.
 
