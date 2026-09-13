@@ -80,6 +80,17 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
+      - name: Test macOS tooling and UI configuration
+        run: |
+          for script in LEKMOD_DLL/macos/*.sh LEKMOD_DLL/macos/steam-compat/Launch-Steam.command; do bash -n "$script"; done
+          python3 -m py_compile LEKMOD_DLL/macos/configure-ui.py LEKMOD_DLL/macos/automated-playtest.py LEKMOD_DLL/macos/steam-compat/patch-steam.py
+          python3 LEKMOD_DLL/macos/test-configure-ui.py
+          python3 LEKMOD_DLL/macos/test-automated-playtest.py
+          python3 LEKMOD_DLL/macos/test-lua-script-data.py
+          python3 LEKMOD_DLL/macos/test-batch-allocate.py
+          clang++ -std=c++11 LEKMOD_DLL/macos/test-random-seed.cpp -o "$RUNNER_TEMP/test-random-seed"
+          "$RUNNER_TEMP/test-random-seed"
+
       - name: Build, validate, and package
         run: LEKMOD_DLL/macos/package-macos.sh
 
