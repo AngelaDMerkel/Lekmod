@@ -40,7 +40,7 @@ checks. Multiplayer, including hotseat and PBEM, is deferred and untested.
 | Area | Status |
 | --- | --- |
 | Remove experimental AI rendering/turn-status suppression and smoke-test | Passed focused native smoke: turns 111–113, 12 majors/40 city-states; no synchronization errors, Lua runtime errors, or new diagnostics |
-| Actual mouse interaction, screen bounds and production UI | Tech-tree Close and production Back are fully visible in native 2836×1898 game-window captures. Other resolutions and physical hitboxes remain untested; the UI-control service timed out |
+| Actual mouse interaction, screen bounds and production UI | Foreground native clicks opened research, opened the tech tree, and closed it through its visible Close button. Broader mouse coverage, other resolutions and background-only control remain untested. Prior native captures also show production Back fully visible |
 | Standard UI and claimed EUI support | Standard callback/screenshot coverage below; no EUI installation found, so EUI runtime compatibility remains untested |
 | Unit, building, wonder and process production | All four normal standard ProductionPopup selection callbacks reached the expected city queue in the Modern-era fixture. Actual clicks and production completion remain pending |
 | Save, quit, reload | Passed callback-driven local save → normal exit (code 0, no kill) → reload and logical-state comparison, then another normal exit. Physical menu clicks remain untested |
@@ -58,6 +58,16 @@ the sampled frontmost application remained Codex. No physical input was sent.
 The supervisor closed its fixture and restored settings/hooks. This narrows the
 blocker to game attachment, rather than establishing that the service is disabled;
 whether background-only operation contributes is not yet established.
+
+The subsequent user-approved foreground attachment test
+(`build/macos/playtests/20260913T031707Z`) attached successfully and verified the
+real mouse paths Choose Research → Open Technology Tree → Close. The first
+Choose Research click had no visible effect; the second opened the panel. No
+scripted action handlers drove those interactions. The run's 180-second cap
+expired during shutdown and the supervisor terminated its own process, so this
+is not another normal-exit result. Settings/hooks were restored, no new Civ V
+diagnostics or Lua/sync errors appeared, and the game is closed. This comparison
+does not yet isolate foregrounding from removal of the background guard.
 
 Keep confirmed fixes in focused commits. Preserve unrelated worktree changes,
 keep experiments separate, and do not push without authorization.
