@@ -18,6 +18,20 @@ clang++ -std=c++11 LEKMOD_DLL/macos/test-random-seed.cpp -o /tmp/lekmod-rng-chec
 /tmp/lekmod-rng-check
 ```
 
+Product Lua handler regressions use the game's Lua 5.1.4 language version:
+
+```sh
+python3 LEKMOD_DLL/macos/bootstrap-test-lua.py
+python3 LEKMOD_DLL/macos/test-unit-handlers.py
+```
+
+The bootstrap downloads the official `lua-5.1.4.tar.gz` once, verifies SHA-256
+`b038e225eaf2a5b57c9bcc35cd13aa8c6c8288ef493d52970c9545074098af3a`, and builds
+under Git-ignored `build/macos/test-deps`. It installs no system software. The
+tests are offline after bootstrap, or accept `--lua /path/to/lua5.1`. They run
+the actual product files with small engine stand-ins; they do not establish
+native unit integration, which must also be checked with the release artifact.
+
 The UI tests use isolated template copies, not the installed app. EUI template
 assembly/XML tests do not establish runtime EUI compatibility. The sanitizer
 tests extract actual binding/allocator code with minimal engine stand-ins;

@@ -86,6 +86,8 @@ jobs:
           python3 -m py_compile LEKMOD_DLL/macos/configure-ui.py LEKMOD_DLL/macos/automated-playtest.py LEKMOD_DLL/macos/steam-compat/patch-steam.py
           python3 LEKMOD_DLL/macos/test-configure-ui.py
           python3 LEKMOD_DLL/macos/test-automated-playtest.py
+          python3 LEKMOD_DLL/macos/bootstrap-test-lua.py
+          python3 LEKMOD_DLL/macos/test-unit-handlers.py
           python3 LEKMOD_DLL/macos/test-lua-script-data.py
           python3 LEKMOD_DLL/macos/test-batch-allocate.py
           clang++ -std=c++11 LEKMOD_DLL/macos/test-random-seed.cpp -o "$RUNNER_TEMP/test-random-seed"

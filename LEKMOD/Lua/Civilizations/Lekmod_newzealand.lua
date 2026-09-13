@@ -71,6 +71,7 @@ function lekmod_new_zealand_uu_batallion(player_id)
    local maori_promotion_id = GameInfoTypes["PROMOTION_ATTACK_AWAY_CAPITAL"]
    local player = Players[player_id]
 
+	-- FriendshipWithMajor is indexed by major civilizations only.
 	if not player:IsAlive() or player:IsMinorCiv() or player:IsBarbarian() then return end
 
    for unit in player:Units() do
@@ -97,7 +98,7 @@ function lekmod_new_zealand_uu_defender(player_id)
    local defender_promotion_default_id	= GameInfoTypes["PROMOTION_JFD_DEFENDER"]
 
 	local player = Players[player_id]
-	if not player:IsAlive() or player:IsMinorCiv() or player:IsBarbarian() then return end
+	if not player:IsAlive() or player:IsBarbarian() then return end
 
 	for unit in player:Units() do
 
@@ -108,12 +109,12 @@ function lekmod_new_zealand_uu_defender(player_id)
 			if plot and plot:IsPlayerCityRadius(player_id) then
             print("New Zealand UU defender is in city radius")
 				is_promotion_valid = true
-			else
+			elseif plot and not player:IsMinorCiv() then
 				for loop_player_id = 0, GameDefines.MAX_MAJOR_CIVS-1, 1 do
 					local loop_player = Players[loop_player_id]
-					if not loop_player:IsAlive() or loop_player == player_id then -- skip
-               elseif loop_player:IsDoF(player:GetTeam()) then
-                  if plot:IsPlayerCityRadius(loop_player) then
+					if not loop_player:IsAlive() or loop_player_id == player_id then -- skip
+               elseif loop_player:IsDoF(player_id) then
+                  if plot:IsPlayerCityRadius(loop_player_id) then
                      is_promotion_valid = true
                      break
                   end

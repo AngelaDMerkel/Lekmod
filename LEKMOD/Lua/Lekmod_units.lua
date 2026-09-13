@@ -23,7 +23,7 @@ local embark_promotion = GameInfoTypes["PROMOTION_EMBARKATION"]
 function lekmod_embark_fix(player_id)
 
 	local player = Players[player_id]
-	if not player:IsAlive() or player:IsMinorCiv() or player:IsBarbarian() then return end
+	if not player:IsAlive() then return end
 	for unit in player:Units() do
 
 		if unit:IsHasPromotion(hover_promotion) then
