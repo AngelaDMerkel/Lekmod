@@ -3310,15 +3310,22 @@ int CvLuaUnit::lGetY(lua_State* L)
 }
 //------------------------------------------------------------------------------
 //void setXY(int iX, int iY, bool bGroup = false, bool bUpdate = true, bool bShow = false, bCheckPlotVisible = false);
+static bool OptionalPositionFlag(lua_State* L, int index, bool fallback)
+{
+	// Accept the documented Lua booleans while retaining legacy 0/1 callers.
+	return lua_isboolean(L, index) ? lua_toboolean(L, index) != 0 :
+		luaL_optint(L, index, fallback ? 1 : 0) != 0;
+}
+
 int CvLuaUnit::lSetXY(lua_State* L)
 {
 	CvUnit* pkUnit = GetInstance(L);
 	const int x = lua_tointeger(L, 2);
 	const int y = lua_tointeger(L, 3);
-	const bool bGroup = luaL_optint(L, 4, 0);
-	const bool bUpdate = luaL_optint(L, 5, 1);
-	const bool bShow = luaL_optint(L, 6, 0);
-	const bool bCheckPlotVisible = luaL_optint(L, 7, 0);
+	const bool bGroup = OptionalPositionFlag(L, 4, false);
+	const bool bUpdate = OptionalPositionFlag(L, 5, true);
+	const bool bShow = OptionalPositionFlag(L, 6, false);
+	const bool bCheckPlotVisible = OptionalPositionFlag(L, 7, false);
 
 	pkUnit->setXY(x, y, bGroup, bUpdate, bShow, bCheckPlotVisible);
 	return 0;

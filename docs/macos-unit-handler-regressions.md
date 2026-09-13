@@ -48,3 +48,19 @@ hundredths-based storage and adds the award without losing a fractional remainde
 Both reward cases now pass, bringing the Lua suite to 17 cases. A full native
 GameCore rebuild and ABI validation passed. Native runtime verification of the
 new binding and a matched binary/payload package are required before release.
+
+## Unit:SetXY boolean flags
+
+Native candidate run `20260913T232746Z` successfully reloaded the old Modern
+fixture and passed the new science-overflow check. A same-position call to
+`unit:SetXY(x, y, false, true, false, false)` then failed with `number expected,
+got boolean`. This is a product binding defect: all four documented boolean
+flags were read using `luaL_optint`.
+
+The binding now accepts Lua booleans while retaining the historical numeric
+0/1 convention and default/nil values. The isolated regression compiles the
+actual binding and helper against Lua 5.1.4 with a recording unit. It reproduces
+the old rejection and passes 34 default/boolean/numeric cases plus invalid-type
+rejection after correction. Local outputs: `build/macos/setxy-binding-before.txt`
+and `setxy-binding-after.txt`. The native failing report remains a failure;
+verification of the corrected installed artifact follows separately.

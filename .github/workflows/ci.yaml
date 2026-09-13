@@ -89,6 +89,7 @@ jobs:
           python3 LEKMOD_DLL/macos/bootstrap-test-lua.py
           python3 LEKMOD_DLL/macos/test-unit-handlers.py
           python3 LEKMOD_DLL/macos/test-scenario-core.py
+          python3 LEKMOD_DLL/macos/test-lua-unit-position.py
           python3 LEKMOD_DLL/macos/test-lua-script-data.py
           python3 LEKMOD_DLL/macos/test-batch-allocate.py
           clang++ -std=c++11 LEKMOD_DLL/macos/test-random-seed.cpp -o "$RUNNER_TEMP/test-random-seed"
