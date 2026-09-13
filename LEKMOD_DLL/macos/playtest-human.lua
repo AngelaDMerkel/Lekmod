@@ -7,6 +7,7 @@ do
     local elapsed, lastTurn = 0, -1
     local pendingProduction = nil
     local pendingPolicy = nil
+    local pendingIdeology = nil
     local firstProduction = true
     local lastBlockedTurn = -1
     local originalUpdate = OnSoftPromptUpdate
@@ -29,11 +30,15 @@ do
                 if actionType == "MISSION_SKIP" then
                     for direction = 0, 5 do
                         local plot = Map.PlotDirection(unit:GetX(), unit:GetY(), direction)
-                        if plot and plot:GetNumUnits() == 0 and not plot:IsWater() and
+                        -- Occupancy alone is not illegality: a civilian and a
+                        -- military unit may share a tile. The engine checks
+                        -- stacking, terrain, diplomacy and movement eligibility.
+                        if plot and not plot:IsWater() and
                            unit:CanMoveOrAttackInto(plot) then
                             Game.SelectionListGameNetMessage(GameMessageTypes.GAMEMESSAGE_PUSH_MISSION,
                                 MissionTypes.MISSION_MOVE_TO, plot:GetX(), plot:GetY(), 0, false, false)
-                            print("[LEKMOD_TEST] moved-stacked-unit id=" .. unit:GetID())
+                            print("[LEKMOD_TEST] moved-stacked-unit id=" .. unit:GetID() ..
+                                " target=" .. plot:GetX() .. "," .. plot:GetY())
                             return
                         end
                     end
@@ -72,6 +77,11 @@ do
             assert(applied, "policy selection was not applied")
             print("[LEKMOD_TEST] policy-verified turn=" .. turn .. " id=" .. pendingPolicy.id)
             pendingPolicy = nil
+        end
+        if pendingIdeology then
+            assert(player:GetLateGamePolicyTree() == pendingIdeology, "ideology choice was not applied")
+            print("[LEKMOD_TEST] ideology-verified turn=" .. turn .. " branch=" .. pendingIdeology)
+            pendingIdeology = nil
         end
 
         for unit in player:Units() do
@@ -168,6 +178,18 @@ do
             end
         end
         local blocking = player:GetEndTurnBlockingType()
+        if blocking == EndTurnBlockingTypes.ENDTURN_BLOCKING_CHOOSE_IDEOLOGY then
+            assert(player:GetLateGamePolicyTree() == -1, "ideology prompt appeared after an ideology was chosen")
+            -- Freedom is one of the three choices in Aspyr's ChooseIdeologyPopup.
+            -- Submit its normal network choice, then verify the resulting tree;
+            -- never dismiss the required decision or clear its blocking flag.
+            local branch = GameInfo.PolicyBranchTypes.POLICY_BRANCH_FREEDOM
+            assert(branch, "fixture has no Freedom ideology")
+            Network.SendIdeologyChoice(player:GetID(), branch.ID)
+            pendingIdeology = branch.ID
+            print("[LEKMOD_TEST] selected-ideology turn=" .. turn .. " branch=" .. branch.ID .. " path=network-choice")
+            return
+        end
         if blocking == EndTurnBlockingTypes.ENDTURN_BLOCKING_CITY_RANGE_ATTACK then
             local width = Map.GetGridSize()
             for city in player:Cities() do
