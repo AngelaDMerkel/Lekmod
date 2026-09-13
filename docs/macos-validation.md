@@ -36,7 +36,7 @@ checks. Multiplayer, including hotseat and PBEM, is deferred and untested.
 
 | Area | Status |
 | --- | --- |
-| Remove experimental AI rendering/turn-status suppression and smoke-test | Pending; changes must not be committed until verified |
+| Remove experimental AI rendering/turn-status suppression and smoke-test | Passed focused native smoke: turns 111–113, 12 majors/40 city-states; no synchronization errors, Lua runtime errors, or new diagnostics |
 | Actual mouse interaction, screen bounds and production UI | Pending; scripted command/queue checks alone are insufficient |
 | Standard UI and claimed EUI support | Broader runtime validation pending |
 | Unit, building, wonder and process production | Partial scripted evidence; full UI matrix pending |
@@ -49,3 +49,23 @@ checks. Multiplayer, including hotseat and PBEM, is deferred and untested.
 
 Keep confirmed fixes in focused commits. Preserve unrelated worktree changes,
 keep experiments separate, and do not push without authorization.
+
+## Verified rendering cleanup
+
+The source now calls the original unit visualization and player turn-status
+callbacks without the experimental hidden-AI suppression. Only diagnostic
+logging remains in the `CvUnit.cpp` and `CvPlayer.cpp` diffs. The RNG and Lua
+movement-query fixes are retained.
+
+- Candidate (unsigned) SHA-256: `bb31cfa89c413b1188ea9a4a91fc5c5bfa4bc4fbc0cd8cc2dbaf40bc28b646d2`.
+- Installed signed cleanup SHA-256: `ada65581fbe74cce79801c92690923d0a35fd50d1fcbf093cfcabcfc923fa40a`.
+- The pre-cleanup binary remains preserved at `build/macos/pre-render-cleanup.dylib`
+  (`ccc945046a9fab534029c6f5ffa0d016c5fbe11a07fd2d5aca37bd927ce1c97e`).
+- Build, ABI validation, five UI-tool tests, ten runner tests, and the
+  one-million-transition RNG regression pass.
+- Native evidence: `build/macos/playtests/20260913T012710Z/report.json`.
+  Three consecutive turns (111–113) returned to the human player. Settings and
+  temporary UI hooks were restored. The runner terminated its own test instance
+  after completing the check; this does not verify normal user-initiated quit.
+- The UI-control service timed out during the follow-up. No physical mouse
+  interaction is claimed from this scripted run.
