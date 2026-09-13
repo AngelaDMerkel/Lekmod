@@ -685,7 +685,7 @@ int CvLuaUnit::lCanMoveOrAttackInto(lua_State* L)
 	bool bResult = false;
 	if(pkPlot)
 	{
-		pkUnit->canMoveOrAttackInto(*pkPlot, bMoveFlags);
+		bResult = pkUnit->canMoveOrAttackInto(*pkPlot, bMoveFlags);
 	}
 
 	lua_pushboolean(L, bResult);
