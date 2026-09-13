@@ -61,6 +61,7 @@ do
             print("[LEKMOD_TEST] human-active turn=" .. turn .. " cities=" .. player:GetNumCities())
             lastTurn = turn
         end
+        if LekmodProductionCompletionStep and LekmodProductionCompletionStep(player) then return end
 
         local greeting = UIManager:GetVisibleNamedContext("CityStateGreetingPopup")
         if greeting then

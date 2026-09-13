@@ -104,8 +104,9 @@ not isolate which condition is necessary. Do not silently remove the guard.
 
 `--foreground-attachment-test` is an explicit exception, restricted to
 `ui-interaction` and `--timeout` at most 180 seconds. It is **not standing user
-authorization**. The one-off approved test is finished. Obtain new approval
-before another foreground test or increasing this limit. The timeout includes
+authorization**. The original one-off test is finished; the user explicitly
+renewed foreground testing for the resumed task. Retain this existing limit,
+and do not infer standing permission for an unrelated task. The timeout includes
 startup, so reserve time to exit; the prior 180-second test hit the cap during
 shutdown and was terminated by the runner.
 
@@ -115,6 +116,48 @@ the interface rejected it. `getApp` can launch the launcher if no game exists,
 so check process state first and do not call it after successfully quitting.
 The app exposes a window, not separate accessibility nodes for its rasterized
 game controls. Derive coordinates from fresh screenshots, not this document.
+
+Wait for the runner's `ui-observer-ready` event and verify that the registered
+process is `Contents/MacOS/Civilization V` before attaching. `AppBundleExe`
+shares the bundle ID and can misdirect attachment. In the resumed tests an
+early attachment timed out, then left a launcher after the game had exited;
+closing that test-created launcher allowed attachment to the actual game.
+Do not click PLAY in a leftover launcher or terminate a user-owned instance.
+
+The read-only observer records full queue order, gold, built buildings,
+specialist assignments, yields in hundredths, worked/locked plot indices, and
+unit IDs/types/positions when they change. These records are retained in
+`report.json` as `ui_observations`; they do not automatically certify mouse
+actions, correct yield accounting, or production completion. Record actual
+inputs and expected/observed outcomes separately.
+
+The observer is appended to both ActionInfoPanel and CityView: the HUD's update
+callback pauses while the city panel is visible. `context` identifies the source.
+Base yields, yield multipliers, worked-plot food/production/gold and manual
+specialist mode are also recorded. Observations wait for an active human turn
+and normal message processing to finish; they never clear processing flags.
+
+## Bounded production completion
+
+The Modern manual fixture listed in the handoff supports a one-turn Worker
+followed by a two-turn Water Mill. To verify actual production outcomes:
+
+```sh
+python3 LEKMOD_DLL/macos/automated-playtest.py \
+  --mode human-turns --turns 3 --timeout 300 --stall-seconds 180 \
+  --load-save /absolute/path/to/the/Modern-fixture.Civ5Save \
+  --production-completion
+```
+
+This option requires a loaded human fixture, exactly three as the turn bound,
+and at most 600 seconds. It replaces the queue through normal synchronized
+orders; no gold, units, buildings, production or technology are granted. The
+ordinary driver resolves legal stacking moves and required research/policy/
+ideology choices, and calls the normal end-turn handler. Both completion events
+must have gold/faith purchase flags false, then the new Worker ID and actual
+Water Mill count must be observed. It stops after both outcomes or fails after
+three turns; selection callbacks, elapsed time, or skipped items cannot pass it.
+This is a focused outcome check, not a restart of the accepted long campaign.
 
 ## Supervision and recovery
 

@@ -5,6 +5,7 @@ from pathlib import Path
 import unittest
 import subprocess
 import sys
+import tempfile
 from unittest import mock
 from types import SimpleNamespace
 
@@ -14,6 +15,41 @@ spec.loader.exec_module(playtest)
 
 
 class PlaytestEvidenceTests(unittest.TestCase):
+    def test_production_completion_is_bounded_and_uses_a_loaded_human_fixture(self):
+        script = str(Path(__file__).with_name("automated-playtest.py"))
+        with tempfile.TemporaryDirectory() as directory:
+            fixture = Path(directory) / "fixture.Civ5Save"
+            fixture.touch()  # Invalid argument combinations must never launch it.
+            for mode, turns, timeout, use_save in (("ui-interaction", 3, 300, True),
+                    ("human-turns", 4, 300, True), ("human-turns", 3, 601, True),
+                    ("human-turns", 3, 300, False)):
+                args = [sys.executable, script, "--production-completion", "--mode", mode,
+                        "--turns", str(turns), "--timeout", str(timeout)]
+                if use_save:
+                    args += ["--load-save", str(fixture)]
+                result = subprocess.run(args, capture_output=True, text=True)
+                self.assertEqual(result.returncode, 2)
+                self.assertIn("Production completion requires", result.stderr)
+
+    def test_production_selection_is_not_completion(self):
+        prefix = "[LEKMOD_FUNCTIONAL] run=current "
+        selection = [prefix + "item=" + item + " status=PASS" for item in playtest.FUNCTIONAL_ITEMS]
+        selection.append(prefix + "event=complete")
+        required = playtest.PRODUCTION_COMPLETION_ITEMS
+        self.assertFalse(playtest.functional_results("\n".join(selection), "current", required)["verified"])
+        completed = [prefix + "item=" + item + " status=PASS" for item in required]
+        self.assertFalse(playtest.functional_results("\n".join(completed), "current", required)["verified"])
+        completed.append(prefix + "event=complete")
+        self.assertTrue(playtest.functional_results("\n".join(completed), "current", required)["verified"])
+        completed.append(prefix + "item=production-completion status=FAIL")
+        self.assertFalse(playtest.functional_results("\n".join(completed), "current", required)["verified"])
+
+    def test_skipped_production_outcomes_never_verify_completion(self):
+        for skipped in playtest.PRODUCTION_COMPLETION_ITEMS:
+            rows = ["[LEKMOD_FUNCTIONAL] run=current item=" + item + " status=" +
+                    ("SKIP" if item == skipped else "PASS") for item in playtest.PRODUCTION_COMPLETION_ITEMS]
+            rows.append("[LEKMOD_FUNCTIONAL] run=current event=complete")
+            self.assertFalse(playtest.production_completion_results("\n".join(rows), "current")["verified"])
     def test_foreground_exception_is_bounded_and_ui_only(self):
         script = str(Path(__file__).with_name("automated-playtest.py"))
         for mode, timeout in (("human-turns", "180"), ("ui-interaction", "181")):

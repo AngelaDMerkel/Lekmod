@@ -116,19 +116,26 @@ def unresolved_driver_error(text):
 
 FUNCTIONAL_ITEMS = {"script-data", "city-focus", "avoid-growth", "tech-tree",
                     "production-unit", "production-building", "production-wonder", "production-process"}
+PRODUCTION_COMPLETION_ITEMS = {"production-completion-unit", "production-completion-building"}
 
 
-def functional_results(text, run):
+def functional_results(text, run, required=FUNCTIONAL_ITEMS):
     rows = [dict(re.findall(r"(\w+)=([^\s]+)", line)) for line in text.splitlines()
             if "[LEKMOD_FUNCTIONAL]" in line]
     rows = [row for row in rows if row.get("run") == run]
     outcomes = {row["item"]: row["status"] for row in rows if "item" in row and "status" in row}
     failed = any(row.get("status") == "FAIL" for row in rows)
     complete = any(row.get("event") == "complete" for row in rows)
-    verified = (complete and not failed and FUNCTIONAL_ITEMS <= outcomes.keys()
-                and all(outcomes[item] in ("PASS", "SKIP") for item in FUNCTIONAL_ITEMS))
+    verified = (complete and not failed and required <= outcomes.keys()
+                and all(outcomes[item] in ("PASS", "SKIP") for item in required))
     return {"outcomes": outcomes, "failed": failed, "complete": complete, "verified": verified,
             "skipped": [item for item in sorted(outcomes) if outcomes[item] == "SKIP"]}
+
+
+def production_completion_results(text, run):
+    result = functional_results(text, run, PRODUCTION_COMPLETION_ITEMS)
+    result["verified"] = result["verified"] and not result["skipped"]
+    return result
 
 
 def refresh_live_driver(evidence):
@@ -186,6 +193,7 @@ def main():
     parser.add_argument("--save-and-exit", action="store_true", help="After functional checks, use the normal local save and exit callbacks")
     parser.add_argument("--capture-panels", action="store_true", help="Capture only the test game's tech-tree and production windows during functional checks")
     parser.add_argument("--city-controls", action="store_true", help="Exercise all nine city-focus callbacks and avoid-growth in the actual CityView context")
+    parser.add_argument("--production-completion", action="store_true", help="Bounded Worker/Water Mill completion fixture through normal orders and at most three scripted human turns")
     parser.add_argument("--foreground-attachment-test", action="store_true", help="Explicitly approved, at-most-180-second UI attachment test without the background activation guard")
     parser.add_argument("--expected-state", type=Path, help="Verify the saved-state fingerprint from an earlier --save-and-exit report before any functional mutations")
     args = parser.parse_args()
@@ -203,6 +211,8 @@ def main():
         parser.error("Save/reload checks require --mode single-player-smoke")
     if args.foreground_attachment_test and (args.mode != "ui-interaction" or args.timeout > 180):
         parser.error("Foreground attachment tests require --mode ui-interaction and --timeout at most 180")
+    if args.production_completion and (args.mode != "human-turns" or args.turns != 3 or not args.load_save or args.timeout > 600):
+        parser.error("Production completion requires --mode human-turns, --turns 3, --load-save and --timeout at most 600")
     expected_state = None
     if args.expected_state:
         expected_state = json.loads(args.expected_state.read_text())["saved_state"]
@@ -230,6 +240,7 @@ def main():
     ui_templates[frontend / "LoadScreen.lua"] = "playtest-loaded.lua"
     if args.mode == "ui-interaction":
         ui_templates[APP / "Contents/Assets/Assets/DLC/LEKMOD/Lua/UI/ActionInfoPanel.lua"] = "playtest-ui-observer.lua"
+        ui_templates[APP / "Contents/Assets/Assets/DLC/LEKMOD/Lua/UI/CityView.lua"] = "playtest-ui-observer.lua"
     if args.mode == "single-player-smoke":
         ui_dir = APP / "Contents/Assets/Assets/DLC/LEKMOD/Lua/UI"
         for name, template in (("ActionInfoPanel.lua", "playtest-single-player.lua"),
@@ -252,6 +263,11 @@ def main():
             if (ui_dir / name).exists():
                 raise SystemExit("Temporary test-control filename already exists: " + str(ui_dir / name))
             ui_templates[ui_dir / name] = template
+        if args.production_completion:
+            completion_path = ui_dir / "LekmodTestCompletion.lua"
+            if completion_path.exists():
+                raise SystemExit("Temporary completion file already exists: " + str(completion_path))
+            ui_templates[completion_path] = "playtest-production-completion.lua"
         ui_templates[APP / "Contents/Assets/Assets/UI/InGame/Popups/TechAwardPopup.lua"] = "playtest-tech-award.lua"
         informational_panels = {"WhosWinningPopup", "NewEraPopup", "NaturalWonderPopup", "GoodyHutPopup",
                                 "BarbarianCampPopup", "GoldenAgePopup", "WonderPopup"}
@@ -293,6 +309,7 @@ def main():
                ("GAME", "GameType"): "singlePlayer",
                ("GAME", "FileName"): ""}
     report = {"mode": args.mode, "requested_turns": args.turns,
+              "production_completion": args.production_completion,
               "live_driver_control": args.mode == "human-turns",
               "runner_pid": os.getpid(),
               "status": "incomplete", "pid": None, "world_size": args.world_size,
@@ -319,6 +336,7 @@ def main():
     engine_started = False
     captured_ui_turns = set()
     captured_panels = set()
+    ui_ready_announced = False
     held_reason = None
     seen_driver_revision = None
 
@@ -349,6 +367,7 @@ def main():
                         "__TEST_SAVE_NAME__": json.dumps(save_name) if args.save_and_exit else "nil",
                         "__TEST_CAPTURE_PANELS__": "true" if args.capture_panels else "false",
                         "__TEST_CITY_CONTROLS__": "true" if args.city_controls else "false",
+                        "__TEST_PRODUCTION_COMPLETION__": "true" if args.production_completion else "false",
                         "__TEST_EXPECTED_STATE__": json.dumps(expected_state) if expected_state else "nil",
                         "__TEST_LOAD_PATH__": json.dumps(str(args.load_save), ensure_ascii=False) if args.load_save else "nil",
                         "__TEST_MAJORS__": str(args.majors),
@@ -419,11 +438,22 @@ def main():
                     break
             latest_turn = state["completed_turns"][-1] if count else None
             human_returned = args.mode != "human-turns" or latest_turn in state["player_zero_turn_starts"]
-            if args.mode in ("autorun", "human-turns") and count >= args.turns and human_returned:
+            if not args.production_completion and args.mode in ("autorun", "human-turns") and count >= args.turns and human_returned:
                 report["status"] = "passed-autorun-only" if args.mode == "autorun" else "passed-scripted-human-turns-only"
                 break
             lua_path = logs / "Lua.log"
             recent_lua = lua_path.read_text(errors="replace")[-16384:] if lua_path.exists() else ""
+            if args.production_completion:
+                completion = production_completion_results(recent_lua, stamp)
+                report["production_completion_checks"] = completion
+                if completion["failed"] or completion["complete"]:
+                    report["status"] = ("passed-production-completion-only" if completion["verified"] and
+                        1 <= count <= args.turns and human_returned else "failed-production-completion")
+                    break
+            if args.mode == "ui-interaction" and not ui_ready_announced and (
+                    "[LEKMOD_UI_OBSERVE] run=" + stamp + " " in recent_lua):
+                ui_ready_announced = True
+                print(json.dumps({"event": "ui-observer-ready", "pid": pid, "evidence": str(output)}), flush=True)
             if args.mode == "single-player-smoke" and engine_started:
                 for panel in re.findall(r"run=" + re.escape(stamp) + r" event=panel-visible name=([a-z-]+)", recent_lua):
                     if args.capture_panels and panel not in captured_panels:
@@ -557,6 +587,15 @@ def main():
                                              if "[LEKMOD_TEST]" in line]
             report["lua_runtime_errors"] = [line.strip() for line in lua_text.splitlines()
                                              if "Runtime Error:" in line]
+            if args.mode == "ui-interaction":
+                report["ui_observations"] = [line.strip() for line in lua_text.splitlines()
+                    if "[LEKMOD_UI_OBSERVE] run=" + stamp + " " in line]
+            if args.production_completion:
+                report["production_completion_checks"] = production_completion_results(lua_text, stamp)
+                report["functional_records"] = [line.strip() for line in lua_text.splitlines()
+                    if "[LEKMOD_FUNCTIONAL] run=" + stamp + " " in line]
+                if report["status"].startswith("passed") and not report["production_completion_checks"]["verified"]:
+                    report["status"] = "failed-production-completion"
             if report["status"].startswith("passed") and report["lua_runtime_errors"]:
                 report["status"] = "failed-lua-runtime-error"
             if args.mode == "human-turns" and report["status"].startswith("passed") and (
