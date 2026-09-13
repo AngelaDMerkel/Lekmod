@@ -6,6 +6,15 @@ repo_dir="$(cd "$port_dir/../.." && pwd)"
 source_dir="$repo_dir/LEKMOD_DLL/CvGameCoreDLL_Expansion2"
 build_dir="$repo_dir/build/macos"
 object_dir="$build_dir/objects"
+incremental=0
+
+while (( $# > 0 )); do
+  case "$1" in
+    --incremental) incremental=1; shift ;;
+    -h|--help) echo "Usage: $0 [--incremental]"; exit 0 ;;
+    *) echo "Unknown option: $1" >&2; exit 2 ;;
+  esac
+done
 
 if [[ ! -f "$source_dir/CvGameCoreDLL.cpp" ]]; then
   echo "error: expected Lekmod DLL sources at $source_dir" >&2
@@ -21,6 +30,7 @@ common_flags=(
   -fdeclspec
   -fdelayed-template-parsing
   -fvisibility=hidden
+  -stdlib=libc++
   -O2
   -DNDEBUG
   -DFINAL_RELEASE
@@ -39,6 +49,7 @@ common_flags=(
   -Wno-microsoft-pure-definition
   -Wno-nonportable-include-path
   -Wno-unused-value
+  -Werror=pointer-to-int-cast
   -I"$port_dir/include"
   -I"$source_dir"
   -I"$source_dir/CvWorldBuilderMap/include"
@@ -63,6 +74,10 @@ done < <(find "$source_dir/Lua" -maxdepth 1 -type f -name '*.cpp' -print0 | sort
 objects=()
 for source_file in "${sources[@]}"; do
   object_file="$object_dir/$(basename "${source_file%.cpp}").o"
+  if (( incremental )) && [[ -f "$object_file" && "$object_file" -nt "$source_file" ]]; then
+    objects+=("$object_file")
+    continue
+  fi
   echo "CXX $(basename "$source_file")"
   clang++ "${common_flags[@]}" -c "$source_file" -o "$object_file"
   objects+=("$object_file")

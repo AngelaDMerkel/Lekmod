@@ -180,8 +180,7 @@ EraTypes CvDllPreGame::era()
 #if defined(__APPLE__)
 const CvString CvDllPreGame::smtpHost()
 {
-	// PBEM SMTP delivery is not implemented by Aspyr's current Steam runtime.
-	return CvString();
+	return CvPreGame::smtpHost();
 }
 //------------------------------------------------------------------------------
 #endif

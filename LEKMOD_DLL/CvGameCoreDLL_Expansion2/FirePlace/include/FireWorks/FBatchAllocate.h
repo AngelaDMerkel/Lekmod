@@ -184,4 +184,3 @@ inline void TestBatchAlloc()
 	kCompositeElement.Free();
 
 };
-

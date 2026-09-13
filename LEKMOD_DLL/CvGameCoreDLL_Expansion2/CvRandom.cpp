@@ -1,5 +1,5 @@
 /*	-------------------------------------------------------------------------------------------------------
-	© 1991-2012 Take-Two Interactive Software and its subsidiaries.  Developed by Firaxis Games.  
+	Â© 1991-2012 Take-Two Interactive Software and its subsidiaries.  Developed by Firaxis Games.
 	Sid Meier's Civilization V, Civ, Civilization, 2K Games, Firaxis Games, Take-Two Interactive Software 
 	and their respective logos are all trademarks of Take-Two interactive Software, Inc.  
 	All other marks and trademarks are the property of their respective owners.  
@@ -205,11 +205,11 @@ unsigned short CvRandom::get(unsigned short usNum, const char* pszLog)
 				{
 					char szOut[1024] = {0};
 #ifdef AUI_USE_SFMT_RNG
-					sprintf_s(szOut, "%d, %d, %u, %u, %u, %u, %8x, %s, %s\n", kGame.getGameTurn(), kGame.getTurnSlice(), uiNum, uiRtnValue, m_ulRandomSeed, m_ulCallCount, (intptr_t)this, m_bSynchronous ? "sync" : "async", (pszLog != NULL) ? pszLog : "Unknown");
+					sprintf_s(szOut, "%d, %d, %u, %u, %u, %u, %p, %s, %s\n", kGame.getGameTurn(), kGame.getTurnSlice(), uiNum, uiRtnValue, m_ulRandomSeed, m_ulCallCount, (void*)this, m_bSynchronous ? "sync" : "async", (pszLog != NULL) ? pszLog : "Unknown");
 #elif defined(AUI_WARNING_FIXES)
-					sprintf_s(szOut, "%d, %d, %u, %u, %u, %8x, %s, %s\n", kGame.getGameTurn(), kGame.getTurnSlice(), uiNum, (uint)us, getSeed(), (intptr_t)this, m_bSynchronous ? "sync" : "async", (pszLog != NULL) ? pszLog : "Unknown");
+					sprintf_s(szOut, "%d, %d, %u, %u, %u, %p, %s, %s\n", kGame.getGameTurn(), kGame.getTurnSlice(), uiNum, (uint)us, getSeed(), (void*)this, m_bSynchronous ? "sync" : "async", (pszLog != NULL) ? pszLog : "Unknown");
 #else
-					sprintf_s(szOut, "%d, %d, %u, %u, %u, %8x, %s, %s\n", kGame.getGameTurn(), kGame.getTurnSlice(), (uint)usNum, (uint)us, getSeed(), (uint)this, m_bSynchronous?"sync":"async", (pszLog != NULL)?pszLog:"Unknown");
+					sprintf_s(szOut, "%d, %d, %u, %u, %u, %p, %s, %s\n", kGame.getGameTurn(), kGame.getTurnSlice(), (uint)usNum, (uint)us, getSeed(), (void*)this, m_bSynchronous?"sync":"async", (pszLog != NULL)?pszLog:"Unknown");
 #endif
 					pLog->Msg(szOut);
 
@@ -307,9 +307,9 @@ unsigned int CvRandom::getBinom(unsigned int uiNum, const char* pszLog)
 				{
 					char szOut[1024] = { 0 };
 #ifdef AUI_USE_SFMT_RNG
-					sprintf_s(szOut, "%d, %d, %u, %u, %u, %u, %8x, %s, %s\n", kGame.getGameTurn(), kGame.getTurnSlice(), uiNum, uiRtnValue, m_ulRandomSeed, m_ulCallCount, (intptr_t)this, m_bSynchronous ? "sync" : "async", (pszLog != NULL) ? pszLog : "Unknown");
+					sprintf_s(szOut, "%d, %d, %u, %u, %u, %u, %p, %s, %s\n", kGame.getGameTurn(), kGame.getTurnSlice(), uiNum, uiRtnValue, m_ulRandomSeed, m_ulCallCount, (void*)this, m_bSynchronous ? "sync" : "async", (pszLog != NULL) ? pszLog : "Unknown");
 #else
-					sprintf_s(szOut, "%d, %d, %u, %u, %u, %8x, %s, %s\n", kGame.getGameTurn(), kGame.getTurnSlice(), uiNum, uiRet, getSeed(), (intptr_t)this, m_bSynchronous ? "sync" : "async", (pszLog != NULL) ? pszLog : "Unknown");
+					sprintf_s(szOut, "%d, %d, %u, %u, %u, %p, %s, %s\n", kGame.getGameTurn(), kGame.getTurnSlice(), uiNum, uiRet, getSeed(), (void*)this, m_bSynchronous ? "sync" : "async", (pszLog != NULL) ? pszLog : "Unknown");
 #endif
 					pLog->Msg(szOut);
 

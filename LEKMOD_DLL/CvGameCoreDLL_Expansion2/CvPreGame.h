@@ -79,6 +79,7 @@ const CvString&                            emailAddress(PlayerTypes p);
 const CvString&                            emailAddress();                      // setupdata
 float                                      endTurnTimerLength();                // setupdata
 EraTypes                                   era();
+const CvString&                            smtpHost();
 PlayerTypes                                findPlayerByNickname(const char* const name);
 void                                       ReseatConnectedPlayers();
 GameMode                                   gameMode();

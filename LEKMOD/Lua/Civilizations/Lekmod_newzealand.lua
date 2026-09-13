@@ -71,7 +71,7 @@ function lekmod_new_zealand_uu_batallion(player_id)
    local maori_promotion_id = GameInfoTypes["PROMOTION_ATTACK_AWAY_CAPITAL"]
    local player = Players[player_id]
 
-	if not player:IsAlive() or player:IsBarbarian() then return end
+	if not player:IsAlive() or player:IsMinorCiv() or player:IsBarbarian() then return end
 
    for unit in player:Units() do
 
@@ -97,7 +97,7 @@ function lekmod_new_zealand_uu_defender(player_id)
    local defender_promotion_default_id	= GameInfoTypes["PROMOTION_JFD_DEFENDER"]
 
 	local player = Players[player_id]
-	if not player:IsAlive() or player:IsBarbarian() then return end
+	if not player:IsAlive() or player:IsMinorCiv() or player:IsBarbarian() then return end
 
 	for unit in player:Units() do
 

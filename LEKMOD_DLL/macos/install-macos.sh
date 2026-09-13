@@ -7,9 +7,11 @@ default_app="$HOME/Library/Application Support/Steam/steamapps/common/Sid Meier'
 app_path="$default_app"
 ui_mode="auto"
 uninstall=0
+verify_payload=0
+dylib_name="libCvGameCoreDLL_Expansion2_DLL.dylib"
 
 usage() {
-  echo "Usage: $0 [--app /path/to/Civilization V.app] [--standard|--eui] [--uninstall]"
+  echo "Usage: $0 [--app /path/to/Civilization V.app] [--standard|--eui] [--uninstall|--verify-payload]"
 }
 
 while (( $# > 0 )); do
@@ -18,16 +20,76 @@ while (( $# > 0 )); do
     --standard) ui_mode="standard"; shift ;;
     --eui) ui_mode="eui"; shift ;;
     --uninstall) uninstall=1; shift ;;
+    --verify-payload) verify_payload=1; shift ;;
     -h|--help) usage; exit 0 ;;
     *) echo "Unknown option: $1" >&2; usage >&2; exit 2 ;;
   esac
 done
 
+layout="repository"
+source_mod="$repo_dir/LEKMOD"
+built_dylib="$repo_dir/build/macos/$dylib_name"
+build_script="$port_dir/build-macos.sh"
+if [[ -d "$port_dir/LEKMOD" && -f "$port_dir/$dylib_name" ]]; then
+  layout="package"
+  source_mod="$port_dir/LEKMOD"
+  built_dylib="$port_dir/$dylib_name"
+  build_script=""
+fi
+
+if (( ! uninstall )) && \
+   { [[ ! -d "$source_mod" ]] || [[ ! -f "$port_dir/configure-ui.py" ]] || [[ ! -x "$port_dir/validate-macos.sh" ]]; }; then
+  echo "Incomplete Lekmod macOS $layout payload in $port_dir" >&2
+  exit 1
+fi
+if (( ! uninstall )) && ! command -v python3 >/dev/null 2>&1; then
+  echo "Python 3 is required to configure Lekmod's macOS UI." >&2
+  exit 1
+fi
+
+prepare_binary() {
+  if [[ "$layout" == "repository" ]] && { [[ ! -f "$built_dylib" ]] || \
+     find "$repo_dir/LEKMOD_DLL" -type f \
+       \( -name '*.cpp' -o -name '*.h' -o -name '*.hpp' -o -name '*.inl' -o -name '*.sh' \) \
+       -newer "$built_dylib" -print -quit | grep -q .; }; then
+    "$build_script"
+  fi
+  [[ -f "$built_dylib" ]] || { echo "Missing macOS GameCore: $built_dylib" >&2; exit 1; }
+}
+
+copy_payload() {
+  local destination="$1"
+  mkdir -p "$destination"
+  rsync -a \
+    --exclude 'CvGameCore_Expansion2.dll' \
+    --exclude 'CvGameCore_Expansion2.pdb' \
+    --exclude 'zlib1.dll' \
+    --exclude 'ui_check.bat' \
+    "$source_mod/" "$destination/"
+}
+
+if (( verify_payload )); then
+  prepare_binary
+  "$port_dir/validate-macos.sh" --binary "$built_dylib"
+  verify_dir="$(mktemp -d "${TMPDIR:-/tmp}/lekmod-payload.XXXXXX")"
+  trap 'rm -rf "$verify_dir"' EXIT
+  copy_payload "$verify_dir/LEKMOD"
+  python3 "$port_dir/configure-ui.py" --lekmod-dir "$verify_dir/LEKMOD" --mode standard
+  for required in VERSION MPModsPack.Civ5Pkg Lua/UI/CityView.lua Lua/UI/CityView.xml \
+      Lua/UI/ProductionPopup.lua Lua/UI/ProductionPopup.xml Lua/UI/LekmodUiConfigured.lua; do
+    [[ -f "$verify_dir/LEKMOD/$required" ]] || {
+      echo "Payload verification failed: missing $required" >&2
+      exit 1
+    }
+  done
+  echo "Verified self-contained Lekmod macOS $layout payload: $port_dir"
+  exit 0
+fi
+
 app_path="${app_path%/}"
 contents="$app_path/Contents"
 macos_dir="$contents/MacOS"
 assets_dir="$contents/Assets/Assets"
-dylib_name="libCvGameCoreDLL_Expansion2_DLL.dylib"
 target_dylib="$macos_dir/$dylib_name"
 backup_dylib="$macos_dir/$dylib_name.lekmod-original"
 dlc_dir="$assets_dir/DLC"
@@ -55,12 +117,7 @@ if (( uninstall )); then
   exit 0
 fi
 
-built_dylib="$repo_dir/build/macos/$dylib_name"
-if [[ ! -f "$built_dylib" ]] || \
-   find "$repo_dir/LEKMOD_DLL" -type f \( -name '*.cpp' -o -name '*.h' -o -name '*.sh' \) \
-     -newer "$built_dylib" -print -quit | grep -q .; then
-  "$port_dir/build-macos.sh"
-fi
+prepare_binary
 "$port_dir/validate-macos.sh" --binary "$built_dylib" --app "$app_path"
 
 if [[ ! -f "$backup_dylib" ]]; then
@@ -70,12 +127,7 @@ fi
 stage_dir="$(mktemp -d "${TMPDIR:-/tmp}/lekmod-macos.XXXXXX")"
 trap 'rm -rf "$stage_dir"' EXIT
 mkdir -p "$stage_dir/LEKMOD"
-rsync -a \
-  --exclude 'CvGameCore_Expansion2.dll' \
-  --exclude 'CvGameCore_Expansion2.pdb' \
-  --exclude 'zlib1.dll' \
-  --exclude 'ui_check.bat' \
-  "$repo_dir/LEKMOD/" "$stage_dir/LEKMOD/"
+copy_payload "$stage_dir/LEKMOD"
 
 eui_dir=""
 if [[ -d "$dlc_dir/UI_bc1" ]]; then
@@ -90,13 +142,20 @@ if [[ -n "$eui_dir" ]]; then
 fi
 python3 "$port_dir/configure-ui.py" "${configure_args[@]}"
 
+resolved_ui_mode="$ui_mode"
+if [[ "$resolved_ui_mode" == "auto" ]]; then
+  resolved_ui_mode="standard"
+  [[ -n "$eui_dir" ]] && resolved_ui_mode="eui"
+fi
+
 if [[ -d "$target_mod" ]]; then
   rm -rf "$target_mod"
 fi
 ditto "$stage_dir/LEKMOD" "$target_mod"
 cp -p "$built_dylib" "$target_dylib"
 codesign --force --sign - "$target_dylib" >/dev/null
+"$port_dir/validate-macos.sh" --binary "$target_dylib" --app "$app_path" --installed
 
-echo "Installed Lekmod $(cat "$target_mod/VERSION") for macOS ($ui_mode UI)."
+echo "Installed Lekmod $(cat "$target_mod/VERSION") for macOS ($resolved_ui_mode UI, $layout payload)."
 echo "Backup: $backup_dylib"
 echo "Run '$0 --uninstall' to restore the original GameCore library."

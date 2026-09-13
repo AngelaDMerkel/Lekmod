@@ -17,7 +17,7 @@
 1. OS
     1. **Windows 7+** - Full Support
     1. **Linux** - Limited/Untested Support
-    1. **macOS 10.11.6+** - Aspyr 64-bit Steam build; Rosetta 2 required on Apple silicon
+    1. **macOS** - Aspyr 64-bit Steam build; Rosetta 2 required on Apple silicon. The binary targets Aspyr's 10.11.6 minimum, but current CI does not runtime-test that oldest OS.
 1. Game: Sid Meier's Civilization V - All available DLC's except for map packs.
 1. Standard UI or EUI (Enhanced User Interface) - LEKMOD v33 and higher support both UIs, Note EUI v 1.29 or higher is currently not supported.
 
@@ -89,8 +89,10 @@ cd LEKMOD_DLL/macos
 
 The installer builds and validates the native GameCore library, installs the
 Lekmod DLC files inside the app bundle, configures standard UI or an existing
-EUI installation, and backs up Aspyr's original library. For a non-default Steam
-location, pass `--app "/path/to/Civilization V.app"`.
+EUI installation, retains Aspyr's native main menu, and backs up Aspyr's
+original library. A packaged macOS artifact uses its bundled binary and data
+without requiring repository sources. For a non-default Steam location, pass
+`--app "/path/to/Civilization V.app"`.
 
 To remove Lekmod and restore the stock library:
 

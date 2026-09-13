@@ -22,6 +22,7 @@ rsync -a \
 python3 "$port_dir/configure-ui.py" --lekmod-dir "$package_dir/LEKMOD" --mode standard
 cp -p "$repo_dir/build/macos/$dylib_name" "$package_dir/$dylib_name"
 cp -p "$port_dir/install-macos.sh" "$port_dir/configure-ui.py" \
-  "$port_dir/validate-macos.sh" "$package_dir/"
+  "$port_dir/validate-macos.sh" "$port_dir/README.md" "$package_dir/"
+"$package_dir/install-macos.sh" --verify-payload
 
 echo "$package_dir"
