@@ -33,6 +33,7 @@
 #include "CvWonderProductionAI.h"
 
 #include "CvDllCity.h"
+#include "LekmodMacDiagnostics.h"
 #include "CvDllCombatInfo.h"
 #include "CvDllPlot.h"
 #include "CvDllUnit.h"
@@ -1606,7 +1607,9 @@ void CvCity::setupGraphical()
 	EraTypes eCurrentEra =(EraTypes) player.GetCurrentEra();
 
 	auto_ptr<ICvCity1> pkDllCity(new CvDllCity(this));
+	LekmodMacLogVisualEvent("city-created.begin", getOwner(), GetID(), getCivilizationType(), getX(), getY(), eCurrentEra);
 	gDLL->GameplayCityCreated(pkDllCity.get(), eCurrentEra);
+	LekmodMacLogVisualEvent("city-created.end", getOwner(), GetID(), getCivilizationType(), getX(), getY(), eCurrentEra);
 	gDLL->GameplayCitySetDamage(pkDllCity.get(), getDamage(), 0);
 
 	// setup the wonders

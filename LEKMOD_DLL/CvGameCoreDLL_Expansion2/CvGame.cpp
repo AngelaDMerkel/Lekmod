@@ -59,6 +59,7 @@
 
 #include "CvInfosSerializationHelper.h"
 #include "CvCityManager.h"
+#include "LekmodMacDiagnostics.h"
 
 #if defined (DEV_RECORDING_STATISTICS) || defined (REPLAY_EVENTS)
 # include <winsqlite3.h>
@@ -8321,6 +8322,7 @@ void CvGame::addGreatPersonBornName(const CvString& szName)
 //	--------------------------------------------------------------------------------
 void CvGame::doTurn()
 {
+	LekmodMacLogVisualEvent("game-turn.begin", -1, -1, -1, -1, -1, getGameTurn());
 #ifndef FINAL_RELEASE
 	char temp[256];
 	sprintf_s(temp, "Turn %i\n", getGameTurn());
@@ -8394,8 +8396,10 @@ void CvGame::doTurn()
 #endif
 
 	gDLL->DoTurn();
+	LekmodMacLogVisualEvent("game-turn.engine.end", -1, -1, -1, -1, -1, getGameTurn());
 
 	CvBarbarians::BeginTurn();
+	LekmodMacLogVisualEvent("game-turn.barbarian-begin.end", BARBARIAN_PLAYER, -1, -1, -1, -1, getGameTurn());
 
 	doUpdateCacheOnTurn();
 
@@ -8434,8 +8438,10 @@ void CvGame::doTurn()
 	{
 #endif
 		CvBarbarians::DoCamps();
+		LekmodMacLogVisualEvent("game-turn.barbarian-camps.end", BARBARIAN_PLAYER, -1, -1, -1, -1, getGameTurn());
 
 		CvBarbarians::DoUnits();
+		LekmodMacLogVisualEvent("game-turn.barbarian-units.end", BARBARIAN_PLAYER, -1, -1, -1, -1, getGameTurn());
 #ifdef AUI_GAME_FIX_MULTIPLAYER_BARBARIANS_SPAWN_AFTER_MOVING
 	}
 #endif
@@ -8671,7 +8677,10 @@ void CvGame::doTurn()
 		gDLL->AutoSave(false);
 	}
 #endif
+	LekmodMacLogVisualEvent("game-turn.publish.begin", -1, -1, -1, -1, -1, getGameTurn());
 	gDLL->PublishNewGameTurn(getGameTurn());
+	LekmodMacLogVisualEvent("game-turn.publish.end", -1, -1, -1, -1, -1, getGameTurn());
+	LekmodMacLogVisualEvent("game-turn.end", -1, -1, -1, -1, -1, getGameTurn());
 }
 
 #ifdef AUI_GAME_BETTER_HYBRID_MODE

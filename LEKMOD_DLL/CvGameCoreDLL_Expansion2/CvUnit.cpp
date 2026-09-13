@@ -42,6 +42,7 @@
 #include "CvDllCity.h"
 #include "CvGameQueries.h"
 #include "CvBarbarians.h"
+#include "LekmodMacDiagnostics.h"
 
 #if !defined(FINAL_RELEASE)
 #include <sstream>
@@ -1382,11 +1383,15 @@ void CvUnit::setupGraphical()
 
 	if(isEmbarked())
 	{
+		LekmodMacLogVisualEvent("unit-embark.begin", getOwner(), GetID(), getUnitType(), getX(), getY(), 1);
 		pDLL->GameplayUnitEmbark(pDllUnit.get(), true);
+		LekmodMacLogVisualEvent("unit-embark.end", getOwner(), GetID(), getUnitType(), getX(), getY(), 1);
 	}
 	else
 	{
+		LekmodMacLogVisualEvent("unit-created.begin", getOwner(), GetID(), getUnitType(), getX(), getY());
 		pDLL->GameplayUnitCreated(pDllUnit.get());
+		LekmodMacLogVisualEvent("unit-created.end", getOwner(), GetID(), getUnitType(), getX(), getY());
 
 		pDLL->GameplayUnitShouldDimFlag(pDllUnit.get(), /*bDim*/ getMoves() <= 0);
 
@@ -24054,7 +24059,9 @@ void CvUnit::PublishQueuedVisualizationMoves()
 			kPlotArray.push_back((*itr)->GetPlotIndex());
 		}
 	}
+	LekmodMacLogVisualEvent("unit-moved.begin", getOwner(), GetID(), getUnitType(), getX(), getY(), (int)kPlotArray.size());
 	gDLL->GameplayUnitMoved(pDllUnit.get(), kPlotArray);
+	LekmodMacLogVisualEvent("unit-moved.end", getOwner(), GetID(), getUnitType(), getX(), getY(), (int)kPlotArray.size());
 	m_unitMoveLocs.clear();
 }
 
@@ -24065,7 +24072,9 @@ void CvUnit::SetPosition(CvPlot* pkPlot)
 
 	auto_ptr<ICvUnit1> pDllUnit(new CvDllUnit(this));
 	auto_ptr<ICvPlot1> pDllPlot(new CvDllPlot(pkPlot));
+	LekmodMacLogVisualEvent("unit-teleported.begin", getOwner(), GetID(), getUnitType(), pkPlot->getX(), pkPlot->getY());
 	gDLL->GameplayUnitTeleported(pDllUnit.get(), pDllPlot.get());
+	LekmodMacLogVisualEvent("unit-teleported.end", getOwner(), GetID(), getUnitType(), pkPlot->getX(), pkPlot->getY());
 
 	m_unitMoveLocs.clear();
 }

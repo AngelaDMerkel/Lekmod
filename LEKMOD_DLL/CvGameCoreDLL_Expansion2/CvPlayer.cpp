@@ -53,6 +53,7 @@
 #include "CvDllCity.h"
 #include "CvGoodyHuts.h"
 #include "CvVotingClasses.h"
+#include "LekmodMacDiagnostics.h"
 // Include this after all other headers.
 #define LINT_WARNINGS_ONLY
 #include "LintFree.h"
@@ -5038,6 +5039,7 @@ int CvPlayer::getCachedSpyStartingRank() const
 //	---------------------------------------------------------------------------
 void CvPlayer::doTurn()
 {
+	LekmodMacLogVisualEvent("player-turn.begin", GetID(), -1, -1, -1, -1, GC.getGame().getGameTurn());
 	// Time building of these maps
 #ifdef AUI_PERF_LOGGING_FORMATTING_TWEAKS
 	AI_PERF_FORMAT("AI-perf.csv", ("CvPlayer::doTurn(), Turn %03d, %s", GC.getGame().getGameTurn(), getCivilizationShortDescription()));
@@ -5159,6 +5161,7 @@ void CvPlayer::doTurn()
 	}
 
 	m_kPlayerAchievements.StartTurn();
+	LekmodMacLogVisualEvent("player-turn.end", GetID(), -1, -1, -1, -1, GC.getGame().getGameTurn());
 }
 
 //	--------------------------------------------------------------------------------
@@ -5602,6 +5605,7 @@ void CvPlayer::doSelfConsistencyCheckAllCities()
 //	--------------------------------------------------------------------------------
 void CvPlayer::doTurnUnits()
 {
+	LekmodMacLogVisualEvent("player-units.begin", GetID(), -1, -1, -1, -1, GC.getGame().getGameTurn());
 	CvArmyAI* pLoopArmyAI;
 	CvUnit* pLoopUnit;
 	int iLoop;
@@ -5732,6 +5736,7 @@ void CvPlayer::doTurnUnits()
 	GC.GetEngineUserInterface()->setDirty(UnitInfo_DIRTY_BIT, true);
 
 	AI_doTurnUnitsPost();
+	LekmodMacLogVisualEvent("player-units.end", GetID(), -1, -1, -1, -1, GC.getGame().getGameTurn());
 }
 
 //	--------------------------------------------------------------------------------
