@@ -117,6 +117,8 @@ def unresolved_driver_error(text):
 FUNCTIONAL_ITEMS = {"script-data", "city-focus", "avoid-growth", "tech-tree",
                     "production-unit", "production-building", "production-wonder", "production-process"}
 PRODUCTION_COMPLETION_ITEMS = {"production-completion-unit", "production-completion-building"}
+SCENARIO_ITEMS = {"inventory": {"system-inventory"},
+                  "espionage": {"spy-home", "spy-recall", "spy-foreign", "spy-diplomat"}}
 
 
 def functional_results(text, run, required=FUNCTIONAL_ITEMS):
@@ -136,6 +138,11 @@ def production_completion_results(text, run):
     result = functional_results(text, run, PRODUCTION_COMPLETION_ITEMS)
     result["verified"] = result["verified"] and not result["skipped"]
     return result
+
+
+def state_fingerprints(text, run):
+    return re.findall(r"\[LEKMOD_FUNCTIONAL\] run=" + re.escape(run) +
+                      r" event=save-state value=([^\r\n]+)", text)
 
 
 def refresh_live_driver(evidence):
@@ -194,6 +201,7 @@ def main():
     parser.add_argument("--capture-panels", action="store_true", help="Capture only the test game's tech-tree and production windows during functional checks")
     parser.add_argument("--city-controls", action="store_true", help="Exercise all nine city-focus callbacks and avoid-growth in the actual CityView context")
     parser.add_argument("--production-completion", action="store_true", help="Bounded Worker/Water Mill completion fixture through normal orders and at most three scripted human turns")
+    parser.add_argument("--scenario", choices=tuple(SCENARIO_ITEMS), help="Focused standard-UI scenario; inventory is read-only")
     parser.add_argument("--foreground-attachment-test", action="store_true", help="Explicitly approved, at-most-180-second UI attachment test without the background activation guard")
     parser.add_argument("--expected-state", type=Path, help="Verify the saved-state fingerprint from an earlier --save-and-exit report before any functional mutations")
     args = parser.parse_args()
@@ -213,6 +221,11 @@ def main():
         parser.error("Foreground attachment tests require --mode ui-interaction and --timeout at most 180")
     if args.production_completion and (args.mode != "human-turns" or args.turns != 3 or not args.load_save or args.timeout > 600):
         parser.error("Production completion requires --mode human-turns, --turns 3, --load-save and --timeout at most 600")
+    if args.scenario and (args.mode != "single-player-smoke" or not args.load_save or args.city_controls or args.timeout > 600):
+        parser.error("Scenarios require --mode single-player-smoke, --load-save, no --city-controls and --timeout at most 600")
+    required_functional_items = SCENARIO_ITEMS[args.scenario] if args.scenario else FUNCTIONAL_ITEMS
+    if args.scenario and args.expected_state:
+        required_functional_items = {"save-reload"}
     expected_state = None
     if args.expected_state:
         expected_state = json.loads(args.expected_state.read_text())["saved_state"]
@@ -251,6 +264,13 @@ def main():
             ui_templates[ui_dir / name] = template
         if args.city_controls:
             ui_templates[ui_dir / "CityView.lua"] = "playtest-city-view.lua"
+        if args.scenario:
+            ui_templates[ui_dir / "ActionInfoPanel.lua"] = "playtest-scenario-bootstrap.lua"
+            for name, template in (("LekmodTestScenarioCore.lua", "playtest-scenario-core.lua"),
+                                   ("LekmodTestScenario.lua", "playtest-scenario-" + args.scenario + ".lua")):
+                if (ui_dir / name).exists():
+                    raise SystemExit("Temporary scenario file already exists: " + str(ui_dir / name))
+                ui_templates[ui_dir / name] = template
         if args.save_and_exit:
             ui_templates[ui_dir / "GameMenu.lua"] = "playtest-game-menu.lua"
             ui_templates[frontend.parent / "InGame/Menus/SaveMenu.lua"] = "playtest-save-menu.lua"
@@ -310,6 +330,7 @@ def main():
                ("GAME", "FileName"): ""}
     report = {"mode": args.mode, "requested_turns": args.turns,
               "production_completion": args.production_completion,
+              "scenario": args.scenario,
               "live_driver_control": args.mode == "human-turns",
               "runner_pid": os.getpid(),
               "status": "incomplete", "pid": None, "world_size": args.world_size,
@@ -460,11 +481,13 @@ def main():
                         captured_panels.add(panel)
                         success = capture_game_window(pid, output / (panel + ".png"))
                         report.setdefault("panel_captures", {})[panel] = success
-                functional = functional_results(recent_lua, stamp)
+                functional = functional_results(recent_lua, stamp, required_functional_items)
                 report["functional_checks"] = functional
                 if functional["failed"] or functional["complete"]:
                     report["status"] = ("passed-available-functional-checks-only" if functional["verified"]
                                         else "failed-functional-checks")
+                    if args.scenario and functional["verified"]:
+                        report["status"] = "passed-scenario-reload-only" if args.expected_state else "passed-scenario-checks-only"
                     if not args.save_and_exit or functional["failed"]:
                         break
                     if pid not in pids:
@@ -604,10 +627,10 @@ def main():
                     "[LEKMOD_TEST] end-turn-click" not in lua_text):
                 report["status"] = "failed-human-test-validation"
             if args.mode == "single-player-smoke":
-                report["functional_checks"] = functional_results(lua_text, stamp)
+                report["functional_checks"] = functional_results(lua_text, stamp, required_functional_items)
                 report["functional_records"] = [line.strip() for line in lua_text.splitlines()
                                                   if "[LEKMOD_FUNCTIONAL]" in line]
-                fingerprints = re.findall(r"run=" + re.escape(stamp) + r" event=save-state value=(\S+)", lua_text)
+                fingerprints = state_fingerprints(lua_text, stamp)
                 if fingerprints:
                     report["saved_state"] = fingerprints[-1]
                 if args.expected_state:

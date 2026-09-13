@@ -15,6 +15,12 @@ spec.loader.exec_module(playtest)
 
 
 class PlaytestEvidenceTests(unittest.TestCase):
+    def test_scenario_fingerprint_retains_spaces_and_escaped_strings(self):
+        snapshot = '{"city":"New York","message":"quote \\\" newline \\n","value":42}'
+        log = '[1.0] ActionInfoPanel: [LEKMOD_FUNCTIONAL] run=current event=save-state value=' + snapshot + '\r\n'
+        self.assertEqual(playtest.state_fingerprints(log, "current"), [snapshot])
+        self.assertEqual(playtest.state_fingerprints(log, "other"), [])
+
     def test_production_completion_is_bounded_and_uses_a_loaded_human_fixture(self):
         script = str(Path(__file__).with_name("automated-playtest.py"))
         with tempfile.TemporaryDirectory() as directory:

@@ -23,6 +23,7 @@ Product Lua handler regressions use the game's Lua 5.1.4 language version:
 ```sh
 python3 LEKMOD_DLL/macos/bootstrap-test-lua.py
 python3 LEKMOD_DLL/macos/test-unit-handlers.py
+python3 LEKMOD_DLL/macos/test-scenario-core.py
 ```
 
 The bootstrap downloads the official `lua-5.1.4.tar.gz` once, verifies SHA-256
@@ -172,6 +173,23 @@ must have gold/faith purchase flags false, then the new Worker ID and actual
 Water Mill count must be observed. It stops after both outcomes or fails after
 three turns; selection callbacks, elapsed time, or skipped items cannot pass it.
 This is a focused outcome check, not a restart of the accepted long campaign.
+
+## Focused system scenarios
+
+`single-player-smoke --scenario inventory` records a read-only inventory of
+religions, cities, spies and routes in a loaded save. It does not certify those
+systems. `--scenario espionage` uses an existing unassigned spy and the game's
+available-city list to test home/foreign deployment, recall and diplomat role
+selection through ordinary network commands. It grants no spies or resources.
+Travelling state is checked; intelligence generation is a separate outcome.
+
+Scenarios require `--load-save` and an explicit budget of at most 600 seconds.
+`--save-and-exit` uses the same normal local save/exit adapters. Reload the new
+unique save with the same scenario and `--expected-state prior/report.json` to
+compare its scenario snapshot before changes. Reload reports only the state
+check, not another pass of the original action sequence. Scenario snapshots use
+deterministic JSON with escaped strings; snapshots describe their selected
+subsystems rather than every serialized game field.
 
 ## Supervision and recovery
 
