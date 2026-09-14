@@ -962,6 +962,24 @@ void CvGame::regenerateMap()
 //	--------------------------------------------------------------------------------
 void CvGame::DoGameStarted()
 {
+#if defined(TRADE_REFACTOR)
+	// The engine calls this after new-game/load initialization. Reconstruct all
+	// building-derived city trade caches before refreshing either end of a route.
+	// No save-format change is needed, including for older affected saves.
+	for (int player = 0; player < MAX_CIV_PLAYERS; ++player)
+	{
+		CvPlayer& owner = GET_PLAYER((PlayerTypes)player);
+		if (!owner.isAlive()) continue;
+		int loop = 0;
+		for (CvCity* city = owner.firstCity(&loop); city; city = owner.nextCity(&loop))
+			city->RebuildBuildingTradeYields();
+	}
+	for (int player = 0; player < MAX_CIV_PLAYERS; ++player)
+	{
+		CvPlayer& owner = GET_PLAYER((PlayerTypes)player);
+		if (owner.isAlive()) owner.GetTrade()->UpdateTradeConnectionValues();
+	}
+#endif
 	// Are features clearable?
 	BuildTypes eBuild;
 #ifdef AUI_WARNING_FIXES

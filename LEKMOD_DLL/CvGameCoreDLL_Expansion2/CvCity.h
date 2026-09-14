@@ -155,6 +155,8 @@ public:
 	void ChangeResourceClassExtraYield(ResourceClassTypes eResourceClass, YieldTypes eYield, int iChange);
 #endif
 #if defined(TRADE_REFACTOR) // :)) Trade Connection extra yields
+	void ApplyBuildingTradeYieldChange(BuildingTypes eBuilding, YieldTypes eYield, int iChange);
+	void RebuildBuildingTradeYields();
 	int GetTradeConnectionOriginLandExtraYield(TradeConnectionType eTradeConnection, YieldTypes eYield) const;
 	int GetTradeConnectionOriginSeaExtraYield(TradeConnectionType eTradeConnection, YieldTypes eYield) const;
 	void ChangeTradeConnectionOriginExtraYield(TradeConnectionType eTradeConnection, YieldTypes eYield, bool bSea, int iChange);

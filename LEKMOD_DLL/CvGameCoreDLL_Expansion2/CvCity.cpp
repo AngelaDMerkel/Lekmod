@@ -3920,6 +3920,57 @@ void CvCity::ChangeResourceClassExtraYield(ResourceClassTypes eClass, YieldTypes
 }
 #endif
 #if defined(TRADE_REFACTOR)
+void CvCity::ApplyBuildingTradeYieldChange(BuildingTypes eBuilding, YieldTypes eYield, int iChange)
+{
+	CvBuildingEntry* info = GC.getBuildingInfo(eBuilding);
+	if (!info || iChange == 0) return;
+	for (int iJ = 0; iJ < NUM_TRADE_CONNECTION_TYPES; ++iJ)
+	{
+		TradeConnectionType connection = (TradeConnectionType)iJ;
+		if (connection == TRADE_CONNECTION_INTERNATIONAL && eYield == YIELD_GOLD)
+		{
+			ChangeTradeConnectionOriginExtraYield(connection, eYield, false, info->GetTradeRouteLandGoldBonus() * iChange);
+			ChangeTradeConnectionOriginExtraYield(connection, eYield, true, info->GetTradeRouteSeaGoldBonus() * iChange);
+			ChangeIncomingTradeConnectionExtraYield(connection, eYield, false, info->GetTradeRouteTargetBonus() * 100 * iChange);
+			ChangeIncomingTradeConnectionExtraYield(connection, eYield, true, info->GetTradeRouteTargetBonus() * 100 * iChange);
+			ChangeTradeConnectionDestExtraYield(connection, eYield, false, info->GetTradeRouteRecipientBonus() * 100 * iChange);
+			ChangeTradeConnectionDestExtraYield(connection, eYield, true, info->GetTradeRouteRecipientBonus() * 100 * iChange);
+		}
+		ChangeTradeConnectionOriginExtraYield(connection, eYield, false, info->GetTradeConnectionOriginLandYieldChange(iJ, eYield) * iChange);
+		ChangeTradeConnectionOriginExtraYield(connection, eYield, true, info->GetTradeConnectionOriginSeaYieldChange(iJ, eYield) * iChange);
+		ChangeTradeConnectionDestExtraYield(connection, eYield, false, info->GetTradeConnectionDestinationLandYieldChange(iJ, eYield) * iChange);
+		ChangeTradeConnectionDestExtraYield(connection, eYield, true, info->GetTradeConnectionDestinationSeaYieldChange(iJ, eYield) * iChange);
+		ChangeIncomingTradeConnectionExtraYield(connection, eYield, false, info->GetIncomingTradeConnectionLandYieldChange(iJ, eYield) * iChange);
+		ChangeIncomingTradeConnectionExtraYield(connection, eYield, true, info->GetIncomingTradeConnectionSeaYieldChange(iJ, eYield) * iChange);
+	}
+}
+
+void CvCity::RebuildBuildingTradeYields()
+{
+	// These six arrays are derived from buildings, not stored in the save stream.
+	// Clear first so repeated initialization cannot add their bonuses twice.
+	for (int connection = 0; connection < NUM_TRADE_CONNECTION_TYPES; ++connection)
+	{
+		for (int yield = 0; yield < NUM_YIELD_TYPES; ++yield)
+		{
+			m_aaiTradeConnectionOriginLandYieldChange[connection][yield] = 0;
+			m_aaiTradeConnectionOriginSeaYieldChange[connection][yield] = 0;
+			m_aaiTradeConnectionDestinationLandYieldChange[connection][yield] = 0;
+			m_aaiTradeConnectionDestinationSeaYieldChange[connection][yield] = 0;
+			m_aaiIncomingTradeConnectionLandYieldChange[connection][yield] = 0;
+			m_aaiIncomingTradeConnectionSeaYieldChange[connection][yield] = 0;
+		}
+	}
+	for (int building = 0; building < GC.getNumBuildingInfos(); ++building)
+	{
+		BuildingTypes type = (BuildingTypes)building;
+		int count = m_pCityBuildings->GetNumActiveBuilding(type);
+		if (count == 0) continue;
+		for (int yield = 0; yield < NUM_YIELD_TYPES; ++yield)
+			ApplyBuildingTradeYieldChange(type, (YieldTypes)yield, count);
+	}
+}
+
 int CvCity::GetTradeConnectionOriginLandExtraYield(TradeConnectionType eTradeConnection, YieldTypes eYield) const
 {
 	VALIDATE_OBJECT;
@@ -8413,27 +8464,7 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 			}
 #endif
 #if defined(TRADE_REFACTOR)
-			for (int iJ = 0; iJ < NUM_TRADE_CONNECTION_TYPES; iJ++)
-			{
-				TradeConnectionType eTradeConnection = (TradeConnectionType)iJ;
-				// Legacy Stuff
-				if (eTradeConnection == TRADE_CONNECTION_INTERNATIONAL && eYield == YIELD_GOLD)
-				{
-					ChangeTradeConnectionOriginExtraYield(eTradeConnection, eYield, false /*bSea*/, ((GC.getBuildingInfo(eBuilding)->GetTradeRouteLandGoldBonus()) * iChange));
-					ChangeTradeConnectionOriginExtraYield(eTradeConnection, eYield, true /*bSea*/, ((GC.getBuildingInfo(eBuilding)->GetTradeRouteSeaGoldBonus()) * iChange));
-					ChangeIncomingTradeConnectionExtraYield(eTradeConnection, eYield, false /*bSea*/, ((GC.getBuildingInfo(eBuilding)->GetTradeRouteTargetBonus() * 100) * iChange)); // Not Times100 in XML
-					ChangeTradeConnectionDestExtraYield(eTradeConnection, eYield, false /*bSea*/, ((GC.getBuildingInfo(eBuilding)->GetTradeRouteRecipientBonus() * 100) * iChange)); // Not Times100 in XML
-					ChangeIncomingTradeConnectionExtraYield(eTradeConnection, eYield, true /*bSea*/, ((GC.getBuildingInfo(eBuilding)->GetTradeRouteTargetBonus() * 100) * iChange)); // Not Times100 in XML
-					ChangeTradeConnectionDestExtraYield(eTradeConnection, eYield, true /*bSea*/, ((GC.getBuildingInfo(eBuilding)->GetTradeRouteRecipientBonus() * 100) * iChange)); // Not Times100 in XML
-				}
-				// New Stuff
-				ChangeTradeConnectionOriginExtraYield(eTradeConnection, eYield, false /*bSea*/, (GC.getBuildingInfo(eBuilding)->GetTradeConnectionOriginLandYieldChange(iJ, eYield) * iChange));
-				ChangeTradeConnectionOriginExtraYield(eTradeConnection, eYield, true /*bSea*/, (GC.getBuildingInfo(eBuilding)->GetTradeConnectionOriginSeaYieldChange(iJ, eYield) * iChange));
-				ChangeTradeConnectionDestExtraYield(eTradeConnection, eYield, false /*bSea*/, (GC.getBuildingInfo(eBuilding)->GetTradeConnectionDestinationLandYieldChange(iJ, eYield) * iChange));
-				ChangeTradeConnectionDestExtraYield(eTradeConnection, eYield, true /*bSea*/, (GC.getBuildingInfo(eBuilding)->GetTradeConnectionDestinationSeaYieldChange(iJ, eYield) * iChange));
-				ChangeIncomingTradeConnectionExtraYield(eTradeConnection, eYield, false /*bSea*/, (GC.getBuildingInfo(eBuilding)->GetIncomingTradeConnectionLandYieldChange(iJ, eYield) * iChange));
-				ChangeIncomingTradeConnectionExtraYield(eTradeConnection, eYield, true /*bSea*/, (GC.getBuildingInfo(eBuilding)->GetIncomingTradeConnectionSeaYieldChange(iJ, eYield) * iChange));
-			}
+			ApplyBuildingTradeYieldChange(eBuilding, eYield, iChange);
 #endif
 			//for(int iJ = 0; iJ < GC.getNumResourceInfos(); iJ++)
 			//{
