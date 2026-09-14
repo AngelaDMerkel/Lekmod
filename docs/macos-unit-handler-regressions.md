@@ -64,3 +64,13 @@ the old rejection and passes 34 default/boolean/numeric cases plus invalid-type
 rejection after correction. Local outputs: `build/macos/setxy-binding-before.txt`
 and `setxy-binding-after.txt`. The native failing report remains a failure;
 verification of the corrected installed artifact follows separately.
+
+## Team:SetHasTech argument routing
+
+The technology setter read `bFirst` from the player-ID argument and `bAnnounce`
+from the first-discovery argument, ignoring the final flag. The actual binding
+was compiled against Lua 5.1.4 with a recording team; it failed the mixed-flag
+case before correction. Reading the two flags from arguments 5 and 6 passes
+all 16 combinations of player ID, new value, first-discovery and announcement.
+Local evidence: `build/macos/team-tech-before.txt`, `team-tech-after.txt` and
+`team-tech-build.log`. The incremental rebuild and ABI validation passed.
