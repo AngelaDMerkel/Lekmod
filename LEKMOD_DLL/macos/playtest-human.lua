@@ -138,10 +138,14 @@ do
                         end
                     end
                 end
-                local scout = GameInfoTypes.UNIT_SCOUT
-                assert(city:CanTrain(scout), "city cannot produce the test scout")
-                Game.CityPushOrder(city, OrderTypes.ORDER_TRAIN, scout, false, true, true)
-                pendingProduction = {city = city:GetID(), order = OrderTypes.ORDER_TRAIN, item = scout}
+                local unitType
+                for _, name in ipairs({"UNIT_SCOUT", "UNIT_WORKER"}) do
+                    local id = GameInfoTypes[name]
+                    if id and city:CanTrain(id) then unitType = id; break end
+                end
+                assert(unitType, "city cannot produce a legal test scout or worker")
+                Game.CityPushOrder(city, OrderTypes.ORDER_TRAIN, unitType, false, true, true)
+                pendingProduction = {city = city:GetID(), order = OrderTypes.ORDER_TRAIN, item = unitType}
                 firstProduction = false
                 return
             end
@@ -248,9 +252,15 @@ do
             end
         end
         print("[LEKMOD_TEST] end-turn-click turn=" .. turn)
+        if LekmodScenarioBeforeEndTurn then LekmodScenarioBeforeEndTurn(player,turn) end
         OnEndTurnClicked()
     end
 
+    if LEKMOD_TEST_EXTERNAL_DRIVER then
+        -- The scenario owns the update loop and explicitly grants each step.
+        -- All ordinary decision checks and the real end-turn handler remain.
+        LekmodScenarioHumanTurn=step
+    else
     ContextPtr:SetUpdate(function(dt)
         if originalUpdate then originalUpdate(dt) end
         elapsed = elapsed + dt
@@ -265,4 +275,5 @@ do
             Controls.EndTurnText:SetText("TEST ERROR: " .. tostring(err))
         end
     end)
+    end
 end
