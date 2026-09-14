@@ -85,6 +85,16 @@ def edit_ini(text, updates):
     return "".join(lines)
 
 
+def parse_window_size(value):
+    match = re.fullmatch(r"(\d+)x(\d+)", value)
+    if not match:
+        raise argparse.ArgumentTypeError("Use WIDTHxHEIGHT, for example 1280x800")
+    width, height = map(int, match.groups())
+    if not 800 <= width <= 3840 or not 600 <= height <= 2160:
+        raise argparse.ArgumentTypeError("Window size must be between 800x600 and 3840x2160")
+    return width, height
+
+
 def records(text):
     return [dict(re.findall(r"(\w+)=([^\s]+)", line))
             for line in text.splitlines() if "[LEKMOD_RENDER]" in line]
@@ -114,11 +124,20 @@ def unresolved_driver_error(text):
     return text.rfind("[LEKMOD_TEST] ERROR") > text.rfind("[LEKMOD_TEST] driver-reloaded")
 
 
-FUNCTIONAL_ITEMS = {"script-data", "city-focus", "avoid-growth", "tech-tree",
+FUNCTIONAL_ITEMS = {"script-data", "science-overflow", "unit-position-flags", "city-focus", "avoid-growth", "tech-tree",
                     "production-unit", "production-building", "production-wonder", "production-process"}
 PRODUCTION_COMPLETION_ITEMS = {"production-completion-unit", "production-completion-building"}
 SCENARIO_ITEMS = {"inventory": {"system-inventory"},
-                  "espionage": {"spy-home", "spy-recall", "spy-foreign", "spy-diplomat"}}
+                  "espionage": {"spy-home", "spy-recall", "spy-foreign", "spy-diplomat"},
+                  "religion": {"pantheon", "religion-found", "religion-enhance", "faith-purchase", "religion-spread"},
+                  "trade": {"gold-unit-purchase", "trade-route", "trade-yield", "trade-income"},
+                  "congress": {"congress-found", "congress-propose", "congress-vote", "congress-resolve", "wonder-completion", "process-income"},
+                  "unit-owners": {"minor-defender", "minor-hover", "barbarian-hover"},
+                  "espionage-mission": {"spy-surveillance", "spy-science", "spy-return"},
+                  "diplomat-arrival": {"diplomat-arrival"},
+                  "diplomacy": {"diplomacy-open", "diplomacy-gift"},
+                  "city-queue": {"city-queue-ready"},
+                  "endgame": {"score-victory", "endgame-panel"}}
 
 
 def functional_results(text, run, required=FUNCTIONAL_ITEMS):
@@ -143,6 +162,25 @@ def production_completion_results(text, run):
 def state_fingerprints(text, run):
     return re.findall(r"\[LEKMOD_FUNCTIONAL\] run=" + re.escape(run) +
                       r" event=save-state value=([^\r\n]+)", text)
+
+
+def congress_resolution_results(render_text, lua_text, run):
+    found = {}
+    for event in ("congress-proposal", "congress-resolved"):
+        matches = re.findall(r"\[LEKMOD_FUNCTIONAL\] run=" + re.escape(run) +
+            r" event=" + event + r" value=([^\r\n]+)", lua_text)
+        if matches:
+            found[event] = json.loads(matches[-1])
+    if len(found) != 2:
+        return {"verified": False, "reason": "missing proposal/resolution snapshot"}
+    proposal, outcome = found["congress-proposal"], found["congress-resolved"]
+    rows = [row for row in records(render_text) if row.get("event") in ("league-enact.passed", "league-enact.failed")
+        and row.get("owner") == "0" and row.get("id") == str(proposal["id"]) and row.get("type") == str(proposal["type"])]
+    if len(rows) != 1:
+        return {"verified": False, "reason": "expected one matching engine resolution result", "matches": rows}
+    passed = rows[0]["event"] == "league-enact.passed"
+    return {"verified": outcome["id"] == proposal["id"] and outcome["active"] == passed,
+            "proposal": proposal, "engine_passed": passed, "active_after_session": outcome["active"]}
 
 
 def refresh_live_driver(evidence):
@@ -192,6 +230,7 @@ def main():
     parser.add_argument("--startup-timeout", type=int, default=60)
     parser.add_argument("--world-size", default="WORLDSIZE_HUGE")
     parser.add_argument("--start-era", default="ERA_ANCIENT", help="Normal game-setup era for a new fixture; ignored when loading")
+    parser.add_argument("--window-size", type=parse_window_size, help="Temporary windowed resolution, with GraphicsSettingsDX9.ini restored afterward")
     parser.add_argument("--majors", type=int, default=12)
     parser.add_argument("--minors", type=int, default=40)
     parser.add_argument("--mode", choices=("autorun", "human-turns", "single-player-smoke", "ui-interaction"), default="autorun")
@@ -202,6 +241,7 @@ def main():
     parser.add_argument("--city-controls", action="store_true", help="Exercise all nine city-focus callbacks and avoid-growth in the actual CityView context")
     parser.add_argument("--production-completion", action="store_true", help="Bounded Worker/Water Mill completion fixture through normal orders and at most three scripted human turns")
     parser.add_argument("--scenario", choices=tuple(SCENARIO_ITEMS), help="Focused standard-UI scenario; inventory is read-only")
+    parser.add_argument("--scenario-turns", type=int, default=0, help="Explicit maximum turns a scenario may request through the normal human driver (0-30)")
     parser.add_argument("--foreground-attachment-test", action="store_true", help="Explicitly approved, at-most-180-second UI attachment test without the background activation guard")
     parser.add_argument("--expected-state", type=Path, help="Verify the saved-state fingerprint from an earlier --save-and-exit report before any functional mutations")
     args = parser.parse_args()
@@ -221,8 +261,12 @@ def main():
         parser.error("Foreground attachment tests require --mode ui-interaction and --timeout at most 180")
     if args.production_completion and (args.mode != "human-turns" or args.turns != 3 or not args.load_save or args.timeout > 600):
         parser.error("Production completion requires --mode human-turns, --turns 3, --load-save and --timeout at most 600")
-    if args.scenario and (args.mode != "single-player-smoke" or not args.load_save or args.city_controls or args.timeout > 600):
-        parser.error("Scenarios require --mode single-player-smoke, --load-save, no --city-controls and --timeout at most 600")
+    if args.scenario and (args.mode != "single-player-smoke" or (not args.load_save and args.scenario not in ("congress", "endgame")) or args.city_controls or args.timeout > 600):
+        parser.error("Scenarios require --mode single-player-smoke, --load-save (except new congress/endgame fixtures), no --city-controls and --timeout at most 600")
+    if args.scenario == "endgame" and (args.load_save or args.expected_state or args.save_and_exit or args.scenario_turns != 2):
+        parser.error("Endgame requires a new two-turn scenario, without save/reload options")
+    if not 0 <= args.scenario_turns <= 30 or (args.scenario_turns and not args.scenario):
+        parser.error("--scenario-turns requires a scenario and a bound from 0 to 30")
     required_functional_items = SCENARIO_ITEMS[args.scenario] if args.scenario else FUNCTIONAL_ITEMS
     if args.scenario and args.expected_state:
         required_functional_items = {"save-reload"}
@@ -246,6 +290,15 @@ def main():
     user_settings = DATA / "UserSettings.ini"
     original_user_settings = user_settings.read_bytes()
     (output / "UserSettings.ini.original").write_bytes(original_user_settings)
+    graphics_settings = DATA / "GraphicsSettingsDX9.ini"
+    original_graphics = graphics_settings.read_bytes() if args.window_size else None
+    if original_graphics is not None:
+        (output / "GraphicsSettingsDX9.ini.original").write_bytes(original_graphics)
+    manual_saves = {path: path.read_bytes() for path in (DATA / "Saves/single").glob("*.Civ5Save")}
+    manual_backup = output / "manual-saves-before"
+    manual_backup.mkdir()
+    for path, data in manual_saves.items():
+        (manual_backup / path.name).write_bytes(data)
     frontend = APP / "Contents/Assets/Assets/UI/FrontEnd"
     menu_paths = [frontend / "MainMenu.lua",
                   APP / "Contents/Assets/Assets/DLC/LEKMOD/Lua/UI/MainMenu.lua"]
@@ -271,13 +324,35 @@ def main():
                 if (ui_dir / name).exists():
                     raise SystemExit("Temporary scenario file already exists: " + str(ui_dir / name))
                 ui_templates[ui_dir / name] = template
+            if args.scenario == "religion":
+                popups = APP / "Contents/Assets/Assets/DLC/Expansion2/UI/InGame/Popups"
+                ui_templates[popups / "ChoosePantheonPopup.lua"] = "playtest-scenario-pantheon-popup.lua"
+                ui_templates[popups / "ChooseReligionPopup.lua"] = "playtest-scenario-religion-popup.lua"
+                ui_templates[ui_dir / "ProductionPopup.lua"] = "playtest-scenario-purchase-popup.lua"
+            if args.scenario == "trade":
+                ui_templates[ui_dir / "ProductionPopup.lua"] = "playtest-scenario-purchase-popup.lua"
+                ui_templates[ui_dir / "ChooseInternationalTradeRoutePopup.lua"] = "playtest-scenario-trade-popup.lua"
+            if args.scenario == "congress":
+                ui_templates[APP / "Contents/Assets/Assets/DLC/Expansion2/UI/InGame/Popups/LeagueOverview.lua"] = "playtest-scenario-league-popup.lua"
+            if args.scenario == "espionage-mission":
+                ui_templates[ui_dir / "TechPopup.lua"] = "playtest-scenario-spy-tech.lua"
+            if args.scenario == "diplomacy":
+                ui_templates[APP / "Contents/Assets/Assets/DLC/Expansion2/UI/InGame/LeaderHead/LeaderHeadRoot.lua"] = "playtest-scenario-diplo-root.lua"
+                ui_templates[ui_dir / "TradeLogic.lua"] = "playtest-scenario-diplo-trade.lua"
+                ui_templates[ui_dir / "DiscussionDialog.lua"] = "playtest-scenario-diplo-reply.lua"
+            if args.scenario == "unit-owners":
+                ui_templates[ui_dir.parent / "Lekmod_units.lua"] = "playtest-scenario-unit-owner-observer.lua"
+            if args.scenario == "endgame":
+                ui_templates[ui_dir / "EndGameMenu.lua"] = "playtest-scenario-endgame-popup.lua"
+                ui_templates[frontend / "ExitConfirm.lua"] = "playtest-exit-confirm.lua"
         if args.save_and_exit:
             ui_templates[ui_dir / "GameMenu.lua"] = "playtest-game-menu.lua"
             ui_templates[frontend.parent / "InGame/Menus/SaveMenu.lua"] = "playtest-save-menu.lua"
             ui_templates[frontend / "ExitConfirm.lua"] = "playtest-exit-confirm.lua"
-    if args.mode == "human-turns":
+    if args.mode == "human-turns" or args.scenario_turns:
         ui_dir = APP / "Contents/Assets/Assets/DLC/LEKMOD/Lua/UI"
-        ui_templates[ui_dir / "ActionInfoPanel.lua"] = "playtest-human-bootstrap.lua"
+        if args.mode == "human-turns":
+            ui_templates[ui_dir / "ActionInfoPanel.lua"] = "playtest-human-bootstrap.lua"
         for name, template in (("LekmodTestDriver.lua", "playtest-human.lua"),
                                ("LekmodTestCommands.lua", "playtest-commands.lua")):
             if (ui_dir / name).exists():
@@ -290,7 +365,7 @@ def main():
             ui_templates[completion_path] = "playtest-production-completion.lua"
         ui_templates[APP / "Contents/Assets/Assets/UI/InGame/Popups/TechAwardPopup.lua"] = "playtest-tech-award.lua"
         informational_panels = {"WhosWinningPopup", "NewEraPopup", "NaturalWonderPopup", "GoodyHutPopup",
-                                "BarbarianCampPopup", "GoldenAgePopup", "WonderPopup"}
+                                "BarbarianCampPopup", "GoldenAgePopup", "WonderPopup", "LeagueSplash"}
         for path in (APP / "Contents/Assets/Assets").rglob("*.lua"):
             if path.stem in informational_panels:
                 ui_templates[path] = "playtest-info-popup.lua"
@@ -331,6 +406,8 @@ def main():
     report = {"mode": args.mode, "requested_turns": args.turns,
               "production_completion": args.production_completion,
               "scenario": args.scenario,
+              "scenario_turn_limit": args.scenario_turns,
+              "requested_window_size": args.window_size,
               "live_driver_control": args.mode == "human-turns",
               "runner_pid": os.getpid(),
               "status": "incomplete", "pid": None, "world_size": args.world_size,
@@ -381,9 +458,15 @@ def main():
         config.write_bytes(edit_ini(original.decode(), updates).encode())
         user_settings.write_bytes(re.sub(rb"(?m)^(SkipIntroVideo\s*=\s*)[^\r\n]*",
                                          rb"\g<1>1", original_user_settings))
+        if original_graphics is not None:
+            graphics_settings.write_bytes(edit_ini(original_graphics.decode(), {
+                ("UserSettings", "WindowResX"): args.window_size[0],
+                ("UserSettings", "WindowResY"): args.window_size[1]}).encode())
         replacements = {"__TEST_WORLD_SIZE__": args.world_size,
                         "__TEST_START_ERA__": args.start_era,
                         "__TEST_RUN__": stamp,
+                        "__TEST_SCENARIO_TURN_LIMIT__": str(args.scenario_turns),
+                        "__TEST_GAME_TURN_LIMIT__": "2" if args.scenario == "endgame" else "0",
                         "__TEST_FUNCTIONAL__": "true" if args.mode in ("single-player-smoke", "ui-interaction") else "false",
                         "__TEST_SAVE_NAME__": json.dumps(save_name) if args.save_and_exit else "nil",
                         "__TEST_CAPTURE_PANELS__": "true" if args.capture_panels else "false",
@@ -463,7 +546,8 @@ def main():
                 report["status"] = "passed-autorun-only" if args.mode == "autorun" else "passed-scripted-human-turns-only"
                 break
             lua_path = logs / "Lua.log"
-            recent_lua = lua_path.read_text(errors="replace")[-16384:] if lua_path.exists() else ""
+            current_lua = lua_path.read_text(errors="replace") if lua_path.exists() else ""
+            recent_lua = current_lua[-16384:]
             if args.production_completion:
                 completion = production_completion_results(recent_lua, stamp)
                 report["production_completion_checks"] = completion
@@ -475,28 +559,30 @@ def main():
                     "[LEKMOD_UI_OBSERVE] run=" + stamp + " " in recent_lua):
                 ui_ready_announced = True
                 print(json.dumps({"event": "ui-observer-ready", "pid": pid, "evidence": str(output)}), flush=True)
+                report["initial_ui_capture"] = capture_game_window(pid, output / "ui-ready.png")
             if args.mode == "single-player-smoke" and engine_started:
                 for panel in re.findall(r"run=" + re.escape(stamp) + r" event=panel-visible name=([a-z-]+)", recent_lua):
                     if args.capture_panels and panel not in captured_panels:
                         captured_panels.add(panel)
                         success = capture_game_window(pid, output / (panel + ".png"))
                         report.setdefault("panel_captures", {})[panel] = success
-                functional = functional_results(recent_lua, stamp, required_functional_items)
+                functional = functional_results(current_lua, stamp, required_functional_items)
                 report["functional_checks"] = functional
                 if functional["failed"] or functional["complete"]:
                     report["status"] = ("passed-available-functional-checks-only" if functional["verified"]
                                         else "failed-functional-checks")
                     if args.scenario and functional["verified"]:
                         report["status"] = "passed-scenario-reload-only" if args.expected_state else "passed-scenario-checks-only"
-                    if not args.save_and_exit or functional["failed"]:
+                    if (not args.save_and_exit and args.scenario != "endgame") or functional["failed"]:
                         break
                     if pid not in pids:
                         exited_normally = game_process.poll() == 0
                         saved = generated_save.is_file() and generated_save.stat().st_size > 0
                         confirmed = "run=" + stamp + " event=exit-confirmed" in recent_lua
                         report["normal_exit_verified"] = exited_normally and confirmed
-                        report["save_file_verified"] = saved
-                        if not (exited_normally and confirmed and saved):
+                        if args.save_and_exit:
+                            report["save_file_verified"] = saved
+                        if not (exited_normally and confirmed and (saved or args.scenario == "endgame")):
                             report["status"] = "failed-save-or-normal-exit"
                         break
             if pid and pid not in pids:
@@ -580,6 +666,8 @@ def main():
                 report["process_returncode"] = game_process.poll()
             config.write_bytes(original)
             user_settings.write_bytes(original_user_settings)
+            if original_graphics is not None:
+                graphics_settings.write_bytes(original_graphics)
             for path, data in ui_backups.items():
                 if data is None:
                     path.unlink(missing_ok=True)
@@ -589,12 +677,19 @@ def main():
                 not path.exists() if data is None else path.read_bytes() == data for path, data in ui_backups.items())
             report["settings_restored"] = (config.read_bytes() == original and
                                            user_settings.read_bytes() == original_user_settings)
+            if original_graphics is not None:
+                report["graphics_settings_restored"] = graphics_settings.read_bytes() == original_graphics
+                report["settings_restored"] = report["settings_restored"] and report["graphics_settings_restored"]
             if display_setting.returncode == 0:
                 command(["defaults", "write", display_domain, "DisplayFullScreen", "-bool",
                          "true" if display_setting.stdout.strip() in ("1", "true") else "false"])
             else:
                 command(["defaults", "delete", display_domain, "DisplayFullScreen"])
         report["duration_seconds"] = round(time.monotonic() - start, 1)
+        report["manual_saves_preserved"] = all(path.is_file() and path.read_bytes() == data for path, data in manual_saves.items())
+        report["new_manual_saves"] = [str(path) for path in (DATA / "Saves/single").glob("*.Civ5Save") if path not in manual_saves]
+        if not report["manual_saves_preserved"]:
+            report["status"] = "failed-manual-save-preservation"
         (output / "LekmodRender.log").write_text(current_text)
         if logs.exists():
             shutil.copytree(logs, output / "logs-after")
@@ -645,6 +740,10 @@ def main():
                     report["saved_sha256"] = hashlib.sha256(saved_copy.read_bytes()).hexdigest()
                 if report["status"].startswith("passed") and not report["functional_checks"]["verified"]:
                     report["status"] = "failed-functional-checks"
+                if args.scenario == "congress" and not args.expected_state:
+                    report["congress_resolution"] = congress_resolution_results(current_text, lua_text, stamp)
+                    if report["status"].startswith("passed") and not report["congress_resolution"]["verified"]:
+                        report["status"] = "failed-congress-resolution-evidence"
         if autosaves.exists():
             shutil.copytree(autosaves, output / "autosaves-after")
         new_reports = [p for p in set(diagnostic_dir.glob("*")) - before_reports

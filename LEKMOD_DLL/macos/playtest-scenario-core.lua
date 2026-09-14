@@ -31,8 +31,34 @@ function LekmodScenarioEvent(event, value)
     print("[LEKMOD_FUNCTIONAL] run=__TEST_RUN__ event=" .. event .. " value=" .. LekmodScenarioJSON(value))
 end
 
+local scenarioWaits={}
+function LekmodScenarioAwait(key, ready)
+    if ready then scenarioWaits[key]=nil; return true end
+    scenarioWaits[key]=(scenarioWaits[key] or 0)+1
+    assert(scenarioWaits[key]<=8, "synchronized result did not arrive: "..key)
+    return false
+end
+
+function LekmodScenarioGrantTech(player, techType, visited)
+    visited=visited or {}
+    local tech=assert(GameInfo.Technologies[techType], "unknown fixture technology")
+    local team=Teams[player:GetTeam()]
+    if team:GetTeamTechs():HasTech(tech.ID) then return end
+    assert(not visited[techType], "cyclic technology prerequisites")
+    visited[techType]=true
+    for row in GameInfo.Technology_PrereqTechs{TechType=techType} do
+        LekmodScenarioGrantTech(player,row.PrereqTech,visited)
+    end
+    -- This is explicitly recorded scenario setup, including prerequisites and
+    -- the usual tech announcements; it is not earned research evidence.
+    team:SetHasTech(tech.ID,true,player:GetID(),true,true)
+    LekmodScenarioEvent("fixture-setup",{operation="provided-technology",technology=techType,id=tech.ID})
+    visited[techType]=nil
+end
+
 function LekmodScenarioStart()
-    local ready, stopped, started, elapsed = false, false, false, 0
+    local ready, stopped, started, elapsed, startTurn = false, false, false, 0, nil
+    local turnLimit=__TEST_SCENARIO_TURN_LIMIT__ or 0
     local originalUpdate = OnSoftPromptUpdate
     Events.SequenceGameInitComplete.Add(function() ready = true end)
     ContextPtr:SetUpdate(function(dt)
@@ -49,13 +75,25 @@ function LekmodScenarioStart()
             local expected = __TEST_EXPECTED_STATE__
             if not started then
                 started = true
+                startTurn=Game.GetGameTurn()
                 LekmodScenarioEvent("scenario-start", {name=LekmodScenario.name, turn=Game.GetGameTurn()})
                 if expected then
-                    assert(LekmodScenarioJSON(LekmodScenario.snapshot(player)) == expected, "scenario save/reload state differs")
+                    local actual= LekmodScenarioJSON(LekmodScenario.snapshot(player))
+                    if actual~=expected then
+                        print("[LEKMOD_FUNCTIONAL] run=__TEST_RUN__ event=reload-expected value="..expected)
+                        print("[LEKMOD_FUNCTIONAL] run=__TEST_RUN__ event=reload-actual value="..actual)
+                    end
+                    assert(actual == expected, "scenario save/reload state differs")
                     LekmodScenarioRecord("save-reload", "PASS", "scope=" .. LekmodScenario.name)
                 end
             end
-            if expected or LekmodScenario.step(player) then
+            assert(Game.GetGameTurn()-startTurn<=turnLimit, "scenario exceeded its explicit turn bound")
+            local result=expected and true or LekmodScenario.step(player)
+            if result=="turn" then
+                assert(turnLimit>0 and Game.GetGameTurn()-startTurn<turnLimit, "scenario needs a turn beyond its explicit bound")
+                assert(LekmodScenarioHumanTurn, "scenario has no normal human driver")
+                LekmodScenarioHumanTurn()
+            elseif result==true then
                 stopped = true
                 print("[LEKMOD_FUNCTIONAL] run=__TEST_RUN__ event=complete scope=" .. LekmodScenario.name)
                 local saveName = __TEST_SAVE_NAME__
@@ -64,6 +102,8 @@ function LekmodScenarioStart()
                         LekmodScenarioJSON(LekmodScenario.snapshot(player)))
                     LuaEvents.LekmodFunctionalSave(saveName)
                 end
+            else
+                assert(result==nil or result==false, "invalid scenario step result")
             end
         end)
         if not ok then

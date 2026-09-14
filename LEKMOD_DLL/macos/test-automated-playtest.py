@@ -15,6 +15,31 @@ spec.loader.exec_module(playtest)
 
 
 class PlaytestEvidenceTests(unittest.TestCase):
+    def test_congress_result_requires_matching_engine_outcome(self):
+        lua = ('[LEKMOD_FUNCTIONAL] run=current event=congress-proposal value={"id":7,"type":15}\n'
+               '[LEKMOD_FUNCTIONAL] run=current event=congress-resolved value={"id":7,"active":true}\n')
+        passed = '[LEKMOD_RENDER] event=league-enact.passed owner=0 id=7 type=15\n'
+        failed = passed.replace('passed','failed')
+        self.assertTrue(playtest.congress_resolution_results(passed,lua,'current')['verified'])
+        self.assertFalse(playtest.congress_resolution_results(failed,lua,'current')['verified'])
+        self.assertFalse(playtest.congress_resolution_results('',lua,'current')['verified'])
+        self.assertFalse(playtest.congress_resolution_results(passed.replace('id=7','id=8'),lua,'current')['verified'])
+        self.assertTrue(playtest.congress_resolution_results(failed,lua.replace('true','false'),'current')['verified'])
+
+    def test_window_size_is_explicit_and_bounded(self):
+        self.assertEqual(playtest.parse_window_size("1280x800"), (1280, 800))
+        for value in ("auto", "1280", "100x100", "9000x800"):
+            with self.assertRaises(playtest.argparse.ArgumentTypeError):
+                playtest.parse_window_size(value)
+
+    def test_scenario_turns_cannot_enable_unbounded_or_unscoped_play(self):
+        script = str(Path(__file__).with_name("automated-playtest.py"))
+        for value in ("-1", "1", "31"):
+            result = subprocess.run([sys.executable, script, "--mode", "single-player-smoke",
+                "--turns", "3", "--timeout", "60", "--scenario-turns", value],capture_output=True,text=True)
+            self.assertEqual(result.returncode, 2)
+            self.assertIn("--scenario-turns requires",result.stderr)
+
     def test_scenario_fingerprint_retains_spaces_and_escaped_strings(self):
         snapshot = '{"city":"New York","message":"quote \\\" newline \\n","value":42}'
         log = '[1.0] ActionInfoPanel: [LEKMOD_FUNCTIONAL] run=current event=save-state value=' + snapshot + '\r\n'

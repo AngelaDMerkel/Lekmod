@@ -80,6 +80,28 @@ do
             assert(ok, err)
             assert(unit:GetScriptData() == original, "script data was not restored")
             record("script-data", "PASS", "reads=400 restored=true")
+            local overflow = player:GetOverflowResearch()
+            local research = player:GetCurrentResearch()
+            local techs, progress = Teams[player:GetTeam()]:GetTeamTechs(), {}
+            for tech in GameInfo.Technologies() do progress[tech.ID] = techs:GetResearchProgress(tech.ID) end
+            assert(player.ChangeOverflowResearch, "GameCore lacks the science-overflow binding")
+            local overflowOK, overflowError = pcall(function()
+                player:ChangeOverflowResearch(12)
+                assert(player:GetOverflowResearch() == overflow + 12, "science overflow did not increase by 12")
+                assert(player:GetCurrentResearch() == research, "overflow changed the selected research")
+                for id, value in pairs(progress) do
+                    assert(techs:GetResearchProgress(id) == value, "overflow changed technology progress")
+                end
+            end)
+            player:ChangeOverflowResearch(overflow - player:GetOverflowResearch())
+            assert(overflowOK, overflowError)
+            assert(player:GetOverflowResearch() == overflow, "science overflow was not restored")
+            record("science-overflow", "PASS", "delta=12 technology-progress=unchanged restored=true path=lua-binding")
+            local x,y=unit:GetX(),unit:GetY()
+            local positionOK,positionError=pcall(function() unit:SetXY(x,y,false,true,false,false) end)
+            assert(positionOK, "SetXY boolean flags rejected: "..tostring(positionError))
+            assert(unit:GetX()==x and unit:GetY()==y, "same-position SetXY changed the unit position")
+            record("unit-position-flags", "PASS", "path=lua-binding same-position=true flags=boolean")
             if __TEST_CITY_CONTROLS__ then
                 response = nil
                 LuaEvents.LekmodFunctionalCity(cityID)
