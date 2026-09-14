@@ -150,6 +150,9 @@ void CvLuaPlayer::PushMethods(lua_State* L, int t)
 	Method(GetImprovementGoldMaintenance);
 	Method(CalculateGoldRate);
 	Method(CalculateGoldRateTimes100);
+#ifdef AUI_YIELDS_APPLIED_AFTER_TURN_NOT_BEFORE
+	Method(GetCachedGoldRateTimes100);
+#endif
 	Method(CalculateGrossGoldTimes100);
 	Method(CalculateInflatedCosts);
 	Method(CalculateResearchModifier);
@@ -1928,6 +1931,15 @@ int CvLuaPlayer::lCalculateGoldRateTimes100(lua_State* L)
 {
 	return BasicLuaMethod(L, &CvPlayerAI::calculateGoldRateTimes100);
 }
+#ifdef AUI_YIELDS_APPLIED_AFTER_TURN_NOT_BEFORE
+// The committed per-turn amount, after the end-turn citizen/yield cache pass.
+int CvLuaPlayer::lGetCachedGoldRateTimes100(lua_State* L)
+{
+	CvPlayerAI* player = GetInstance(L);
+	lua_pushinteger(L, player->GetTreasury()->getGoldT100ForThisTurn());
+	return 1;
+}
+#endif
 //------------------------------------------------------------------------------
 //int CalculateGrossGoldTimes100();
 int CvLuaPlayer::lCalculateGrossGoldTimes100(lua_State* L)
