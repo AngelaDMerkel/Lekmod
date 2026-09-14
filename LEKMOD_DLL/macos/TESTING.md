@@ -227,3 +227,80 @@ Known tool limitations: startup's separate timeout does not cover every stage
 of asset loading; the overall timeout is the reliable bound. Live functional
 metadata in `run-state.json` is incomplete until the report is finalized. The
 human bot is not a strategy evaluator and can make economically poor choices.
+
+### Explicit turn allowance and scenario setup
+
+Scenarios default to zero end-turn commands. `--scenario-turns N` (0–30) lets
+that scenario request steps from the ordinary human driver; its remaining
+research/policy/unit decisions and end-turn checks stay intact. The scenario
+supervisor rejects requests beyond that bound. The total scenario budget is at
+most 600 seconds. These are functional fixtures, not a resumed long campaign.
+
+Religion records supplied faith/prophets and a missionary staging position,
+then tests real founding/enhancement/purchase/spread actions. Trade records its
+range-building, prerequisite/reveal and gold setup, then uses real unit-purchase
+and route callbacks. Setup is not earned gameplay evidence. `fixture-setup`
+records distinguish these inputs from the asserted outcomes.
+
+The Congress fixture can start a new ordinary Industrial/Duel game with two
+majors and four city-states. It waits through the unchanged session countdown;
+its proposal result is cross-checked against the native `league-enact.*` log
+and active resolution state. It also produces a real world wonder and measures
+Wealth against actual settled gold history. Other scenario files may be in active
+development: consult the system-validation report for their current evidence.
+
+### Window size and manual saves
+
+`--window-size 1280x800` changes only the temporary window dimensions in
+`GraphicsSettingsDX9.ini`, preserves its original bytes in the run directory,
+and restores them in cleanup. An initial game-window screenshot is retained for
+UI-interaction runs. Inspect its actual dimensions rather than assuming the
+requested dimensions equal the Retina backing buffer size.
+
+Every run also backs up root single-player manual saves under
+`manual-saves-before`, reports whether all originals remain byte-identical, and
+lists newly created saves separately. Never use overwrite confirmation to replace
+an earlier manual save for a test. In recovery after a supervisor failure, include
+the graphics INI backup when that run requested a window size.
+
+### End-game and EUI fixtures
+
+`--scenario endgame --scenario-turns 2` starts a new ordinary game with a two-turn
+setup limit. It observes the actual score-victory/game-over event, captures the
+end-game panel and uses normal exit confirmation. Do not pass a save or
+`--save-and-exit`; it does not assign scores, winners or turn/wait flags. Use a
+small Duel setup for this fixture. This does not cover every victory condition.
+
+`temporary-eui-test.py` runs a bounded test with a private EUI 1.28g dependency.
+It requires an EUI-configured LEKMOD package, the exact currently installed
+standard package for restoration, and the central installer. It refuses to
+replace an existing UI_bc1 folder or a mismatched standard installation. EUI
+text files and its existing options database/journals are restored byte for byte;
+new test files are removed. Restoration evidence is under
+`build/macos/eui-tests/<UTC>/state.json`. The EUI code/assets are not committed or
+redistributed. Obtain the author's archive and verify the hash in the system
+validation report.
+
+```sh
+python3 LEKMOD_DLL/macos/temporary-eui-test.py \
+  --installer /absolute/path/to/Civ5ModDlcPacker/civ5_dlc_installer.py \
+  --eui-root /absolute/path/to/extracted/eui-1.28g \
+  --package /absolute/path/to/private-eui-configured-package.zip \
+  --restore-package /absolute/path/to/current-standard-package.zip \
+  -- --mode human-turns --turns 3 --timeout 300 --load-save /absolute/path/to/fixture.Civ5Save
+```
+
+The production, city and system-popup adapters target standard UI. EUI permits
+bounded human-turn/observer modes plus read-only `--scenario inventory` using
+the shared save/exit callbacks. Use its saved report with `--expected-state` for
+exact EUI reload comparison. The observer runs in its own Lua context and does
+not replace either city screen's update/show handlers. Actual mouse input remains
+a separate test. Do not silently apply
+standard production/city callbacks to EUI's different contexts. A configurator
+unit test alone is not an EUI runtime pass.
+
+Human-turn reports distinguish `new_order_verified` from
+`inherited_order_observed`. A loaded Wealth queue can permit ordinary turns
+without any new production command; observing its queue/active-production
+agreement is not a production-click or new-order pass. The engine's completed
+turn records remain mandatory.

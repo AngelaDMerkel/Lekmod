@@ -6,6 +6,7 @@ do
     local stopped = false
     local elapsed, lastTurn = 0, -1
     local pendingProduction = nil
+    local observedProduction = {}
     local pendingPolicy = nil
     local pendingIdeology = nil
     local firstProduction = true
@@ -108,6 +109,7 @@ do
             assert(actual == pendingProduction.item,
                 "production order did not reach the city queue")
             print("[LEKMOD_TEST] production-verified turn=" .. turn .. " city=" .. city:GetID())
+            observedProduction[city:GetID()] = true
             pendingProduction = nil
         end
 
@@ -123,6 +125,17 @@ do
         end
 
         for city in player:Cities() do
+            if city:GetOrderQueueLength() > 0 and not observedProduction[city:GetID()] then
+                local kind, id = city:GetOrderFromQueue(0)
+                local actual
+                if kind == OrderTypes.ORDER_TRAIN then actual = city:GetProductionUnit()
+                elseif kind == OrderTypes.ORDER_CONSTRUCT then actual = city:GetProductionBuilding()
+                elseif kind == OrderTypes.ORDER_CREATE then actual = city:GetProductionProject()
+                elseif kind == OrderTypes.ORDER_MAINTAIN then actual = city:GetProductionProcess() end
+                assert(actual == id, "inherited order does not match active production")
+                observedProduction[city:GetID()] = true
+                print("[LEKMOD_TEST] production-inherited turn=" .. turn .. " city=" .. city:GetID() .. " order=" .. kind .. " item=" .. id)
+            end
             if city:GetOrderQueueLength() == 0 then
                 -- Exercise real building queues and avoid filling the capital
                 -- with an endless stream of scouts during a long stress run.

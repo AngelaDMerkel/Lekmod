@@ -15,6 +15,16 @@ spec.loader.exec_module(playtest)
 
 
 class PlaytestEvidenceTests(unittest.TestCase):
+    def test_inherited_production_does_not_claim_a_new_order(self):
+        text = "[LEKMOD_TEST] production-inherited city=8192 order=3 item=0\n[LEKMOD_TEST] end-turn-click turn=214"
+        result = playtest.human_turn_results(text)
+        self.assertTrue(result["verified"])
+        self.assertTrue(result["inherited_order_observed"])
+        self.assertFalse(result["new_order_verified"])
+        self.assertFalse(playtest.human_turn_results("[LEKMOD_TEST] end-turn-click")["verified"])
+        self.assertFalse(playtest.human_turn_results(text + "\n[LEKMOD_TEST] ERROR broken")["verified"])
+        self.assertFalse(playtest.human_turn_results("[LEKMOD_TEST] production-verified")["verified"])
+
     def test_congress_result_requires_matching_engine_outcome(self):
         lua = ('[LEKMOD_FUNCTIONAL] run=current event=congress-proposal value={"id":7,"type":15}\n'
                '[LEKMOD_FUNCTIONAL] run=current event=congress-resolved value={"id":7,"active":true}\n')

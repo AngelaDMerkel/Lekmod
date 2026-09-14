@@ -1,11 +1,9 @@
 -- Read-only observer for physical UI tests. Does not choose orders, dismiss
--- popups, alter turn state, or dispatch input. Normal HUD updates are retained.
+-- popups, alter turn state, or dispatch input. Runs in its own UI context.
 do
     local ready, elapsed, previous = false, 0, nil
-    local originalUpdate = OnSoftPromptUpdate
     Events.SequenceGameInitComplete.Add(function() ready = true end)
     ContextPtr:SetUpdate(function(dt)
-        if originalUpdate then originalUpdate(dt) end
         if not ready then return end
         elapsed = elapsed + dt
         if elapsed < 1 then return end

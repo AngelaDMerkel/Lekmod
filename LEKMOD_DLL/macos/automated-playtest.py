@@ -124,6 +124,16 @@ def unresolved_driver_error(text):
     return text.rfind("[LEKMOD_TEST] ERROR") > text.rfind("[LEKMOD_TEST] driver-reloaded")
 
 
+def human_turn_results(text):
+    result = {"new_order_verified": "[LEKMOD_TEST] production-verified" in text,
+              "inherited_order_observed": "[LEKMOD_TEST] production-inherited" in text,
+              "end_turn_clicked": "[LEKMOD_TEST] end-turn-click" in text,
+              "unresolved_driver_error": unresolved_driver_error(text)}
+    result["verified"] = (result["end_turn_clicked"] and not result["unresolved_driver_error"] and
+                          (result["new_order_verified"] or result["inherited_order_observed"]))
+    return result
+
+
 FUNCTIONAL_ITEMS = {"script-data", "science-overflow", "unit-position-flags", "city-focus", "avoid-growth", "tech-tree",
                     "production-unit", "production-building", "production-wonder", "production-process"}
 PRODUCTION_COMPLETION_ITEMS = {"production-completion-unit", "production-completion-building"}
@@ -267,6 +277,10 @@ def main():
         parser.error("Endgame requires a new two-turn scenario, without save/reload options")
     if not 0 <= args.scenario_turns <= 30 or (args.scenario_turns and not args.scenario):
         parser.error("--scenario-turns requires a scenario and a bound from 0 to 30")
+    eui_root = APP / "Contents/Assets/Assets/DLC/UI_bc1"
+    has_eui = eui_root.is_dir()
+    if has_eui and ((args.mode == "single-player-smoke" and args.scenario != "inventory") or args.production_completion):
+        parser.error("Only read-only inventory with shared save/exit adapters, human-turns, and ui-interaction support EUI")
     required_functional_items = SCENARIO_ITEMS[args.scenario] if args.scenario else FUNCTIONAL_ITEMS
     if args.scenario and args.expected_state:
         required_functional_items = {"save-reload"}
@@ -303,15 +317,21 @@ def main():
     menu_paths = [frontend / "MainMenu.lua",
                   APP / "Contents/Assets/Assets/DLC/LEKMOD/Lua/UI/MainMenu.lua"]
     ui_templates = {path: "playtest-start.lua" for path in menu_paths if path.exists()}
-    ui_templates[frontend / "LoadScreen.lua"] = "playtest-loaded.lua"
+    loading_screen = eui_root / "GameSetup/LoadScreen.lua" if has_eui else frontend / "LoadScreen.lua"
+    ui_templates[loading_screen] = "playtest-loaded.lua"
     if args.mode == "ui-interaction":
-        ui_templates[APP / "Contents/Assets/Assets/DLC/LEKMOD/Lua/UI/ActionInfoPanel.lua"] = "playtest-ui-observer.lua"
-        ui_templates[APP / "Contents/Assets/Assets/DLC/LEKMOD/Lua/UI/CityView.lua"] = "playtest-ui-observer.lua"
+        observer_ui = APP / "Contents/Assets/Assets/DLC/LEKMOD/Lua/UI"
+        observer_module = observer_ui / "LekmodTestObserver.lua"
+        if observer_module.exists():
+            raise SystemExit("Temporary observer module already exists")
+        ui_templates[observer_ui / "InGame.lua"] = "playtest-ui-observer-bootstrap.lua"
+        ui_templates[observer_module] = "playtest-ui-observer.lua"
     if args.mode == "single-player-smoke":
         ui_dir = APP / "Contents/Assets/Assets/DLC/LEKMOD/Lua/UI"
-        for name, template in (("ActionInfoPanel.lua", "playtest-single-player.lua"),
+        base_templates = () if args.scenario else (("ActionInfoPanel.lua", "playtest-single-player.lua"),
                                ("ProductionPopup.lua", "playtest-production.lua"),
-                               ("TechTree.lua", "playtest-tech-tree.lua")):
+                               ("TechTree.lua", "playtest-tech-tree.lua"))
+        for name, template in base_templates:
             if not (ui_dir / name).is_file():
                 raise SystemExit("Focused suite currently requires standard UI: missing " + name)
             ui_templates[ui_dir / name] = template
@@ -404,6 +424,7 @@ def main():
                ("GAME", "GameType"): "singlePlayer",
                ("GAME", "FileName"): ""}
     report = {"mode": args.mode, "requested_turns": args.turns,
+              "ui_variant": "eui" if has_eui else "standard",
               "production_completion": args.production_completion,
               "scenario": args.scenario,
               "scenario_turn_limit": args.scenario_turns,
@@ -560,6 +581,9 @@ def main():
                 ui_ready_announced = True
                 print(json.dumps({"event": "ui-observer-ready", "pid": pid, "evidence": str(output)}), flush=True)
                 report["initial_ui_capture"] = capture_game_window(pid, output / "ui-ready.png")
+            if has_eui and args.mode == "human-turns" and not ui_ready_announced and "[LEKMOD_TEST] human-active" in recent_lua:
+                ui_ready_announced = True
+                report["initial_eui_capture"] = capture_game_window(pid, output / "eui-first-human-turn.png")
             if args.mode == "single-player-smoke" and engine_started:
                 for panel in re.findall(r"run=" + re.escape(stamp) + r" event=panel-visible name=([a-z-]+)", recent_lua):
                     if args.capture_panels and panel not in captured_panels:
@@ -716,11 +740,10 @@ def main():
                     report["status"] = "failed-production-completion"
             if report["status"].startswith("passed") and report["lua_runtime_errors"]:
                 report["status"] = "failed-lua-runtime-error"
-            if args.mode == "human-turns" and report["status"].startswith("passed") and (
-                    unresolved_driver_error(lua_text) or
-                    "[LEKMOD_TEST] production-verified" not in lua_text or
-                    "[LEKMOD_TEST] end-turn-click" not in lua_text):
-                report["status"] = "failed-human-test-validation"
+            if args.mode == "human-turns":
+                report["human_validation"] = human_turn_results(lua_text)
+                if report["status"].startswith("passed") and not report["human_validation"]["verified"]:
+                    report["status"] = "failed-human-test-validation"
             if args.mode == "single-player-smoke":
                 report["functional_checks"] = functional_results(lua_text, stamp, required_functional_items)
                 report["functional_records"] = [line.strip() for line in lua_text.splitlines()
