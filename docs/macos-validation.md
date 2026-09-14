@@ -54,8 +54,14 @@ checks. Multiplayer, including hotseat and PBEM, is deferred and untested.
 
 ## Single-player coverage matrix
 
+Additional foreground execution is currently blocked by automatic approval review;
+a fresh request for two three-minute mouse sessions is pending. The background
+results below do not substitute for those mouse checks. The system report also
+records startup-only code 255 exits whose cause has not been isolated.
+
 | Area | Status |
 | --- | --- |
+| Clean-source package, stock restoration and reinstall | Passed: clean commit `293e2235`, archive `2a9b3ce9…ca84f`, 4,086 payload files matched, stock/Aspyr backups and all prior manual saves preserved. Final native smoke `20260914T051747Z` passed all ten checks and normal save/exit |
 | Remove experimental AI rendering/turn-status suppression and smoke-test | Passed focused native smoke: turns 111–113, 12 majors/40 city-states; no synchronization errors, Lua runtime errors, or new diagnostics |
 | Actual mouse interaction, screen bounds and production UI | Actual clicks cover research/tech-tree open and close, Rome city entry, Worker selection, Workshop specialist assignment/removal, Walls purchase, queue append/reorder, and normal exit. Physical focus/save/load also passed at requested 1280×800 (2560×1656 captured backing buffer); background-only mouse input remains untested |
 | Standard UI and claimed EUI support | EUI 1.28g passed three scripted turns, shared normal save/exit and exact inventory reload, with complete standard-payload/text/options restoration. Its HUD is captured at 1280×800. EUI mouse and broader popup coverage remain unverified |

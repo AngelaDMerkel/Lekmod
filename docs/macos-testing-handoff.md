@@ -15,9 +15,11 @@ scoped tests, not certification of every feature or victory route.
 
 The tested signed GameCore is
 `04904d1ff7d8db789816b8fe900d4518ed77bb5a5e1032f727b180a84e60b40c`.
-The current standard candidate is `build/macos/Lekmod-native-settlement-candidate.zip`
-(SHA-256 `fc80e2b85dd51a35d384c963d25c6a8605ca71178255452e79291c77e2ac77a7`).
-A clean-source final package/install/restore check is still pending. The central
+The installed standard package is `build/macos/Lekmod-native-single-player-20260914.zip`
+(SHA-256 `2a9b3ce98ba1d303ad80095f1ae59ccbb3d9523e9397083616b7dfed07dca84f`),
+built from clean source commit `293e2235`. Actual stock restoration, reinstallation,
+all 4,086 payload files, backup/save preservation and final native smoke
+`20260914T051747Z` passed. The detailed artifact section is in the system report. The central
 `Civ5ModDlcPacker/civ5_dlc_installer.py` now owns installation and stock restoration;
 do not overwrite its managed GameCore or LEKMOD payload manually. Legacy payload,
 binary and Aspyr backups are preserved locally.
@@ -53,7 +55,9 @@ current execution boundary for additional foreground sessions.
 Read this document, [validation status](macos-validation.md), and the
 [test-tool operator guide](../LEKMOD_DLL/macos/TESTING.md) before taking actions.
 The historical 100-turn requirements do not override the user's decisions;
-the README's stale instructions have now been corrected.
+the README's stale instructions have now been corrected. Background work is
+complete through the final clean-package regression; only the explicitly listed
+coverage limits and foreground approval gate remain.
 
 Suggested prompt for the next task:
 
@@ -246,8 +250,9 @@ are a game defect. Do not call `getApp` after quitting: it may start a launcher.
 - EUI 1.28g background turns, shared save/exit and exact inventory reload passed,
   and its HUD was captured at the smaller window size. Broader EUI popup and
   mouse checks remain unverified. Standard UI, text and options were restored.
-- Produce and verify a clean-source archive through the central installer,
-  including stock restoration and a focused native regression on the exact bytes.
+- Clean-source artifact installation, stock restoration and exact-byte native
+  smoke are complete; preserve the archive and its verification evidence. Do not
+  repeat the accepted long campaign or rerun completed cases without a reason.
 - Keep content/scope limits explicit: omitted optional menu shortcuts, Nubia's
   undefined leader scene, unused adjacency-table scaffolding, other victory
   routes and other macOS releases are not made supported by these tests.

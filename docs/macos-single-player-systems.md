@@ -53,8 +53,9 @@ validation later in this report. See [the unit-handler regressions](macos-unit-h
 
 Religion, trade, Congress, world-wonder production, Wealth settlement and
 diplomat arrival now have gameplay evidence below. The earned spy award, AI deal and score-resolution/end-screen checks also passed.
-Remaining work is real queue/tile mouse controls, isolated EUI validation, and
-final clean artifact install/restore verification. EUI, other macOS versions, all victory
+Remaining work is the gated foreground queue/tile/tech-tree tests and EUI mouse
+coverage. EUI background turns/save/reload and clean artifact installation/stock
+restoration passed. Broader EUI popup coverage remains unverified. EUI, other macOS versions, all victory
 routes and every civilization-specific ability are not covered by these standard
 UI fixtures. Multiplayer remains deferred by the user.
 
@@ -323,3 +324,41 @@ The timer ended this observation session; its report remains
 physical input. `manual-captures.json` records the independent capture method
 and `physical_input: false`. All EUI wrapper runs restored the standard payload,
 original text, options database/journals and temporary EUI folder state.
+
+## Clean artifact and final installation regression
+
+The standard package is
+`build/macos/Lekmod-native-single-player-20260914.zip`, SHA-256
+`2a9b3ce98ba1d303ad80095f1ae59ccbb3d9523e9397083616b7dfed07dca84f`.
+It was packaged from clean source commit
+`293e223598e6bfa43366bbee93bd4ac8169a895f` (`dirty: false`). Its signed GameCore
+SHA-256 is `04904d1ff7d8db789816b8fe900d4518ed77bb5a5e1032f727b180a84e60b40c`;
+standard payload SHA-256 is
+`08e643ae1bad6bd73ebc508f8c7d0c2eead5df013bcaeac25221ecc24670b560`. These
+installed bytes exactly match the relevant preceding outcome tests. The manifest
+retains `runtime_validated: false`; it is not a blanket support certification.
+
+The central installer actually restored the original stock DLL and removed the
+managed LEKMOD payload, then installed this clean package. Independent checks
+matched all 4,086 payload files and the signed DLL. All 25 then-existing manual
+saves and both stock/Aspyr backups remained byte-identical. The canonical and
+Aspyr backup hash is
+`0da6a5ffc283c3f147b20a7ec426e4ed85a6838ab891faf61b50af4e25c4a09c`. Details:
+`build/macos/final-install-verification.json`, `final-stock-restore.log`,
+`final-clean-install.log`, and `single-player-package.log`.
+
+`20260914T051747Z` then loaded the preserved old Modern save on the clean
+installation and passed script-data lifetime, science overflow, boolean SetXY
+flags, all nine city-focus callbacks, avoid-growth restoration, tech-tree
+open/close and all four production-selection callbacks. These remain scripted
+callback/binding checks; the earlier bounded gameplay outcomes are separate.
+Normal save/exit, settings/hooks restoration and manual-save preservation passed,
+with no Lua errors, synchronization failures or new diagnostics. Its new save
+SHA-256 is `63599940116aaf50a2402c0ae6143440f803ab114e57e74e83b381ee8d026d9b`.
+The local `single-player-outcome-index.json` links the qualified passing reports
+without relabeling earlier failures or incomplete observation sessions.
+
+Full support is not claimed: the requested additional foreground tests remain
+blocked pending fresh approval; EUI's broader popup/mouse paths, other victory
+routes and other macOS versions are unverified. The recorded startup-only code
+255 exits remain unexplained even though subsequent retries succeeded.
