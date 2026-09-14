@@ -8,7 +8,8 @@ previous fourteen product/documentation edits had already been committed in
 `0952b9e5`, followed by the shared compatibility extraction. Those commits and
 the installed handoff binary are preserved.
 
-The [resumed single-player evidence](macos-single-player-20260913.md) separates
+The [system outcomes](macos-single-player-systems.md) and
+[resumed single-player evidence](macos-single-player-20260913.md) separate
 physical mouse actions, scripted commands, gameplay outcomes, and incomplete
 sessions. The user renewed foreground-testing permission for this task.
 
@@ -29,6 +30,10 @@ checks. Multiplayer, including hotseat and PBEM, is deferred and untested.
 | Keep unit script-data storage alive until Lua copies it | ASan reproduces the old heap-use-after-free; current binding passes, plus 400 native reads of empty/short/long/Unicode strings with original data restored | `e7cc7580` |
 | Pointer-width batch allocator alignment | 256 mixed 1D/2D cases under ASan/UBSan, using the actual templates, including zero dimensions and 12-byte elements | `ded7a74d` |
 | Standard tech-tree vertical geometry | Native screenshot shows the full Close button at the tested window size; normal close callback succeeds | `c05a602d` |
+| Preserve unit-owner abilities and Defender player IDs | 17 actual-Lua regression cases; native minor Defender and minor/barbarian Helicopter Gunship states verified | `3d97c2a3` |
+| New Zealand science without selected research | Actual-Lua reward test and native +12 overflow/progress-preservation check | `5ca189f2` |
+| Accept boolean SetXY flags and route SetHasTech flags correctly | Actual Lua binding harnesses: 34 position cases plus invalid type, 16 technology combinations; native boolean call and scenario technology setup | `8f902063`, `7188275c` |
+| Restore building-derived trade bonuses after loading | Before: route 8.10 → 5.60 gold. After: exact old-save snapshot remains 8.10; 128 six-array sanitizer cases | `a8bc7d38` |
 
 ## Recorded runtime evidence
 
@@ -47,21 +52,21 @@ checks. Multiplayer, including hotseat and PBEM, is deferred and untested.
   remain labeled as such in their original reports. They have not been relabeled
   as successful runs.
 
-## Remaining checklist
+## Single-player coverage matrix
 
 | Area | Status |
 | --- | --- |
 | Remove experimental AI rendering/turn-status suppression and smoke-test | Passed focused native smoke: turns 111–113, 12 majors/40 city-states; no synchronization errors, Lua runtime errors, or new diagnostics |
-| Actual mouse interaction, screen bounds and production UI | Actual clicks cover research/tech-tree open and close, Rome city entry, Worker selection, Workshop specialist assignment/removal, Walls purchase, queue append/reorder, and normal exit. Captures are at 2836×1898; other resolutions and background-only input remain untested |
-| Standard UI and claimed EUI support | Standard callback/screenshot coverage below; no EUI installation found, so EUI runtime compatibility remains untested |
-| Unit, building, wonder and process production | All four selection callbacks passed. Worker selection and Water Mill queue append/reorder also passed by mouse. Bounded scripted orders produced a Worker on turn 215 and Water Mill on 217, with engine production events and final-state checks. Wonder completion and sustained process-income outcomes remain pending |
-| Purchasing and queue removal | Walls purchase by mouse reduced gold 134 → 14, added building 22 and increased displayed defense 56 → 61. Unit/faith purchases and queue removal remain unverified |
-| Save, quit, reload | Passed callback-driven local save → normal exit → reload/logical-state comparison. Physical Escape → exit → Yes also exited with code 0 and no supervisor stop in two sessions. Physical save/load menu paths remain untested |
-| Extra Lekmod main-menu features | Known parity gap; native Aspyr XML currently retained |
-| City focus, specialists and yields | All nine focus callbacks and avoid-growth toggle/restore pass. A real Workshop-slot click added an engineer, removed worked plot 1 and changed production 9.9 → 11 and gross food 11 → 10; removal restored both. Broader specialist/tile controls, physical focus buttons and yield accounting remain pending |
-| Religion, espionage and trade routes | Pending |
-| Diplomacy and World Congress | Some normal callbacks exercised; full functional checks pending |
-| Later-game mechanics | Required Freedom ideology selection through the normal network command was verified in the Modern fixture. This is not mouse/ideology-popup coverage or a naturally progressed late-game campaign. Broader mechanics remain pending |
+| Actual mouse interaction, screen bounds and production UI | Actual clicks cover research/tech-tree open and close, Rome city entry, Worker selection, Workshop specialist assignment/removal, Walls purchase, queue append/reorder, and normal exit. Physical focus/save/load also passed at requested 1280×800 (2560×1656 captured backing buffer); background-only mouse input remains untested |
+| Standard UI and claimed EUI support | EUI 1.28g passed three scripted turns, shared normal save/exit and exact inventory reload, with complete standard-payload/text/options restoration. Its HUD is captured at 1280×800. EUI mouse and broader popup coverage remain unverified |
+| Unit, building, wonder and process production | All four selection callbacks passed. Worker selection and Water Mill queue append/reorder also passed by mouse. Bounded scripted orders produced a Worker on turn 215 and Water Mill on 217, with engine production events and final-state checks. Globe Theatre completed through normal production; Wealth settlement matched actual treasury history in the small Congress fixture |
+| Purchasing and queue removal | Walls purchase by mouse reduced gold 134 → 14, added building 22 and increased displayed defense 56 → 61. Gold caravan and faith missionary purchases passed through real popup callbacks; queue removal remains unverified |
+| Save, quit, reload | Passed callback-driven local save → normal exit → reload/logical-state comparison. Physical Escape → exit → Yes also exited with code 0 and no supervisor stop in two sessions. Physical Save and Load Game selections passed at the smaller window size, with the loading adapter dismissing the loading screen; those sessions reached their cap before normal exit |
+| Extra Lekmod main-menu features | Optional version/download and Discord/GitHub shortcuts omitted; native Aspyr XML retained. These are not gameplay systems |
+| City focus, specialists and yields | All nine focus callbacks and avoid-growth toggle/restore pass. A real Workshop-slot click added an engineer, removed worked plot 1 and changed production 9.9 → 11 and gross food 11 → 10; removal restored both. Physical Food Focus selection passed; broader tile controls remain pending. Trade income and Wealth use actual gameplay settlement checks |
+| Religion, espionage and trade routes | Pantheon/founding/enhancement, missionary purchase/spread and reload passed with labeled resource/unit setup. Trade route, income and corrected reload passed. Spy assignment/recall/diplomat and persistence passed; diplomat reached schmoozing through four ordinary turns. An earned 230-science popup award and recall passed after eight ordinary turns with labeled research-city setup; exact research/spy-state reload passed |
+| Diplomacy and World Congress | Congress formed, proposal and three yes votes resolved into engine-confirmed enactment; exact saved-state reload passed. A legal embassy offer passed through Trade, Propose, acceptance, Back and Goodbye; exact embassy/deal-state reload passed |
+| Later-game mechanics | Required Freedom ideology selection through the normal network command was verified in the Modern fixture. This is not mouse/ideology-popup coverage or a naturally progressed late-game campaign. Ordinary two-turn score resolution, the human defeat screen and normal exit also passed. Other victory routes are not covered |
 | Multiplayer, cross-platform, hotseat, PBEM | Deferred by user; untested |
 
 Native-control recheck (`build/macos/playtests/20260913T023845Z`): service

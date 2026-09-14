@@ -1,7 +1,37 @@
 # Lekmod macOS single-player testing handoff
 
-Last updated: 2026-09-13. This is a same-machine, same-workspace handoff, not a
+Last updated: 2026-09-14. This is a same-machine, same-workspace handoff, not a
 claim that the macOS port is fully certified. No new task or schedule was created.
+
+## Current continuation results
+
+Read [the system-validation report](macos-single-player-systems.md) for the new
+bounded gameplay evidence: religion founding/enhancement/purchase/spread, trade
+route income and corrected save persistence, spy science and diplomat arrival,
+AI embassy acceptance, Congress enactment, Globe Theatre, Wealth settlement,
+unit-owner regressions, and ordinary score resolution/end screen. Exact reload
+checks passed for religion, trade, espionage, diplomacy and Congress. These are
+scoped tests, not certification of every feature or victory route.
+
+The tested signed GameCore is
+`04904d1ff7d8db789816b8fe900d4518ed77bb5a5e1032f727b180a84e60b40c`.
+The current standard candidate is `build/macos/Lekmod-native-settlement-candidate.zip`
+(SHA-256 `fc80e2b85dd51a35d384c963d25c6a8605ca71178255452e79291c77e2ac77a7`).
+A clean-source final package/install/restore check is still pending. The central
+`Civ5ModDlcPacker/civ5_dlc_installer.py` now owns installation and stock restoration;
+do not overwrite its managed GameCore or LEKMOD payload manually. Legacy payload,
+binary and Aspyr backups are preserved locally.
+
+EUI 1.28g is a private ignored dependency with a reversible test wrapper. Check
+`build/macos/continuation-state.json`, the latest runner/wrapper reports, actual
+processes and installer state before launching anything; a background EUI test
+may temporarily own the installed variant. No original manual save is disposable.
+
+Automatic approval review subsequently rejected the additional foreground queue/
+tile session twice, including a retry citing the user's renewed permission.
+Fresh approval was requested for two additional three-minute standard/EUI mouse
+sessions and remains pending. Do not bypass that rejection. Continue authorized
+background/artifact work while waiting.
 
 ## Start here
 
@@ -11,15 +41,14 @@ out by the intervening task. The resumed testing did not switch branches.
 At the resumed 2026-09-13 inspection, `HEAD` was `ef173459` and the worktree
 was clean. Another task had committed the fourteen changes below in `0952b9e5`,
 then extracted/pinned the shared compatibility layer in `ee1f207f`/`ef173459`.
-Those commits are preserved. The installed GameCore and both fixture hashes
-still match this handoff; the current local build hash is
-`c4c149630d34260bd4a30647c8f89c3313ee35175da4d3a5096f3a067e1beb78` and has
-not been installed or runtime-certified by these resumed tests.
+Those commits are preserved. The binary and checkout values from that initial
+inspection are historical; use the current continuation results above.
 
 The user explicitly renewed foreground-testing permission in the resumed
 conversation. The runner's 180-second foreground cap remains in force. The
 original one-off permission and original dirty-file inventory below describe
-the earlier handoff state, not the current checkout or authorization.
+the earlier handoff state. The later automatic-review rejection above is the
+current execution boundary for additional foreground sessions.
 
 Read this document, [validation status](macos-validation.md), and the
 [test-tool operator guide](../LEKMOD_DLL/macos/TESTING.md) before taking actions.
@@ -30,7 +59,7 @@ Suggested prompt for the next task:
 
 > Resume the remaining Lekmod macOS single-player testing in
 > /Users/duffy/Documents/GitHub/Lekmod. First read docs/macos-testing-handoff.md,
-> docs/macos-validation.md, docs/macos-single-player-20260913.md, and
+> docs/macos-validation.md, docs/macos-single-player-systems.md, and
 > LEKMOD_DLL/macos/TESTING.md. Preserve the current checkout and existing edits.
 > Do not resume the completed long turn campaign, test multiplayer,
 > restart Docker, change Steam's channel, or enable a schedule. The one-off
@@ -209,26 +238,21 @@ are a game defect. Do not call `getApp` after quitting: it may start a launcher.
 
 ## Remaining single-player coverage
 
-See [the resumed evidence](macos-single-player-20260913.md) and the current
-validation table for the narrow gaps closed since the original handoff.
-
-- Broader real mouse hitboxes and multiple resolutions; Worker/Water Mill
-  selection, queue append/reorder, and Walls purchase have physical-input
-  evidence. Queue removal, unit/faith purchase and other production categories'
-  mouse paths remain open. Worker/Water Mill completion has a bounded scripted
-  gameplay pass; wonder completion remains open.
-- Broader specialist/tile assignments and yield accounting. One Workshop
-  engineer add/remove has physical-input and matching yield evidence; focus
-  enum changes alone do not prove correct yield effects in other cases.
-- Supported EUI installation (up to v1.28 is the repository claim), isolated with
-  backups. The callback adapters currently target standard UI. No EUI is installed
-  locally and no native EUI pass exists.
-- Extra Lekmod main-menu features. Aspyr-native MainMenu XML is intentionally
-  retained after prior override crashes; the extra mod buttons are absent.
-- Religion, espionage, trade routes, full diplomacy, World Congress, and richer
-  late-game mechanics. Modern starting turn 214 is a setup value, not evidence of
-  214 played turns. That fixture has religion disabled.
-- Multiplayer remains outside the current assignment.
+- Actual queue removal and broader tile controls, plus tech-tree Close at the
+  smaller window size. Queue preparation is saved at
+  `build/macos/playtests/20260914T041903Z/Lekmod-Functional-20260914T041903Z.Civ5Save`,
+  SHA-256 `596f3151a32f222d516ed08b8ef25c0c9f87fce384c2fff0b7c181b54579c7dc`.
+  Additional foreground execution is currently gated on fresh approval.
+- EUI 1.28g background turns, shared save/exit and exact inventory reload passed,
+  and its HUD was captured at the smaller window size. Broader EUI popup and
+  mouse checks remain unverified. Standard UI, text and options were restored.
+- Produce and verify a clean-source archive through the central installer,
+  including stock restoration and a focused native regression on the exact bytes.
+- Keep content/scope limits explicit: omitted optional menu shortcuts, Nubia's
+  undefined leader scene, unused adjacency-table scaffolding, other victory
+  routes and other macOS releases are not made supported by these tests.
+- Multiplayer, including hotseat and PBEM, remains deferred. The accepted long
+  turn-testing phase is closed.
 
 ## Original uncommitted work (now preserved in `0952b9e5`)
 
