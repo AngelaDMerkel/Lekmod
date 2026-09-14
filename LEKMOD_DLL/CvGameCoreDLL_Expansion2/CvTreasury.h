@@ -36,6 +36,10 @@ public:
 	void cacheGoldT100ForThisTurn();
 #endif
 	void DoGold();
+	int GetLastGoldChangeTimes100() const
+	{
+		return m_GoldChangeForTurnTimes100.empty() ? 0 : m_GoldChangeForTurnTimes100.back();
+	}
 
 	// Methods to add or subtract gold
 	int GetGold() const;

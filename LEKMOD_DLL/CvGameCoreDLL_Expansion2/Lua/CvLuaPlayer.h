@@ -143,9 +143,7 @@ protected:
 	static int lGetImprovementGoldMaintenance(lua_State* L);
 	static int lCalculateGoldRate(lua_State* L);
 	static int lCalculateGoldRateTimes100(lua_State* L);
-#ifdef AUI_YIELDS_APPLIED_AFTER_TURN_NOT_BEFORE
-	static int lGetCachedGoldRateTimes100(lua_State* L);
-#endif
+	static int lGetLastGoldChangeTimes100(lua_State* L);
 	static int lCalculateGrossGoldTimes100(lua_State* L);
 	static int lCalculateInflatedCosts(lua_State* L);
 	static int lCalculateResearchModifier(lua_State* L);
