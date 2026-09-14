@@ -16,6 +16,7 @@
 #include "CvEconomicAI.h"
 #include "CvTechAI.h"
 #include "cvStopWatch.h"
+#include "LekmodMacDiagnostics.h"
 
 #include "LintFree.h"
 
@@ -6380,6 +6381,9 @@ void CvLeague::NotifyProposalResult(CvEnactProposal* pProposal)
 {
 	CvAssert(pProposal != NULL);
 	if (pProposal == NULL) return;
+	LekmodMacLogVisualEvent(pProposal->IsPassed(GetVotesSpentThisSession()) ? "league-enact.passed" : "league-enact.failed",
+		pProposal->GetProposalPlayer(), pProposal->GetID(), pProposal->GetType(), -1, -1,
+		pProposal->GetVoterDecision()->GetDecision());
 
 	CvString sSummary = "";
 	CvString sMessage = "";
@@ -6487,6 +6491,9 @@ void CvLeague::NotifyProposalResult(CvRepealProposal* pProposal)
 {
 	CvAssert(pProposal != NULL);
 	if (pProposal == NULL) return;
+	LekmodMacLogVisualEvent(pProposal->IsPassed(GetVotesSpentThisSession()) ? "league-repeal.passed" : "league-repeal.failed",
+		pProposal->GetProposalPlayer(), pProposal->GetID(), pProposal->GetType(), -1, -1,
+		pProposal->GetVoterDecision()->GetDecision());
 
 	Localization::String sSummaryTemp = Localization::Lookup("TXT_KEY_NOTIFICATION_LEAGUE_VOTING_RESULT_FAIL_SUMMARY");
 	Localization::String sMessageTemp = Localization::Lookup("TXT_KEY_NOTIFICATION_LEAGUE_VOTING_RESULT_REPEAL_FAIL");
