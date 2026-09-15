@@ -1,6 +1,6 @@
 # Lekmod macOS single-player testing handoff
 
-Last updated: 2026-09-14. This is a same-machine, same-workspace handoff, not a
+Last updated: 2026-09-15. This is a same-machine, same-workspace handoff, not a
 claim that the macOS port is fully certified. No new task or schedule was created.
 
 ## Current continuation results
@@ -29,11 +29,13 @@ EUI 1.28g is a private ignored dependency with a reversible test wrapper. Check
 processes and installer state before launching anything; a background EUI test
 may temporarily own the installed variant. No original manual save is disposable.
 
-Automatic approval review subsequently rejected the additional foreground queue/
-tile session twice, including a retry citing the user's renewed permission.
-Fresh approval was requested for two additional three-minute standard/EUI mouse
-sessions and remains pending. Do not bypass that rejection. Continue authorized
-background/artifact work while waiting.
+The earlier automatic-review foreground block was resolved by the user's
+2026-09-15 messages: permission is restored and sessions may be as long as
+required. Standard queue/tile/tech-tree mouse checks and normal exit passed in
+`20260915T104347Z`; see [the physical report](macos-physical-validation-20260915.md).
+The desktop locked before EUI launch. That attempt did not launch the game and
+restored all temporary installation changes. Continue EUI when the desktop is
+unlocked; no additional permission question is needed for the authorized scope.
 
 ## Start here
 
@@ -46,11 +48,9 @@ then extracted/pinned the shared compatibility layer in `ee1f207f`/`ef173459`.
 Those commits are preserved. The binary and checkout values from that initial
 inspection are historical; use the current continuation results above.
 
-The user explicitly renewed foreground-testing permission in the resumed
-conversation. The runner's 180-second foreground cap remains in force. The
-original one-off permission and original dirty-file inventory below describe
-the earlier handoff state. The later automatic-review rejection above is the
-current execution boundary for additional foreground sessions.
+The original one-off permission, three-minute cap and dirty-file inventory
+below are historical. Current foreground authorization permits longer sessions;
+use an explicit bounded recovery timeout and retain the desktop-lock guard.
 
 Read this document, [validation status](macos-validation.md), and the
 [test-tool operator guide](../LEKMOD_DLL/macos/TESTING.md) before taking actions.
@@ -80,7 +80,7 @@ Suggested prompt for the next task:
 - Remaining work is single-player functionality. Network/cross-platform
   multiplayer, hotseat, and PBEM are explicitly deferred and untested.
 - Keep Steam and Civ V in the background by default. Foreground testing is now
-  authorized for this resumed task; retain the existing 180-second session cap.
+  authorized for this resumed task, including longer sessions as needed.
   A CLI flag or this historical handoff alone is not authorization for a new
   unrelated task.
 - Do not disrupt Docker, alter Steam's channel, or undo the accepted Steam
@@ -211,7 +211,7 @@ Do not rewrite old reports as passes. Use accompanying notes/screenshots.
    separately from the already removed C++ rendering suppressions.
 3. Continue remaining single-player coverage with an explicit fixture and
    assertions. Foreground work is authorized in the resumed conversation;
-   preserve its 180-second cap and do not infer permission in an unrelated task.
+   use a bounded recovery timeout and do not infer permission in an unrelated task.
 4. Record exact game/UI configuration, observed input or callback path, expected
    result, actual result, artifacts, errors, and cleanup. Commit each verified
    defect correction and update the validation checklist.
@@ -229,9 +229,9 @@ python3 LEKMOD_DLL/macos/automated-playtest.py \
 ```
 
 For genuine mouse input, use `ui-interaction`: it loads the fixture but only
-observes state, without invoking gameplay callbacks. The existing foreground
-exception is capped at 180 seconds; permission was renewed in the resumed task.
-Do not lift the cap as an implied consequence of this handoff. About 50–80 seconds of prior
+observes state, without invoking gameplay callbacks. The current foreground
+flag accepts an explicit recovery timeout up to one hour; the user explicitly
+removed the earlier three-minute restriction on 2026-09-15. About 50–80 seconds of prior
 runs were spent starting/loading; leave shutdown time inside any approved window.
 
 Use the native computer-use tool for UI actions. In the successful foreground
@@ -246,7 +246,7 @@ are a game defect. Do not call `getApp` after quitting: it may start a launcher.
   smaller window size. Queue preparation is saved at
   `build/macos/playtests/20260914T041903Z/Lekmod-Functional-20260914T041903Z.Civ5Save`,
   SHA-256 `596f3151a32f222d516ed08b8ef25c0c9f87fce384c2fff0b7c181b54579c7dc`.
-  Additional foreground execution is currently gated on fresh approval.
+  Standard mouse checks passed on 2026-09-15; EUI continuation awaits unlock.
 - EUI 1.28g background turns, shared save/exit and exact inventory reload passed,
   and its HUD was captured at the smaller window size. Broader EUI popup and
   mouse checks remain unverified. Standard UI, text and options were restored.

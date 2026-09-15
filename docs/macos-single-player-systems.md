@@ -2,8 +2,8 @@
 
 Scope: standard UI on macOS 26.5.2 (25F84), plus isolated EUI 1.28g checks on
 this machine. The long stability phase remains accepted; multiplayer is deferred.
-Additional foreground sessions are currently awaiting fresh approval after an
-automatic-review rejection. Older macOS versions are not covered.
+Foreground permission was restored on 2026-09-15, including longer sessions.
+See the newer physical validation report for current results and desktop state. Older macOS versions are not covered.
 
 ## Read-only mid-game fixture inventory
 
@@ -53,8 +53,8 @@ validation later in this report. See [the unit-handler regressions](macos-unit-h
 
 Religion, trade, Congress, world-wonder production, Wealth settlement and
 diplomat arrival now have gameplay evidence below. The earned spy award, AI deal and score-resolution/end-screen checks also passed.
-Remaining work is the gated foreground queue/tile/tech-tree tests and EUI mouse
-coverage. EUI background turns/save/reload and clean artifact installation/stock
+Standard queue/tile/tech-tree mouse checks passed on 2026-09-15. EUI mouse
+coverage remains outstanding and currently requires an unlocked desktop. EUI background turns/save/reload and clean artifact installation/stock
 restoration passed. Broader EUI popup coverage remains unverified. EUI, other macOS versions, all victory
 routes and every civilization-specific ability are not covered by these standard
 UI fixtures. Multiplayer remains deferred by the user.
@@ -362,3 +362,13 @@ Full support is not claimed: the requested additional foreground tests remain
 blocked pending fresh approval; EUI's broader popup/mouse paths, other victory
 routes and other macOS versions are unverified. The recorded startup-only code
 255 exits remain unexplained even though subsequent retries succeeded.
+
+## 2026-09-15 physical continuation
+
+The user restored permission and removed the old three-minute limit.
+[The new physical report](macos-physical-validation-20260915.md) records successful
+standard queue removal, tile assignment/reset with matching yields, the smaller
+tech-tree Close button, and normal exit. The previous approval-review block is
+resolved. The desktop locked before the EUI launch; that attempt launched no
+game and restored its temporary changes. Foreground permission remains valid
+when the desktop is unlocked.

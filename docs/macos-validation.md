@@ -54,9 +54,10 @@ checks. Multiplayer, including hotseat and PBEM, is deferred and untested.
 
 ## Single-player coverage matrix
 
-Additional foreground execution is currently blocked by automatic approval review;
-a fresh request for two three-minute mouse sessions is pending. The background
-results below do not substitute for those mouse checks. The system report also
+The user restored foreground permission on 2026-09-15 and removed the old
+three-minute limit. [Current physical evidence](macos-physical-validation-20260915.md)
+closes standard queue removal, tile assignment/reset and the smaller-window
+tech-tree Close path. EUI continuation currently awaits an unlocked desktop. The system report also
 records startup-only code 255 exits whose cause has not been isolated.
 
 | Area | Status |
@@ -66,10 +67,10 @@ records startup-only code 255 exits whose cause has not been isolated.
 | Actual mouse interaction, screen bounds and production UI | Actual clicks cover research/tech-tree open and close, Rome city entry, Worker selection, Workshop specialist assignment/removal, Walls purchase, queue append/reorder, and normal exit. Physical focus/save/load also passed at requested 1280×800 (2560×1656 captured backing buffer); background-only mouse input remains untested |
 | Standard UI and claimed EUI support | EUI 1.28g passed three scripted turns, shared normal save/exit and exact inventory reload, with complete standard-payload/text/options restoration. Its HUD is captured at 1280×800. EUI mouse and broader popup coverage remain unverified |
 | Unit, building, wonder and process production | All four selection callbacks passed. Worker selection and Water Mill queue append/reorder also passed by mouse. Bounded scripted orders produced a Worker on turn 215 and Water Mill on 217, with engine production events and final-state checks. Globe Theatre completed through normal production; Wealth settlement matched actual treasury history in the small Congress fixture |
-| Purchasing and queue removal | Walls purchase by mouse reduced gold 134 → 14, added building 22 and increased displayed defense 56 → 61. Gold caravan and faith missionary purchases passed through real popup callbacks; queue removal remains unverified |
+| Purchasing and queue removal | Walls purchase by mouse reduced gold 134 → 14, added building 22 and increased displayed defense 56 → 61. Gold caravan and faith missionary purchases passed through real popup callbacks; Water Mill queue removal also passed by mouse, leaving the Worker order intact |
 | Save, quit, reload | Passed callback-driven local save → normal exit → reload/logical-state comparison. Physical Escape → exit → Yes also exited with code 0 and no supervisor stop in two sessions. Physical Save and Load Game selections passed at the smaller window size, with the loading adapter dismissing the loading screen; those sessions reached their cap before normal exit |
 | Extra Lekmod main-menu features | Optional version/download and Discord/GitHub shortcuts omitted; native Aspyr XML retained. These are not gameplay systems |
-| City focus, specialists and yields | All nine focus callbacks and avoid-growth toggle/restore pass. A real Workshop-slot click added an engineer, removed worked plot 1 and changed production 9.9 → 11 and gross food 11 → 10; removal restored both. Physical Food Focus selection passed; broader tile controls remain pending. Trade income and Wealth use actual gameplay settlement checks |
+| City focus, specialists and yields | All nine focus callbacks and avoid-growth toggle/restore pass. A real Workshop-slot click added an engineer, removed worked plot 1 and changed production 9.9 → 11 and gross food 11 → 10; removal restored both. Physical Food Focus selection passed; physical tile assignment/reset passed with matching worked flags and food/production changes. Trade income and Wealth use actual gameplay settlement checks |
 | Religion, espionage and trade routes | Pantheon/founding/enhancement, missionary purchase/spread and reload passed with labeled resource/unit setup. Trade route, income and corrected reload passed. Spy assignment/recall/diplomat and persistence passed; diplomat reached schmoozing through four ordinary turns. An earned 230-science popup award and recall passed after eight ordinary turns with labeled research-city setup; exact research/spy-state reload passed |
 | Diplomacy and World Congress | Congress formed, proposal and three yes votes resolved into engine-confirmed enactment; exact saved-state reload passed. A legal embassy offer passed through Trade, Propose, acceptance, Back and Goodbye; exact embassy/deal-state reload passed |
 | Later-game mechanics | Required Freedom ideology selection through the normal network command was verified in the Modern fixture. This is not mouse/ideology-popup coverage or a naturally progressed late-game campaign. Ordinary two-turn score resolution, the human defeat screen and normal exit also passed. Other victory routes are not covered |
