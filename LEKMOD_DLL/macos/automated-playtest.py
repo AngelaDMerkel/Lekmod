@@ -147,7 +147,12 @@ SCENARIO_ITEMS = {"inventory": {"system-inventory"},
                   "diplomat-arrival": {"diplomat-arrival"},
                   "diplomacy": {"diplomacy-open", "diplomacy-gift"},
                   "city-queue": {"city-queue-ready"},
-                  "endgame": {"score-victory", "endgame-panel"}}
+                  "endgame": {"score-victory", "endgame-panel"},
+                  "bolivia": {"colorado-created", "bolivia-artist", "bolivia-writer"},
+                  "mughals": {"mughal-conversion", "mughal-conversion-cleanup", "mughal-reconversion"},
+                  "domination": {"war-declaration", "capital-combat", "capital-capture", "domination-victory", "victory-panel"},
+                  "science-prelaunch": {"apollo-completion", "space-parts-production", "space-assembly", "space-location-rejection", "space-prelaunch"},
+                  "science-launch": {"science-final-part", "science-victory", "victory-panel"}}
 
 
 def functional_results(text, run, required=FUNCTIONAL_ITEMS):
@@ -240,6 +245,7 @@ def main():
     parser.add_argument("--startup-timeout", type=int, default=60)
     parser.add_argument("--world-size", default="WORLDSIZE_HUGE")
     parser.add_argument("--start-era", default="ERA_ANCIENT", help="Normal game-setup era for a new fixture; ignored when loading")
+    parser.add_argument("--civilization", default="CIVILIZATION_ROME", help="Normal player-zero civilization selection for new fixtures")
     parser.add_argument("--window-size", type=parse_window_size, help="Temporary windowed resolution, with GraphicsSettingsDX9.ini restored afterward")
     parser.add_argument("--majors", type=int, default=12)
     parser.add_argument("--minors", type=int, default=40)
@@ -261,6 +267,8 @@ def main():
         parser.error("Use at least three turns, a total timeout of 30 seconds, and other timeouts of five seconds")
     if not 2 <= args.majors <= 12 or not 0 <= args.minors <= 41:
         parser.error("Use 2-12 major civilizations and 0-41 city states")
+    if not re.fullmatch(r"CIVILIZATION_[A-Z0-9_]+", args.civilization):
+        parser.error("--civilization requires a CIVILIZATION_TYPE identifier")
     if args.load_save:
         args.load_save = args.load_save.resolve()
         if args.mode == "autorun" or not args.load_save.is_file() or args.load_save.suffix.lower() != ".civ5save":
@@ -271,10 +279,14 @@ def main():
         parser.error("Foreground UI tests require --mode ui-interaction and --timeout at most 3600; the flag does not grant user permission")
     if args.production_completion and (args.mode != "human-turns" or args.turns != 3 or not args.load_save or args.timeout > 600):
         parser.error("Production completion requires --mode human-turns, --turns 3, --load-save and --timeout at most 600")
-    if args.scenario and (args.mode != "single-player-smoke" or (not args.load_save and args.scenario not in ("congress", "endgame")) or args.city_controls or args.timeout > 600):
-        parser.error("Scenarios require --mode single-player-smoke, --load-save (except new congress/endgame fixtures), no --city-controls and --timeout at most 600")
+    if args.scenario and (args.mode != "single-player-smoke" or (not args.load_save and args.scenario not in ("congress", "endgame", "bolivia", "mughals")) or args.city_controls or args.timeout > 600):
+        parser.error("Scenarios require --mode single-player-smoke, --load-save (except congress/endgame/bolivia/mughals), no --city-controls and --timeout at most 600")
     if args.scenario == "endgame" and (args.load_save or args.expected_state or args.save_and_exit or args.scenario_turns != 2):
         parser.error("Endgame requires a new two-turn scenario, without save/reload options")
+    if args.scenario == "science-launch" and (args.save_and_exit or args.expected_state or not 1 <= args.scenario_turns <= 3):
+        parser.error("Science launch requires a loaded prelaunch fixture, 1-3 ordinary turns and no save/reload options")
+    if args.scenario == "domination" and (args.save_and_exit or args.expected_state or not 1 <= args.scenario_turns <= 6):
+        parser.error("Domination requires a loaded Duel fixture, 1-6 ordinary turns and no save/reload options")
     if not 0 <= args.scenario_turns <= 30 or (args.scenario_turns and not args.scenario):
         parser.error("--scenario-turns requires a scenario and a bound from 0 to 30")
     eui_root = APP / "Contents/Assets/Assets/DLC/UI_bc1"
@@ -365,6 +377,17 @@ def main():
             if args.scenario == "endgame":
                 ui_templates[ui_dir / "EndGameMenu.lua"] = "playtest-scenario-endgame-popup.lua"
                 ui_templates[frontend / "ExitConfirm.lua"] = "playtest-exit-confirm.lua"
+            if args.scenario in ("science-prelaunch", "science-launch"):
+                science_module = ui_dir / "LekmodTestScience.lua"
+                if science_module.exists():
+                    raise SystemExit("Temporary science module already exists")
+                ui_templates[science_module] = "playtest-science-common.lua"
+            if args.scenario == "science-launch":
+                ui_templates[ui_dir / "EndGameMenu.lua"] = "playtest-scenario-science-victory-popup.lua"
+                ui_templates[frontend / "ExitConfirm.lua"] = "playtest-exit-confirm.lua"
+            if args.scenario == "domination":
+                ui_templates[ui_dir / "EndGameMenu.lua"] = "playtest-scenario-domination-victory-popup.lua"
+                ui_templates[frontend / "ExitConfirm.lua"] = "playtest-exit-confirm.lua"
         if args.save_and_exit:
             ui_templates[ui_dir / "GameMenu.lua"] = "playtest-game-menu.lua"
             ui_templates[frontend.parent / "InGame/Menus/SaveMenu.lua"] = "playtest-save-menu.lua"
@@ -435,6 +458,7 @@ def main():
               "major_civilizations": args.majors, "city_states": args.minors,
               "started_utc": stamp, "evidence": str(output),
               "start_era": args.start_era if not args.load_save else None,
+              "civilization": args.civilization if not args.load_save else None,
               "binary_sha256": hashlib.sha256((APP / "Contents/MacOS/libCvGameCoreDLL_Expansion2_DLL.dylib").read_bytes()).hexdigest()}
     if args.load_save:
         report["loaded_from"] = str(args.load_save)
@@ -484,6 +508,7 @@ def main():
                 ("UserSettings", "WindowResX"): args.window_size[0],
                 ("UserSettings", "WindowResY"): args.window_size[1]}).encode())
         replacements = {"__TEST_WORLD_SIZE__": args.world_size,
+                        "__TEST_CIVILIZATION__": args.civilization,
                         "__TEST_START_ERA__": args.start_era,
                         "__TEST_RUN__": stamp,
                         "__TEST_SCENARIO_TURN_LIMIT__": str(args.scenario_turns),
@@ -597,7 +622,7 @@ def main():
                                         else "failed-functional-checks")
                     if args.scenario and functional["verified"]:
                         report["status"] = "passed-scenario-reload-only" if args.expected_state else "passed-scenario-checks-only"
-                    if (not args.save_and_exit and args.scenario != "endgame") or functional["failed"]:
+                    if (not args.save_and_exit and args.scenario not in ("endgame", "science-launch", "domination")) or functional["failed"]:
                         break
                     if pid not in pids:
                         exited_normally = game_process.poll() == 0
@@ -606,7 +631,7 @@ def main():
                         report["normal_exit_verified"] = exited_normally and confirmed
                         if args.save_and_exit:
                             report["save_file_verified"] = saved
-                        if not (exited_normally and confirmed and (saved or args.scenario == "endgame")):
+                        if not (exited_normally and confirmed and (saved or args.scenario in ("endgame", "science-launch", "domination"))):
                             report["status"] = "failed-save-or-normal-exit"
                         break
             if pid and pid not in pids:

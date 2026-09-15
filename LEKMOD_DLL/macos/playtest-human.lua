@@ -11,6 +11,12 @@ do
     local pendingIdeology = nil
     local firstProduction = true
     local lastBlockedTurn = -1
+    local leagueNotificationWaits = 0
+    local techAwardVisible = false
+    local techAwardCooldown = 0
+    LuaEvents.LekmodTestTechAwardVisible.Add(function(visible)
+        techAwardVisible, techAwardCooldown = visible, 2
+    end)
     local originalUpdate = OnSoftPromptUpdate
     if not LEKMOD_TEST_INIT_HOOK then
         Events.SequenceGameInitComplete.Add(function() LEKMOD_TEST_READY = true end)
@@ -57,6 +63,11 @@ do
         local player = Players[0]
         assert(player:IsHuman(), "test player is not human")
         if not player:IsTurnActive() then return end
+        -- Award popups pause ordinary notification updates. Their own adapter
+        -- uses Continue; do not spend a synchronized-result timeout while a
+        -- batch of announced fixture technologies is still being presented.
+        if techAwardVisible then return end
+        if techAwardCooldown > 0 then techAwardCooldown = techAwardCooldown - 1; return end
         local turn = Game.GetGameTurn()
         if turn ~= lastTurn then
             print("[LEKMOD_TEST] human-active turn=" .. turn .. " cities=" .. player:GetNumCities())
@@ -253,10 +264,48 @@ do
             end
             error("policy prompt has no valid choice")
         end
+        if blocking == EndTurnBlockingTypes.ENDTURN_BLOCKING_LEAGUE_CALL_FOR_PROPOSALS then
+            local league = assert(Game.GetActiveLeague(), "proposal prompt has no active league")
+            if not league:CanPropose(player:GetID()) then
+                leagueNotificationWaits = leagueNotificationWaits + 1
+                assert(leagueNotificationWaits <= 8, "spent proposal notification did not clear")
+                return
+            end
+            leagueNotificationWaits = 0
+            for resolution in GameInfo.Resolutions() do
+                if league:CanProposeEnact(resolution.ID, player:GetID(), -1) then
+                    Network.SendLeagueProposeEnact(league:GetID(), resolution.ID, player:GetID(), -1)
+                    print("[LEKMOD_TEST] selected-congress-proposal turn=" .. turn .. " resolution=" .. resolution.Type)
+                    return
+                end
+            end
+            for _, resolution in ipairs(league:GetActiveResolutions()) do
+                if league:CanProposeRepeal(resolution.ID, player:GetID()) then
+                    Network.SendLeagueProposeRepeal(league:GetID(), resolution.ID, player:GetID())
+                    print("[LEKMOD_TEST] selected-congress-repeal turn=" .. turn .. " resolution=" .. resolution.ID)
+                    return
+                end
+            end
+            error("proposal prompt has no legal target-free proposal or repeal")
+        end
+        if blocking == EndTurnBlockingTypes.ENDTURN_BLOCKING_LEAGUE_CALL_FOR_VOTES then
+            local league = assert(Game.GetActiveLeague(), "vote prompt has no active league")
+            local votes = league:GetRemainingVotesForMember(player:GetID())
+            if not league:CanVote(player:GetID()) or votes <= 0 then
+                leagueNotificationWaits = leagueNotificationWaits + 1
+                assert(leagueNotificationWaits <= 8, "spent voting notification did not clear")
+                return
+            end
+            leagueNotificationWaits = 0
+            Network.SendLeagueVoteAbstain(league:GetID(), player:GetID(), votes)
+            print("[LEKMOD_TEST] congress-abstain turn=" .. turn .. " votes=" .. votes)
+            return
+        end
         if blocking ~= EndTurnBlockingTypes.NO_ENDTURN_BLOCKING_TYPE then
             print("[LEKMOD_TEST] human-blocked turn=" .. turn .. " type=" .. blocking)
             return
         end
+        leagueNotificationWaits = 0
         if not UI.CanEndTurn() and turn ~= lastBlockedTurn then
             lastBlockedTurn = turn
             for _, name in ipairs({"TechAwardPopup", "TechPopup", "TechTree", "SocialPolicyPopup", "CityView"}) do

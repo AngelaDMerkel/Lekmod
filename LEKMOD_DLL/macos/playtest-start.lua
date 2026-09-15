@@ -41,7 +41,10 @@ do
             PreGame.SetSlotStatus(21, SlotStatus.SS_OBSERVER)
             PreGame.SetSlotClaim(21, SlotClaim.SLOTCLAIM_UNASSIGNED)
         end
-        PreGame.SetCivilization(0, GameInfo.Civilizations["CIVILIZATION_ROME"].ID)
+        local civilization = assert(GameInfo.Civilizations["__TEST_CIVILIZATION__"], "unknown test civilization")
+        assert(civilization.Playable, "test civilization is not playable")
+        PreGame.SetCivilization(0, civilization.ID)
+        print("[LEKMOD_TEST] fixture-setup normal-civilization=" .. civilization.Type)
         Events.SerialEventStartGame()
         UIManager:SetUICursor(1)
     end

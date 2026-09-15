@@ -304,3 +304,33 @@ Human-turn reports distinguish `new_order_verified` from
 without any new production command; observing its queue/active-production
 agreement is not a production-click or new-order pass. The engine's completed
 turn records remain mandatory.
+
+### Expanded single-player scenarios
+
+The current-Mac completion ledger is `docs/macos-expanded-coverage.md`.
+`--civilization CIVILIZATION_TYPE` selects player zero through normal setup for
+new fixtures; loaded saves retain their own civilization. The `bolivia` and
+`mughals` scenarios permit new Duel games with explicit `--scenario-turns 4`.
+Bolivia uses supplied units and normal great-person actions; Mughals uses
+scripted religion/conversion inputs and observes actual engine events. Neither
+is mouse interaction or a claim that the supplied inputs were earned.
+
+`science-prelaunch` loads the documented small Congress fixture, supplies the
+prerequisites and near-complete production, and completes Apollo and all parts
+through normal orders/turns. Use `--scenario-turns 15 --save-and-exit`, then
+reload with `--expected-state` to compare the saved state. `science-launch`
+loads the prelaunch save with `--scenario-turns 3 --capture-panels`, without
+`--save-and-exit`, and checks the final normal assembly action and victory.
+
+`domination` loads the same Duel fixture with `--scenario-turns 6
+--capture-panels` and no save/expected-state options. It supplies an attacker,
+uranium and a staging position, then uses ordinary war/combat commands. It never
+sets damage, ownership or a winner. Victory adapters preserve the original
+presentation and use normal exit confirmation.
+
+The human driver waits for technology-award popups to finish through their
+real Continue/show-hide callbacks before counting notification-result waits.
+It resolves Congress prompts by submitting eligible proposals or abstaining
+through the normal network commands. The foreground/background helper also
+retains a call stack for nonzero `exit` calls without changing the exit status;
+this helps investigate startup failures that create no OS crash report.
