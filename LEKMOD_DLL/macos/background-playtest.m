@@ -4,6 +4,29 @@
 #import <AppKit/AppKit.h>
 #import <objc/runtime.h>
 #import <dispatch/dispatch.h>
+#include <execinfo.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+// Preserve the exit status while retaining the call site of startup-only
+// failures such as 255, which need not create an OS crash report. dyld leaves
+// calls from the interposing image itself bound to the original exit function.
+__attribute__((noreturn)) static void observedExit(int status) {
+    if (status != 0) {
+        void *frames[64];
+        int count = backtrace(frames, 64);
+        fprintf(stderr, "[LEKMOD_TEST] nonzero-exit status=%d frames=%d\n", status, count);
+        fflush(stderr);
+        backtrace_symbols_fd(frames, count, STDERR_FILENO);
+    }
+    exit(status);
+}
+__attribute__((used)) static const struct {
+    const void *replacement;
+    const void *original;
+} exitObserver __attribute__((section("__DATA,__interpose"))) = {
+    (const void *)&observedExit, (const void *)&exit
+};
 
 static void noActivate(id self, SEL command, BOOL flag) {}
 static BOOL noRunningActivate(id self, SEL command, NSApplicationActivationOptions options) { return NO; }
