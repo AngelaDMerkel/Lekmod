@@ -12,68 +12,54 @@ local DUMMY_BUILDING = "BUILDING_DUMMY_MUGHALS"
 -- Mughal UA: Foreign religions give benefits to both the Mughal city and the religion's holy city
 ------------------------------------------------------------------------------------------------------------------------
 
--- Main function to check for foreign religions and apply the dummy building
-function lekmod_ua_mughals_foreign_religion_check(player_id)
-   local player = Players[player_id]
-
-   -- Skip if not the Mughal civilization
-   if not player or not player:IsAlive() or player:GetCivilizationType() ~= this_civ then
-      return
-   end
-
+-- Rebuild the shared benefit from all living Mughal cities. A holy city can
+-- have multiple contributing cities/players and can change owner, so updating
+-- just the triggering player's cities leaves stale or missing benefits.
+local function rebuild_mughal_religion_benefits()
    local dummy_building_id = GameInfoTypes[DUMMY_BUILDING]
    if not dummy_building_id then
       print("Error: Could not find " .. DUMMY_BUILDING)
       return
    end
-
-   -- If the player has a religion, record it
-   local mughal_religion = -1
-   if player:HasCreatedReligion() then
-      mughal_religion = player:GetReligionCreatedByPlayer()
-   end
-
-   -- Clear all existing dummy buildings first to reset
-   for city in player:Cities() do
-      if city:IsHasBuilding(dummy_building_id) then
-         city:SetNumRealBuilding(dummy_building_id, 0)
+   local wanted, religions = {}, {}
+   for player_id = 0, GameDefines.MAX_CIV_PLAYERS do
+      local player = Players[player_id]
+      if player and player:IsAlive() and player:GetCivilizationType() == this_civ then
+         local own_religion = player:HasCreatedReligion() and player:GetReligionCreatedByPlayer() or -1
+         for city in player:Cities() do
+            local religion = city:GetReligiousMajority()
+            if religion ~= -1 and religion ~= ReligionTypes.RELIGION_PANTHEON and religion ~= own_religion then
+               wanted[player_id .. ":" .. city:GetID()] = true
+               religions[religion] = true
+            end
+         end
       end
    end
-
-  -- Process current cities
-   for city in player:Cities() do
-      local city_religion = city:GetReligiousMajority()
-
-      -- Check if city has a proper religion (not just pantheon) and it's foreign
-      if city_religion ~= ReligionTypes.RELIGION_PANTHEON and city_religion ~= -1 and city_religion ~= mughal_religion then
-
-         -- Add the dummy building to this city
-         city:SetNumRealBuilding(dummy_building_id, 1)
-
-         -- Check all other players' cities for holy cities with this religion
-         for other_player_id = 0, GameDefines.MAX_MAJOR_CIVS - 1 do
-            local other_player = Players[other_player_id]
-            
-            -- Skip if it's the Mughal player or if player doesn't exist/isn't alive
-            if other_player and other_player:IsAlive() and other_player_id ~= player_id then
-               
-               for other_city in other_player:Cities() do
-                  -- Check if this city is a holy city and if its religion matches the foreign religion in Mughal city
-                  if other_city:IsHolyCityForReligion(city_religion) then
-                     -- Add the dummy building to this holy city if it doesn't already have it
-                     if not other_city:IsHasBuilding(dummy_building_id) then
-                        other_city:SetNumRealBuilding(dummy_building_id, 1)
-                     end
-                  end
-               end
+   for player_id = 0, GameDefines.MAX_CIV_PLAYERS do
+      local player = Players[player_id]
+      if player and player:IsAlive() then
+         for city in player:Cities() do
+            local has_benefit = wanted[player_id .. ":" .. city:GetID()] or false
+            for religion in pairs(religions) do
+               if city:IsHolyCityForReligion(religion) then has_benefit = true; break end
+            end
+            if city:IsHasBuilding(dummy_building_id) ~= has_benefit then
+               city:SetNumRealBuilding(dummy_building_id, has_benefit and 1 or 0)
             end
          end
       end
    end
 end
 
+function lekmod_ua_mughals_foreign_religion_check(player_id)
+   local player = Players[player_id]
+   if player and player:GetCivilizationType() == this_civ then
+      rebuild_mughal_religion_benefits()
+   end
+end
+
 -- Callback for when a city changes religion
-function lekmod_ua_mughals_religion_changed(player_id, city_id, religion_id, majority)
+function lekmod_ua_mughals_religion_changed(player_id, religion_id, x, y)
    lekmod_ua_mughals_foreign_religion_check(player_id)
 end
 
@@ -83,15 +69,16 @@ function lekmod_ua_mughals_turn_start(player_id)
 end
 
 -- Check when a city is acquired (captured or traded)
-function lekmod_ua_mughals_city_acquired(old_owner_id, new_owner_id, city_id)
-   lekmod_ua_mughals_foreign_religion_check(new_owner_id)
+function lekmod_ua_mughals_city_acquired(old_owner_id, was_capital, x, y, new_owner_id)
+   -- Capturing a foreign holy city also matters, even when neither owner is
+   -- Mughal. The C++ event supplies the new owner as its fifth argument.
+   rebuild_mughal_religion_benefits()
 end
 
 -- Register events if Mughal civilization is active
 if is_active then
    GameEvents.PlayerDoTurn.Add(lekmod_ua_mughals_turn_start)
-   GameEvents.CityReligionChanged.Add(lekmod_ua_mughals_religion_changed)
+   GameEvents.CityConvertsReligion.Add(lekmod_ua_mughals_religion_changed)
    GameEvents.CityCaptureComplete.Add(lekmod_ua_mughals_city_acquired)
    GameEvents.PlayerCityFounded.Add(function(player_id) lekmod_ua_mughals_foreign_religion_check(player_id) end)
 end
-
