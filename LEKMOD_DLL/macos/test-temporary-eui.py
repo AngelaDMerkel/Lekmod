@@ -16,6 +16,18 @@ spec.loader.exec_module(eui_test)
 
 
 class RestorationTests(unittest.TestCase):
+    def test_locked_desktop_refuses_before_installing(self):
+        argv = ["test", "--installer", "/unused/installer.py", "--eui-root", "/unused/eui",
+                "--package", "/unused/eui.zip", "--restore-package", "/unused/standard.zip", "--", "--mode", "ui-interaction"]
+        with patch("sys.argv", argv), patch.object(eui_test.playtest, "game_pids", return_value=[]), \
+             patch.object(eui_test.playtest, "require_unlocked_desktop", side_effect=SystemExit("Desktop is locked")), \
+             patch.object(eui_test.playtest, "require_existing_steam_session") as steam, \
+             patch.object(eui_test.subprocess, "run") as run:
+            with self.assertRaisesRegex(SystemExit, "Desktop is locked"):
+                eui_test.main()
+            steam.assert_not_called()
+            run.assert_not_called()
+
     def test_failed_runner_restores_existing_text_and_managed_payload(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -57,6 +69,8 @@ class RestorationTests(unittest.TestCase):
                 return subprocess.CompletedProcess(command, 42)
             with patch.object(eui_test, "ROOT", root), patch.object(eui_test.playtest, "APP", app), \
                  patch.object(eui_test.playtest, "DATA", data), patch.object(eui_test.playtest, "game_pids", return_value=[]), \
+                 patch.object(eui_test.playtest, "require_unlocked_desktop"), \
+                 patch.object(eui_test.playtest, "require_existing_steam_session"), \
                  patch("sys.argv", argv), patch.object(eui_test.subprocess, "run", side_effect=run):
                 self.assertEqual(eui_test.main(), 42)
             self.assertEqual(text.read_bytes(), b"original user text")

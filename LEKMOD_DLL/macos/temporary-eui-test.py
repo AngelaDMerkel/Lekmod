@@ -40,6 +40,10 @@ def main():
     rest = args.playtest_args[1:] if args.playtest_args[:1] == ["--"] else args.playtest_args
     if not rest or playtest.game_pids():
         raise SystemExit("Supply playtest arguments and close Civ V first")
+    # Refuse before switching packages or copying EUI assets. The inner runner
+    # checks again immediately before launch, since the desktop can lock later.
+    playtest.require_unlocked_desktop()
+    playtest.require_existing_steam_session()
     eui = playtest.APP / "Contents/Assets/Assets/DLC/UI_bc1"
     if eui.exists():
         raise SystemExit("An existing EUI installation must not be overwritten")

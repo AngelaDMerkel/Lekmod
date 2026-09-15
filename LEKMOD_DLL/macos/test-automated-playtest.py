@@ -93,12 +93,16 @@ class PlaytestEvidenceTests(unittest.TestCase):
             self.assertFalse(playtest.production_completion_results("\n".join(rows), "current")["verified"])
     def test_foreground_exception_is_bounded_and_ui_only(self):
         script = str(Path(__file__).with_name("automated-playtest.py"))
-        for mode, timeout in (("human-turns", "180"), ("ui-interaction", "181")):
+        for mode, timeout in (("human-turns", "180"), ("ui-interaction", "3601")):
             result = subprocess.run([sys.executable, script, "--foreground-attachment-test",
                                      "--mode", mode, "--timeout", timeout],
                                     capture_output=True, text=True)
             self.assertEqual(result.returncode, 2)
-            self.assertIn("Foreground attachment tests require", result.stderr)
+            self.assertIn("Foreground UI tests require", result.stderr)
+        with mock.patch.object(sys, "argv", [script, "--foreground-ui-test", "--mode", "ui-interaction", "--timeout", "1200"]), \
+             mock.patch.object(playtest, "game_pids", return_value=[123]):
+            with self.assertRaisesRegex(SystemExit, "already open"):
+                playtest.main()  # Accepted bound; the existing-process guard prevents any launch.
 
     def test_functional_completion_requires_all_items_from_this_run(self):
         prefix = "[LEKMOD_FUNCTIONAL] run=current "

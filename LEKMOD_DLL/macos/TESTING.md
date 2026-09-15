@@ -120,13 +120,13 @@ Native control successfully attached with the game foregrounded and the guard
 disabled. Attachment with the guarded background fixture timed out. This does
 not isolate which condition is necessary. Do not silently remove the guard.
 
-`--foreground-attachment-test` is an explicit exception, restricted to
-`ui-interaction` and `--timeout` at most 180 seconds. It is **not standing user
-authorization**. The original one-off test is finished; the user explicitly
-renewed foreground testing for the resumed task. Retain this existing limit,
-and do not infer standing permission for an unrelated task. The timeout includes
-startup, so reserve time to exit; the prior 180-second test hit the cap during
-shutdown and was terminated by the runner.
+`--foreground-ui-test` (legacy alias `--foreground-attachment-test`) requires
+`ui-interaction` and an explicit `--timeout` no greater than 3600 seconds. The
+user restored permission on 2026-09-15 and allowed sessions as long as required;
+the previous 180-second limit describes older sessions. A 1200-second recovery
+timeout is used for current checks, with normal exit as soon as they finish.
+The flag never grants user permission. Desktop-lock and existing-Steam checks
+remain mandatory; no synchronization or GameCore wait flag may be bypassed.
 
 Use the provided native computer-use interface for actual UI input. App ID:
 `com.aspyr.civ5xp.steam`. Do not try to attach using the direct executable path;

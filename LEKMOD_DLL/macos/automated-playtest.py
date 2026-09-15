@@ -252,7 +252,7 @@ def main():
     parser.add_argument("--production-completion", action="store_true", help="Bounded Worker/Water Mill completion fixture through normal orders and at most three scripted human turns")
     parser.add_argument("--scenario", choices=tuple(SCENARIO_ITEMS), help="Focused standard-UI scenario; inventory is read-only")
     parser.add_argument("--scenario-turns", type=int, default=0, help="Explicit maximum turns a scenario may request through the normal human driver (0-30)")
-    parser.add_argument("--foreground-attachment-test", action="store_true", help="Explicitly approved, at-most-180-second UI attachment test without the background activation guard")
+    parser.add_argument("--foreground-ui-test", "--foreground-attachment-test", dest="foreground_attachment_test", action="store_true", help="Explicitly approved foreground UI test; specify --timeout (at most one hour)")
     parser.add_argument("--expected-state", type=Path, help="Verify the saved-state fingerprint from an earlier --save-and-exit report before any functional mutations")
     args = parser.parse_args()
     if args.refresh_driver:
@@ -267,8 +267,8 @@ def main():
             parser.error("--load-save requires an existing Civ5Save file and a human test mode")
     if (args.save_and_exit or args.expected_state or args.capture_panels or args.city_controls) and args.mode != "single-player-smoke":
         parser.error("Save/reload checks require --mode single-player-smoke")
-    if args.foreground_attachment_test and (args.mode != "ui-interaction" or args.timeout > 180):
-        parser.error("Foreground attachment tests require --mode ui-interaction and --timeout at most 180")
+    if args.foreground_attachment_test and (args.mode != "ui-interaction" or args.timeout > 3600):
+        parser.error("Foreground UI tests require --mode ui-interaction and --timeout at most 3600; the flag does not grant user permission")
     if args.production_completion and (args.mode != "human-turns" or args.turns != 3 or not args.load_save or args.timeout > 600):
         parser.error("Production completion requires --mode human-turns, --turns 3, --load-save and --timeout at most 600")
     if args.scenario and (args.mode != "single-player-smoke" or (not args.load_save and args.scenario not in ("congress", "endgame")) or args.city_controls or args.timeout > 600):
