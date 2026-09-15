@@ -49,17 +49,18 @@ These runs used the legacy installed GameCore hash `ada65581…fa40a`. The new
 product Lua fixes and science-overflow binding received matched-package native
 validation later in this report. See [the unit-handler regressions](macos-unit-handler-regressions.md).
 
-## Work still in progress
+## Completed planned checks and limits
 
-Religion, trade, Congress, world-wonder production, Wealth settlement and
-diplomat arrival now have gameplay evidence below. The earned spy award, AI deal and score-resolution/end-screen checks also passed.
-Standard queue/tile/tech-tree mouse checks passed on 2026-09-15. EUI mouse
-coverage remains outstanding and currently requires an unlocked desktop. EUI background turns/save/reload and clean artifact installation/stock
-restoration passed. Broader EUI popup coverage remains unverified. EUI, other macOS versions, all victory
-routes and every civilization-specific ability are not covered by these standard
-UI fixtures. Multiplayer remains deferred by the user.
+The bounded religion, trade, Congress, world-wonder, Wealth, diplomat, spy-science,
+AI-deal and score-resolution checks below passed. Clean artifact installation,
+stock restoration and exact-byte native smoke also passed. The later
+[physical report](macos-physical-validation-20260915.md) closes the planned
+standard/EUI mouse continuation, including a physical EUI save/load/normal exit.
 
-No full-support claim is made from partial coverage.
+This is scoped coverage. Every EUI popup, victory route and civilization-specific
+ability, other macOS releases and multiplayer are not certified. Earlier
+startup-only code 255 exits remain unexplained. No full-support claim is made
+from partial coverage.
 
 ## Religion outcomes and persistence
 
@@ -358,9 +359,9 @@ SHA-256 is `63599940116aaf50a2402c0ae6143440f803ab114e57e74e83b381ee8d026d9b`.
 The local `single-player-outcome-index.json` links the qualified passing reports
 without relabeling earlier failures or incomplete observation sessions.
 
-Full support is not claimed: the requested additional foreground tests remain
-blocked pending fresh approval; EUI's broader popup/mouse paths, other victory
-routes and other macOS versions are unverified. The recorded startup-only code
+Full support is not claimed: the planned foreground continuation subsequently
+passed, but every EUI popup, other victory routes and other macOS versions are
+unverified. The recorded startup-only code
 255 exits remain unexplained even though subsequent retries succeeded.
 
 ## 2026-09-15 physical continuation
@@ -372,3 +373,10 @@ tech-tree Close button, and normal exit. The previous approval-review block is
 resolved. The desktop locked before the EUI launch; that attempt launched no
 game and restored its temporary changes. Foreground permission remains valid
 when the desktop is unlocked.
+
+The EUI continuation completed in `20260915T222014Z` after the desktop was
+unlocked. The physical report records actual city, focus, specialist, tile,
+purchase, queue, tech-tree and save/load/exit actions, exact observer comparisons
+and full restoration. The earlier permission/unlock barriers in this chronology
+are resolved; they are not current blockers. No product-code change was needed
+for these final mouse checks.

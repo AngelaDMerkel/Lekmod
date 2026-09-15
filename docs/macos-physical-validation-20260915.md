@@ -43,6 +43,8 @@ identifies only these verified physical checks.
 
 ## EUI
 
+### Earlier locked-desktop attempt
+
 The desktop locked before the EUI attempt could launch a game. The inner runner
 refused, and wrapper evidence at `build/macos/eui-tests/20260915T105302Z/state.json`
 confirms restoration of the standard package, EUI text and EUI options. No EUI
@@ -52,3 +54,46 @@ the desktop must be unlocked before continuation.
 The wrapper now checks desktop/Steam readiness before changing the installation,
 and the inner runner still rechecks immediately before launch. Offline tests
 cover refusal without installer calls and preservation after a failed child run.
+
+### Completed foreground session
+
+Run `build/macos/playtests/20260915T222014Z` used EUI 1.28g at requested
+1280×800 with the same signed GameCore. The private EUI package was
+`Lekmod-native-eui128g-test.zip` (SHA-256
+`14e27217075bdf99f99f1c21faba2801472a605a932f3ea4806c2ed98002b73d`).
+The wrapper restored the clean standard package after the session.
+
+| Actual input | Verified result |
+| --- | --- |
+| City banner and Water Mill queue X | City opened; Water Mill alone was removed, leaving Worker queued. |
+| Food Focus, then Default Focus | Focus enum changed −1 → 0 → −1 through the visible radio controls. |
+| Workshop engineer slot, then removal | Specialist count 0 → 1 → 0; gross food 11 → 10 → 11 and production 9.9 → 11 → 9.9. Automatic specialist management was explicitly restored. |
+| Two tile assignments, then Reset Tiles | Forced-work flags and food/production changed as in the standard test; reset restored the complete initial worked set and all recorded yields. |
+| Aqueduct's 120-gold button | Treasury 134 → 14; building 67 appeared with count 1. No turn was needed and no resource budget was supplied. |
+| Caravansary list entry, then queue drag | Added building 38 after Worker, then dragged it ahead: `0,1;1,38` → `1,38;0,1`. This is selection/reordering, not completed production. |
+| Choose Research, then technology-tree Close | EUI's tree opened at the current era, with Close in bounds; the mouse click returned to the map. |
+| Save Game, typed unique filename, Save | Created `EUI-Mouse-20260915.Civ5Save`; no overwrite confirmation was used. |
+| Post-save Food Focus, then Load Game / select new save / Load | Reload restored saved Default Focus and exactly matched the pre-save observed treasury, buildings, queue, worked plots, units and yields. Loading-screen dismissal was scripted. |
+| Escape / Exit to Windows / Yes | Normal exit code 0, with no supervisor stop or termination signals. |
+
+The new save's SHA-256 is
+`109403c6c01822122636ac7d6bb46f77b60e77bb672c5cd0ecebeb74a427d63d`; a copy is
+in the run directory. Ordinary text entry and forward Delete produced the
+verified filename. Select-all/End shortcut behavior was not established, so no
+shortcut pass is claimed. The post-save focus change makes the reload check
+distinguishable from merely observing unchanged state.
+
+The session lasted 1007.7 seconds and did not advance a turn. The original report
+remains `ended-manual-ui-session`. `physical-validation.json` asserts the state
+transitions and exact post-reload observation match and indexes seven screenshots.
+No Lua runtime errors, synchronization failures or new diagnostics were recorded.
+All prior manual saves, settings, graphics and UI hooks were preserved/restored.
+Wrapper `build/macos/eui-tests/20260915T222005Z/state.json` confirms restoration of
+the standard payload, EUI text and EUI options database/journals. Independent
+checks matched the standard payload and DLL to the clean archive, preserved the
+Aspyr backup, found no EUI folder or Civ V process, and verified Steam inactive.
+
+These selected standard/EUI mouse workflows are now complete. They do not prove
+every EUI popup, every civilization ability, every victory route, other macOS
+versions or multiplayer support. The broader limitations in the system report
+remain explicit.

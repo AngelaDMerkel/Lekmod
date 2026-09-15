@@ -33,9 +33,11 @@ The earlier automatic-review foreground block was resolved by the user's
 2026-09-15 messages: permission is restored and sessions may be as long as
 required. Standard queue/tile/tech-tree mouse checks and normal exit passed in
 `20260915T104347Z`; see [the physical report](macos-physical-validation-20260915.md).
-The desktop locked before EUI launch. That attempt did not launch the game and
-restored all temporary installation changes. Continue EUI when the desktop is
-unlocked; no additional permission question is needed for the authorized scope.
+The earlier locked-desktop EUI attempt launched no game and restored its changes.
+EUI mouse testing subsequently completed in `20260915T222014Z`: city controls,
+purchase, queue selection/reorder, tech-tree Close and physical save/load with
+normal exit passed. The standard installation, text/options and backups were
+restored. No game or test supervisor remains running.
 
 ## Start here
 
@@ -57,7 +59,7 @@ Read this document, [validation status](macos-validation.md), and the
 The historical 100-turn requirements do not override the user's decisions;
 the README's stale instructions have now been corrected. Background work is
 complete through the final clean-package regression; only the explicitly listed
-coverage limits and foreground approval gate remain.
+coverage limits remain; the planned foreground continuation is also complete.
 
 Suggested prompt for the next task:
 
@@ -240,24 +242,25 @@ fresh screenshots. The first Choose Research click had no visible effect; the
 second opened it. Do not assume saved coordinates or an unexplained first click
 are a game defect. Do not call `getApp` after quitting: it may start a launcher.
 
-## Remaining single-player coverage
+## Completed continuation and coverage boundaries
 
-- Actual queue removal and broader tile controls, plus tech-tree Close at the
-  smaller window size. Queue preparation is saved at
+- The planned standard/EUI mouse continuation is complete; see the physical
+  report and its supplemental assertions. No further launch is needed merely
+  to repeat these passed cases.
+- The reusable queue fixture remains at
   `build/macos/playtests/20260914T041903Z/Lekmod-Functional-20260914T041903Z.Civ5Save`,
   SHA-256 `596f3151a32f222d516ed08b8ef25c0c9f87fce384c2fff0b7c181b54579c7dc`.
-  Standard mouse checks passed on 2026-09-15; EUI continuation awaits unlock.
-- EUI 1.28g background turns, shared save/exit and exact inventory reload passed,
-  and its HUD was captured at the smaller window size. Broader EUI popup and
-  mouse checks remain unverified. Standard UI, text and options were restored.
+  The new EUI physical save and exact observed reload result are documented.
+- EUI background turns, shared save/exit and inventory reload passed alongside
+  the later physical workflow. Every popup and civilization ability is not covered.
 - Clean-source artifact installation, stock restoration and exact-byte native
-  smoke are complete; preserve the archive and its verification evidence. Do not
-  repeat the accepted long campaign or rerun completed cases without a reason.
-- Keep content/scope limits explicit: omitted optional menu shortcuts, Nubia's
-  undefined leader scene, unused adjacency-table scaffolding, other victory
-  routes and other macOS releases are not made supported by these tests.
-- Multiplayer, including hotseat and PBEM, remains deferred. The accepted long
-  turn-testing phase is closed.
+  smoke are complete; preserve the archive and verification evidence.
+- Keep limits explicit: omitted optional menu shortcuts, Nubia's undefined
+  leader scene, unused adjacency-table scaffolding, other victory routes and
+  other macOS releases are not made supported by these tests. Earlier startup
+  code 255 exits remain unexplained; later successful retries do not erase them.
+- Multiplayer, hotseat and PBEM remain deferred. The accepted long turn-testing
+  phase is closed. No full-support certification is inferred from this coverage.
 
 ## Original uncommitted work (now preserved in `0952b9e5`)
 
