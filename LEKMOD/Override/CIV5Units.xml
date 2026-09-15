@@ -204817,7 +204817,7 @@
 			<TraitType>TRAIT_OCEAN_MOVEMENT</TraitType> 
 			<UnitCombatType>UNITCOMBAT_CARRIER</UnitCombatType> 
 			<MovesChange>2</MovesChange> 
-		</Row
+		</Row>
 	</Trait_MovesChangeUnitCombats> 
 
 	<Table name="Trait_NoTrain">
