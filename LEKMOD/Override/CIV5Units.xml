@@ -169717,6 +169717,7 @@
 		<Row> 
 			<ID>44</ID> 
 			<Type>LEADER_AYYUBIDS</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_MEDIEVAL_SCENARIO_LEADER_ASKIA</Description> 
 			<Civilopedia>TXT_KEY_MEDIEVAL_SCENARIO_LEADER_AYYUBIDSIN_PEDIA</Civilopedia> 
 			<CivilopediaTag>TXT_KEY_MEDIEVAL_SCENARIO_LEADER_AYYUBIDSIN</CivilopediaTag> 
@@ -169741,6 +169742,7 @@
 		<Row> 
 			<ID>45</ID> 
 			<Type>LEADER_BELGIUM</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_SCRAMBLE_AFRICA_LEADER_PEDRO</Description> 
 			<Civilopedia>TXT_KEY_SCRAMBLE_AFRICA_LEADER_PEDRO</Civilopedia> 
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_NAPOLEON</CivilopediaTag>  
@@ -169765,6 +169767,7 @@
 		<Row> 
 			<ID>46</ID> 
 			<Type>LEADER_BOERS</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_BOERS</Description> 
 			<Civilopedia>TXT_KEY_SCRAMBLE_AFRICA_LEADER_WASHINGTON</Civilopedia> 
 			<CivilopediaTag>TXT_KEY_SCRAMBLE_AFRICA_LEADER_WASHINGTON</CivilopediaTag> 
@@ -169789,6 +169792,7 @@
 		<Row> 
 			<ID>47</ID> 
 			<Type>LEADER_ASPARUKH</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_ASPARUKH</Description> 
 			<Civilopedia>TXT_KEY_LEADER_ASPARUKH_PEDIA</Civilopedia> 
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_ASPARUKH</CivilopediaTag>
@@ -169813,6 +169817,7 @@
 		<Row> 
 			<ID>48</ID> 
 			<Type>LEADER_VITTORIO</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_VITTORIO</Description> 
 			<Civilopedia>TXT_KEY_LEADER_ENRICO_DANDOLO_PEDIA</Civilopedia> 
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_ENRICO_DANDOLO</CivilopediaTag>
@@ -169837,6 +169842,7 @@
 		<Row> 
 			<ID>49</ID> 
 			<Type>LEADER_ARMENIA</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_ARMENIA</Description> 
 			<Civilopedia>TXT_KEY_LEADER_ASHURBANIPAL_PEDIA</Civilopedia> 
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_ASHURBANIPAL</CivilopediaTag>
@@ -169861,6 +169867,7 @@
 		<Row> 
 			<ID>50</ID> 
 			<Type>LEADER_TIMUR</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_TIMUR</Description> 
 			<Civilopedia>TXT_KEY_SCRAMBLE_AFRICA_LEADER_WASHINGTON</Civilopedia> 
 			<CivilopediaTag>TXT_KEY_SCRAMBLE_AFRICA_LEADER_WASHINGTON</CivilopediaTag> 
@@ -169910,6 +169917,7 @@
 		<Row> 
 			<ID>52</ID> 
 			<Type>LEADER_SITTINGBULL</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_SITTINGBULL</Description> 
 			<Civilopedia>TXT_KEY_LEADER_POCATELLO_PEDIA</Civilopedia> 
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_POCATELLO</CivilopediaTag> 
@@ -169934,6 +169942,7 @@
 		<Row> 
 			<ID>53</ID> 
 			<Type>LEADER_GILGAMMESH</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_GILGAMMESH</Description> 
 			<Civilopedia>TXT_KEY_WONDER_SCENARIO_LEADER_GILGAMESH_PEDIA</Civilopedia> 
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_ASHURBANIPAL</CivilopediaTag> 
@@ -169958,6 +169967,7 @@
 		<Row> 
 			<ID>54</ID> 
 			<Type>LEADER_TRUNG</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_TRUNG</Description> 
 			<Civilopedia>TXT_KEY_LEADER_GAJAH_MADA_PEDIA</Civilopedia> 
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_GAJAH_MADA</CivilopediaTag> 
@@ -169982,6 +169992,7 @@
 		<Row> 
 			<ID>55</ID> 
 			<Type>LEADER_MUWATALLIS</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_WONDER_SCENARIO_LEADER_SULEIMAN</Description> 
 			<Civilopedia>TXT_KEY_WONDER_SCENARIO_LEADER_MUWATALLIS_PEDIA</Civilopedia> 
 			<CivilopediaTag>TXT_KEY_WONDER_SCENARIO_LEADER_MUWATALLIS</CivilopediaTag> 
@@ -170006,6 +170017,7 @@
 		<Row> 
 			<ID>56</ID> 
 			<Type>LEADER_VYTAU</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_VYTAU</Description> 
 			<Civilopedia>TXT_KEY_LEADER_CASIMIR_PEDIA</Civilopedia> 
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_CASIMIR</CivilopediaTag> 
@@ -170030,6 +170042,7 @@
 		<Row> 
 			<ID>57</ID> 
 			<Type>LEADER_SURYA</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_SURYA</Description> 
 			<Civilopedia>TXT_KEY_LEADER_RAMKHAMHAENG_PEDIA</Civilopedia> 
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_RAMKHAMHAENG</CivilopediaTag> 
@@ -170079,6 +170092,7 @@
 		<Row> 
 			<ID>59</ID> 
 			<Type>LEADER_BRUNEI</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_BRUNEI</Description> 
 			<Civilopedia>TXT_KEY_LEADER_GAJAH_MADA_PEDIA</Civilopedia> 
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_GAJAH_MADA</CivilopediaTag> 
@@ -170103,6 +170117,7 @@
 		<Row> 
 			<ID>60</ID> 
 			<Type>LEADER_CHARLEMAGNE</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_CHARLEMAGNE</Description> 
 			<Civilopedia>TXT_KEY_LEADER_CASIMIR_PEDIA</Civilopedia> 
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_CASIMIR</CivilopediaTag> 
@@ -170127,6 +170142,7 @@
 		<Row> 
 			<ID>61</ID> 
 			<Type>LEADER_AUSTRALIA</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_AUSTRALIA</Description> 
 			<Civilopedia>TXT_KEY_LEADER_PEDRO_PEDIA</Civilopedia> 
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_PEDRO</CivilopediaTag> 
@@ -170151,6 +170167,7 @@
 		<Row> 
 			<ID>62</ID> 
 			<Type>LEADER_ONDREJ</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_ONDREJ</Description> 
 			<Civilopedia>TXT_KEY_LEADER_CASIMIR_PEDIA</Civilopedia> 
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_CASIMIR</CivilopediaTag> 
@@ -170175,6 +170192,7 @@
 		<Row> 
 			<ID>63</ID> 
 			<Type>LEADER_YAROSLAV</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_YAROSLAV</Description> 
 			<Civilopedia>TXT_KEY_LEADER_CASIMIR_PEDIA</Civilopedia> 
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_CASIMIR</CivilopediaTag> 
@@ -170199,6 +170217,7 @@
 		<Row> 
 			<ID>64</ID> 
 			<Type>LEADER_ALARIC</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_ALARRIC</Description> 
 			<Civilopedia>TXT_KEY_LEADER_CASIMIR_PEDIA</Civilopedia> 
 			<CivilopediaTag>TXT_KEY_FOR_SCENARIO_LEADER_ALARIC</CivilopediaTag> 
@@ -170223,6 +170242,7 @@
 		<Row> 
 			<ID>65</ID> 
 			<Type>LEADER_NGAWANG</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_NGAWANG</Description> 
 			<Civilopedia>TXT_KEY_LEADER_GAJAH_MADA_PEDIA</Civilopedia> 
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_NGAWANG</CivilopediaTag> 
@@ -170247,6 +170267,7 @@
 		<Row> 
 			<ID>66</ID> 
 			<Type>LEADER_ROBF</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_ROBF</Description> 
 			<Civilopedia>TXT_KEY_LEADER_PEDRO_PEDIA</Civilopedia> 
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_PEDRO</CivilopediaTag> 
@@ -170271,6 +170292,7 @@
 		<Row> 
 			<ID>67</ID> 
 			<Type>LEADER_NZINGA</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_NZINGA</Description> 
 			<Civilopedia>TXT_KEY_LEADER_SHAKA_PEDIA</Civilopedia> 
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_SHAKA</CivilopediaTag> 
@@ -170320,6 +170342,7 @@
 		<Row> 
 			<ID>69</ID> 
 			<Type>LEADER_NURHACHI</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_NURHACHI</Description> 
 			<Civilopedia>TXT_KEY_KOREA_SCENARIO_LEADER_NURHACI</Civilopedia> 
 			<CivilopediaTag>TXT_KEY_KOREA_SCENARIO_LEADER_NURHACI</CivilopediaTag> 
@@ -170344,6 +170367,7 @@
 		<Row> 
 			<ID>70</ID> 
 			<Type>LEADER_MALAGASY</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_MALAGASY</Description> 
 			<Civilopedia>TXT_KEY_LEADER_GAJAH_MADA_PEDIA</Civilopedia> 
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_AHMAD_ALMANSUR</CivilopediaTag> 
@@ -170368,6 +170392,7 @@
 		<Row> 
 			<ID>71</ID> 
 			<Type>LEADER_ANAWRAHTA</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_ANAWRAHTA</Description> 
 			<Civilopedia>TXT_KEY_LEADER_GAJAH_MADA_PEDIA</Civilopedia> 
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_GAJAH_MADA</CivilopediaTag> 
@@ -170392,6 +170417,7 @@
 		<Row> 
 			<ID>72</ID> 
 			<Type>LEADER_LEXICO</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_LEXICO</Description> 
 			<Civilopedia>TXT_KEY_LEADER_PEDRO_PEDIA</Civilopedia> 
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_PEDRO</CivilopediaTag> 
@@ -170416,6 +170442,7 @@
 		<Row> 
 			<ID>73</ID> 
 			<Type>LEADER_HORDE</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_HORDE</Description> 
 			<Civilopedia>TXT_KEY_LEADER_GENGHIS_KHAN_PEDIA</Civilopedia> 
 			<CivilopediaTag>TXT_KEY_CIV5_GENGHIS</CivilopediaTag> 
@@ -170440,6 +170467,7 @@
 		<Row> 
 			<ID>74</ID> 
 			<Type>LEADER_FULK</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_FULK</Description> 
 			<Civilopedia>TXT_KEY_LEADER_FULK_PEDIA</Civilopedia> 
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_CASIMIR</CivilopediaTag> 
@@ -170489,6 +170517,7 @@
 		<Row> 
 			<ID>76</ID> 
 			<Type>LEADER_PRUSSIA</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_PRUSSIA</Description> 
 			<Civilopedia>TXT_KEY_LEADER_BISMARCK_PEDIA</Civilopedia> 
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_BISMARCK</CivilopediaTag> 
@@ -170513,6 +170542,7 @@
 		<Row> 
 			<ID>77</ID> 
 			<Type>LEADER_VATICAN</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_VATICAN</Description> 
 			<Civilopedia>TXT_KEY_LEADER_CASIMIR_PEDIA</Civilopedia> 
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_CASIMIR</CivilopediaTag> 
@@ -170537,6 +170567,7 @@
 		<Row> 
 			<ID>78</ID> 
 			<Type>LEADER_AMANITORE</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_AMANITORE</Description> 
 			<Civilopedia>TXT_KEY_LEADER_AMANITORE_PEDIA</Civilopedia> 
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_AMANITORE</CivilopediaTag> 
@@ -170561,6 +170592,7 @@
 		<Row>
 			<ID>79</ID>
 			<Type>LEADER_MANNERHEIM</Type>
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_MANNERHEIM</Description>
 			<Civilopedia>TXT_KEY_CIVILOPEDIA_LEADERS_MANNERHEIM_TEXT_1</Civilopedia>
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_MANNERHEIM</CivilopediaTag>
@@ -170585,6 +170617,7 @@
 		<Row>
 			<ID>80</ID>
 			<Type>LEADER_AKKAD</Type>
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_AKKAD_DESC</Description>
 			<Civilopedia>TXT_KEY_LEADER_AKKAD_PEDIA</Civilopedia>
 			<CivilopediaTag>TXT_KEY_LEADER_AKKAD</CivilopediaTag>
@@ -170607,6 +170640,7 @@
 		<Row>
 			<ID>81</ID>
 			<Type>LEADER_DAVID</Type>
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_DAVID</Description>
 			<Civilopedia>TXT_KEY_LEADER_DAVID_PEDIA</Civilopedia>
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADER_DAVID</CivilopediaTag>
@@ -170629,6 +170663,7 @@
 		<Row>
 			<ID>82</ID>
 			<Type>LEADER_ARGENTINA</Type>
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_ARGENTINA</Description>
 			<Civilopedia>TXT_KEY_LEADER_ARGENTINA_PEDIA</Civilopedia>
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADER_ARGENTINA</CivilopediaTag>
@@ -170651,6 +170686,7 @@
 		<Row>
 			<ID>83</ID>
 			<Type>LEADER_MC_CAROL_I</Type>
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_MC_CAROL_I_DESC</Description>
 			<Civilopedia>TXT_KEY_LEADER_MC_CAROL_I_PEDIA</Civilopedia>
 			<CivilopediaTag>TXT_KEY_LEADER_MC_CAROL_I</CivilopediaTag>
@@ -170673,6 +170709,7 @@
 		<Row>
 			<ID>84</ID>
 			<Type>LEADER_VERCINGETORIX</Type>
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_VERCINGETORIX</Description>
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_VERCINGETORIX</CivilopediaTag>
 			<Civilopedia></Civilopedia>
@@ -170695,6 +170732,7 @@
 		<Row>
 			<ID>85</ID>
 			<Type>LEADER_HIRAM</Type>
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_HIRAM</Description>
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_HIRAM</CivilopediaTag>
 			<Civilopedia></Civilopedia>
@@ -170717,6 +170755,7 @@
 		<Row>
 			<ID>86</ID>
 			<Type>LEADER_OWAIN_GLYNDWR</Type>
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_OWAIN_GLYNDWR_DESC</Description>
 			<Civilopedia>TXT_KEY_LEADER_OWAIN_GLYNDWR_PEDIA</Civilopedia>
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_US_OWAIN</CivilopediaTag>
@@ -170739,6 +170778,7 @@
 		<Row>
 			<ID>87</ID>
 			<Type>LEADER_MC_ROBERT_BRUS</Type>
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_MC_ROBERT_BRUS_DESC</Description>
 			<Civilopedia>TXT_KEY_LEADER_MC_ROBERT_BRUS_PEDIA</Civilopedia>
 			<CivilopediaTag>TXT_KEY_LEADER_MC_ROBERT_BRUS</CivilopediaTag>
@@ -170761,6 +170801,7 @@
 		<Row>
 			<ID>88</ID>
 			<Type>LEADER_MICHAEL_COLLINS</Type>
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_US_MICHAEL_COLLINS</Description>
 			<Civilopedia>TXT_KEY_LEADER_US_MICHAEL_COLLINS_PEDIA</Civilopedia>
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_US_MICHAEL_COLLINS</CivilopediaTag>
@@ -170783,6 +170824,7 @@
 		<Row>
 			<ID>89</ID>
 			<Type>LEADER_UC_ATATURK</Type>
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_UC_ATATURK_DESC</Description>
 			<Civilopedia>TXT_KEY_LEADER_UC_ATATURK_PEDIA</Civilopedia>
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_UC_ATATURK</CivilopediaTag>
@@ -170805,6 +170847,7 @@
 		<Row>
 			<ID>90</ID>
 			<Type>LEADER_MC_AL_HASSAN</Type>
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_MC_AL_HASSAN_DESC</Description>
 			<Civilopedia>TXT_KEY_LEADER_MC_AL_HASSAN_PEDIA</Civilopedia>
 			<CivilopediaTag>TXT_KEY_LEADER_MC_AL_HASSAN</CivilopediaTag>
@@ -170827,6 +170870,7 @@
 		<Row>
 			<ID>91</ID>
 			<Type>LEADER_AKSUM</Type>
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_AKSUM_DESC</Description>
 			<Civilopedia>TXT_KEY_LEADER_AKSUM_PEDIA</Civilopedia>
 			<CivilopediaTag>TXT_KEY_LEADER_AKSUM</CivilopediaTag>
@@ -170849,6 +170893,7 @@
 		<Row>
 			<ID>92</ID>
 			<Type>LEADER_MC_NYATSIMBA_MUTOTA</Type>
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_MC_NYATSIMBA_MUTOTA</Description>
 			<Civilopedia>TXT_KEY_LEADER_MC_NYATSIMBA_MUTOTA_PEDIA</Civilopedia>
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_MC_NYATSIMBA_MUTOTA</CivilopediaTag>
@@ -170871,6 +170916,7 @@
 		<Row>
 			<ID>93</ID>
 			<Type>LEADER_MC_SAVAGE</Type>
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_MC_SAVAGE_DESC</Description>
 			<Civilopedia>TXT_KEY_LEADER_MC_SAVAGE_PEDIA</Civilopedia>
 			<CivilopediaTag>TXT_KEY_LEADER_MC_SAVAGE</CivilopediaTag>
@@ -170893,6 +170939,7 @@
 		<Row>
 			<ID>94</ID>
 			<Type>LEADER_MC_TE_RAUPARAHA</Type>
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_MC_TE_RAUPARAHA_DESC</Description>
 			<Civilopedia>TXT_KEY_LEADER_MC_TE_RAUPARAHA_PEDIA</Civilopedia>
 			<CivilopediaTag>TXT_KEY_LEADER_MC_TE_RAUPARAHA</CivilopediaTag>
@@ -170915,6 +170962,7 @@
 		<Row>
 			<ID>95</ID>
 			<Type>LEADER_MC_AHO_EITU</Type>
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_MC_AHO_EITU_DESC</Description>
 			<Civilopedia>TXT_KEY_LEADER_MC_AHO_EITU_PEDIA</Civilopedia>
 			<CivilopediaTag>TXT_KEY_LEADER_MC_AHO_EITU</CivilopediaTag>
@@ -170937,6 +170985,7 @@
 		<Row>
 			<ID>96</ID>
 			<Type>LEADER_LEU_O_HIGGENS</Type>
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_LEU_O_HIGGENS</Description>
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_LEU_O_HIGGENS</CivilopediaTag>
 			<VictoryCompetitiveness>8</VictoryCompetitiveness>
@@ -170959,6 +171008,7 @@
 		<Row>
 			<ID>97</ID>
 			<Type>LEADER_LEU_BELZU</Type>
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_LEU_BELZU</Description>
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_LEU_BELZU</CivilopediaTag>
 			<VictoryCompetitiveness>3</VictoryCompetitiveness>
@@ -170981,6 +171031,7 @@
 		<Row>
 			<ID>98</ID>
 			<Type>LEADER_UC_BATISTA</Type>
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_CL_UC_CASTRO_DESC</Description>
 			<Civilopedia>TXT_KEY_LEADER_CL_UC_CASTRO_PEDIA</Civilopedia>
 			<CivilopediaTag>TXT_KEY_LEADER_CL_UC_CASTRO</CivilopediaTag>
@@ -171005,6 +171056,7 @@
 		<Row>
 			<ID>99</ID>
 			<Type>LEADER_MC_SAIF_BIN_SULTAN</Type>
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_MC_SAIF_BIN_SULTAN_DESC</Description>
 			<Civilopedia>TXT_KEY_LEADER_MC_SAIF_BIN_SULTAN_PEDIA</Civilopedia>
 			<CivilopediaTag>TXT_KEY_LEADER_MC_SAIF_BIN_SULTAN</CivilopediaTag>
@@ -171029,6 +171081,7 @@
 		<Row>
 			<ID>100</ID>
 			<Type>LEADER_SHEIKH_ZAYED</Type>
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_SHEIKH_ZAYED_DESC</Description>
 			<Civilopedia>TXT_KEY_LEADER_SHEIKH_ZAYED_PEDIA</Civilopedia>
 			<CivilopediaTag>TXT_KEY_LEADER_SHEIKH_ZAYED</CivilopediaTag>
@@ -171051,6 +171104,7 @@
 		<Row>
 			<ID>101</ID>
 			<Type>LEADER_MC_LITE_ABD_AR_RAHMAN_III</Type>
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_MC_LITE_ABD_AR_RAHMAN_III</Description>
 			<Civilopedia>TXT_KEY_LEADER_MC_LITE_ABD_AR_RAHMAN_III</Civilopedia>
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_MC_LITE_ABD_AR_RAHMAN_III</CivilopediaTag>
@@ -171073,6 +171127,7 @@
 		<Row>
 			<ID>102</ID>
 			<Type>LEADER_MC_ARETAS</Type>
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_MC_ARETAS</Description>
 			<Civilopedia>TXT_KEY_LEADER_MC_ARETAS</Civilopedia>
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADER_MC_ARETAS</CivilopediaTag>
@@ -171095,6 +171150,7 @@
 		<Row>
 			<ID>103</ID>
 			<Type>LEADER_CB_AGUINALDO</Type>
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_CB_AGUINALDO</Description>
 			<Civilopedia>TXT_KEY_LEADER_CB_AGUINALDO_PEDIA</Civilopedia>
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_CB_AGUINALDO</CivilopediaTag>
@@ -171119,6 +171175,7 @@
 		<Row>
 			<ID>104</ID>
 			<Type>LEADER_MC_ASHOKA</Type>
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_MC_ASHOKA_DESC</Description>
 			<Civilopedia>TXT_KEY_LEADER_MC_ASHOKA_PEDIA</Civilopedia>
 			<CivilopediaTag>TXT_KEY_LEADER_MC_ASHOKA</CivilopediaTag>
@@ -171141,6 +171198,7 @@
 		<Row>
 			<ID>105</ID>
 			<Type>LEADER_MC_AKBAR</Type>
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_MC_AKBAR_DESC</Description>
 			<Civilopedia>TXT_KEY_LEADER_MC_AKBAR_PEDIA</Civilopedia>
 			<CivilopediaTag>TXT_KEY_LEADER_MC_AKBAR</CivilopediaTag>
@@ -171163,6 +171221,7 @@
 		<Row>
 			<ID>106</ID>
 			<Type>LEADER_PG_BOLIVAR</Type>
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_PG_BOLIVAR</Description>
 			<Civilopedia>TXT_KEY_LEADER_PG_BOLIVAR_PEDIA</Civilopedia>
 			<CivilopediaTag>TXT_KEY_CIVILOPEDIA_LEADERS_PG_BOLIVAR</CivilopediaTag>
@@ -171273,6 +171332,7 @@
 		<Row>
 			<ID>112</ID>   
 			<Type>LEADER_CZECHIA</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_CZECHIA</Description> 
 			<Civilopedia>TXT_KEY_LEADER_CZECHIA_PEDIA</Civilopedia>
 			<CivilopediaTag>TXT_KEY_LEADER_CZECHIA_PEDIA</CivilopediaTag>
@@ -171295,6 +171355,7 @@
 		<Row>
 			<ID>113</ID>  
 			<Type>LEADER_MUGHALS</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_MUGHALS</Description> 
 			<Civilopedia>TXT_KEY_LEADER_MUGHALS_PEDIA</Civilopedia>
 			<CivilopediaTag>TXT_KEY_LEADER_MUGHALS_PEDIA</CivilopediaTag>
@@ -171317,6 +171378,7 @@
 		<Row>
 			<ID>114</ID>   
 			<Type>LEADER_TUNISIA</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_TUNISIA</Description> 
 			<Civilopedia>TXT_KEY_LEADER_TUNISIA_PEDIA</Civilopedia>
 			<CivilopediaTag>TXT_KEY_LEADER_TUNISIA_PEDIA</CivilopediaTag>
@@ -171339,6 +171401,7 @@
 		<Row>
 			<ID>115</ID>   
 			<Type>LEADER_MALI</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_MALI</Description> 
 			<Civilopedia>TXT_KEY_LEADER_MALI_PEDIA</Civilopedia>
 			<CivilopediaTag>TXT_KEY_LEADER_MALI_PEDIA</CivilopediaTag>
@@ -171361,6 +171424,7 @@
 		<Row>
 			<ID>116</ID>   
 			<Type>LEADER_BUGANDA</Type> 
+			<ArtDefineTag>LEKMOD_StaticLeaderScene.xml</ArtDefineTag>
 			<Description>TXT_KEY_LEADER_BUGANDA</Description> 
 			<Civilopedia>TXT_KEY_LEADER_BUGANDA_PEDIA</Civilopedia>
 			<CivilopediaTag>TXT_KEY_LEADER_BUGANDA_PEDIA</CivilopediaTag>

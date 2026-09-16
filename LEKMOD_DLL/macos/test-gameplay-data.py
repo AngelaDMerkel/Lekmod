@@ -46,6 +46,20 @@ class GameplayDataTests(unittest.TestCase):
             self.assertIn(row.findtext("LeaderType"),leaders)
             self.assertIn(row.findtext("TraitType"),traits)
 
+    def test_playable_leaders_have_scene_definitions(self):
+        playable={row.findtext("Type") for row in self.rows("Civilizations")
+                  if row.findtext("Playable","true").strip().lower() in ("true","1")
+                  and row.findtext("Type") not in ("CIVILIZATION_MINOR","CIVILIZATION_BARBARIAN")}
+        leaders={row.findtext("Type"):row for row in self.rows("Leaders")}
+        for link in self.rows("Civilization_Leaders"):
+            if link.findtext("CivilizationType") in playable:
+                leader=link.findtext("LeaderheadType")
+                self.assertTrue(leaders[leader].findtext("ArtDefineTag"),leader)
+        scene=ET.parse(ROOT/"LEKMOD/Art/Lekmod (v 1)/Art/LEKMOD_StaticLeaderScene.xml").getroot()
+        image=scene.get("FallbackImage")
+        self.assertEqual(image,"generic_DoM.dds")
+        self.assertTrue((ROOT/"LEKMOD/Art/Lekmod (v 1)/Art"/image).is_file())
+
 
 if __name__=="__main__":
     unittest.main()
