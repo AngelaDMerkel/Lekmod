@@ -373,3 +373,13 @@ prerequisites and a pillaged-farm input, then observes farm, road and repair
 completion and yield changes. Reload either saved report with `--expected-state`
 to compare its snapshot. These are action/outcome tests, not physical input or
 proof that the supplied inputs were earned.
+
+
+`buganda-lake` starts an Industrial/Duel Buganda game with `--scenario-turns 15
+--save-and-exit`. It supplies a worker and, if needed, a legal secondary city
+beside naturally dry terrain. Normal construction must make the lake and its
+neighbors fresh water; permanent-improvement restrictions are queried without
+forcing pillage flags. `combat` loads the small Congress fixture without end-turn
+allowance, supplies full-health units/resources, then submits actual attack/capture
+missions. Both support exact `--expected-state` reload comparisons. These checks
+use scripted callbacks/missions, not actual mouse input.

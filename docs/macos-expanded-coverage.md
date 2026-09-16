@@ -22,7 +22,7 @@ mean every possible combination of game state has been tested.
 | Cultural victory | Tourism/influence, musician action, threshold crossing and victory | Passed with supplied great people and staging positions |
 | Diplomatic victory | World Leader session, vote eligibility/count, winning resolution and victory | Passed with supplied technology/gold; natural gifts, sessions and ballots |
 | Score victory | Score resolution, human victory and defeat presentation | Passed |
-| Combat | Human melee/ranged/city attacks, unit death/capture, terrain/war restrictions, naval and air actions | Pending dedicated cases |
+| Combat | Human melee/ranged/city attacks, unit death/capture, terrain/war restrictions, naval and air actions | Core land/city/naval/air attacks, death/capture and reload passed; air defense/carriers remain |
 | Unit lifecycle | Founding, movement/pathing, embark/disembark, promotion/upgrade, worker build/repair/pillage, healing, gifting/deletion, great-person actions | Promotion/upgrade/heal/embark, farm/road/repair and reload passed; other cases remain |
 | City lifecycle | Additional founding, capture/puppet/annex/raze/liberation, growth/starvation, building sale, specialists/great works | Core lifecycle and exact reloads passed; additional great-work management remains |
 | Economy and policies | Research/free tech, policy/tenet acquisition and switching, happiness/golden age, resources, treasury boundaries | Partial earlier evidence; remaining cases pending |
@@ -317,6 +317,27 @@ terrain. `034621Z` exposed a driver loop choosing a legal transit tile that was
 not a legal stopping destination. Commit `46a9891d` supplies the destination
 argument to the engine query; the same scenario then advanced through the
 previously stalled turn. No synchronization or wait state was changed.
+
+### Combat actions and persistence
+
+`20260916T035936Z` supplied full-health combat units and iron/uranium/oil as
+explicit inputs on unchanged map plots. Normal commands produced these outcomes:
+Archer→Spearman damage 30; Warrior exchange damage 36 to defender and 29 to
+attacker; Giant Death Robot killed a Warrior and received damage 1; a Warrior
+captured a worker; the capital's ranged strike dealt 13; Frigate→Caravel dealt
+57; Bomber→Infantry dealt 37. Combat units gained XP, while friendly targeting
+and a second ranged attack were rejected. No unit health/death/ownership outcome
+was assigned. This is scripted mission/outcome coverage, not mouse interaction.
+The turn-179 save SHA-256 is
+`bb638a6ce3829cc2fbf462020722bf24bf216885d303f120d86a6a17818f2a5b`.
+`20260916T040113Z` matched the exact recorded unit type, owner, damage, XP,
+position/movement, city and treasury snapshot on reload. Both runs exited normally
+(0) and restored hooks/settings/manual saves, with no Lua/synchronization errors.
+
+The earlier `035733Z` report remains failed after its four land cases: it required
+an empty tile immediately beside the already occupied capital. The corrected
+fixture uses an empty tile within the city's normal two-tile range. Air defense,
+air sweeps and carrier operations are not established by the bomber strike.
 
 ### Current test artifact
 

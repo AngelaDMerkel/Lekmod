@@ -1,20 +1,22 @@
 # Lekmod macOS single-player testing handoff
 
-Last updated: 2026-09-15. This is a same-machine, same-workspace handoff, not a
+Last updated: 2026-09-16. This is a same-machine, same-workspace handoff, not a
 claim that the macOS port is fully certified. No new task or schedule was created.
 
 The user subsequently requested expanded functional coverage on **this Mac
 only**, with foreground sessions allowed as long as needed. The active completion
 ledger is [expanded coverage](macos-expanded-coverage.md). The old planned suite
 below is complete, but that is not the user's expanded completion criterion.
-Science, domination, cultural and civilization regressions have been added;
-diplomatic continuation is active. Check current processes and ignored evidence
-before launching. The installed standard test archive is now
-`Lekmod-league-choices-20260916.zip` (hash and scope in the expanded ledger),
-with the voting-choice correction and reviewed XML/Lua fixes. Startup exit 255
-was reproduced and traced to an empty generated localization cache; the cache
-was preserved and regenerated successfully. The original creation failure
-remains under investigation.
+All five primary victory outcomes, expanded city/unit workflows, standard
+post-victory UI, and bounded combat with exact reloads now have evidence. The
+broader completion ledger still has open rows. Check current processes and ignored
+evidence before launching. The installed standard test archive is now
+`Lekmod-lake-freshwater-20260916.zip` (hash and scope in the expanded ledger),
+with the voting, presentation, greeting and artificial-lake freshwater fixes.
+Startup exit 255 was reproduced with generated-database save/open failures.
+Empty-localization-cache recovery passed, but the original intermittent failure
+remains under investigation; a later database-save failure involved nonempty,
+healthy SQLite files and did not justify deleting them.
 
 ## Current continuation results
 
