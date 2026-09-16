@@ -23,7 +23,7 @@ mean every possible combination of game state has been tested.
 | Diplomatic victory | World Leader session, vote eligibility/count, winning resolution and victory | Passed with supplied technology/gold; natural gifts, sessions and ballots |
 | Score victory | Score resolution, human victory and defeat presentation | Passed |
 | Combat | Human melee/ranged/city attacks, unit death/capture, terrain/war restrictions, naval and air actions | Core land/city/naval attacks, death/capture and reload passed; actual air strike/interception, ground sweep, carrier capacity/movement and exact reload passed |
-| Unit lifecycle | Founding, movement/pathing, embark/disembark, promotion/upgrade, worker build/repair/pillage, healing, gifting/deletion, great-person actions | Promotion/upgrade/heal/embark, farm/road/repair, disband/gift and great-person actions passed; road repair/combat pillage and other great-person cases remain |
+| Unit lifecycle | Founding, movement/pathing, embark/disembark, promotion/upgrade, worker build/repair/pillage, healing, gifting/deletion, great-person actions | Promotion/upgrade/heal/embark, farm/road/repair, disband/gift and great-person actions passed; pillage, road repair/travel and exact reload passed; other great-person cases remain |
 | City lifecycle | Additional founding, capture/puppet/annex/raze/liberation, growth/starvation, building sale, specialists/great works | Core lifecycle and exact reloads passed; additional great-work management remains |
 | Economy and policies | Research/free tech, policy/tenet acquisition and switching, happiness/golden age, resources, treasury boundaries | Partial earlier evidence; remaining cases pending |
 | Diplomacy | War/peace, friendship/denunciation, resources/GPT/open borders/research agreements, city-state interactions | Embassy workflow passed; remaining cases pending |
@@ -302,8 +302,10 @@ and scripted freshwater behavior.
 `20260916T035314Z` repeated normal construction on the rebuilt GameCore and
 verified freshwater on the lake and its six formerly dry neighbors. The tile
 remained land, with food 3 and gold 1. City-tile construction, duplicate building,
-farm replacement and pillaging by an own combat unit were rejected. Kabaka's
-Lake is permanent, so no forced pillage/repair is claimed as ordinary gameplay.
+farm replacement were rejected. The original own-unit pillage query does not
+isolate permanence because Lekmod blocks all own-tile pillage. Supplemental notes
+retain that limit, and a stronger enemy/ordinary-farm control is being retested.
+No forced lake pillage/repair is claimed as ordinary gameplay.
 All nine sanitizer cases passed. The native run saved/exited normally (0), with
 hooks/settings/manual saves preserved and no Lua/synchronization errors.
 Save SHA-256:
@@ -397,6 +399,28 @@ air-strike mission and exited normally; save SHA-256
 Source review established that zero attacker XP is deliberate. The corrected
 assertions require actual spent interception/movement plus the configured zero
 XP/damage outcome; no wait flag or synchronization check was bypassed.
+
+### Pillage, repairs and roads
+
+`20260916T042453Z` loaded the preserved ordinary worker-build fixture. It supplied
+a Horseman, horses and damage 40, and verified that own-tile pillaging is rejected.
+An unowned farm/road and staging position were supplied explicitly. Normal pillage
+of that farm yielded 20 gold, healed 25 damage and removed the improvement yield.
+A second pillage damaged the road with no further gold/healing. The engine rejected
+another pillage after both were damaged. The original worker was staged there and
+used normal repair missions; three ordinary turns restored both farm and road and
+the farm's food yield. No pillage/repair outcome flags were assigned.
+
+Finally the Horseman was staged on the originally built own road. An adjacent
+road was supplied as the destination, and an actual move consumed 30 movement
+points, below an ordinary step's 60. This verifies road travel, not construction
+of that additional road. Save SHA-256:
+`e10e04691c3206a9fa5a8613bcb6cee55ae7eb4d1974710d330ccaafc493fb86`.
+`20260916T042644Z` matched the recorded improvements, routes, pillage states,
+yields, treasury, unit positions/health/movement and turn on reload. Both runs
+saved/exited normally (0), with hooks/settings/manual saves preserved and no
+Lua/synchronization errors. The earlier `042118Z` failed a test assumption that
+own improvements were pillageable; the product deliberately forbids that action.
 
 ### Current test artifact
 
