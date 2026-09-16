@@ -287,17 +287,53 @@ greeting now uses the shared personality helper; all ten offline personality
 cases pass and `20260916T033220Z` rendered Pacifistic correctly, then closed and
 saved/exited normally. Contact was a labeled input, not earned exploration.
 
-The current temporary standard test package is
-`build/macos/Lekmod-league-choices-20260916.zip`, SHA-256
-`d46d4784a9d4fbbf47d532e5302f3259e9e74aadd56b862d1097aee6cbf78b25`.
-It contains the reviewed XML/Lua changes and the voting-choice correction in
-signed GameCore `4ac6ef335a2d5cdd78c515793fb2fe2ba1e99cbd279642ee86ee4be2b989e9a9`.
-`7ba4560c` commits that correction after 17 sanitizer cases and the native
-World Leader candidate check. Earlier expanded science, domination, cultural and
-civilization results used GameCore `04904d1f…` and, for the civilization fixes,
+### Buganda lake construction and freshwater
+
+`20260916T034956Z` reproduced a product defect after three normal worker turns:
+a lake built on naturally dry land gave freshwater to all six neighbors but
+reported `IsFreshWater=false` on its own tile, contrary to the in-game ability
+text. A legal secondary city and worker were supplied as recorded inputs; no
+terrain, improvement, damage or freshwater flag was assigned. The isolated
+product-query test reproduced the same failure among nine sanitizer cases.
+The correction recognizes the existing artificial-lake state in the freshwater
+query. It adds no serialized fields and preserves river, natural-lake, feature
+and scripted freshwater behavior.
+
+`20260916T035314Z` repeated normal construction on the rebuilt GameCore and
+verified freshwater on the lake and its six formerly dry neighbors. The tile
+remained land, with food 3 and gold 1. City-tile construction, duplicate building,
+farm replacement and pillaging by an own combat unit were rejected. Kabaka's
+Lake is permanent, so no forced pillage/repair is claimed as ordinary gameplay.
+All nine sanitizer cases passed. The native run saved/exited normally (0), with
+hooks/settings/manual saves preserved and no Lua/synchronization errors.
+Save SHA-256:
+`87f583d799dcd65f23ad5f88b74809a96f12dd2a954dfc4f1ab137cf7da9ba13`.
+`20260916T035522Z` matched the exact lake/neighbor freshwater and yield snapshot
+on reload, saved and exited normally, with the same cleanup checks passing.
+
+Earlier attempts remain failed reports. `034444Z` had no dry plot beside its
+capital; the fixture now supplies a second legal city beside unchanged dry
+terrain. `034621Z` exposed a driver loop choosing a legal transit tile that was
+not a legal stopping destination. Commit `46a9891d` supplies the destination
+argument to the engine query; the same scenario then advanced through the
+previously stalled turn. No synchronization or wait state was changed.
+
+### Current test artifact
+
+The current standard test package is
+`build/macos/Lekmod-lake-freshwater-20260916.zip`, SHA-256
+`67adbe6cc898a4513a7d28682aae27bbfde41ef830b714556764b9fb0a921aef`.
+Its signed GameCore is
+`5ad12f091579d48c244155415db19479189d76b880345b2ba004880ee47e5b68`.
+It includes the earlier voting, presentation and greeting fixes plus the lake
+query correction. Its manifest records a dirty source tree; it is an identified
+test artifact, not the final clean release. Installation used the central
+installer with the canonical stock backup retained.
+
+Earlier voting/presentation/greeting tests used signed GameCore
+`4ac6ef335a2d5cdd78c515793fb2fe2ba1e99cbd279642ee86ee4be2b989e9a9`.
+Earlier expanded science, domination, cultural and civilization results used
+GameCore `04904d1f…` and, for the civilization fixes,
 `Lekmod-civ-regressions-20260915b.zip` (SHA-256
 `349afefb42bef3713ff1bba83f3749951a32ba43e6fe1dbd89241bc785d300f6`).
-Its manifest correctly records a dirty source tree; it is not a final clean
-release artifact. Installation used the central installer, and the three changed
-product files match their manifest hashes. The preceding clean package remains
-available for restoration.
+All prior packages and their reports remain preserved locally.

@@ -1147,6 +1147,15 @@ bool CvPlot::isFreshWater() const
 	if(isWater() || isImpassable() || isMountain())
 		return false;
 
+#if defined(LEKMOD_BUGANDA_LAKE)
+	// An artificial lake remains land, but its own tile is freshwater too.
+	// Query the saved lake state so existing completed lakes also benefit.
+	if (isPseudoLake())
+	{
+		return true;
+	}
+#endif
+
 	if(isRiver())
 	{
 		return true;
