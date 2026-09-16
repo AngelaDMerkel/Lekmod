@@ -48,6 +48,10 @@ def configure_eui(eui_root: Path, template_root: Path, destination: Path) -> Non
     # EUI 1.28g has none and uses the native layout with our visible Close button.
     if any(eui_root.rglob("CivilopediaScreen.xml")) or any(eui_root.rglob("CivilopediaScreen.lua")):
         (destination / "CivilopediaScreen.xml").unlink(missing_ok=True)
+    # EUI 1.28g deliberately supplies an empty greeting context and handles
+    # first contact in its own city-state popup. Do not re-enable the stock one.
+    if any(eui_root.rglob("CityStateGreetingPopup.lua")):
+        (destination / "CityStateGreetingPopup.lua").unlink(missing_ok=True)
     city_banners = eui_root / "CityBanners" / "CityBannerManager.lua"
     variant = "1" if contains(city_banners, "CityBannerProductionBox = function( city )") else "2"
     if city_banners.is_file():

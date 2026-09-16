@@ -40,7 +40,7 @@ class ConfigureUiTests(unittest.TestCase):
         count, mode = CONFIGURE_UI.configure(self.lekmod, "standard", None)
 
         self.assertEqual(mode, "standard")
-        self.assertEqual(count, 87)
+        self.assertEqual(count, 88)
         self.assertTrue((self.output / "CityView.xml").is_file())
         self.assertTrue((self.output / "CityView_small.xml").is_file())
         self.assertTrue((self.output / "ProductionPopup.xml").is_file())
@@ -48,6 +48,7 @@ class ConfigureUiTests(unittest.TestCase):
         self.assertTrue((self.output / "TopPanel.lua").is_file())
         self.assertFalse((self.output / "MainMenu.xml").exists())
         self.assertTrue((self.output / "CivilopediaScreen.xml").is_file())
+        self.assertTrue((self.output / "CityStateGreetingPopup.lua").is_file())
         self.assertIn(
             'ID="GoldenAgePointsFocusButton"',
             (self.output / "CityView.xml").read_text(encoding="utf-8"),
@@ -101,6 +102,12 @@ class ConfigureUiTests(unittest.TestCase):
         (folder/"CivilopediaScreen.lua").write_text("-- EUI-owned context\n")
         CONFIGURE_UI.configure(self.lekmod,"eui",eui)
         self.assertFalse((self.output/"CivilopediaScreen.xml").exists())
+
+    def test_eui_greeting_suppression_is_preserved(self) -> None:
+        eui=self.root/"EUI";folder=eui/"CityStatePopup";folder.mkdir(parents=True)
+        (folder/"CityStateGreetingPopup.lua").write_text("-- deliberate empty override\n")
+        CONFIGURE_UI.configure(self.lekmod,"eui",eui)
+        self.assertFalse((self.output/"CityStateGreetingPopup.lua").exists())
 
     def test_eui_city_view_uses_matching_lua_and_xml(self) -> None:
         eui = self.root / "EUI"

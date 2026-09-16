@@ -20,3 +20,12 @@ playable leaders that lacked that reference use `LEKMOD_StaticLeaderScene.xml`,
 which displays the existing `generic_DoM.dds` Lekmod backdrop. The native leader
 and trade views for Belgium were verified. This is shared static presentation,
 not a claim that missing individual 3D artwork has been created.
+
+`CityStatePopup/CityStateGreetingPopup.lua.ignore` is based on Aspyr's Expansion 2
+greeting Lua, source SHA-256
+`e38e8963290129979526d5aba699078265f114fac591664e782705378aa28e0c`.
+Its four-personality switch is replaced by the existing shared Lekmod personality
+helper. Ten data-driven personality cases pass; six custom cases were blank in
+the original block. Native run `20260916T033220Z` rendered Pacifistic correctly
+and used normal Close/save/exit. EUI's deliberately empty greeting override is
+retained; EUI already uses the shared helper in its own city-state popup.
