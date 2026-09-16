@@ -26,7 +26,7 @@ mean every possible combination of game state has been tested.
 | Unit lifecycle | Founding, movement/pathing, embark/disembark, promotion/upgrade, worker build/repair/pillage, healing, gifting/deletion, great-person actions | Promotion/upgrade/heal/embark, farm/road/repair, disband/gift and great-person actions passed; pillage, road repair/travel and exact reload passed; other great-person cases remain |
 | City lifecycle | Additional founding, capture/puppet/annex/raze/liberation, growth/starvation, building sale, specialists/great works | Core lifecycle, artwork movement/theming and exact reloads passed; Dance Hall bonuses and ordinary artifact/landmark digs passed; further cultural UI/branches remain |
 | Economy and policies | Research/free tech, policy/tenet acquisition and switching, happiness/golden age, resources, treasury boundaries | Policy/tenet confirmations, spending and Cuba reward boundaries passed; switching and remaining economy cases pending |
-| Diplomacy | War/peace, friendship/denunciation, resources/GPT/open borders, non-aggression pacts and configured agreement restrictions, city-state interactions | Luxury/GPT gifts, mutual embassies, open borders and persistence passed; natural contract expiry and permanent embassies passed; friendship/denunciation and reload passed; non-aggression creation/expiry and configured-off agreement UI passed; negotiated peace remains |
+| Diplomacy | War/peace, friendship/denunciation, resources/GPT/open borders, non-aggression pacts and configured agreement restrictions, city-state interactions | Luxury/GPT gifts, mutual embassies, open borders and persistence passed; natural contract expiry and permanent embassies passed; friendship/denunciation and reload passed; non-aggression creation/expiry and configured-off agreement UI passed; negotiated peace/protection/expiry and reload passed |
 | Religion | Found/enhance/buy/spread, conversion/defense and belief effects, save persistence | Core workflow, inquisitor purchase/defense/removal and pressure-retention belief/reload passed; founder gold, Mandir/luxury yields and Holy Warriors purchases/reload passed; further boundaries pending |
 | Espionage | Assignment, diplomat, science award, surveillance, counterspy/election/coup paths and persistence | Core workflow, counterspy arrival, scheduled election and successful coup/reload passed; failed coup, dead-agent rejection and five-turn replacement/reloads also passed; defensive interception and further UI remain |
 | Trade | Legal routes/income/reload, internal/sea routes, rebasing, expiry/plunder and restrictions | Land external, internal land-food/sea-production, rebasing and reload passed; natural expiry/countdown correction and land plunder/reload passed |
@@ -993,6 +993,28 @@ coverage for these unavailable agreements; no positive research-agreement payout
 is claimed. All five final runs saved/exited normally (0), restored settings/hooks,
 preserved manual saves and had no Lua/synchronization errors. Actions were
 scripted callbacks/queries and ordinary gameplay, not mouse input.
+
+### Negotiated AI peace and treaty expiry
+
+`20260916T113841Z` resumed the real city-capture war and used the actual leader
+Negotiate Peace, trade proposal, AI reply, Back and Goodbye callbacks. The normal
+UI supplied two five-turn peace items, with no asset concession. Both war flags
+cleared, both forced-peace protections became true, and neither side could declare
+war. Gold was unchanged. No war score, AI willingness or peace flag was assigned.
+Save SHA-256:
+`e9aeca4db1665da7f21490378e28501f52f173819f89bdfca286fc047b2216e5`.
+`20260916T114119Z` matched the accepted peace and treasury state exactly on reload.
+
+`20260916T114406Z` followed five ordinary turns (182–187). Both protections held
+until the quoted end, then cleared together; both sides regained war-declaration
+eligibility without actually declaring war. Save SHA-256:
+`c26a37def26443f23a2bee6a9292e48e52a157e1403d9026119f4c3b77901dcd`.
+`20260916T114747Z` matched that expired state exactly. All four runs saved/exited
+normally (0), restored settings/hooks, preserved manual saves and reported no
+Lua/synchronization errors. These are scripted callbacks and gameplay outcomes,
+not mouse input. No early refusal occurred in this fixture; the shipped
+AI_GIMP_ALWAYS_WHITE_PEACE option defaults to enabled, so an unconditional
+five-war-turn refusal must not be inferred from the alternate code path.
 
 ### Current test artifact
 
