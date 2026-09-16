@@ -11,9 +11,9 @@ All five primary victory outcomes, expanded city/unit workflows, standard
 post-victory UI, and bounded combat with exact reloads now have evidence. The
 broader completion ledger still has open rows. Check current processes and ignored
 evidence before launching. The installed standard test archive is now
-`Lekmod-unit-conversion-20260916.zip` (hash and scope in the expanded ledger),
+`Lekmod-greatwork-location-20260916b.zip` (hash and scope in the expanded ledger),
 with the voting, presentation, greeting, artificial-lake freshwater and Georgia
-creation/conversion fixes.
+creation/conversion and great-work holding fixes.
 Startup exit 255 was reproduced with generated-database save/open failures.
 Empty-localization-cache recovery passed, but the original intermittent failure
 remains under investigation; a later database-save failure involved nonempty,

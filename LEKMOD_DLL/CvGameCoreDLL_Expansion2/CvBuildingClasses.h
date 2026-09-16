@@ -897,6 +897,7 @@ public:
 	void ChangeFirstPurchaseDiscount(int iChange);
 #endif
 #if defined(LEKMOD_GREAT_WORK_YIELD_EFFECTS)
+	int GetHeldGreatWorkYield(GreatWorkClass eWorkClass, BuildingClassTypes eBuildingClass, int iSlot, YieldTypes eYield) const;
 	int GetCityGreatWorkClassYieldChanges(GreatWorkClass eClass, YieldTypes eYield) const;
 	void ChangeCityGreatWorkClassYieldChanges(GreatWorkClass eClass, YieldTypes eYield, int iChange);
 	void ChangeCityGreatWorkYieldChange(YieldTypes eYield, int iChange);

@@ -504,15 +504,55 @@ All three runs saved/exited normally (0), preserved settings/hooks/manual saves,
 and had no Lua/synchronization errors. Slot-type rejection through real UI,
 foreign swaps, special building bonuses and archaeology remain separate cases.
 
+### Cuba music holdings and cached bonuses
+
+On the unchanged GameCore, `20260916T051509Z` recorded music culture 2 in Cuba's
+Dance Hall instead of the data-defined 2+4. Moving it to another city's Broadcast
+Tower left local happiness 3 instead of the original 2, and empire happiness -32
+instead of -33. The optional work-class column was NULL in the shipped holding-
+bonus row, but an inner join discarded it. Removing a work also failed to refresh
+happiness and class-count caches. Three SQL cases and extracted product C++ cases
+reproduced these failures before correction.
+
+The first candidate, `052428Z`, fixed creation/removal/return but exposed a third
+case: swapping two occupied music slots from the later city to the earlier one
+left both works producing 6 culture. A global location search found a temporary
+duplicate during the two slot assignments. The calculation now resolves each
+city's own slot. Current yields and tooltip values use the same read-only
+calculation; they do not write serialized caches during a query. Happiness is
+also derived from current holdings. Class-count caches are invalidated on all
+changes. The save format and object layout are unchanged.
+
+`20260916T054630Z` passed normal Music creation, removal, return and occupied
+cross-city swapping. The Dance Hall consistently supplied 6 culture and one
+happiness; the Broadcast Tower supplied 2 culture and no work happiness. Both
+tooltip values matched. Inputs were two legal cities, populations 20 to avoid
+happiness caps, holding buildings and Musicians; work creation and moves were
+actual commands. Save SHA-256:
+`e9456497a486ee6e8d22a3b00f556265a549ffd34a784869f72637d06281e9be`.
+`20260916T055052Z` matched exact music slots, local/global happiness, culture,
+tourism, populations and work count on reload. Both saved/exited normally (0),
+restored hooks/settings/manual saves, and had no Lua/synchronization errors.
+
+`20260916T055316Z` also reloaded the prior ordinary Museum/artwork save and
+matched its exact pre-change snapshot on the rebuilt GameCore, with normal exit
+and cleanup.
+
+A full native rebuild was performed because a shared C++ declaration changed.
+The ABI check retained the sole GameContext export, 474 imports and 359 dynamic
+lookups. Three SQL cases and thirteen sanitizer cases pass, including both swap
+directions and stale derived values after a cache reset. Those cache-reset cases
+are offline evidence; no pre-fix native reload failure is claimed.
+
 ### Current test artifact
 
 The current standard test package is
-`build/macos/Lekmod-unit-conversion-20260916.zip`, SHA-256
-`19374588d50bd3b2cbe140bd60d9793f936179c67e70914a4f19817ccd8c4696`.
+`build/macos/Lekmod-greatwork-location-20260916b.zip`, SHA-256
+`f18f134e489bae5f336526232233f73d9264b39afbbb12e8e1e34715b8b02e37`.
 Its signed GameCore is
-`398dafe4b9a99ec93d91b24bea4f194b13cbd1ae6243db94e9ec05d9dfa471e1`.
+`ab54f592caf9bb94892d969c20bef9de96c3eb3d82082b68e05c45e958480435`.
 It includes the earlier voting, presentation, greeting and lake fixes plus
-the Georgia first-creation and post-conversion hooks. Its manifest records a dirty source tree; it is an identified
+the Georgia hooks and great-work holding corrections. Its manifest records a dirty source tree; it is an identified
 test artifact, not the final clean release. Installation used the central
 installer with the canonical stock backup retained.
 

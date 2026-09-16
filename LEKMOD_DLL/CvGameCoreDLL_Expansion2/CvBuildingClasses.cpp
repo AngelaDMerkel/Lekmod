@@ -739,7 +739,7 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 				"SELECT Yields.ID as YieldID, COALESCE(GreatWorkClasses.ID, -1) as GreatWorkClassID, YieldChange, HoldingYield "
 				"FROM Building_GreatWorkYieldChanges "
 				"INNER JOIN Yields on Yields.Type = YieldType "
-				"INNER JOIN GreatWorkClasses on GreatWorkClasses.Type = GreatWorkClassType "
+				"LEFT JOIN GreatWorkClasses on GreatWorkClasses.Type = GreatWorkClassType "
 				"WHERE BuildingType = ?";
 			pResults = kUtility.PrepareResults(strKey, szSQL);
 		}
@@ -4111,14 +4111,16 @@ void CvCityBuildings::SetBuildingGreatWork(BuildingClassTypes eBuildingClass, in
 				else
 				{
 					(*it).iGreatWorkIndex = iGreatWorkIndex;
-#if !defined(LEKMOD_GREAT_WORK_YIELD_EFFECTS)
 				}
-#else
+#if defined(LEKMOD_GREAT_WORK_YIELD_EFFECTS)
+				m_bGreatWorkClassMapDirty = true;
+				if (iGreatWorkIndex != -1)
+				{
 					rebuildGreatWorkYields(GC.getGame().GetGameCulture()->GetGreatWorkClass(iGreatWorkIndex));
-					calculateHappinessFromGreatWorks();
 				}
-			}
+				calculateHappinessFromGreatWorks();
 #endif
+			}
 			GC.GetEngineUserInterface()->setDirty(CityInfo_DIRTY_BIT, true);
 			GC.GetEngineUserInterface()->setDirty(GreatWorksScreen_DIRTY_BIT, true);
 			return;
@@ -4469,6 +4471,30 @@ int CvCityBuildings::GetThemingBonuses() const
 	return iBonus;
 }
 #else
+// Use this city's slot, not a global search: during an occupied swap the same
+// work can temporarily appear in both cities while the two assignments run.
+static CvBuildingEntry* GreatWorkHoldingBuilding(const CvCity* pCity, BuildingClassTypes eClass, int iSlot)
+{
+	CvCivilizationInfo& civilization = GET_PLAYER(pCity->getOwner()).getCivilizationInfo();
+	BuildingTypes eBuilding = static_cast<BuildingTypes>(civilization.getCivilizationBuildings(eClass));
+	if (eBuilding == NO_BUILDING || pCity->GetCityBuildings()->GetNumBuilding(eBuilding) == 0)
+		return NULL;
+	CvBuildingEntry* info = GC.getBuildingInfo(eBuilding);
+	return info && iSlot >= 0 && iSlot < info->GetGreatWorkCount() ? info : NULL;
+}
+
+int CvCityBuildings::GetHeldGreatWorkYield(GreatWorkClass eWorkClass, BuildingClassTypes eBuildingClass, int iSlot, YieldTypes eYield) const
+{
+	CvBuildingEntry* info = GreatWorkHoldingBuilding(m_pCity, eBuildingClass, iSlot);
+	if (!info || !GC.getGreatWorkClassInfo(eWorkClass))
+		return 0;
+	int value = GC.getGreatWorkClassInfo(eWorkClass)->getGreatWorkClassBaseYield(eYield);
+	value += GET_PLAYER(m_pCity->getOwner()).GetGreatWorkClassYieldChange(eWorkClass, eYield);
+	value += info->GetBuildingGreatWorkYieldChange(eYield);
+	value += GetCityGreatWorkClassYieldChanges(eWorkClass, eYield);
+	return value;
+}
+
 int CvCityBuildings::GetYieldFromGreatWorks(YieldTypes eIndex) const
 {
 	int iTotalYield = 0;
@@ -4481,10 +4507,13 @@ int CvCityBuildings::GetYieldFromGreatWorks(YieldTypes eIndex) const
 		return 0;
 	for (std::vector<BuildingGreatWork>::const_iterator it = m_aBuildingGreatWork.begin(); it != m_aBuildingGreatWork.end(); ++it)
 	{
-		const CvGreatWork* pWork = &culture->m_CurrentGreatWorks[(*it).iGreatWorkIndex];
-		if (pWork)
+		if (it->iGreatWorkIndex < 0 || static_cast<size_t>(it->iGreatWorkIndex) >= culture->m_CurrentGreatWorks.size())
+			continue;
+		const CvGreatWork* pWork = &culture->m_CurrentGreatWorks[it->iGreatWorkIndex];
+		// Derive current values without changing the serialized per-work cache
+		// during a read. This also handles stale values in existing saves.
 		{
-			thisWork = pWork->m_viYield[eIndex];
+			thisWork = GetHeldGreatWorkYield(pWork->m_eClassType, it->eBuildingClass, it->iSlot, eIndex);
 #if defined(LEK_YIELD_TOURISM)
 			thisWork *= iMod;
 			thisWork /= 100;
@@ -4548,70 +4577,38 @@ void CvCityBuildings::rebuildGreatWorkYields(GreatWorkClass eClass)
 	CvGameCulture* culture = GC.getGame().GetGameCulture();
 	if (!culture)
 		return;
-	CvPlayerCulture* playerCulture = GET_PLAYER(m_pCity->getOwner()).GetCulture();
-	if (playerCulture)
+	for (std::vector<BuildingGreatWork>::const_iterator it = m_aBuildingGreatWork.begin(); it != m_aBuildingGreatWork.end(); ++it)
 	{
-		for (std::vector<BuildingGreatWork>::const_iterator it = m_aBuildingGreatWork.begin(); it != m_aBuildingGreatWork.end(); ++it)
+		if (it->iGreatWorkIndex < 0 || static_cast<size_t>(it->iGreatWorkIndex) >= culture->m_CurrentGreatWorks.size())
+			continue;
+		CvGreatWork& work = culture->m_CurrentGreatWorks[it->iGreatWorkIndex];
+		if (work.m_eClassType == eClass)
 		{
-			CvGreatWork* work = &culture->m_CurrentGreatWorks[(*it).iGreatWorkIndex];
-			if (work->m_eClassType != eClass)
-				continue;
-			if (work)
-			{
-				int iCityID, iSlot, workYield;
-				BuildingTypes eBuilding;
-				if (!playerCulture->GetGreatWorkLocation((*it).iGreatWorkIndex, iCityID, eBuilding, iSlot))
-					continue;
-				CvBuildingEntry* pkBuildingInfo = GC.getBuildingInfo(eBuilding);
-				if (!pkBuildingInfo)
-					continue;
-			
-				for (int yield = 0; yield < NUM_YIELD_TYPES; yield++)
-				{
-					YieldTypes eYield = static_cast<YieldTypes>(yield);
-					work->m_viYield[eYield] = 0;
-					workYield = GC.getGreatWorkClassInfo(work->m_eClassType)->getGreatWorkClassBaseYield(eYield);
-					workYield += GET_PLAYER(m_pCity->getOwner()).GetGreatWorkClassYieldChange(work->m_eClassType, eYield);
-					workYield += pkBuildingInfo->GetBuildingGreatWorkYieldChange(eYield);
-					workYield += GetCityGreatWorkClassYieldChanges(work->m_eClassType, eYield);
-					work->m_viYield[eYield] = workYield;
-				}
-			}
+			for (int yield = 0; yield < NUM_YIELD_TYPES; ++yield)
+				work.m_viYield[yield] = GetHeldGreatWorkYield(eClass, it->eBuildingClass, it->iSlot, static_cast<YieldTypes>(yield));
 		}
 	}
 }
 int CvCityBuildings::GetHappinessFromGreatWorks() const
 {
-	return m_iHappinessFromGreatWorks;
+	// Holdings are authoritative; the derived happiness cache is not serialized.
+	int total = 0;
+	CvGameCulture* culture = GC.getGame().GetGameCulture();
+	if (!culture)
+		return 0;
+	for (std::vector<BuildingGreatWork>::const_iterator it = m_aBuildingGreatWork.begin(); it != m_aBuildingGreatWork.end(); ++it)
+	{
+		if (it->iGreatWorkIndex < 0 || static_cast<size_t>(it->iGreatWorkIndex) >= culture->m_CurrentGreatWorks.size())
+			continue;
+		CvBuildingEntry* info = GreatWorkHoldingBuilding(m_pCity, it->eBuildingClass, it->iSlot);
+		if (info)
+			total += info->GetGreatWorkHappiness();
+	}
+	return total;
 }
 void CvCityBuildings::calculateHappinessFromGreatWorks()
 {
-	m_iHappinessFromGreatWorks = 0;
-	int iTotalHappiness = 0;
-	CvGameCulture* culture = GC.getGame().GetGameCulture();
-	if (!culture)
-		return;
-	CvPlayerCulture* playerCulture = GET_PLAYER(m_pCity->getOwner()).GetCulture();
-	if (playerCulture)
-	{
-		for (std::vector<BuildingGreatWork>::const_iterator it = m_aBuildingGreatWork.begin(); it != m_aBuildingGreatWork.end(); ++it)
-		{
-			CvGreatWork* pWork = &culture->m_CurrentGreatWorks[(*it).iGreatWorkIndex];
-			if (pWork)
-			{
-				int iCityID, iSlot;
-				BuildingTypes eBuilding;
-				if (!playerCulture->GetGreatWorkLocation((*it).iGreatWorkIndex, iCityID, eBuilding, iSlot))
-					continue;
-				CvBuildingEntry* pkBuildingInfo = GC.getBuildingInfo(eBuilding);
-				if (!pkBuildingInfo)
-					continue;
-				int buildingHappiness = pkBuildingInfo->GetGreatWorkHappiness();
-				iTotalHappiness += buildingHappiness;
-			}
-		}
-	}
-	m_iHappinessFromGreatWorks = iTotalHappiness;
+	m_iHappinessFromGreatWorks = GetHappinessFromGreatWorks();
 	GET_PLAYER(m_pCity->getOwner()).DoUpdateHappiness();
 }
 int CvCityBuildings::countNumThemesActive() const

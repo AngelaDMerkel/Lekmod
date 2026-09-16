@@ -203,9 +203,12 @@ CvString CvGameCulture::GetGreatWorkTooltip(int iIndex, PlayerTypes eOwner) cons
 	CvString cultureString;
 #if defined(LEKMOD_GREAT_WORK_YIELD_EFFECTS) // some of this is useful
 	CvPlayerCulture* pCulture = GET_PLAYER(eOwner).GetCulture();
-	int iCityID, iSlot;
-	BuildingTypes eBuilding;
-	pCulture->GetGreatWorkLocation(iIndex, iCityID, eBuilding, iSlot);
+	int iCityID = -1, iSlot = -1;
+	BuildingTypes eBuilding = NO_BUILDING;
+	CvCity* pHoldingCity = NULL;
+	if (pCulture && pCulture->GetGreatWorkLocation(iIndex, iCityID, eBuilding, iSlot))
+		pHoldingCity = GET_PLAYER(eOwner).getCity(iCityID);
+	CvBuildingEntry* pHoldingBuilding = eBuilding != NO_BUILDING ? GC.getBuildingInfo(eBuilding) : NULL;
 #endif
 #if !defined(LEKMOD_GREAT_WORK_YIELD_EFFECTS) // redo the Yield thing, its not much better actually, but w/e
 #if defined(MISC_CHANGES) // Show Yields being Added to Great Works in the Hover Tooltip
@@ -227,6 +230,9 @@ CvString CvGameCulture::GetGreatWorkTooltip(int iIndex, PlayerTypes eOwner) cons
 	{
 		YieldTypes eYield = (YieldTypes)iYieldLoop;
 		int iYield = pWork->m_viYield[eYield];
+		if (pHoldingCity && pHoldingBuilding)
+			iYield = pHoldingCity->GetCityBuildings()->GetHeldGreatWorkYield(pWork->m_eClassType,
+				static_cast<BuildingClassTypes>(pHoldingBuilding->GetBuildingClassType()), iSlot, eYield);
 		if (iYield == 0)
 			continue;
 		CvString strYieldIcon = GC.getYieldInfo(eYield)->getIconString();
@@ -240,7 +246,7 @@ CvString CvGameCulture::GetGreatWorkTooltip(int iIndex, PlayerTypes eOwner) cons
 #else
 	int iTourismPerWork = GC.getGreatWorkClassInfo(pWork->m_eClassType)->getBaseTourism();
 	iTourismPerWork += GET_PLAYER(eOwner).GetGreatWorkClassTourismChange(pWork->m_eClassType);
-	int iMod = GET_PLAYER(eOwner).getCity(iCityID)->GetCityBuildings()->GetGreatWorksTourismModifier();
+	int iMod = pHoldingCity ? pHoldingCity->GetCityBuildings()->GetGreatWorksTourismModifier() : 0;
 	iTourismPerWork = (iTourismPerWork * (100 + iMod)) / 100;
 #endif
 #if !defined(MISC_CHANGES) // Build Tooltip String Dynamically

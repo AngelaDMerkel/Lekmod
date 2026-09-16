@@ -415,3 +415,14 @@ The synchronized `UnitConverted` event arguments are old owner, new owner, old
 unit ID, new unit ID and upgrade boolean. It is emitted at the end of
 `CvUnit::convert`, after copied promotions/state and before delayed removal of
 the old unit. It does not replace or reorder the existing `UnitUpgraded` event.
+
+
+`greatworks` loads the small Congress fixture, supplies a second city, Museums
+and Artists, then tests normal work creation, compatible slot swaps, cross-city
+moves, exact tourism/theming changes and saved-state comparison. `cuba-greatworks`
+starts Industrial/Duel Cuba with `--scenario-turns 3`: it supplies two cities,
+uncapped population inputs, holding buildings and Musicians, then tests Dance
+Hall culture/happiness removal, restoration, occupied swaps and tooltip values.
+Its collected semantic mismatches always fail the scenario; diagnostic collection
+does not turn them into passes. Both use actual commands/Close callbacks, not
+mouse input. Use `--save-and-exit`, then exact `--expected-state` reload.
