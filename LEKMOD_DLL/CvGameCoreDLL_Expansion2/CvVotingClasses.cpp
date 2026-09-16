@@ -3111,40 +3111,37 @@ std::vector<int> CvLeague::GetChoicesForDecision(ResolutionDecisionTypes eDecisi
 		}
 		break;
 	case RESOLUTION_DECISION_MAJOR_CIV_MEMBER:
+	{
+		bool bSelfOnly = false;
 #ifdef DIPLO_VICTORY_VOTING
-		for (EnactProposalList::iterator it = m_vEnactProposals.begin(); it != m_vEnactProposals.end(); ++it)
+		// Human World Leader ballots are self-only. AI and unspecified-decider
+		// previews retain the ordinary major-member choices.
+		if (eDecider != NO_PLAYER && GET_PLAYER(eDecider).isHuman())
 		{
-			if (it->GetEffects()->bDiplomaticVictory)
+#if defined(AUI_WARNING_FIXES) || defined(AUI_CONSTIFY)
+			for (EnactProposalList::const_iterator it = m_vEnactProposals.begin(); it != m_vEnactProposals.end(); ++it)
+#else
+			for (EnactProposalList::iterator it = m_vEnactProposals.begin(); it != m_vEnactProposals.end(); ++it)
+#endif
 			{
-				for (uint i = 0; i < m_vMembers.size(); i++)
+				if (it->GetEffects()->bDiplomaticVictory)
 				{
-					if (m_vMembers[i].ePlayer == eDecider)
-					{
-						vChoices.push_back(m_vMembers[i].ePlayer);
-					}
-				}
-			}
-			else
-			{
-				for (uint i = 0; i < m_vMembers.size(); i++)
-				{
-					if (!GET_PLAYER(m_vMembers[i].ePlayer).isMinorCiv())
-					{
-						vChoices.push_back(m_vMembers[i].ePlayer);
-					}
+					bSelfOnly = true;
+					break;
 				}
 			}
 		}
-#else
+#endif
 		for (uint i = 0; i < m_vMembers.size(); i++)
 		{
-			if (!GET_PLAYER(m_vMembers[i].ePlayer).isMinorCiv())
+			PlayerTypes eMember = m_vMembers[i].ePlayer;
+			if (!GET_PLAYER(eMember).isMinorCiv() && (!bSelfOnly || eMember == eDecider))
 			{
-				vChoices.push_back(m_vMembers[i].ePlayer);
+				vChoices.push_back(eMember);
 			}
 		}
 		break;
-#endif
+	}
 	case RESOLUTION_DECISION_OTHER_MAJOR_CIV_MEMBER:
 		for (uint i = 0; i < m_vMembers.size(); i++)
 		{
