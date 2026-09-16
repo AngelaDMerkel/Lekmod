@@ -9,6 +9,34 @@
 #include <unistd.h>
 #include <string.h>
 #include <errno.h>
+#include <fcntl.h>
+#include <limits.h>
+#include <libproc.h>
+#include <sys/resource.h>
+
+static void recordDescriptorState(const char *stage) {
+    int savedErrno = errno;
+    struct rlimit limit = {0, 0};
+    int limitStatus = getrlimit(RLIMIT_NOFILE, &limit);
+    struct proc_fdinfo descriptors[4096];
+    int bytes = proc_pidinfo(getpid(), PROC_PIDLISTFDS, 0, descriptors, sizeof(descriptors));
+    fprintf(stderr, "[LEKMOD_TEST] descriptor-state stage=%s limit_status=%d soft=%llu hard=%llu open=%d truncated=%d\n",
+            stage, limitStatus, (unsigned long long)limit.rlim_cur, (unsigned long long)limit.rlim_max,
+            bytes > 0 ? bytes / (int)sizeof(struct proc_fdinfo) : -1, bytes == sizeof(descriptors));
+    errno = savedErrno;
+}
+
+static void flushLoggingStream(FILE *stream) {
+    // Never flush game databases or other buffered data streams. Only live
+    // diagnostic logs need early visibility to the bounded test supervisor.
+    int savedErrno = errno;
+    char path[PATH_MAX] = {0};
+    int fd = fileno(stream);
+    if (stream == stdout || stream == stderr ||
+        (fd >= 0 && fcntl(fd, F_GETPATH, path) == 0 && strstr(path, "/Logs/")))
+        fflush(stream);
+    errno = savedErrno;
+}
 
 static void observeDatabaseLogWrite(const void *bytes, size_t length) {
     // Retain the caller while it reports a cache failure, before startup
@@ -24,6 +52,7 @@ static void observeDatabaseLogWrite(const void *bytes, size_t length) {
                 int savedErrno = errno;
                 void *frames[48];
                 int depth = backtrace(frames, 48);
+                recordDescriptorState("database-failure");
                 fprintf(stderr, "[LEKMOD_TEST] database-failure-write frames=%d\n", depth);
                 backtrace_symbols_fd(frames, depth, STDERR_FILENO);
                 errno = savedErrno;
@@ -35,11 +64,22 @@ static void observeDatabaseLogWrite(const void *bytes, size_t length) {
 static size_t observedFwrite(const void *bytes, size_t size, size_t count, FILE *stream) {
     size_t result = fwrite(bytes, size, count, stream);
     if (size && result && result <= SIZE_MAX / size) observeDatabaseLogWrite(bytes, size * result);
+    if (result) flushLoggingStream(stream);
     return result;
 }
 static ssize_t observedWrite(int fd, const void *bytes, size_t length) {
     ssize_t result = write(fd, bytes, length);
     if (result > 0) observeDatabaseLogWrite(bytes, (size_t)result);
+    return result;
+}
+static int observedSetrlimit(int resource, const struct rlimit *limit) {
+    int result = setrlimit(resource, limit);
+    int savedErrno = errno;
+    if (resource == RLIMIT_NOFILE) {
+        fprintf(stderr, "[LEKMOD_TEST] setrlimit-nofile result=%d errno=%d\n", result, savedErrno);
+        recordDescriptorState("setrlimit");
+    }
+    errno = savedErrno;
     return result;
 }
 
@@ -64,7 +104,8 @@ __attribute__((used)) static const struct {
     { (const void *)&observedExit, (const void *)&exit },
     { (const void *)&observedImmediateExit, (const void *)&_exit },
     { (const void *)&observedFwrite, (const void *)&fwrite },
-    { (const void *)&observedWrite, (const void *)&write }
+    { (const void *)&observedWrite, (const void *)&write },
+    { (const void *)&observedSetrlimit, (const void *)&setrlimit }
 };
 
 static void noActivate(id self, SEL command, BOOL flag) {}
@@ -93,13 +134,14 @@ __attribute__((constructor)) static void keepGameInBackground(void) {
         replace([NSWindow class], @selector(orderFrontRegardless), (IMP)behindRegardless);
         [[NSApplication sharedApplication] setActivationPolicy:NSApplicationActivationPolicyProhibited];
 #endif
-        // Native Lua logs otherwise stay in 4 KiB stdio buffers and disappear
-        // when a hung test must be terminated. Only the test process is affected.
+        recordDescriptorState("startup");
+        // Lua/engine file logs are flushed individually after their writes.
+        // Keep only standard output streams on the timer; never fflush(NULL).
         static dispatch_source_t logFlushTimer;
         logFlushTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
         dispatch_source_set_timer(logFlushTimer, dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC),
                                   NSEC_PER_SEC, NSEC_PER_SEC / 10);
-        dispatch_source_set_event_handler(logFlushTimer, ^{ fflush(NULL); });
+        dispatch_source_set_event_handler(logFlushTimer, ^{ fflush(stdout); fflush(stderr); });
         dispatch_resume(logFlushTimer);
 #ifdef LEKMOD_TEST_ALLOW_FOREGROUND
         fprintf(stderr, "[LEKMOD_TEST] explicitly approved foreground attachment test; log flushing only\n");

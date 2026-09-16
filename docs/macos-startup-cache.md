@@ -53,3 +53,30 @@ not launch/retry Civ V, change source databases, alter saves, touch Aspyr backup
 or modify any gameplay/synchronization flag. Six offline tests cover inspection,
 preservation and refusal boundaries. A nonempty malformed cache needs inspection;
 this tool deliberately does not delete it.
+
+
+## Nonempty-cache failure and scoped diagnostics
+
+`20260916T062914Z` reproduced exit 255 at 20.4 seconds after an English
+localization text update. The write observer captured the failure on the
+localization worker thread. Offline disassembly places the return address
+`0x10048b4c7` immediately after `Database::Results::Execute()` for
+`ATTACH ? AS Localization`. The merged database was 25,509,888 bytes and passed
+SQLite quick_check with its expected tables present. This was not another
+confirmed empty-cache case. All twenty cache files and hashes were preserved in
+`build/macos/cache-investigation/20260916T062914Z/`; no cache file was deleted.
+
+The process observer now reports the actual RLIMIT_NOFILE and open-descriptor
+count at startup/database failure, and observes limit changes without changing
+their requested values or results. `20260916T065002Z` observed an inherited soft
+limit of 1,048,575, then the executable successfully set 10,240. That separately
+recorded attempt reached gameplay with unchanged product bytes and the healthy
+cache intact. This does not resolve the original startup cause.
+
+The test helper previously called `fflush(NULL)` once per second, which affected
+unrelated buffered streams. A real x86-64 probe under its dispatch timer reproduced
+that side effect with the committed old helper; its output is retained beside
+the cache snapshot. Flushing now covers stdout/stderr and identified files under
+Logs only. The same probe preserves unrelated buffered database bytes, while the
+existing exit/status and database-write tracing cases still pass. Narrowing the
+instrumentation is not proof that global flushing caused the startup failures.
