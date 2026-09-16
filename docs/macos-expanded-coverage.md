@@ -24,7 +24,7 @@ mean every possible combination of game state has been tested.
 | Score victory | Score resolution, human victory and defeat presentation | Passed |
 | Combat | Human melee/ranged/city attacks, unit death/capture, terrain/war restrictions, naval and air actions | Pending dedicated cases |
 | Unit lifecycle | Founding, movement/pathing, embark/disembark, promotion/upgrade, worker build/repair/pillage, healing, gifting/deletion, great-person actions | Promotion/upgrade/heal/embark, farm/road/repair and reload passed; other cases remain |
-| City lifecycle | Additional founding, capture/puppet/annex/raze/liberation, growth/starvation, building sale, specialists/great works | Partial earlier evidence; remaining cases pending |
+| City lifecycle | Additional founding, capture/puppet/annex/raze/liberation, growth/starvation, building sale, specialists/great works | Core lifecycle and exact reloads passed; additional great-work management remains |
 | Economy and policies | Research/free tech, policy/tenet acquisition and switching, happiness/golden age, resources, treasury boundaries | Partial earlier evidence; remaining cases pending |
 | Diplomacy | War/peace, friendship/denunciation, resources/GPT/open borders/research agreements, city-state interactions | Embassy workflow passed; remaining cases pending |
 | Religion | Found/enhance/buy/spread, conversion/defense and belief effects, save persistence | Core workflow passed; additional cases pending |
@@ -252,6 +252,40 @@ eligibility were rejected. The turn-8 save has SHA-256
 units and treasury on reload. Normal exit and settings/hooks/save preservation
 passed for both runs, without Lua/synchronization errors. Combat pillaging,
 road repair and actual road travel remain separate coverage items.
+
+### City lifecycle
+
+`20260916T031131Z` supplied a settler at a legal site and founded a second city
+through its normal action. The actual production popup bought an Aqueduct for
+130 gold. CityView sale cancellation preserved it and the treasury; confirmed
+sale removed it and refunded 6 gold. Palace sale was rejected. With stored food
+provided one whole food below the threshold, an actual 0.75-food/turn surplus
+grew population 3→4 over two ordinary turns. The test was corrected to inspect
+hundredths rather than truncating that surplus to zero. Population 20 and empty
+food were then supplied as a starvation boundary, and one ordinary turn reduced
+population to 19. Save SHA-256:
+`119e2677146a243a746a26774b36b648b8807041a4c07499a1fd81d9d337b122`.
+`20260916T031421Z` matched the exact city/food/building/treasury snapshot on reload.
+
+`20260916T032323Z` supplied an opponent's secondary city, a Giant Death Robot,
+uranium and staging positions. Normal war/attack commands captured the city;
+the actual capture-popup choice made it a puppet. Normal city tasks annexed it
+and razed it over ordinary turns. An original capital was not razable. A minor
+city temporarily held by the opponent was a labeled ownership input; another
+real human attack and the actual Liberate choice restored city-state owner 22.
+Save SHA-256:
+`9da9e81e70ca069a95091185d7a0bb04c625c71ab73fd5124ce2e99188d8c726`.
+`20260916T032711Z` matched city ownership, original owners, population and
+disposition flags on reload. All four final runs exited normally with settings,
+hooks and manual saves preserved, without Lua/synchronization errors.
+
+The earlier capture run stalled on a genuine first-contact greeting. Its
+supervisor captured the panel and preserved the failed report. The adapter now
+uses that informational popup's normal Close callback; no game wait flag was
+changed. The same screenshot exposed blank custom-personality text. The standard
+greeting now uses the shared personality helper; all ten offline personality
+cases pass and `20260916T033220Z` rendered Pacifistic correctly, then closed and
+saved/exited normally. Contact was a labeled input, not earned exploration.
 
 The current temporary standard test package is
 `build/macos/Lekmod-league-choices-20260916.zip`, SHA-256

@@ -159,6 +159,9 @@ SCENARIO_ITEMS = {"inventory": {"system-inventory"},
                   "unit-owners": {"minor-defender", "minor-hover", "barbarian-hover"},
                   "unit-actions": {"unit-promotion", "unit-upgrade", "unit-healing", "unit-embark", "unit-disembark", "unit-restrictions"},
                   "worker": {"worker-farm", "worker-road", "worker-repair", "worker-restrictions"},
+                  "city-basics": {"additional-city", "building-purchase", "building-sale-cancel", "building-sale", "city-growth", "city-starvation"},
+                  "city-capture": {"secondary-capture", "city-puppet", "city-annex", "city-raze", "city-liberation"},
+                  "minor-greeting": {"minor-personality-greeting"},
                   "espionage-mission": {"spy-surveillance", "spy-science", "spy-return"},
                   "diplomat-arrival": {"diplomat-arrival"},
                   "diplomacy": {"diplomacy-open", "diplomacy-gift"},
@@ -392,6 +395,13 @@ def main():
             if args.scenario == "trade":
                 ui_templates[ui_dir / "ProductionPopup.lua"] = "playtest-scenario-purchase-popup.lua"
                 ui_templates[ui_dir / "ChooseInternationalTradeRoutePopup.lua"] = "playtest-scenario-trade-popup.lua"
+            if args.scenario == "city-basics":
+                ui_templates[ui_dir / "ProductionPopup.lua"] = "playtest-scenario-purchase-popup.lua"
+                ui_templates[ui_dir / "CityView.lua"] = "playtest-scenario-city-sale.lua"
+            if args.scenario == "city-capture":
+                ui_templates[APP / "Contents/Assets/Assets/UI/InGame/Popups/GenericPopup.lua"] = "playtest-scenario-city-capture-popup.lua"
+            if args.scenario == "minor-greeting":
+                ui_templates[ui_dir / "CityStateGreetingPopup.lua"] = "playtest-scenario-minor-greeting-popup.lua"
             if args.scenario == "congress":
                 ui_templates[APP / "Contents/Assets/Assets/DLC/Expansion2/UI/InGame/Popups/LeagueOverview.lua"] = "playtest-scenario-league-popup.lua"
             if args.scenario == "espionage-mission":
@@ -459,7 +469,7 @@ def main():
             ui_templates[completion_path] = "playtest-production-completion.lua"
         ui_templates[APP / "Contents/Assets/Assets/UI/InGame/Popups/TechAwardPopup.lua"] = "playtest-tech-award.lua"
         informational_panels = {"WhosWinningPopup", "NewEraPopup", "NaturalWonderPopup", "GoodyHutPopup",
-                                "BarbarianCampPopup", "GoldenAgePopup", "WonderPopup", "LeagueSplash", "GreatPersonRewardPopup"}
+                                "BarbarianCampPopup", "GoldenAgePopup", "WonderPopup", "LeagueSplash", "GreatPersonRewardPopup", "CityStateGreetingPopup"}
         for path in (APP / "Contents/Assets/Assets").rglob("*.lua"):
             if path.stem in informational_panels:
                 ui_templates[path] = "playtest-info-popup.lua"
