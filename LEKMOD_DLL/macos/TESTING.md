@@ -452,3 +452,10 @@ open borders use actual single-player AI trade/reply callbacks. It checks both
 sides' accounting, rejection boundaries, ordinary settlement and exact reload.
 Explicit diplomacy adapters must take precedence over generic turn handlers, and
 accepted replies must be observed in a visible context before normal Back/Goodbye.
+
+
+`trade-internal` loads the small Congress fixture with `--scenario-turns 6`.
+It supplies coastal-city/building/reveal/unit inputs, then uses actual new-home
+No/Yes and route popup callbacks for rebasing, internal land food and sea
+production. Use its saved report for exact reload. The city accounting checks
+compare returned legal route quotes with trade-only yield contributions.

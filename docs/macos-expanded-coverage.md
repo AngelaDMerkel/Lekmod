@@ -29,7 +29,7 @@ mean every possible combination of game state has been tested.
 | Diplomacy | War/peace, friendship/denunciation, resources/GPT/open borders/research agreements, city-state interactions | Luxury/GPT gifts, mutual embassies, open borders and persistence passed; friendship/peace/research agreements and expiry remain |
 | Religion | Found/enhance/buy/spread, conversion/defense and belief effects, save persistence | Core workflow passed; additional cases pending |
 | Espionage | Assignment, diplomat, science award, surveillance, counterspy/election/coup paths and persistence | Core workflow passed; additional cases pending |
-| Trade | Legal routes/income/reload, internal/sea routes, rebasing, expiry/plunder and restrictions | Land external workflow passed; additional cases pending |
+| Trade | Legal routes/income/reload, internal/sea routes, rebasing, expiry/plunder and restrictions | Land external, internal land-food/sea-production, rebasing and reload passed; expiry/plunder remain |
 | Civilization content | Inventory every playable civilization and active Lua handler; test unique mechanics and owner/negative boundaries | [Inventory: 114 civilizations and 26 Lua files](macos-civilization-coverage.md); systematic cases in progress |
 | UI | Standard/EUI city, production, tech, save/load/exit, then remaining overview/notification/popups, post-victory continuation/replay and screen-size boundaries | Standard post-victory/overview workflow and presentation fixes passed; EUI additional views and dense/size boundaries remain |
 | Setup and persistence | Map/era/speed/difficulty/options boundaries, new/reloaded games, autosave/manual/quicksave compatibility | Partial earlier evidence; additional cases pending |
@@ -630,6 +630,26 @@ overwritten the scenario's handlers. Explicit handlers now take precedence.
 from the hidden trade context. The visible reply context now verifies accepted
 state and uses its ordinary Back action, followed by the root's Goodbye action.
 Both earlier records remain incomplete/failed; no game wait flag was cleared.
+
+### Trade rebasing and internal land/sea routes
+
+`20260916T073026Z` supplied two legal coastal cities on the same sea, origin
+buildings, trade-range visibility and trade units. The actual new-home popup's
+No choice preserved the caravan's position; Yes moved it to the selected city.
+After ordinary movement refresh, the actual route popup created a legal internal
+land-food route. Its quoted 175 hundredths of food matched the destination's
+trade contribution. A supplied cargo ship then created an internal sea-production
+route, with quoted and observed production both 350 hundredths. A current-home
+rebase destination and same-city routes were rejected. These are city yield
+contributions, not a separate completed-production or food-settlement claim.
+
+Save SHA-256:
+`a919359413d0dabc28907a4dda23876681f4d5cb1b7a604cb44442c9fb1e817d`.
+`20260916T073412Z` matched exact routes, domains, destinations, quoted yields,
+remaining durations, city contributions and trade-unit positions/movement on
+reload. Both saved/exited normally (0), preserved settings/hooks/manual saves,
+and had no Lua/synchronization errors. Normal contract expiry and plunder are
+separate cases; no route duration was assigned by these tests.
 
 ### Current test artifact
 

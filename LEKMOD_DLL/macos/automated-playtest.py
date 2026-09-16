@@ -171,6 +171,7 @@ SCENARIO_ITEMS = {"inventory": {"system-inventory"},
                   "archaeology": {"artifact-dig", "archaeology-cancel", "artifact-created", "landmark-dig", "landmark-created", "landmark-yield-preview", "archaeology-restrictions"},
                   "cuba-ideology": {"ideology-cancel", "ideology-selected", "tenet-cancel", "cuba-first-tenet-reward", "cuba-later-tenet-no-repeat", "tenet-restrictions"},
                   "diplomacy-assets": {"resource-gift", "gpt-gift", "mutual-embassies", "open-borders-gift", "diplomacy-trade-restrictions", "gpt-settlement"},
+                  "trade-internal": {"trade-rebase-cancel", "trade-rebase", "internal-land-food", "internal-sea-production", "internal-route-restrictions"},
                   "city-basics": {"additional-city", "building-purchase", "building-sale-cancel", "building-sale", "city-growth", "city-starvation"},
                   "city-capture": {"secondary-capture", "city-puppet", "city-annex", "city-raze", "city-liberation"},
                   "minor-greeting": {"minor-personality-greeting"},
@@ -407,6 +408,9 @@ def main():
             if args.scenario == "trade":
                 ui_templates[ui_dir / "ProductionPopup.lua"] = "playtest-scenario-purchase-popup.lua"
                 ui_templates[ui_dir / "ChooseInternationalTradeRoutePopup.lua"] = "playtest-scenario-trade-popup.lua"
+            if args.scenario == "trade-internal":
+                ui_templates[ui_dir / "ChooseInternationalTradeRoutePopup.lua"] = "playtest-scenario-trade-popup.lua"
+                ui_templates[APP / "Contents/Assets/Assets/DLC/Expansion2/UI/InGame/Popups/ChooseTradeUnitNewHome.lua"] = "playtest-scenario-trade-home-popup.lua"
             if args.scenario == "city-basics":
                 ui_templates[ui_dir / "ProductionPopup.lua"] = "playtest-scenario-purchase-popup.lua"
                 ui_templates[ui_dir / "CityView.lua"] = "playtest-scenario-city-sale.lua"
