@@ -436,3 +436,11 @@ No/Yes callbacks are required. A queued build must be acknowledged before the
 human turn driver runs, or an immediate Skip can cancel it. Landmark assertions
 follow the mod's science/gold and age-based culture rules. The older-site yield
 preview is a read-only API check, not an earned or worked Landmark outcome.
+
+
+`cuba-ideology` starts Modern/Duel Cuba with `--scenario-turns 6`. It waits for
+the normal ideology notification and exercises actual ideology and tenet No/Yes
+callbacks, first-tenet unit rewards, non-repeat, costs and rejection conditions.
+Use `--save-and-exit`, followed by exact `--expected-state` reload. The content
+revolution-button rejection does not establish switching under ideological
+pressure. All multiplayer branches remain outside this test scope.

@@ -25,7 +25,7 @@ mean every possible combination of game state has been tested.
 | Combat | Human melee/ranged/city attacks, unit death/capture, terrain/war restrictions, naval and air actions | Core land/city/naval attacks, death/capture and reload passed; actual air strike/interception, ground sweep, carrier capacity/movement and exact reload passed |
 | Unit lifecycle | Founding, movement/pathing, embark/disembark, promotion/upgrade, worker build/repair/pillage, healing, gifting/deletion, great-person actions | Promotion/upgrade/heal/embark, farm/road/repair, disband/gift and great-person actions passed; pillage, road repair/travel and exact reload passed; other great-person cases remain |
 | City lifecycle | Additional founding, capture/puppet/annex/raze/liberation, growth/starvation, building sale, specialists/great works | Core lifecycle, artwork movement/theming and exact reloads passed; Dance Hall bonuses and ordinary artifact/landmark digs passed; further cultural UI/branches remain |
-| Economy and policies | Research/free tech, policy/tenet acquisition and switching, happiness/golden age, resources, treasury boundaries | Partial earlier evidence; remaining cases pending |
+| Economy and policies | Research/free tech, policy/tenet acquisition and switching, happiness/golden age, resources, treasury boundaries | Policy/tenet confirmations, spending and Cuba reward boundaries passed; switching and remaining economy cases pending |
 | Diplomacy | War/peace, friendship/denunciation, resources/GPT/open borders/research agreements, city-state interactions | Embassy workflow passed; remaining cases pending |
 | Religion | Found/enhance/buy/spread, conversion/defense and belief effects, save persistence | Core workflow passed; additional cases pending |
 | Espionage | Assignment, diplomat, science award, surveillance, counterspy/election/coup paths and persistence | Core workflow passed; additional cases pending |
@@ -583,17 +583,39 @@ current-era Landmark. None of these corrections bypassed synchronization.
 `062914Z` failed before the menu with the separately documented database attach
 error; the later successful run is not a replacement for that failure.
 
+### Ideology selection and Cuba's first-tenet reward
+
+`20260916T070316Z` used normal Modern/Duel Cuba setup and one ordinary turn.
+The actual ideology popup's No choice preserved the unchosen state, then its Yes
+choice selected Freedom. The actual tenet confirmation's No choice preserved
+culture and policy state. Two distinct eligible level-one tenets were then
+adopted through the real confirmation callback and observed PlayerAdoptPolicy
+events. Culture inputs of 90 and 235 were recorded; exact culture/free-token
+spending was checked. The first tenet unlocked the Cuban dummy policy/building
+and created exactly two Guerrilleros. The later tenet did not repeat that reward.
+Level-two choices without prerequisites and duplicate adoption were rejected;
+the actual revolution button was disabled while public opinion was content.
+
+Save SHA-256:
+`d0e6c0fab16ac24b24acd6c914d2d36af11436da1a72edb1f212b169b7efcb7c`.
+`20260916T070605Z` matched exact ideology, policies, culture/free counters,
+reward units/building, public-opinion unhappiness and anarchy on reload. Both
+runs saved/exited normally (0), preserved settings/hooks/manual saves, and had
+no Lua/synchronization errors. This is scripted callback/gameplay coverage;
+ideology switching under pressure and physical policy clicks remain separate.
+
 ### Current test artifact
 
 The current standard test package is
-`build/macos/Lekmod-archaeology-20260916.zip`, SHA-256
-`ee2bf202c65f7e650d0956b209a2e8f3292e7ed51155195215bb54fcccd2de71`.
+`build/macos/Lekmod-sp-coverage-20260916.zip`, SHA-256
+`3e3d355e9d2ef9ca658dff9f18ff727c1e9ab313f7aba726d4d71e20ad4a692b`.
 Its signed GameCore is
 `eb67f54a38b10f9be2f8cee054ae17ac492ed4384357ff4bdd8184f232dc32b5`.
 It includes the earlier voting, presentation, greeting and lake fixes plus
 the Georgia hooks, great-work holding corrections and plot-yield argument fix.
-The science-icon-only text correction is in source and awaits the next package. Its manifest records a dirty source tree; it is an identified
-test artifact, not the final clean release. Installation used the central
+It includes the science-icon correction and was packaged from clean source
+`a2567e28`. It is an intermediate test artifact; final release regression remains
+open while the broader checklist is unfinished. Its provenance is recorded in the archive manifest. Installation used the central
 installer with the canonical stock backup retained.
 
 Earlier voting/presentation/greeting tests used signed GameCore

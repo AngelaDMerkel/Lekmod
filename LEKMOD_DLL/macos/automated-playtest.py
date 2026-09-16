@@ -169,6 +169,7 @@ SCENARIO_ITEMS = {"inventory": {"system-inventory"},
                   "greatworks": {"art-created", "museum-themed", "great-work-swap", "great-work-cross-city", "theming-removed", "theming-restored"},
                   "cuba-greatworks": {"cuba-music-bonus", "cuba-music-removal", "cuba-music-return", "cuba-occupied-swap"},
                   "archaeology": {"artifact-dig", "archaeology-cancel", "artifact-created", "landmark-dig", "landmark-created", "landmark-yield-preview", "archaeology-restrictions"},
+                  "cuba-ideology": {"ideology-cancel", "ideology-selected", "tenet-cancel", "cuba-first-tenet-reward", "cuba-later-tenet-no-repeat", "tenet-restrictions"},
                   "city-basics": {"additional-city", "building-purchase", "building-sale-cancel", "building-sale", "city-growth", "city-starvation"},
                   "city-capture": {"secondary-capture", "city-puppet", "city-annex", "city-raze", "city-liberation"},
                   "minor-greeting": {"minor-personality-greeting"},
@@ -314,8 +315,8 @@ def main():
         parser.error("Foreground UI tests require --mode ui-interaction and --timeout at most 3600; the flag does not grant user permission")
     if args.production_completion and (args.mode != "human-turns" or args.turns != 3 or not args.load_save or args.timeout > 600):
         parser.error("Production completion requires --mode human-turns, --turns 3, --load-save and --timeout at most 600")
-    if args.scenario and (args.mode != "single-player-smoke" or (not args.load_save and args.scenario not in ("congress", "endgame", "bolivia", "mughals", "worker", "buganda-lake", "georgia", "georgia-upgrade", "cuba-greatworks")) or args.city_controls or args.timeout > 1800):
-        parser.error("Scenarios require --mode single-player-smoke, --load-save (except congress/endgame/bolivia/mughals/worker/buganda-lake/georgia/georgia-upgrade/cuba-greatworks), no --city-controls and --timeout at most 1800")
+    if args.scenario and (args.mode != "single-player-smoke" or (not args.load_save and args.scenario not in ("congress", "endgame", "bolivia", "mughals", "worker", "buganda-lake", "georgia", "georgia-upgrade", "cuba-greatworks", "cuba-ideology")) or args.city_controls or args.timeout > 1800):
+        parser.error("Scenarios require --mode single-player-smoke, --load-save (except congress/endgame/bolivia/mughals/worker/buganda-lake/georgia/georgia-upgrade/cuba-greatworks/cuba-ideology), no --city-controls and --timeout at most 1800")
     if args.scenario == "endgame" and (args.load_save or args.expected_state or args.save_and_exit or args.scenario_turns != 2):
         parser.error("Endgame requires a new two-turn scenario, without save/reload options")
     if args.expect_human_victory and args.scenario != "endgame":
@@ -416,6 +417,9 @@ def main():
                 ui_templates[ui_dir / "CityStateGreetingPopup.lua"] = "playtest-scenario-minor-greeting-popup.lua"
             if args.scenario == "archaeology":
                 ui_templates[APP / "Contents/Assets/Assets/DLC/Expansion2/UI/InGame/Popups/ChooseArchaeologyPopup.lua"] = "playtest-scenario-archaeology-popup.lua"
+            if args.scenario == "cuba-ideology":
+                ui_templates[APP / "Contents/Assets/Assets/DLC/Expansion2/UI/InGame/Popups/ChooseIdeologyPopup.lua"] = "playtest-scenario-ideology-popup.lua"
+                ui_templates[ui_dir / "SocialPolicyPopup.lua"] = "playtest-scenario-tenet-popup.lua"
             if args.scenario == "congress":
                 ui_templates[APP / "Contents/Assets/Assets/DLC/Expansion2/UI/InGame/Popups/LeagueOverview.lua"] = "playtest-scenario-league-popup.lua"
             if args.scenario == "espionage-mission":
