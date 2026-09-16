@@ -22215,7 +22215,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_CHOOSE_ARCH_LANDMARK_RESULT"> 
 			<Text>
-				When worked, a Landmark provides [ICON_CULTURE] Culture based on its age. +1 [ICON_CULTURE] Culture per Era older than this civ's current Era. Archaeologist will be consumed.
+				When worked, a Landmark provides +2 [ICON_RESEARCH] Science and +2 [ICON_GOLD] Gold, plus +1 [ICON_CULTURE] Culture for each Era older than its owner's current Era. The Archaeologist will be consumed.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CHOOSE_ARCH_LEAD_IN"> 

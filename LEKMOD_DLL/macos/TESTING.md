@@ -426,3 +426,13 @@ Hall culture/happiness removal, restoration, occupied swaps and tooltip values.
 Its collected semantic mismatches always fail the scenario; diagnostic collection
 does not turn them into passes. Both use actual commands/Close callbacks, not
 mouse input. Use `--save-and-exit`, then exact `--expected-state` reload.
+
+
+`archaeology` loads the recorded two-Museum great-work fixture with
+`--scenario-turns 20 --timeout 900 --capture-panels --save-and-exit`. It supplies
+technology and archaeologists at natural sites away from nearby enemies. Real
+build completion events, normal notification activation and the actual archaeology
+No/Yes callbacks are required. A queued build must be acknowledged before the
+human turn driver runs, or an immediate Skip can cancel it. Landmark assertions
+follow the mod's science/gold and age-based culture rules. The older-site yield
+preview is a read-only API check, not an earned or worked Landmark outcome.

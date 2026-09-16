@@ -24,13 +24,13 @@ mean every possible combination of game state has been tested.
 | Score victory | Score resolution, human victory and defeat presentation | Passed |
 | Combat | Human melee/ranged/city attacks, unit death/capture, terrain/war restrictions, naval and air actions | Core land/city/naval attacks, death/capture and reload passed; actual air strike/interception, ground sweep, carrier capacity/movement and exact reload passed |
 | Unit lifecycle | Founding, movement/pathing, embark/disembark, promotion/upgrade, worker build/repair/pillage, healing, gifting/deletion, great-person actions | Promotion/upgrade/heal/embark, farm/road/repair, disband/gift and great-person actions passed; pillage, road repair/travel and exact reload passed; other great-person cases remain |
-| City lifecycle | Additional founding, capture/puppet/annex/raze/liberation, growth/starvation, building sale, specialists/great works | Core lifecycle, artwork movement/theming and exact reloads passed; special building bonuses and archaeology in progress |
+| City lifecycle | Additional founding, capture/puppet/annex/raze/liberation, growth/starvation, building sale, specialists/great works | Core lifecycle, artwork movement/theming and exact reloads passed; Dance Hall bonuses and ordinary artifact/landmark digs passed; further cultural UI/branches remain |
 | Economy and policies | Research/free tech, policy/tenet acquisition and switching, happiness/golden age, resources, treasury boundaries | Partial earlier evidence; remaining cases pending |
 | Diplomacy | War/peace, friendship/denunciation, resources/GPT/open borders/research agreements, city-state interactions | Embassy workflow passed; remaining cases pending |
 | Religion | Found/enhance/buy/spread, conversion/defense and belief effects, save persistence | Core workflow passed; additional cases pending |
 | Espionage | Assignment, diplomat, science award, surveillance, counterspy/election/coup paths and persistence | Core workflow passed; additional cases pending |
 | Trade | Legal routes/income/reload, internal/sea routes, rebasing, expiry/plunder and restrictions | Land external workflow passed; additional cases pending |
-| Civilization content | Inventory every playable civilization and active Lua handler; test unique mechanics and owner/negative boundaries | Inventory: 114 playable civilizations, 26 Lua files; systematic cases in progress |
+| Civilization content | Inventory every playable civilization and active Lua handler; test unique mechanics and owner/negative boundaries | [Inventory: 114 civilizations and 26 Lua files](macos-civilization-coverage.md); systematic cases in progress |
 | UI | Standard/EUI city, production, tech, save/load/exit, then remaining overview/notification/popups, post-victory continuation/replay and screen-size boundaries | Standard post-victory/overview workflow and presentation fixes passed; EUI additional views and dense/size boundaries remain |
 | Setup and persistence | Map/era/speed/difficulty/options boundaries, new/reloaded games, autosave/manual/quicksave compatibility | Partial earlier evidence; additional cases pending |
 | Startup reliability | Isolate recorded startup-only exit 255; compare identical artifact/configuration and retain failures | Localization-cache failure identified; empty-cache recovery passed; original creation failure still under investigation |
@@ -544,15 +544,55 @@ lookups. Three SQL cases and thirteen sanitizer cases pass, including both swap
 directions and stale derived values after a cache reset. Those cache-reset cases
 are offline evidence; no pre-fix native reload failure is claimed.
 
+### Archaeology and improvement-yield arguments
+
+`20260916T065002Z` supplied Archaeology and archaeologists at two natural sites,
+then completed normal build missions and ordinary turns. The actual archaeology
+popup's No choice preserved the pending dig; its confirmed artifact choice
+created a work whose origin matched minor 25. A second confirmed choice created
+a Landmark, consumed its archaeologist and removed the antiquity resource.
+The unowned, current-era Landmark had tile yields +2 science, +2 gold and zero
+culture, matching Lekmod's data. This is not worked-city income coverage.
+A read-only native preview at the older site returned four culture if owned by
+the human; it is not a claim that an aged Landmark was worked in gameplay.
+
+The plot-yield Lua binding read both the optimal flag and route from argument 5.
+The corrected route position is 6. The actual binding/helper against Lua 5.1
+passes nineteen default/boolean/route combinations and an invalid-route guard;
+the old code failed forwarding. The native preview accepted explicit boolean and
+route arguments. The landmark choice's English wording now includes its science
+and gold. A native capture verified the wording; the science icon token was then
+aligned with the shipped Yields definition, `[ICON_RESEARCH]`.
+
+Save SHA-256:
+`27f6801da2a12a5486d3283d0ea6b16c899543433029dcf6e0a2ddea907b9335`.
+`20260916T065356Z` matched the exact artifact slots/origins, remaining sites,
+Landmark/resource state, tile yields and turn after reload. Both final runs
+saved/exited normally (0), restored hooks/settings/manual saves and had no
+Lua/synchronization errors. All actions here were scripted missions/callbacks.
+Written artifacts, foreign-work exchange and physical archaeology clicks remain
+separate coverage.
+
+Earlier reports remain failed: `055525Z` chose an exposed site subsequently
+entered by a barbarian; site selection now excludes nearby enemies and checks
+for lost/displaced workers. `060026Z` completed the first artifact but its second
+Build command was followed by Skip in the same frame, canceling the dig. The
+scenario now waits for an acknowledged build mission before delegating turns.
+`060915Z` completed both digs but incorrectly expected positive culture from a
+current-era Landmark. None of these corrections bypassed synchronization.
+`062914Z` failed before the menu with the separately documented database attach
+error; the later successful run is not a replacement for that failure.
+
 ### Current test artifact
 
 The current standard test package is
-`build/macos/Lekmod-greatwork-location-20260916b.zip`, SHA-256
-`f18f134e489bae5f336526232233f73d9264b39afbbb12e8e1e34715b8b02e37`.
+`build/macos/Lekmod-archaeology-20260916.zip`, SHA-256
+`ee2bf202c65f7e650d0956b209a2e8f3292e7ed51155195215bb54fcccd2de71`.
 Its signed GameCore is
-`ab54f592caf9bb94892d969c20bef9de96c3eb3d82082b68e05c45e958480435`.
+`eb67f54a38b10f9be2f8cee054ae17ac492ed4384357ff4bdd8184f232dc32b5`.
 It includes the earlier voting, presentation, greeting and lake fixes plus
-the Georgia hooks and great-work holding corrections. Its manifest records a dirty source tree; it is an identified
+the Georgia hooks, great-work holding corrections and plot-yield argument fix.
+The science-icon-only text correction is in source and awaits the next package. Its manifest records a dirty source tree; it is an identified
 test artifact, not the final clean release. Installation used the central
 installer with the canonical stock backup retained.
 

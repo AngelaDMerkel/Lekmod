@@ -168,6 +168,7 @@ SCENARIO_ITEMS = {"inventory": {"system-inventory"},
                   "georgia-upgrade": {"georgia-paid-upgrade", "georgia-upgrade-golden-age", "georgia-gift-away"},
                   "greatworks": {"art-created", "museum-themed", "great-work-swap", "great-work-cross-city", "theming-removed", "theming-restored"},
                   "cuba-greatworks": {"cuba-music-bonus", "cuba-music-removal", "cuba-music-return", "cuba-occupied-swap"},
+                  "archaeology": {"artifact-dig", "archaeology-cancel", "artifact-created", "landmark-dig", "landmark-created", "landmark-yield-preview", "archaeology-restrictions"},
                   "city-basics": {"additional-city", "building-purchase", "building-sale-cancel", "building-sale", "city-growth", "city-starvation"},
                   "city-capture": {"secondary-capture", "city-puppet", "city-annex", "city-raze", "city-liberation"},
                   "minor-greeting": {"minor-personality-greeting"},
@@ -413,6 +414,8 @@ def main():
                 ui_templates[APP / "Contents/Assets/Assets/UI/InGame/Popups/GenericPopup.lua"] = "playtest-scenario-unit-confirm.lua"
             if args.scenario == "minor-greeting":
                 ui_templates[ui_dir / "CityStateGreetingPopup.lua"] = "playtest-scenario-minor-greeting-popup.lua"
+            if args.scenario == "archaeology":
+                ui_templates[APP / "Contents/Assets/Assets/DLC/Expansion2/UI/InGame/Popups/ChooseArchaeologyPopup.lua"] = "playtest-scenario-archaeology-popup.lua"
             if args.scenario == "congress":
                 ui_templates[APP / "Contents/Assets/Assets/DLC/Expansion2/UI/InGame/Popups/LeagueOverview.lua"] = "playtest-scenario-league-popup.lua"
             if args.scenario == "espionage-mission":
