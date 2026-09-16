@@ -29,7 +29,7 @@ mean every possible combination of game state has been tested.
 | Diplomacy | War/peace, friendship/denunciation, resources/GPT/open borders/research agreements, city-state interactions | Luxury/GPT gifts, mutual embassies, open borders and persistence passed; friendship/peace/research agreements and expiry remain |
 | Religion | Found/enhance/buy/spread, conversion/defense and belief effects, save persistence | Core workflow passed; additional cases pending |
 | Espionage | Assignment, diplomat, science award, surveillance, counterspy/election/coup paths and persistence | Core workflow, counterspy arrival, scheduled election and successful coup/reload passed; defensive interception and failed-coup branch remain |
-| Trade | Legal routes/income/reload, internal/sea routes, rebasing, expiry/plunder and restrictions | Land external, internal land-food/sea-production, rebasing and reload passed; natural expiry/countdown correction passed; plunder remains |
+| Trade | Legal routes/income/reload, internal/sea routes, rebasing, expiry/plunder and restrictions | Land external, internal land-food/sea-production, rebasing and reload passed; natural expiry/countdown correction and land plunder/reload passed |
 | Civilization content | Inventory every playable civilization and active Lua handler; test unique mechanics and owner/negative boundaries | [Inventory: 114 civilizations and 26 Lua files](macos-civilization-coverage.md); systematic cases in progress |
 | UI | Standard/EUI city, production, tech, save/load/exit, then remaining overview/notification/popups, post-victory continuation/replay and screen-size boundaries | Standard post-victory/overview workflow and presentation fixes passed; EUI additional views and dense/size boundaries remain |
 | Setup and persistence | Map/era/speed/difficulty/options boundaries, new/reloaded games, autosave/manual/quicksave compatibility | Partial earlier evidence; additional cases pending |
@@ -753,6 +753,34 @@ and influence on reload. Both saved/exited normally (0), restored settings/hooks
 preserved manual saves and reported no Lua/synchronization errors. These were
 normal scripted game commands and observed outcomes. The coup confirmation UI
 and actual mouse workflow were not exercised by this scenario.
+
+### Trade plunder and restrictions
+
+`20260916T084330Z` supplied an AI secondary city, origin buildings/range visibility
+and a caravan. Its real active PlayerDoTurn callback issued a legal internal-food
+route mission; the engine created and moved the route during one ordinary turn.
+A supplied human Horseman could not plunder that route at peace or the existing
+human-owned route. At war a supplied noncombat Worker remained ineligible, while
+the Horseman was eligible against the same foreign route. The raider's position
+was supplied explicitly; the actual normal unit action then plundered the route.
+The real UnitPlundered event fired, the AI route/visual unit and one used capacity
+slot disappeared, human treasury increased by exactly 100 gold, and the AI city's
+food contribution returned to baseline. A repeat on the empty tile was rejected.
+
+Save SHA-256:
+`301b8c4d12b302e3cd7c15bf927fad692e4e1b8eb72bf7d5f4cf5d00c169506d`.
+`20260916T084524Z` matched exact treasuries, routes/units, capacity, city food and
+war state on reload. Both saved/exited normally (0), restored settings/hooks,
+preserved manual saves and reported no Lua/synchronization errors. This is
+scripted command/action evidence; it does not establish a mouse plunder workflow
+or earned construction of the supplied AI route prerequisites.
+
+The earlier `083710Z` failed because an AI mission queued during the human turn
+had not executed. `083933Z` allowed an owner turn, but the ordinary AI strategy
+replaced that queued order with a different external route. Both reports remain
+failed harness attempts. The final setup issues its mission inside the actual
+active owner-turn callback before unit planning; no active-player, wait or
+synchronization flag is assigned, and the AI remains computer-controlled.
 
 ### Current test artifact
 
