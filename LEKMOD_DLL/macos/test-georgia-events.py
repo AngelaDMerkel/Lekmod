@@ -52,6 +52,14 @@ k,w=setup(2,true);emit('UnitCreated',0,1007);emit('PlayerDoTurn',0);check('other
 k,w=setup(1,true,false);emit('UnitCreated',0,1007);emit('PlayerDoTurn',0);check('dead-owner',not k.prom)
 k,w=setup(1,false);k.prom=true;emit('PlayerDoTurn',0);check('ordinary-turn-expiration',not k.prom)
 k,w=setup(1,false);local other=unit(11);Players[1].units={other};emit('UnitCreated',1,1007);check('duplicate-civ-correct-owner',not k.prom and other.prom)
+k,w=setup(1,true);emit('UnitCreated',0,1007);k.prom=false -- engine conversion reapplies promotions
+emit('UnitConverted',0,0,1006,1007,true);check('paid-upgrade-after-promotion-conversion',k.prom and not w.prom)
+k,w=setup(2,true);other=unit(11);Players[1].units={other}
+emit('UnitConverted',0,1,1006,1007,false);check('gift-to-Georgia-uses-new-owner',other.prom and not k.prom)
+k,w=setup(1,true);Players[1]=player(2,true);other=unit(11);Players[1].units={other}
+emit('UnitConverted',0,1,1006,1007,false);check('gift-to-other-civilization',not other.prom)
+k,w=setup(1,false);emit('UnitConverted',0,0,1006,1007,true);check('conversion-outside-golden-age',not k.prom)
+k,w=setup(1,true);Players[0].units={w};emit('UnitConverted',0,0,1006,1007,true);check('upgrade-away-from-Khevsur',not w.prom)
 print(count..' cases, '..failed..' failures');os.exit(failed==0 and 0 or 1)
 '''
 with tempfile.TemporaryDirectory(prefix='lekmod-georgia-events-') as directory:

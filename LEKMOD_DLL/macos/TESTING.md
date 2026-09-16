@@ -402,3 +402,16 @@ Industrial/Duel Georgia game with the same turn bound, tests real Artist-driven
 and newly created Khevsur bonuses, then lets the golden age expire normally.
 Both support saved-state comparison. Supplied terrain improvements, resources,
 units and staging are labeled separately from observed action outcomes.
+
+
+`georgia-upgrade` starts a Medieval/Duel Georgia fixture with
+`--scenario-turns 6 --save-and-exit`. It supplies prerequisites, units and any
+required gold/iron, then uses a normal Artist action and a paid Warrior→Khevsur
+upgrade. A separate Khevsur is gifted to another civilization through the normal
+command to verify new-owner cleanup. Its snapshot retains both owners' units;
+reload with `--expected-state` to compare bonus and non-bonus state.
+
+The synchronized `UnitConverted` event arguments are old owner, new owner, old
+unit ID, new unit ID and upgrade boolean. It is emitted at the end of
+`CvUnit::convert`, after copied promotions/state and before delayed removal of
+the old unit. It does not replace or reorder the existing `UnitUpgraded` event.

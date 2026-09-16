@@ -1598,6 +1598,22 @@ void CvUnit::convert(CvUnit* pUnit, bool bIsUpgrade)
 	SetIgnoreExpended(pUnit->IsIgnoreExpended());
 #endif
 
+	// Creation callbacks run before convert() replaces promotions. Give Lua a
+	// synchronized opportunity to apply the receiving owner's current abilities
+	// after that replacement, for upgrades and ownership transfers alike.
+	ICvEngineScriptSystem1* pkScriptSystem = gDLL->GetScriptSystem();
+	if (pkScriptSystem)
+	{
+		CvLuaArgsHandle args;
+		args->Push(pUnit->getOwner());
+		args->Push(getOwner());
+		args->Push(pUnit->GetID());
+		args->Push(GetID());
+		args->Push(bIsUpgrade);
+		bool bResult;
+		LuaSupport::CallHook(pkScriptSystem, "UnitConverted", args.get(), bResult);
+	}
+
 	pUnit->kill(true);
 }
 

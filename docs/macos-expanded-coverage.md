@@ -453,15 +453,43 @@ fixture now creates military inputs on empty nearby map plots and selects normal
 Wealth production. Paid upgrades are a separate conversion boundary under test;
 first-creation coverage does not establish that path.
 
+### Georgia upgrade and ownership conversion
+
+`20260916T044307Z` reproduced a second boundary: the normal 40-gold paid upgrade
+created a Khevsur during a golden age but conversion removed its creation-time
+promotion. Existing `UnitUpgraded` notification order is retained. A new
+synchronized `UnitConverted(oldOwner, newOwner, oldUnitID, newUnitID, isUpgrade)`
+hook runs after promotion/state transfer and before the old unit's delayed death.
+Georgia refreshes the receiving owner's ability there. No serialized fields,
+wait flags or synchronization checks changed. Thirteen offline event cases pass,
+including conversion after creation, both gift directions and upgrading away
+from the Khevsur; two conversion cases failed before this addition.
+
+`20260916T044753Z` used a normal Medieval Georgia setup, supplied Guilds/iron/gold
+and units, then completed one ordinary turn, an Artist golden age and the actual
+40-gold upgrade. The new Khevsur retained +33 combat and the real post-conversion
+event identified the correct owner and IDs. A separate supplied Khevsur with the
+bonus was staged in peaceful foreign territory and gifted through the normal
+command. Its new owner retained the unit type and lost Georgia's promotion.
+Save SHA-256:
+`5b9c0ea42f7c1673e1bf3317d9ad1f24d014d0df670ec24fe76265da190d2cc3`.
+`20260916T045001Z` matched the exact saved treasury, golden-age duration and both
+owners' Khevsur promotions/combat/level/XP. Both runs saved/exited normally (0),
+with hooks/settings/manual saves preserved and no Lua/synchronization errors.
+`20260916T045132Z` reran all seven ordinary Roman disposal/gift/great-person
+cases on the new GameCore, including the real minor-unit gift conversion. All
+passed with normal save/exit and cleanup. Gift-to-Georgia coverage remains
+offline; the native Georgian gift check was away from Georgia. No multiplayer coverage is inferred from the synchronized event.
+
 ### Current test artifact
 
 The current standard test package is
-`build/macos/Lekmod-georgia-20260916.zip`, SHA-256
-`c94c10bf19118b98f4b816e43979cfb11dcc6e3d443479fffdee65a94a628371`.
+`build/macos/Lekmod-unit-conversion-20260916.zip`, SHA-256
+`19374588d50bd3b2cbe140bd60d9793f936179c67e70914a4f19817ccd8c4696`.
 Its signed GameCore is
-`5ad12f091579d48c244155415db19479189d76b880345b2ba004880ee47e5b68`.
+`398dafe4b9a99ec93d91b24bea4f194b13cbd1ae6243db94e9ec05d9dfa471e1`.
 It includes the earlier voting, presentation, greeting and lake fixes plus
-the Georgia first-creation hook. Its manifest records a dirty source tree; it is an identified
+the Georgia first-creation and post-conversion hooks. Its manifest records a dirty source tree; it is an identified
 test artifact, not the final clean release. Installation used the central
 installer with the canonical stock backup retained.
 

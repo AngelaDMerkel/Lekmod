@@ -31,3 +31,8 @@ GameEvents.PlayerDoTurn.Add(lekmod_georgia_uu_golden_age)
 GameEvents.GreatPersonExpended.Add(lekmod_georgia_uu_golden_age)
 -- Apply the current golden-age benefit when a Khevsur is first created.
 GameEvents.UnitCreated.Add(lekmod_georgia_uu_golden_age)
+-- Conversion replaces creation-time promotions; refresh for the new owner
+-- after the engine has transferred them, including paid upgrades and gifts.
+GameEvents.UnitConverted.Add(function(old_player_id, new_player_id)
+    lekmod_georgia_uu_golden_age(new_player_id)
+end)
