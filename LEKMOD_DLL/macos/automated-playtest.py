@@ -126,6 +126,14 @@ def localization_startup_failure(database_text):
              "no such table: Languages" in database_text))
 
 
+def process_exit_status(mode, returncode):
+    # pgrep can lose a terminating process before Popen has its exit status.
+    # An unavailable status is still pending, not an early-exit failure.
+    if returncode is None:
+        return None
+    return "ended-manual-ui-session" if mode == "ui-interaction" and returncode == 0 else "failed-early-exit"
+
+
 def unresolved_driver_error(text):
     return text.rfind("[LEKMOD_TEST] ERROR") > text.rfind("[LEKMOD_TEST] driver-reloaded")
 
@@ -676,8 +684,9 @@ def main():
                         report["status"] = "passed-scenario-reload-only" if args.expected_state else "passed-scenario-checks-only"
                     if (not args.save_and_exit and args.scenario not in ("endgame", "science-launch", "domination", "culture-launch", "diplo-victory-launch")) or functional["failed"]:
                         break
-                    if pid not in pids:
-                        exited_normally = game_process.poll() == 0
+                    returncode = game_process.poll()
+                    if returncode is not None:
+                        exited_normally = returncode == 0
                         saved = generated_save.is_file() and generated_save.stat().st_size > 0
                         confirmed = "run=" + stamp + " event=exit-confirmed" in recent_lua
                         report["normal_exit_verified"] = exited_normally and confirmed
@@ -686,9 +695,9 @@ def main():
                         if not (exited_normally and confirmed and (saved or args.scenario in ("endgame", "science-launch", "domination", "culture-launch", "diplo-victory-launch"))):
                             report["status"] = "failed-save-or-normal-exit"
                         break
-            if pid and pid not in pids:
-                report["status"] = ("ended-manual-ui-session" if args.mode == "ui-interaction" and game_process.poll() == 0
-                                    else "failed-early-exit")
+            exit_status = process_exit_status(args.mode, game_process.poll()) if pid else None
+            if exit_status is not None:
+                report["status"] = exit_status
                 break
             revisions = re.findall(r"\[LEKMOD_TEST\] driver-reloaded revision=(\S+)", recent_lua)
             if engine_started and revisions and revisions[-1] != seen_driver_revision:

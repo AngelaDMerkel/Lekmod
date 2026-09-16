@@ -15,6 +15,14 @@ spec.loader.exec_module(playtest)
 
 
 class PlaytestEvidenceTests(unittest.TestCase):
+    def test_exit_classification_waits_for_actual_process_status(self):
+        self.assertIsNone(playtest.process_exit_status("ui-interaction",None))
+        self.assertIsNone(playtest.process_exit_status("single-player-smoke",None))
+        self.assertEqual(playtest.process_exit_status("ui-interaction",0),"ended-manual-ui-session")
+        for code in (-9,1,255):
+            self.assertEqual(playtest.process_exit_status("ui-interaction",code),"failed-early-exit")
+        self.assertEqual(playtest.process_exit_status("single-player-smoke",0),"failed-early-exit")
+
     def test_localization_startup_failure_is_distinct_from_duplicate_data_warnings(self):
         self.assertTrue(playtest.localization_startup_failure("unable to open database: C:\\Emu\\cache\\Localization-Merged.db"))
         self.assertTrue(playtest.localization_startup_failure("Failed to Load database.\nno such table: Languages"))

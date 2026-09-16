@@ -3,6 +3,9 @@
 do
     local ready, elapsed, previous = false, 0, nil
     Events.SequenceGameInitComplete.Add(function() ready = true end)
+    Events.EndGameShow.Add(function(kind,team)
+        print("[LEKMOD_UI_OBSERVE] run=__TEST_RUN__ event=endgame type="..kind.." team="..team)
+    end)
     ContextPtr:SetUpdate(function(dt)
         if not ready then return end
         elapsed = elapsed + dt
@@ -57,6 +60,7 @@ do
             " yields100=" .. table.concat(yields, ";") .. " worked=" .. table.concat(worked, ";") ..
             " base_yields=" .. table.concat(baseYields, ";") .. " modifiers=" .. table.concat(modifiers, ";") ..
             " plot_food_production_gold=" .. table.concat(plotYields, ";") ..
+            " game_state=" .. Game.GetGameState() .. " winner=" .. Game.GetWinner() .. " victory=" .. Game.GetVictory() ..
             " units=" .. table.concat(units, ";")
         if state ~= previous then
             print("[LEKMOD_UI_OBSERVE] run=__TEST_RUN__ context=" .. ContextPtr:GetID() .. " state=" .. state)
