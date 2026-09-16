@@ -170,6 +170,7 @@ SCENARIO_ITEMS = {"inventory": {"system-inventory"},
                   "cuba-greatworks": {"cuba-music-bonus", "cuba-music-removal", "cuba-music-return", "cuba-occupied-swap"},
                   "archaeology": {"artifact-dig", "archaeology-cancel", "artifact-created", "landmark-dig", "landmark-created", "landmark-yield-preview", "archaeology-restrictions"},
                   "cuba-ideology": {"ideology-cancel", "ideology-selected", "tenet-cancel", "cuba-first-tenet-reward", "cuba-later-tenet-no-repeat", "tenet-restrictions"},
+                  "diplomacy-assets": {"resource-gift", "gpt-gift", "mutual-embassies", "open-borders-gift", "diplomacy-trade-restrictions", "gpt-settlement"},
                   "city-basics": {"additional-city", "building-purchase", "building-sale-cancel", "building-sale", "city-growth", "city-starvation"},
                   "city-capture": {"secondary-capture", "city-puppet", "city-annex", "city-raze", "city-liberation"},
                   "minor-greeting": {"minor-personality-greeting"},
@@ -315,8 +316,8 @@ def main():
         parser.error("Foreground UI tests require --mode ui-interaction and --timeout at most 3600; the flag does not grant user permission")
     if args.production_completion and (args.mode != "human-turns" or args.turns != 3 or not args.load_save or args.timeout > 600):
         parser.error("Production completion requires --mode human-turns, --turns 3, --load-save and --timeout at most 600")
-    if args.scenario and (args.mode != "single-player-smoke" or (not args.load_save and args.scenario not in ("congress", "endgame", "bolivia", "mughals", "worker", "buganda-lake", "georgia", "georgia-upgrade", "cuba-greatworks", "cuba-ideology")) or args.city_controls or args.timeout > 1800):
-        parser.error("Scenarios require --mode single-player-smoke, --load-save (except congress/endgame/bolivia/mughals/worker/buganda-lake/georgia/georgia-upgrade/cuba-greatworks/cuba-ideology), no --city-controls and --timeout at most 1800")
+    if args.scenario and (args.mode != "single-player-smoke" or (not args.load_save and args.scenario not in ("congress", "endgame", "bolivia", "mughals", "worker", "buganda-lake", "georgia", "georgia-upgrade", "cuba-greatworks", "cuba-ideology", "diplomacy-assets")) or args.city_controls or args.timeout > 1800):
+        parser.error("Scenarios require --mode single-player-smoke, --load-save (except congress/endgame/bolivia/mughals/worker/buganda-lake/georgia/georgia-upgrade/cuba-greatworks/cuba-ideology/diplomacy-assets), no --city-controls and --timeout at most 1800")
     if args.scenario == "endgame" and (args.load_save or args.expected_state or args.save_and_exit or args.scenario_turns != 2):
         parser.error("Endgame requires a new two-turn scenario, without save/reload options")
     if args.expect_human_victory and args.scenario != "endgame":
@@ -428,6 +429,10 @@ def main():
                 ui_templates[APP / "Contents/Assets/Assets/DLC/Expansion2/UI/InGame/LeaderHead/LeaderHeadRoot.lua"] = "playtest-scenario-diplo-root.lua"
                 ui_templates[ui_dir / "TradeLogic.lua"] = "playtest-scenario-diplo-trade.lua"
                 ui_templates[ui_dir / "DiscussionDialog.lua"] = "playtest-scenario-diplo-reply.lua"
+            if args.scenario == "diplomacy-assets":
+                ui_templates[APP / "Contents/Assets/Assets/DLC/Expansion2/UI/InGame/LeaderHead/LeaderHeadRoot.lua"] = "playtest-scenario-diplo-assets-root.lua"
+                ui_templates[ui_dir / "TradeLogic.lua"] = "playtest-scenario-diplo-assets-popup.lua"
+                ui_templates[ui_dir / "DiscussionDialog.lua"] = "playtest-scenario-diplo-assets-reply.lua"
             if args.scenario == "unit-owners":
                 ui_templates[ui_dir.parent / "Lekmod_units.lua"] = "playtest-scenario-unit-owner-observer.lua"
             if args.scenario == "endgame":
@@ -492,11 +497,11 @@ def main():
             if path.stem in informational_panels:
                 ui_templates[path] = "playtest-info-popup.lua"
             elif path.name == "LeaderHeadRoot.lua":
-                ui_templates[path] = "playtest-leader-root.lua"
-            elif path.name == "DiploTrade.lua":
+                ui_templates.setdefault(path, "playtest-leader-root.lua")
+            elif path.name == "DiploTrade.lua" and args.scenario not in ("diplomacy", "diplomacy-assets"):
                 ui_templates[path] = "playtest-trade.lua"
             elif path.name == "DiscussionDialog.lua":
-                ui_templates[path] = "playtest-discussion.lua"
+                ui_templates.setdefault(path, "playtest-discussion.lua")
     ui_backups = {path: path.read_bytes() if path.exists() else None for path in ui_templates}
     for path, data in ui_backups.items():
         relative = path.relative_to(APP)

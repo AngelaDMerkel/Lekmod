@@ -26,7 +26,7 @@ mean every possible combination of game state has been tested.
 | Unit lifecycle | Founding, movement/pathing, embark/disembark, promotion/upgrade, worker build/repair/pillage, healing, gifting/deletion, great-person actions | Promotion/upgrade/heal/embark, farm/road/repair, disband/gift and great-person actions passed; pillage, road repair/travel and exact reload passed; other great-person cases remain |
 | City lifecycle | Additional founding, capture/puppet/annex/raze/liberation, growth/starvation, building sale, specialists/great works | Core lifecycle, artwork movement/theming and exact reloads passed; Dance Hall bonuses and ordinary artifact/landmark digs passed; further cultural UI/branches remain |
 | Economy and policies | Research/free tech, policy/tenet acquisition and switching, happiness/golden age, resources, treasury boundaries | Policy/tenet confirmations, spending and Cuba reward boundaries passed; switching and remaining economy cases pending |
-| Diplomacy | War/peace, friendship/denunciation, resources/GPT/open borders/research agreements, city-state interactions | Embassy workflow passed; remaining cases pending |
+| Diplomacy | War/peace, friendship/denunciation, resources/GPT/open borders/research agreements, city-state interactions | Luxury/GPT gifts, mutual embassies, open borders and persistence passed; friendship/peace/research agreements and expiry remain |
 | Religion | Found/enhance/buy/spread, conversion/defense and belief effects, save persistence | Core workflow passed; additional cases pending |
 | Espionage | Assignment, diplomat, science award, surveillance, counterspy/election/coup paths and persistence | Core workflow passed; additional cases pending |
 | Trade | Legal routes/income/reload, internal/sea routes, rebasing, expiry/plunder and restrictions | Land external workflow passed; additional cases pending |
@@ -603,6 +603,33 @@ reward units/building, public-opinion unhappiness and anarchy on reload. Both
 runs saved/exited normally (0), preserved settings/hooks/manual saves, and had
 no Lua/synchronization errors. This is scripted callback/gameplay coverage;
 ideology switching under pressure and physical policy clicks remain separate.
+
+### Diplomatic resources, payments and borders
+
+`20260916T072213Z` started ordinary Ancient/Duel Rome. Civil Service/Writing
+prerequisites, contact and a two-copy whale surplus were supplied and recorded.
+Actual resource/GPT pocket callbacks and Propose gave the AI one luxury copy and
+1 gold per turn. Both players' resource and diplomatic GPT balances changed by
+exactly one in opposite directions. Subsequent real proposals established mutual
+embassies and granted open borders to the AI. Requests exceeding available GPT,
+open borders without the required embassy, and another copy of a luxury already
+held by the recipient were rejected. An ordinary turn settled exactly 2 gold
+at the recorded net 2-GPT rate, which included the outgoing payment.
+
+Save SHA-256:
+`2087405331a61db6474b873c9a6646c0f3218896cdbec15db19f19e6c2ba0814`.
+`20260916T072431Z` matched resources, treasury, diplomatic GPT, open-border state
+and turn after reload, and separately asserted both embassy directions. Both
+saved/exited normally (0), preserved settings/hooks/manual saves, and had no
+Lua/synchronization errors. These are actual scripted trade/reply callbacks and
+engine outcomes, not mouse input, negotiated research agreements or peace deals.
+
+Earlier `071522Z` was interrupted when generic turn-driver dialog adapters had
+overwritten the scenario's handlers. Explicit handlers now take precedence.
+`071815Z` retained an accepted AI reply but stalled because completion was watched
+from the hidden trade context. The visible reply context now verifies accepted
+state and uses its ordinary Back action, followed by the root's Goodbye action.
+Both earlier records remain incomplete/failed; no game wait flag was cleared.
 
 ### Current test artifact
 

@@ -444,3 +444,11 @@ callbacks, first-tenet unit rewards, non-repeat, costs and rejection conditions.
 Use `--save-and-exit`, followed by exact `--expected-state` reload. The content
 revolution-button rejection does not establish switching under ideological
 pressure. All multiplayer branches remain outside this test scope.
+
+
+`diplomacy-assets` starts Ancient/Duel Rome with `--scenario-turns 6`. Technologies,
+contact and a luxury surplus are inputs; resource/GPT gifts, mutual embassies and
+open borders use actual single-player AI trade/reply callbacks. It checks both
+sides' accounting, rejection boundaries, ordinary settlement and exact reload.
+Explicit diplomacy adapters must take precedence over generic turn handlers, and
+accepted replies must be observed in a visible context before normal Back/Goodbye.
