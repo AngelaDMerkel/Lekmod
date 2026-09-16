@@ -29,7 +29,7 @@ mean every possible combination of game state has been tested.
 | Diplomacy | War/peace, friendship/denunciation, resources/GPT/open borders/research agreements, city-state interactions | Luxury/GPT gifts, mutual embassies, open borders and persistence passed; friendship/peace/research agreements and expiry remain |
 | Religion | Found/enhance/buy/spread, conversion/defense and belief effects, save persistence | Core workflow passed; additional cases pending |
 | Espionage | Assignment, diplomat, science award, surveillance, counterspy/election/coup paths and persistence | Core workflow passed; additional cases pending |
-| Trade | Legal routes/income/reload, internal/sea routes, rebasing, expiry/plunder and restrictions | Land external, internal land-food/sea-production, rebasing and reload passed; expiry/plunder remain |
+| Trade | Legal routes/income/reload, internal/sea routes, rebasing, expiry/plunder and restrictions | Land external, internal land-food/sea-production, rebasing and reload passed; natural expiry/countdown correction passed; plunder remains |
 | Civilization content | Inventory every playable civilization and active Lua handler; test unique mechanics and owner/negative boundaries | [Inventory: 114 civilizations and 26 Lua files](macos-civilization-coverage.md); systematic cases in progress |
 | UI | Standard/EUI city, production, tech, save/load/exit, then remaining overview/notification/popups, post-victory continuation/replay and screen-size boundaries | Standard post-victory/overview workflow and presentation fixes passed; EUI additional views and dense/size boundaries remain |
 | Setup and persistence | Map/era/speed/difficulty/options boundaries, new/reloaded games, autosave/manual/quicksave compatibility | Partial earlier evidence; additional cases pending |
@@ -651,17 +651,63 @@ reload. Both saved/exited normally (0), preserved settings/hooks/manual saves,
 and had no Lua/synchronization errors. Normal contract expiry and plunder are
 separate cases; no route duration was assigned by these tests.
 
+### Trade countdown and natural expiry
+
+`20260916T073646Z` exposed an incorrect countdown: a sea contract remained active
+past its quoted completion turn. The report remains failed. The read-only native
+diagnostic `20260916T075115Z` loaded its late autosave and observed nine of ten
+circuits, six path nodes and speed four. The UI said -3 turns at turn 203; normal
+movement completed the tenth circuit and returned the ship on turn 204. This was
+a duration-display defect, not a stalled trade route.
+
+The countdown now derives remaining steps from current circuit count, position,
+direction and speed, then rounds once. All three Lua route-list bindings share
+that calculation, including incoming routes whose previous expression had the
+opposite sign. Gameplay speed/circuits, serialized fields and route duration are
+unchanged. Old saves use their actual saved progress without rewriting counters.
+An extracted-product sanitizer test compares 15,720 reachable states against the
+actual StepUnit progression, including fractional sea circuits and endpoints.
+The full native build and ABI checks passed.
+
+`20260916T080136Z` resumed the preserved turn-198 autosave. Loading finished the
+stored turn, so assertions began at turn 199: the land route had already returned,
+and the sea route correctly quoted five remaining turns. Five subsequent ordinary
+turns preserved its exact projected end at 204. Natural expiry returned the ship,
+left both trade units at their origin, retained two occupied capacity slots and
+cleared all internal food/production contributions. Save SHA-256:
+`b9ee2dd6696c2fb602a0c4489e1c12b83ec3ea3d255ba994884e7607f9c7ccc1`.
+It saved/exited normally (0), restored settings/hooks/manual saves and reported
+no Lua or synchronization errors. This is scripted turn/gameplay evidence, not
+mouse interaction. The short continuation avoided repeating the full contract.
+`20260916T080434Z` matched its exact expired-route snapshot after reload,
+with normal exit and all cleanup verified.
+
+`20260916T080553Z` recreated both internal routes through the real rebase/route
+popups on the corrected build. All five prior creation/restriction cases passed;
+outgoing and available lists agreed on 19 turns for land and 24 for sea after
+initial movement. Save SHA-256:
+`7c39f84765f6976d6a9dbdc24c24faaba4e317fbcf79b1db7c4d34f74528dc30`.
+It saved/exited normally with cleanup and no Lua/synchronization errors.
+`20260916T080910Z` matched both active routes, their corrected countdowns, yields
+and unit state exactly after reload, with normal exit and complete cleanup.
+
+`20260916T080736Z` loaded the older external-route save and checked outgoing,
+available and incoming list APIs. All three agreed on 26 remaining turns; its
+810-hundredths gold contribution remained unchanged. This was a read-only check,
+followed by normal save/exit and verified cleanup. Incoming-list consistency is
+native query evidence, not a mouse inspection of that overview.
+
 ### Current test artifact
 
 The current standard test package is
-`build/macos/Lekmod-sp-coverage-20260916.zip`, SHA-256
-`3e3d355e9d2ef9ca658dff9f18ff727c1e9ab313f7aba726d4d71e20ad4a692b`.
+`build/macos/Lekmod-trade-countdown-20260916.zip`, SHA-256
+`4cfb4dcf96aba2115fb179f0f80311438da9b2fa252dfe4d7e9ff05ebe135656`.
 Its signed GameCore is
-`eb67f54a38b10f9be2f8cee054ae17ac492ed4384357ff4bdd8184f232dc32b5`.
+`30227e5184acc20bde6e634bccd29e4d9046f96a93588f71143d6385fae6b80c`.
 It includes the earlier voting, presentation, greeting and lake fixes plus
 the Georgia hooks, great-work holding corrections and plot-yield argument fix.
-It includes the science-icon correction and was packaged from clean source
-`a2567e28`. It is an intermediate test artifact; final release regression remains
+It includes the science-icon and trade-countdown corrections and was packaged
+from `cd81b714` plus the recorded countdown changes (dirty source manifest). It is an intermediate test artifact; final release regression remains
 open while the broader checklist is unfinished. Its provenance is recorded in the archive manifest. Installation used the central
 installer with the canonical stock backup retained.
 

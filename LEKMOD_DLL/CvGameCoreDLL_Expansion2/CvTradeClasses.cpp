@@ -17,6 +17,7 @@
 #include "CvNotifications.h"
 #include "cvStopWatch.h"
 #include "CvCityManager.h"
+#include "LekmodMacDiagnostics.h"
 #ifdef LEKMOD_MINOR_CIV_PERSONALITIES
 #include "CvMinorCivAI.h"
 #endif
@@ -1766,6 +1767,23 @@ int CvGameTrade::GetTechDifference (PlayerTypes ePlayer, PlayerTypes ePlayer2)
 }
 
 //	--------------------------------------------------------------------------------
+// Count steps through the remaining circuits, then round once. The stored
+// completion-turn estimate rounded each circuit down and can be stale in saves.
+int TradeConnection::GetTurnsRemaining(int iRouteSpeed) const
+{
+	if (m_iCircuitsCompleted >= m_iCircuitsToComplete)
+		return 0;
+	if (iRouteSpeed <= 0 || m_aPlotList.size() < 2)
+		return -1;
+
+	const int iCircuitSteps = ((int)m_aPlotList.size() - 1) * 2;
+	const int iProgress = (m_bTradeUnitMovingForward || m_iTradeUnitLocationIndex == 0)
+		? m_iTradeUnitLocationIndex : iCircuitSteps - m_iTradeUnitLocationIndex;
+	const int iRemainingSteps = (m_iCircuitsToComplete - m_iCircuitsCompleted) * iCircuitSteps - iProgress;
+	return (iRemainingSteps + iRouteSpeed - 1) / iRouteSpeed;
+}
+
+// --------------------------------------------------------------------------------
 /// move a trade unit along its path for all its movement points
 bool CvGameTrade::MoveUnit (int iIndex) 
 {
@@ -1777,6 +1795,9 @@ bool CvGameTrade::MoveUnit (int iIndex)
 
 	TradeConnection &kTradeConnection = m_aTradeConnections[iIndex];
 	int iMoves = GET_PLAYER(kTradeConnection.m_eOriginOwner).GetTrade()->GetTradeRouteSpeed(kTradeConnection.m_eDomain);
+	// Read-only test diagnostics: type=path index, x=completed, y=required, detail=path size.
+	LekmodMacLogVisualEvent("trade-progress.begin", kTradeConnection.m_eOriginOwner, kTradeConnection.m_iID, kTradeConnection.m_iTradeUnitLocationIndex, kTradeConnection.m_iCircuitsCompleted, kTradeConnection.m_iCircuitsToComplete, (int)kTradeConnection.m_aPlotList.size());
+	LekmodMacLogVisualEvent("trade-progress.timing", kTradeConnection.m_eOriginOwner, kTradeConnection.m_iID, kTradeConnection.m_eDomain, kTradeConnection.m_iTurnRouteComplete, GC.getGame().getGameTurn(), iMoves);
 	for (int i = 0; i < iMoves; i++)
 	{
 		if (kTradeConnection.m_iCircuitsCompleted >= kTradeConnection.m_iCircuitsToComplete)
@@ -1791,6 +1812,7 @@ bool CvGameTrade::MoveUnit (int iIndex)
 		}
 	}
 
+	LekmodMacLogVisualEvent("trade-progress.end", kTradeConnection.m_eOriginOwner, kTradeConnection.m_iID, kTradeConnection.m_iTradeUnitLocationIndex, kTradeConnection.m_iCircuitsCompleted, kTradeConnection.m_iCircuitsToComplete, (int)kTradeConnection.m_aPlotList.size());
 	gDLL->TradeVisuals_UpdateRouteDirection(iIndex, kTradeConnection.m_bTradeUnitMovingForward);
 
 	// Send a NULL plot move to say we are complete to the vis unit.

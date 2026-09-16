@@ -51,6 +51,9 @@ struct TradeConnection
 	int m_aiOriginYields[NUM_YIELD_TYPES];
 	int m_aiDestYields[NUM_YIELD_TYPES];
 
+	// Remaining owner-turn moves, derived without changing serialized route state.
+	int GetTurnsRemaining(int iRouteSpeed) const;
+
 #ifdef AUI_EXPLICIT_DESTRUCTION
 	~TradeConnection()
 	{

@@ -42,6 +42,14 @@ local function verifyRoute(player,id)
     if not LekmodScenarioAwait("internal-route-created",found~=nil and #player:GetTradeRoutes()==routeCount+1) then return false end
     LekmodScenarioEvent("internal-route-yield",{domain=domain,kind=kind,target=target,yield=yieldType,before100=baseline,after100=tradeYield(c,yieldType),quoted100=amount})
     assert(tradeYield(c,yieldType)==baseline+amount,"internal route's quoted yield did not reach its destination")
+    assert(found.TurnsLeft>0,"new route countdown is not positive")
+    local available
+    for _,r in ipairs(player:GetTradeRoutesAvailable()) do
+        if r.FromCity:GetID()==found.FromCity:GetID() and r.ToCity:GetID()==found.ToCity:GetID()
+            and r.Domain==found.Domain and r.ConnectionType==found.ConnectionType then available=r;break end
+    end
+    assert(available and available.TurnsLeft==found.TurnsLeft,"active and available route lists disagree on countdown")
+    LekmodScenarioEvent("trade-countdown",{domain=found.Domain,turns=found.TurnsLeft,from=found.FromCity:GetID(),to=found.ToCity:GetID()})
     return true
 end
 function LekmodScenario.step(player)

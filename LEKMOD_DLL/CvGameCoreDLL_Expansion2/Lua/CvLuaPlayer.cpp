@@ -4784,7 +4784,7 @@ int CvLuaPlayer::lGetTradeRoutes(lua_State* L)
 		lua_pushinteger(L, iToDelta);
 		lua_setfield(L, t, "ToTourism");
 
-		lua_pushinteger(L, pConnection->m_iTurnRouteComplete - GC.getGame().getGameTurn());
+		lua_pushinteger(L, pConnection->GetTurnsRemaining(GET_PLAYER(pConnection->m_eOriginOwner).GetTrade()->GetTradeRouteSpeed(pConnection->m_eDomain)));
 		lua_setfield(L, t, "TurnsLeft");
 
 		lua_rawseti(L, -2, index++);
@@ -4880,7 +4880,7 @@ int CvLuaPlayer::lGetTradeRoutesAvailable(lua_State* L)
 						TradeConnection* pConnection = pPlayerTrade->GetTradeConnection(pOriginCity, pDestCity);
 						if (pConnection && pConnection->m_eDomain == eDomain)
 						{
-							iTurnsLeft = pConnection->m_iTurnRouteComplete - GC.getGame().getGameTurn();
+							iTurnsLeft = pConnection->GetTurnsRemaining(GET_PLAYER(pConnection->m_eOriginOwner).GetTrade()->GetTradeRouteSpeed(pConnection->m_eDomain));
 						}
 
 						lua_pushinteger(L, eDomain);
@@ -5072,7 +5072,7 @@ int CvLuaPlayer::lGetTradeRoutesToYou(lua_State* L)
 		lua_pushinteger(L, iToDelta);
 		lua_setfield(L, t, "ToTourism");
 
-		lua_pushinteger(L, GC.getGame().getGameTurn() - pConnection->m_iTurnRouteComplete);
+		lua_pushinteger(L, pConnection->GetTurnsRemaining(GET_PLAYER(pConnection->m_eOriginOwner).GetTrade()->GetTradeRouteSpeed(pConnection->m_eDomain)));
 		lua_setfield(L, t, "TurnsLeft");
 
 		lua_rawseti(L, -2, index++);
