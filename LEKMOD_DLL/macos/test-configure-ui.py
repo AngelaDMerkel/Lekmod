@@ -40,13 +40,14 @@ class ConfigureUiTests(unittest.TestCase):
         count, mode = CONFIGURE_UI.configure(self.lekmod, "standard", None)
 
         self.assertEqual(mode, "standard")
-        self.assertEqual(count, 86)
+        self.assertEqual(count, 87)
         self.assertTrue((self.output / "CityView.xml").is_file())
         self.assertTrue((self.output / "CityView_small.xml").is_file())
         self.assertTrue((self.output / "ProductionPopup.xml").is_file())
         self.assertTrue((self.output / "PlotMouseoverInclude.lua").is_file())
         self.assertTrue((self.output / "TopPanel.lua").is_file())
         self.assertFalse((self.output / "MainMenu.xml").exists())
+        self.assertTrue((self.output / "CivilopediaScreen.xml").is_file())
         self.assertIn(
             'ID="GoldenAgePointsFocusButton"',
             (self.output / "CityView.xml").read_text(encoding="utf-8"),
@@ -86,6 +87,20 @@ class ConfigureUiTests(unittest.TestCase):
                 self.assertEqual(controls["EraBlock"].get("Size"), "1650,740")
                 self.assertEqual(controls["OldBar"].get("Size"), "1650,722")
                 self.assertEqual(controls["CurrentBlock2"].get("Size"), "1650,722")
+
+    def test_civilopedia_close_is_in_the_header_and_has_a_visible_label(self) -> None:
+        CONFIGURE_UI.configure(self.lekmod, "standard", None)
+        root=ET.parse(self.output/"CivilopediaScreen.xml").getroot()
+        close=root.find(".//*[@ID='CloseButton']")
+        self.assertEqual(close.tag,"GridButton")
+        self.assertEqual(close.get("Offset"),"36,-76")
+        self.assertEqual(close.find("Label").get("String"),"X")
+
+    def test_eui_civilopedia_provider_keeps_its_own_hierarchy(self) -> None:
+        eui=self.root/"EUI";folder=eui/"Civilopedia";folder.mkdir(parents=True)
+        (folder/"CivilopediaScreen.lua").write_text("-- EUI-owned context\n")
+        CONFIGURE_UI.configure(self.lekmod,"eui",eui)
+        self.assertFalse((self.output/"CivilopediaScreen.xml").exists())
 
     def test_eui_city_view_uses_matching_lua_and_xml(self) -> None:
         eui = self.root / "EUI"

@@ -44,6 +44,10 @@ def contains(path: Path, marker: str) -> bool:
 
 
 def configure_eui(eui_root: Path, template_root: Path, destination: Path) -> None:
+    # Preserve an EUI-provided Civilopedia hierarchy if a version adds one.
+    # EUI 1.28g has none and uses the native layout with our visible Close button.
+    if any(eui_root.rglob("CivilopediaScreen.xml")) or any(eui_root.rglob("CivilopediaScreen.lua")):
+        (destination / "CivilopediaScreen.xml").unlink(missing_ok=True)
     city_banners = eui_root / "CityBanners" / "CityBannerManager.lua"
     variant = "1" if contains(city_banners, "CityBannerProductionBox = function( city )") else "2"
     if city_banners.is_file():
