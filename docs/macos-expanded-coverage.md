@@ -22,7 +22,7 @@ mean every possible combination of game state has been tested.
 | Cultural victory | Tourism/influence, musician action, threshold crossing and victory | Passed with supplied great people and staging positions |
 | Diplomatic victory | World Leader session, vote eligibility/count, winning resolution and victory | Passed with supplied technology/gold; natural gifts, sessions and ballots |
 | Score victory | Score resolution, human victory and defeat presentation | Passed |
-| Combat | Human melee/ranged/city attacks, unit death/capture, terrain/war restrictions, naval and air actions | Core land/city/naval/air attacks, death/capture and reload passed; air defense/carriers remain |
+| Combat | Human melee/ranged/city attacks, unit death/capture, terrain/war restrictions, naval and air actions | Core land/city/naval attacks, death/capture and reload passed; actual air strike/interception, ground sweep, carrier capacity/movement and exact reload passed |
 | Unit lifecycle | Founding, movement/pathing, embark/disembark, promotion/upgrade, worker build/repair/pillage, healing, gifting/deletion, great-person actions | Promotion/upgrade/heal/embark, farm/road/repair, disband/gift and great-person actions passed; road repair/combat pillage and other great-person cases remain |
 | City lifecycle | Additional founding, capture/puppet/annex/raze/liberation, growth/starvation, building sale, specialists/great works | Core lifecycle and exact reloads passed; additional great-work management remains |
 | Economy and policies | Research/free tech, policy/tenet acquisition and switching, happiness/golden age, resources, treasury boundaries | Partial earlier evidence; remaining cases pending |
@@ -325,7 +325,11 @@ explicit inputs on unchanged map plots. Normal commands produced these outcomes:
 Archer→Spearman damage 30; Warrior exchange damage 36 to defender and 29 to
 attacker; Giant Death Robot killed a Warrior and received damage 1; a Warrior
 captured a worker; the capital's ranged strike dealt 13; Frigate→Caravel dealt
-57; Bomber→Infantry dealt 37. Combat units gained XP, while friendly targeting
+57. The recorded Bomber→Infantry damage 37 used the generic ranged mission;
+source review during `040955Z` showed that actual air strikes use `MISSION_MOVE_TO`.
+That bomber result is not accepted as normal air-combat coverage. Supplemental
+validation notes preserve the distinction; both drivers are corrected for retest.
+Combat units gained XP, while friendly targeting
 and a second ranged attack were rejected. No unit health/death/ownership outcome
 was assigned. This is scripted mission/outcome coverage, not mouse interaction.
 The turn-179 save SHA-256 is
@@ -336,8 +340,8 @@ position/movement, city and treasury snapshot on reload. Both runs exited normal
 
 The earlier `035733Z` report remains failed after its four land cases: it required
 an empty tile immediately beside the already occupied capital. The corrected
-fixture uses an empty tile within the city's normal two-tile range. Air defense,
-air sweeps and carrier operations are not established by the bomber strike.
+fixture uses an empty tile within the city's normal two-tile range. Air strikes, air defense, air sweeps and carrier operations require the corrected
+native tests below.
 
 ### Unit disposal, gifts and great-person actions
 
@@ -362,6 +366,37 @@ confirmation waiting for a choice. The added adapter captures the actual popup
 choice closure and uses its normal close bookkeeping; it does not bypass that
 confirmation or alter any GameCore wait flag. These are scripted callback/action
 outcomes, not mouse interaction.
+
+### Air missions and carriers
+
+`20260916T041621Z` supplied full-health units and oil/aluminum, then used the
+actual WorldView air-strike `MISSION_MOVE_TO` command. The Bomber took 68 damage
+from interception/retaliation, the target Infantry took 16, and the anti-air unit
+spent its interception. A Fighter's normal air sweep spent another ground
+anti-air unit's interception. Both units retained zero damage and the fighter
+zero XP, exactly as Lekmod's explicit ground-sweep rule and zero damage multiplier
+require. No attack/activity/interception flag was assigned.
+
+Three normal rebase missions loaded three Fighters onto a Carrier. A fourth
+fighter was ineligible at its ordinary capacity of three. A normal sea move
+carried all three loaded aircraft to the new plot with their transport links
+intact. The save SHA-256 is
+`1350f0a37344ab649fbc988dfb9dbe178419cd5e7b27148f22e9b561d51eb053`.
+`20260916T041755Z` matched every recorded unit's type, damage, XP, position,
+movement, spent-interception state and cargo/transport links after reload.
+Both runs exited normally (0), with settings/hooks/manual saves preserved and
+no Lua/synchronization errors. These are scripted missions and gameplay outcomes.
+They do not establish a mouse workflow or fighter-versus-fighter dogfighting.
+
+Earlier air reports remain failed. `040955Z` used a generic ranged mission instead
+of the UI's air-strike mission. `041259Z` used the correct strike and observed
+interception, then incorrectly required attacker XP from sweeping ground AA.
+`20260916T041926Z` also reran all eight combined combat cases with the corrected
+air-strike mission and exited normally; save SHA-256
+`8c5c4c5b0d26f295d040708bc640f3822e3edc3125378589ed95f850a7cb59cb`.
+Source review established that zero attacker XP is deliberate. The corrected
+assertions require actual spent interception/movement plus the configured zero
+XP/damage outcome; no wait flag or synchronization check was bypassed.
 
 ### Current test artifact
 

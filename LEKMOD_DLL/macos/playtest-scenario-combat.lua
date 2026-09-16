@@ -73,7 +73,7 @@ function LekmodScenario.step(player)
                 assert(u:CanRangeStrikeAt(target:GetX(),target:GetY()),"normal ranged strike unavailable: "..case.item)
             else assert(u:CanMoveOrAttackInto(target,0,1),"normal melee/capture destination unavailable") end
             Game.SelectionListGameNetMessage(GameMessageTypes.GAMEMESSAGE_PUSH_MISSION,
-                case.ranged and MissionTypes.MISSION_RANGE_ATTACK or MissionTypes.MISSION_MOVE_TO,target:GetX(),target:GetY(),0,false,false)
+                (case.ranged and not case.air) and MissionTypes.MISSION_RANGE_ATTACK or MissionTypes.MISSION_MOVE_TO,target:GetX(),target:GetY(),0,false,false)
         end
         issued=true;phase="result"
     elseif phase=="result" then

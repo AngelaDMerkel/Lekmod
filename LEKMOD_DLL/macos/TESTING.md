@@ -383,3 +383,13 @@ forcing pillage flags. `combat` loads the small Congress fixture without end-tur
 allowance, supplies full-health units/resources, then submits actual attack/capture
 missions. Both support exact `--expected-state` reload comparisons. These checks
 use scripted callbacks/missions, not actual mouse input.
+
+
+`unit-utility` loads the same small Congress fixture and exercises actual disband
+No/Yes confirmation closures, gifts and Merchant/Scientist/Engineer actions.
+`air-operations` exercises real air strikes, ground-AA sweeps, three carrier
+rebases, capacity rejection and ship movement with cargo. Use no end-turn
+allowance, `--save-and-exit`, then exact `--expected-state` reload. Air strikes
+must use `MISSION_MOVE_TO`, matching WorldView; `MISSION_RANGE_ATTACK` invokes a
+different combat path. Ground-AA sweeps deliberately give the attacker no XP and
+use Lekmod's zero damage multiplier. See the ledger's failed-test corrections.
