@@ -3,6 +3,19 @@
 Last updated: 2026-09-15. This is a same-machine, same-workspace handoff, not a
 claim that the macOS port is fully certified. No new task or schedule was created.
 
+The user subsequently requested expanded functional coverage on **this Mac
+only**, with foreground sessions allowed as long as needed. The active completion
+ledger is [expanded coverage](macos-expanded-coverage.md). The old planned suite
+below is complete, but that is not the user's expanded completion criterion.
+Science, domination, cultural and civilization regressions have been added;
+diplomatic continuation is active. Check current processes and ignored evidence
+before launching. The installed standard test archive is now
+`Lekmod-league-choices-20260916.zip` (hash and scope in the expanded ledger),
+with the voting-choice correction and reviewed XML/Lua fixes. Startup exit 255
+was reproduced and traced to an empty generated localization cache; the cache
+was preserved and regenerated successfully. The original creation failure
+remains under investigation.
+
 ## Current continuation results
 
 Read [the system-validation report](macos-single-player-systems.md) for the new

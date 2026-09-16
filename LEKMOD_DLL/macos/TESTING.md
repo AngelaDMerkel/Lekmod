@@ -186,7 +186,7 @@ available-city list to test home/foreign deployment, recall and diplomat role
 selection through ordinary network commands. It grants no spies or resources.
 Travelling state is checked; intelligence generation is a separate outcome.
 
-Scenarios require `--load-save` and an explicit budget of at most 600 seconds.
+Scenarios require `--load-save` and an explicit budget of at most 1800 seconds.
 `--save-and-exit` uses the same normal local save/exit adapters. Reload the new
 unique save with the same scenario and `--expected-state prior/report.json` to
 compare its scenario snapshot before changes. Reload reports only the state
@@ -234,7 +234,11 @@ Scenarios default to zero end-turn commands. `--scenario-turns N` (0–30) lets
 that scenario request steps from the ordinary human driver; its remaining
 research/policy/unit decisions and end-turn checks stay intact. The scenario
 supervisor rejects requests beyond that bound. The total scenario budget is at
-most 600 seconds. These are functional fixtures, not a resumed long campaign.
+most 1800 seconds. The extended recovery time follows the user's authorization
+for longer sessions; the thirty-turn bound remains. These are functional
+fixtures, not a resumed long campaign. Turn-using scenarios temporarily request
+an autosave every turn so recovery does not repeat a ten-turn block. The original
+autosave preference bytes are restored with the other settings.
 
 Religion records supplied faith/prophets and a missionary staging position,
 then tests real founding/enhancement/purchase/spread actions. Trade records its
@@ -334,3 +338,28 @@ It resolves Congress prompts by submitting eligible proposals or abstaining
 through the normal network commands. The foreground/background helper also
 retains a call stack for nonzero `exit` calls without changing the exit status;
 this helps investigate startup failures that create no OS crash report.
+
+`culture-prelaunch` creates a Great Work through its normal action, closes the
+real animated popup, observes one ordinary tourism turn and performs concert
+actions until the next concert would cross the cultural threshold. It supplies
+the great people and staging positions explicitly. Save/reload that snapshot,
+then use `culture-launch --scenario-turns 3 --capture-panels` for the final
+concert and actual victory.
+
+Diplomatic fixtures use `diplo-victory-prelaunch`, `diplo-victory-resume` and
+`diplo-victory-launch`. The initial fixture supplies technology/gold, verifies
+actual gift spending/influence and isolationist gift rejection, and follows the
+unchanged UN countdown. `resume` requires an existing UN save and supplies no
+additional technology/gold. Failed World Leader ballots can earn the normal
+extra delegates. Save before the winning ballot, compare with `--expected-state`,
+then cast the final normal vote. Prefer an explicit `--timeout 900` or `1200`
+for the longer session preparation and retain the thirty-turn limit. These
+scenarios never assign votes, alliances or a winner.
+
+`endgame --expect-human-victory` adds an assertion that the ordinary two-turn
+score result selects the human. It does not set scores or choose a winner.
+
+For startup exit 255 with merged-localization errors, consult
+`docs/macos-startup-cache.md`. The cache-recovery tool defaults to read-only
+inspection and preserves/removes only a confirmed empty generated cache with
+explicit `--repair-empty`; it does not silently retry a test.

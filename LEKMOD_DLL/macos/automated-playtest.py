@@ -120,6 +120,12 @@ def synchronization_failures(text):
             "protocol_error": "PROTOCOL ERROR" in text}
 
 
+def localization_startup_failure(database_text):
+    return (bool(re.search(r"unable to open database: .*Localization-Merged\.db", database_text)) or
+            ("Failed to Load database." in database_text and
+             "no such table: Languages" in database_text))
+
+
 def unresolved_driver_error(text):
     return text.rfind("[LEKMOD_TEST] ERROR") > text.rfind("[LEKMOD_TEST] driver-reloaded")
 
@@ -151,6 +157,11 @@ SCENARIO_ITEMS = {"inventory": {"system-inventory"},
                   "bolivia": {"colorado-created", "bolivia-artist", "bolivia-writer"},
                   "mughals": {"mughal-conversion", "mughal-conversion-cleanup", "mughal-reconversion"},
                   "domination": {"war-declaration", "capital-combat", "capital-capture", "domination-victory", "victory-panel"},
+                  "culture-prelaunch": {"great-work", "passive-tourism", "concert-tourism", "concert-location-rejection", "culture-prelaunch"},
+                  "culture-launch": {"culture-threshold", "cultural-victory", "victory-panel"},
+                  "diplo-victory-prelaunch": {"city-state-gifts", "city-state-gift-rejection", "un-session", "world-leader-ready"},
+                  "diplo-victory-resume": {"un-session", "world-leader-ready"},
+                  "diplo-victory-launch": {"world-leader-choices", "world-leader-vote", "diplomatic-victory", "victory-panel"},
                   "science-prelaunch": {"apollo-completion", "space-parts-production", "space-assembly", "space-location-rejection", "space-prelaunch"},
                   "science-launch": {"science-final-part", "science-victory", "victory-panel"}}
 
@@ -258,6 +269,7 @@ def main():
     parser.add_argument("--production-completion", action="store_true", help="Bounded Worker/Water Mill completion fixture through normal orders and at most three scripted human turns")
     parser.add_argument("--scenario", choices=tuple(SCENARIO_ITEMS), help="Focused standard-UI scenario; inventory is read-only")
     parser.add_argument("--scenario-turns", type=int, default=0, help="Explicit maximum turns a scenario may request through the normal human driver (0-30)")
+    parser.add_argument("--expect-human-victory", action="store_true", help="Require the endgame scenario's naturally resolved score winner to be the human")
     parser.add_argument("--foreground-ui-test", "--foreground-attachment-test", dest="foreground_attachment_test", action="store_true", help="Explicitly approved foreground UI test; specify --timeout (at most one hour)")
     parser.add_argument("--expected-state", type=Path, help="Verify the saved-state fingerprint from an earlier --save-and-exit report before any functional mutations")
     args = parser.parse_args()
@@ -279,14 +291,20 @@ def main():
         parser.error("Foreground UI tests require --mode ui-interaction and --timeout at most 3600; the flag does not grant user permission")
     if args.production_completion and (args.mode != "human-turns" or args.turns != 3 or not args.load_save or args.timeout > 600):
         parser.error("Production completion requires --mode human-turns, --turns 3, --load-save and --timeout at most 600")
-    if args.scenario and (args.mode != "single-player-smoke" or (not args.load_save and args.scenario not in ("congress", "endgame", "bolivia", "mughals")) or args.city_controls or args.timeout > 600):
-        parser.error("Scenarios require --mode single-player-smoke, --load-save (except congress/endgame/bolivia/mughals), no --city-controls and --timeout at most 600")
+    if args.scenario and (args.mode != "single-player-smoke" or (not args.load_save and args.scenario not in ("congress", "endgame", "bolivia", "mughals")) or args.city_controls or args.timeout > 1800):
+        parser.error("Scenarios require --mode single-player-smoke, --load-save (except congress/endgame/bolivia/mughals), no --city-controls and --timeout at most 1800")
     if args.scenario == "endgame" and (args.load_save or args.expected_state or args.save_and_exit or args.scenario_turns != 2):
         parser.error("Endgame requires a new two-turn scenario, without save/reload options")
+    if args.expect_human_victory and args.scenario != "endgame":
+        parser.error("--expect-human-victory is only a score-endgame assertion")
     if args.scenario == "science-launch" and (args.save_and_exit or args.expected_state or not 1 <= args.scenario_turns <= 3):
         parser.error("Science launch requires a loaded prelaunch fixture, 1-3 ordinary turns and no save/reload options")
     if args.scenario == "domination" and (args.save_and_exit or args.expected_state or not 1 <= args.scenario_turns <= 6):
         parser.error("Domination requires a loaded Duel fixture, 1-6 ordinary turns and no save/reload options")
+    if args.scenario == "culture-launch" and (args.save_and_exit or args.expected_state or not 1 <= args.scenario_turns <= 3):
+        parser.error("Cultural launch requires a loaded pre-victory fixture, 1-3 ordinary turns and no save/reload options")
+    if args.scenario == "diplo-victory-launch" and (args.save_and_exit or args.expected_state or not 1 <= args.scenario_turns <= 3):
+        parser.error("Diplomatic launch requires a loaded ballot fixture, 1-3 ordinary turns and no save/reload options")
     if not 0 <= args.scenario_turns <= 30 or (args.scenario_turns and not args.scenario):
         parser.error("--scenario-turns requires a scenario and a bound from 0 to 30")
     eui_root = APP / "Contents/Assets/Assets/DLC/UI_bc1"
@@ -388,6 +406,29 @@ def main():
             if args.scenario == "domination":
                 ui_templates[ui_dir / "EndGameMenu.lua"] = "playtest-scenario-domination-victory-popup.lua"
                 ui_templates[frontend / "ExitConfirm.lua"] = "playtest-exit-confirm.lua"
+            if args.scenario in ("culture-prelaunch", "culture-launch"):
+                culture_module = ui_dir / "LekmodTestCulture.lua"
+                if culture_module.exists():
+                    raise SystemExit("Temporary culture module already exists")
+                ui_templates[culture_module] = "playtest-culture-common.lua"
+            if args.scenario == "culture-launch":
+                ui_templates[ui_dir / "EndGameMenu.lua"] = "playtest-scenario-culture-victory-popup.lua"
+                ui_templates[frontend / "ExitConfirm.lua"] = "playtest-exit-confirm.lua"
+            if args.scenario == "culture-prelaunch":
+                ui_templates[APP / "Contents/Assets/Assets/DLC/Expansion2/UI/InGame/Popups/GreatWorkPopup.lua"] = "playtest-culture-great-work-popup.lua"
+            if args.scenario in ("diplo-victory-prelaunch", "diplo-victory-resume", "diplo-victory-launch"):
+                diplo_module = ui_dir / "LekmodTestDiploVictory.lua"
+                if diplo_module.exists():
+                    raise SystemExit("Temporary diplomatic victory module already exists")
+                ui_templates[diplo_module] = "playtest-diplo-victory-common.lua"
+            if args.scenario == "diplo-victory-resume":
+                resume_module = ui_dir / "LekmodTestDiploPrelaunch.lua"
+                if resume_module.exists():
+                    raise SystemExit("Temporary diplomatic preparation module already exists")
+                ui_templates[resume_module] = "playtest-scenario-diplo-victory-prelaunch.lua"
+            if args.scenario == "diplo-victory-launch":
+                ui_templates[ui_dir / "EndGameMenu.lua"] = "playtest-scenario-diplo-victory-popup.lua"
+                ui_templates[frontend / "ExitConfirm.lua"] = "playtest-exit-confirm.lua"
         if args.save_and_exit:
             ui_templates[ui_dir / "GameMenu.lua"] = "playtest-game-menu.lua"
             ui_templates[frontend.parent / "InGame/Menus/SaveMenu.lua"] = "playtest-save-menu.lua"
@@ -408,7 +449,7 @@ def main():
             ui_templates[completion_path] = "playtest-production-completion.lua"
         ui_templates[APP / "Contents/Assets/Assets/UI/InGame/Popups/TechAwardPopup.lua"] = "playtest-tech-award.lua"
         informational_panels = {"WhosWinningPopup", "NewEraPopup", "NaturalWonderPopup", "GoodyHutPopup",
-                                "BarbarianCampPopup", "GoldenAgePopup", "WonderPopup", "LeagueSplash"}
+                                "BarbarianCampPopup", "GoldenAgePopup", "WonderPopup", "LeagueSplash", "GreatPersonRewardPopup"}
         for path in (APP / "Contents/Assets/Assets").rglob("*.lua"):
             if path.stem in informational_panels:
                 ui_templates[path] = "playtest-info-popup.lua"
@@ -451,6 +492,8 @@ def main():
               "production_completion": args.production_completion,
               "scenario": args.scenario,
               "scenario_turn_limit": args.scenario_turns,
+              "temporary_autosave_interval": 1 if args.scenario_turns else None,
+              "expected_human_score_victory": args.expect_human_victory,
               "requested_window_size": args.window_size,
               "live_driver_control": args.mode == "human-turns",
               "runner_pid": os.getpid(),
@@ -501,8 +544,14 @@ def main():
         print(json.dumps({"event": "waiting-for-driver", "reason": reason, "pid": pid}), flush=True)
     try:
         config.write_bytes(edit_ini(original.decode(), updates).encode())
-        user_settings.write_bytes(re.sub(rb"(?m)^(SkipIntroVideo\s*=\s*)[^\r\n]*",
-                                         rb"\g<1>1", original_user_settings))
+        test_user_settings = re.sub(rb"(?m)^(SkipIntroVideo\s*=\s*)[^\r\n]*",
+                                    rb"\g<1>1", original_user_settings)
+        if args.scenario_turns:
+            # Bounded scenarios should recover from their latest ordinary
+            # autosave. The original preference bytes are restored in finally.
+            test_user_settings = edit_ini(test_user_settings.decode(), {
+                ("AutoSave", "TurnsBetweenAutosave"): 1}).encode()
+        user_settings.write_bytes(test_user_settings)
         if original_graphics is not None:
             graphics_settings.write_bytes(edit_ini(original_graphics.decode(), {
                 ("UserSettings", "WindowResX"): args.window_size[0],
@@ -513,6 +562,7 @@ def main():
                         "__TEST_RUN__": stamp,
                         "__TEST_SCENARIO_TURN_LIMIT__": str(args.scenario_turns),
                         "__TEST_GAME_TURN_LIMIT__": "2" if args.scenario == "endgame" else "0",
+                        "__TEST_EXPECT_HUMAN_VICTORY__": "true" if args.expect_human_victory else "false",
                         "__TEST_FUNCTIONAL__": "true" if args.mode in ("single-player-smoke", "ui-interaction") else "false",
                         "__TEST_SAVE_NAME__": json.dumps(save_name) if args.save_and_exit else "nil",
                         "__TEST_CAPTURE_PANELS__": "true" if args.capture_panels else "false",
@@ -622,7 +672,7 @@ def main():
                                         else "failed-functional-checks")
                     if args.scenario and functional["verified"]:
                         report["status"] = "passed-scenario-reload-only" if args.expected_state else "passed-scenario-checks-only"
-                    if (not args.save_and_exit and args.scenario not in ("endgame", "science-launch", "domination")) or functional["failed"]:
+                    if (not args.save_and_exit and args.scenario not in ("endgame", "science-launch", "domination", "culture-launch", "diplo-victory-launch")) or functional["failed"]:
                         break
                     if pid not in pids:
                         exited_normally = game_process.poll() == 0
@@ -631,7 +681,7 @@ def main():
                         report["normal_exit_verified"] = exited_normally and confirmed
                         if args.save_and_exit:
                             report["save_file_verified"] = saved
-                        if not (exited_normally and confirmed and (saved or args.scenario in ("endgame", "science-launch", "domination"))):
+                        if not (exited_normally and confirmed and (saved or args.scenario in ("endgame", "science-launch", "domination", "culture-launch", "diplo-victory-launch"))):
                             report["status"] = "failed-save-or-normal-exit"
                         break
             if pid and pid not in pids:
@@ -742,6 +792,10 @@ def main():
         (output / "LekmodRender.log").write_text(current_text)
         if logs.exists():
             shutil.copytree(logs, output / "logs-after")
+        database_log = logs / "Database.log"
+        report["localization_startup_failure"] = (
+            report.get("process_returncode") == 255 and database_log.exists() and
+            localization_startup_failure(database_log.read_text(errors="replace")))
         net_log = logs / "net_message_debug.log"
         report["synchronization_checks"] = synchronization_failures(
             net_log.read_text(errors="replace") if net_log.exists() else "")

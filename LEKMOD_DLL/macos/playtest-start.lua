@@ -24,8 +24,8 @@ do
         PreGame.SetMapScript("Assets\\Maps\\Continents.lua")
         PreGame.SetGameSpeed(GameInfo.GameSpeeds["GAMESPEED_QUICK"].ID)
         PreGame.SetEra(GameInfo.Eras["__TEST_START_ERA__"].ID)
+        PreGame.SetMaxTurns(__TEST_GAME_TURN_LIMIT__)
         if __TEST_GAME_TURN_LIMIT__ > 0 then
-            PreGame.SetMaxTurns(__TEST_GAME_TURN_LIMIT__)
             PreGame.SetVictory(GameInfo.Victories["VICTORY_TIME"].ID,true)
             print("[LEKMOD_TEST] fixture-setup normal-game-options score-victory=true max-turns="..__TEST_GAME_TURN_LIMIT__)
         end

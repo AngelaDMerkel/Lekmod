@@ -15,6 +15,12 @@ spec.loader.exec_module(playtest)
 
 
 class PlaytestEvidenceTests(unittest.TestCase):
+    def test_localization_startup_failure_is_distinct_from_duplicate_data_warnings(self):
+        self.assertTrue(playtest.localization_startup_failure("unable to open database: C:\\Emu\\cache\\Localization-Merged.db"))
+        self.assertTrue(playtest.localization_startup_failure("Failed to Load database.\nno such table: Languages"))
+        self.assertFalse(playtest.localization_startup_failure("UNIQUE constraint failed: ArtDefine_StrategicView"))
+        self.assertFalse(playtest.localization_startup_failure("Failed to Load database."))
+
     def test_inherited_production_does_not_claim_a_new_order(self):
         text = "[LEKMOD_TEST] production-inherited city=8192 order=3 item=0\n[LEKMOD_TEST] end-turn-click turn=214"
         result = playtest.human_turn_results(text)
@@ -49,6 +55,15 @@ class PlaytestEvidenceTests(unittest.TestCase):
                 "--turns", "3", "--timeout", "60", "--scenario-turns", value],capture_output=True,text=True)
             self.assertEqual(result.returncode, 2)
             self.assertIn("--scenario-turns requires",result.stderr)
+
+    def test_scenario_recovery_timeout_stays_bounded(self):
+        with tempfile.TemporaryDirectory() as directory:
+            fixture=Path(directory)/"fixture.Civ5Save";fixture.touch()
+            result=subprocess.run([sys.executable,str(Path(__file__).with_name("automated-playtest.py")),
+                "--mode","single-player-smoke","--scenario","inventory","--load-save",str(fixture),
+                "--timeout","1801"],capture_output=True,text=True)
+            self.assertEqual(result.returncode,2)
+            self.assertIn("timeout at most 1800",result.stderr)
 
     def test_scenario_fingerprint_retains_spaces_and_escaped_strings(self):
         snapshot = '{"city":"New York","message":"quote \\\" newline \\n","value":42}'

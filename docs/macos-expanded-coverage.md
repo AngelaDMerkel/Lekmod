@@ -4,6 +4,8 @@ The user requested broader coverage after the earlier bounded suite and selected
 **this Mac only** for platform scope. The accepted stability campaign remains
 closed; multiplayer, hotseat and PBEM remain deferred. Foreground testing is
 authorized for sessions as long as required, with explicit recovery timeouts.
+The tested host is Mac14,5 / Apple M2 Max, macOS 26.5.2 (25F84), running the
+x86-64 Civ V executable on arm64 macOS.
 
 This checklist is the completion ledger. Existing evidence is retained, while
 new rows require reproducible positive outcomes, relevant rejection/boundary
@@ -17,9 +19,9 @@ mean every possible combination of game state has been tested.
 | --- | --- | --- |
 | Science victory | Apollo/project completion, part production and assembly, wrong-location rejection, prelaunch reload, final victory and presentation | Passed with explicitly supplied prerequisites/near-complete production |
 | Domination victory | Legal attack, capital capture, owner transfer, city disposition and victory | Attack/capture/victory passed; disposition choices remain under city lifecycle |
-| Cultural victory | Tourism/influence, musician action, threshold crossing and victory | Pending |
-| Diplomatic victory | World Leader session, vote eligibility/count, winning resolution and victory | Pending |
-| Score victory | Score resolution and defeat presentation | Passed in earlier suite; human victory presentation still pending |
+| Cultural victory | Tourism/influence, musician action, threshold crossing and victory | Passed with supplied great people and staging positions |
+| Diplomatic victory | World Leader session, vote eligibility/count, winning resolution and victory | Passed with supplied technology/gold; natural gifts, sessions and ballots |
+| Score victory | Score resolution, human victory and defeat presentation | Passed |
 | Combat | Human melee/ranged/city attacks, unit death/capture, terrain/war restrictions, naval and air actions | Pending dedicated cases |
 | Unit lifecycle | Founding, movement/pathing, embark/disembark, promotion/upgrade, worker build/repair/pillage, healing, gifting/deletion, great-person actions | Partial earlier evidence; systematic cases pending |
 | City lifecycle | Additional founding, capture/puppet/annex/raze/liberation, growth/starvation, building sale, specialists/great works | Partial earlier evidence; remaining cases pending |
@@ -29,9 +31,9 @@ mean every possible combination of game state has been tested.
 | Espionage | Assignment, diplomat, science award, surveillance, counterspy/election/coup paths and persistence | Core workflow passed; additional cases pending |
 | Trade | Legal routes/income/reload, internal/sea routes, rebasing, expiry/plunder and restrictions | Land external workflow passed; additional cases pending |
 | Civilization content | Inventory every playable civilization and active Lua handler; test unique mechanics and owner/negative boundaries | Inventory: 114 playable civilizations, 26 Lua files; systematic cases in progress |
-| UI | Standard/EUI city, production, tech, save/load/exit, then remaining overview/notification/popups and screen-size boundaries | Earlier core mouse workflow passed; additional cases pending |
+| UI | Standard/EUI city, production, tech, save/load/exit, then remaining overview/notification/popups, post-victory continuation/replay and screen-size boundaries | Earlier core mouse workflow passed; additional cases pending |
 | Setup and persistence | Map/era/speed/difficulty/options boundaries, new/reloaded games, autosave/manual/quicksave compatibility | Partial earlier evidence; additional cases pending |
-| Startup reliability | Isolate recorded startup-only exit 255; compare identical artifact/configuration and retain failures | Unresolved |
+| Startup reliability | Isolate recorded startup-only exit 255; compare identical artifact/configuration and retain failures | Localization-cache failure identified; empty-cache recovery passed; original creation failure still under investigation |
 | Release regression | Recheck exact final product bytes, affected save compatibility, settings/backups and installer restore | Earlier artifact passed; repeat only for changed product code |
 
 Evidence details and fixture commands will be added as each row progresses.
@@ -128,13 +130,100 @@ under the broader city lifecycle row.
 records a call stack without changing the requested status. A real x86-64
 subprocess test verified statuses 0, 42 and 255; status 0 adds no failure trace.
 Future ordinary tests carry this diagnostic. The two historical exit-255 runs
-remain unexplained; successful later starts do not resolve their cause.
+were initially unexplained. The subsequent immediate-exit observer also covers
+`_exit`; six real x86-64 subprocess paths retained their original statuses.
+
+`20260916T001510Z` and `20260916T001834Z` reproduced exit 255 before the menu.
+The latter captured Aspyr's `_exit(-1)` call stack. Both historical exit-255
+Database logs, and these new failures, contain merged-localization errors.
+The latest `Localization-Merged.db` was zero bytes and had no tables; the source
+localization databases passed SQLite quick checks. Disk space and the descriptor
+limit were sufficient. The complete cache was preserved under
+`build/macos/cache-investigation/20260916T002558Z`, then only the confirmed
+empty merged cache was removed. On the unchanged artifact,
+`20260916T002602Z` rebuilt a 27,500,544-byte merged cache containing the required
+tables and successfully resumed gameplay. This establishes the immediate failure
+and a tested recovery; it does not explain the original cache-creation failure.
+
+`repair-localization-cache.py` defaults to read-only inspection. Its explicit
+`--repair-empty` option requires the game to be closed, preserves the zero-byte
+file, and refuses nonempty files, symlinks and SQLite sidecars. Six offline cases
+verify these boundaries. The runner reports this startup failure separately and
+does not silently retry or turn a failed launch into a pass.
+
+### Cultural victory
+
+`20260915T235204Z` used a supplied writer's normal Great Work action and observed
+one new work and two tourism. Its original popup animation ran and the normal
+Close callback dismissed it. One ordinary turn added two influence. Four
+supplied/staged musicians then used normal concert actions, each adding exactly
+100 influence and being consumed. The normal action was unavailable on own
+territory. The pre-victory save had 402 influence against the other major's 427
+lifetime culture, one Great Work and one remaining musician (strength 100).
+Save SHA-256: `2caf71226e9f062520aaa8b79af222cb66151716f7d0b9c2d866a741eb79b203`.
+
+`20260915T235441Z` matched that exact recorded state on reload.
+`20260915T235657Z` performed the final concert, then one ordinary turn resolved
+human/team 0 cultural victory. The correct cultural artwork/text was captured
+and visually inspected. All three runs exited normally and preserved original
+saves/settings/hooks, with no Lua or synchronization errors. This tests action
+outcomes and persistence with supplied great people, not an earned cultural
+campaign or mouse interaction. Earlier run `20260915T235007Z` remains failed:
+the first test driver omitted the Great Work popup's normal Close callback and
+timed out waiting for a notification while that popup paused world updates.
+
+### Diplomatic victory and score
+
+The diplomatic fixture supplied Atomic Theory prerequisites and 20,000 gold,
+then submitted actual city-state gift commands. Three city-states accepted the
+gifts with verified treasury/influence changes. The isolationist fourth rejected
+the command without changing either value, as its personality requires. Earlier
+attempts incorrectly expected that gift to succeed, and one used a proposal's
+current decision value where the UI looks up its decision type; failed reports
+remain preserved. The isolationist later changed personality through normal
+gameplay and accepted gifts in the resumed fixture, yielding four allies.
+
+`20260916T000633Z` reached the UN and turn 187, then was interrupted after an
+unhandled Great Engineer birth popup was captured. Its turn-180 autosave was
+preserved. The popup's real Close callback was added. After the cache recovery
+described above, `20260916T002602Z` resumed that autosave, retained ordinary
+session timing and verified the corrected self-only human candidate list.
+At turn 199 a 14-vote World Leader ballot did not win against the required 16;
+the next starting allocation became 16 through the ordinary additional-delegate
+rule. That run reached turn 209 before its 600-second recovery bound. It is
+incomplete evidence, not a completed scenario or an uninterrupted campaign claim.
+
+`20260916T003735Z` resumed its preserved turn-200 autosave, reached the next
+World Leader session at turn 211, and saved with 16 votes unspent and no winner.
+Save SHA-256: `d0d4e3513333d3688ba0e1364f1bdb21d120d0bf2827d5295a339d0ca31613c3`.
+That continuation inherited the four alliances and made no new gifts. Its old
+adapter's `gifts=0` PASS line is not accepted as new gift coverage; the sibling
+`validation-notes.json` records this distinction, and the adapter is corrected.
+`20260916T004309Z` matched the exact saved ballot/treasury/alliance snapshot.
+`20260916T004509Z` cast the normal 16-vote ballot, observed resolution 9/type 0
+enacted in the native log, and verified human/team 0 diplomatic victory after
+one ordinary turn. Its correct artwork/text was visually inspected. All three
+final runs saved/exited as applicable with process code 0 and verified cleanup,
+without Lua or synchronization errors.
+
+`20260916T004712Z` started an ordinary Ancient/Duel Shoshone game with a two-turn
+score limit. No units, resources, scores or winner were assigned. The human
+finished with score 51 against the AI's 42, both with one city. The engine selected
+human/team 0 for score victory, the score artwork was inspected, and normal exit
+returned 0 with settings/hooks/saves preserved. The prior ordinary score-defeat
+case remains valid. These checks complete the five primary victory outcomes;
+post-victory UI actions and the remaining rows above are still open.
 
 The current temporary standard test package is
-`build/macos/Lekmod-civ-regressions-20260915b.zip`, SHA-256
-`349afefb42bef3713ff1bba83f3749951a32ba43e6fe1dbd89241bc785d300f6`.
-It contains the reviewed XML/Lua changes and the unchanged signed GameCore
-`04904d1ff7d8db789816b8fe900d4518ed77bb5a5e1032f727b180a84e60b40c`.
+`build/macos/Lekmod-league-choices-20260916.zip`, SHA-256
+`d46d4784a9d4fbbf47d532e5302f3259e9e74aadd56b862d1097aee6cbf78b25`.
+It contains the reviewed XML/Lua changes and the voting-choice correction in
+signed GameCore `4ac6ef335a2d5cdd78c515793fb2fe2ba1e99cbd279642ee86ee4be2b989e9a9`.
+`7ba4560c` commits that correction after 17 sanitizer cases and the native
+World Leader candidate check. Earlier expanded science, domination, cultural and
+civilization results used GameCore `04904d1f…` and, for the civilization fixes,
+`Lekmod-civ-regressions-20260915b.zip` (SHA-256
+`349afefb42bef3713ff1bba83f3749951a32ba43e6fe1dbd89241bc785d300f6`).
 Its manifest correctly records a dirty source tree; it is not a final clean
 release artifact. Installation used the central installer, and the three changed
 product files match their manifest hashes. The preceding clean package remains
