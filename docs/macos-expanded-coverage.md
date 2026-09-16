@@ -882,6 +882,26 @@ settings/hooks, preserved manual saves and had no Lua/synchronization errors.
 These are scripted callbacks/missions and outcomes; physical purchase clicks and
 repeat-adoption boundaries are separate checks.
 
+### Repeat adoption and retained religious buildings
+
+`20260916T094500Z` loaded the saved first-conversion/Mandir fixture, supplied one
+prophet for each religion and recorded their staging positions. A normal foreign
+owner-turn spread changed the Mandir city's majority from religion 9 to 7. The
+human prophet's actual spread action changed it back to 9. Each spent one charge.
+The second adoption of religion 9 added zero gold, establishing that the paid
+first-conversion bonus survived save/reload and did not repeat after genuine
+conversion away and back. The Mandir and all recorded food/production yields
+of its assigned resource plots remained unchanged through both conversions.
+
+Save SHA-256:
+`06c02596f0897494dd5ebbb80dc365fb6f57775607fda8c21b1bf5755386292c`.
+`20260916T095206Z` matched the final religions, building, tile yields, treasury,
+faith and owned units with religion data exactly after reload. Both saved/exited
+normally (0), restored settings/hooks, preserved manual saves and reported no
+Lua/synchronization errors. Prophets/positions were supplied; conversions and
+one-time reward behavior were actual outcomes, not assigned counters or mouse
+interaction.
+
 ### Current test artifact
 
 The current standard test package is
