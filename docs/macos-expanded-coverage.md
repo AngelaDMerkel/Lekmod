@@ -26,7 +26,7 @@ mean every possible combination of game state has been tested.
 | Unit lifecycle | Founding, movement/pathing, embark/disembark, promotion/upgrade, worker build/repair/pillage, healing, gifting/deletion, great-person actions | Promotion/upgrade/heal/embark, farm/road/repair, disband/gift and great-person actions passed; pillage, road repair/travel and exact reload passed; other great-person cases remain |
 | City lifecycle | Additional founding, capture/puppet/annex/raze/liberation, growth/starvation, building sale, specialists/great works | Core lifecycle, artwork movement/theming and exact reloads passed; Dance Hall bonuses and ordinary artifact/landmark digs passed; further cultural UI/branches remain |
 | Economy and policies | Research/free tech, policy/tenet acquisition and switching, happiness/golden age, resources, treasury boundaries | Policy/tenet confirmations, spending and Cuba reward boundaries passed; switching and remaining economy cases pending |
-| Diplomacy | War/peace, friendship/denunciation, resources/GPT/open borders, non-aggression pacts and configured agreement restrictions, city-state interactions | Luxury/GPT gifts, mutual embassies, open borders and persistence passed; natural contract expiry and permanent embassies passed; friendship/denunciation and reload passed; peace/non-aggression pacts and configured-off agreement UI remain |
+| Diplomacy | War/peace, friendship/denunciation, resources/GPT/open borders, non-aggression pacts and configured agreement restrictions, city-state interactions | Luxury/GPT gifts, mutual embassies, open borders and persistence passed; natural contract expiry and permanent embassies passed; friendship/denunciation and reload passed; non-aggression creation/expiry and configured-off agreement UI passed; negotiated peace remains |
 | Religion | Found/enhance/buy/spread, conversion/defense and belief effects, save persistence | Core workflow, inquisitor purchase/defense/removal and pressure-retention belief/reload passed; founder gold, Mandir/luxury yields and Holy Warriors purchases/reload passed; further boundaries pending |
 | Espionage | Assignment, diplomat, science award, surveillance, counterspy/election/coup paths and persistence | Core workflow, counterspy arrival, scheduled election and successful coup/reload passed; failed coup, dead-agent rejection and five-turn replacement/reloads also passed; defensive interception and further UI remain |
 | Trade | Legal routes/income/reload, internal/sea routes, rebasing, expiry/plunder and restrictions | Land external, internal land-food/sea-production, rebasing and reload passed; natural expiry/countdown correction and land plunder/reload passed |
@@ -959,6 +959,40 @@ compiled NEW_DEFENSIVE_PACT rule and shipped non-aggression text instead define
 a ten-turn peace commitment. The checklist now follows those configured rules;
 it does not require forcing an otherwise unavailable research agreement into a
 positive test. Native unavailable-control and non-aggression checks are next.
+
+### Configured treaty rules and non-aggression pacts
+
+The shipped technology rows explicitly disable research- and trade-agreement
+unlocks. With science enabled, unfinished research, mutual friendship/embassies
+and sufficient supplied affordability budgets, `20260916T112417Z` verified the
+native research unlock remained false and both actual research-agreement controls
+were disabled. It then used the actual pact pocket/proposal/AI-reply callbacks.
+The live label was “NON-AGGRESSION PACT (10 Turns)”, matching the compiled rule
+and shipped text. Both treaty items had duration ten; both pact flags became
+true and both sides lost the ability to declare war, without a treasury charge.
+One ordinary turn before the proposal let the AI update its opinion after the
+new friendship. The earlier `111607Z` correctly received an AI refusal but its
+adapter waited on a hidden reply context; that blocked harness report is retained.
+The corrected adapter handles trade-screen refusals and only submits checked
+counterterms. No counteroffer was needed in the passing run.
+
+Active-pact save SHA-256:
+`07766cd8fad0403a16b3066b9ef79f81fdef4d0b836cbf0b6530b825006af357`.
+`20260916T112641Z` matched exact pact/protection/treasury/embassy/friendship state
+on reload. `20260916T112946Z` followed ten ordinary turns (21–31), preserving
+both protections through turn 30. At the quoted end, 31, both pact flags cleared
+and ordinary war eligibility returned, with no declaration made. Expired save:
+`365b28c4cdd9ffb6dbef3943f0abf0b649de1d2d6cf3df85d15e902d2f94ea82`.
+`20260916T113314Z` matched that expired state exactly after reload.
+
+`20260916T113600Z` separately opened the actual funded, friendly trade screen and
+verified both research controls were disabled and both trade-agreement controls
+were hidden or disabled. Native unlock counts were false, while funds, friendship,
+embassies and science were otherwise available. This closes configuration/UI
+coverage for these unavailable agreements; no positive research-agreement payout
+is claimed. All five final runs saved/exited normally (0), restored settings/hooks,
+preserved manual saves and had no Lua/synchronization errors. Actions were
+scripted callbacks/queries and ordinary gameplay, not mouse input.
 
 ### Current test artifact
 

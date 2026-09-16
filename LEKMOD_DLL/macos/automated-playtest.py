@@ -180,6 +180,9 @@ SCENARIO_ITEMS = {"inventory": {"system-inventory"},
                   "diplomacy-friendship-mature": {"friendship-request", "friendship-agreement", "duplicate-friendship-rejected"},
                   "friendship-observe": {"friendship-dialog-result"},
                   "diplomacy-denounce": {"denounce-cancel", "denounce-confirm", "denounce-state"},
+                  "diplomacy-pact": {"research-agreement-configured-off", "research-agreement-ui", "pact-create", "pact-war-restriction"},
+                  "pact-expiry": {"pact-duration", "pact-expiry", "war-eligibility-restored"},
+                  "disabled-agreements": {"disabled-research-ui", "disabled-trade-ui"},
                   "trade-internal": {"trade-rebase-cancel", "trade-rebase", "internal-land-food", "internal-sea-production", "internal-route-restrictions"},
                   "trade-expiry": {"trade-expiry", "expired-trade-units-return", "expired-trade-yields-cleared"},
                   "trade-progress": {"trade-progress-observed"},
@@ -469,6 +472,13 @@ def main():
             if args.scenario == "diplomacy-denounce":
                 ui_templates[APP / "Contents/Assets/Assets/DLC/Expansion2/UI/InGame/LeaderHead/LeaderHeadRoot.lua"] = "playtest-scenario-friendship-root.lua"
                 ui_templates[ui_dir / "DiscussionDialog.lua"] = "playtest-scenario-denounce-discussion.lua"
+            if args.scenario == "diplomacy-pact":
+                ui_templates[APP / "Contents/Assets/Assets/DLC/Expansion2/UI/InGame/LeaderHead/LeaderHeadRoot.lua"] = "playtest-scenario-diplo-assets-root.lua"
+                ui_templates[ui_dir / "TradeLogic.lua"] = "playtest-scenario-pact-popup.lua"
+                ui_templates[ui_dir / "DiscussionDialog.lua"] = "playtest-scenario-pact-reply.lua"
+            if args.scenario == "disabled-agreements":
+                ui_templates[APP / "Contents/Assets/Assets/DLC/Expansion2/UI/InGame/LeaderHead/LeaderHeadRoot.lua"] = "playtest-scenario-diplo-assets-root.lua"
+                ui_templates[ui_dir / "TradeLogic.lua"] = "playtest-scenario-disabled-agreements-popup.lua"
             if args.scenario == "unit-owners":
                 ui_templates[ui_dir.parent / "Lekmod_units.lua"] = "playtest-scenario-unit-owner-observer.lua"
             if args.scenario == "endgame":
@@ -534,7 +544,7 @@ def main():
                 ui_templates[path] = "playtest-info-popup.lua"
             elif path.name == "LeaderHeadRoot.lua":
                 ui_templates.setdefault(path, "playtest-leader-root.lua")
-            elif path.name == "DiploTrade.lua" and args.scenario not in ("diplomacy", "diplomacy-assets"):
+            elif path.name == "DiploTrade.lua" and args.scenario not in ("diplomacy", "diplomacy-assets", "diplomacy-pact", "disabled-agreements"):
                 ui_templates[path] = "playtest-trade.lua"
             elif path.name == "DiscussionDialog.lua":
                 ui_templates.setdefault(path, "playtest-discussion.lua")
