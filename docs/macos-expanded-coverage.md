@@ -28,7 +28,7 @@ mean every possible combination of game state has been tested.
 | Economy and policies | Research/free tech, policy/tenet acquisition and switching, happiness/golden age, resources, treasury boundaries | Policy/tenet confirmations, spending and Cuba reward boundaries passed; switching and remaining economy cases pending |
 | Diplomacy | War/peace, friendship/denunciation, resources/GPT/open borders/research agreements, city-state interactions | Luxury/GPT gifts, mutual embassies, open borders and persistence passed; friendship/peace/research agreements and expiry remain |
 | Religion | Found/enhance/buy/spread, conversion/defense and belief effects, save persistence | Core workflow passed; additional cases pending |
-| Espionage | Assignment, diplomat, science award, surveillance, counterspy/election/coup paths and persistence | Core workflow, counterspy arrival, scheduled election and successful coup/reload passed; defensive interception and failed-coup branch remain |
+| Espionage | Assignment, diplomat, science award, surveillance, counterspy/election/coup paths and persistence | Core workflow, counterspy arrival, scheduled election and successful coup/reload passed; failed coup, dead-agent rejection and five-turn replacement/reloads also passed; defensive interception and further UI remain |
 | Trade | Legal routes/income/reload, internal/sea routes, rebasing, expiry/plunder and restrictions | Land external, internal land-food/sea-production, rebasing and reload passed; natural expiry/countdown correction and land plunder/reload passed |
 | Civilization content | Inventory every playable civilization and active Lua handler; test unique mechanics and owner/negative boundaries | [Inventory: 114 civilizations and 26 Lua files](macos-civilization-coverage.md); systematic cases in progress |
 | UI | Standard/EUI city, production, tech, save/load/exit, then remaining overview/notification/popups, post-victory continuation/replay and screen-size boundaries | Standard post-victory/overview workflow and presentation fixes passed; EUI additional views and dense/size boundaries remain |
@@ -782,17 +782,56 @@ failed harness attempts. The final setup issues its mission inside the actual
 active owner-turn callback before unit planning; no active-player, wait or
 synchronization flag is assigned, and the AI remains computer-controlled.
 
+### Coup percentages and dead-spy relocation
+
+The actual coup comparison accepted one extra result from the engine's 0–99 RNG:
+0% accepted one roll and 85% accepted 86 rolls. An extracted-product sanitizer
+test exhausts all 8,600 combinations across quoted chances 0–85; all 86
+percentages failed before the strict comparison and now match exactly. The RNG
+call and its order remain unchanged. This exhaustive probability evidence is
+offline; no native zero-percent success is claimed.
+
+`20260916T084759Z` then reproduced an independent native boundary defect. An
+actual zero-chance coup failed, killed/extracted the spy and set human influence
+to -10, but the dead spy still had three advertised relocation destinations.
+A normal Network.SendMoveSpy command immediately changed it to travelling,
+bypassing the existing five-turn replacement delay. The original failed report
+is retained. The relocation predicate now validates the index and dead state
+before either a city destination or recall. Fifteen extracted-product sanitizer
+cases pass; four dead/invalid cases failed before correction.
+
+`20260916T085153Z` repeated the same input on the corrected GameCore. The real
+failed-coup outcome retained the AI alliance/influence and treasury, the dead spy
+had zero destinations, and the same normal relocation command left it dead at
+HQ. Save SHA-256:
+`3144b9e05aef3dd69b69d6f9fe43d9cd1919c5232245e33ed4d7b245988431f4`.
+`20260916T085327Z` matched the exact dead-spy/treasury/influence snapshot on reload.
+
+`20260916T085517Z` followed five ordinary turns (191–196). The spy remained dead
+and ineligible for the first four turns; on the fifth, the engine supplied its
+normal replacement, unassigned at HQ with no surveillance and the same agent-slot
+count. Save SHA-256:
+`04f5c6a9e2aabaa89b5113ae6d3a7d8cd54efb09dff872e2d269a05603c8e21b`.
+`20260916T085911Z` matched the replacement state exactly after reload.
+`20260916T090115Z` also matched the older successful-coup save's exact spy,
+alliance and influence snapshot on the new GameCore. All five final runs
+saved/exited normally (0), preserved settings/hooks/manual saves, and reported
+no Lua/synchronization errors. No spy counter, rank, RNG state or wait flag was
+assigned. These are scripted commands and outcomes, not mouse or coup-popup
+confirmation checks.
+
 ### Current test artifact
 
 The current standard test package is
-`build/macos/Lekmod-palmyra-20260916.zip`, SHA-256
-`465a785b3165efb74c0000095091022ab50a1464d57b35077baf80de6d375165`.
+`build/macos/Lekmod-espionage-boundaries-20260916.zip`, SHA-256
+`04b0de77ccde1c5e5d99f611b3c308b61c83d1f8d68171689ae2dfd87239019a`.
 Its signed GameCore is
-`30227e5184acc20bde6e634bccd29e4d9046f96a93588f71143d6385fae6b80c`.
+`4d45161d97633bb83b3804254f13127909323d2bb4e6ba12646eb670e6c3325c`.
 It includes the earlier voting, presentation, greeting and lake fixes plus
 the Georgia hooks, great-work holding corrections and plot-yield argument fix.
-It includes the science-icon, trade-countdown and Palmyra owner corrections and
-was packaged from `12e01d19` plus the Palmyra changes (dirty source manifest). It is an intermediate test artifact; final release regression remains
+It includes the science-icon, trade-countdown, Palmyra owner and espionage
+boundary corrections. It was packaged from `dc7740c4` plus the espionage changes
+(dirty source manifest). It is an intermediate test artifact; final release regression remains
 open while the broader checklist is unfinished. Its provenance is recorded in the archive manifest. Installation used the central
 installer with the canonical stock backup retained.
 

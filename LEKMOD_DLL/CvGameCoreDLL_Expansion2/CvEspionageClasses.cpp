@@ -1298,6 +1298,14 @@ bool CvPlayerEspionage::CanEverMoveSpyTo(CvCity* pCity)
 /// CanMoveSpyTo - May a spy move into this city
 bool CvPlayerEspionage::CanMoveSpyTo(CvCity* pCity, uint uiSpyIndex, bool bAsDiplomat)
 {
+	// Validate the agent before either relocation or recall. A normal move must
+	// not replace the dead state and bypass the existing replacement countdown.
+	CvAssertMsg(uiSpyIndex < m_aSpyList.size(), "iSpyIndex is out of bounds");
+	if(uiSpyIndex >= m_aSpyList.size() || m_aSpyList[uiSpyIndex].m_eSpyState == SPY_STATE_DEAD)
+	{
+		return false;
+	}
+
 	// This allows the player to move the spy off the board
 	if(!pCity)
 	{
@@ -1305,12 +1313,6 @@ bool CvPlayerEspionage::CanMoveSpyTo(CvCity* pCity, uint uiSpyIndex, bool bAsDip
 	}
 
 	if(!CanEverMoveSpyTo(pCity))
-	{
-		return false;
-	}
-
-	CvAssertMsg(uiSpyIndex < m_aSpyList.size(), "iSpyIndex is out of bounds");
-	if(uiSpyIndex >= m_aSpyList.size())
 	{
 		return false;
 	}
@@ -2156,7 +2158,8 @@ bool CvPlayerEspionage::AttemptCoup(uint uiSpyIndex)
 
 	bool bAttemptSuccess = false;
 	int iRandRoll = GC.getGame().getJonRandNum(100, "Roll for the result of an attempted coup");
-	if(iRandRoll <= GetCoupChanceOfSuccess(uiSpyIndex))
+	// The RNG returns 0..99; accept exactly the quoted percentage of rolls.
+	if(iRandRoll < GetCoupChanceOfSuccess(uiSpyIndex))
 	{
 		// swap influence from ally to 2nd place ally
 		int iInfluenceTemp = aiNewInfluenceValueTimes100[ePreviousAlly];
