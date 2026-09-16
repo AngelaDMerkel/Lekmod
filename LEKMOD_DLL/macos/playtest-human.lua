@@ -41,7 +41,7 @@ do
                         -- military unit may share a tile. The engine checks
                         -- stacking, terrain, diplomacy and movement eligibility.
                         if plot and not plot:IsWater() and
-                           unit:CanMoveOrAttackInto(plot) then
+                           unit:CanMoveOrAttackInto(plot, 0, 1) then
                             Game.SelectionListGameNetMessage(GameMessageTypes.GAMEMESSAGE_PUSH_MISSION,
                                 MissionTypes.MISSION_MOVE_TO, plot:GetX(), plot:GetY(), 0, false, false)
                             print("[LEKMOD_TEST] moved-stacked-unit id=" .. unit:GetID() ..
