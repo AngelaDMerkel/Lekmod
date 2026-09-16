@@ -28,7 +28,7 @@ mean every possible combination of game state has been tested.
 | Economy and policies | Research/free tech, policy/tenet acquisition and switching, happiness/golden age, resources, treasury boundaries | Policy/tenet confirmations, spending and Cuba reward boundaries passed; switching and remaining economy cases pending |
 | Diplomacy | War/peace, friendship/denunciation, resources/GPT/open borders/research agreements, city-state interactions | Luxury/GPT gifts, mutual embassies, open borders and persistence passed; friendship/peace/research agreements and expiry remain |
 | Religion | Found/enhance/buy/spread, conversion/defense and belief effects, save persistence | Core workflow passed; additional cases pending |
-| Espionage | Assignment, diplomat, science award, surveillance, counterspy/election/coup paths and persistence | Core workflow passed; additional cases pending |
+| Espionage | Assignment, diplomat, science award, surveillance, counterspy/election/coup paths and persistence | Core workflow, counterspy arrival, scheduled election and successful coup/reload passed; defensive interception and failed-coup branch remain |
 | Trade | Legal routes/income/reload, internal/sea routes, rebasing, expiry/plunder and restrictions | Land external, internal land-food/sea-production, rebasing and reload passed; natural expiry/countdown correction passed; plunder remains |
 | Civilization content | Inventory every playable civilization and active Lua handler; test unique mechanics and owner/negative boundaries | [Inventory: 114 civilizations and 26 Lua files](macos-civilization-coverage.md); systematic cases in progress |
 | UI | Standard/EUI city, production, tech, save/load/exit, then remaining overview/notification/popups, post-victory continuation/replay and screen-size boundaries | Standard post-victory/overview workflow and presentation fixes passed; EUI additional views and dense/size boundaries remain |
@@ -726,6 +726,33 @@ scripted commands/callbacks and native outcomes, not physical mouse actions.
 The intervening `081444Z` and `081937Z` failures occurred before gameplay and
 remain recorded separately in the startup-cache report. The successful bounded
 empty-cache recovery does not establish that the original startup defect is fixed.
+
+### Counterspy arrival, city-state election and coup
+
+`20260916T083052Z` used the existing spy and twelve ordinary turns (179–191).
+A normal relocation reached counterintelligence duty in the human capital;
+this establishes arrival/state, not interception of a foreign spy. Relocating
+the same spy to minor 22 completed travel/surveillance and entered election
+rigging. Contact, capital visibility and initial influence (human 70, AI 140)
+were recorded fixture inputs. The scheduled election at turn 190 produced the
+real success notification and an observed net influence increase of 19 by the
+next human turn (with recorded ordinary decay -1.25 per turn).
+
+For the coup branch, explicit influence inputs supplied human 100 and AI 110,
+leaving the AI allied and a quoted 85% chance. The normal Network.SendStageCoup
+command succeeded through the engine RNG: human influence became 110, the
+previous ally fell to 80, and the alliance transferred to the human. No random
+seed, spy progress/rank, election clock or outcome counter was changed. Coup
+eligibility was rejected while unassigned, at home, while travelling and after
+the human became allied. The failed-coup/dead-spy branch remains separate.
+
+Save SHA-256:
+`bbd7c688d516da77b93f3ce6f9a9e27f9dfb91039f0155010b8aee4d398faa4d`.
+`20260916T083513Z` matched exact spy states, election countdown, minor alliances
+and influence on reload. Both saved/exited normally (0), restored settings/hooks,
+preserved manual saves and reported no Lua/synchronization errors. These were
+normal scripted game commands and observed outcomes. The coup confirmation UI
+and actual mouse workflow were not exercised by this scenario.
 
 ### Current test artifact
 
