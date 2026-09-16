@@ -175,6 +175,11 @@ SCENARIO_ITEMS = {"inventory": {"system-inventory"},
                   "cuba-ideology": {"ideology-cancel", "ideology-selected", "tenet-cancel", "cuba-first-tenet-reward", "cuba-later-tenet-no-repeat", "tenet-restrictions"},
                   "diplomacy-assets": {"resource-gift", "gpt-gift", "mutual-embassies", "open-borders-gift", "diplomacy-trade-restrictions", "gpt-settlement"},
                   "diplomacy-expiry": {"diplomatic-contract-expiry", "expired-diplomatic-accounting", "embassies-permanent"},
+                  "diplomacy-friendship": {"friendship-request", "friendship-agreement", "duplicate-friendship-rejected"},
+                  "diplomacy-friendship-prepared": {"friendship-request", "friendship-agreement", "duplicate-friendship-rejected"},
+                  "diplomacy-friendship-mature": {"friendship-request", "friendship-agreement", "duplicate-friendship-rejected"},
+                  "friendship-observe": {"friendship-dialog-result"},
+                  "diplomacy-denounce": {"denounce-cancel", "denounce-confirm", "denounce-state"},
                   "trade-internal": {"trade-rebase-cancel", "trade-rebase", "internal-land-food", "internal-sea-production", "internal-route-restrictions"},
                   "trade-expiry": {"trade-expiry", "expired-trade-units-return", "expired-trade-yields-cleared"},
                   "trade-progress": {"trade-progress-observed"},
@@ -454,6 +459,16 @@ def main():
                 ui_templates[APP / "Contents/Assets/Assets/DLC/Expansion2/UI/InGame/LeaderHead/LeaderHeadRoot.lua"] = "playtest-scenario-diplo-assets-root.lua"
                 ui_templates[ui_dir / "TradeLogic.lua"] = "playtest-scenario-diplo-assets-popup.lua"
                 ui_templates[ui_dir / "DiscussionDialog.lua"] = "playtest-scenario-diplo-assets-reply.lua"
+            if args.scenario in ("diplomacy-friendship", "diplomacy-friendship-prepared", "diplomacy-friendship-mature", "friendship-observe"):
+                ui_templates[APP / "Contents/Assets/Assets/DLC/Expansion2/UI/InGame/LeaderHead/LeaderHeadRoot.lua"] = "playtest-scenario-friendship-root.lua"
+                ui_templates[ui_dir / "DiscussionDialog.lua"] = "playtest-scenario-friendship-discussion.lua"
+                if args.scenario in ("diplomacy-friendship-prepared", "diplomacy-friendship-mature"):
+                    helper=ui_dir / "LekmodTestFriendship.lua"
+                    if helper.exists(): raise SystemExit("Temporary friendship module already exists")
+                    ui_templates[helper]="playtest-scenario-diplomacy-friendship.lua"
+            if args.scenario == "diplomacy-denounce":
+                ui_templates[APP / "Contents/Assets/Assets/DLC/Expansion2/UI/InGame/LeaderHead/LeaderHeadRoot.lua"] = "playtest-scenario-friendship-root.lua"
+                ui_templates[ui_dir / "DiscussionDialog.lua"] = "playtest-scenario-denounce-discussion.lua"
             if args.scenario == "unit-owners":
                 ui_templates[ui_dir.parent / "Lekmod_units.lua"] = "playtest-scenario-unit-owner-observer.lua"
             if args.scenario == "endgame":

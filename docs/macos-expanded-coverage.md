@@ -26,7 +26,7 @@ mean every possible combination of game state has been tested.
 | Unit lifecycle | Founding, movement/pathing, embark/disembark, promotion/upgrade, worker build/repair/pillage, healing, gifting/deletion, great-person actions | Promotion/upgrade/heal/embark, farm/road/repair, disband/gift and great-person actions passed; pillage, road repair/travel and exact reload passed; other great-person cases remain |
 | City lifecycle | Additional founding, capture/puppet/annex/raze/liberation, growth/starvation, building sale, specialists/great works | Core lifecycle, artwork movement/theming and exact reloads passed; Dance Hall bonuses and ordinary artifact/landmark digs passed; further cultural UI/branches remain |
 | Economy and policies | Research/free tech, policy/tenet acquisition and switching, happiness/golden age, resources, treasury boundaries | Policy/tenet confirmations, spending and Cuba reward boundaries passed; switching and remaining economy cases pending |
-| Diplomacy | War/peace, friendship/denunciation, resources/GPT/open borders/research agreements, city-state interactions | Luxury/GPT gifts, mutual embassies, open borders and persistence passed; natural contract expiry and permanent embassies passed; friendship/peace/research agreements remain |
+| Diplomacy | War/peace, friendship/denunciation, resources/GPT/open borders, non-aggression pacts and configured agreement restrictions, city-state interactions | Luxury/GPT gifts, mutual embassies, open borders and persistence passed; natural contract expiry and permanent embassies passed; friendship/denunciation and reload passed; peace/non-aggression pacts and configured-off agreement UI remain |
 | Religion | Found/enhance/buy/spread, conversion/defense and belief effects, save persistence | Core workflow, inquisitor purchase/defense/removal and pressure-retention belief/reload passed; founder gold, Mandir/luxury yields and Holy Warriors purchases/reload passed; further boundaries pending |
 | Espionage | Assignment, diplomat, science award, surveillance, counterspy/election/coup paths and persistence | Core workflow, counterspy arrival, scheduled election and successful coup/reload passed; failed coup, dead-agent rejection and five-turn replacement/reloads also passed; defensive interception and further UI remain |
 | Trade | Legal routes/income/reload, internal/sea routes, rebasing, expiry/plunder and restrictions | Land external, internal land-food/sea-production, rebasing and reload passed; natural expiry/countdown correction and land plunder/reload passed |
@@ -921,18 +921,58 @@ embassies on reload. Both saved/exited normally (0), restored settings/hooks,
 preserved manual saves and reported no Lua/synchronization errors. This was a
 bounded agreement test, not a restarted stability campaign or mouse workflow.
 
+### Friendship decisions and denunciation
+
+The first friendship fixtures recorded genuine refusals, not a confirmed product
+defect: `100820Z` (Belgium), `101319Z` (larger-world partners, including one too
+recently met), and `102429Z` (Belgium after explicitly supplied military inputs).
+Their failed positive-case reports remain preserved. Read-only engine diagnostics
+then showed Belgium had 26 turns of contact, willingness 2, favorable opinion and
+score 8 against threshold 12. `20260916T104454Z` recorded that refusal and exited
+normally; its diagnostic pass is not acceptance coverage. The original single RNG
+call and all decision conditions remain unchanged by the trace.
+
+`20260916T105154Z` used normal Ancient/Duel setup with Argentina selected as the
+AI opponent. The prior six resource/GPT/embassy/border cases passed. The next
+case, `20260916T105738Z`, waited eighteen ordinary turns (2–20) for the normal
+contact requirement. The actual Discuss/Button6 request received acceptance;
+Argentina's recorded score was 15 against 12. Both friendship flags became true,
+and the actual duplicate-request button became unavailable. No friendship,
+opinion, willingness or contact counter was assigned. Save SHA-256:
+`4257141f236b0c8e43c1216b0f2b5a5b492a8bbb5e9d5f43606fef07177901a0`.
+`20260916T110147Z` matched the friendship/counters exactly on reload. The helper's
+AI-initiated offer branch did not fire in this run; its acceptance was human-requested.
+
+`20260916T110343Z` loaded that friendship. The actual denouncement confirmation's
+No choice preserved friendship and the embassy. Its Yes choice then denounced
+the AI, ended both friendship flags and closed both embassies while remaining
+at peace. Normal Back/Goodbye closed the reply. Save SHA-256:
+`952ada162c116c52a93a4ec830a12c0d550499815f26f795ad0684129ec75fee`.
+`20260916T110703Z` matched the denunciation, ended friendship, embassies and war
+state exactly after reload. All five final Argentina/denunciation runs saved and
+exited normally (0), restored settings/hooks, preserved manual saves and reported
+no Lua/synchronization errors. These are scripted callbacks and outcomes, not
+mouse interaction or a claim that every AI should accept every proposal.
+
+The shipped technology data has no research- or trade-agreement unlock. The
+compiled NEW_DEFENSIVE_PACT rule and shipped non-aggression text instead define
+a ten-turn peace commitment. The checklist now follows those configured rules;
+it does not require forcing an otherwise unavailable research agreement into a
+positive test. Native unavailable-control and non-aggression checks are next.
+
 ### Current test artifact
 
 The current standard test package is
-`build/macos/Lekmod-inquisitor-owner-20260916.zip`, SHA-256
-`1152cbdaed3fe9411fef881116c20de955afa5ba4260a48ecf90a4905819d614`.
+`build/macos/Lekmod-diplomacy-diagnostics-20260916.zip`, SHA-256
+`295c7ecc5bd916da7514aef03322b6d55f79c1c30d07829c0722c0234df0b946`.
 Its signed GameCore is
-`d947772f0cbb1f296fb1280719070c36bebedde467a76d5f34779a9bee414f5f`.
+`e07f67902ebbc0a88f5c104a92f0eecd5b82f38f2c107291bb22c1c3eb5a75ed`.
 It includes the earlier voting, presentation, greeting and lake fixes plus
 the Georgia hooks, great-work holding corrections and plot-yield argument fix.
 It includes the science-icon, trade-countdown, Palmyra owner and espionage
-boundary and inquisitor ownership corrections. It was packaged from `d9724dbf`
-plus the inquisitor changes (dirty source manifest). It is an intermediate test artifact; final release regression remains
+boundary and inquisitor ownership corrections, plus read-only friendship decision
+tracing. It was packaged from `89a9afdb` plus the diagnostic changes (dirty source
+manifest). It is an intermediate test artifact; final release regression remains
 open while the broader checklist is unfinished. Its provenance is recorded in the archive manifest. Installation used the central
 installer with the canonical stock backup retained.
 

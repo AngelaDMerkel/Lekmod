@@ -17,6 +17,7 @@
 #include "CvGameCoreUtils.h"
 #include "CvNotifications.h"
 #include "CvDiplomacyRequests.h"
+#include "LekmodMacDiagnostics.h"
 
 // must be included after all other headers
 #include "LintFree.h"
@@ -19777,6 +19778,7 @@ void CvDiplomacyAI::ChangePlayerStopSpyingRequestCounter(PlayerTypes ePlayer, in
 /// Is this AI willing to work with ePlayer?
 bool CvDiplomacyAI::IsDoFAcceptable(PlayerTypes ePlayer)
 {
+	const bool bTraceHuman = GET_PLAYER(ePlayer).isHuman();
 	// Can't declare friendship with a civ you're at war with
 	if(GET_TEAM(GetTeam()).isAtWar(GET_PLAYER(ePlayer).getTeam()) || GC.getGame().isOption(GAMEOPTION_ALWAYS_WAR))
 	{
@@ -19785,9 +19787,13 @@ bool CvDiplomacyAI::IsDoFAcceptable(PlayerTypes ePlayer)
 
 	// Haven't known this guy for long enough
 	if(IsTooEarlyForDoF(ePlayer))
+	{
+		if (bTraceHuman) LekmodMacLogVisualEvent("dof.too-early", GetPlayer()->GetID(), ePlayer, GET_TEAM(GetTeam()).GetTurnsSinceMeetingTeam(GET_PLAYER(ePlayer).getTeam()), GC.getDOF_TURN_BUFFER(), 0, 0);
 		return false;
+	}
 
 	MajorCivApproachTypes eApproach = GetMajorCivApproach(ePlayer, /*bHideTrueFeelings*/ false);
+	if (bTraceHuman) LekmodMacLogVisualEvent("dof.approach", GetPlayer()->GetID(), ePlayer, eApproach, GET_TEAM(GetTeam()).GetTurnsSinceMeetingTeam(GET_PLAYER(ePlayer).getTeam()), GetDoFWillingness(), 0);
 
 	// If player is planning War, always say no
 	if(eApproach == MAJOR_CIV_APPROACH_WAR)
@@ -19800,6 +19806,7 @@ bool CvDiplomacyAI::IsDoFAcceptable(PlayerTypes ePlayer)
 		return true;
 
 	MajorCivOpinionTypes eOpinion = GetMajorCivOpinion(ePlayer);
+	if (bTraceHuman) LekmodMacLogVisualEvent("dof.opinion", GetPlayer()->GetID(), ePlayer, eOpinion, GetRecentTradeValue(ePlayer), 0, 0);
 
 	// If player is unforgivable, always say no
 	if(eOpinion == MAJOR_CIV_OPINION_UNFORGIVABLE)
@@ -19842,7 +19849,9 @@ bool CvDiplomacyAI::IsDoFAcceptable(PlayerTypes ePlayer)
 		iWeight += 10;
 
 	// Rand
-	iWeight += GC.getGame().getJonRandNum(5, "Diplomacy AI: Rand for whether AI wants to work with player");
+	const int iFriendshipRoll = GC.getGame().getJonRandNum(5, "Diplomacy AI: Rand for whether AI wants to work with player");
+	iWeight += iFriendshipRoll;
+	if (bTraceHuman) LekmodMacLogVisualEvent("dof.score", GetPlayer()->GetID(), ePlayer, iWeight, GetDoFWillingness(), iFriendshipRoll, GC.getDOF_THRESHOLD());
 
 	if(iWeight >= /*12*/ GC.getDOF_THRESHOLD())
 		return true;

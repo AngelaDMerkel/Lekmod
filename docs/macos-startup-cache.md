@@ -117,3 +117,13 @@ fixture successfully. POSIX tracing observed successful merged-database/journal
 opens; this attempt produced no correlated localization CF-stream records.
 The gameplay run saved/exited normally with cleanup. Successful regeneration
 again establishes recovery, not the original failure's root cause.
+
+`20260916T103743Z` reproduced the nonempty merged-cache attach failure with the
+new friendship diagnostics. The merged file was again 25,509,888 bytes and passed
+quick_check; twenty cache files/hashes are preserved under
+`build/macos/cache-investigation/20260916T103743Z/`. POSIX opens of the merged file
+and its journal succeeded before the attach error, without a further recorded
+POSIX open at the failure. There were 122 descriptors under the 10,240 limit.
+The unchanged retry `104454Z` reached gameplay and exited normally with the cache
+left intact. This narrows the evidence but does not identify or fix the underlying
+startup failure.
