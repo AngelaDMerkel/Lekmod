@@ -363,3 +363,13 @@ For startup exit 255 with merged-localization errors, consult
 `docs/macos-startup-cache.md`. The cache-recovery tool defaults to read-only
 inspection and preserves/removes only a confirmed empty generated cache with
 explicit `--repair-empty`; it does not silently retry a test.
+
+`unit-actions` uses the small loaded Congress fixture with
+`--scenario-turns 15 --save-and-exit`. It supplies a Warrior/XP/iron/damage and
+staging positions, then tests normal promotion, upgrade, healing and coastal
+movement plus terrain/territory rejection. `worker` permits a new ordinary
+Ancient/Duel game with the same turn bound. It supplies a worker, Wheel
+prerequisites and a pillaged-farm input, then observes farm, road and repair
+completion and yield changes. Reload either saved report with `--expected-state`
+to compare its snapshot. These are action/outcome tests, not physical input or
+proof that the supplied inputs were earned.

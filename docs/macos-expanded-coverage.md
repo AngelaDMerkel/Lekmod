@@ -23,7 +23,7 @@ mean every possible combination of game state has been tested.
 | Diplomatic victory | World Leader session, vote eligibility/count, winning resolution and victory | Passed with supplied technology/gold; natural gifts, sessions and ballots |
 | Score victory | Score resolution, human victory and defeat presentation | Passed |
 | Combat | Human melee/ranged/city attacks, unit death/capture, terrain/war restrictions, naval and air actions | Pending dedicated cases |
-| Unit lifecycle | Founding, movement/pathing, embark/disembark, promotion/upgrade, worker build/repair/pillage, healing, gifting/deletion, great-person actions | Partial earlier evidence; systematic cases pending |
+| Unit lifecycle | Founding, movement/pathing, embark/disembark, promotion/upgrade, worker build/repair/pillage, healing, gifting/deletion, great-person actions | Promotion/upgrade/heal/embark, farm/road/repair and reload passed; other cases remain |
 | City lifecycle | Additional founding, capture/puppet/annex/raze/liberation, growth/starvation, building sale, specialists/great works | Partial earlier evidence; remaining cases pending |
 | Economy and policies | Research/free tech, policy/tenet acquisition and switching, happiness/golden age, resources, treasury boundaries | Partial earlier evidence; remaining cases pending |
 | Diplomacy | War/peace, friendship/denunciation, resources/GPT/open borders/research agreements, city-state interactions | Embassy workflow passed; remaining cases pending |
@@ -213,6 +213,41 @@ human/team 0 for score victory, the score artwork was inspected, and normal exit
 returned 0 with settings/hooks/saves preserved. The prior ordinary score-defeat
 case remains valid. These checks complete the five primary victory outcomes;
 post-victory UI actions and the remaining rows above are still open.
+
+### Unit actions and worker outcomes
+
+`20260916T010204Z` supplied a Warrior, XP to the first promotion threshold and
+two iron. An ordinary unit turn refreshed promotion readiness. The normal
+promotion action selected Drill I (level 2, XP 10), and a normal paid upgrade
+created a Roman Legion for 25 gold while retaining that promotion, XP and level.
+Engine queries rejected mountain entry and upgrading in neutral territory,
+while the same unit could upgrade in friendly territory. Supplied damage 50
+was healed to zero by a normal heal mission over three ordinary turns.
+After a labeled coastal staging move, actual movement embarked and disembarked
+the unit. The final save at turn 185 has SHA-256
+`2876a4b4d76bb33c04a43622a2a3f3ffc85f3d9319f59c8036947f03111a60cc`.
+`20260916T010519Z` matched unit types, promotions, XP, health, coordinates,
+movement, embark state, gold and iron on reload. Both runs exited normally with
+cleanup verified and no Lua/synchronization errors.
+
+Earlier unit attempts remain failed test reports. One assumed SetExperience
+immediately refreshes readiness, whereas this build does that on the ordinary
+unit turn. Another used general movement eligibility for a domain transition;
+the corrected test uses CanEmbarkOnto/CanDisembarkOnto, then the same normal
+movement command and actual position/state assertions. No readiness or embark
+flag was assigned to obtain these outcomes.
+
+`20260916T010732Z` started an ordinary Ancient/Duel Rome game and legally founded
+its capital. A worker and Wheel prerequisites were supplied. Normal build
+missions completed a farm (food 1→2) and a road without replacing that farm.
+After a labeled pillaged-farm input, the normal repair mission restored food 2
+and retained both improvement and road. City, water and duplicate-farm build
+eligibility were rejected. The turn-8 save has SHA-256
+`9cfc1e4a5e92dfbe2fef264a8a8bf62dc3738778b16b1862a04ee58ed7e0c547`.
+`20260916T011046Z` matched the recorded improvement/route/pillage flags, yields,
+units and treasury on reload. Normal exit and settings/hooks/save preservation
+passed for both runs, without Lua/synchronization errors. Combat pillaging,
+road repair and actual road travel remain separate coverage items.
 
 The current temporary standard test package is
 `build/macos/Lekmod-league-choices-20260916.zip`, SHA-256

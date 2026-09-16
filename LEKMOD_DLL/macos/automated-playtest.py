@@ -149,6 +149,8 @@ SCENARIO_ITEMS = {"inventory": {"system-inventory"},
                   "trade": {"gold-unit-purchase", "trade-route", "trade-yield", "trade-income"},
                   "congress": {"congress-found", "congress-propose", "congress-vote", "congress-resolve", "wonder-completion", "process-income"},
                   "unit-owners": {"minor-defender", "minor-hover", "barbarian-hover"},
+                  "unit-actions": {"unit-promotion", "unit-upgrade", "unit-healing", "unit-embark", "unit-disembark", "unit-restrictions"},
+                  "worker": {"worker-farm", "worker-road", "worker-repair", "worker-restrictions"},
                   "espionage-mission": {"spy-surveillance", "spy-science", "spy-return"},
                   "diplomat-arrival": {"diplomat-arrival"},
                   "diplomacy": {"diplomacy-open", "diplomacy-gift"},
@@ -291,8 +293,8 @@ def main():
         parser.error("Foreground UI tests require --mode ui-interaction and --timeout at most 3600; the flag does not grant user permission")
     if args.production_completion and (args.mode != "human-turns" or args.turns != 3 or not args.load_save or args.timeout > 600):
         parser.error("Production completion requires --mode human-turns, --turns 3, --load-save and --timeout at most 600")
-    if args.scenario and (args.mode != "single-player-smoke" or (not args.load_save and args.scenario not in ("congress", "endgame", "bolivia", "mughals")) or args.city_controls or args.timeout > 1800):
-        parser.error("Scenarios require --mode single-player-smoke, --load-save (except congress/endgame/bolivia/mughals), no --city-controls and --timeout at most 1800")
+    if args.scenario and (args.mode != "single-player-smoke" or (not args.load_save and args.scenario not in ("congress", "endgame", "bolivia", "mughals", "worker")) or args.city_controls or args.timeout > 1800):
+        parser.error("Scenarios require --mode single-player-smoke, --load-save (except congress/endgame/bolivia/mughals/worker), no --city-controls and --timeout at most 1800")
     if args.scenario == "endgame" and (args.load_save or args.expected_state or args.save_and_exit or args.scenario_turns != 2):
         parser.error("Endgame requires a new two-turn scenario, without save/reload options")
     if args.expect_human_victory and args.scenario != "endgame":
