@@ -85,12 +85,25 @@ function LekmodScenario.step(player)
         local unit=assert(player:GetUnitByID(unitID))
         assert(not unit:CanBuild(plot,GameInfoTypes.BUILD_FARM),"permanent lake can be replaced by a farm")
         assert(not unit:CanBuild(plot,build),"duplicate lake allowed")
-        -- Units may pillage their owner's ordinary improvements, so this
-        -- rejection does not depend on peace with a foreign owner.
-        local attacker=assert(player:InitUnit(GameInfoTypes.UNIT_WARRIOR,plot:GetX(),plot:GetY()))
-        LekmodScenarioEvent("fixture-setup",{operation="provided-own-unit-for-pillage-query",owner=player:GetID(),id=attacker:GetID()})
+        -- Lekmod blocks own-tile pillage globally. Use a wartime enemy and a
+        -- positive ordinary-farm control to isolate the permanent-lake rule.
+        local control,staging,barbarian
+        for id=0,GameDefines.MAX_CIV_PLAYERS do if Players[id] and Players[id]:IsBarbarian() then barbarian=id;break end end
+        for i=0,Map.GetNumPlots()-1 do local p=Map.GetPlotByIndex(i)
+            if not p:IsWater() and not p:IsMountain() and not p:IsCity() and p:GetNumUnits()==0 then
+                if p:GetOwner()==-1 and not staging then staging=p end
+                if p:GetOwner()==player:GetID() and not p:IsHills() and p:GetFeatureType()==-1
+                    and p:GetResourceType(-1)==-1 and p:GetImprovementType()==-1 and not control then control=p end
+            end
+        end
+        assert(control and staging and barbarian,"missing wartime pillage control inputs")
+        assert(Teams[Players[barbarian]:GetTeam()]:IsAtWar(player:GetTeam()),"pillage query opponent is not at war")
+        control:SetImprovementType(GameInfoTypes.IMPROVEMENT_FARM)
+        local attacker=assert(Players[barbarian]:InitUnit(GameInfoTypes.UNIT_WARRIOR,staging:GetX(),staging:GetY()))
+        LekmodScenarioEvent("fixture-setup",{operation="provided-enemy-and-ordinary-farm-for-pillage-queries",owner=barbarian,id=attacker:GetID(),x=staging:GetX(),y=staging:GetY(),farm_x=control:GetX(),farm_y=control:GetY()})
+        assert(attacker:CanPillage(control),"enemy cannot pillage the ordinary farm control")
         assert(not attacker:CanPillage(plot),"permanent lake is pillageable")
-        LekmodScenarioRecord("buganda-lake-restrictions","PASS","city-and-replacement-and-duplicate-and-pillage=rejected")
+        LekmodScenarioRecord("buganda-lake-restrictions","PASS","city-and-replacement-and-duplicate-and-enemy-pillage=rejected enemy-farm-pillage=allowed")
         return true
     end
     return false

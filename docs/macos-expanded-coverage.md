@@ -304,7 +304,12 @@ verified freshwater on the lake and its six formerly dry neighbors. The tile
 remained land, with food 3 and gold 1. City-tile construction, duplicate building,
 farm replacement were rejected. The original own-unit pillage query does not
 isolate permanence because Lekmod blocks all own-tile pillage. Supplemental notes
-retain that limit, and a stronger enemy/ordinary-farm control is being retested.
+retain that limit. `20260916T042844Z` supplied an at-war barbarian unit and an
+ordinary farm owned by the human as a positive control. The enemy could pillage
+the farm and could not pillage the lake. Construction/freshwater checks also
+passed again; normal exit and hooks/settings/manual-save preservation passed.
+That stronger test's save SHA-256 is
+`696e2eeda855d51568b07178f01ccc6cfc4503f398d78e177305578abd52777e`.
 No forced lake pillage/repair is claimed as ordinary gameplay.
 All nine sanitizer cases passed. The native run saved/exited normally (0), with
 hooks/settings/manual saves preserved and no Lua/synchronization errors.
