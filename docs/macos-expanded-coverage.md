@@ -24,7 +24,7 @@ mean every possible combination of game state has been tested.
 | Score victory | Score resolution, human victory and defeat presentation | Passed |
 | Combat | Human melee/ranged/city attacks, unit death/capture, terrain/war restrictions, naval and air actions | Core land/city/naval attacks, death/capture and reload passed; actual air strike/interception, ground sweep, carrier capacity/movement and exact reload passed |
 | Unit lifecycle | Founding, movement/pathing, embark/disembark, promotion/upgrade, worker build/repair/pillage, healing, gifting/deletion, great-person actions | Promotion/upgrade/heal/embark, farm/road/repair, disband/gift and great-person actions passed; pillage, road repair/travel and exact reload passed; other great-person cases remain |
-| City lifecycle | Additional founding, capture/puppet/annex/raze/liberation, growth/starvation, building sale, specialists/great works | Core lifecycle and exact reloads passed; additional great-work management remains |
+| City lifecycle | Additional founding, capture/puppet/annex/raze/liberation, growth/starvation, building sale, specialists/great works | Core lifecycle, artwork movement/theming and exact reloads passed; special building bonuses and archaeology in progress |
 | Economy and policies | Research/free tech, policy/tenet acquisition and switching, happiness/golden age, resources, treasury boundaries | Partial earlier evidence; remaining cases pending |
 | Diplomacy | War/peace, friendship/denunciation, resources/GPT/open borders/research agreements, city-state interactions | Embassy workflow passed; remaining cases pending |
 | Religion | Found/enhance/buy/spread, conversion/defense and belief effects, save persistence | Core workflow passed; additional cases pending |
@@ -480,6 +480,29 @@ with hooks/settings/manual saves preserved and no Lua/synchronization errors.
 cases on the new GameCore, including the real minor-unit gift conversion. All
 passed with normal save/exit and cleanup. Gift-to-Georgia coverage remains
 offline; the native Georgian gift check was away from Georgia. No multiplayer coverage is inferred from the synchronized event.
+
+### Great-work creation, movement and theming
+
+`20260916T050010Z` supplied a legal second city, two Museums and two Artists.
+Normal Artist actions created two artworks and consumed the artists; both real
+animated popups used their normal Close callback. The first artwork was captured
+and visually inspected. Normal CultureOverview move commands placed the works in
+one Museum, swapped its two occupied slots, moved one work to the second city,
+and returned it. The full pair gave theme 2 and tourism 6; separating the works
+removed both themes; restoration returned the original totals. These commands
+are scripted gameplay outcomes, not mouse clicks or full CultureOverview UI
+coverage. The save SHA-256 is
+`1d63533eb6243274daa93f1fe3c4fb392d2883b0515b808c44b77d17861a8afa`.
+
+`20260916T050213Z` matched exact slots, work classes/creators/controllers/era,
+city counts, themes and tourism on reload. `20260916T050343Z` reran the same
+mutations with stronger intermediate assertions: the split works yielded exactly
+2 tourism in each city, rather than merely less than the themed total. Its final
+snapshot equals the previously reloaded snapshot; its distinct save SHA-256 is
+`7bacab6f4212ae9a16e8f6e3239b01e83d15fc15e4910bdc15aa7617f87b5718`.
+All three runs saved/exited normally (0), preserved settings/hooks/manual saves,
+and had no Lua/synchronization errors. Slot-type rejection through real UI,
+foreign swaps, special building bonuses and archaeology remain separate cases.
 
 ### Current test artifact
 

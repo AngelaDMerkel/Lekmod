@@ -166,6 +166,7 @@ SCENARIO_ITEMS = {"inventory": {"system-inventory"},
                   "pillage-road": {"own-pillage-rejection", "farm-pillage", "road-pillage", "road-repair", "road-travel"},
                   "georgia": {"georgia-before-golden-age", "georgia-existing-golden-age", "georgia-new-golden-age", "georgia-golden-age-expired"},
                   "georgia-upgrade": {"georgia-paid-upgrade", "georgia-upgrade-golden-age", "georgia-gift-away"},
+                  "greatworks": {"art-created", "museum-themed", "great-work-swap", "great-work-cross-city", "theming-removed", "theming-restored"},
                   "city-basics": {"additional-city", "building-purchase", "building-sale-cancel", "building-sale", "city-growth", "city-starvation"},
                   "city-capture": {"secondary-capture", "city-puppet", "city-annex", "city-raze", "city-liberation"},
                   "minor-greeting": {"minor-personality-greeting"},
@@ -443,7 +444,7 @@ def main():
             if args.scenario == "culture-launch":
                 ui_templates[ui_dir / "EndGameMenu.lua"] = "playtest-scenario-culture-victory-popup.lua"
                 ui_templates[frontend / "ExitConfirm.lua"] = "playtest-exit-confirm.lua"
-            if args.scenario == "culture-prelaunch":
+            if args.scenario in ("culture-prelaunch", "greatworks"):
                 ui_templates[APP / "Contents/Assets/Assets/DLC/Expansion2/UI/InGame/Popups/GreatWorkPopup.lua"] = "playtest-culture-great-work-popup.lua"
             if args.scenario in ("diplo-victory-prelaunch", "diplo-victory-resume", "diplo-victory-launch"):
                 diplo_module = ui_dir / "LekmodTestDiploVictory.lua"
