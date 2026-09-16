@@ -80,3 +80,40 @@ the cache snapshot. Flushing now covers stdout/stderr and identified files under
 Logs only. The same probe preserves unrelated buffered database bytes, while the
 existing exit/status and database-write tracing cases still pass. Narrowing the
 instrumentation is not proof that global flushing caused the startup failures.
+
+## Recurrence after scoped logging
+
+`20260916T081444Z` reproduced the same attach failure and exit 255 at 20.4
+seconds while loading the Palmyra regression fixture. The observer recorded a
+10,240 descriptor limit and only 122 open descriptors at the failure, excluding
+ordinary descriptor exhaustion in this occurrence. The scoped logger was active,
+so removing global fflush did not resolve the startup defect. The 25,509,888-byte
+merged database again passed quick_check and retained its localization tables.
+All twenty cache files and hashes were preserved in
+`build/macos/cache-investigation/20260916T081444Z/`; no cache was deleted.
+
+A test-process-only open/openat/fopen observer now records localization paths and
+OS errors, preserving the original results, flags and errno without retrying an
+operation. Real x86-64 probes cover successful create/read and missing-file
+results for all three calls, in addition to the six exit paths and buffered-file
+preservation checks. This instrumentation seeks the underlying open failure;
+it is not a product fix or evidence that startup is reliable.
+
+The unchanged retry `20260916T081937Z` also failed, this time with a zero-byte
+merged database and missing tables. POSIX tracing recorded ENOENT on its first
+open and a successful subsequent open; that does not establish which higher-level
+operation failed. Aspyr imports CF file-stream APIs. The observer now correlates
+localization stream creation/open calls and records their actual CF errors;
+real x86-64 read/write/error probes preserve both data and return values.
+
+Only that confirmed empty generated cache was preserved and removed using the
+bounded repair tool. Its backup is
+`build/macos/cache-repairs/20260916T081937Z/Localization-Merged.db`, SHA-256
+`e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`.
+Healthy source databases, manual saves and Aspyr backups were left intact.
+
+`20260916T082254Z` then rebuilt the merged cache and reached the same Palmyra
+fixture successfully. POSIX tracing observed successful merged-database/journal
+opens; this attempt produced no correlated localization CF-stream records.
+The gameplay run saved/exited normally with cleanup. Successful regeneration
+again establishes recovery, not the original failure's root cause.

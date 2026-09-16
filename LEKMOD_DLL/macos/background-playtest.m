@@ -13,6 +13,102 @@
 #include <limits.h>
 #include <libproc.h>
 #include <sys/resource.h>
+#include <stdarg.h>
+#include <pthread.h>
+
+static pthread_mutex_t localizationStreamMutex = PTHREAD_MUTEX_INITIALIZER;
+static const void *localizationStreams[128];
+static void rememberLocalizationStream(const void *stream, CFURLRef url, const char *kind) {
+    int savedErrno = errno;
+    unsigned char path[PATH_MAX];
+    if (stream && CFURLGetFileSystemRepresentation(url, true, path, sizeof(path)) &&
+        strstr((const char *)path, "Localization")) {
+        pthread_mutex_lock(&localizationStreamMutex);
+        for (unsigned i = 0; i < 128; ++i) if (!localizationStreams[i]) { localizationStreams[i] = stream; break; }
+        pthread_mutex_unlock(&localizationStreamMutex);
+        fprintf(stderr, "[LEKMOD_TEST] localization-stream-create kind=%s stream=%p path=%s\n", kind, stream, path);
+    }
+    errno = savedErrno;
+}
+static bool localizationStreamKnown(const void *stream, bool remove) {
+    bool found = false;
+    pthread_mutex_lock(&localizationStreamMutex);
+    for (unsigned i = 0; i < 128; ++i) if (localizationStreams[i] == stream) {
+        found = true; if (remove) localizationStreams[i] = NULL;
+    }
+    pthread_mutex_unlock(&localizationStreamMutex);
+    return found;
+}
+static CFReadStreamRef observedReadStreamCreate(CFAllocatorRef allocator, CFURLRef url) {
+    CFReadStreamRef stream = CFReadStreamCreateWithFile(allocator, url);
+    rememberLocalizationStream(stream, url, "read"); return stream;
+}
+static CFWriteStreamRef observedWriteStreamCreate(CFAllocatorRef allocator, CFURLRef url) {
+    CFWriteStreamRef stream = CFWriteStreamCreateWithFile(allocator, url);
+    rememberLocalizationStream(stream, url, "write"); return stream;
+}
+static Boolean observedReadStreamOpen(CFReadStreamRef stream) {
+    Boolean result = CFReadStreamOpen(stream); int savedErrno = errno;
+    if (localizationStreamKnown(stream, false)) {
+        CFStreamError error = CFReadStreamGetError(stream);
+        fprintf(stderr, "[LEKMOD_TEST] localization-stream-open kind=read stream=%p result=%d domain=%ld error=%d\n",
+                stream, result, error.domain, (int)error.error);
+    }
+    errno = savedErrno; return result;
+}
+static Boolean observedWriteStreamOpen(CFWriteStreamRef stream) {
+    Boolean result = CFWriteStreamOpen(stream); int savedErrno = errno;
+    if (localizationStreamKnown(stream, false)) {
+        CFStreamError error = CFWriteStreamGetError(stream);
+        fprintf(stderr, "[LEKMOD_TEST] localization-stream-open kind=write stream=%p result=%d domain=%ld error=%d\n",
+                stream, result, error.domain, (int)error.error);
+    }
+    errno = savedErrno; return result;
+}
+static void observedReadStreamClose(CFReadStreamRef stream) {
+    CFReadStreamClose(stream); int savedErrno = errno;
+    localizationStreamKnown(stream, true); errno = savedErrno;
+}
+static void observedWriteStreamClose(CFWriteStreamRef stream) {
+    CFWriteStreamClose(stream); int savedErrno = errno;
+    localizationStreamKnown(stream, true); errno = savedErrno;
+}
+
+static void recordLocalizationOpen(const char *operation, const char *path, int result, int error) {
+    // Observe only localization paths, including an untranslated emulated path.
+    // Preserve the syscall result/errno and never retry or change access flags.
+    if (path && strstr(path, "Localization")) {
+        fprintf(stderr, "[LEKMOD_TEST] localization-open operation=%s result=%d errno=%d path=%s\n",
+                operation, result, result < 0 ? error : 0, path);
+    }
+    errno = error;
+}
+static int observedOpen(const char *path, int flags, ...) {
+    int result;
+    if (flags & O_CREAT) {
+        va_list args; va_start(args, flags); int mode = va_arg(args, int); va_end(args);
+        result = open(path, flags, mode);
+    } else result = open(path, flags);
+    int error = errno;
+    recordLocalizationOpen("open", path, result, error);
+    return result;
+}
+static int observedOpenat(int directory, const char *path, int flags, ...) {
+    int result;
+    if (flags & O_CREAT) {
+        va_list args; va_start(args, flags); int mode = va_arg(args, int); va_end(args);
+        result = openat(directory, path, flags, mode);
+    } else result = openat(directory, path, flags);
+    int error = errno;
+    recordLocalizationOpen("openat", path, result, error);
+    return result;
+}
+static FILE *observedFopen(const char *path, const char *mode) {
+    FILE *result = fopen(path, mode);
+    int error = errno;
+    recordLocalizationOpen("fopen", path, result ? fileno(result) : -1, error);
+    return result;
+}
 
 static void recordDescriptorState(const char *stage) {
     int savedErrno = errno;
@@ -105,7 +201,16 @@ __attribute__((used)) static const struct {
     { (const void *)&observedImmediateExit, (const void *)&_exit },
     { (const void *)&observedFwrite, (const void *)&fwrite },
     { (const void *)&observedWrite, (const void *)&write },
-    { (const void *)&observedSetrlimit, (const void *)&setrlimit }
+    { (const void *)&observedSetrlimit, (const void *)&setrlimit },
+    { (const void *)&observedOpen, (const void *)&open },
+    { (const void *)&observedOpenat, (const void *)&openat },
+    { (const void *)&observedFopen, (const void *)&fopen },
+    { (const void *)&observedReadStreamCreate, (const void *)&CFReadStreamCreateWithFile },
+    { (const void *)&observedWriteStreamCreate, (const void *)&CFWriteStreamCreateWithFile },
+    { (const void *)&observedReadStreamOpen, (const void *)&CFReadStreamOpen },
+    { (const void *)&observedWriteStreamOpen, (const void *)&CFWriteStreamOpen },
+    { (const void *)&observedReadStreamClose, (const void *)&CFReadStreamClose },
+    { (const void *)&observedWriteStreamClose, (const void *)&CFWriteStreamClose }
 };
 
 static void noActivate(id self, SEL command, BOOL flag) {}
