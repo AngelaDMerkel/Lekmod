@@ -9131,10 +9131,12 @@ bool CvUnit::CanRemoveHeresy(const CvPlot* pPlot) const
 		{
 			return false;
 		}
-		else if(pCity->getOwner() != getOwner())
-		{
-			return false;
-		}
+	}
+
+	// The same ownership rule applies on the city tile and beside the city.
+	if(pCity->getOwner() != getOwner())
+	{
+		return false;
 	}
 
 	if(!pCity->GetCityReligions()->IsReligionHereOtherThan(GetReligionData()->GetReligion()))

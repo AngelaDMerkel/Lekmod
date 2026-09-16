@@ -31,6 +31,7 @@ python3 LEKMOD_DLL/macos/test-trade-countdown.py
 python3 LEKMOD_DLL/macos/test-palmyra-events.py
 python3 LEKMOD_DLL/macos/test-coup-probability.py
 python3 LEKMOD_DLL/macos/test-spy-relocation.py
+python3 LEKMOD_DLL/macos/test-inquisitor-owner.py
 ```
 
 The bootstrap downloads the official `lua-5.1.4.tar.gz` once, verifies SHA-256

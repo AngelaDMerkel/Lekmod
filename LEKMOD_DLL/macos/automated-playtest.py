@@ -154,6 +154,7 @@ PRODUCTION_COMPLETION_ITEMS = {"production-completion-unit", "production-complet
 SCENARIO_ITEMS = {"inventory": {"system-inventory"},
                   "espionage": {"spy-home", "spy-recall", "spy-foreign", "spy-diplomat"},
                   "religion": {"pantheon", "religion-found", "religion-enhance", "faith-purchase", "religion-spread"},
+                  "religion-defense": {"inquisitor-purchase", "inquisitor-defense", "foreign-religion-spread", "remove-heresy", "inquisitor-retention", "inquisitor-restrictions"},
                   "trade": {"gold-unit-purchase", "trade-route", "trade-yield", "trade-income"},
                   "congress": {"congress-found", "congress-propose", "congress-vote", "congress-resolve", "wonder-completion", "process-income"},
                   "unit-owners": {"minor-defender", "minor-hover", "barbarian-hover"},
@@ -415,6 +416,8 @@ def main():
                 popups = APP / "Contents/Assets/Assets/DLC/Expansion2/UI/InGame/Popups"
                 ui_templates[popups / "ChoosePantheonPopup.lua"] = "playtest-scenario-pantheon-popup.lua"
                 ui_templates[popups / "ChooseReligionPopup.lua"] = "playtest-scenario-religion-popup.lua"
+                ui_templates[ui_dir / "ProductionPopup.lua"] = "playtest-scenario-purchase-popup.lua"
+            if args.scenario == "religion-defense":
                 ui_templates[ui_dir / "ProductionPopup.lua"] = "playtest-scenario-purchase-popup.lua"
             if args.scenario == "trade":
                 ui_templates[ui_dir / "ProductionPopup.lua"] = "playtest-scenario-purchase-popup.lua"

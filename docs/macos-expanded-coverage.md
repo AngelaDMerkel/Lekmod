@@ -27,7 +27,7 @@ mean every possible combination of game state has been tested.
 | City lifecycle | Additional founding, capture/puppet/annex/raze/liberation, growth/starvation, building sale, specialists/great works | Core lifecycle, artwork movement/theming and exact reloads passed; Dance Hall bonuses and ordinary artifact/landmark digs passed; further cultural UI/branches remain |
 | Economy and policies | Research/free tech, policy/tenet acquisition and switching, happiness/golden age, resources, treasury boundaries | Policy/tenet confirmations, spending and Cuba reward boundaries passed; switching and remaining economy cases pending |
 | Diplomacy | War/peace, friendship/denunciation, resources/GPT/open borders/research agreements, city-state interactions | Luxury/GPT gifts, mutual embassies, open borders and persistence passed; friendship/peace/research agreements and expiry remain |
-| Religion | Found/enhance/buy/spread, conversion/defense and belief effects, save persistence | Core workflow passed; additional cases pending |
+| Religion | Found/enhance/buy/spread, conversion/defense and belief effects, save persistence | Core workflow, inquisitor purchase/defense/removal and pressure-retention belief/reload passed; further belief effects pending |
 | Espionage | Assignment, diplomat, science award, surveillance, counterspy/election/coup paths and persistence | Core workflow, counterspy arrival, scheduled election and successful coup/reload passed; failed coup, dead-agent rejection and five-turn replacement/reloads also passed; defensive interception and further UI remain |
 | Trade | Legal routes/income/reload, internal/sea routes, rebasing, expiry/plunder and restrictions | Land external, internal land-food/sea-production, rebasing and reload passed; natural expiry/countdown correction and land plunder/reload passed |
 | Civilization content | Inventory every playable civilization and active Lua handler; test unique mechanics and owner/negative boundaries | [Inventory: 114 civilizations and 26 Lua files](macos-civilization-coverage.md); systematic cases in progress |
@@ -820,18 +820,55 @@ no Lua/synchronization errors. No spy counter, rank, RNG state or wait flag was
 assigned. These are scripted commands and outcomes, not mouse or coup-popup
 confirmation checks.
 
+### Inquisitor defense, ownership and pressure retention
+
+`20260916T090658Z` supplied a legal owned secondary city, an 80-faith budget and
+a foreign missionary. The actual purchase callback spent exactly 80 faith on an
+inquisitor of the human religion. Staging it in the target city blocked foreign
+spread, while a same-religion control remained eligible. Moving the defender
+away enabled the foreign missionary. Its real active owner-turn callback used a
+normal spread mission, consuming one charge and establishing 7,500 pressure/one
+follower. The human's actual Remove Heresy action then consumed the inquisitor
+and removed that foreign religion. Those positive checks passed.
+
+The run failed the ownership boundary: native mission queries rejected the
+foreign city's adjacent plot but accepted its center. The shipped inquisitor
+strategy limits removal to the player's own cities. The predicate checked
+ownership only inside the adjacent-city branch; it now applies to both city
+positions. Nine extracted-product sanitizer cases pass, including own/foreign
+centers and neighbors, no foreign religion, non-inquisitors and consumed units.
+Only the foreign-center case failed before correction. The bad native result was
+a query; the test did not actually purge the foreign-owned city.
+
+`20260916T091332Z` passed all five original cases on the corrected build.
+`20260916T092352Z` added exact pressure-retention assertions to the same fixture.
+The existing Unity of the Prophets belief preserved 180 → 90 pressure (50%) for
+religion 2; religion 3's 180 and religion 7's 7,500 cleared; the inquisitor's own
+religion 9 kept all 180. No belief or pressure value was supplied for that check.
+The final snapshot equals the earlier five-case pass exactly. Save SHA-256:
+`d1af3d1cc0266cbe788fe8b797b90eb64dcf87aa81449feb635132d0d1dbf08d`.
+
+`20260916T092839Z` matched exact city pressures/followers, faith and surviving
+religious units after reload. All three final runs saved/exited normally (0),
+restored settings/hooks, preserved manual saves and had no Lua/synchronization
+errors. These are scripted callbacks, mission queries and gameplay outcomes,
+not mouse input. The supplied own-religion missionary served as a query control;
+its creation is not an earned faith-purchase claim. The saved city remained
+without a majority after removal; restoration of the human religion is not
+claimed by this case.
+
 ### Current test artifact
 
 The current standard test package is
-`build/macos/Lekmod-espionage-boundaries-20260916.zip`, SHA-256
-`04b0de77ccde1c5e5d99f611b3c308b61c83d1f8d68171689ae2dfd87239019a`.
+`build/macos/Lekmod-inquisitor-owner-20260916.zip`, SHA-256
+`1152cbdaed3fe9411fef881116c20de955afa5ba4260a48ecf90a4905819d614`.
 Its signed GameCore is
-`4d45161d97633bb83b3804254f13127909323d2bb4e6ba12646eb670e6c3325c`.
+`d947772f0cbb1f296fb1280719070c36bebedde467a76d5f34779a9bee414f5f`.
 It includes the earlier voting, presentation, greeting and lake fixes plus
 the Georgia hooks, great-work holding corrections and plot-yield argument fix.
 It includes the science-icon, trade-countdown, Palmyra owner and espionage
-boundary corrections. It was packaged from `dc7740c4` plus the espionage changes
-(dirty source manifest). It is an intermediate test artifact; final release regression remains
+boundary and inquisitor ownership corrections. It was packaged from `d9724dbf`
+plus the inquisitor changes (dirty source manifest). It is an intermediate test artifact; final release regression remains
 open while the broader checklist is unfinished. Its provenance is recorded in the archive manifest. Installation used the central
 installer with the canonical stock backup retained.
 
