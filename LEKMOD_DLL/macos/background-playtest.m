@@ -7,6 +7,41 @@
 #include <execinfo.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h>
+#include <errno.h>
+
+static void observeDatabaseLogWrite(const void *bytes, size_t length) {
+    // Retain the caller while it reports a cache failure, before startup
+    // unwinds to _exit. Never alter the bytes or consume a database error.
+    if (length == 0 || length > 4096) return;
+    const char *messages[] = { "Failed to Save database.", "Failed to Load database.",
+                              "unable to open database:" };
+    for (unsigned message = 0; message < 3; ++message) {
+        size_t count = strlen(messages[message]);
+        if (length < count) continue;
+        for (size_t offset = 0; offset <= length - count; ++offset) {
+            if (memcmp((const char *)bytes + offset, messages[message], count) == 0) {
+                int savedErrno = errno;
+                void *frames[48];
+                int depth = backtrace(frames, 48);
+                fprintf(stderr, "[LEKMOD_TEST] database-failure-write frames=%d\n", depth);
+                backtrace_symbols_fd(frames, depth, STDERR_FILENO);
+                errno = savedErrno;
+                return;
+            }
+        }
+    }
+}
+static size_t observedFwrite(const void *bytes, size_t size, size_t count, FILE *stream) {
+    size_t result = fwrite(bytes, size, count, stream);
+    if (size && result && result <= SIZE_MAX / size) observeDatabaseLogWrite(bytes, size * result);
+    return result;
+}
+static ssize_t observedWrite(int fd, const void *bytes, size_t length) {
+    ssize_t result = write(fd, bytes, length);
+    if (result > 0) observeDatabaseLogWrite(bytes, (size_t)result);
+    return result;
+}
 
 // Preserve the exit status while retaining the call site of startup-only
 // failures such as 255, which need not create an OS crash report. dyld leaves
@@ -27,7 +62,9 @@ __attribute__((used)) static const struct {
     const void *original;
 } exitObserver[] __attribute__((section("__DATA,__interpose"))) = {
     { (const void *)&observedExit, (const void *)&exit },
-    { (const void *)&observedImmediateExit, (const void *)&_exit }
+    { (const void *)&observedImmediateExit, (const void *)&_exit },
+    { (const void *)&observedFwrite, (const void *)&fwrite },
+    { (const void *)&observedWrite, (const void *)&write }
 };
 
 static void noActivate(id self, SEL command, BOOL flag) {}
