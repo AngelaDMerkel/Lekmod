@@ -16,6 +16,11 @@ do
         Events.SerialEventGameMessagePopup({Type=ButtonPopupTypes.BUTTONPOPUP_CHOOSEPRODUCTION,
             Data1=city,Data2=-1,Data3=-1,Option1=false,Option2=true})
     end)
+    LuaEvents.LekmodScenarioFaithBuildingPurchase.Add(function(city,building)
+        pending,elapsed,announced={city=city,building=building,faith=true},0,false
+        Events.SerialEventGameMessagePopup({Type=ButtonPopupTypes.BUTTONPOPUP_CHOOSEPRODUCTION,
+            Data1=city,Data2=-1,Data3=-1,Option1=false,Option2=true})
+    end)
     ContextPtr:SetUpdate(function(dt)
         if not pending then return end
         elapsed=elapsed+dt
@@ -32,7 +37,7 @@ do
             local yield=request.faith and YieldTypes.YIELD_FAITH or YieldTypes.YIELD_GOLD
             if request.building then
                 assert(city:IsCanPurchase(true,true,-1,request.building,-1,yield),"building purchase is not legal")
-                ProductionSelected(g_PURCHASE_BUILDING_GOLD,request.building)
+                ProductionSelected(request.faith and g_PURCHASE_BUILDING_FAITH or g_PURCHASE_BUILDING_GOLD,request.building)
                 LuaEvents.LekmodScenarioCityResponse("purchase",request.building)
                 return
             end

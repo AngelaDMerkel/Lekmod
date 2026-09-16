@@ -27,7 +27,7 @@ mean every possible combination of game state has been tested.
 | City lifecycle | Additional founding, capture/puppet/annex/raze/liberation, growth/starvation, building sale, specialists/great works | Core lifecycle, artwork movement/theming and exact reloads passed; Dance Hall bonuses and ordinary artifact/landmark digs passed; further cultural UI/branches remain |
 | Economy and policies | Research/free tech, policy/tenet acquisition and switching, happiness/golden age, resources, treasury boundaries | Policy/tenet confirmations, spending and Cuba reward boundaries passed; switching and remaining economy cases pending |
 | Diplomacy | War/peace, friendship/denunciation, resources/GPT/open borders/research agreements, city-state interactions | Luxury/GPT gifts, mutual embassies, open borders and persistence passed; friendship/peace/research agreements and expiry remain |
-| Religion | Found/enhance/buy/spread, conversion/defense and belief effects, save persistence | Core workflow, inquisitor purchase/defense/removal and pressure-retention belief/reload passed; further belief effects pending |
+| Religion | Found/enhance/buy/spread, conversion/defense and belief effects, save persistence | Core workflow, inquisitor purchase/defense/removal and pressure-retention belief/reload passed; founder gold, Mandir/luxury yields and Holy Warriors purchases/reload passed; further boundaries pending |
 | Espionage | Assignment, diplomat, science award, surveillance, counterspy/election/coup paths and persistence | Core workflow, counterspy arrival, scheduled election and successful coup/reload passed; failed coup, dead-agent rejection and five-turn replacement/reloads also passed; defensive interception and further UI remain |
 | Trade | Legal routes/income/reload, internal/sea routes, rebasing, expiry/plunder and restrictions | Land external, internal land-food/sea-production, rebasing and reload passed; natural expiry/countdown correction and land plunder/reload passed |
 | Civilization content | Inventory every playable civilization and active Lua handler; test unique mechanics and owner/negative boundaries | [Inventory: 114 civilizations and 26 Lua files](macos-civilization-coverage.md); systematic cases in progress |
@@ -856,6 +856,31 @@ not mouse input. The supplied own-religion missionary served as a query control;
 its creation is not an earned faith-purchase claim. The saved city remained
 without a majority after removal; restoration of the human religion is not
 claimed by this case.
+
+### First-conversion and faith-purchase beliefs
+
+`20260916T093309Z` loaded the defense fixture's existing religion and supplied
+another legal city plus a missionary. The unconverted city could not purchase
+its Mandir or military faith unit, while the existing religious capital could.
+An actual missionary action converted the new city and awarded exactly 40 gold:
+Promised Land's data value 60 scaled by Quick speed's 67% training rate.
+Faith purchases became available after conversion.
+
+The actual production-popup callbacks bought a Mandir for 180 faith and an
+Archer for 50 faith. Separate exact budgets were supplied and recorded; exact
+spending, building presence and the actual CityTrained faith event were verified.
+A supplied raw gem node assigned to the Mandir city changed from food 0/production
+2 to food 1/production 3, matching its luxury-class building bonus. This establishes
+tile yields, not worked-city food/production settlement. Duplicate Mandir purchase
+was rejected. No religion, conversion, bonus gold or purchase outcome was assigned.
+
+Save SHA-256:
+`fcd7e7143454d84e6fb92576d669290445ff20af66e01324a6fa9260599acfa6`.
+`20260916T093933Z` matched exact gold/faith, city religion/buildings, resource-tile
+yields and owned-unit states after reload. Both saved/exited normally (0), restored
+settings/hooks, preserved manual saves and had no Lua/synchronization errors.
+These are scripted callbacks/missions and outcomes; physical purchase clicks and
+repeat-adoption boundaries are separate checks.
 
 ### Current test artifact
 

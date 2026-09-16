@@ -155,6 +155,7 @@ SCENARIO_ITEMS = {"inventory": {"system-inventory"},
                   "espionage": {"spy-home", "spy-recall", "spy-foreign", "spy-diplomat"},
                   "religion": {"pantheon", "religion-found", "religion-enhance", "faith-purchase", "religion-spread"},
                   "religion-defense": {"inquisitor-purchase", "inquisitor-defense", "foreign-religion-spread", "remove-heresy", "inquisitor-retention", "inquisitor-restrictions"},
+                  "religion-benefits": {"religion-purchase-restrictions", "first-conversion-gold", "faith-building-purchase", "mandir-luxury-yields", "holy-warriors-purchase"},
                   "trade": {"gold-unit-purchase", "trade-route", "trade-yield", "trade-income"},
                   "congress": {"congress-found", "congress-propose", "congress-vote", "congress-resolve", "wonder-completion", "process-income"},
                   "unit-owners": {"minor-defender", "minor-hover", "barbarian-hover"},
@@ -417,7 +418,7 @@ def main():
                 ui_templates[popups / "ChoosePantheonPopup.lua"] = "playtest-scenario-pantheon-popup.lua"
                 ui_templates[popups / "ChooseReligionPopup.lua"] = "playtest-scenario-religion-popup.lua"
                 ui_templates[ui_dir / "ProductionPopup.lua"] = "playtest-scenario-purchase-popup.lua"
-            if args.scenario == "religion-defense":
+            if args.scenario in ("religion-defense", "religion-benefits"):
                 ui_templates[ui_dir / "ProductionPopup.lua"] = "playtest-scenario-purchase-popup.lua"
             if args.scenario == "trade":
                 ui_templates[ui_dir / "ProductionPopup.lua"] = "playtest-scenario-purchase-popup.lua"
