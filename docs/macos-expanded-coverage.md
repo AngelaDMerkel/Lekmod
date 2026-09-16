@@ -23,7 +23,7 @@ mean every possible combination of game state has been tested.
 | Diplomatic victory | World Leader session, vote eligibility/count, winning resolution and victory | Passed with supplied technology/gold; natural gifts, sessions and ballots |
 | Score victory | Score resolution, human victory and defeat presentation | Passed |
 | Combat | Human melee/ranged/city attacks, unit death/capture, terrain/war restrictions, naval and air actions | Core land/city/naval/air attacks, death/capture and reload passed; air defense/carriers remain |
-| Unit lifecycle | Founding, movement/pathing, embark/disembark, promotion/upgrade, worker build/repair/pillage, healing, gifting/deletion, great-person actions | Promotion/upgrade/heal/embark, farm/road/repair and reload passed; other cases remain |
+| Unit lifecycle | Founding, movement/pathing, embark/disembark, promotion/upgrade, worker build/repair/pillage, healing, gifting/deletion, great-person actions | Promotion/upgrade/heal/embark, farm/road/repair, disband/gift and great-person actions passed; road repair/combat pillage and other great-person cases remain |
 | City lifecycle | Additional founding, capture/puppet/annex/raze/liberation, growth/starvation, building sale, specialists/great works | Core lifecycle and exact reloads passed; additional great-work management remains |
 | Economy and policies | Research/free tech, policy/tenet acquisition and switching, happiness/golden age, resources, treasury boundaries | Partial earlier evidence; remaining cases pending |
 | Diplomacy | War/peace, friendship/denunciation, resources/GPT/open borders/research agreements, city-state interactions | Embassy workflow passed; remaining cases pending |
@@ -338,6 +338,30 @@ The earlier `035733Z` report remains failed after its four land cases: it requir
 an empty tile immediately beside the already occupied capital. The corrected
 fixture uses an empty tile within the city's normal two-tile range. Air defense,
 air sweeps and carrier operations are not established by the bomber strike.
+
+### Unit disposal, gifts and great-person actions
+
+`20260916T040612Z` supplied a Scout, Warrior, Merchant, Scientist and Engineer
+as recorded inputs. The actual disband popup's No choice preserved the Scout
+and treasury; Yes consumed it and refunded 4 gold. A normal military gift
+transferred the Warrior to minor 22 and added 5 influence. Own-territory gifting
+and Scout gifts to a city-state were rejected. A merchant staged in that minor's
+territory used its normal mission for 469 gold and 30 influence, while its own-city
+mission was ineligible. Normal research selection and a Scientist discovery
+added exactly 57 research from existing science history. A legal building order
+and Engineer hurry added exactly 154 production. All three great people were
+consumed. These benefits were not assigned by the fixture.
+
+The run saved/exited normally (0), with no Lua/synchronization errors and all
+hooks/settings/manual saves preserved. Save SHA-256:
+`2825a69d9916d642a05415a0ee1bc35e0b6c395a8d11efd83771bc8666e9d120`.
+`20260916T040742Z` matched the exact saved units, treasury, influence, research
+and city-production snapshot, then saved/exited normally with cleanup verified.
+The earlier `040246Z` report remains failed: a screenshot showed the real disband
+confirmation waiting for a choice. The added adapter captures the actual popup
+choice closure and uses its normal close bookkeeping; it does not bypass that
+confirmation or alter any GameCore wait flag. These are scripted callback/action
+outcomes, not mouse interaction.
 
 ### Current test artifact
 

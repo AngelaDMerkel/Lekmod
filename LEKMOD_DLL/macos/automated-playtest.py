@@ -161,6 +161,7 @@ SCENARIO_ITEMS = {"inventory": {"system-inventory"},
                   "worker": {"worker-farm", "worker-road", "worker-repair", "worker-restrictions"},
                   "buganda-lake": {"buganda-lake-build", "buganda-lake-freshwater", "buganda-lake-restrictions"},
                   "combat": {"land-ranged", "land-melee", "combat-unit-death", "civilian-capture", "city-ranged", "naval-ranged", "air-strike", "combat-restrictions"},
+                  "unit-utility": {"unit-disband-cancel", "unit-disband", "unit-gift", "gift-restrictions", "merchant-mission", "scientist-discovery", "engineer-hurry"},
                   "city-basics": {"additional-city", "building-purchase", "building-sale-cancel", "building-sale", "city-growth", "city-starvation"},
                   "city-capture": {"secondary-capture", "city-puppet", "city-annex", "city-raze", "city-liberation"},
                   "minor-greeting": {"minor-personality-greeting"},
@@ -402,6 +403,8 @@ def main():
                 ui_templates[ui_dir / "CityView.lua"] = "playtest-scenario-city-sale.lua"
             if args.scenario == "city-capture":
                 ui_templates[APP / "Contents/Assets/Assets/UI/InGame/Popups/GenericPopup.lua"] = "playtest-scenario-city-capture-popup.lua"
+            if args.scenario == "unit-utility":
+                ui_templates[APP / "Contents/Assets/Assets/UI/InGame/Popups/GenericPopup.lua"] = "playtest-scenario-unit-confirm.lua"
             if args.scenario == "minor-greeting":
                 ui_templates[ui_dir / "CityStateGreetingPopup.lua"] = "playtest-scenario-minor-greeting-popup.lua"
             if args.scenario == "congress":
