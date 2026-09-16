@@ -427,15 +427,41 @@ saved/exited normally (0), with hooks/settings/manual saves preserved and no
 Lua/synchronization errors. The earlier `042118Z` failed a test assumption that
 own improvements were pillageable; the product deliberately forbids that action.
 
+### Georgia golden-age creation boundary
+
+`20260916T043109Z` reproduced a Georgia ability defect: a supplied Artist's normal
+golden-age action gave an existing Khevsur +33% combat, but a new Khevsur created
+while six golden-age turns remained had neither the promotion nor the modifier.
+The product handler listened only for player turns and expended great people.
+Adding the actual UnitCreated event fixes first creation. Eight offline event
+cases cover creation, existing units, ordinary expiration, other/dead owners and
+a duplicate civilization; two creation cases failed before the change.
+
+`20260916T043809Z` verified both existing and newly created Khevsurs had exactly
++33 combat percentage during the real Artist golden age, while an ordinary
+Warrior had no benefit. Six ordinary turns (165–171) expired the golden age and
+removed both bonuses. Inputs were recorded units/staging; golden-age duration,
+promotions and combat modifiers were not assigned. Normal exit (0), hooks/settings
+and manual-save preservation passed without Lua/synchronization errors.
+Save SHA-256:
+`6542cee6267cf30ff55b7a8587460894a3fa0a740a682152ad050416aaf6770f`.
+`20260916T044138Z` matched the exact saved turn, golden-age duration and both
+Khevsur promotion/combat values, then saved/exited normally with cleanup verified.
+The preceding `043451Z` observed the corrected creation bonus but remains failed:
+placing every supplied unit in the capital overcrowded the test driver. The
+fixture now creates military inputs on empty nearby map plots and selects normal
+Wealth production. Paid upgrades are a separate conversion boundary under test;
+first-creation coverage does not establish that path.
+
 ### Current test artifact
 
 The current standard test package is
-`build/macos/Lekmod-lake-freshwater-20260916.zip`, SHA-256
-`67adbe6cc898a4513a7d28682aae27bbfde41ef830b714556764b9fb0a921aef`.
+`build/macos/Lekmod-georgia-20260916.zip`, SHA-256
+`c94c10bf19118b98f4b816e43979cfb11dcc6e3d443479fffdee65a94a628371`.
 Its signed GameCore is
 `5ad12f091579d48c244155415db19479189d76b880345b2ba004880ee47e5b68`.
-It includes the earlier voting, presentation and greeting fixes plus the lake
-query correction. Its manifest records a dirty source tree; it is an identified
+It includes the earlier voting, presentation, greeting and lake fixes plus
+the Georgia first-creation hook. Its manifest records a dirty source tree; it is an identified
 test artifact, not the final clean release. Installation used the central
 installer with the canonical stock backup retained.
 

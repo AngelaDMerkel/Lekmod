@@ -393,3 +393,12 @@ allowance, `--save-and-exit`, then exact `--expected-state` reload. Air strikes
 must use `MISSION_MOVE_TO`, matching WorldView; `MISSION_RANGE_ATTACK` invokes a
 different combat path. Ground-AA sweeps deliberately give the attacker no XP and
 use Lekmod's zero damage multiplier. See the ledger's failed-test corrections.
+
+
+`pillage-road` loads the recorded Ancient worker save with `--scenario-turns 15`.
+It rejects own-tile pillage, supplies an abandoned farm/road, tests actual pillage,
+then normal neutral-territory repairs and road travel. `georgia` starts an
+Industrial/Duel Georgia game with the same turn bound, tests real Artist-driven
+and newly created Khevsur bonuses, then lets the golden age expire normally.
+Both support saved-state comparison. Supplied terrain improvements, resources,
+units and staging are labeled separately from observed action outcomes.

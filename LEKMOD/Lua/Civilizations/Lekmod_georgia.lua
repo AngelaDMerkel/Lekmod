@@ -29,3 +29,5 @@ end
 
 GameEvents.PlayerDoTurn.Add(lekmod_georgia_uu_golden_age)
 GameEvents.GreatPersonExpended.Add(lekmod_georgia_uu_golden_age)
+-- Apply the current golden-age benefit when a Khevsur is first created.
+GameEvents.UnitCreated.Add(lekmod_georgia_uu_golden_age)
