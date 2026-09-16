@@ -45,6 +45,13 @@ do
         assert(civilization.Playable, "test civilization is not playable")
         PreGame.SetCivilization(0, civilization.ID)
         print("[LEKMOD_TEST] fixture-setup normal-civilization=" .. civilization.Type)
+        local opponentType="__TEST_OPPONENT_CIVILIZATION__"
+        if opponentType~="" then
+            local opponent=assert(GameInfo.Civilizations[opponentType],"unknown opponent civilization")
+            assert(opponent.Playable,"opponent civilization is not playable")
+            PreGame.SetCivilization(1,opponent.ID)
+            print("[LEKMOD_TEST] fixture-setup normal-AI-civilization="..opponent.Type)
+        end
         Events.SerialEventStartGame()
         UIManager:SetUICursor(1)
     end

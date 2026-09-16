@@ -175,6 +175,7 @@ SCENARIO_ITEMS = {"inventory": {"system-inventory"},
                   "trade-expiry": {"trade-expiry", "expired-trade-units-return", "expired-trade-yields-cleared"},
                   "trade-progress": {"trade-progress-observed"},
                   "trade-countdown": {"trade-list-countdowns"},
+                  "palmyra": {"palmyra-founded-water", "palmyra-capture-water"},
                   "city-basics": {"additional-city", "building-purchase", "building-sale-cancel", "building-sale", "city-growth", "city-starvation"},
                   "city-capture": {"secondary-capture", "city-puppet", "city-annex", "city-raze", "city-liberation"},
                   "minor-greeting": {"minor-personality-greeting"},
@@ -286,6 +287,7 @@ def main():
     parser.add_argument("--world-size", default="WORLDSIZE_HUGE")
     parser.add_argument("--start-era", default="ERA_ANCIENT", help="Normal game-setup era for a new fixture; ignored when loading")
     parser.add_argument("--civilization", default="CIVILIZATION_ROME", help="Normal player-zero civilization selection for new fixtures")
+    parser.add_argument("--opponent-civilization", default="", help="Optional normal AI slot-one civilization selection for new single-player fixtures")
     parser.add_argument("--window-size", type=parse_window_size, help="Temporary windowed resolution, with GraphicsSettingsDX9.ini restored afterward")
     parser.add_argument("--majors", type=int, default=12)
     parser.add_argument("--minors", type=int, default=40)
@@ -310,6 +312,8 @@ def main():
         parser.error("Use 2-12 major civilizations and 0-41 city states")
     if not re.fullmatch(r"CIVILIZATION_[A-Z0-9_]+", args.civilization):
         parser.error("--civilization requires a CIVILIZATION_TYPE identifier")
+    if args.opponent_civilization and not re.fullmatch(r"CIVILIZATION_[A-Z0-9_]+", args.opponent_civilization):
+        parser.error("--opponent-civilization requires a CIVILIZATION_TYPE identifier")
     if args.load_save:
         args.load_save = args.load_save.resolve()
         if args.mode == "autorun" or not args.load_save.is_file() or args.load_save.suffix.lower() != ".civ5save":
@@ -320,8 +324,8 @@ def main():
         parser.error("Foreground UI tests require --mode ui-interaction and --timeout at most 3600; the flag does not grant user permission")
     if args.production_completion and (args.mode != "human-turns" or args.turns != 3 or not args.load_save or args.timeout > 600):
         parser.error("Production completion requires --mode human-turns, --turns 3, --load-save and --timeout at most 600")
-    if args.scenario and (args.mode != "single-player-smoke" or (not args.load_save and args.scenario not in ("congress", "endgame", "bolivia", "mughals", "worker", "buganda-lake", "georgia", "georgia-upgrade", "cuba-greatworks", "cuba-ideology", "diplomacy-assets")) or args.city_controls or args.timeout > 1800):
-        parser.error("Scenarios require --mode single-player-smoke, --load-save (except congress/endgame/bolivia/mughals/worker/buganda-lake/georgia/georgia-upgrade/cuba-greatworks/cuba-ideology/diplomacy-assets), no --city-controls and --timeout at most 1800")
+    if args.scenario and (args.mode != "single-player-smoke" or (not args.load_save and args.scenario not in ("congress", "endgame", "bolivia", "mughals", "worker", "buganda-lake", "georgia", "georgia-upgrade", "cuba-greatworks", "cuba-ideology", "diplomacy-assets", "palmyra")) or args.city_controls or args.timeout > 1800):
+        parser.error("Scenarios require --mode single-player-smoke, --load-save (except congress/endgame/bolivia/mughals/worker/buganda-lake/georgia/georgia-upgrade/cuba-greatworks/cuba-ideology/diplomacy-assets/palmyra), no --city-controls and --timeout at most 1800")
     if args.scenario == "endgame" and (args.load_save or args.expected_state or args.save_and_exit or args.scenario_turns != 2):
         parser.error("Endgame requires a new two-turn scenario, without save/reload options")
     if args.expect_human_victory and args.scenario != "endgame":
@@ -417,7 +421,7 @@ def main():
             if args.scenario == "city-basics":
                 ui_templates[ui_dir / "ProductionPopup.lua"] = "playtest-scenario-purchase-popup.lua"
                 ui_templates[ui_dir / "CityView.lua"] = "playtest-scenario-city-sale.lua"
-            if args.scenario == "city-capture":
+            if args.scenario in ("city-capture", "palmyra"):
                 ui_templates[APP / "Contents/Assets/Assets/UI/InGame/Popups/GenericPopup.lua"] = "playtest-scenario-city-capture-popup.lua"
             if args.scenario == "unit-utility":
                 ui_templates[APP / "Contents/Assets/Assets/UI/InGame/Popups/GenericPopup.lua"] = "playtest-scenario-unit-confirm.lua"
@@ -552,6 +556,7 @@ def main():
               "started_utc": stamp, "evidence": str(output),
               "start_era": args.start_era if not args.load_save else None,
               "civilization": args.civilization if not args.load_save else None,
+              "opponent_civilization": args.opponent_civilization if not args.load_save else None,
               "binary_sha256": hashlib.sha256((APP / "Contents/MacOS/libCvGameCoreDLL_Expansion2_DLL.dylib").read_bytes()).hexdigest()}
     if args.load_save:
         report["loaded_from"] = str(args.load_save)
@@ -608,6 +613,7 @@ def main():
                 ("UserSettings", "WindowResY"): args.window_size[1]}).encode())
         replacements = {"__TEST_WORLD_SIZE__": args.world_size,
                         "__TEST_CIVILIZATION__": args.civilization,
+                        "__TEST_OPPONENT_CIVILIZATION__": args.opponent_civilization,
                         "__TEST_START_ERA__": args.start_era,
                         "__TEST_RUN__": stamp,
                         "__TEST_SCENARIO_TURN_LIMIT__": str(args.scenario_turns),

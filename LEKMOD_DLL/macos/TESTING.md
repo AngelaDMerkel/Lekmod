@@ -28,6 +28,7 @@ python3 LEKMOD_DLL/macos/test-lua-unit-position.py
 python3 LEKMOD_DLL/macos/test-lua-team-tech.py
 python3 LEKMOD_DLL/macos/test-trade-building-cache.py
 python3 LEKMOD_DLL/macos/test-trade-countdown.py
+python3 LEKMOD_DLL/macos/test-palmyra-events.py
 ```
 
 The bootstrap downloads the official `lua-5.1.4.tar.gz` once, verifies SHA-256

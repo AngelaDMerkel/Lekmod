@@ -86,7 +86,7 @@ All 114 playable civilizations and 26 civilization Lua files are listed below. A
 | `CIVILIZATION_NUBIA` | `TRAIT_TA_SETI` | UNIT_NUBIAN_BOW, BUILDING_BLAST_FURNACE | — | Unique mechanics pending. |
 | `CIVILIZATION_OMAN` | `TRAIT_MC_CHAIN_OF_THE_EARTH` | UNIT_MC_OMANI_BAGHLAH, BUILDING_MC_OMANI_MINAA | Lekmod_oman.lua | Unique mechanics pending. |
 | `CIVILIZATION_OTTOMAN` | `TRAIT_OTTOMANS` | UNIT_OTTOMAN_JANISSARY, UNIT_OTTOMAN_SIPAHI | Lekmod_ottomans.lua | Unique mechanics pending. |
-| `CIVILIZATION_PALMYRA` | `TRAIT_PEARL_OF_THE_DESERT` | UNIT_PALMYRA_CLIBANARIUS, BUILDING_PALMYRA_FORUM | Lekmod_palmyra.lua | Unique mechanics pending. |
+| `CIVILIZATION_PALMYRA` | `TRAIT_PEARL_OF_THE_DESERT` | UNIT_PALMYRA_CLIBANARIUS, BUILDING_PALMYRA_FORUM | Lekmod_palmyra.lua | Founding and duplicate-owner capture freshwater, exact reload native; eliminated-owner boundaries offline. Other uniques pending. |
 | `CIVILIZATION_PERSIA` | `TRAIT_ENHANCED_GOLDEN_AGES` | UNIT_PERSIAN_IMMORTAL, BUILDING_SATRAPS_COURT | — | Unique mechanics pending. |
 | `CIVILIZATION_PHILIPPINES` | `TRAIT_GOOD_FIGHT` | UNIT_PHILIPINO_MARINE, BUILDING_NATIONALCHURCH | Lekmod_philippines.lua | Unique mechanics pending. |
 | `CIVILIZATION_PHOENICIAN` | `TRAIT_LEADER_HIRAM` | UNIT_SQUARE_SAIL_SHIP, BUILDING_TRADE_HARBOUR | Lekmod_phoenicia.lua | Unique mechanics pending. |

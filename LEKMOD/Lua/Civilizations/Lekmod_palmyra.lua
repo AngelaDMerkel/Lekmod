@@ -14,21 +14,18 @@ function lekmod_ua_palmyra_add_fresh_water(player_id, x, y, new_player_id)
    local player = Players[player_id]
    local new_player = Players[new_player_id]
 
-   if not player:IsAlive() or player:GetCivilizationType() ~= this_civ then
-      if new_player ~= nil and (new_player:IsAlive() and new_player:GetCivilizationType() == this_civ) then
-         player = new_player
-      else
-         return
-      end
+   -- The old owner can already be eliminated when CityCaptureComplete fires.
+   -- Either civilization makes the capture relevant, but the current city
+   -- owner decides whether the ability still applies (including duplicates).
+   if (not player or player:GetCivilizationType() ~= this_civ)
+      and (not new_player or new_player:GetCivilizationType() ~= this_civ) then
+      return
    end
 
-   local is_owned
    local plot = Map.GetPlot(x, y)
-   if plot:IsCity() and plot:GetOwner() ~= player:GetID() then
-      is_owned = false
-   else
-      is_owned = true
-   end
+   local owner = Players[plot:GetOwner()]
+   local is_owned = plot:IsCity() and owner and owner:IsAlive()
+      and owner:GetCivilizationType() == this_civ
 
    for loop_plot in PlotAreaSweepIterator(plot, 1, SECTOR_NORTH, DIRECTION_CLOCKWISE, DIRECTION_OUTWARDS, CENTRE_EXCLUDE) do
 

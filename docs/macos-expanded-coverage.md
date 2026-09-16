@@ -697,17 +697,47 @@ available and incoming list APIs. All three agreed on 26 remaining turns; its
 followed by normal save/exit and verified cleanup. Incoming-list consistency is
 native query evidence, not a mouse inspection of that overview.
 
+### Palmyra city ownership
+
+`20260916T081118Z` reproduced the owner-selection defect in normal single-player
+setup with both the human and AI choosing Palmyra. The supplied AI secondary
+city at (34,8) gave its naturally dry neighbor (33,9) freshwater through the real
+founding event. A supplied Giant Death Robot/uranium and recorded staging position
+then used a normal war/attack and the actual Puppet callback. Capture removed the
+freshwater even though the current owner was also Palmyra. The failed report and
+its pre-capture autosave remain intact.
+
+The handler now determines the benefit from the actual current city owner.
+The old owner's civilization still makes a capture relevant even when that
+player has already been eliminated before CityCaptureComplete. Eight actual-Lua
+boundary cases pass (two failed before): founding, gaining/losing a city,
+duplicate Palmyra owners, eliminated old owners and unrelated civilizations.
+The eliminated-owner cases are offline evidence, not native elimination tests.
+
+`20260916T082254Z` replayed the same preserved starting save and coordinates.
+The actual founding event added freshwater, and the normal attack/Puppet choice
+retained it for the new Palmyra owner. Save SHA-256:
+`e948987602a8ec29266af2204bed308191f161f5d7f1adec9b51045f455c4f2e`.
+`20260916T082529Z` matched exact city ownership/puppet state and adjacent
+freshwater after reload. Both saved/exited normally (0), restored settings/hooks,
+preserved manual saves and reported no Lua/synchronization errors. These are
+scripted commands/callbacks and native outcomes, not physical mouse actions.
+
+The intervening `081444Z` and `081937Z` failures occurred before gameplay and
+remain recorded separately in the startup-cache report. The successful bounded
+empty-cache recovery does not establish that the original startup defect is fixed.
+
 ### Current test artifact
 
 The current standard test package is
-`build/macos/Lekmod-trade-countdown-20260916.zip`, SHA-256
-`4cfb4dcf96aba2115fb179f0f80311438da9b2fa252dfe4d7e9ff05ebe135656`.
+`build/macos/Lekmod-palmyra-20260916.zip`, SHA-256
+`465a785b3165efb74c0000095091022ab50a1464d57b35077baf80de6d375165`.
 Its signed GameCore is
 `30227e5184acc20bde6e634bccd29e4d9046f96a93588f71143d6385fae6b80c`.
 It includes the earlier voting, presentation, greeting and lake fixes plus
 the Georgia hooks, great-work holding corrections and plot-yield argument fix.
-It includes the science-icon and trade-countdown corrections and was packaged
-from `cd81b714` plus the recorded countdown changes (dirty source manifest). It is an intermediate test artifact; final release regression remains
+It includes the science-icon, trade-countdown and Palmyra owner corrections and
+was packaged from `12e01d19` plus the Palmyra changes (dirty source manifest). It is an intermediate test artifact; final release regression remains
 open while the broader checklist is unfinished. Its provenance is recorded in the archive manifest. Installation used the central
 installer with the canonical stock backup retained.
 
