@@ -26,7 +26,7 @@ mean every possible combination of game state has been tested.
 | Unit lifecycle | Founding, movement/pathing, embark/disembark, promotion/upgrade, worker build/repair/pillage, healing, gifting/deletion, great-person actions | Promotion/upgrade/heal/embark, farm/road/repair, disband/gift and great-person actions passed; pillage, road repair/travel and exact reload passed; other great-person cases remain |
 | City lifecycle | Additional founding, capture/puppet/annex/raze/liberation, growth/starvation, building sale, specialists/great works | Core lifecycle, artwork movement/theming and exact reloads passed; Dance Hall bonuses and ordinary artifact/landmark digs passed; further cultural UI/branches remain |
 | Economy and policies | Research/free tech, policy/tenet acquisition and switching, happiness/golden age, resources, treasury boundaries | Policy/tenet confirmations, spending and Cuba reward boundaries passed; switching and remaining economy cases pending |
-| Diplomacy | War/peace, friendship/denunciation, resources/GPT/open borders/research agreements, city-state interactions | Luxury/GPT gifts, mutual embassies, open borders and persistence passed; friendship/peace/research agreements and expiry remain |
+| Diplomacy | War/peace, friendship/denunciation, resources/GPT/open borders/research agreements, city-state interactions | Luxury/GPT gifts, mutual embassies, open borders and persistence passed; natural contract expiry and permanent embassies passed; friendship/peace/research agreements remain |
 | Religion | Found/enhance/buy/spread, conversion/defense and belief effects, save persistence | Core workflow, inquisitor purchase/defense/removal and pressure-retention belief/reload passed; founder gold, Mandir/luxury yields and Holy Warriors purchases/reload passed; further boundaries pending |
 | Espionage | Assignment, diplomat, science award, surveillance, counterspy/election/coup paths and persistence | Core workflow, counterspy arrival, scheduled election and successful coup/reload passed; failed coup, dead-agent rejection and five-turn replacement/reloads also passed; defensive interception and further UI remain |
 | Trade | Legal routes/income/reload, internal/sea routes, rebasing, expiry/plunder and restrictions | Land external, internal land-food/sea-production, rebasing and reload passed; natural expiry/countdown correction and land plunder/reload passed |
@@ -901,6 +901,25 @@ normally (0), restored settings/hooks, preserved manual saves and reported no
 Lua/synchronization errors. Prophets/positions were supplied; conversions and
 one-time reward behavior were actual outcomes, not assigned counters or mouse
 interaction.
+
+### Diplomatic contract expiry
+
+`20260916T095618Z` loaded the actual resource/GPT/open-border agreements created
+in `072213Z`. Read-only current-deal queries supplied their quoted final turns;
+no duration, deal counter or diplomatic outcome was assigned. Twenty-four ordinary
+turns (2–26) retained one resource export/import, outgoing/incoming 1 GPT and open
+borders until the quoted end. On turn 26 all three ended together: both diplomatic
+GPT values and the resource import/export returned to zero, and open borders
+became false. Both permanent embassy directions remained true throughout. Imports
+and exports were checked separately from total resource availability, so ordinary
+map/resource development could not masquerade as contract expiry.
+
+Save SHA-256:
+`89d341bbbaacbc3cf826baee100f967bd58764bda838a5c5c0a87c4f0b6b1f24`.
+`20260916T100120Z` matched exact accounting, current-deal records and permanent
+embassies on reload. Both saved/exited normally (0), restored settings/hooks,
+preserved manual saves and reported no Lua/synchronization errors. This was a
+bounded agreement test, not a restarted stability campaign or mouse workflow.
 
 ### Current test artifact
 
