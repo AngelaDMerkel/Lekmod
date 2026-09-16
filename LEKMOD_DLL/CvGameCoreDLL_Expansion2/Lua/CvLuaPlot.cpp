@@ -1412,7 +1412,7 @@ int CvLuaPlot::lCalculateImprovementYieldChange(lua_State* L)
 	const YieldTypes eYield = (YieldTypes)lua_tointeger(L,3);
 	const PlayerTypes ePlayer = (PlayerTypes)lua_tointeger(L, 4);
 	const bool bOptional = luaL_optbool(L, 5, false);
-	const RouteTypes eRoute = (RouteTypes)luaL_optint(L, 5, NUM_ROUTE_TYPES);
+	const RouteTypes eRoute = (RouteTypes)luaL_optint(L, 6, NUM_ROUTE_TYPES);
 
 	const int iResult = pkPlot->calculateImprovementYieldChange(eImprovement, eYield, ePlayer, bOptional, eRoute);
 	lua_pushinteger(L, iResult);
