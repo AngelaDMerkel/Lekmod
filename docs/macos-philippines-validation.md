@@ -79,3 +79,30 @@ sequence. It saved/exited normally (0) with restoration/preservation and Lua/syn
 checks passing. Save SHA-256:
 `5205f0d4534750fed456e61dc36b50b2d21b4e6568bb89500768dba3c81fe98f`.
 Thirty-one runner regressions also pass.
+
+## Civilian movement and normal refresh
+
+`20260918T091920Z` supplied Workers, Settlers and Scientists on distinct owned
+and neutral land plots, an owned Philippine Warrior and a Roman Worker control.
+No movement counter was assigned. Workers/Settlers had native maximums of 240
+on owned land and 120 on neutral land; Scientists, whose base is four moves, had
+360 and 240 respectively. The own combat unit and other-owner Worker stayed at
+their base 120. One ordinary turn retained the six human probe positions/owners
+and refreshed each budget exactly to its quoted maximum.
+
+Save SHA-256: `1121b5710d53d9f2dd9b2b1b5f52b8ca464a30db6f894eaf659dd14524e8c225`.
+The original PASS detail mentioned the Worker/Settler budgets only; its actual
+assertions and structured records used each unit's correct base value. A retained
+clarification and corrected future message explicitly distinguish Scientists.
+
+`094245Z` reloaded the complete recorded unit identities, owners, types, positions,
+territory, movement, maximum, combat and embarked fields exactly. Reload-save
+SHA-256: `4ce35aaaff4d2808261cb2c32f7ee333baf942e4562b18097a59c5f7a6570dcc`.
+Both successful runs saved/exited normally (0), restored settings/hooks and
+preserved manual saves, with no Lua/sync errors. The intervening `092553Z` and
+`092829Z` attempts failed during localization startup before reading the save;
+the separate logging-only control and cache evidence are in the startup report.
+
+This is native movement-budget and turn-refresh coverage for three civilian
+classes, plus combat/owner controls. It does not claim a physical movement path,
+foreign open-border territory, embarked-unit or every civilian-class behavior.

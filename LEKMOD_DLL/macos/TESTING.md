@@ -694,3 +694,9 @@ from changes made by the game, then restores the original bytes. Foreground
 authorization must already exist in the conversation. Both native and functional
 runners now recheck desktop lock state immediately before process launch, after
 artifact preparation.
+
+`--scenario philippines-movement --scenario-turns 1` supplies three civilian
+classes on distinct owned/neutral land plus combat/other-owner controls. It
+checks each actual base-plus-two limit, then normal turn refresh without any
+movement setter. The full unit snapshot supports exact reload. This does not
+cover embarked or foreign-open-border movement.
