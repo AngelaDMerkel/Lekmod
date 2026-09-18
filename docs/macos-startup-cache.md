@@ -250,3 +250,11 @@ offline subprocess tests pass, including a known exported error value of 1234
 and the existing exit, stream and activation-only preservation checks. Native
 quicksave run `20260918T053742Z` used this observer successfully but encountered
 no startup failure, so it supplies no host-error value for the unresolved defect.
+
+`20260918T062317Z` failed before its EUI Great Work save loaded: native exit
+255 after 20.4 seconds. Both database-failure records reported host error value
+0, with 122 open descriptors and a 12,544 soft limit. This does not identify a
+host error or explain the localization failure. The temporary EUI wrapper
+restored standard payload/text/options; settings and manual saves were preserved.
+A post-cleanup read-only inspection found the merged cache absent. No manual
+cache deletion or empty-cache repair was performed for this attempt.

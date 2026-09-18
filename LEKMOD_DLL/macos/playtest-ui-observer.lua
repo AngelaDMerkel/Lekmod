@@ -57,6 +57,22 @@ do
         for unit in player:Units() do
             units[#units + 1] = table.concat({unit:GetID(), unit:GetUnitType(), unit:GetX(), unit:GetY()}, ",")
         end
+        local greatWorks, cultureCities = {}, {}
+        for ownedCity in player:Cities() do
+            cultureCities[#cultureCities + 1] = table.concat({ownedCity:GetID(), ownedCity:GetNumGreatWorks(),
+                ownedCity:GetThemingBonus(GameInfoTypes.BUILDINGCLASS_MUSEUM), ownedCity:GetBaseTourism()}, ",")
+            for building in GameInfo.Buildings() do
+                if building.GreatWorkCount > 0 and ownedCity:GetNumBuilding(building.ID) > 0 then
+                    local class = GameInfo.BuildingClasses[building.BuildingClass].ID
+                    for slot = 0, building.GreatWorkCount - 1 do
+                        greatWorks[#greatWorks + 1] = table.concat({ownedCity:GetID(), class, slot,
+                            ownedCity:GetBuildingGreatWork(class, slot)}, ",")
+                    end
+                end
+            end
+        end
+        table.sort(greatWorks)
+        table.sort(cultureCities)
         table.sort(units)
         local state = table.concat({Game.GetGameTurn(), player:GetID(), tostring(player:IsTurnActive()),
             city and city:GetID() or -1, order or -1, item or -1,
@@ -69,7 +85,8 @@ do
             " base_yields=" .. table.concat(baseYields, ";") .. " modifiers=" .. table.concat(modifiers, ";") ..
             " plot_food_production_gold=" .. table.concat(plotYields, ";") ..
             " game_state=" .. Game.GetGameState() .. " winner=" .. Game.GetWinner() .. " victory=" .. Game.GetVictory() ..
-            " units=" .. table.concat(units, ";")
+            " units=" .. table.concat(units, ";") ..
+            " greatworks=" .. table.concat(greatWorks, ";") .. " culture_cities=" .. table.concat(cultureCities, ";")
         if state ~= previous then
             print("[LEKMOD_UI_OBSERVE] run=__TEST_RUN__ context=" .. ContextPtr:GetID() .. " state=" .. state)
             previous = state

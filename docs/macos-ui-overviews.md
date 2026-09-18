@@ -93,3 +93,58 @@ These checks add compact and larger layouts to the earlier 1280x800 physical
 city/save tests. They do not establish populated trade-table or occupied-work
 mouse coverage, every popup, every resolution, startup reliability or gameplay
 mechanics represented by read-only overview values.
+
+## EUI occupied Great Works and physical quickload
+
+`20260918T062447Z` loaded the preserved two-Museum fixture at requested 1024x768.
+Its original two Artists and Museums were supplied in the earlier scenario;
+this session supplied no new units, buildings, works or gameplay values. The
+observer only read all city work slots, Museum themes and tourism.
+
+Actual Culture Overview clicks established these outcomes at unchanged turn 179:
+
+- Selecting artwork then an empty writing slot changed only selection. The
+  complete observed gameplay state remained unchanged.
+- Moving work 1 from Rome to Antium preserved both work IDs, removed the Museum
+  theme and yielded two tourism per city.
+- Selecting both occupied slots swapped work 0/work 1 across cities without
+  duplication. Theme 0/tourism 2 per city remained; another real swap reversed it.
+- F11 saved that split arrangement. An unsaved move then reunited the pair in
+  Rome, restoring theme 2/tourism 6 and leaving Antium empty.
+- Ctrl+F11 restored the exact full saved observer string: split works, both
+  themes 0, tourism 2 each, city/unit/treasury/queue/yield state and turn 179. The
+  quicksave file was unchanged by loading.
+- Click to View and the occupied slot opened Bartholomeus Spranger's Self
+  portrait with artwork/title and a visible Close. Actual Close returned to
+  Culture Overview without changing the saved arrangement.
+
+Quicksave SHA-256: `92c6f2301ced5ef6a4355f07f3186a307febc225b9389d73b35e817568ccd5f6`.
+The retained copy is `062447Z/EUI-GreatWork-QuickSave.Civ5Save`. Before F11, the
+previous test quicksave was verified against its preserved `053742Z` copy
+(`9ef8ba46…`); no original manual save was overwritten. Every intermediate
+assertion, full snapshot and screenshot hash is retained in the run folder.
+
+The normal physical exit returned 0 after 405.7 seconds. Settings, graphics, hooks
+and manual saves were preserved, with no Lua or synchronization errors. Wrapper
+`20260918T062439Z` restored standard payload, EUI text and options. The preceding
+`062317Z` attempt failed during localization startup before opening the save and
+remains failed; its host error diagnostic was 0. No retry reclassified that run.
+
+This adds actual mouse Great Work management and EUI keyboard quicksave/load
+coverage. Foreign-player exchanges and populated trade overview remain separate.
+
+`20260918T063242Z` loaded that EUI quicksave under standard UI at 1440x900.
+The entire recorded observer string matched the EUI saved state before input.
+Actual clicks rejected an artwork-to-writing slot change, swapped occupied
+Museum works across cities, reversed that swap, then restored both works to
+Rome. IDs and total count were preserved; Rome regained theme 2/tourism 6,
+Antium returned to zero. The normal production notification opened Antium's
+list and Back closed it. Its banner opened the larger city screen, where all
+nine focus controls, specialist/work slots and Return to Map were visible.
+No production or focus selection was made. These city-screen checks do not
+assert that opening a city preserves its automatic citizen assignments.
+
+The session exited normally through physical Return / Escape / Exit to Windows
+/ Yes, returned 0 and preserved original manual saves, settings, graphics and
+hooks. No Lua/sync errors were recorded. Its source quicksave remains byte
+identical; these later standard-UI changes were not saved.

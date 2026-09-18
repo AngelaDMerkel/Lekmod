@@ -592,3 +592,18 @@ six-failure baseline. `test-configure-ui.py` checks both assembled UI modes.
 The physical observer additionally records met city-state personality types and
 the culture-overview option without assigning them. Native physical evidence
 is in `docs/macos-ui-overviews.md`.
+
+### Physical Great Work evidence verification
+
+After the recorded mouse sequence, run:
+
+```sh
+python3 LEKMOD_DLL/macos/verify-greatwork-ui.py \
+  --eui-run build/macos/playtests/20260918T062447Z \
+  --standard-run build/macos/playtests/20260918T063242Z
+```
+
+The validator checks slot IDs, incompatible selection preservation, occupied
+swaps, Museum themes/tourism, exact quickload and cross-UI load, save hash,
+normal native exit and restoration. Mouse actions themselves are documented
+separately in `docs/macos-ui-overviews.md` and screenshot event records.
