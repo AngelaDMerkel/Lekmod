@@ -753,3 +753,13 @@ Minor/barbarian index guards reject major-only friendship queries in the mocks.
 Each case loads the product into a fresh environment. These tests establish
 callback behavior only; native terrain/pathing, event timing, conversion/upgrade
 and persistence remain separate tests.
+
+
+`test-city-policy-boundaries.lua LEKMOD/Lua/Civilizations` runs 29 isolated
+actual-handler cases for Romanian capture rewards, Vatican courthouses and
+Yugoslav tenets. Capture events pass the recipient in argument five; conversion
+events pass owner/religion/x/y; ideology events pass owner/branch. The Romanian
+integer mock follows the positive-number truncation of the Lua binding and
+checks the four normal speed inputs (Quick 80%, Standard 100%, Epic 125%,
+Marathon 200%). Native capture/liberation/gift distinctions, disposition timing,
+revolution timing and persistence remain open. No product code was changed.

@@ -94,7 +94,7 @@ All 114 playable civilizations and 26 civilization Lua files are listed below. A
 | `CIVILIZATION_POLYNESIA` | `TRAIT_WAYFINDING` | UNIT_MC_HAWAIIAN_KOA | Lekmod_polynesia.lua | Five isolated actual-handler cases cover creation cleanup for human/AI units, unrelated/dead-owner exclusion and inactive registration. Native ocean movement and post-conversion upgrade timing pending. |
 | `CIVILIZATION_PORTUGAL` | `TRAIT_EXTRA_TRADE` | UNIT_PORTUGUESE_NAU, UNIT_VENEZ_CARAVAN, UNIT_VENEZ_CARGO_SHIP, BUILDING_FEITORIA | — | Unique mechanics pending. |
 | `CIVILIZATION_PRUSSIA` | `TRAIT_PRUSSIA` | UNIT_LANDWHER, BUILDING_PRUSSIAN_FACTORY | — | Unique mechanics pending. |
-| `CIVILIZATION_ROMANIA` | `TRAIT_MC_NIHIL_SINE_DEO` | UNIT_MC_ROMANIAN_VINATOR, BUILDING_MC_ROMANIAN_PAINTED_MONASTERY | Lekmod_romania.lua | Unique mechanics pending. |
+| `CIVILIZATION_ROMANIA` | `TRAIT_MC_NIHIL_SINE_DEO` | UNIT_MC_ROMANIAN_VINATOR, BUILDING_MC_ROMANIAN_PAINTED_MONASTERY | Lekmod_romania.lua | Eight isolated actual-handler cases cover capture recipient routing, four game-speed inputs, independent owners, dead/other-owner exclusions and inactive registration. Native capture/liberation/gift distinctions and other unique mechanics pending. |
 | `CIVILIZATION_ROME` | `TRAIT_CAPITAL_BUILDINGS_CHEAPER` | UNIT_ROMAN_BALLISTA, UNIT_ROMAN_LEGION | — | Generic systems and Legion upgrade native. This does not complete Roman unique mechanics. |
 | `CIVILIZATION_RUSSIA` | `TRAIT_STRATEGIC_RICHES` | UNIT_RUSSIAN_COSSACK, BUILDING_KREPOST | — | Unique mechanics pending. |
 | `CIVILIZATION_SCOTLAND` | `TRAIT_LAST_OF_THE_FREE` | UNIT_MC_SCOTTISH_GALLOWGLASS, BUILDING_CEILIDH_HALL | — | Unique mechanics pending. |
@@ -113,11 +113,11 @@ All 114 playable civilizations and 26 civilization Lua files are listed below. A
 | `CIVILIZATION_TURKEY` | `TRAIT_WESTERNIZATION` | UNIT_TURKISH_GWI, BUILDING_UC_HALKEVLERI | — | Unique mechanics pending. |
 | `CIVILIZATION_UAE` | `TRAIT_YALLAH_HABIBI` | UNIT_QASIMI_RAIDER, BUILDING_BURJ | Lekmod_uae.lua | Sea plunder, +15 XP/two-move reward and exact reload native. Other abilities/owner boundaries pending. |
 | `CIVILIZATION_UKRAINE` | `TRAIT_RUS` | UNIT_TACHANKA, BUILDING_KNYAZ | — | Unique mechanics pending. |
-| `CIVILIZATION_VATICAN` | `TRAIT_VATICAN` | UNIT_SWITZ, BUILDING_STPETERS | Lekmod_vatican.lua | Unique mechanics pending. |
+| `CIVILIZATION_VATICAN` | `TRAIT_VATICAN` | UNIT_SWITZ, BUILDING_STPETERS | Lekmod_vatican.lua | Twelve isolated actual-handler cases cover capture/conversion argument routing, occupied/puppet own-religion eligibility, negative controls, non-stacking and inactive registration. Native disposition/conversion timing, persistence and other unique mechanics pending. |
 | `CIVILIZATION_VENEZ` | `TRAIT_VENEZ` | UNIT_VENETIAN_GALLEASS, UNIT_VENETIAN_MERCHANT | Lekmod_venice.lua | Independent Compass awards, affected-save repair, exact reload and Industrial start native. Other uniques pending. |
 | `CIVILIZATION_VIETNAM` | `TRAIT_TAMGIAO` | UNIT_VIETNAM_INFANTRY, BUILDING_VOKHI | — | Unique mechanics pending. |
 | `CIVILIZATION_WALES` | `TRAIT_US_WALES` | UNIT_US_LONGBOWMAN | — | Unique mechanics pending. |
-| `CIVILIZATION_YUGOSLAVIA` | `TRAIT_NONALIGNED` | UNIT_YUGO_M84, BUILDING_YUGO_SPOMENIK | Lekmod_yugoslavia.lua | Unique mechanics pending. |
+| `CIVILIZATION_YUGOSLAVIA` | `TRAIT_NONALIGNED` | UNIT_YUGO_M84, BUILDING_YUGO_SPOMENIK | Lekmod_yugoslavia.lua | Nine isolated actual-handler cases cover all three ideology branches, independent owner rewards, ordinary/dead/other-owner/anarchy exclusions and inactive registration. Native adoption/revolution timing, persistence and rival-ideology bonuses pending. |
 | `CIVILIZATION_ZIMBABWE` | `TRAIT_GREAT_ZIMBABWE` | UNIT_SHONA, BUILDING_STONE_MASON | — | Unique mechanics pending. |
 | `CIVILIZATION_ZULU` | `TRAIT_BUFFALO_HORNS` | UNIT_ZULU_IMPI, BUILDING_IKANDA | — | Unique mechanics pending. |
 
