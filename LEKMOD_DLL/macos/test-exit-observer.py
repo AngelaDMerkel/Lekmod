@@ -24,6 +24,7 @@ class ExitObserverTests(unittest.TestCase):
 #include <errno.h>
 #include <string.h>
 #include <CoreFoundation/CoreFoundation.h>
+unsigned int GetLastError(void){return 1234;}
 int main(int argc,char **argv){
  if(atoi(argv[2])==5){
   CFURLRef url=CFURLCreateFromFileSystemRepresentation(NULL,(const UInt8*)argv[3],strlen(argv[3]),false);
@@ -84,6 +85,7 @@ int main(int argc,char **argv){
             self.assertEqual(result.stdout,"Failed to Save database.\n")
             self.assertIn("database-failure-write",result.stderr)
             self.assertIn("descriptor-state stage=database-failure",result.stderr)
+            self.assertIn("host-file-error value=1234",result.stderr)
             result=subprocess.run([str(probe),"0","3",str(root/"buffered.db")],env=environment,text=True,capture_output=True,timeout=10)
             self.assertEqual(result.returncode,0,result.stderr)
             self.assertEqual(result.stdout,"buffer-preserved=1\n")

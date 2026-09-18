@@ -15,6 +15,10 @@
 #include <sys/resource.h>
 #include <stdarg.h>
 #include <pthread.h>
+#include <dlfcn.h>
+
+typedef unsigned int (*HostLastErrorFunction)(void);
+static HostLastErrorFunction hostLastError = NULL;
 
 static pthread_mutex_t localizationStreamMutex = PTHREAD_MUTEX_INITIALIZER;
 static const void *localizationStreams[128];
@@ -146,6 +150,7 @@ static void observeDatabaseLogWrite(const void *bytes, size_t length) {
         for (size_t offset = 0; offset <= length - count; ++offset) {
             if (memcmp((const char *)bytes + offset, messages[message], count) == 0) {
                 int savedErrno = errno;
+                if (hostLastError) fprintf(stderr, "[LEKMOD_TEST] host-file-error value=%u\n", hostLastError());
                 void *frames[48];
                 int depth = backtrace(frames, 48);
                 recordDescriptorState("database-failure");
@@ -243,6 +248,7 @@ __attribute__((constructor)) static void keepGameInBackground(void) {
         [[NSApplication sharedApplication] setActivationPolicy:NSApplicationActivationPolicyProhibited];
 #endif
 #ifndef LEKMOD_TEST_ACTIVATION_ONLY
+        hostLastError = (HostLastErrorFunction)dlsym(RTLD_DEFAULT, "GetLastError");
         recordDescriptorState("startup");
         // Lua/engine file logs are flushed individually after their writes.
         // Keep only standard output streams on the timer; never fflush(NULL).

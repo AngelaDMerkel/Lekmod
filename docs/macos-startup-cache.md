@@ -240,3 +240,13 @@ remains failed; no wait flag or synchronization check was altered. Its saved
 state reloaded exactly with normal exit in `031725Z`; an unchanged fresh-case
 retest `032102Z` and exact reload `032239Z` also exited normally. The single
 shutdown stall remains an unresolved intermittent host-path observation.
+
+## Read-only host error observation
+
+The process-local observer now resolves Aspyr's exported `GetLastError` and
+records its current thread-local value when a database failure is logged. It
+does not clear the value, retry the failed operation or alter exit status. Two
+offline subprocess tests pass, including a known exported error value of 1234
+and the existing exit, stream and activation-only preservation checks. Native
+quicksave run `20260918T053742Z` used this observer successfully but encountered
+no startup failure, so it supplies no host-error value for the unresolved defect.
