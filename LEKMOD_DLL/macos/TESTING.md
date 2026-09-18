@@ -731,3 +731,9 @@ human `--civilization`. Disabled slots, duplicate slots and overlap with
 this does not enable multiplayer. The normal `GAMEOPTION_NO_GOODY_HUTS` setting
 is also allowed for controlled single-player reward tests. Thirty-two runner
 regressions pass; the Ottoman three-owner case validates normal slot 2 selection.
+
+`--scenario ottoman-promotions --scenario-turns 4` supports human/AI Ottomans
+and Roman slot 2, with the normal no-ruins option. Supplied XP must become ready
+through ordinary unit turns; human promotion actions and normal AI promotions
+must produce the event-time faith reward, while Rome gains none. All owner unit
+levels/XP/promotions and faith values support exact reload.

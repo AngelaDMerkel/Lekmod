@@ -1345,3 +1345,10 @@ lethal stacked-unit behavior, native exclusion controls, exact reload and
 separately labeled offline filters. The first AI-interference attempt remains
 failed fixture evidence; no AI or synchronization flag was changed to isolate
 the passing ordinary-turn pulse. Other Omani mechanics remain open.
+
+### Ottoman promotion faith
+
+[Ottoman validation](macos-ottoman-validation.md) records real human and AI
+promotions, event-time XP/faith amounts, a Roman no-award control and exact
+persistence. XP inputs are explicit and readiness comes from ordinary turns.
+Other Ottoman mechanics remain open.
