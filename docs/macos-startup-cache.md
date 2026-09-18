@@ -158,3 +158,46 @@ confirmed the duplicate-Venice gameplay defect, exited 0 with the real exit
 confirmation and no signals, and restored settings/hooks/manual saves. Both
 controls passed startup, but two successes do not establish that the observer
 caused the intermittent failure or resolve its root cause.
+
+## Controls without observers, and ordinary startup settings
+
+`20260918T020756Z` again failed the merged-cache attach before loading a saved
+game. The 25,509,888-byte cache passed quick_check; its SHA-256 is
+`44283d3d3fa2cb5ce96b696fde3e1771e4b62b78bcf89e8c3d90a16ff0eb0332`,
+and all cache files/hashes are preserved under
+`build/macos/cache-investigation/20260918T020756Z/`. The activation-only retry
+`021045Z` failed and left an empty merged cache. Following guarded preservation
+and removal of that empty file, activation-only `021357Z` failed again.
+Explicitly authorized foreground control `021800Z`, with no injected test
+library at all, also failed before the menu. This establishes that neither the
+file/stream observers nor the background activation guard is required for the
+failure. It does not identify the underlying host/cache trigger.
+
+`native-startup-control.py` provides an ordinary foreground comparison with no
+temporary UI hooks, no configuration changes before launch, and no injected
+library. It requires an explicit authorization flag, an unlocked desktop, a
+running signed-in Steam session, no existing Civ V process and a bounded timeout.
+It preserves settings and verifies original manual-save hashes afterward.
+In `native-startup-controls/20260918T022247Z`, the normal opening movie appeared.
+An actual Escape key dismissed it; the main menu appeared, and actual Exit/Yes
+clicks closed the game with return code 0 and no signals. No settings changed.
+The regenerated merged cache was 27,500,544 bytes. See the separate physical
+report; surviving startup alone is not a gameplay pass.
+
+The scripted runner had forced QuickStart=1 and SkipIntroVideo=1. Those settings
+are now independently selectable and reported. `022855Z` used QuickStart=0,
+SkipIntroVideo=1, foreground mode and no injected test library: the pending
+great-person save matched exactly and saved/exited normally. Two background
+controls `023119Z` and `023231Z` repeated that exact reload with the full normal
+observers enabled, QuickStart=0, and the healthy cache left intact. Both passed.
+`023447Z` then passed a fresh Industrial/Duel Venice game under the same startup
+configuration, including normal exit and preservation checks.
+
+The runner therefore defaults to QuickStart=0, using its existing normal
+main-menu Start/Load callbacks. QuickStart=1 remains available explicitly for
+diagnostics. No gameplay, RNG, synchronization or wait flag is changed. These
+controls remove an unnecessary test setting and establish several successful
+ordinary-menu paths; cache state/timing also differed between attempts, so they
+do not prove QuickStart is the sole cause or that the intermittent failure is
+fully fixed. All failed runs remain in the evidence. Twenty-seven offline runner
+guard/classification cases pass.

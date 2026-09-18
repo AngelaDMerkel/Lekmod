@@ -512,3 +512,23 @@ rejection, neutral Citadel claims and the existing used-prophet boundary. The
 Holy Site's fresh prophet is created in a religious capital before positioning.
 Use `--save-and-exit` and exact `--expected-state` reload; startup failures before
 loading are distinct from a saved-state mismatch.
+
+
+Startup comparisons can set `--quick-start 0|1` and `--skip-intro 0|1`
+independently. QuickStart defaults to 0 because the runner already uses normal
+main-menu Start/Load callbacks. `--no-process-adapter` requires an explicitly
+authorized `--foreground-ui-test`, supports bounded UI interaction or scripted
+single-player checks, and cannot combine with `--activation-only`. It injects
+no test library. Foreground execution does not imply physical mouse coverage.
+
+For an ordinary menu control without UI hooks or prelaunch configuration edits:
+
+```sh
+python3 LEKMOD_DLL/macos/native-startup-control.py --foreground-authorized --timeout 600
+```
+
+Use only with current user foreground authorization. It checks the desktop lock
+and existing Steam/game processes, preserves settings and manual saves, and
+records the actual process exit. Use CUA for real UI actions; after the app exits,
+do not select it again and inadvertently launch another instance. A zero exit
+alone does not prove the menu was reached: retain a separate physical observation.

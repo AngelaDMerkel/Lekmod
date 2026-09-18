@@ -310,6 +310,8 @@ def main():
     parser.add_argument("--timeout", type=int, default=7200)
     parser.add_argument("--stall-seconds", type=int, default=90)
     parser.add_argument("--startup-timeout", type=int, default=60)
+    parser.add_argument("--quick-start", type=int, choices=(0, 1), default=0, help="Temporary QuickStart setting; use normal menu startup by default")
+    parser.add_argument("--skip-intro", type=int, choices=(0, 1), default=1, help="Temporary SkipIntroVideo setting for startup controls")
     parser.add_argument("--world-size", default="WORLDSIZE_HUGE")
     parser.add_argument("--start-era", default="ERA_ANCIENT", help="Normal game-setup era for a new fixture; ignored when loading")
     parser.add_argument("--civilization", default="CIVILIZATION_ROME", help="Normal player-zero civilization selection for new fixtures")
@@ -328,6 +330,7 @@ def main():
     parser.add_argument("--scenario-turns", type=int, default=0, help="Explicit maximum turns a scenario may request through the normal human driver (0-30)")
     parser.add_argument("--expect-human-victory", action="store_true", help="Require the endgame scenario's naturally resolved score winner to be the human")
     parser.add_argument("--foreground-ui-test", "--foreground-attachment-test", dest="foreground_attachment_test", action="store_true", help="Explicitly approved foreground UI test; specify --timeout (at most one hour)")
+    parser.add_argument("--no-process-adapter", action="store_true", help="Explicit foreground startup control with no injected process library; requires --foreground-ui-test")
     parser.add_argument("--activation-only", action="store_true", help="Startup diagnostic control: retain background activation guard without syscall/stream observers or a log-flush timer")
     parser.add_argument("--expected-state", type=Path, help="Verify the saved-state fingerprint from an earlier --save-and-exit report before any functional mutations")
     args = parser.parse_args()
@@ -347,8 +350,10 @@ def main():
             parser.error("--load-save requires an existing Civ5Save file and a human test mode")
     if (args.save_and_exit or args.expected_state or args.capture_panels or args.city_controls) and args.mode != "single-player-smoke":
         parser.error("Save/reload checks require --mode single-player-smoke")
-    if args.foreground_attachment_test and (args.mode != "ui-interaction" or args.timeout > 3600):
-        parser.error("Foreground UI tests require --mode ui-interaction and --timeout at most 3600; the flag does not grant user permission")
+    if args.no_process_adapter and (not args.foreground_attachment_test or args.activation_only):
+        parser.error("--no-process-adapter requires explicit foreground control and cannot combine with --activation-only")
+    if args.foreground_attachment_test and (args.mode not in ("ui-interaction", "single-player-smoke") or args.timeout > 3600):
+        parser.error("Foreground UI tests require --mode ui-interaction or single-player-smoke and --timeout at most 3600; the flag does not grant user permission")
     if args.production_completion and (args.mode != "human-turns" or args.turns != 3 or not args.load_save or args.timeout > 600):
         parser.error("Production completion requires --mode human-turns, --turns 3, --load-save and --timeout at most 600")
     if args.scenario and (args.mode != "single-player-smoke" or (not args.load_save and args.scenario not in ("congress", "endgame", "bolivia", "mughals", "worker", "buganda-lake", "georgia", "georgia-upgrade", "cuba-greatworks", "cuba-ideology", "diplomacy-assets", "palmyra", "venice", "venice-known-compass", "italy")) or args.city_controls or args.timeout > 1800):
@@ -582,7 +587,7 @@ def main():
     before_reports = set(diagnostic_dir.glob("*"))
     render_log = logs / "LekmodRender.log"
     offset = render_log.stat().st_size if render_log.exists() else 0
-    updates = {("CONFIG", "QuickStart"): 1,
+    updates = {("CONFIG", "QuickStart"): args.quick_start,
                ("CONFIG", "SyncRandSeed"): 12345,
                ("CONFIG", "MapRandSeed"): 67890,
                ("DEBUG", "Autorun"): int(args.mode == "autorun"),
@@ -596,7 +601,8 @@ def main():
     report = {"mode": args.mode, "requested_turns": args.turns,
               "ui_variant": "eui" if has_eui else "standard",
               "production_completion": args.production_completion,
-              "process_observer": "activation-only" if args.activation_only else "full-diagnostics",
+              "quick_start": args.quick_start, "skip_intro": args.skip_intro,
+              "process_observer": "none" if args.no_process_adapter else "activation-only" if args.activation_only else "full-diagnostics",
               "scenario": args.scenario,
               "scenario_turn_limit": args.scenario_turns,
               "temporary_autosave_interval": 1 if args.scenario_turns else None,
@@ -620,9 +626,10 @@ def main():
     display_setting = command(["defaults", "read", display_domain, "DisplayFullScreen"])
     background_lib = REPO / "build/macos" / ("background-activation-only.dylib" if args.activation_only else "foreground-attachment.dylib" if args.foreground_attachment_test
                                              else "background-playtest.dylib")
-    subprocess.run(["clang", "-arch", "x86_64", "-dynamiclib", "-framework", "AppKit",
-                    "-framework", "Foundation", str(Path(__file__).with_name("background-playtest.m")),
-                    "-o", str(background_lib)] + (["-DLEKMOD_TEST_ALLOW_FOREGROUND"] if args.foreground_attachment_test else []) + (["-DLEKMOD_TEST_ACTIVATION_ONLY"] if args.activation_only else []), check=True)
+    if not args.no_process_adapter:
+        subprocess.run(["clang", "-arch", "x86_64", "-dynamiclib", "-framework", "AppKit",
+                        "-framework", "Foundation", str(Path(__file__).with_name("background-playtest.m")),
+                        "-o", str(background_lib)] + (["-DLEKMOD_TEST_ALLOW_FOREGROUND"] if args.foreground_attachment_test else []) + (["-DLEKMOD_TEST_ACTIVATION_ONLY"] if args.activation_only else []), check=True)
     current_text = ""
     start = time.monotonic()
     last_progress = start
@@ -653,7 +660,7 @@ def main():
     try:
         config.write_bytes(edit_ini(original.decode(), updates).encode())
         test_user_settings = re.sub(rb"(?m)^(SkipIntroVideo\s*=\s*)[^\r\n]*",
-                                    rb"\g<1>1", original_user_settings)
+                                    lambda match: match.group(1) + str(args.skip_intro).encode(), original_user_settings)
         if args.scenario_turns:
             # Bounded scenarios should recover from their latest ordinary
             # autosave. The original preference bytes are restored in finally.
@@ -690,7 +697,10 @@ def main():
             path.write_bytes((ui_backups[path] or b"") + b"\n" + code.encode())
         command(["defaults", "write", display_domain, "DisplayFullScreen", "-bool", "false"])
         environment = os.environ.copy()
-        environment["DYLD_INSERT_LIBRARIES"] = str(background_lib)
+        if args.no_process_adapter:
+            environment.pop("DYLD_INSERT_LIBRARIES", None)
+        else:
+            environment["DYLD_INSERT_LIBRARIES"] = str(background_lib)
         environment["SteamAppId"] = "8930"
         environment["SteamGameId"] = "8930"
         with (output / "process.log").open("w") as process_log:

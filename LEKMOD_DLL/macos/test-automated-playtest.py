@@ -114,7 +114,7 @@ class PlaytestEvidenceTests(unittest.TestCase):
                     ("SKIP" if item == skipped else "PASS") for item in playtest.PRODUCTION_COMPLETION_ITEMS]
             rows.append("[LEKMOD_FUNCTIONAL] run=current event=complete")
             self.assertFalse(playtest.production_completion_results("\n".join(rows), "current")["verified"])
-    def test_foreground_exception_is_bounded_and_ui_only(self):
+    def test_foreground_exception_is_bounded_and_non_autoplay(self):
         script = str(Path(__file__).with_name("automated-playtest.py"))
         for mode, timeout in (("human-turns", "180"), ("ui-interaction", "3601")):
             result = subprocess.run([sys.executable, script, "--foreground-attachment-test",
@@ -126,6 +126,22 @@ class PlaytestEvidenceTests(unittest.TestCase):
              mock.patch.object(playtest, "game_pids", return_value=[123]):
             with self.assertRaisesRegex(SystemExit, "already open"):
                 playtest.main()  # Accepted bound; the existing-process guard prevents any launch.
+
+    def test_unmodified_process_requires_explicit_bounded_foreground_scope(self):
+        script = str(Path(__file__).with_name("automated-playtest.py"))
+        for extra in ([], ["--activation-only", "--foreground-ui-test"], ["--foreground-ui-test", "--mode", "human-turns"], ["--foreground-ui-test", "--timeout", "3601"]):
+            result = subprocess.run([sys.executable, script, "--no-process-adapter"] + extra, capture_output=True, text=True)
+            self.assertEqual(result.returncode, 2)
+        with mock.patch.object(sys, "argv", [script, "--no-process-adapter", "--foreground-ui-test", "--mode", "single-player-smoke", "--timeout", "600"]), mock.patch.object(playtest, "game_pids", return_value=[123]):
+            with self.assertRaisesRegex(SystemExit, "already open"):
+                playtest.main()
+
+    def test_startup_control_settings_accept_only_binary_values(self):
+        script = str(Path(__file__).with_name("automated-playtest.py"))
+        for flag in ("--quick-start", "--skip-intro"):
+            for value in ("-1", "2", "yes"):
+                result = subprocess.run([sys.executable, script, flag, value], capture_output=True, text=True)
+                self.assertEqual(result.returncode, 2)
 
     def test_functional_completion_requires_all_items_from_this_run(self):
         prefix = "[LEKMOD_FUNCTIONAL] run=current "
