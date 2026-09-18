@@ -794,3 +794,12 @@ snapshot supports exact reload. No turn or happiness value is assigned.
 Nine cases exercise minority addition/removal, no-majority diversity, unchanged
 and pantheon controls, and the existing majority-conversion paths. Cache/event
 sinks are stand-ins; the native Ottoman fixture supplies the engine evidence.
+
+
+`--scenario tonga-vision --save-and-exit` starts normal human/AI Tonga plus
+Roman slot 2 on Small Archipelago. It only observes native generated terrain,
+area identity and team visibility; no visibility or terrain input is supplied.
+A suitable fixture must contain a singleton island at distance 7–12 and Roman
+distant-island controls. Missing preconditions fail explicitly. A failing
+visibility verdict can still be saved for exact-map retesting; it remains FAIL.
+The full per-owner revealed-plot snapshot supports exact reload.

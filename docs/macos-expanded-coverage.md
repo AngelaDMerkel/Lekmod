@@ -1364,3 +1364,14 @@ and owner happiness without a false conversion event. Nine actual-method
 sanitizer cases pass (four failed before). Successful native runs exited 0
 and restored hooks/settings/manual saves. Religions, pressure and population
 were supplied inputs. The broader religion/civilization rows remain open.
+
+
+### Tonga generated-map starting vision
+
+The [Tonga report](macos-tonga-validation.md) records six naturally generated
+one-tile islands omitted at startup (`20260918T233544Z`), the exact-map fixed
+replay (`234131Z`) and exact full-visibility reload (`234339Z`). All 90 nearby
+island-coast anchors pass after the fix, while Rome's complete revealed set
+remains unchanged. No terrain or visibility was assigned. All three processes
+exited normally and restored hooks/settings/manual saves; the baseline keeps
+its failed scenario verdict. Remaining Tonga mechanics are still open.
