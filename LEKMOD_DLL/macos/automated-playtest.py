@@ -336,10 +336,17 @@ def capture_game_window(pid, destination):
 
 
 SINGLE_PLAYER_SETUP_OPTIONS = frozenset({
-    "GAMEOPTION_NO_BARBARIANS", "GAMEOPTION_RAGING_BARBARIANS",
+    "GAMEOPTION_NO_BARBARIANS", "GAMEOPTION_RAGING_BARBARIANS", "GAMEOPTION_NO_GOODY_HUTS",
     "GAMEOPTION_NO_SCIENCE", "GAMEOPTION_NO_POLICIES", "GAMEOPTION_NO_RELIGION",
     "GAMEOPTION_NO_ESPIONAGE", "GAMEOPTION_ONE_CITY_CHALLENGE", "GAMEOPTION_NO_CITY_RAZING",
 })
+
+def parse_slot_civilization(value):
+    match = re.fullmatch(r"([1-9]|1[01])=(CIVILIZATION_[A-Z0-9_]+)", value)
+    if not match:
+        raise argparse.ArgumentTypeError("Use AI_SLOT=CIVILIZATION_TYPE with an AI slot from 1 to 11")
+    return int(match[1]), match[2]
+
 
 def parse_start_era(value):
     # The shipped Atomic/Information UI eras retain their older internal IDs.
@@ -371,6 +378,7 @@ def main():
     parser.add_argument("--start-era", type=parse_start_era, default="ERA_ANCIENT", help="Normal starting era; Atomic/Information aliases map to POSTMODERN/FUTURE; ignored when loading")
     parser.add_argument("--civilization", default="CIVILIZATION_ROME", help="Normal player-zero civilization selection for new fixtures")
     parser.add_argument("--opponent-civilization", default="", help="Optional normal AI slot-one civilization selection for new single-player fixtures")
+    parser.add_argument("--slot-civilization", action="append", type=parse_slot_civilization, default=[], help="Normal civilization selection for a specific AI slot, SLOT=CIVILIZATION_TYPE")
     parser.add_argument("--window-size", type=parse_window_size, help="Temporary windowed resolution, with GraphicsSettingsDX9.ini restored afterward")
     parser.add_argument("--majors", type=int, default=12)
     parser.add_argument("--minors", type=int, default=40)
@@ -392,6 +400,12 @@ def main():
     args = parser.parse_args()
     if len(dict(args.game_option)) != len(args.game_option):
         parser.error("Do not specify a game option more than once")
+    if len(dict(args.slot_civilization)) != len(args.slot_civilization):
+        parser.error("Do not assign an AI civilization slot more than once")
+    if any(slot >= args.majors for slot, _ in args.slot_civilization):
+        parser.error("AI civilization overrides require an enabled major slot")
+    if args.opponent_civilization and 1 in dict(args.slot_civilization):
+        parser.error("Do not combine --opponent-civilization with a slot-one override")
     if args.refresh_driver:
         return refresh_live_driver(args.refresh_driver)
     if args.turns < 3 or args.timeout < 30 or args.stall_seconds < 5 or args.startup_timeout < 5:
@@ -680,6 +694,7 @@ def main():
               "requested_game_options": dict(args.game_option) if not args.load_save else None,
               "civilization": args.civilization if not args.load_save else None,
               "opponent_civilization": args.opponent_civilization if not args.load_save else None,
+              "slot_civilizations": dict(args.slot_civilization) if not args.load_save else None,
               "binary_sha256": hashlib.sha256((APP / "Contents/MacOS/libCvGameCoreDLL_Expansion2_DLL.dylib").read_bytes()).hexdigest()}
     if args.load_save:
         report["loaded_from"] = str(args.load_save)
@@ -738,6 +753,7 @@ def main():
         replacements = {"__TEST_WORLD_SIZE__": args.world_size,
                         "__TEST_CIVILIZATION__": args.civilization,
                         "__TEST_OPPONENT_CIVILIZATION__": args.opponent_civilization,
+                        "__TEST_SLOT_CIVILIZATIONS__": "{" + ",".join("[" + str(slot) + "]=" + json.dumps(civ) for slot, civ in args.slot_civilization) + "}",
                         "__TEST_START_ERA__": args.start_era,
                         "__TEST_MAP_SCRIPT__": args.map_script,
                         "__TEST_GAME_SPEED__": args.game_speed,

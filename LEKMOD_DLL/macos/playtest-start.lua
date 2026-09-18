@@ -58,6 +58,12 @@ do
             PreGame.SetCivilization(1,opponent.ID)
             print("[LEKMOD_TEST] fixture-setup normal-AI-civilization="..opponent.Type)
         end
+        for slot,civType in pairs(__TEST_SLOT_CIVILIZATIONS__) do
+            local civ=assert(GameInfo.Civilizations[civType],"unknown AI-slot civilization")
+            assert(civ.Playable,"AI-slot civilization is not playable")
+            PreGame.SetCivilization(slot,civ.ID)
+            print("[LEKMOD_TEST] fixture-setup normal-AI-slot="..slot.." civilization="..civType)
+        end
         Events.SerialEventStartGame()
         UIManager:SetUICursor(1)
     end

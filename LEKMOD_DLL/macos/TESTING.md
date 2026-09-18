@@ -721,3 +721,13 @@ the opposing AI finishes. The next real Oman turn must apply exact damage with
 lethal-stack and own/land/distance controls. `test-oman-minaa.lua PRODUCT_LUA`
 adds isolated filter cases, labeled separately from native outcomes. The
 persistent surviving-unit/building/war snapshot supports exact reload.
+
+### Explicit AI control civilizations
+
+`--slot-civilization 2=CIVILIZATION_ROME` selects a normal civilization for an
+additional enabled AI slot. Repeat for distinct slots 1–11; slot 0 remains the
+human `--civilization`. Disabled slots, duplicate slots and overlap with
+`--opponent-civilization` are rejected before launch. Slot status remains AI and
+this does not enable multiplayer. The normal `GAMEOPTION_NO_GOODY_HUTS` setting
+is also allowed for controlled single-player reward tests. Thirty-two runner
+regressions pass; the Ottoman three-owner case validates normal slot 2 selection.

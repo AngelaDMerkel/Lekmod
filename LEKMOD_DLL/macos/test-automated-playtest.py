@@ -50,6 +50,22 @@ class PlaytestEvidenceTests(unittest.TestCase):
         self.assertFalse(playtest.congress_resolution_results(passed.replace('id=7','id=8'),lua,'current')['verified'])
         self.assertTrue(playtest.congress_resolution_results(failed,lua.replace('true','false'),'current')['verified'])
 
+    def test_ai_civilization_slots_are_explicit_and_bounded(self):
+        self.assertEqual(playtest.parse_slot_civilization("2=CIVILIZATION_ROME"), (2, "CIVILIZATION_ROME"))
+        for value in ("0=CIVILIZATION_ROME", "12=CIVILIZATION_ROME", "2=Rome", "2=CIVILIZATION_ROME;bad"):
+            with self.assertRaises(playtest.argparse.ArgumentTypeError):
+                playtest.parse_slot_civilization(value)
+        script = str(Path(__file__).with_name("automated-playtest.py"))
+        cases = [
+            ["--majors", "2", "--slot-civilization", "2=CIVILIZATION_ROME"],
+            ["--slot-civilization", "2=CIVILIZATION_ROME", "--slot-civilization", "2=CIVILIZATION_ROME"],
+            ["--opponent-civilization", "CIVILIZATION_ROME", "--slot-civilization", "1=CIVILIZATION_ROME"],
+        ]
+        for args in cases:
+            result = subprocess.run([sys.executable, script, *args], capture_output=True, text=True)
+            self.assertEqual(result.returncode, 2)
+            self.assertIn("error:", result.stderr)
+
     def test_window_size_is_explicit_and_bounded(self):
         self.assertEqual(playtest.parse_window_size("1280x800"), (1280, 800))
         for value in ("auto", "1280", "100x100", "9000x800"):
