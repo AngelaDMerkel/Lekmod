@@ -312,3 +312,10 @@ The first request for this control was rejected by automatic approval review
 using the historical one-session limit. No part of that rejected command ran.
 After the user's later explicit foreground-restoration and unlimited-duration
 messages were quoted, the same action was approved. No permission block remains.
+
+`20260918T100336Z` matched a Gerilya land-state reload but stalled after normal
+Exit confirmation. Its retained `stall.sample.txt` again shows main-thread
+`pthread_join` and SDLTimer `std::future<void>::get`; the supervisor used SIGTERM
+and restored settings/hooks/manual saves. A separate retry passed. This third
+matching sample strengthens the recurring shutdown observation but does not
+identify its cause or justify bypassing synchronization.

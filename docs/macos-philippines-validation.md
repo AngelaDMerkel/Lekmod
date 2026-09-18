@@ -130,3 +130,34 @@ base yields and all human unit identities/types/XP/positions. Reload-save SHA-25
 Both saved/exited normally (0), restored hooks/settings and preserved manual saves,
 with no Lua/sync errors. This is scripted production/native outcome coverage,
 not mouse input or earned research/production. No product correction was needed.
+
+## Gerilya strength, embarkation and land boundary
+
+`20260918T095334Z` supplied a Gerilya and same-owner Expeditionary Force control
+on distinct neutral coastal staging plots, plus an upkeep budget. Their native
+land strengths were 55 and 40, matching the current data, with equal 180-point
+(three-move) land limits. Only the Gerilya had its unique Marine promotion.
+
+Both used normal land-to-coast moves; no embark flag was assigned. While embarked,
+their limits were 360 and 180. One ordinary turn refreshed actual movement to those
+exact values: the Gerilya received three extra moves. Their embarked combat
+query was 12 for both; the 55/40 strength comparison is a land-state result.
+Save SHA-256: `386a010376dc308725f3a432213f595eb4390256eeee191e56b32e1b1776e8fc`.
+`095548Z` matched the complete embarked comparison state on reload; reload-save
+SHA-256: `663c35b5349ec40cf1245a0fb12c83c3466bdacb94c69a300cfd88d23dbdeff0`.
+
+`095814Z` resumed that actual save and issued two normal coast-to-land moves.
+Both land limits returned to 180; the Gerilya retained its promotion and 55 strength
+versus the control's 40. Both movement budgets were 0 after disembarking, without
+a turn advance. Save SHA-256:
+`7a755682d077f07e2b290efd9a12f1e34175dff8ea85dbb894db1c20158be3ba`.
+Reload `100336Z` matched state but stalled after Exit confirmation and required
+SIGTERM; it remains a failed shutdown run. Separate retry `100854Z` matched state
+and exited normally. Its reload-save SHA-256 is
+`3b26b0c5a6d3ecf2b19a82cbe4d8a914d47ca897c1351b020b6a40396b0711b2`.
+
+All four successful action/reload runs exited 0, restored settings/hooks and
+preserved manual saves, with no Lua/sync errors. These are scripted moves and
+native outcomes with supplied units, not mouse input, normal Gerilya production
+or combat-damage testing. The failed shutdown has the same main-thread join /
+SDLTimer future-wait pattern as the earlier failures and remains unresolved.

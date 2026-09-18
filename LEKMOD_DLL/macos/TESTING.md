@@ -706,3 +706,10 @@ Help/data (no building prerequisite, Compass, +1 culture/+2 faith/+15 training X
 It supplies research and near-complete production, then requires normal Church
 construction and a normally trained combat unit with the quoted XP. The resulting
 building/yield/unit snapshot supports exact reload.
+
+`--scenario philippines-gerilya --scenario-turns 1` supplies a Gerilya and
+Expeditionary Force control, then requires normal embarkation and an ordinary
+refresh of the three-extra-move difference. `philippines-gerilya-return` loads
+that saved state and uses normal disembark moves to verify equal land limits
+while retaining unique strength/promotion. Both snapshots support exact reload.
+Neither scenario sets an embark flag or movement counter.
