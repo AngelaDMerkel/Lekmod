@@ -258,3 +258,14 @@ host error or explain the localization failure. The temporary EUI wrapper
 restored standard payload/text/options; settings and manual saves were preserved.
 A post-cleanup read-only inspection found the merged cache absent. No manual
 cache deletion or empty-cache repair was performed for this attempt.
+
+`20260918T070926Z` repeated the shutdown-stall pattern after a passing exact
+Mexico visibility reload and normal Exit confirmation at 52.7 seconds. The
+supervisor's `stall.sample.txt` shows the Aspyr main thread in `pthread_join`
+and SDLTimer in `std::future<void>::get`, matching the earlier `030901Z` pattern.
+No active GameCore frame appears in those blocked paths; this does not establish
+the original cause. At 153.7 seconds the supervisor sent SIGTERM (return -15),
+restored settings/hooks and preserved manual saves. A later manual sample request
+found the owned process already closed and collected no additional sample.
+Separate retry `071357Z` passed exact reload and normal exit 0; the stalled run
+remains failed evidence. No wait flag was changed or successful exit fabricated.

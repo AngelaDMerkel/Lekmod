@@ -620,3 +620,13 @@ settlement. Its saved report supports exact `--expected-state` reload.
 `test-eui-science-display.py` executes the actual EUI HUD and tooltip rate query;
 `--source PATH` accepts the preserved pre-fix template for baseline comparison.
 See `docs/macos-economy-boundaries.md` for evidence and coverage limits.
+
+### Mexico first-turn discovery
+
+Run `test-mexico-discovery.lua` with the pinned Lua 5.1 interpreter and a product
+`Lekmod_mexico.lua` path. Native `--scenario mexico-discovery --scenario-turns 1`
+requires normally selected human/AI Mexico on separate single-player teams and
+nearby/distant minor starting plots. Tiny Pangaea with eight minors supplies the
+recorded fixture. The test observes opening locations, real minor foundations
+and distance controls without assigning visibility; use its saved report for
+exact `--expected-state` reload. See `docs/macos-mexico-validation.md`.

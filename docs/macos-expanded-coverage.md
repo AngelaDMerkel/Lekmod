@@ -1314,3 +1314,10 @@ saves/settings/graphics/hooks were preserved. See the physical report for the
 quicksave hash, full-frame captures, earlier capture-helper defect and retained
 startup failures. This closes the standard-UI quicksave/quickload workflow;
 it does not close the remaining EUI/size/overview or gameplay ledger rows.
+
+### Mexico opening discovery
+
+[Mexico validation](macos-mexico-validation.md) records the native timing/owner
+failure, corrected initialization/founding events, identical-world replay,
+distance controls, exact reload and the separately retained shutdown stall.
+Other Mexican unique mechanics remain open in the civilization inventory.

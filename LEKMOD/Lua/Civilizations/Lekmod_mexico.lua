@@ -1,44 +1,46 @@
 -- Author: EnormousApplePie
 include("Lekmod_utilities.lua")
-include("PlotIterators.lua")
 
 local this_civ = GameInfoTypes["CIVILIZATION_MEXICO"]
 local is_active = LekmodUtilities:is_civilization_active(this_civ)
 
-------------------------------------------------------------------------------------------------------------------------
--- Mexico UA, search for 10 tiles around the starting settler and reveal city-states
-------------------------------------------------------------------------------------------------------------------------
-function lekmod_mexico_ua_do_discover(player_id)
-
-	local player = Players[player_id]
-	local player_team = player:GetTeam()
-	
-	-- Iterate to find cities from the starting plot
-	local start_plot = player:GetStartingPlot()
-	for loop_plot in PlotAreaSweepIterator(start_plot, 10, SECTOR_NORTH, DIRECTION_CLOCKWISE, DIRECTION_OUTWARDS, CENTRE_EXCLUDE) do
-		local city = loop_plot:GetPlotCity()
-		if city then
-			--get the owner of the city tile
-			local city_owner = Players[city:GetOwner()]
-			if city_owner:IsMinorCiv() and (not(city:IsRevealed(player_team))) then
-				loop_plot:SetRevealed(player_team, true);
-			end
-		end
-	end
-
+-- Minor settlers found their capitals after the first major-player callbacks.
+-- Reveal their starting locations for every Mexico player, then refresh the
+-- city visibility when the actual capital is founded during that opening turn.
+local function reveal_for_mexico(plot)
+    if not plot then return end
+    for _, player in pairs(Players) do
+        if player:IsAlive() and player:GetCivilizationType() == this_civ then
+            local start_plot = player:GetStartingPlot()
+            if start_plot then
+                local distance = Map.PlotDistance(start_plot:GetX(), start_plot:GetY(), plot:GetX(), plot:GetY())
+                if distance > 0 and distance <= 10 then
+                    plot:SetRevealed(player:GetTeam(), true)
+                end
+            end
+        end
+    end
 end
 
-function lekmod_mexico_ua(player_id)
+function lekmod_mexico_initial_locations()
+    if Game.GetElapsedGameTurns() ~= 0 then return end
+    for _, player in pairs(Players) do
+        if player:IsAlive() and player:IsMinorCiv() then
+            reveal_for_mexico(player:GetStartingPlot())
+        end
+    end
+end
 
+function lekmod_mexico_initial_city(player_id, x, y)
+    if Game.GetElapsedGameTurns() ~= 0 then return end
     local player = Players[player_id]
-    if player:GetCivilizationType() ~= this_civ or not player:IsAlive() then return end
-
-	lekmod_mexico_ua_do_discover(player_id)
-
-	GameEvents.PlayerDoTurn.Remove(lekmod_mexico_ua)
-
+    if not player or not player:IsAlive() or not player:IsMinorCiv() then return end
+    -- Reapplying true also reveals the newly founded city on an already known
+    -- plot. No fog is cleared or reset first.
+    reveal_for_mexico(Map.GetPlot(x, y))
 end
-------------------------------------------------------------------------------------------------------------------------
+
 if is_active then
-	GameEvents.PlayerDoTurn.Add(lekmod_mexico_ua)
+    Events.SequenceGameInitComplete.Add(lekmod_mexico_initial_locations)
+    GameEvents.PlayerCityFounded.Add(lekmod_mexico_initial_city)
 end
