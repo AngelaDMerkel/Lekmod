@@ -476,3 +476,11 @@ checking branch removal, tenet/culture accounting and content-button rejection.
 `anarchy-expiry` loads the immediate revolution save with `--scenario-turns 2`;
 it never assigns anarchy or turn counters. All four support `--save-and-exit`
 and exact `--expected-state` reload; reload does not repeat fixture mutations.
+
+
+`--activation-only` is a startup diagnostic control: the background activation
+guard remains, while process file/stream observers and the log-flush timer are
+compiled out. Engine/Lua logs can then remain buffered until normal exit; do
+not treat a supervisor stall with incomplete buffered records as a gameplay
+verdict. Compare this mode separately and retain failures. It never changes
+cache files, game rules, turn counters or synchronization checks.

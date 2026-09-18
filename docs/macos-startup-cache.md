@@ -127,3 +127,34 @@ POSIX open at the failure. There were 122 descriptors under the 10,240 limit.
 The unchanged retry `104454Z` reached gameplay and exited normally with the cache
 left intact. This narrows the evidence but does not identify or fix the underlying
 startup failure.
+
+## September 18 diagnostic control
+
+`20260918T013230Z` failed before the menu with the same `ATTACH ? AS
+Localization` error: 122 open descriptors under a 10,240 limit, successful
+merged/journal POSIX opens, and a nonempty 25,509,888-byte merged database that
+passed quick_check. Twenty-one cache files and hashes were preserved under
+`build/macos/cache-investigation/20260918T013230Z/`; no healthy file was deleted.
+Unchanged retry `013348Z` left a zero-byte merged database, with missing
+Languages/LocalizedText. Its fifteen cache files were preserved separately.
+The guarded empty-cache repair retained that zero-byte file before removal.
+`013510Z` still failed regeneration; its empty merged file was likewise preserved
+under `build/macos/cache-repairs/20260918T013510Z/`. Both empty backups have
+SHA-256 `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`.
+
+The runner now offers an explicit `--activation-only` diagnostic control. It
+retains the existing background activation guard while compiling out syscall/CF
+stream interposition and the stdout/stderr flush timer. The default diagnostic
+mode is unchanged, and the selected mode is recorded in each report. A real
+x86-64 subprocess confirms no `__interpose` section, unchanged exit 42, and
+unflushed buffered bytes after a running dispatch loop; all existing observer
+return-value/errno/exit/CF-stream tests continue to pass.
+
+After guarded empty-cache recovery, activation-only run `013746Z` reached the
+Venice game. Its final scenario assertion remained buffered, so the supervisor
+reported a stall; this is not a functional pass. `014048Z` used explicit failed
+verdict retention plus normal diagnostic save/exit to flush its evidence. It
+confirmed the duplicate-Venice gameplay defect, exited 0 with the real exit
+confirmation and no signals, and restored settings/hooks/manual saves. Both
+controls passed startup, but two successes do not establish that the observer
+caused the intermittent failure or resolve its root cause.

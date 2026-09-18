@@ -193,6 +193,7 @@ static void recordExit(const char *path, int status) {
 }
 __attribute__((noreturn)) static void observedExit(int status) { recordExit("exit", status); exit(status); }
 __attribute__((noreturn)) static void observedImmediateExit(int status) { recordExit("_exit", status); _exit(status); }
+#ifndef LEKMOD_TEST_ACTIVATION_ONLY
 __attribute__((used)) static const struct {
     const void *replacement;
     const void *original;
@@ -212,6 +213,8 @@ __attribute__((used)) static const struct {
     { (const void *)&observedReadStreamClose, (const void *)&CFReadStreamClose },
     { (const void *)&observedWriteStreamClose, (const void *)&CFWriteStreamClose }
 };
+
+#endif // LEKMOD_TEST_ACTIVATION_ONLY
 
 static void noActivate(id self, SEL command, BOOL flag) {}
 static BOOL noRunningActivate(id self, SEL command, NSApplicationActivationOptions options) { return NO; }
@@ -239,6 +242,7 @@ __attribute__((constructor)) static void keepGameInBackground(void) {
         replace([NSWindow class], @selector(orderFrontRegardless), (IMP)behindRegardless);
         [[NSApplication sharedApplication] setActivationPolicy:NSApplicationActivationPolicyProhibited];
 #endif
+#ifndef LEKMOD_TEST_ACTIVATION_ONLY
         recordDescriptorState("startup");
         // Lua/engine file logs are flushed individually after their writes.
         // Keep only standard output streams on the timer; never fflush(NULL).
@@ -248,6 +252,9 @@ __attribute__((constructor)) static void keepGameInBackground(void) {
                                   NSEC_PER_SEC, NSEC_PER_SEC / 10);
         dispatch_source_set_event_handler(logFlushTimer, ^{ fflush(stdout); fflush(stderr); });
         dispatch_resume(logFlushTimer);
+#else
+        fprintf(stderr, "[LEKMOD_TEST] activation-only control; syscall/stream observers and log-flush timer disabled\n");
+#endif
 #ifdef LEKMOD_TEST_ALLOW_FOREGROUND
         fprintf(stderr, "[LEKMOD_TEST] explicitly approved foreground attachment test; log flushing only\n");
 #else

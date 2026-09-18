@@ -324,6 +324,7 @@ def main():
     parser.add_argument("--scenario-turns", type=int, default=0, help="Explicit maximum turns a scenario may request through the normal human driver (0-30)")
     parser.add_argument("--expect-human-victory", action="store_true", help="Require the endgame scenario's naturally resolved score winner to be the human")
     parser.add_argument("--foreground-ui-test", "--foreground-attachment-test", dest="foreground_attachment_test", action="store_true", help="Explicitly approved foreground UI test; specify --timeout (at most one hour)")
+    parser.add_argument("--activation-only", action="store_true", help="Startup diagnostic control: retain background activation guard without syscall/stream observers or a log-flush timer")
     parser.add_argument("--expected-state", type=Path, help="Verify the saved-state fingerprint from an earlier --save-and-exit report before any functional mutations")
     args = parser.parse_args()
     if args.refresh_driver:
@@ -591,6 +592,7 @@ def main():
     report = {"mode": args.mode, "requested_turns": args.turns,
               "ui_variant": "eui" if has_eui else "standard",
               "production_completion": args.production_completion,
+              "process_observer": "activation-only" if args.activation_only else "full-diagnostics",
               "scenario": args.scenario,
               "scenario_turn_limit": args.scenario_turns,
               "temporary_autosave_interval": 1 if args.scenario_turns else None,
@@ -612,11 +614,11 @@ def main():
     game_process = None
     display_domain = "com.aspyr.civ5xp.steam"
     display_setting = command(["defaults", "read", display_domain, "DisplayFullScreen"])
-    background_lib = REPO / "build/macos" / ("foreground-attachment.dylib" if args.foreground_attachment_test
+    background_lib = REPO / "build/macos" / ("background-activation-only.dylib" if args.activation_only else "foreground-attachment.dylib" if args.foreground_attachment_test
                                              else "background-playtest.dylib")
     subprocess.run(["clang", "-arch", "x86_64", "-dynamiclib", "-framework", "AppKit",
                     "-framework", "Foundation", str(Path(__file__).with_name("background-playtest.m")),
-                    "-o", str(background_lib)] + (["-DLEKMOD_TEST_ALLOW_FOREGROUND"] if args.foreground_attachment_test else []), check=True)
+                    "-o", str(background_lib)] + (["-DLEKMOD_TEST_ALLOW_FOREGROUND"] if args.foreground_attachment_test else []) + (["-DLEKMOD_TEST_ACTIVATION_ONLY"] if args.activation_only else []), check=True)
     current_text = ""
     start = time.monotonic()
     last_progress = start

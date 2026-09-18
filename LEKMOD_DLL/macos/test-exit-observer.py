@@ -104,5 +104,41 @@ int main(int argc,char **argv){
             self.assertIn("result=0 domain=1 error=2",result.stderr)
 
 
+    def test_activation_only_control_has_no_interposition_or_flush_timer(self):
+        source=Path(__file__).with_name("background-playtest.m")
+        with tempfile.TemporaryDirectory(prefix="lekmod-activation-control-") as directory:
+            root=Path(directory);library=root/"control.dylib";probe=root/"probe"
+            subprocess.run(["clang","-arch","x86_64","-dynamiclib","-framework","AppKit",
+                "-framework","Foundation","-DLEKMOD_TEST_ALLOW_FOREGROUND","-DLEKMOD_TEST_ACTIVATION_ONLY",
+                str(source),"-o",str(library)],check=True)
+            sections=subprocess.check_output(["otool","-l",str(library)],text=True)
+            self.assertNotIn("__interpose",sections)
+            (root/"probe.c").write_text(r"""
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/stat.h>
+#include <dispatch/dispatch.h>
+int main(int argc,char **argv){
+ FILE *file=fopen(argv[1],"w");if(!file)return 3;
+ static char buffer[4096];setvbuf(file,buffer,_IOFBF,sizeof(buffer));
+ fputs("Failed to Save database.\n",file);
+ dispatch_after(dispatch_time(DISPATCH_TIME_NOW,2200000000LL),dispatch_get_main_queue(),^{
+  struct stat status;_exit(stat(argv[1],&status)==0&&status.st_size==0?42:8);
+ });
+ dispatch_main();
+}
+""")
+            subprocess.run(["clang","-arch","x86_64","-fblocks",str(root/"probe.c"),"-o",str(probe)],check=True)
+            logs=root/"Logs";logs.mkdir()
+            output=logs/"Localization-Probe.db"
+            result=subprocess.run([str(probe),str(output)],env={**os.environ,"DYLD_INSERT_LIBRARIES":str(library)},
+                text=True,capture_output=True,timeout=10)
+            self.assertEqual(result.returncode,42,result.stderr)
+            self.assertEqual(output.stat().st_size,0)
+            self.assertIn("activation-only control",result.stderr)
+            for observer in ("nonzero-exit","database-failure-write","localization-open","descriptor-state"):
+                self.assertNotIn(observer,result.stderr)
+
+
 if __name__=="__main__":
     unittest.main()
