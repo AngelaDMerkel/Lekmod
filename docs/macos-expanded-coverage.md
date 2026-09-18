@@ -32,7 +32,7 @@ mean every possible combination of game state has been tested.
 | Trade | Legal routes/income/reload, internal/sea routes, rebasing, expiry/plunder and restrictions | Land external, internal land-food/sea-production, rebasing and reload passed; natural expiry/countdown correction and land plunder/reload passed |
 | Civilization content | Inventory every playable civilization and active Lua handler; test unique mechanics and owner/negative boundaries | [Inventory: 114 civilizations and 26 Lua files](macos-civilization-coverage.md); systematic cases in progress |
 | UI | Standard/EUI city, production, tech, save/load/exit, then remaining overview/notification/popups, post-victory continuation/replay and screen-size boundaries | Standard post-victory/overview workflow and presentation fixes passed; EUI additional views and dense/size boundaries remain |
-| Setup and persistence | Map/era/speed/difficulty/options boundaries, new/reloaded games, autosave/manual/quicksave compatibility | Nine normal setup cases and exact reloads passed across all speeds/difficulties/eras/world sizes; quicksave and further persistence/UI boundaries remain |
+| Setup and persistence | Map/era/speed/difficulty/options boundaries, new/reloaded games, autosave/manual/quicksave compatibility | Nine normal setup cases and exact reloads passed across all speeds/difficulties/eras/world sizes; physical quicksave/quickload passed; further persistence/UI boundaries remain |
 | Startup reliability | Isolate recorded startup-only exit 255; compare identical artifact/configuration and retain failures | Localization-cache failure identified; empty-cache recovery passed; original creation failure still under investigation |
 | Release regression | Recheck exact final product bytes, affected save compatibility, settings/backups and installer restore | Earlier artifact passed; repeat only for changed product code |
 
@@ -1245,7 +1245,7 @@ synchronization checks. These are scripted commands and native outcomes.
 The [current-Mac setup matrix](macos-setup-matrix.md) records nine passing
 two-turn configurations and exact reloads, selected option outcomes, hashes and
 all retained failed attempts. This closes the finite setup-variation matrix;
-quicksave, additional UI boundaries, civilization mechanics and the other open
+additional UI boundaries, civilization mechanics and the other open
 ledger rows remain. It does not restart the accepted long-turn phase or claim
 every possible combination.
 
@@ -1305,3 +1305,12 @@ no Lua/synchronization failures. The combined package/hash is recorded in the
 Qasimi section above. These are native event-handler checks with explicitly
 provided healing deltas, not ordinary-turn healing, Church construction, mouse
 input or completion of Aksum's other abilities.
+
+### Physical quicksave persistence
+
+`20260918T053742Z` passed actual F11/Ctrl+F11 and city-control clicks with a
+distinct saved state, exact observer comparison and normal UI exit. Original
+saves/settings/graphics/hooks were preserved. See the physical report for the
+quicksave hash, full-frame captures, earlier capture-helper defect and retained
+startup failures. This closes the standard-UI quicksave/quickload workflow;
+it does not close the remaining EUI/size/overview or gameplay ledger rows.

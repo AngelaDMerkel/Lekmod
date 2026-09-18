@@ -160,6 +160,17 @@ class PlaytestEvidenceTests(unittest.TestCase):
         self.assertEqual(result.returncode, 2)
         self.assertIn("more than once", result.stderr)
 
+    def test_capture_uses_large_game_window_not_thin_title_bar(self):
+        import json
+        windows=[{"kCGWindowOwnerPID":77,"kCGWindowNumber":10,"kCGWindowBounds":{"Width":1280,"Height":828}},
+                 {"kCGWindowOwnerPID":88,"kCGWindowNumber":11,"kCGWindowBounds":{"Width":3000,"Height":2000}},
+                 {"kCGWindowOwnerPID":77,"kCGWindowNumber":12,"kCGWindowBounds":{"Width":1512,"Height":33}}]
+        def command(args, **kwargs):
+            return SimpleNamespace(returncode=0,stdout=json.dumps(windows) if args==["helper"] else "")
+        with mock.patch.object(playtest,"window_helper",return_value="helper"), mock.patch.object(playtest,"command",side_effect=command) as run:
+            self.assertTrue(playtest.capture_game_window(77,Path("image.png")))
+            self.assertEqual(run.call_args_list[-1].args[0], ["screencapture","-x","-o","-l","10","image.png"])
+
     def test_functional_completion_requires_all_items_from_this_run(self):
         prefix = "[LEKMOD_FUNCTIONAL] run=current "
         rows = [prefix + "item=" + item + " status=PASS" for item in playtest.FUNCTIONAL_ITEMS]

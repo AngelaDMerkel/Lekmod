@@ -575,3 +575,10 @@ labels the provided Church, units, damage and native healing deltas. Only the
 faith response to real UnitHealed dispatch is certified; this does not claim
 ordinary-turn healing or construction. Land/sea/air/distance controls and exact
 reload are required.
+
+
+For physical quicksave checks, the shipped controls use F11 and Ctrl+F11.
+Preserve an existing quicksave before any overwrite; use a distinct state
+marker before saving and a different unsaved state before loading. The
+read-only UI observer can compare the resulting city/unit state. Capture only
+the game PID's full-size window, not a thin title-bar surface.

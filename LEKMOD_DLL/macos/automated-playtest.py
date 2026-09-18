@@ -296,9 +296,11 @@ def capture_game_window(pid, destination):
     helper = window_helper()
     result = command([str(helper)])
     windows = [w for w in json.loads(result.stdout) if w.get("kCGWindowOwnerPID") == pid]
-    windows = [w for w in windows if w.get("kCGWindowBounds", {}).get("Width", 0) > 100]
+    windows = [w for w in windows if w.get("kCGWindowBounds", {}).get("Width", 0) > 100
+               and w.get("kCGWindowBounds", {}).get("Height", 0) > 100]
     if windows:
-        result = command(["screencapture", "-x", "-o", "-l", str(windows[-1]["kCGWindowNumber"]), str(destination)])
+        window = max(windows, key=lambda w: w["kCGWindowBounds"]["Width"] * w["kCGWindowBounds"]["Height"])
+        result = command(["screencapture", "-x", "-o", "-l", str(window["kCGWindowNumber"]), str(destination)])
         if result.returncode == 0:
             return True
     independent = REPO / "build/macos/capture-test-window"
