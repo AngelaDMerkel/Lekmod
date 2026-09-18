@@ -11,11 +11,22 @@ local is_active = LekmodUtilities:is_civilization_active(this_civ)
 local dummy_building = GameInfoTypes["BUILDING_PHILIPPINES_TRAIT"]
 local bonus_cities_amount = 2
 
+local function has_remaining_expansion_bonus(player)
+   if player.GetNumCitiesFounded then
+      -- The capital counts as the first founded city. This serialized lifetime
+      -- count survives captures/razing and ignores cities acquired from others.
+      return player:GetNumCitiesFounded() <= bonus_cities_amount + 1
+   end
+   -- Preserve compatibility with older DLLs that lack the history query.
+   return player:CountNumBuildings(dummy_building) < bonus_cities_amount
+end
+
+
 function lekmod_philippine_expand_population(player_id, iX, iY)
    local player = Players[player_id]
    if player:GetCivilizationType() == this_civ
       and player:IsAlive()
-      and player:CountNumBuildings(dummy_building) < bonus_cities_amount
+      and has_remaining_expansion_bonus(player)
    then
       local plot = Map.GetPlot(iX, iY)
       local city = plot:GetPlotCity()

@@ -674,3 +674,15 @@ founding before/after supplied Optics, excludes nearby ruins from those sites,
 checks no retroactive reward and observes the AI/other-owner outcomes after an
 ordinary turn. Population/founding events are logged read-only. Its saved report
 supports exact reload; see `docs/macos-phoenicia-validation.md`.
+
+### Philippines founding history
+
+`test-philippines-quota.lua PRODUCT_LUA` checks the actual handler against
+capital, first-two, later, lost-city, owner and legacy-DLL boundaries. Native
+`--scenario philippines-founding --scenario-turns 2` supports a normal human
+Philippines/other-AI opening with three supplied Settlers at legal ruin-free sites.
+`--scenario philippines-loss --scenario-turns 3` loads that baseline, provides
+one AI attacker/uranium/upkeep budget, and requires an actual war/move-attack
+capture before testing a later normal founding. Native lifetime-counter checks
+distinguish owned, founded and captured city counts. Snapshots support exact
+reload; see `docs/macos-philippines-validation.md`.

@@ -778,6 +778,7 @@ void CvLuaPlayer::PushMethods(lua_State* L, int t)
 
 	Method(Cities);
 	Method(GetNumCities);
+	Method(GetNumCitiesFounded);
 	Method(GetCityByID);
 
 	Method(Units);
@@ -8040,6 +8041,13 @@ int CvLuaPlayer::lCities(lua_State* L)
 int CvLuaPlayer::lGetNumCities(lua_State* L)
 {
 	return BasicLuaMethod(L, &CvPlayerAI::getNumCities);
+}
+//------------------------------------------------------------------------------
+// Lifetime founding history, already serialized by CvPlayer. Captures do not add
+// to it and losing a city does not subtract from it.
+int CvLuaPlayer::lGetNumCitiesFounded(lua_State* L)
+{
+	return BasicLuaMethod(L, &CvPlayerAI::GetNumCitiesFounded);
 }
 //------------------------------------------------------------------------------
 //CyCity* getCity(int iID);

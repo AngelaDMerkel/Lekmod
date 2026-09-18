@@ -760,6 +760,7 @@ protected:
 
 	static int lGetCities(lua_State* L);
 	static int lGetNumCities(lua_State* L);
+	static int lGetNumCitiesFounded(lua_State* L);
 	static int lGetCityByID(lua_State* L);
 
 	static int lGetUnits(lua_State* L);

@@ -1328,3 +1328,12 @@ Other Mexican unique mechanics remain open in the civilization inventory.
 before/after Optics, human/AI awards, existing-city and other-owner controls,
 exact reload and the diagnosed ancient-ruin fixture contamination. Gameplay
 needed no correction; the stale source comment was aligned with the tested rule.
+
+### Philippines lifetime founding quota
+
+[Philippines validation](macos-philippines-validation.md) records the ordinary
+first-two baseline, actual AI capture exposing a repeated award, a read-only
+binding for the existing serialized founding counter, native correction/reload
+and retained first-two behavior. No save field or object layout changed. The
+matched updated DLL is required for the corrected lifetime path; older DLLs
+retain the compatibility fallback. Other Philippine abilities remain open.
