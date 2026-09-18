@@ -1199,3 +1199,43 @@ These are scripted build/action and native outcome checks, not mouse input,
 earned great-person generation or worked-city yield settlement. The Citadel
 case covers neutral territory, not foreign-city/territory seizure. No product
 change was needed for the five build paths.
+
+### Native MovementCost object arguments
+
+While exercising a crowded Atomic start, `20260918T033425Z` crashed with signal
+11 at `CvPlot::movementCost` (+145), called by `CvLuaPlot::lMovementCost`. The
+OS report arrived after the runner's initial diagnostic scan and is retained
+inside that run directory as `Civilization V-2026-09-17-233522.ips`. Its fault
+address was 0x48. The binding used BasicLuaMethod, whose generic conversion casts
+Lua values through `lua_tointeger`; valid unit/plot objects are tables and became
+null pointers.
+
+The binding now retrieves the unit and source-plot instances explicitly and reads
+the optional remaining-movement integer from the correct argument. An extracted
+product-binding regression runs real Lua 5.1 under AddressSanitizer: 24 combinations
+of distinct unit/source objects and default/nil/explicit movement arguments, plus
+six invalid-argument guards, pass. The original binding fails its first object
+routing assertion. This changes argument decoding, not movement rules or save data.
+
+The managed intermediate package `build/macos/Lekmod-movement-cost-20260918.zip`
+has SHA-256 `2ea17a1232f3ccf8d9cf5b59c34bbe967ec460095ab1b724f670e792f01e2567`.
+Its signed GameCore is
+`cf5273574eb622c53b700d6a0dbfa1e2ff882f5475d4c9a486aa4cdac740e798`.
+The preserved initial save from the crashing run was used for retesting.
+`035222Z` and `035746Z` no longer crashed but exposed separate driver limitations
+in handling crowded starting units. Those failures remain recorded.
+
+The driver now submits normal moves to legal nearby destinations, checks native
+movement costs for intermediate steps, allows the legal final step to spend the
+remaining movement, and resolves overstacked units before skipping possible
+blockers. Where necessary it moves a matching adjacent blocker outward. Every
+issued move must reach its destination; no position, movement count or game
+wait flag is assigned. Eleven offline destination/boundary cases pass.
+
+`040228Z` completed the exact Atomic starting fixture through two ordinary turns
+325→327, including legal stack resolution, the normal ideology choice, disabled
+espionage, save and normal exit. Save SHA-256:
+`bf1423a006e7d841d7e5f9a6a27e7a10e0b08a461de5557fa680a450914c9bae`.
+`040718Z` matched the exact saved setup/city/unit state and exited normally.
+Both restored hooks/settings, preserved manual saves and passed Lua and
+synchronization checks. These are scripted commands and native outcomes.

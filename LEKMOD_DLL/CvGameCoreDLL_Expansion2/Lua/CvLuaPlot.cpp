@@ -647,7 +647,14 @@ int CvLuaPlot::lDefenseModifier(lua_State* L)
 //int movementCost(CyUnit* pUnit, CyPlot* pFromPlot);
 int CvLuaPlot::lMovementCost(lua_State* L)
 {
-	return BasicLuaMethod(L, &CvPlot::movementCost);
+	CvPlot* pkPlot = GetInstance(L);
+	CvUnit* pkUnit = CvLuaUnit::GetInstance(L, 2);
+	CvPlot* pkFromPlot = CvLuaPlot::GetInstance(L, 3);
+	const int iMovesRemaining = luaL_optint(L, 4, 0);
+
+	// Lua objects are tables containing native instances, not integer enums.
+	lua_pushinteger(L, pkPlot->movementCost(pkUnit, pkFromPlot, iMovesRemaining));
+	return 1;
 }
 
 //------------------------------------------------------------------------------

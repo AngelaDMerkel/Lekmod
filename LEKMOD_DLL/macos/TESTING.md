@@ -532,3 +532,10 @@ and existing Steam/game processes, preserves settings and manual saves, and
 records the actual process exit. Use CUA for real UI actions; after the app exits,
 do not select it again and inadvertently launch another instance. A zero exit
 alone does not prove the menu was reached: retain a separate physical observation.
+
+
+`test-lua-movement-cost.py` extracts the product `MovementCost` binding and runs
+30 real-Lua argument cases with AddressSanitizer. Object arguments must use
+`CvLuaUnit`/`CvLuaPlot` instance lookup; the generic enum/integer conversion does
+not support Lua object tables. The optional remaining movement defaults to zero.
+The crowded Atomic fixture in the expanded ledger supplies the native regression.
