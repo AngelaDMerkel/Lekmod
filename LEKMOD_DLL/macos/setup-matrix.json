@@ -1,0 +1,130 @@
+{
+  "scope": "Current Mac, standard UI, single player, two ordinary turns per case; no multiplayer or campaign stress run",
+  "cases": [
+    {
+      "name": "standard-settler",
+      "map": "Pangaea.lua",
+      "speed": "STANDARD",
+      "difficulty": "SETTLER",
+      "era": "ANCIENT",
+      "world": "TINY",
+      "majors": 3,
+      "minors": 0,
+      "options": [
+        "NO_BARBARIANS=1",
+        "NO_ESPIONAGE=1"
+      ]
+    },
+    {
+      "name": "epic-deity",
+      "map": "Archipelago.lua",
+      "speed": "EPIC",
+      "difficulty": "DEITY",
+      "era": "MEDIEVAL",
+      "world": "SMALL",
+      "majors": 4,
+      "minors": 4,
+      "options": [
+        "RAGING_BARBARIANS=1",
+        "ONE_CITY_CHALLENGE=1"
+      ]
+    },
+    {
+      "name": "marathon-prince",
+      "map": "Lakes.lua",
+      "speed": "MARATHON",
+      "difficulty": "PRINCE",
+      "era": "RENAISSANCE",
+      "world": "TINY",
+      "majors": 2,
+      "minors": 4,
+      "options": [
+        "NO_POLICIES=1",
+        "NO_RELIGION=1"
+      ]
+    },
+    {
+      "name": "quick-immortal",
+      "map": "Fractal.lua",
+      "speed": "QUICK",
+      "difficulty": "IMMORTAL",
+      "era": "INDUSTRIAL",
+      "world": "STANDARD",
+      "majors": 6,
+      "minors": 8,
+      "options": [
+        "NO_SCIENCE=1",
+        "NO_CITY_RAZING=1"
+      ]
+    },
+    {
+      "name": "standard-king",
+      "map": "SmallContinents.lua",
+      "speed": "STANDARD",
+      "difficulty": "KING",
+      "era": "POSTMODERN",
+      "world": "TINY",
+      "majors": 3,
+      "minors": 6,
+      "options": [
+        "NO_ESPIONAGE=1",
+        "NO_RELIGION=1"
+      ]
+    },
+    {
+      "name": "huge-emperor",
+      "map": "Continents.lua",
+      "speed": "QUICK",
+      "difficulty": "EMPEROR",
+      "era": "ANCIENT",
+      "world": "HUGE",
+      "majors": 12,
+      "minors": 41,
+      "options": [
+        "NO_BARBARIANS=1"
+      ]
+    },
+    {
+      "name": "large-chieftain",
+      "map": "Continents.lua",
+      "speed": "EPIC",
+      "difficulty": "CHIEFTAIN",
+      "era": "CLASSICAL",
+      "world": "LARGE",
+      "majors": 8,
+      "minors": 12,
+      "options": [
+        "NO_CITY_RAZING=0",
+        "NO_BARBARIANS=0"
+      ]
+    },
+    {
+      "name": "information-warlord",
+      "map": "Pangaea.lua",
+      "speed": "MARATHON",
+      "difficulty": "WARLORD",
+      "era": "FUTURE",
+      "world": "SMALL",
+      "majors": 4,
+      "minors": 4,
+      "options": [
+        "NO_ESPIONAGE=1",
+        "NO_SCIENCE=1"
+      ]
+    },
+    {
+      "name": "modern-prince",
+      "map": "Fractal.lua",
+      "speed": "QUICK",
+      "difficulty": "PRINCE",
+      "era": "MODERN",
+      "world": "DUEL",
+      "majors": 2,
+      "minors": 4,
+      "options": [
+        "NO_BARBARIANS=1",
+        "NO_RELIGION=1"
+      ]
+    }
+  ]
+}

@@ -545,3 +545,18 @@ The crowded Atomic fixture in the expanded ledger supplies the native regression
 and the report. It can distinguish a startup failure before GameCore loads
 from a loaded-core failure. It does not modify cache files, retry a failed
 launch, or change any gameplay/synchronization state.
+
+
+`setup` uses normal `--map-script`, `--game-speed`, `--handicap`, `--start-era`,
+world/roster and repeated `--game-option TYPE=0|1` controls. Only the explicitly
+listed single-player options are accepted; duplicates and unknown eras fail
+before launch. Use `--scenario-turns 2`, then exact reload. The finite inputs
+are in `setup-matrix.json`; evidence and limits are in `docs/macos-setup-matrix.md`.
+For driver movement checks:
+
+```sh
+build/macos/test-deps/lua-5.1.4/src/lua LEKMOD_DLL/macos/test-stacked-movement.lua LEKMOD_DLL/macos/playtest-movement.lua
+```
+
+The driver preserves real movement budgets and arrival checks. Its nearby search
+never assigns unit position/moves/activity, declares war, or clears a waiting flag.

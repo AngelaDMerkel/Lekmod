@@ -143,6 +143,23 @@ class PlaytestEvidenceTests(unittest.TestCase):
                 result = subprocess.run([sys.executable, script, flag, value], capture_output=True, text=True)
                 self.assertEqual(result.returncode, 2)
 
+    def test_starting_era_aliases_use_shipped_identifiers(self):
+        self.assertEqual(playtest.parse_start_era("ERA_ATOMIC"), "ERA_POSTMODERN")
+        self.assertEqual(playtest.parse_start_era("ERA_INFORMATION"), "ERA_FUTURE")
+        self.assertEqual(playtest.parse_start_era("ERA_MODERN"), "ERA_MODERN")
+        with self.assertRaises(playtest.argparse.ArgumentTypeError):
+            playtest.parse_start_era("ERA_UNKNOWN")
+
+    def test_setup_options_are_single_player_bounded_values(self):
+        self.assertEqual(playtest.parse_game_option("GAMEOPTION_NO_BARBARIANS=1"), ("GAMEOPTION_NO_BARBARIANS", 1))
+        for value in ("GAMEOPTION_NO_SCIENCE=2", "GAMEOPTION_NO_SCIENCE=true", "GAMEOPTION_SIMULTANEOUS_TURNS=1", "NO_BARBARIANS=1", "GAMEOPTION_UNKNOWN=0"):
+            with self.assertRaises(playtest.argparse.ArgumentTypeError):
+                playtest.parse_game_option(value)
+        script = str(Path(__file__).with_name("automated-playtest.py"))
+        result = subprocess.run([sys.executable, script, "--game-option", "GAMEOPTION_NO_SCIENCE=0", "--game-option", "GAMEOPTION_NO_SCIENCE=1"], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 2)
+        self.assertIn("more than once", result.stderr)
+
     def test_functional_completion_requires_all_items_from_this_run(self):
         prefix = "[LEKMOD_FUNCTIONAL] run=current "
         rows = [prefix + "item=" + item + " status=PASS" for item in playtest.FUNCTIONAL_ITEMS]

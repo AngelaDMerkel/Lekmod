@@ -32,7 +32,7 @@ mean every possible combination of game state has been tested.
 | Trade | Legal routes/income/reload, internal/sea routes, rebasing, expiry/plunder and restrictions | Land external, internal land-food/sea-production, rebasing and reload passed; natural expiry/countdown correction and land plunder/reload passed |
 | Civilization content | Inventory every playable civilization and active Lua handler; test unique mechanics and owner/negative boundaries | [Inventory: 114 civilizations and 26 Lua files](macos-civilization-coverage.md); systematic cases in progress |
 | UI | Standard/EUI city, production, tech, save/load/exit, then remaining overview/notification/popups, post-victory continuation/replay and screen-size boundaries | Standard post-victory/overview workflow and presentation fixes passed; EUI additional views and dense/size boundaries remain |
-| Setup and persistence | Map/era/speed/difficulty/options boundaries, new/reloaded games, autosave/manual/quicksave compatibility | Partial earlier evidence; additional cases pending |
+| Setup and persistence | Map/era/speed/difficulty/options boundaries, new/reloaded games, autosave/manual/quicksave compatibility | Nine normal setup cases and exact reloads passed across all speeds/difficulties/eras/world sizes; quicksave and further persistence/UI boundaries remain |
 | Startup reliability | Isolate recorded startup-only exit 255; compare identical artifact/configuration and retain failures | Localization-cache failure identified; empty-cache recovery passed; original creation failure still under investigation |
 | Release regression | Recheck exact final product bytes, affected save compatibility, settings/backups and installer restore | Earlier artifact passed; repeat only for changed product code |
 
@@ -1239,3 +1239,12 @@ espionage, save and normal exit. Save SHA-256:
 `040718Z` matched the exact saved setup/city/unit state and exited normally.
 Both restored hooks/settings, preserved manual saves and passed Lua and
 synchronization checks. These are scripted commands and native outcomes.
+
+### Setup matrix
+
+The [current-Mac setup matrix](macos-setup-matrix.md) records nine passing
+two-turn configurations and exact reloads, selected option outcomes, hashes and
+all retained failed attempts. This closes the finite setup-variation matrix;
+quicksave, additional UI boundaries, civilization mechanics and the other open
+ledger rows remain. It does not restart the accepted long-turn phase or claim
+every possible combination.

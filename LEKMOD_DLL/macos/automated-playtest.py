@@ -153,6 +153,7 @@ FUNCTIONAL_ITEMS = {"script-data", "science-overflow", "unit-position-flags", "c
 PRODUCTION_COMPLETION_ITEMS = {"production-completion-unit", "production-completion-building"}
 SCENARIO_ITEMS = {"inventory": {"system-inventory"},
                   "ideology-inventory": {"ideology-input-inventory"},
+                  "setup": {"setup-configuration", "setup-options", "setup-two-human-turns"},
                   "great-person-builds": {"academy", "manufactory", "customs-house", "holy-site", "citadel", "great-person-build-restrictions", "spent-prophet-build-rejection"},
                   "anarchy-expiry": {"anarchy-yield-restrictions", "anarchy-natural-expiry"},
                   "ideology-pressure": {"foreign-concert-pressure", "pressure-below-victory"},
@@ -304,6 +305,27 @@ def capture_game_window(pid, destination):
     return False
 
 
+
+SINGLE_PLAYER_SETUP_OPTIONS = frozenset({
+    "GAMEOPTION_NO_BARBARIANS", "GAMEOPTION_RAGING_BARBARIANS",
+    "GAMEOPTION_NO_SCIENCE", "GAMEOPTION_NO_POLICIES", "GAMEOPTION_NO_RELIGION",
+    "GAMEOPTION_NO_ESPIONAGE", "GAMEOPTION_ONE_CITY_CHALLENGE", "GAMEOPTION_NO_CITY_RAZING",
+})
+
+def parse_start_era(value):
+    # The shipped Atomic/Information UI eras retain their older internal IDs.
+    value = {"ERA_ATOMIC": "ERA_POSTMODERN", "ERA_INFORMATION": "ERA_FUTURE"}.get(value, value)
+    if value not in {"ERA_ANCIENT", "ERA_CLASSICAL", "ERA_MEDIEVAL", "ERA_RENAISSANCE", "ERA_INDUSTRIAL", "ERA_MODERN", "ERA_POSTMODERN", "ERA_FUTURE"}:
+        raise argparse.ArgumentTypeError("Unknown normal starting era")
+    return value
+
+def parse_game_option(value):
+    match = re.fullmatch(r"(GAMEOPTION_[A-Z0-9_]+)=([01])", value)
+    if not match or match[1] not in SINGLE_PLAYER_SETUP_OPTIONS:
+        raise argparse.ArgumentTypeError("Use an allowed single-player GAMEOPTION_TYPE=0|1")
+    return match[1], int(match[2])
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--turns", type=int, default=100)
@@ -313,7 +335,11 @@ def main():
     parser.add_argument("--quick-start", type=int, choices=(0, 1), default=0, help="Temporary QuickStart setting; use normal menu startup by default")
     parser.add_argument("--skip-intro", type=int, choices=(0, 1), default=1, help="Temporary SkipIntroVideo setting for startup controls")
     parser.add_argument("--world-size", default="WORLDSIZE_HUGE")
-    parser.add_argument("--start-era", default="ERA_ANCIENT", help="Normal game-setup era for a new fixture; ignored when loading")
+    parser.add_argument("--map-script", choices=("Continents.lua", "Pangaea.lua", "Archipelago.lua", "Fractal.lua", "SmallContinents.lua", "Lakes.lua"), default="Continents.lua")
+    parser.add_argument("--game-speed", choices=tuple("GAMESPEED_" + s for s in ("QUICK", "STANDARD", "EPIC", "MARATHON")), default="GAMESPEED_QUICK")
+    parser.add_argument("--handicap", choices=tuple("HANDICAP_" + s for s in ("SETTLER", "CHIEFTAIN", "WARLORD", "PRINCE", "KING", "EMPEROR", "IMMORTAL", "DEITY")), default="HANDICAP_PRINCE", help="Normal human difficulty selection; AI slot defaults remain Prince")
+    parser.add_argument("--game-option", action="append", type=parse_game_option, default=[], help="Explicit single-player setup option, GAMEOPTION_TYPE=0|1; repeat for distinct options")
+    parser.add_argument("--start-era", type=parse_start_era, default="ERA_ANCIENT", help="Normal starting era; Atomic/Information aliases map to POSTMODERN/FUTURE; ignored when loading")
     parser.add_argument("--civilization", default="CIVILIZATION_ROME", help="Normal player-zero civilization selection for new fixtures")
     parser.add_argument("--opponent-civilization", default="", help="Optional normal AI slot-one civilization selection for new single-player fixtures")
     parser.add_argument("--window-size", type=parse_window_size, help="Temporary windowed resolution, with GraphicsSettingsDX9.ini restored afterward")
@@ -335,6 +361,8 @@ def main():
     parser.add_argument("--activation-only", action="store_true", help="Startup diagnostic control: retain background activation guard without syscall/stream observers or a log-flush timer")
     parser.add_argument("--expected-state", type=Path, help="Verify the saved-state fingerprint from an earlier --save-and-exit report before any functional mutations")
     args = parser.parse_args()
+    if len(dict(args.game_option)) != len(args.game_option):
+        parser.error("Do not specify a game option more than once")
     if args.refresh_driver:
         return refresh_live_driver(args.refresh_driver)
     if args.turns < 3 or args.timeout < 30 or args.stall_seconds < 5 or args.startup_timeout < 5:
@@ -357,8 +385,8 @@ def main():
         parser.error("Foreground UI tests require --mode ui-interaction or single-player-smoke and --timeout at most 3600; the flag does not grant user permission")
     if args.production_completion and (args.mode != "human-turns" or args.turns != 3 or not args.load_save or args.timeout > 600):
         parser.error("Production completion requires --mode human-turns, --turns 3, --load-save and --timeout at most 600")
-    if args.scenario and (args.mode != "single-player-smoke" or (not args.load_save and args.scenario not in ("congress", "endgame", "bolivia", "mughals", "worker", "buganda-lake", "georgia", "georgia-upgrade", "cuba-greatworks", "cuba-ideology", "diplomacy-assets", "palmyra", "venice", "venice-known-compass", "italy")) or args.city_controls or args.timeout > 1800):
-        parser.error("Scenarios require --mode single-player-smoke, --load-save (except congress/endgame/bolivia/mughals/worker/buganda-lake/georgia/georgia-upgrade/cuba-greatworks/cuba-ideology/diplomacy-assets/palmyra/venice/venice-known-compass/italy), no --city-controls and --timeout at most 1800")
+    if args.scenario and (args.mode != "single-player-smoke" or (not args.load_save and args.scenario not in ("congress", "endgame", "bolivia", "mughals", "worker", "buganda-lake", "georgia", "georgia-upgrade", "cuba-greatworks", "cuba-ideology", "diplomacy-assets", "palmyra", "venice", "venice-known-compass", "italy", "setup")) or args.city_controls or args.timeout > 1800):
+        parser.error("Scenarios require --mode single-player-smoke, --load-save (except congress/endgame/bolivia/mughals/worker/buganda-lake/georgia/georgia-upgrade/cuba-greatworks/cuba-ideology/diplomacy-assets/palmyra/venice/venice-known-compass/italy/setup), no --city-controls and --timeout at most 1800")
     if args.scenario == "endgame" and (args.load_save or args.expected_state or args.save_and_exit or args.scenario_turns != 2):
         parser.error("Endgame requires a new two-turn scenario, without save/reload options")
     if args.expect_human_victory and args.scenario != "endgame":
@@ -550,6 +578,7 @@ def main():
         if args.mode == "human-turns":
             ui_templates[ui_dir / "ActionInfoPanel.lua"] = "playtest-human-bootstrap.lua"
         for name, template in (("LekmodTestDriver.lua", "playtest-human.lua"),
+                               ("LekmodTestMovement.lua", "playtest-movement.lua"),
                                ("LekmodTestCommands.lua", "playtest-commands.lua")):
             if (ui_dir / name).exists():
                 raise SystemExit("Temporary test-control filename already exists: " + str(ui_dir / name))
@@ -616,6 +645,10 @@ def main():
               "major_civilizations": args.majors, "city_states": args.minors,
               "started_utc": stamp, "evidence": str(output),
               "start_era": args.start_era if not args.load_save else None,
+              "map_script": args.map_script if not args.load_save else None,
+              "game_speed": args.game_speed if not args.load_save else None,
+              "human_handicap": args.handicap if not args.load_save else None,
+              "requested_game_options": dict(args.game_option) if not args.load_save else None,
               "civilization": args.civilization if not args.load_save else None,
               "opponent_civilization": args.opponent_civilization if not args.load_save else None,
               "binary_sha256": hashlib.sha256((APP / "Contents/MacOS/libCvGameCoreDLL_Expansion2_DLL.dylib").read_bytes()).hexdigest()}
@@ -677,6 +710,10 @@ def main():
                         "__TEST_CIVILIZATION__": args.civilization,
                         "__TEST_OPPONENT_CIVILIZATION__": args.opponent_civilization,
                         "__TEST_START_ERA__": args.start_era,
+                        "__TEST_MAP_SCRIPT__": args.map_script,
+                        "__TEST_GAME_SPEED__": args.game_speed,
+                        "__TEST_HANDICAP__": args.handicap,
+                        "__TEST_GAME_OPTIONS__": "{" + ",".join("[" + json.dumps(name) + "]=" + str(value) for name, value in args.game_option) + "}",
                         "__TEST_RUN__": stamp,
                         "__TEST_SCENARIO_TURN_LIMIT__": str(args.scenario_turns),
                         "__TEST_GAME_TURN_LIMIT__": "2" if args.scenario == "endgame" else "0",

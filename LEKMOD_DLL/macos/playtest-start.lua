@@ -21,10 +21,15 @@ do
         PreGame.SetWorldSize(GameInfo.Worlds["__TEST_WORLD_SIZE__"].ID)
         PreGame.SetNumMinorCivs(__TEST_MINORS__)
         PreGame.SetRandomMapScript(false)
-        PreGame.SetMapScript("Assets\\Maps\\Continents.lua")
-        PreGame.SetGameSpeed(GameInfo.GameSpeeds["GAMESPEED_QUICK"].ID)
+        PreGame.SetMapScript("Assets\\Maps\\__TEST_MAP_SCRIPT__")
+        PreGame.SetGameSpeed(GameInfo.GameSpeeds["__TEST_GAME_SPEED__"].ID)
         PreGame.SetEra(GameInfo.Eras["__TEST_START_ERA__"].ID)
         PreGame.SetMaxTurns(__TEST_GAME_TURN_LIMIT__)
+        for name,value in pairs(__TEST_GAME_OPTIONS__) do
+            assert(GameInfo.GameOptions[name], "unknown requested game option: "..name)
+            PreGame.SetGameOption(name,value==1)
+        end
+        print("[LEKMOD_TEST] fixture-setup map=__TEST_MAP_SCRIPT__ speed=__TEST_GAME_SPEED__ human-handicap=__TEST_HANDICAP__")
         if __TEST_GAME_TURN_LIMIT__ > 0 then
             PreGame.SetVictory(GameInfo.Victories["VICTORY_TIME"].ID,true)
             print("[LEKMOD_TEST] fixture-setup normal-game-options score-victory=true max-turns="..__TEST_GAME_TURN_LIMIT__)
@@ -35,6 +40,7 @@ do
             PreGame.SetCivilization(i, -1)
             PreGame.SetHandicap(i, GameInfo.HandicapInfos["HANDICAP_PRINCE"].ID)
         end
+        PreGame.SetHandicap(0, GameInfo.HandicapInfos["__TEST_HANDICAP__"].ID)
         -- Autoplay must move the human to a spare observer slot. Without one,
         -- CivGame::setAIAutoPlay destroys the human's cities and units.
         if __TEST_AUTOPLAY__ then

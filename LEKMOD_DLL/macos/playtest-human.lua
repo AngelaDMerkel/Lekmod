@@ -1,11 +1,13 @@
 -- Temporary ActionInfoPanel test driver. Keep player 0 human and use the real
 -- end-turn button handler. This covers the human/AI handoff, not mouse hitboxes.
+include("LekmodTestMovement.lua")
 do
     LEKMOD_TEST_DRIVER_GENERATION = (LEKMOD_TEST_DRIVER_GENERATION or 0) + 1
     local generation = LEKMOD_TEST_DRIVER_GENERATION
     local stopped = false
     local elapsed, lastTurn = 0, -1
     local pendingProduction = nil
+    local pendingStackMove = nil
     local observedProduction = {}
     local pendingPolicy = nil
     local pendingIdeology = nil
@@ -35,20 +37,32 @@ do
                 -- A newly produced unit may be stacked with a waiting unit;
                 -- Civ V correctly refuses Skip until that stack is resolved.
                 if actionType == "MISSION_SKIP" then
-                    for direction = 0, 5 do
-                        local plot = Map.PlotDirection(unit:GetX(), unit:GetY(), direction)
-                        -- Occupancy alone is not illegality: a civilian and a
-                        -- military unit may share a tile. The engine checks
-                        -- stacking, terrain, diplomacy and movement eligibility.
-                        if plot and not plot:IsWater() and
-                           unit:CanMoveOrAttackInto(plot, 0, 1) then
-                            Game.SelectionListGameNetMessage(GameMessageTypes.GAMEMESSAGE_PUSH_MISSION,
-                                MissionTypes.MISSION_MOVE_TO, plot:GetX(), plot:GetY(), 0, false, false)
-                            print("[LEKMOD_TEST] moved-stacked-unit id=" .. unit:GetID() ..
-                                " target=" .. plot:GetX() .. "," .. plot:GetY())
-                            return
+                    local plot=LekmodFindStackedUnitDestination(unit)
+                    if plot then
+                        Game.SelectionListGameNetMessage(GameMessageTypes.GAMEMESSAGE_PUSH_MISSION,
+                            MissionTypes.MISSION_MOVE_TO, plot:GetX(), plot:GetY(), 0, false, false)
+                        pendingStackMove={id=unit:GetID(),x=plot:GetX(),y=plot:GetY(),waits=0}
+                        print("[LEKMOD_TEST] moved-stacked-unit id="..unit:GetID().." target="..plot:GetX()..","..plot:GetY())
+                        return
+                    end
+                    -- An adjacent unit may occupy the only useful exit. Move
+                    -- that blocker outward while it still has movement left.
+                    for blocker in Players[unit:GetOwner()]:Units() do
+                        if blocker:GetID()~=unit:GetID() and blocker:IsReadyToMove() and not blocker:IsBusy()
+                            and blocker:GetDomainType()==unit:GetDomainType() and blocker:IsCombatUnit()==unit:IsCombatUnit()
+                            and Map.PlotDistance(unit:GetX(),unit:GetY(),blocker:GetX(),blocker:GetY())==1 then
+                            local destination=LekmodFindStackedUnitDestination(blocker,unit:GetPlot())
+                            if destination then
+                                UI.SelectUnit(blocker)
+                                Game.SelectionListGameNetMessage(GameMessageTypes.GAMEMESSAGE_PUSH_MISSION,
+                                    MissionTypes.MISSION_MOVE_TO,destination:GetX(),destination:GetY(),0,false,false)
+                                pendingStackMove={id=blocker:GetID(),x=destination:GetX(),y=destination:GetY(),waits=0}
+                                print("[LEKMOD_TEST] moved-blocking-unit id="..blocker:GetID().." for="..unit:GetID().." target="..destination:GetX()..","..destination:GetY())
+                                return
+                            end
                         end
                     end
+                    print("[LEKMOD_TEST] unresolved-stack id="..unit:GetID().." type="..unit:GetUnitType().." x="..unit:GetX().." y="..unit:GetY().." moves="..unit:GetMoves())
                 end
                 error("unit action is unavailable: " .. actionType)
             end
@@ -63,6 +77,18 @@ do
         local player = Players[0]
         assert(player:IsHuman(), "test player is not human")
         if not player:IsTurnActive() then return end
+        if pendingStackMove then
+            local u=player:GetUnitByID(pendingStackMove.id)
+            assert(u,"stack-movement unit disappeared")
+            if u:GetX()==pendingStackMove.x and u:GetY()==pendingStackMove.y then
+                print("[LEKMOD_TEST] stack-movement-verified id="..u:GetID())
+                pendingStackMove=nil
+            else
+                pendingStackMove.waits=pendingStackMove.waits+1
+                assert(pendingStackMove.waits<=8,"normal stack-movement destination was not reached")
+                return
+            end
+        end
         -- Award popups pause ordinary notification updates. Their own adapter
         -- uses Continue; do not spend a synchronized-result timeout while a
         -- batch of announced fixture technologies is still being presented.
@@ -186,6 +212,24 @@ do
                 end
             end
             error("no available research choice")
+        end
+
+        -- Resolve real overstacking before spending adjacent units' movement
+        -- on Skip, so those units can make room through ordinary move orders.
+        local skipAction
+        for id=0,#GameInfoActions do if GameInfoActions[id] and GameInfoActions[id].Type=="MISSION_SKIP" then skipAction=id;break end end
+        for unit in player:Units() do
+            if skipAction and unit:IsReadyToMove() and not unit:IsBusy() and not unit:IsTrade() then
+                local same=0;local plot=unit:GetPlot()
+                for i=0,plot:GetNumUnits()-1 do local other=plot:GetUnit(i)
+                    if other:GetOwner()==player:GetID() and not other:IsTrade() and other:GetDomainType()==unit:GetDomainType()
+                        and other:IsCombatUnit()==unit:IsCombatUnit() then same=same+1 end
+                end
+                if same>1 then
+                    UI.SelectUnit(unit)
+                    if not Game.CanHandleAction(skipAction) then unitAction(unit,"MISSION_SKIP");return end
+                end
+            end
         end
 
         for unit in player:Units() do
