@@ -4385,6 +4385,7 @@ void CvCityReligions::ResetNumTradeRoutePressure()
 void CvCityReligions::RecomputeFollowers(CvReligiousFollowChangeReason eReason, ReligionTypes eOldMajorityReligion, PlayerTypes eResponsibleParty)
 {
 	int iOldFollowers = GetNumFollowers(eOldMajorityReligion);
+	const int iOldReligionCount = GetNumReligionsWithFollowers();
 	int iUnassignedFollowers = m_pCity->getPopulation();
 	int iPressurePerFollower;
 
@@ -4468,6 +4469,15 @@ void CvCityReligions::RecomputeFollowers(CvReligiousFollowChangeReason eReason, 
 	if(eMajority != eOldMajorityReligion || iFollowers != iOldFollowers)
 	{
 		CityConvertsReligion(eMajority, eOldMajorityReligion, eResponsibleParty);
+		GC.GetEngineUserInterface()->setDirty(CityInfo_DIRTY_BIT, true);
+		LogFollowersChange(eReason);
+	}
+	else if (GetNumReligionsWithFollowers() != iOldReligionCount)
+	{
+		// Minority religions affect diversity yields and happiness even when the
+		// majority and its followers stay unchanged. Refresh without a conversion
+		// event, adoption reward or conversion notification.
+		m_pCity->UpdateReligion(eMajority);
 		GC.GetEngineUserInterface()->setDirty(CityInfo_DIRTY_BIT, true);
 		LogFollowersChange(eReason);
 	}

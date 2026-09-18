@@ -1352,3 +1352,15 @@ the passing ordinary-turn pulse. Other Omani mechanics remain open.
 promotions, event-time XP/faith amounts, a Roman no-award control and exact
 persistence. XP inputs are explicit and readiness comes from ordinary turns.
 Other Ottoman mechanics remain open.
+
+
+### Minority-religion diversity refresh
+
+The [Ottoman report](macos-ottoman-validation.md) records native stale empire
+happiness (`20260918T233007Z`), corrected six-case run (`233755Z`) and exact
+final-state reload (`233947Z`). Minority diversity can change without changing
+the majority or its followers; the core now refreshes city religion yields
+and owner happiness without a false conversion event. Nine actual-method
+sanitizer cases pass (four failed before). Successful native runs exited 0
+and restored hooks/settings/manual saves. Religions, pressure and population
+were supplied inputs. The broader religion/civilization rows remain open.

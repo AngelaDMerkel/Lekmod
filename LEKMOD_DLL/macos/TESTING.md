@@ -779,3 +779,18 @@ international destinations, internal routes, domain zero, incoming/other-origin
 exclusion, absent targets, stale-count removal and the real UnitPrekill argument
 order. Route lists and city identities are supplied stand-ins. Native route
 creation/expiry/plunder timing, food settlement and persistence remain pending.
+
+
+`--scenario ottoman-diversity --load-save PATH --save-and-exit` loads the
+three-owner Ottoman promotion fixture. Population, pantheon, three world
+religions with non-happiness beliefs and pressure transfers are supplied inputs.
+Native follower counts and local/empire happiness must follow one/two/three
+religions, reject pantheon/other-owner awards and remove expired bonuses. A
+minority-only addition must not emit a majority-conversion event. Its final
+snapshot supports exact reload. No turn or happiness value is assigned.
+
+`test-religion-diversity-cache.py [--source OLD_CPP]` compiles the actual product
+`RecomputeFollowers` method under AddressSanitizer and UndefinedBehaviorSanitizer.
+Nine cases exercise minority addition/removal, no-majority diversity, unchanged
+and pantheon controls, and the existing majority-conversion paths. Cache/event
+sinks are stand-ins; the native Ottoman fixture supplies the engine evidence.
