@@ -201,3 +201,42 @@ ordinary-menu paths; cache state/timing also differed between attempts, so they
 do not prove QuickStart is the sole cause or that the intermittent failure is
 fully fixed. All failed runs remain in the evidence. Twenty-seven offline runner
 guard/classification cases pass.
+
+## Recurrence with QuickStart disabled; loader and stock controls
+
+`20260918T040816Z` reproduced the localization attach failure with QuickStart=0,
+so changing that test default did not eliminate the issue. Its nonempty cache
+was preserved under `build/macos/cache-investigation/20260918T040816Z/`.
+`041455Z` repeated the failure with dyld image tracing enabled and left an empty
+merged cache. The trace contained 899 image-load records and no GameCore image
+before exit 255. This places that occurrence before the modded GameCore loaded;
+it does not separate mod localization data from an Aspyr host/cache defect.
+The empty cache was preserved using the guarded recovery tool.
+
+The central installer temporarily restored stock (canonical hash unchanged).
+`native-startup-controls/20260918T042052Z` then used original configuration, no
+UI hooks and no injected library. Actual Escape, copyright-notice Continue,
+Exit and Yes actions reached the stock menu and closed normally: return 0,
+229.0 seconds, no settings changed and all original manual saves preserved.
+The exact movement-cost test package was reinstalled through the central
+installer; its signed GameCore again matched
+`cf5273574eb622c53b700d6a0dbfa1e2ff882f5475d4c9a486aa4cdac740e798`.
+This was a menu-only comparison and loaded no modded save under stock.
+
+The subsequent traced Lekmod run `042603Z` started a Huge/12-major/41-minor
+world and completed its two-turn functional case, save and normal exit. Its
+trace does contain the expected GameCore image, confirming that the failed
+trace would have recorded it. Exact reload `042735Z` also exited normally.
+The stock comparison and successful restoration are controls, not proof of a
+root-cause fix; cache content and timing changed during the comparison.
+
+## Separate shutdown stall
+
+`20260918T030901Z` passed its two-turn science-disabled assertions and wrote
+its save, then stalled after the real exit confirmation. The retained sample
+shows the Aspyr main thread in `pthread_join`, while SDLTimer waits in
+`std::future<void>::get`. The supervisor ultimately used SIGTERM. This run
+remains failed; no wait flag or synchronization check was altered. Its saved
+state reloaded exactly with normal exit in `031725Z`; an unchanged fresh-case
+retest `032102Z` and exact reload `032239Z` also exited normally. The single
+shutdown stall remains an unresolved intermittent host-path observation.

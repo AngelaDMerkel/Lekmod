@@ -539,3 +539,9 @@ alone does not prove the menu was reached: retain a separate physical observatio
 `CvLuaUnit`/`CvLuaPlot` instance lookup; the generic enum/integer conversion does
 not support Lua object tables. The optional remaining movement defaults to zero.
 The crowded Atomic fixture in the expanded ledger supplies the native regression.
+
+
+`--trace-loaded-libraries` records dyld image loading in the test process log
+and the report. It can distinguish a startup failure before GameCore loads
+from a loaded-core failure. It does not modify cache files, retry a failed
+launch, or change any gameplay/synchronization state.

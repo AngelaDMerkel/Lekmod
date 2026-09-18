@@ -331,6 +331,7 @@ def main():
     parser.add_argument("--expect-human-victory", action="store_true", help="Require the endgame scenario's naturally resolved score winner to be the human")
     parser.add_argument("--foreground-ui-test", "--foreground-attachment-test", dest="foreground_attachment_test", action="store_true", help="Explicitly approved foreground UI test; specify --timeout (at most one hour)")
     parser.add_argument("--no-process-adapter", action="store_true", help="Explicit foreground startup control with no injected process library; requires --foreground-ui-test")
+    parser.add_argument("--trace-loaded-libraries", action="store_true", help="Record dyld image loading in the test process log for startup diagnosis")
     parser.add_argument("--activation-only", action="store_true", help="Startup diagnostic control: retain background activation guard without syscall/stream observers or a log-flush timer")
     parser.add_argument("--expected-state", type=Path, help="Verify the saved-state fingerprint from an earlier --save-and-exit report before any functional mutations")
     args = parser.parse_args()
@@ -602,6 +603,7 @@ def main():
               "ui_variant": "eui" if has_eui else "standard",
               "production_completion": args.production_completion,
               "quick_start": args.quick_start, "skip_intro": args.skip_intro,
+              "trace_loaded_libraries": args.trace_loaded_libraries,
               "process_observer": "none" if args.no_process_adapter else "activation-only" if args.activation_only else "full-diagnostics",
               "scenario": args.scenario,
               "scenario_turn_limit": args.scenario_turns,
@@ -701,6 +703,8 @@ def main():
             environment.pop("DYLD_INSERT_LIBRARIES", None)
         else:
             environment["DYLD_INSERT_LIBRARIES"] = str(background_lib)
+        if args.trace_loaded_libraries:
+            environment["DYLD_PRINT_LIBRARIES"] = "1"
         environment["SteamAppId"] = "8930"
         environment["SteamGameId"] = "8930"
         with (output / "process.log").open("w") as process_log:

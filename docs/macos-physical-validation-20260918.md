@@ -21,3 +21,18 @@ The report records the exact original configuration bytes and save hashes.
 The later foreground great-person reload `022855Z` was scripted and is not
 additional mouse coverage. Startup reliability remains qualified by the
 [cache investigation](macos-startup-cache.md).
+
+## Stock menu comparison
+
+The managed installer temporarily selected the stock GameCore and payload.
+Evidence: `build/macos/native-startup-controls/20260918T042052Z/`, PID 67721.
+Original settings/UI were used with no injected library. Actual Escape skipped
+the opening movie; an actual click dismissed the non-binding copyright notice.
+The stock main menu was visually verified. Actual Exit/Yes clicks closed the
+app, with return code 0 and no termination signals. The 229.0-second control
+changed no settings and preserved all manual-save hashes. No game was loaded.
+The exact Lekmod movement-cost archive was then reinstalled with its expected
+signed-core hash. Steam's channel/session and Aspyr backups were preserved.
+
+`stock-main-menu.png` SHA-256:
+`7fa8be6cb7e33c4391fc1f61d5a167e63f50ed7e1e399faeddcb0ccb96ee2782`.
