@@ -686,3 +686,11 @@ one AI attacker/uranium/upkeep budget, and requires an actual war/move-attack
 capture before testing a later normal founding. Native lifetime-counter checks
 distinguish owned, founded and captured city counts. Snapshots support exact
 reload; see `docs/macos-philippines-validation.md`.
+
+`native-startup-control.py --foreground-authorized --logging-enabled 0|1` is
+an optional one-setting comparison: all other original settings/UI are retained
+and no process library is injected. The report distinguishes intentional input
+from changes made by the game, then restores the original bytes. Foreground
+authorization must already exist in the conversation. Both native and functional
+runners now recheck desktop lock state immediately before process launch, after
+artifact preparation.

@@ -772,6 +772,8 @@ def main():
             environment["DYLD_PRINT_LIBRARIES"] = "1"
         environment["SteamAppId"] = "8930"
         environment["SteamGameId"] = "8930"
+        # Preparation can copy many saved artifacts; check again at launch.
+        require_unlocked_desktop()
         with (output / "process.log").open("w") as process_log:
             game_process = subprocess.Popen([str(APP / "Contents/MacOS/Civilization V")],
                 cwd=APP / "Contents/MacOS", env=environment, stdin=subprocess.DEVNULL,

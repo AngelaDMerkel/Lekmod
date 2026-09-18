@@ -292,3 +292,23 @@ The merged cache regenerated to 27,500,544 bytes. The next full-observer backgro
 run `075215Z` reached gameplay, where its resource-placement fixture failed.
 This does not isolate one cause: original settings, fullscreen, activation and
 hooks differed between the controls. Startup reliability remains unresolved.
+
+Philippine movement reloads `20260918T092553Z` and `092829Z` failed with exit 255
+before loading their save. The first retained a healthy 25,509,888-byte cache;
+its 21 files and passing merged quick_check were preserved under the matching
+`cache-investigation` directory. The next failure left an empty merged cache,
+preserved by the guarded recovery under `cache-repairs/20260918T092829Z`.
+
+Foreground control `native-startup-controls/20260918T093746Z` changed only
+`DEBUG.LoggingEnabled` from 0 to 1. All other settings, fullscreen behavior and
+UI files remained original; no library was injected. Actual Escape skipped the
+movie, the menu appeared, and actual Exit/Yes returned 0 after 208.9 seconds.
+The game changed no settings beyond the explicit input; the original bytes and
+all manual saves were restored/preserved. This single successful comparison
+does not identify the intermittent trigger. Its menu screenshot hash is
+`b231b50cbf8a08dce8a3f24223f8743bc4666c9896552d837ea7bc71feba5e93`.
+
+The first request for this control was rejected by automatic approval review
+using the historical one-session limit. No part of that rejected command ran.
+After the user's later explicit foreground-restoration and unlimited-duration
+messages were quoted, the same action was approved. No permission block remains.
