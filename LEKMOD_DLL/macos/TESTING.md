@@ -763,3 +763,11 @@ integer mock follows the positive-number truncation of the Lua binding and
 checks the four normal speed inputs (Quick 80%, Standard 100%, Epic 125%,
 Marathon 200%). Native capture/liberation/gift distinctions, disposition timing,
 revolution timing and persistence remain open. No product code was changed.
+
+
+`test-tonga-exploration.lua LEKMOD/Lua [OLD_TONGA_LUA]` executes the real
+starting-exploration callback and shipped plot iterators on a controlled axial
+hex grid. Thirteen island/coast/owner cases catch the excluded-center one-tile
+island defect. Grid conversion, area identity and visibility are stand-ins;
+native generated-map and persistence checks remain required. The optional old
+source argument reproduces the five pre-fix failures. See the Tonga report.
