@@ -464,3 +464,15 @@ It supplies coastal-city/building/reveal/unit inputs, then uses actual new-home
 No/Yes and route popup callbacks for rebasing, internal land food and sea
 production. Use its saved report for exact reload. The city accounting checks
 compare returned legal route quotes with trade-only yield contributions.
+
+
+`ideology-inventory` reads saved ideology, influence and public-opinion inputs.
+`ideology-pressure` loads the Cuba two-tenet save with `--scenario-turns 5`;
+foreign Order/Radio, population 25 and positioned Musicians are explicit inputs.
+Concerts run only during the owning AI's actual turn, stay below cultural victory,
+and must produce public opinion on an ordinary turn. `ideology-switch` loads
+that pressure save and uses the actual SocialPolicyPopup No/Yes callbacks,
+checking branch removal, tenet/culture accounting and content-button rejection.
+`anarchy-expiry` loads the immediate revolution save with `--scenario-turns 2`;
+it never assigns anarchy or turn counters. All four support `--save-and-exit`
+and exact `--expected-state` reload; reload does not repeat fixture mutations.

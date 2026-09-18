@@ -25,7 +25,7 @@ mean every possible combination of game state has been tested.
 | Combat | Human melee/ranged/city attacks, unit death/capture, terrain/war restrictions, naval and air actions | Core land/city/naval attacks, death/capture and reload passed; actual air strike/interception, ground sweep, carrier capacity/movement and exact reload passed |
 | Unit lifecycle | Founding, movement/pathing, embark/disembark, promotion/upgrade, worker build/repair/pillage, healing, gifting/deletion, great-person actions | Promotion/upgrade/heal/embark, farm/road/repair, disband/gift and great-person actions passed; pillage, road repair/travel and exact reload passed; other great-person cases remain |
 | City lifecycle | Additional founding, capture/puppet/annex/raze/liberation, growth/starvation, building sale, specialists/great works | Core lifecycle, artwork movement/theming and exact reloads passed; Dance Hall bonuses and ordinary artifact/landmark digs passed; further cultural UI/branches remain |
-| Economy and policies | Research/free tech, policy/tenet acquisition and switching, happiness/golden age, resources, treasury boundaries | Policy/tenet confirmations, spending and Cuba reward boundaries passed; switching and remaining economy cases pending |
+| Economy and policies | Research/free tech, policy/tenet acquisition and switching, happiness/golden age, resources, treasury boundaries | Policy/tenet confirmations, spending and Cuba reward boundaries passed; pressure/revolution, natural anarchy expiry and exact reload passed; remaining economy cases pending |
 | Diplomacy | War/peace, friendship/denunciation, resources/GPT/open borders, non-aggression pacts and configured agreement restrictions, city-state interactions | Luxury/GPT gifts, mutual embassies, open borders and persistence passed; natural contract expiry and permanent embassies passed; friendship/denunciation and reload passed; non-aggression creation/expiry and configured-off agreement UI passed; negotiated peace/protection/expiry and reload passed |
 | Religion | Found/enhance/buy/spread, conversion/defense and belief effects, save persistence | Core workflow, inquisitor purchase/defense/removal and pressure-retention belief/reload passed; founder gold, Mandir/luxury yields and Holy Warriors purchases/reload passed; further boundaries pending |
 | Espionage | Assignment, diplomat, science award, surveillance, counterspy/election/coup paths and persistence | Core workflow, counterspy arrival, scheduled election and successful coup/reload passed; failed coup, dead-agent rejection and five-turn replacement/reloads also passed; defensive interception and further UI remain |
@@ -1039,3 +1039,49 @@ GameCore `04904d1f…` and, for the civilization fixes,
 `Lekmod-civ-regressions-20260915b.zip` (SHA-256
 `349afefb42bef3713ff1bba83f3749951a32ba43e6fe1dbd89241bc785d300f6`).
 All prior packages and their reports remain preserved locally.
+
+### Ideological pressure and revolution
+
+`20260918T011415Z` read the existing Cuba fixture: Freedom, two tenets,
+no tourism or pressure, and an AI without an ideology. `011646Z` supplied
+Radio and let the AI choose normally; it also chose Freedom, so the opposing
+pressure fixture correctly failed. `011943Z` exposed an overly restrictive
+empty-tile staging assumption. `012125Z` then executed a legal foreign concert
+for 100 influence, but the small city's rounded public-opinion penalty remained
+zero. These failed reports and their exact scenario sources are retained; none
+establish a product defect or a completed revolution.
+
+`20260918T012412Z` explicitly supplied the AI's Order ideology and Radio, human
+capital population 25, and five positioned foreign Musicians. During the AI's
+actual active turn, five normal concert missions each added 100 influence and
+consumed the corresponding unit. One ordinary turn reached 216; human population
+was 24, lifetime culture 675, foreign influence 500/level 3, public-opinion
+unhappiness 1, preferred ideology Order, and no winner. The one-point result
+reflects Lekmod's base halving and Cuba's additional 50% reduction. Influence,
+opinion, elapsed turns and victory state were never assigned. Save SHA-256:
+`219b71aa4ddf1c3a45c93e9bd5c7d28be8d7cd61e08d0839e4e9469fcae98651`.
+Exact reload `012545Z` matched that state and exited normally.
+
+`20260918T012640Z` loaded the pressure save and supplied 37 additional culture
+to make retention observable. The actual SocialPolicyPopup revolution No callback
+preserved Freedom, 47 culture, tenets and zero anarchy. Its Yes callback sent the
+normal network command: Order became active, Freedom and both old tenets cleared,
+47 culture remained, one replacement free tenet appeared under the shipped
+one-tenet-loss rule, and two turns of anarchy began. Public-opinion unhappiness
+cleared; the actual switch control became disabled. Cuba's two reward units and
+first-tenet marker were unchanged. Save SHA-256:
+`5979138ab271cc918c1e9a58ae2e4dfddbeb84fd0f5f29ec07c8410efec651a4`.
+These are scripted UI callback and native outcome checks, not physical clicks
+or an earned tourism campaign. All successful runs above exited normally (0),
+preserved original manual saves and restored hooks/settings, with no Lua runtime
+or synchronization errors. Exact revolution reload `012805Z` passed. `012901Z` advanced two ordinary turns
+216→218: the anarchy counter was 2→1→0, player yields and city production rates
+were zero while active, and culture/science/production rates returned afterward.
+The recorded settlement audit retained culture 47, treasury 132 and production 0
+through both turns. The normal policy command spent the replacement tenet on
+Hero of the People. Expiry save SHA-256:
+`6a2485c8d834b0adfb4c6ff1042ef729c286e472af239339c518e07ae98c0500`.
+`013033Z` reloaded that exact state. These three follow-ups also exited normally
+and passed the same preservation and error checks. No product change was needed
+for this workflow. The offline runner's 25 cases and scenario-supervisor checks
+passed; multiplayer and the wider unfinished ledger remain outside this result.

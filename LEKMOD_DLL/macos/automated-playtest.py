@@ -152,6 +152,10 @@ FUNCTIONAL_ITEMS = {"script-data", "science-overflow", "unit-position-flags", "c
                     "production-unit", "production-building", "production-wonder", "production-process"}
 PRODUCTION_COMPLETION_ITEMS = {"production-completion-unit", "production-completion-building"}
 SCENARIO_ITEMS = {"inventory": {"system-inventory"},
+                  "ideology-inventory": {"ideology-input-inventory"},
+                  "anarchy-expiry": {"anarchy-yield-restrictions", "anarchy-natural-expiry"},
+                  "ideology-pressure": {"foreign-concert-pressure", "pressure-below-victory"},
+                  "ideology-switch": {"revolution-cancel", "revolution-confirm", "revolution-tenets-culture", "revolution-content-rejection"},
                   "espionage": {"spy-home", "spy-recall", "spy-foreign", "spy-diplomat"},
                   "religion": {"pantheon", "religion-found", "religion-enhance", "faith-purchase", "religion-spread"},
                   "religion-defense": {"inquisitor-purchase", "inquisitor-defense", "foreign-religion-spread", "remove-heresy", "inquisitor-retention", "inquisitor-restrictions"},
@@ -449,6 +453,8 @@ def main():
                 ui_templates[ui_dir / "CityStateGreetingPopup.lua"] = "playtest-scenario-minor-greeting-popup.lua"
             if args.scenario == "archaeology":
                 ui_templates[APP / "Contents/Assets/Assets/DLC/Expansion2/UI/InGame/Popups/ChooseArchaeologyPopup.lua"] = "playtest-scenario-archaeology-popup.lua"
+            if args.scenario == "ideology-switch":
+                ui_templates[ui_dir / "SocialPolicyPopup.lua"] = "playtest-scenario-revolution-popup.lua"
             if args.scenario == "cuba-ideology":
                 ui_templates[APP / "Contents/Assets/Assets/DLC/Expansion2/UI/InGame/Popups/ChooseIdeologyPopup.lua"] = "playtest-scenario-ideology-popup.lua"
                 ui_templates[ui_dir / "SocialPolicyPopup.lua"] = "playtest-scenario-tenet-popup.lua"
