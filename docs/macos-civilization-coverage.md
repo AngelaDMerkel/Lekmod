@@ -80,7 +80,7 @@ All 114 playable civilizations and 26 civilization Lua files are listed below. A
 | `CIVILIZATION_MYSORE` | `TRAIT_UNHAPPY_ELITE` | UNIT_ROCKET_CORPS, BUILDING_MYSORE_PALACE | — | Unique mechanics pending. |
 | `CIVILIZATION_NABATEA` | `TRAIT_FOOD_FOR_TOUGHT` | UNIT_MC_ZABONAH, BUILDING_MC_KOKH | Lekmod_nabatea.lua, MC_NabateaAddin.lua | Unique mechanics pending. |
 | `CIVILIZATION_NETHERLANDS` | `TRAIT_LUXURY_RETENTION` | UNIT_DUTCH_SEA_BEGGAR | — | Unique mechanics pending. |
-| `CIVILIZATION_NEW_ZEALAND` | `TRAIT_WHERE_SHE_GOES` | UNIT_JFD_DEFENDER, UNIT_MC_NEW_ZEALAND_MAORI_BATTALION | Lekmod_newzealand.lua | Unique mechanics pending. |
+| `CIVILIZATION_NEW_ZEALAND` | `TRAIT_WHERE_SHE_GOES` | UNIT_JFD_DEFENDER, UNIT_MC_NEW_ZEALAND_MAORI_BATTALION | Lekmod_newzealand.lua | Twenty-eight isolated actual-handler cases cover meeting reward branches/team routing, Battalion influence eligibility and non-major exclusions, Defender city/friendship boundaries and inactive registration. Native gameplay/event timing and persistence pending. |
 | `CIVILIZATION_NORMANDY` | `TRAIT_WIRR` | UNIT_PEDITE | — | Unique mechanics pending. |
 | `CIVILIZATION_NORWAY` | `TRAIT_NORDIC_BOUNTY` | UNIT_SKINFANTRY, BUILDING_STAVE | — | Unique mechanics pending. |
 | `CIVILIZATION_NUBIA` | `TRAIT_TA_SETI` | UNIT_NUBIAN_BOW, BUILDING_BLAST_FURNACE | — | Unique mechanics pending. |
@@ -91,7 +91,7 @@ All 114 playable civilizations and 26 civilization Lua files are listed below. A
 | `CIVILIZATION_PHILIPPINES` | `TRAIT_GOOD_FIGHT` | UNIT_PHILIPINO_MARINE, BUILDING_NATIONALCHURCH | Lekmod_philippines.lua | [Founding quota](macos-philippines-validation.md): first-two/capital/third/other-owner boundaries, actual AI capture/later founding, lifetime-counter correction and exact reload native. Worker/Settler/Scientist owned-neutral movement and ordinary refresh/reload native. National Church prerequisites/yields/actual training XP/reload native. Gerilya/control strength, real embark/disembark, movement refresh and reloads native. Further territory/domain/production/combat branches remain. |
 | `CIVILIZATION_PHOENICIAN` | `TRAIT_LEADER_HIRAM` | UNIT_SQUARE_SAIL_SHIP, BUILDING_TRADE_HARBOUR | Lekmod_phoenicia.lua | [Optics founding reward](macos-phoenicia-validation.md), human/AI and pre-tech/existing-city/other-owner controls, exact reload native. Sailing/Trade Harbour and remaining boundaries pending. |
 | `CIVILIZATION_POLAND` | `TRAIT_SOLIDARITY` | UNIT_POLISH_WINGED_HUSSAR, BUILDING_DUCAL_STABLE | — | Unique mechanics pending. |
-| `CIVILIZATION_POLYNESIA` | `TRAIT_WAYFINDING` | UNIT_MC_HAWAIIAN_KOA | Lekmod_polynesia.lua | Unique mechanics pending. |
+| `CIVILIZATION_POLYNESIA` | `TRAIT_WAYFINDING` | UNIT_MC_HAWAIIAN_KOA | Lekmod_polynesia.lua | Five isolated actual-handler cases cover creation cleanup for human/AI units, unrelated/dead-owner exclusion and inactive registration. Native ocean movement and post-conversion upgrade timing pending. |
 | `CIVILIZATION_PORTUGAL` | `TRAIT_EXTRA_TRADE` | UNIT_PORTUGUESE_NAU, UNIT_VENEZ_CARAVAN, UNIT_VENEZ_CARGO_SHIP, BUILDING_FEITORIA | — | Unique mechanics pending. |
 | `CIVILIZATION_PRUSSIA` | `TRAIT_PRUSSIA` | UNIT_LANDWHER, BUILDING_PRUSSIAN_FACTORY | — | Unique mechanics pending. |
 | `CIVILIZATION_ROMANIA` | `TRAIT_MC_NIHIL_SINE_DEO` | UNIT_MC_ROMANIAN_VINATOR, BUILDING_MC_ROMANIAN_PAINTED_MONASTERY | Lekmod_romania.lua | Unique mechanics pending. |
@@ -105,7 +105,7 @@ All 114 playable civilizations and 26 civilization Lua files are listed below. A
 | `CIVILIZATION_SPAIN` | `TRAIT_SEVEN_CITIES` | UNIT_SPANISH_TERCIO, BUILDING_PLAZA_DE_TOROS | — | Unique mechanics pending. |
 | `CIVILIZATION_SUMERIA` | `TRAIT_CRADLE_OF_CIVILIZATION` | UNIT_PHALANXX, BUILDING_ZIGGURAT | — | Unique mechanics pending. |
 | `CIVILIZATION_SWEDEN` | `TRAIT_DIPLOMACY_GREAT_PEOPLE` | UNIT_CAROL, BUILDING_FALU_GRUVA | — | Unique mechanics pending. |
-| `CIVILIZATION_SWISS` | `TRAIT_SWISS_BANKS` | BUILDING_SWISS_REISLAUFER, BUILDING_SWISS_SKI_RESORT | Lekmod_switzerland.lua | Unique mechanics pending. |
+| `CIVILIZATION_SWISS` | `TRAIT_SWISS_BANKS` | BUILDING_SWISS_REISLAUFER, BUILDING_SWISS_SKI_RESORT | Lekmod_switzerland.lua | Six isolated actual-handler cases cover creation/movement, mountain-bonus removal, owner-local IDs, foreign/minor owners and unrelated-unit exclusion. Native terrain/upgrade/gift timing and other unique mechanics pending. |
 | `CIVILIZATION_TIBET` | `TRAIT_TIBET` | UNIT_DALAILAMA | — | Unique mechanics pending. |
 | `CIVILIZATION_TIMURIDS` | `TRAIT_ULUG` | UNIT_MARATHI, BUILDING_SERAI | — | Unique mechanics pending. |
 | `CIVILIZATION_TONGA` | `TRAIT_ISLANDS` | UNIT_MC_RAPA_NUI_MATATOA, BUILDING_MC_TONGAN_MALAE | Lekmod_tonga.lua | Unique mechanics pending. |

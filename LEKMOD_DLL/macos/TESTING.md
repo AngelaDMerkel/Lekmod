@@ -743,3 +743,13 @@ offline handler cases for Medieval/Renaissance counts, later-era clearing,
 human/AI team routing, unrelated/dead-owner exclusions and per-owner-turn
 updates. It does not establish native production modifiers or immediate new-city
 behavior. All 26 civilization Lua files also pass the pinned Lua 5.1 syntax check.
+
+
+`test-unit-owner-boundaries.lua LEKMOD/Lua/Civilizations` runs 39 isolated
+actual-handler cases using Lua 5.1 and the C++ event argument order: Swiss
+creation/movement promotions; Polynesian creation cleanup; New Zealand meeting
+rewards, Battalion influence and Defender city-radius/friendship filtering.
+Minor/barbarian index guards reject major-only friendship queries in the mocks.
+Each case loads the product into a fresh environment. These tests establish
+callback behavior only; native terrain/pathing, event timing, conversion/upgrade
+and persistence remain separate tests.
