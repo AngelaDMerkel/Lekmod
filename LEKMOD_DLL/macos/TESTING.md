@@ -493,3 +493,12 @@ is retained as FAIL while diagnostic save/exit can finish; completion never
 overrides that verdict. `venice-known-compass` is read-only: load an affected
 save or start Industrial/Duel with the same civilizations. Both support exact
 reload; missing-award repair must happen in product initialization.
+
+
+`italy` starts Ancient/Duel with human and AI `CIVILIZATION_ITALY` and
+`--scenario-turns 6`. Prerequisite policies/free choices and Artists are labeled
+inputs. Final policies use normal legal adoption; AI actions require the real
+owner turn. Golden-age starts use Artist missions. It checks both owners' point
+awards and extensions, then supports exact saved-state reload. Alert gating
+and unrelated/ineligible/fractional boundaries also have offline tests in
+`test-italy-events.py`.

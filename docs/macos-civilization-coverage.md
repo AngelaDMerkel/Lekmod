@@ -57,7 +57,7 @@ All 114 playable civilizations and 26 civilization Lua files are listed below. A
 | `CIVILIZATION_IRELAND` | `TRAIT_GAELIC` | UNIT_IRISH_RIFLEMAN, BUILDING_IRISH_PUB | — | Unique mechanics pending. |
 | `CIVILIZATION_IROQUOIS` | `TRAIT_IGNORE_TERRAIN_IN_FOREST` | UNIT_IROQUOIAN_MOHAWKWARRIOR, BUILDING_LONGHOUSE | — | Unique mechanics pending. |
 | `CIVILIZATION_ISRAEL` | `TRAIT_PROMISED_LAND` | UNIT_ISRAEL_MACCABEE, BUILDING_ISRAEL_NATIONAL_COLLEGE | — | Unique mechanics pending. |
-| `CIVILIZATION_ITALY` | `TRAIT_RINASCIMENTO` | UNIT_ITALARTIST, BUILDING_BASIL | Lekmod_italy.lua | Unique mechanics pending. |
+| `CIVILIZATION_ITALY` | `TRAIT_RINASCIMENTO` | UNIT_ITALARTIST, BUILDING_BASIL | Lekmod_italy.lua | Human/AI branch-completion points and Artist-led golden-age extension, exact reload native. Other uniques pending. |
 | `CIVILIZATION_JAPAN` | `TRAIT_FIGHT_WELL_DAMAGED` | UNIT_JAPANESE_SAMURAI, BUILDING_DOJO | — | Unique mechanics pending. |
 | `CIVILIZATION_JERUSALEM` | `TRAIT_HOLYLAND` | UNIT_CRUSADER, BUILDING_OUTREMER | — | Unique mechanics pending. |
 | `CIVILIZATION_KHMER` | `TRAIT_ANGKOR` | UNIT_KHMER_WARELEPHANT, BUILDING_BARAY | — | Unique mechanics pending. |

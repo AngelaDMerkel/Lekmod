@@ -1131,3 +1131,38 @@ All five passed normal exit, settings/hook restoration, manual-save preservation
 Lua and synchronization checks. Technology grants are fixture inputs, not earned
 research; this does not cover Venice's other unique mechanics or resolve startup
 reliability.
+
+### Italy rewards apply to AI players
+
+`20260918T015326Z` selected human and AI Italy normally. Prerequisite policies
+and one free policy choice were supplied separately; the final Tradition policy
+was legally adopted through the human network command and the AI's actual
+active-turn `DoAdoptPolicy` path. The human received 250 golden-age points under
+the installed Quick speed's 80% scaling. The AI spent its choice and completed
+Tradition but received zero points (27→27): the handler incorrectly required
+`Game.GetActivePlayer()` to match the reward owner. The supervisor retained a
+failed result and stopped the test; cleanup and manual-save preservation passed.
+
+The active-human restriction now applies only to the UI alert. Gameplay rewards
+retain their existing eligibility, amount and timing for every eligible owner.
+Ten offline cases cover human/AI point awards and golden-age extension, unrelated
+civilizations, incomplete/unowned/branchless policies, fractional scaling and
+shipped Quick values. Four fail on the original source; all ten pass after the fix.
+
+`20260918T015729Z` passed all four native outcomes. Human and AI Tradition
+completion each awarded 250 points. Supplied Artists then used normal golden-age
+actions; completing Honor legally extended each golden age by four turns. AI
+commands required the owning AI's actual active turn while the active human
+remained player 0. Only prerequisites/free choices/Artists were supplied; reward
+points, golden-age state and outcomes were not assigned. Save SHA-256:
+`24ad0a92396713522a4dfd8832c93d07c0947c66db0099507023a59e1858318f`.
+`015907Z` matched the exact saved policies, free choices, points and durations.
+The action test used the activation-only process control; reload used the normal
+full diagnostic mode. Both exited normally, restored hooks/settings, preserved
+manual saves, and had no Lua or synchronization failures. These are native
+command/event checks, not physical clicks or validation of Italy's other uniques.
+
+The intermediate managed package is `build/macos/Lekmod-italy-20260918.zip`,
+SHA-256 `c4e4bda52c53532e1f3a6d752daa9008c42724c4fac6a90d29bc71910e34a60c`.
+Its GameCore remains `e07f67902ebbc0a88f5c104a92f0eecd5b82f38f2c107291bb22c1c3eb5a75ed`;
+this is another Lua-only fix, built on the Venice package's product changes.
