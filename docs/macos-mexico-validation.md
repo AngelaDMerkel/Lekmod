@@ -69,3 +69,23 @@ These are normal initialization/event outcomes and scripted observation, not
 mouse input, multiplayer, the free Worker/tribute-influence abilities or the
 Ranchero/Hacienda mechanics. Late saves with discoveries already missed by the
 old handler are not retroactively awarded new visibility by this first-turn fix.
+
+## Pottery Worker award
+
+`20260918T072049Z` loaded the discovery save at turn 1, with both capitals and
+Pottery unknown to both Mexico players. Pottery was supplied separately to each
+team through the native technology API. The human's grant created exactly one
+Worker while AI count stayed zero; the AI's grant then created exactly one Worker
+while the human count stayed one. Re-sending already-known Pottery created no
+additional unit for either owner. No Worker was supplied with InitUnit. Both
+Workers had owner-local ID24576, so the recorded identity includes owner as well
+as unit ID. Technology input is explicit, not earned research or mouse input.
+
+The save SHA-256 is `783b89cd014b8ee3315f90ab52784402221aadc1d7a64e89872611344b7c2514`.
+`072226Z` matched each owner's technology, Worker identity, position and movement
+exactly on reload. Its save SHA-256 is
+`3613e6ec8f678e11ae8ceec834d72324673b12e9bcd35d4ed19c1293a8c838e5`.
+Both runs saved/exited normally (0), restored hooks/settings and preserved manual
+saves, with no Lua/sync errors. The new initial-hook evidence feature retained
+and hash-verified all 43 injected files in the action run. No product change was
+needed for this award. Tribute-related influence and Ranchero/Hacienda remain open.

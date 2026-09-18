@@ -72,7 +72,7 @@ All 114 playable civilizations and 26 civilization Lua files are listed below. A
 | `CIVILIZATION_MAORI` | `TRAIT_MANA` | UNIT_POLYNESIAN_MAORI_WARRIOR | Lekmod_maori.lua | Unique mechanics pending. |
 | `CIVILIZATION_MAURYA` | `TRAIT_INSCRIPTIONS` | UNIT_MAURYA_MISSIONARY, BUILDING_ASHOKA | — | Unique mechanics pending. |
 | `CIVILIZATION_MAYA` | `TRAIT_LONG_COUNT` | UNIT_MAYAN_ATLATLIST, BUILDING_MAYA_PYRAMID | — | Unique mechanics pending. |
-| `CIVILIZATION_MEXICO` | `TRAIT_MEXICO` | UNIT_RANCHERO, BUILDING_HACIENDA | Lekmod_mexico.lua | [Opening discovery](macos-mexico-validation.md): human/AI starting locations and real minor foundations, range controls and exact reload native. Worker/influence and UU/UB pending. |
+| `CIVILIZATION_MEXICO` | `TRAIT_MEXICO` | UNIT_RANCHERO, BUILDING_HACIENDA | Lekmod_mexico.lua | [Opening discovery](macos-mexico-validation.md): human/AI starting locations and real minor foundations, range controls and exact reload native. Human/AI Pottery Worker awards, no-repeat and exact reload native with supplied technology. Influence and UU/UB pending. |
 | `CIVILIZATION_MONGOL` | `TRAIT_TERROR` | UNIT_MONGOLIAN_KESHIK, UNIT_MONGOLIAN_KHAN | — | Unique mechanics pending. |
 | `CIVILIZATION_MOORS` | `TRAIT_MOOR` | UNIT_MC_LITE_GRANADINE_CAVALRY, BUILDING_ALCAZABA | Lekmod_moors.lua | Unique mechanics pending. |
 | `CIVILIZATION_MOROCCO` | `TRAIT_GATEWAY_AFRICA` | UNIT_BERBER_CAVALRY | — | Unique mechanics pending. |

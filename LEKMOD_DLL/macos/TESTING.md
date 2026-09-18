@@ -639,3 +639,10 @@ record each adapter, byte count and SHA-256 after run-specific placeholders are
 rendered. `ui-original/` continues to hold restoration backups. This is initial
 launch evidence; a later live driver refresh is a separate revision. The files
 remain local, ignored artifacts, including any privately installed EUI context.
+
+`--scenario mexico-pottery --scenario-turns 1` loads a human/AI Mexico fixture
+with separate teams, existing capitals and Pottery unknown. It supplies only
+the technology inputs, checks native Worker creation for each owner and rejects
+a repeated award from already-known technology. The turn allowance installs
+ordinary technology-popup handling; the successful action run advanced no turn.
+Its saved report supports exact reload.
