@@ -582,3 +582,13 @@ Preserve an existing quicksave before any overwrite; use a distinct state
 marker before saving and a different unsaved state before loading. The
 read-only UI observer can compare the resulting city/unit state. Capture only
 the game PID's full-size window, not a thin title-bar surface.
+
+### Overview personality display regression
+
+`test-greeting-personality.py --relationships LEKMOD/Lua/tmp/ui/DiploRelationships.lua.ignore`
+executes the actual diplomacy personality block for all ten shipped types. Pass
+a preserved native BNW `DiploRelationships.lua` to the same option for the
+six-failure baseline. `test-configure-ui.py` checks both assembled UI modes.
+The physical observer additionally records met city-state personality types and
+the culture-overview option without assigning them. Native physical evidence
+is in `docs/macos-ui-overviews.md`.

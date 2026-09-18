@@ -13,6 +13,14 @@ do
         elapsed = 0
         local player = Players[Game.GetActivePlayer()]
         if not player or not player:IsTurnActive() or Game.IsProcessingMessages() then return end
+        if previous == nil then
+            print("[LEKMOD_UI_OPTIONS] run=__TEST_RUN__ culture_overview_disabled=" .. tostring(Game.IsOption("GAMEOPTION_NO_CULTURE_OVERVIEW_UI")))
+            for id, minor in pairs(Players) do
+                if minor:IsAlive() and minor:IsMinorCiv() and Teams[player:GetTeam()]:IsHasMet(minor:GetTeam()) then
+                    print("[LEKMOD_UI_PERSONALITY] run=__TEST_RUN__ id=" .. id .. " name=" .. Locale.ConvertTextKey(minor:GetCivilizationShortDescriptionKey()) .. " type=" .. tostring(minor:GetMinorCivPersonalityType()))
+                end
+            end
+        end
         local city = player:GetCapitalCity()
         local order, item = -1, -1
         if city then order, item = city:GetOrderFromQueue(0) end

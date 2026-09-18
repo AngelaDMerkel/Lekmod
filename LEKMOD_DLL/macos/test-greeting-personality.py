@@ -10,11 +10,12 @@ import xml.etree.ElementTree as ET
 root=Path(__file__).resolve().parents[2]
 parser=argparse.ArgumentParser()
 parser.add_argument("--greeting",type=Path,default=root/"LEKMOD/Lua/tmp/ui/CityStatePopup/CityStateGreetingPopup.lua.ignore")
+parser.add_argument("--relationships",type=Path,help="Test the diplomacy overview personality block instead")
 args=parser.parse_args()
-source=args.greeting.read_text()
+source=(args.relationships or args.greeting).read_text()
 start=source.find("\t-- Personality")
 if start<0:start=source.index("\t-- Shared data-driven personality text")
-end=source.index("\t-- Ally Status",start)
+end=source.index("\t-- Allied with anyone?" if args.relationships else "\t-- Ally Status",start)
 block=source[start:end]
 rows=ET.parse(root/"LEKMOD/Override/CIV5Units.xml").getroot().findall("Minor_Civ_Personalities/Row")
 entries=[]
@@ -34,6 +35,7 @@ for _,row in ipairs(rows) do
  local text,tip,labelTip
  local pPlayer={IsMinorCiv=function()return true end,GetMinorCivPersonalityType=function()return row.Type end,GetPersonality=function()return row.ordinal end}
  Controls={PersonalityInfo={SetText=function(_,v)text=v end,SetToolTipString=function(_,v)tip=v end},PersonalityLabel={SetToolTipString=function(_,v)labelTip=v end}}
+ local pStack=Controls
  local function render()
 '''+block+'''
  end
@@ -45,7 +47,7 @@ for _,row in ipairs(rows) do
  print((ok and "PASS " or "FAIL ")..row.Type..(ok and "" or " "..tostring(err)))
  if not ok then failures=failures+1 end
 end
-print(#rows.." greeting personality cases; "..failures.." failures")
+print(#rows.." personality display cases; "..failures.." failures")
 os.exit(failures==0 and 0 or 1)
 '''
 with tempfile.TemporaryDirectory(prefix="lekmod-greeting-test-") as directory:

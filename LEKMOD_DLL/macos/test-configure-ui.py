@@ -40,7 +40,7 @@ class ConfigureUiTests(unittest.TestCase):
         count, mode = CONFIGURE_UI.configure(self.lekmod, "standard", None)
 
         self.assertEqual(mode, "standard")
-        self.assertEqual(count, 88)
+        self.assertEqual(count, 89)
         self.assertTrue((self.output / "CityView.xml").is_file())
         self.assertTrue((self.output / "CityView_small.xml").is_file())
         self.assertTrue((self.output / "ProductionPopup.xml").is_file())
@@ -53,6 +53,15 @@ class ConfigureUiTests(unittest.TestCase):
             'ID="GoldenAgePointsFocusButton"',
             (self.output / "CityView.xml").read_text(encoding="utf-8"),
         )
+
+    def test_both_modes_include_data_driven_diplomacy_personalities(self) -> None:
+        eui = self.root / "EUI"
+        eui.mkdir()
+        for mode in ("standard", "eui"):
+            CONFIGURE_UI.configure(self.lekmod, mode, eui)
+            source = (self.output / "DiploRelationships.lua").read_text()
+            self.assertIn('include( "CityStatePersonalityHelper" );', source)
+            self.assertIn("GetMinorCivPersonalityDisplayText(pPlayer)", source)
 
     def test_all_ui_xml_templates_are_well_formed(self) -> None:
         for template_root in (
