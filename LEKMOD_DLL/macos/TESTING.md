@@ -607,3 +607,16 @@ The validator checks slot IDs, incompatible selection preservation, occupied
 swaps, Museum themes/tourism, exact quickload and cross-UI load, save hash,
 normal native exit and restoration. Mouse actions themselves are documented
 separately in `docs/macos-ui-overviews.md` and screenshot event records.
+
+### Budget science boundaries
+
+`--scenario budget-science --load-save PATH --save-and-exit` reads native science
+queries across supplied treasury balances, restores the original balance and
+asserts all research state is untouched. Use a negative-income fixture.
+`--scenario budget-settlement --scenario-turns 3 --save-and-exit` supports a new
+Ancient Duel setup: the normal driver founds a city, labeled temporary maintenance
+inputs create zero science, and two ordinary turns verify deficit and recovery
+settlement. Its saved report supports exact `--expected-state` reload.
+`test-eui-science-display.py` executes the actual EUI HUD and tooltip rate query;
+`--source PATH` accepts the preserved pre-fix template for baseline comparison.
+See `docs/macos-economy-boundaries.md` for evidence and coverage limits.

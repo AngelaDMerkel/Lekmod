@@ -964,7 +964,8 @@ local function UpdateTopPanelNow()
 	-----------------------------
 	if g_isScienceEnabled then
 
-		local sciencePerTurnTimes100 = g_activePlayer:GetYieldTimes100(YieldTypes.YIELD_SCIENCE)
+		-- Match the science used for research settlement, including its zero floor.
+		local sciencePerTurnTimes100 = g_activePlayer:GetScienceTimes100()
 
 		local strSciencePerTurn = S( "+%.0f", sciencePerTurnTimes100 / 100 )
 
@@ -1512,7 +1513,8 @@ g_toolTipHandler.SciencePerTurn = function()-- control )
 		tips:insert( L"TXT_KEY_TOP_PANEL_SCIENCE_OFF" .. ": " .. L"TXT_KEY_TOP_PANEL_SCIENCE_OFF_TOOLTIP" )
 	else
 
-		local sciencePerTurnTimes100 = g_activePlayer:GetYieldTimes100(YieldTypes.YIELD_SCIENCE)
+		-- Match the science used for research settlement, including its zero floor.
+		local sciencePerTurnTimes100 = g_activePlayer:GetScienceTimes100()
 		local techID = g_activePlayer:GetCurrentResearch()
 		local recentTechID = g_activeTeamTechs:GetLastTechAcquired()
 

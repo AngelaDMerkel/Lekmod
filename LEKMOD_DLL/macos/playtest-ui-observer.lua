@@ -79,6 +79,9 @@ do
             city and city:GetFocusType() or -1,
             tostring(city and city:IsForcedAvoidGrowth())}, ":") ..
             " gold=" .. player:GetGold() .. " queue=" .. table.concat(queue, ";") ..
+            " science100=" .. player:GetScienceTimes100() ..
+            " generic_science100=" .. player:GetYieldTimes100(YieldTypes.YIELD_SCIENCE) ..
+            " deficit_science100=" .. player:GetScienceFromBudgetDeficitTimes100() ..
             " buildings=" .. table.concat(buildings, ";") .. " specialists=" .. table.concat(specialists, ";") ..
             " manual_specialists=" .. tostring(city and city:IsNoAutoAssignSpecialists()) ..
             " yields100=" .. table.concat(yields, ";") .. " worked=" .. table.concat(worked, ";") ..
