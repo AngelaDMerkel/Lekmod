@@ -172,6 +172,7 @@ SCENARIO_ITEMS = {"inventory": {"system-inventory"},
                   "philippines-church": {"church-prerequisites", "church-construction-yields", "church-production-XP"},
                   "philippines-gerilya": {"gerilya-strength-control", "gerilya-normal-embark", "gerilya-embarked-refresh"},
                   "philippines-gerilya-return": {"gerilya-normal-disembark", "gerilya-land-move-boundary"},
+                  "oman-minaa": {"minaa-enemy-sea", "minaa-embarked", "minaa-lethal-stack", "minaa-own-land-distance-controls"},
                   "ideology-pressure": {"foreign-concert-pressure", "pressure-below-victory"},
                   "ideology-switch": {"revolution-cancel", "revolution-confirm", "revolution-tenets-culture", "revolution-content-rejection"},
                   "espionage": {"spy-home", "spy-recall", "spy-foreign", "spy-diplomat"},
@@ -413,8 +414,8 @@ def main():
         parser.error("Foreground UI tests require --mode ui-interaction or single-player-smoke and --timeout at most 3600; the flag does not grant user permission")
     if args.production_completion and (args.mode != "human-turns" or args.turns != 3 or not args.load_save or args.timeout > 600):
         parser.error("Production completion requires --mode human-turns, --turns 3, --load-save and --timeout at most 600")
-    if args.scenario and (args.mode != "single-player-smoke" or (not args.load_save and args.scenario not in ("congress", "endgame", "bolivia", "mughals", "worker", "buganda-lake", "georgia", "georgia-upgrade", "cuba-greatworks", "cuba-ideology", "diplomacy-assets", "palmyra", "venice", "venice-known-compass", "italy", "setup", "uae-raider", "aksum-heal-domain", "budget-settlement", "mexico-discovery", "phoenicia-founding", "philippines-founding")) or args.city_controls or args.timeout > 1800):
-        parser.error("Scenarios require --mode single-player-smoke, --load-save (except congress/endgame/bolivia/mughals/worker/buganda-lake/georgia/georgia-upgrade/cuba-greatworks/cuba-ideology/diplomacy-assets/palmyra/venice/venice-known-compass/italy/setup/uae-raider/aksum-heal-domain/budget-settlement/mexico-discovery/phoenicia-founding/philippines-founding), no --city-controls and --timeout at most 1800")
+    if args.scenario and (args.mode != "single-player-smoke" or (not args.load_save and args.scenario not in ("congress", "endgame", "bolivia", "mughals", "worker", "buganda-lake", "georgia", "georgia-upgrade", "cuba-greatworks", "cuba-ideology", "diplomacy-assets", "palmyra", "venice", "venice-known-compass", "italy", "setup", "uae-raider", "aksum-heal-domain", "budget-settlement", "mexico-discovery", "phoenicia-founding", "philippines-founding", "oman-minaa")) or args.city_controls or args.timeout > 1800):
+        parser.error("Scenarios require --mode single-player-smoke, --load-save (except congress/endgame/bolivia/mughals/worker/buganda-lake/georgia/georgia-upgrade/cuba-greatworks/cuba-ideology/diplomacy-assets/palmyra/venice/venice-known-compass/italy/setup/uae-raider/aksum-heal-domain/budget-settlement/mexico-discovery/phoenicia-founding/philippines-founding/oman-minaa), no --city-controls and --timeout at most 1800")
     if args.scenario == "endgame" and (args.load_save or args.expected_state or args.save_and_exit or args.scenario_turns != 2):
         parser.error("Endgame requires a new two-turn scenario, without save/reload options")
     if args.expect_human_victory and args.scenario != "endgame":

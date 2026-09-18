@@ -713,3 +713,11 @@ refresh of the three-extra-move difference. `philippines-gerilya-return` loads
 that saved state and uses normal disembark moves to verify equal land limits
 while retaining unique strength/promotion. Both snapshots support exact reload.
 Neither scenario sets an embark flag or movement counter.
+
+`--scenario oman-minaa --scenario-turns 2` supports a normal Oman/other-AI
+Industrial Archipelago setup. It supplies a distant coastal city/building and
+units/health/embark inputs at the observed empty barbarian-turn boundary after
+the opposing AI finishes. The next real Oman turn must apply exact damage with
+lethal-stack and own/land/distance controls. `test-oman-minaa.lua PRODUCT_LUA`
+adds isolated filter cases, labeled separately from native outcomes. The
+persistent surviving-unit/building/war snapshot supports exact reload.

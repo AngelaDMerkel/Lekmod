@@ -1337,3 +1337,11 @@ binding for the existing serialized founding counter, native correction/reload
 and retained first-two behavior. No save field or object layout changed. The
 matched updated DLL is required for the corrected lifetime path; older DLLs
 retain the compatibility fallback. Other Philippine abilities remain open.
+
+### Oman Minaa pulse
+
+[Oman validation](macos-oman-validation.md) records the real periodic damage,
+lethal stacked-unit behavior, native exclusion controls, exact reload and
+separately labeled offline filters. The first AI-interference attempt remains
+failed fixture evidence; no AI or synchronization flag was changed to isolate
+the passing ordinary-turn pulse. Other Omani mechanics remain open.

@@ -84,7 +84,7 @@ All 114 playable civilizations and 26 civilization Lua files are listed below. A
 | `CIVILIZATION_NORMANDY` | `TRAIT_WIRR` | UNIT_PEDITE | — | Unique mechanics pending. |
 | `CIVILIZATION_NORWAY` | `TRAIT_NORDIC_BOUNTY` | UNIT_SKINFANTRY, BUILDING_STAVE | — | Unique mechanics pending. |
 | `CIVILIZATION_NUBIA` | `TRAIT_TA_SETI` | UNIT_NUBIAN_BOW, BUILDING_BLAST_FURNACE | — | Unique mechanics pending. |
-| `CIVILIZATION_OMAN` | `TRAIT_MC_CHAIN_OF_THE_EARTH` | UNIT_MC_OMANI_BAGHLAH, BUILDING_MC_OMANI_MINAA | Lekmod_oman.lua | Unique mechanics pending. |
+| `CIVILIZATION_OMAN` | `TRAIT_MC_CHAIN_OF_THE_EARTH` | UNIT_MC_OMANI_BAGHLAH, BUILDING_MC_OMANI_MINAA | Lekmod_oman.lua | [Minaa pulse](macos-oman-validation.md): real owner-turn enemy sea/embarked damage, lethal stack and own/land/distance controls/reload native with supplied inputs; other filters offline. Other Omani mechanics pending. |
 | `CIVILIZATION_OTTOMAN` | `TRAIT_OTTOMANS` | UNIT_OTTOMAN_JANISSARY, UNIT_OTTOMAN_SIPAHI | Lekmod_ottomans.lua | Unique mechanics pending. |
 | `CIVILIZATION_PALMYRA` | `TRAIT_PEARL_OF_THE_DESERT` | UNIT_PALMYRA_CLIBANARIUS, BUILDING_PALMYRA_FORUM | Lekmod_palmyra.lua | Founding and duplicate-owner capture freshwater, exact reload native; eliminated-owner boundaries offline. Other uniques pending. |
 | `CIVILIZATION_PERSIA` | `TRAIT_ENHANCED_GOLDEN_AGES` | UNIT_PERSIAN_IMMORTAL, BUILDING_SATRAPS_COURT | — | Unique mechanics pending. |
