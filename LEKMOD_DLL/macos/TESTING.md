@@ -737,3 +737,9 @@ and Roman slot 2, with the normal no-ruins option. Supplied XP must become ready
 through ordinary unit turns; human promotion actions and normal AI promotions
 must produce the event-time faith reward, while Rome gains none. All owner unit
 levels/XP/promotions and faith values support exact reload.
+
+`test-moors-era.lua LEKMOD/Lua/Civilizations/Lekmod_moors.lua` executes ten
+offline handler cases for Medieval/Renaissance counts, later-era clearing,
+human/AI team routing, unrelated/dead-owner exclusions and per-owner-turn
+updates. It does not establish native production modifiers or immediate new-city
+behavior. All 26 civilization Lua files also pass the pinned Lua 5.1 syntax check.
