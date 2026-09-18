@@ -771,3 +771,11 @@ hex grid. Thirteen island/coast/owner cases catch the excluded-center one-tile
 island defect. Grid conversion, area identity and visibility are stand-ins;
 native generated-map and persistence checks remain required. The optional old
 source argument reproduces the five pre-fix failures. See the Tonga report.
+
+
+`test-kilwa-routes.lua LEKMOD/Lua` loads the actual utility and Kilwa script
+for seventeen route-filter and owner/city refresh cases. It checks major/minor
+international destinations, internal routes, domain zero, incoming/other-origin
+exclusion, absent targets, stale-count removal and the real UnitPrekill argument
+order. Route lists and city identities are supplied stand-ins. Native route
+creation/expiry/plunder timing, food settlement and persistence remain pending.
