@@ -5,7 +5,7 @@ local this_civ = GameInfoTypes["CIVILIZATION_PHOENICIAN"]
 local is_active = LekmodUtilities:is_civilization_active(this_civ)
 
 ------------------------------------------------------------------------------------------------------------------------
--- Phoenicia UA. Add a building to a new city that gives +1 Population, +1 Happiness and +40 Gold.
+-- Phoenicia UA. After Optics, add the founding building that gives +1 Population and +50 Gold.
 ------------------------------------------------------------------------------------------------------------------------
 function lekmod_phoenicia_ua_new_city_bonus(player_id, x, y)
 

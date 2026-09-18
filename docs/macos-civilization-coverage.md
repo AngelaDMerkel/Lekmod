@@ -89,7 +89,7 @@ All 114 playable civilizations and 26 civilization Lua files are listed below. A
 | `CIVILIZATION_PALMYRA` | `TRAIT_PEARL_OF_THE_DESERT` | UNIT_PALMYRA_CLIBANARIUS, BUILDING_PALMYRA_FORUM | Lekmod_palmyra.lua | Founding and duplicate-owner capture freshwater, exact reload native; eliminated-owner boundaries offline. Other uniques pending. |
 | `CIVILIZATION_PERSIA` | `TRAIT_ENHANCED_GOLDEN_AGES` | UNIT_PERSIAN_IMMORTAL, BUILDING_SATRAPS_COURT | — | Unique mechanics pending. |
 | `CIVILIZATION_PHILIPPINES` | `TRAIT_GOOD_FIGHT` | UNIT_PHILIPINO_MARINE, BUILDING_NATIONALCHURCH | Lekmod_philippines.lua | Unique mechanics pending. |
-| `CIVILIZATION_PHOENICIAN` | `TRAIT_LEADER_HIRAM` | UNIT_SQUARE_SAIL_SHIP, BUILDING_TRADE_HARBOUR | Lekmod_phoenicia.lua | Unique mechanics pending. |
+| `CIVILIZATION_PHOENICIAN` | `TRAIT_LEADER_HIRAM` | UNIT_SQUARE_SAIL_SHIP, BUILDING_TRADE_HARBOUR | Lekmod_phoenicia.lua | [Optics founding reward](macos-phoenicia-validation.md), human/AI and pre-tech/existing-city/other-owner controls, exact reload native. Sailing/Trade Harbour and remaining boundaries pending. |
 | `CIVILIZATION_POLAND` | `TRAIT_SOLIDARITY` | UNIT_POLISH_WINGED_HUSSAR, BUILDING_DUCAL_STABLE | — | Unique mechanics pending. |
 | `CIVILIZATION_POLYNESIA` | `TRAIT_WAYFINDING` | UNIT_MC_HAWAIIAN_KOA | Lekmod_polynesia.lua | Unique mechanics pending. |
 | `CIVILIZATION_PORTUGAL` | `TRAIT_EXTRA_TRADE` | UNIT_PORTUGUESE_NAU, UNIT_VENEZ_CARAVAN, UNIT_VENEZ_CARGO_SHIP, BUILDING_FEITORIA | — | Unique mechanics pending. |

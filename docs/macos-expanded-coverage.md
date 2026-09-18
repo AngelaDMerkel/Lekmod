@@ -1321,3 +1321,10 @@ it does not close the remaining EUI/size/overview or gameplay ledger rows.
 failure, corrected initialization/founding events, identical-world replay,
 distance controls, exact reload and the separately retained shutdown stall.
 Other Mexican unique mechanics remain open in the civilization inventory.
+
+### Phoenicia founding reward
+
+[Phoenicia validation](macos-phoenicia-validation.md) records normal founding
+before/after Optics, human/AI awards, existing-city and other-owner controls,
+exact reload and the diagnosed ancient-ruin fixture contamination. Gameplay
+needed no correction; the stale source comment was aligned with the tested rule.

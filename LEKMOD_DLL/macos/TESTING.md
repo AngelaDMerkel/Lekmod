@@ -667,3 +667,10 @@ then verifies the native tribute-eligibility rate, one ordinary influence turn
 and an actual tribute command/cutoff. The friendship getter exposes whole
 points; the report distinguishes those observations from quoted hundredths.
 The complete minor/treasury/unit snapshot supports exact reload.
+
+`--scenario phoenicia-founding --scenario-turns 2` supports normally selected
+human/AI Phoenicia and a non-Phoenician third major. It stages normal Settler
+founding before/after supplied Optics, excludes nearby ruins from those sites,
+checks no retroactive reward and observes the AI/other-owner outcomes after an
+ordinary turn. Population/founding events are logged read-only. Its saved report
+supports exact reload; see `docs/macos-phoenicia-validation.md`.
