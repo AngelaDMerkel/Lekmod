@@ -7,7 +7,7 @@ All 114 playable civilizations and 26 civilization Lua files are listed below. A
 | Civilization | Trait | Unique overrides | Lua | Current evidence |
 | --- | --- | --- | --- | --- |
 | `CIVILIZATION_AKKAD` | `TRAIT_AKKAD` | UNIT_AKKAD_SPEARMAN, BUILDING_AKKAD_LIBRARY | — | Unique mechanics pending. |
-| `CIVILIZATION_AKSUM` | `TRAIT_AKSUM` | BUILDING_ASKUM_NATIONAL_EPIC | Lekmod_aksum.lua | Unique mechanics pending. |
+| `CIVILIZATION_AKSUM` | `TRAIT_AKSUM` | BUILDING_ASKUM_NATIONAL_EPIC | Lekmod_aksum.lua | Church land/sea/air/distance faith boundaries and exact reload native with supplied healing deltas. Other uniques/ordinary healing pending. |
 | `CIVILIZATION_AMERICA` | `TRAIT_RIVER_EXPANSION` | UNIT_AMERICAN_MINUTEMAN, UNIT_PIONEER | — | Unique mechanics pending. |
 | `CIVILIZATION_ARABIA` | `TRAIT_LAND_TRADE_GOLD` | UNIT_ARABIAN_CAMELARCHER, BUILDING_BAZAAR | — | Unique mechanics pending. |
 | `CIVILIZATION_ARGENTINA` | `TRAIT_ARGENTINA` | UNIT_ARGENTINA_KNIGHT, BUILDING_ARGENTINA_STABLE | — | Unique mechanics pending. |

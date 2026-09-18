@@ -567,3 +567,11 @@ never assigns unit position/moves/activity, declares war, or clears a waiting fl
 labeled inputs. The AI creates a legal sea route on its real active turn; normal
 war/plunder commands must remove it and award the configured XP/movement.
 Use normal save/exit and exact reload.
+
+
+`aksum-heal-domain` starts Aksum/Small Archipelago with religion enabled and
+`--scenario-turns 3`, or loads a suitable religion-enabled coastal fixture. It
+labels the provided Church, units, damage and native healing deltas. Only the
+faith response to real UnitHealed dispatch is certified; this does not claim
+ordinary-turn healing or construction. Land/sea/air/distance controls and exact
+reload are required.

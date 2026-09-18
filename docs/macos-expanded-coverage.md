@@ -1274,3 +1274,34 @@ The combined civilization test package is `build/macos/Lekmod-uae-aksum-20260918
 SHA-256 `79859cd8c9b03a20f8d7508e9a30f5a5dd6175c25af082362c7844d3fedeff8a`.
 Its signed GameCore remains
 `cf5273574eb622c53b700d6a0dbfa1e2ff882f5475d4c9a486aa4cdac740e798`.
+
+### Rock-Hewn Church healing domain
+
+The shipped help limits the healing faith reward to land units and awards it to
+the unit owner. The handler previously checked only proximity. Four offline
+product-handler cases reproduced erroneous sea/air awards while retaining the
+land and distance controls.
+
+`20260918T044252Z` used an old religion-disabled save: the event reached the
+handler, but the engine correctly ignored all faith changes. That failed test
+assumption is retained. `044712Z` lacked an owned distant control tile; the
+fixture was corrected to use empty neutral land without changing ownership.
+`044847Z` then used normal Aksum setup with religion explicitly enabled. A
+Church, units, damage 40 and native healing deltas -10 were supplied/labeled
+event stimuli. Land, sea and air units each received two faith; the distant
+land control received zero. The two non-land results failed the tooltip's rule.
+
+The handler now rejects non-land units before testing proximity. It continues
+to award the healing unit's owner, including when another civilization owns
+the Church. The obsolete comment naming the improvement's owner was corrected
+to match the existing player-facing rule. All four offline cases pass.
+
+`045517Z` repeated the native event stimuli: nearby land +2 faith, sea 0, air 0,
+distant land 0. Save SHA-256:
+`8f32fb24707100bd77da097b3468add3f3af1c719a758478c9a136a41d611ac4`.
+`045617Z` matched the exact faith/unit/improvement state after reload. Both
+saved/exited normally, restored hooks/settings, preserved manual saves and had
+no Lua/synchronization failures. The combined package/hash is recorded in the
+Qasimi section above. These are native event-handler checks with explicitly
+provided healing deltas, not ordinary-turn healing, Church construction, mouse
+input or completion of Aksum's other abilities.

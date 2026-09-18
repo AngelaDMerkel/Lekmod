@@ -22,7 +22,7 @@ function lekmod_aksum_ua_follow_religion(player_id, founded_city, religion_id)
 
 end
 ------------------------------------------------------------------------------------------------------------------------
--- Aksum UI. Any unit healing next to or on the UI will grant the owner of the UI faith.
+-- Aksum UI. Healing land units on or next to the improvement grant their owner faith.
 ------------------------------------------------------------------------------------------------------------------------
 function lekmod_aksum_ui_faith_on_heal(player_id, unit_id, _, x, y)
 
@@ -30,6 +30,7 @@ function lekmod_aksum_ui_faith_on_heal(player_id, unit_id, _, x, y)
    local player = Players[player_id]
 
    local unit = player:GetUnitByID(unit_id)
+   if not unit or unit:GetDomainType() ~= DomainTypes.DOMAIN_LAND then return end
    local needs_same_player = false
    print(GameInfoTypes["IMPROVEMENT_AKSUM"])
    if unit:IsNearImprovementType(GameInfoTypes["IMPROVEMENT_AKSUM"], 1, needs_same_player) then
