@@ -502,3 +502,13 @@ owner turn. Golden-age starts use Artist missions. It checks both owners' point
 awards and extensions, then supports exact saved-state reload. Alert gating
 and unrelated/ineligible/fractional boundaries also have offline tests in
 `test-italy-events.py`.
+
+
+`great-person-builds` loads the saved religion-reconversion fixture without
+advancing turns. Five supplied great people use normal Academy, Manufactory,
+Customs House, Holy Site and Citadel build actions. The scenario checks actual
+completion events, consumption, plot-yield previews, city/water/duplicate
+rejection, neutral Citadel claims and the existing used-prophet boundary. The
+Holy Site's fresh prophet is created in a religious capital before positioning.
+Use `--save-and-exit` and exact `--expected-state` reload; startup failures before
+loading are distinct from a saved-state mismatch.

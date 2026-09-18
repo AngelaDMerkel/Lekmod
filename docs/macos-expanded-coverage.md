@@ -23,7 +23,7 @@ mean every possible combination of game state has been tested.
 | Diplomatic victory | World Leader session, vote eligibility/count, winning resolution and victory | Passed with supplied technology/gold; natural gifts, sessions and ballots |
 | Score victory | Score resolution, human victory and defeat presentation | Passed |
 | Combat | Human melee/ranged/city attacks, unit death/capture, terrain/war restrictions, naval and air actions | Core land/city/naval attacks, death/capture and reload passed; actual air strike/interception, ground sweep, carrier capacity/movement and exact reload passed |
-| Unit lifecycle | Founding, movement/pathing, embark/disembark, promotion/upgrade, worker build/repair/pillage, healing, gifting/deletion, great-person actions | Promotion/upgrade/heal/embark, farm/road/repair, disband/gift and great-person actions passed; pillage, road repair/travel and exact reload passed; other great-person cases remain |
+| Unit lifecycle | Founding, movement/pathing, embark/disembark, promotion/upgrade, worker build/repair/pillage, healing, gifting/deletion, great-person actions | Promotion/upgrade/heal/embark, farm/road/repair, disband/gift and great-person actions passed; pillage, road repair/travel and exact reload passed; Academy/Manufactory/Customs House/Holy Site/Citadel construction and reload passed; other great-person cases remain |
 | City lifecycle | Additional founding, capture/puppet/annex/raze/liberation, growth/starvation, building sale, specialists/great works | Core lifecycle, artwork movement/theming and exact reloads passed; Dance Hall bonuses and ordinary artifact/landmark digs passed; further cultural UI/branches remain |
 | Economy and policies | Research/free tech, policy/tenet acquisition and switching, happiness/golden age, resources, treasury boundaries | Policy/tenet confirmations, spending and Cuba reward boundaries passed; pressure/revolution, natural anarchy expiry and exact reload passed; remaining economy cases pending |
 | Diplomacy | War/peace, friendship/denunciation, resources/GPT/open borders, non-aggression pacts and configured agreement restrictions, city-state interactions | Luxury/GPT gifts, mutual embassies, open borders and persistence passed; natural contract expiry and permanent embassies passed; friendship/denunciation and reload passed; non-aggression creation/expiry and configured-off agreement UI passed; negotiated peace/protection/expiry and reload passed |
@@ -1166,3 +1166,36 @@ The intermediate managed package is `build/macos/Lekmod-italy-20260918.zip`,
 SHA-256 `c4e4bda52c53532e1f3a6d752daa9008c42724c4fac6a90d29bc71910e34a60c`.
 Its GameCore remains `e07f67902ebbc0a88f5c104a92f0eecd5b82f38f2c107291bb22c1c3eb5a75ed`;
 this is another Lua-only fix, built on the Venice package's product changes.
+
+### Great-person improvements and used-prophet restriction
+
+`20260918T020634Z` loaded the existing reconversion save. Supplied Scientists,
+Engineers, Merchants, Prophets and Generals used normal build actions on naturally
+eligible owned plots. Each produced the expected improvement, emitted the real
+BuildFinished event and consumed its builder. Completed plot yields matched the
+native build preview: Academy +8 science, Manufactory +6 production, Customs
+House +4 gold and Holy Site +6 faith. Underlying resources and road state were
+retained. The Citadel claimed four adjacent neutral tiles through the normal
+construction/culture-bomb path; no tile owner was assigned.
+
+All five actions rejected city/water/duplicate builds. An existing prophet that
+had actually spread religion before the source save was ineligible to build a
+Holy Site. The positive prophet was supplied in the capital, inherited religion
+9 and four spread charges, and was positioned on its legal build tile. The
+earlier `020409Z` passed the same construction checks with a religionless
+plot-created prophet; its exact source is retained in that run directory.
+
+The final save SHA-256 is
+`ae1af29f901eb4f05e7aaf15169c60ec36be4ab015b9d5802bb43c70a28ac34d`.
+`022855Z` matched its exact saved improvements, six plot yields, adjacent owners,
+resources/routes and surviving units. That reload used an explicitly authorized
+foreground startup control without an injected test library, QuickStart=0 and
+SkipIntroVideo=1. Both successful runs saved/exited normally (0), preserved manual
+saves, restored settings/hooks and had no Lua/synchronization errors. Intermediate
+reload attempts `020756Z`, `021045Z`, `021357Z` and `021800Z` failed during
+localization startup before opening the save and remain failed startup evidence.
+
+These are scripted build/action and native outcome checks, not mouse input,
+earned great-person generation or worked-city yield settlement. The Citadel
+case covers neutral territory, not foreign-city/territory seizure. No product
+change was needed for the five build paths.

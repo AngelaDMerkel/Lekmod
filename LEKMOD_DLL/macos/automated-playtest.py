@@ -153,6 +153,7 @@ FUNCTIONAL_ITEMS = {"script-data", "science-overflow", "unit-position-flags", "c
 PRODUCTION_COMPLETION_ITEMS = {"production-completion-unit", "production-completion-building"}
 SCENARIO_ITEMS = {"inventory": {"system-inventory"},
                   "ideology-inventory": {"ideology-input-inventory"},
+                  "great-person-builds": {"academy", "manufactory", "customs-house", "holy-site", "citadel", "great-person-build-restrictions", "spent-prophet-build-rejection"},
                   "anarchy-expiry": {"anarchy-yield-restrictions", "anarchy-natural-expiry"},
                   "ideology-pressure": {"foreign-concert-pressure", "pressure-below-victory"},
                   "ideology-switch": {"revolution-cancel", "revolution-confirm", "revolution-tenets-culture", "revolution-content-rejection"},
