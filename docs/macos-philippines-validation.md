@@ -106,3 +106,27 @@ the separate logging-only control and cache evidence are in the startup report.
 This is native movement-budget and turn-refresh coverage for three civilian
 classes, plus combat/owner controls. It does not claim a physical movement path,
 foreign open-border territory, embarked-unit or every civilian-class behavior.
+
+## National Church prerequisites, yields and training XP
+
+The active building Help/Strategy points to `TXT_KEY_BUILDING_NATIONALCHURCH_HELP`:
+Compass, no prerequisite building, cheaper than Zoo, +1 culture/+2 faith and
++15 training XP. The separate older `_STRATEGY` text describes a superseded
+Temple/four-faith rule and is not the building's active reference.
+
+`20260918T094631Z` verified the Church unavailable before Compass, then available
+at Compass while Printing Press, Temple and Colosseum were all absent. The base
+Zoo was rejected and its quoted cost exceeded the Church's. Technologies and
+production one hammer below completion were labeled inputs. One ordinary turn
+completed the Church through CityConstructed: base culture 1→2, faith 0→2 and
+quoted Scout production XP 0→15. A second normal production order and similarly
+provided near-complete progress produced a real Scout with exactly 15 XP through
+CityTrained. No completed building, unit or XP value was assigned.
+
+Save SHA-256: `c4e730a13f5729f3b24a8beb72d930305ce74dcaa257bf7b6d096f05fe5b618a`.
+Exact reload `094859Z` matched the Church count, absent prerequisite buildings,
+base yields and all human unit identities/types/XP/positions. Reload-save SHA-256:
+`4741528adc996d1d5e400c7dc373fa677e4933b1cbe41e804989b6d2c9c14cb5`.
+Both saved/exited normally (0), restored hooks/settings and preserved manual saves,
+with no Lua/sync errors. This is scripted production/native outcome coverage,
+not mouse input or earned research/production. No product correction was needed.

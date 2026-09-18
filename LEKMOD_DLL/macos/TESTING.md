@@ -700,3 +700,9 @@ classes on distinct owned/neutral land plus combat/other-owner controls. It
 checks each actual base-plus-two limit, then normal turn refresh without any
 movement setter. The full unit snapshot supports exact reload. This does not
 cover embarked or foreign-open-border movement.
+
+`--scenario philippines-church --scenario-turns 2` uses the currently referenced
+Help/data (no building prerequisite, Compass, +1 culture/+2 faith/+15 training XP).
+It supplies research and near-complete production, then requires normal Church
+construction and a normally trained combat unit with the quoted XP. The resulting
+building/yield/unit snapshot supports exact reload.
