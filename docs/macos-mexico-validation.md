@@ -89,3 +89,24 @@ Both runs saved/exited normally (0), restored hooks/settings and preserved manua
 saves, with no Lua/sync errors. The new initial-hook evidence feature retained
 and hash-verified all 43 injected files in the action run. No product change was
 needed for this award. Tribute-related influence and Ranchero/Hacienda remain open.
+
+## Ranchero growth during production
+
+`20260918T072920Z` supplied capital population 4, a Granary and stored food one
+short of growth, then selected Food Focus and disabled Avoid Growth through
+normal commands. The legal Ranchero production order was accepted; Mexico's
+replaced base Settler was ineligible. Native `IsFoodProduction` stayed false.
+
+One ordinary turn (1 to 2) grew the city from 4 to 5 while Ranchero production
+advanced from 0 to 600 hundredths toward its 71-hammer cost. The unit remained
+under construction; no completed Ranchero appeared. Food went from 28 to 4
+after paying the growth threshold. These are scripted orders and native turn
+outcomes with supplied growth prerequisites, not earned food or mouse input.
+Save SHA-256: `35856d6864b2b58c3595c028a0cf85c583089fb364bb033fc369de80940eda42`.
+
+`073243Z` matched the exact population, food, focus, production, Granary and
+Ranchero-count state on reload. Reload-save SHA-256:
+`75e5b8b2150a1c5abbc0c703e482210b856377422a5f7ac370538e6a0f7d791b`.
+Both saved/exited normally (0), restored settings/hooks and preserved manual
+saves, with no Lua/sync errors. No product correction was required. This checks
+the Ranchero's distinct growth rule, not a completed training/founding sequence.

@@ -646,3 +646,9 @@ the technology inputs, checks native Worker creation for each owner and rejects
 a repeated award from already-known technology. The turn allowance installs
 ordinary technology-popup handling; the successful action run advanced no turn.
 Its saved report supports exact reload.
+
+`--scenario mexico-ranchero --scenario-turns 1` loads a Mexican capital. It
+supplies population 4, a Granary and near-growth food, uses normal focus and
+Ranchero production orders, checks base-Settler rejection, and verifies one
+ordinary growth turn while the Ranchero remains under construction. Its complete
+snapshot supports exact reload.
