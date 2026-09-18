@@ -70,7 +70,7 @@ function lekmod_uae_qasimi_raider_pillage(player_id, unit_id, plot_x, plot_y)
 
    -- Award XP and movement
    unit:ChangeExperience(15)
-   unit:ChangeMoves(200) -- Movement points are in hundredths, so 200 = 2 movement points
+   unit:ChangeMoves(2 * GameDefines.MOVE_DENOMINATOR) -- Preserve the advertised two moves, including overfill.
 
    -- Show popup text if this is the active player
    if player_id == Game.GetActivePlayer() then

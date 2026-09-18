@@ -560,3 +560,10 @@ build/macos/test-deps/lua-5.1.4/src/lua LEKMOD_DLL/macos/test-stacked-movement.l
 
 The driver preserves real movement budgets and arrival checks. Its nearby search
 never assigns unit position/moves/activity, declares war, or clears a waiting flag.
+
+
+`uae-raider` starts Industrial/Small Archipelago with human UAE and AI Rome,
+`--scenario-turns 6`. Coastal cities/buildings/reveal and the relevant units are
+labeled inputs. The AI creates a legal sea route on its real active turn; normal
+war/plunder commands must remove it and award the configured XP/movement.
+Use normal save/exit and exact reload.

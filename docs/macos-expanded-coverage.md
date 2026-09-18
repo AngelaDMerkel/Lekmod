@@ -1248,3 +1248,29 @@ all retained failed attempts. This closes the finite setup-variation matrix;
 quicksave, additional UI boundaries, civilization mechanics and the other open
 ledger rows remain. It does not restart the accepted long-turn phase or claim
 every possible combination.
+
+### Qasimi Raider movement reward
+
+`20260918T043955Z` selected human UAE and AI Rome normally. Supplied AI coastal
+city/buildings/reveal and a cargo ship produced a legal internal sea route on
+the AI's actual turn. After normal war declaration, a supplied/positioned Qasimi
+Raider used the actual plunder action. The sea route and visual unit disappeared,
+gold rose by 100 and XP by 15. Movement rose 480→680: the Lua reward used 200
+raw points, but the shipped MOVE_DENOMINATOR is 60 and the tooltip promises two
+moves (including overfill). The failed verdict and diagnostic save were retained;
+its process exited 0 with cleanup, not a functional pass.
+
+The reward now uses `2 * GameDefines.MOVE_DENOMINATOR`. Four offline cases cover
+the amount, overfill, an ordinary unit and a missing-unit guard; the original
+source fails the two movement cases. Native retest `045245Z` repeated the sea
+plunder, XP and gold outcomes with movement 480→600. Save SHA-256:
+`474f04881ab7f466cad393d4f9ac7e7058387c4ee7945343fbe3978cf5ec9fdc`.
+`045420Z` matched the exact saved movement/XP/route/war/treasury state. Both
+passed normal exit, restoration, manual-save preservation and Lua/sync checks.
+This is scripted mission/action coverage with supplied inputs; it does not
+cover foreign-owner Raiders or all UAE abilities.
+
+The combined civilization test package is `build/macos/Lekmod-uae-aksum-20260918.zip`,
+SHA-256 `79859cd8c9b03a20f8d7508e9a30f5a5dd6175c25af082362c7844d3fedeff8a`.
+Its signed GameCore remains
+`cf5273574eb622c53b700d6a0dbfa1e2ff882f5475d4c9a486aa4cdac740e798`.

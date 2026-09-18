@@ -111,7 +111,7 @@ All 114 playable civilizations and 26 civilization Lua files are listed below. A
 | `CIVILIZATION_TONGA` | `TRAIT_ISLANDS` | UNIT_MC_RAPA_NUI_MATATOA, BUILDING_MC_TONGAN_MALAE | Lekmod_tonga.lua | Unique mechanics pending. |
 | `CIVILIZATION_TUNISIA` | `TRAIT_TUNISIA` | UNIT_TUNISIA_PRIVATEER, BUILDING_TUNISIA_CASTLE | — | Unique mechanics pending. |
 | `CIVILIZATION_TURKEY` | `TRAIT_WESTERNIZATION` | UNIT_TURKISH_GWI, BUILDING_UC_HALKEVLERI | — | Unique mechanics pending. |
-| `CIVILIZATION_UAE` | `TRAIT_YALLAH_HABIBI` | UNIT_QASIMI_RAIDER, BUILDING_BURJ | Lekmod_uae.lua | Unique mechanics pending. |
+| `CIVILIZATION_UAE` | `TRAIT_YALLAH_HABIBI` | UNIT_QASIMI_RAIDER, BUILDING_BURJ | Lekmod_uae.lua | Sea plunder, +15 XP/two-move reward and exact reload native. Other abilities/owner boundaries pending. |
 | `CIVILIZATION_UKRAINE` | `TRAIT_RUS` | UNIT_TACHANKA, BUILDING_KNYAZ | — | Unique mechanics pending. |
 | `CIVILIZATION_VATICAN` | `TRAIT_VATICAN` | UNIT_SWITZ, BUILDING_STPETERS | Lekmod_vatican.lua | Unique mechanics pending. |
 | `CIVILIZATION_VENEZ` | `TRAIT_VENEZ` | UNIT_VENETIAN_GALLEASS, UNIT_VENETIAN_MERCHANT | Lekmod_venice.lua | Independent Compass awards, affected-save repair, exact reload and Industrial start native. Other uniques pending. |
