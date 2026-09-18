@@ -110,3 +110,34 @@ Ranchero-count state on reload. Reload-save SHA-256:
 Both saved/exited normally (0), restored settings/hooks and preserved manual
 saves, with no Lua/sync errors. No product correction was required. This checks
 the Ranchero's distinct growth rule, not a completed training/founding sequence.
+
+## Hacienda construction and resource classes
+
+`20260918T075444Z` loaded the Ranchero fixture. Economics and the resource-reveal
+technologies, two cleared forest/jungle plots, compatible wheat/cotton/iron/coal
+resources, and production one hammer below completion were explicit inputs.
+Resource placement used native compatibility checks and distinct owned plots;
+no plot-yield value or completed building was assigned.
+
+A normal Hacienda production order was legal; the replaced Windmill was rejected.
+One ordinary turn (2 to 3) completed the Hacienda and emitted CityConstructed.
+Wheat gained exactly one gold, cotton one production, and both iron and coal one
+food. Every other measured plot yield remained unchanged. City base building
+maintenance stayed unchanged, matching Hacienda's zero maintenance.
+Save SHA-256: `d4e3aa8e7a2633f032ab4a2bcbd16a8ab236f15201203af838d554c79fd97d1d`.
+`075847Z` matched the saved building, maintenance, all owned resource quantities
+and plot yields exactly. Reload-save SHA-256:
+`8dfd6dd069e7d8136745689ec0639eab878eec52164670a44c2c7e3c20972c7e`.
+Both saved/exited normally (0), restored settings/hooks and preserved manual
+saves, with no Lua/sync errors. No product change was required.
+
+The earlier `073937Z`, `074200Z`, `074503Z` and activation-only `074705Z` attempts
+failed during localization startup, before gameplay. Original-settings native
+control `074840Z` reached the menu and exited normally; it is documented in the
+startup investigation. `075215Z` then reached gameplay but had no eligible early
+strategic-resource plot. The final fixture explicitly cleared two plots before
+finding a valid assignment; this is supplied terrain, not worker-chopping coverage.
+
+This establishes the four resource-class bonuses, normal construction and zero
+maintenance. Capture/removal behavior and the remaining influence mechanic are
+separate coverage; no broad Mexico-complete claim follows from these cases.

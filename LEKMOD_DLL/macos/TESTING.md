@@ -652,3 +652,11 @@ supplies population 4, a Granary and near-growth food, uses normal focus and
 Ranchero production orders, checks base-Settler rejection, and verifies one
 ordinary growth turn while the Ranchero remains under construction. Its complete
 snapshot supports exact reload.
+
+`--scenario mexico-hacienda --scenario-turns 1` loads a Mexican capital without
+a Hacienda. It supplies technology, selects four distinct compatible owned
+resource plots (clearing forest/jungle as labeled input only if required), and
+supplies production one hammer short of completion. Normal construction must
+apply bonus-gold, luxury-production and both strategic-class food increases,
+leave other plot yields unchanged and add no maintenance. The snapshot supports
+exact reload of the resulting building/resource/yield state.

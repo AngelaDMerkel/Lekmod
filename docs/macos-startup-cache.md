@@ -269,3 +269,26 @@ restored settings/hooks and preserved manual saves. A later manual sample reques
 found the owned process already closed and collected no additional sample.
 Separate retry `071357Z` passed exact reload and normal exit 0; the stalled run
 remains failed evidence. No wait flag was changed or successful exit fabricated.
+
+The Hacienda attempts `20260918T073937Z`, `074200Z` and `074503Z` each failed
+during localization startup before any scenario action. The first retained a
+25,509,888-byte merged cache with localization tables and a passing SQLite
+quick_check. All 21 cache files were preserved under
+`build/macos/cache-investigation/20260918T073937Z`; that healthy cache was not
+deleted. The second and third attempts left zero-byte merged files, separately
+preserved by the guarded repair tool under their matching `cache-repairs`
+directories before retrying. All failures restored hooks/settings and preserved
+manual saves. An activation-only background comparison was then initiated.
+
+Activation-only comparison `20260918T074705Z` also failed before gameplay with
+exit 255 after 20.4 seconds and an empty merged cache. That file was preserved by
+the guarded repair. Original-settings foreground control
+`native-startup-controls/20260918T074840Z` then used no injected library or UI
+hooks and changed no settings before launch. Actual Escape skipped the movie;
+the main menu appeared. Actual Exit/Yes returned 0 after 150.7 seconds, with no
+settings changed by the game and all manual saves preserved. Its menu screenshot
+SHA-256 is `b231b50cbf8a08dce8a3f24223f8743bc4666c9896552d837ea7bc71feba5e93`.
+The merged cache regenerated to 27,500,544 bytes. The next full-observer background
+run `075215Z` reached gameplay, where its resource-placement fixture failed.
+This does not isolate one cause: original settings, fullscreen, activation and
+hooks differed between the controls. Startup reliability remains unresolved.
