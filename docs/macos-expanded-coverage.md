@@ -1375,3 +1375,12 @@ island-coast anchors pass after the fix, while Rome's complete revealed set
 remains unchanged. No terrain or visibility was assigned. All three processes
 exited normally and restored hooks/settings/manual saves; the baseline keeps
 its failed scenario verdict. Remaining Tonga mechanics are still open.
+
+
+### Per-religion building-yield caches
+
+[Native Candi/Gurdwara checks](macos-religion-diversity-yields.md) passed minority
+addition/removal, unchanged-majority rate updates, Roman controls and exact
+two-religion saved-state reload (`20260918T234916Z`, `235038Z`). The buildings
+and pressure transfers were supplied inputs; construction, purchase and ordinary
+yield settlement are separate. Both runs exited normally with cleanup verified.

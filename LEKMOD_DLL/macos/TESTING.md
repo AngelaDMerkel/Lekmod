@@ -803,3 +803,11 @@ A suitable fixture must contain a singleton island at distance 7–12 and Roman
 distant-island controls. Missing preconditions fail explicitly. A failing
 visibility verdict can still be saved for exact-map retesting; it remains FAIL.
 The full per-owner revealed-plot snapshot supports exact reload.
+
+
+`--scenario diversity-yields --load-save PATH --save-and-exit` loads the
+corrected Ottoman diversity fixture, supplies a Candi then a Gurdwara and uses
+pressure transfers with unchanged majority/followers. Native faith and science
+religion caches must update, minority removal must clear the Candi bonus, and
+the other-owner control must stay unchanged. The two-religion Gurdwara snapshot
+supports exact reload. This is not construction, purchase or turn settlement.
