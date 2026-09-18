@@ -160,6 +160,21 @@ class PlaytestEvidenceTests(unittest.TestCase):
         self.assertEqual(result.returncode, 2)
         self.assertIn("more than once", result.stderr)
 
+    def test_injected_ui_evidence_retains_exact_bytes_and_rejects_outside_paths(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            app, evidence = root / "app", root / "evidence"
+            target = app / "Contents/Assets/Test.lua"
+            contents = b"-- original\r\n-- rendered run=example\nprint('Mexico')\n"
+            result = playtest.preserve_injected_ui(evidence, app, target, contents)
+            self.assertEqual((evidence / "ui-injected" / result["path"]).read_bytes(), contents)
+            self.assertEqual(result["size"], len(contents))
+            self.assertEqual(result["sha256"], playtest.hashlib.sha256(contents).hexdigest())
+            self.assertFalse(target.exists())
+            with self.assertRaises(ValueError):
+                playtest.preserve_injected_ui(evidence, app, root / "outside.lua", b"bad")
+            self.assertFalse((root / "outside.lua").exists())
+
     def test_capture_uses_large_game_window_not_thin_title_bar(self):
         import json
         windows=[{"kCGWindowOwnerPID":77,"kCGWindowNumber":10,"kCGWindowBounds":{"Width":1280,"Height":828}},

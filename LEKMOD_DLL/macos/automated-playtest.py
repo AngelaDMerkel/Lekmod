@@ -294,6 +294,16 @@ def refresh_live_driver(evidence):
     return 0
 
 
+def preserve_injected_ui(evidence, app, path, contents):
+    """Retain exact initial test-hook bytes, including rendered run parameters."""
+    relative = path.relative_to(app)
+    destination = evidence / "ui-injected" / relative
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    destination.write_bytes(contents)
+    return {"path": relative.as_posix(), "sha256": hashlib.sha256(contents).hexdigest(),
+            "size": len(contents)}
+
+
 def capture_game_window(pid, destination):
     """Capture only the test PID's window, without activation or desktop capture."""
     helper = window_helper()
@@ -736,11 +746,15 @@ def main():
                         "__TEST_MINORS__": str(args.minors),
                         "__TEST_AUTOPLAY__": "true" if args.mode == "autorun" else "false",
                         "__TEST_TURNS__": str(args.turns + 2)}
+        report["initial_ui_hooks"] = []
         for path, template in ui_templates.items():
             code = Path(__file__).with_name(template).read_text()
             for key, value in replacements.items():
                 code = code.replace(key, value)
-            path.write_bytes((ui_backups[path] or b"") + b"\n" + code.encode())
+            contents = (ui_backups[path] or b"") + b"\n" + code.encode()
+            hook = preserve_injected_ui(output, APP, path, contents)
+            report["initial_ui_hooks"].append({**hook, "adapter": template})
+            path.write_bytes(contents)
         command(["defaults", "write", display_domain, "DisplayFullScreen", "-bool", "false"])
         environment = os.environ.copy()
         if args.no_process_adapter:

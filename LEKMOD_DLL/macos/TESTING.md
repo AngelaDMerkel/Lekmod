@@ -630,3 +630,12 @@ nearby/distant minor starting plots. Tiny Pangaea with eight minors supplies the
 recorded fixture. The test observes opening locations, real minor foundations
 and distance controls without assigning visibility; use its saved report for
 exact `--expected-state` reload. See `docs/macos-mexico-validation.md`.
+
+### Exact initial hook sources
+
+New runs preserve the full initially injected Lua bytes under `ui-injected/`,
+using paths relative to the app bundle. The report's `initial_ui_hooks` entries
+record each adapter, byte count and SHA-256 after run-specific placeholders are
+rendered. `ui-original/` continues to hold restoration backups. This is initial
+launch evidence; a later live driver refresh is a separate revision. The files
+remain local, ignored artifacts, including any privately installed EUI context.
