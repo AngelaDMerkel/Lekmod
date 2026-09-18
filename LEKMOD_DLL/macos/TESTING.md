@@ -660,3 +660,10 @@ supplies production one hammer short of completion. Normal construction must
 apply bonus-gold, luxury-production and both strategic-class food increases,
 leave other plot yields unchanged and add no maintenance. The snapshot supports
 exact reload of the resulting building/resource/yield state.
+
+`--scenario mexico-influence --scenario-turns 1` loads the early Mexico fixture.
+It supplies contact, one neutral-tile military unit, uranium and upkeep gold,
+then verifies the native tribute-eligibility rate, one ordinary influence turn
+and an actual tribute command/cutoff. The friendship getter exposes whole
+points; the report distinguishes those observations from quoted hundredths.
+The complete minor/treasury/unit snapshot supports exact reload.

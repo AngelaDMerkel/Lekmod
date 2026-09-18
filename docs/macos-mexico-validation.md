@@ -141,3 +141,33 @@ finding a valid assignment; this is supplied terrain, not worker-chopping covera
 This establishes the four resource-class bonuses, normal construction and zero
 maintenance. Capture/removal behavior and the remaining influence mechanic are
 separate coverage; no broad Mexico-complete claim follows from these cases.
+
+## Tribute eligibility and influence
+
+`20260918T080340Z` supplied contact with minor 22, one Giant Death Robot on an
+empty neutral staging plot, one uranium and an upkeep budget of 1,000 gold.
+Friendship, tribute eligibility and influence rates were not assigned. Before
+the military input, influence/rate were zero and tribute was unavailable. The
+native military calculation then allowed tribute (score +90); Mexico's rate rose
+to 750 hundredths under the shipped Quick speed's 125% GoldGiftMod.
+
+One ordinary turn (1 to 2), with no tribute taken, produced the whole-point
+friendship reading 7 expected from that quoted rate. The exposed friendship
+getter truncates hundredths; no direct exact-fraction outcome is claimed. The
+next rate was 625 hundredths after ordinary positive-influence decay.
+
+The normal `Game.DoMinorBullyGold` command then paid its quoted 65 gold
+(1020 to 1085), changed the whole-point influence reading to -7, removed current
+tribute eligibility and left only the 125-hundredths recovery rate. The final
+native snapshot also contains an unmet, tribute-eligible minor 26 whose influence
+and rate remained 0; `unmet-influence-control.json` verifies that negative case.
+Save SHA-256: `8e02d230673099c2d5e0c3ccb58ed6e4d20267e3b784f8a976276d644ab45f21`.
+
+`080646Z` matched the exact saved treasury, every living minor's contact,
+friendship/rate/eligibility/personality fields and human unit positions/movement.
+Reload-save SHA-256:
+`ca5b1a787c6d9182e274b99a135bdaa6b2db221d2162ba24e29f42246afeb7aa`.
+Both saved/exited normally (0), restored hooks/settings and preserved manual
+saves, with no Lua/sync errors. These are scripted setup/commands and native
+turn outcomes; no mouse or earned military buildup is claimed. No product fix
+was needed for these influence/tribute cases.
