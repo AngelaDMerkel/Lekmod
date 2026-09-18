@@ -1085,3 +1085,49 @@ Hero of the People. Expiry save SHA-256:
 and passed the same preservation and error checks. No product change was needed
 for this workflow. The offline runner's 25 cases and scenario-supervisor checks
 passed; multiplayer and the wider unfinished ledger remain outside this result.
+
+### Venice Compass award: independent owners and save recovery
+
+On the old payload, `20260918T014048Z` selected human and AI Venice normally
+on separate single-player teams. Supplied prerequisite technologies emitted
+real `TeamTechResearched(team, tech, change)` events. The first player gained
+one miscellaneous route (capacity 3), but the second retained zero (capacity 2)
+after its own Compass event. The shared Lua listener had removed itself after
+the first team. The failed verdict was retained alongside a diagnostic save
+(SHA-256 `d69fe6e6d7ac8d0c77bfbd2ca73dcf5409d7debb1ab5f565ed69e6f983e377a7`),
+real exit confirmation, return code 0 and no termination signals. The earlier
+activation-only `013746Z` remains a buffered-log stall, not a functional pass.
+
+The handler now keeps listening for other teams and applies the native change
+sign only to living Venice players on the affected team. Game initialization
+also repairs a zero miscellaneous-route count when Compass is already known;
+existing positive counts are preserved. Venice is the sole caller of this
+miscellaneous-route award in the shipped product. This covers affected saves
+and starts whose initial technologies predate the Lua context. Eight offline
+event/reload cases pass; the original source fails six of those cases.
+Shared-team/negative-change cases are offline boundaries, not multiplayer tests.
+
+The centrally installed intermediate test package is
+`build/macos/Lekmod-venice-20260918.zip`, archive SHA-256
+`c8f05428a77ef519c8d2ef17511d6b20c0e1141e38438f16804154a132e1cb0c`.
+The signed GameCore remains
+`e07f67902ebbc0a88f5c104a92f0eecd5b82f38f2c107291bb22c1c3eb5a75ed`;
+this fix changes Lua only. All five native retests used the separately labeled
+activation-only process control:
+
+- `014611Z`: both independent Compass events awarded one route, both capacities
+  became 3, and re-submitting already-known technology added nothing. Save SHA-256
+  `de08d6d68f5d774871a3a90d91f5132595feecd2781ed3e5bed5f2c6bd5fc018`;
+  `014719Z` matched its exact snapshot after reload.
+- `014817Z`: loading the actual failed save restored only the missing AI award,
+  yielding one bonus/capacity 3 for each player. Save SHA-256
+  `703dda17f1463c5f3a8a61dc30d10ff35f73fd9ee915baa6b163958611a0b6fe`;
+  exact reload `014914Z` proved no repeated award.
+- `015014Z`: a normal Industrial/Duel start had Compass and one bonus for both
+  owners, with capacity 6. Save SHA-256
+  `ff61873680bcc45f6c145763f30ddf6bafd22f00c60a92c379ca48a222f705af`.
+
+All five passed normal exit, settings/hook restoration, manual-save preservation,
+Lua and synchronization checks. Technology grants are fixture inputs, not earned
+research; this does not cover Venice's other unique mechanics or resolve startup
+reliability.

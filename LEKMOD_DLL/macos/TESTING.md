@@ -484,3 +484,12 @@ compiled out. Engine/Lua logs can then remain buffered until normal exit; do
 not treat a supervisor stall with incomplete buffered records as a gameplay
 verdict. Compare this mode separately and retain failures. It never changes
 cache files, game rules, turn counters or synchronization checks.
+
+
+`venice` starts Ancient/Duel with human and AI `CIVILIZATION_VENEZ` and
+`--scenario-turns 3`. Recorded technology grants emit native events; independent
+route awards and already-known-tech rejection are checked. A semantic failure
+is retained as FAIL while diagnostic save/exit can finish; completion never
+overrides that verdict. `venice-known-compass` is read-only: load an affected
+save or start Industrial/Duel with the same civilizations. Both support exact
+reload; missing-award repair must happen in product initialization.

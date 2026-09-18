@@ -114,7 +114,7 @@ All 114 playable civilizations and 26 civilization Lua files are listed below. A
 | `CIVILIZATION_UAE` | `TRAIT_YALLAH_HABIBI` | UNIT_QASIMI_RAIDER, BUILDING_BURJ | Lekmod_uae.lua | Unique mechanics pending. |
 | `CIVILIZATION_UKRAINE` | `TRAIT_RUS` | UNIT_TACHANKA, BUILDING_KNYAZ | — | Unique mechanics pending. |
 | `CIVILIZATION_VATICAN` | `TRAIT_VATICAN` | UNIT_SWITZ, BUILDING_STPETERS | Lekmod_vatican.lua | Unique mechanics pending. |
-| `CIVILIZATION_VENEZ` | `TRAIT_VENEZ` | UNIT_VENETIAN_GALLEASS, UNIT_VENETIAN_MERCHANT | Lekmod_venice.lua | Unique mechanics pending. |
+| `CIVILIZATION_VENEZ` | `TRAIT_VENEZ` | UNIT_VENETIAN_GALLEASS, UNIT_VENETIAN_MERCHANT | Lekmod_venice.lua | Independent Compass awards, affected-save repair, exact reload and Industrial start native. Other uniques pending. |
 | `CIVILIZATION_VIETNAM` | `TRAIT_TAMGIAO` | UNIT_VIETNAM_INFANTRY, BUILDING_VOKHI | — | Unique mechanics pending. |
 | `CIVILIZATION_WALES` | `TRAIT_US_WALES` | UNIT_US_LONGBOWMAN | — | Unique mechanics pending. |
 | `CIVILIZATION_YUGOSLAVIA` | `TRAIT_NONALIGNED` | UNIT_YUGO_M84, BUILDING_YUGO_SPOMENIK | Lekmod_yugoslavia.lua | Unique mechanics pending. |
