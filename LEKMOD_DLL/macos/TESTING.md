@@ -1007,3 +1007,11 @@ save, supplies near-complete research and uses ordinary research/plot-assignment
 commands. A native technology event, exact worked-city yield increase and next
 turn food-storage settlement are required. Setup never sets yield or city food.
 The outcome snapshot supports exact zero-turn reload.
+
+`nabatea-tomb --scenario-turns 2` loads the Farm research outcome. Supplied
+Horseback Riding/near-complete production and a normal avoid-growth command
+control a real Tomb construction. Native building yields/resources, six
+type/domain contribution queries and an actual external land route are checked
+separately. The route table has no FromFood field: use the native total-value
+query and independently verify the origin city's actual gross food. The
+complete two-owner city/resource/route snapshot supports exact zero-turn reload.

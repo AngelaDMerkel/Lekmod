@@ -1511,3 +1511,12 @@ controls with exact reload. Technology and Farm setup was supplied. A separate t
 completed Mathematics through ordinary research with near-complete progress
 supplied, updated the worked city and settled exactly four food next turn.
 Further unique mechanics remain separate.
+
+
+### Rock-Cut Tomb
+
+The [Nabataean report](macos-nabatea-validation.md) adds normal Tomb production,
+technology/replacement controls, exact flat yields and two horses, six native
+trade contribution queries with Roman controls, and an actual international
+land route matching its income/food quote. Other route domains/types are query
+coverage only. Prior test-driver failures remain recorded separately.

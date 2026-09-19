@@ -182,3 +182,56 @@ Hooks/settings/manual saves were preserved, with no Lua/sync errors or new
 diagnostics. The farm transition and worked-city paths are now covered on
 this artifact; AI Nabataean ordinary research and other terrain combinations
 remain outside these specific native cases.
+
+## Rock-Cut Tomb construction and trade
+
+`20260919T114156Z` loaded the ordinary-research Farm fixture and used the
+additional Nabataean city. Horseback Riding, one caravan, contact/visibility and
+59 of the 60 required production were supplied inputs. Ordinary avoid-growth
+selection held the origin at population 1. The test rejected the Tomb before
+Horseback Riding, allowed it afterward, rejected the replaced Caravansary for
+Nabatea and confirmed the inverse Roman building controls.
+
+One ordinary turn completed the Tomb with the real CityConstructed event:
+its building contribution added two food and three gold, and empire horses
+changed 0→2 while the Roman control stayed 0. A normal synchronized caravan
+mission then established an international land route to Rome. Its actual
+4.12-gold quote and 1-food contribution matched native calculations; origin
+gross food rose 8→9 immediately. The two-gold building route contribution was
+checked separately from the total, which also includes city gold and resources.
+
+The native building-contribution queries returned this matrix; these queries
+do not claim actual sea/internal route execution:
+
+| Route kind | Land food / gold | Sea food / gold |
+| --- | --- | --- |
+| International | 1 / 2 | 1 / 0 |
+| Internal food | 1 / 0 | 0.5 / 0 |
+| Internal production | 1 / 0 | 1 / 0 |
+
+All six Roman-origin food controls returned zero. The half-food internal sea
+value is the shipped data and was not silently rounded to one. The five native
+checks passed, followed by normal save/exit (0), settings/hooks/manual-save
+preservation, no Lua/synchronization errors and no new diagnostics. Save SHA-256:
+`f8df6ea08889ea8596ca109c228a4286a055a12d5019520be57b2c12901b732c`.
+The exact same farm-cache package/core was used; no Tomb product change was made.
+
+Retained failed attempts were test-driver/oracle errors, not confirmed game
+defects: `113436Z` used a nonexistent TradeConnectionTypes Lua table; `113633Z`
+compared total route income as if it contained only the building bonus while
+other city inputs also changed; `113937Z` read a nonexistent FromFood table
+field. The final test uses the supported GameInfoTypes fallback and actual
+GetTradeConnectionYourBuildingValue/GetTradeConnectionTotalValue queries, plus
+the independent origin-city gross-food change. Original failed reports and
+injected scripts are unchanged; none establishes normal exit.
+
+Reproduce with `--scenario nabatea-tomb --scenario-turns 2` and the `112824Z`
+save; one ordinary turn was used. Actual sea/internal route settlement, capture
+or sale of the Tomb, and trade removal are separate cases. This was scripted
+normal gameplay input and native outcomes, with no physical mouse interaction.
+
+Exact Tomb reload `20260919T114321Z` preserved the two-owner city/resource/route
+snapshot and exited normally (0), with hooks/settings/manual-save preservation
+and no Lua/sync errors or new diagnostics. Save SHA-256:
+`6433cd99ef37c2727efd24a8ad199040cf08147f8d42a24cbcf03db260ab469b`.
+All 32 runner regressions pass.
