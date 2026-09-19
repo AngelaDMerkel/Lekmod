@@ -901,3 +901,14 @@ and incoming paths. The sinks do not test locale rendering. Native
 `trade-tooltip --load-save PATH --save-and-exit` uses the two-route internal
 fixture to require real localized 1.75 food/3.5 production strings and unchanged
 175/350-hundredths route data. Its snapshot supports exact reload.
+
+
+`test-trade-incoming-owner.py` executes actual incoming route identity field
+assignments under ASan/UBSan. Native scenario `trade-incoming` uses preserved
+internal-route fixture `20260916T080553Z`, two explicitly supplied AI caravans
+and a legal supplied city, then at most two ordinary turns to create incoming
+routes on the AI's active turn. On its saved two-route fixture it performs only
+read-only checks; `--expected-state` compares the exact recorded snapshot. The
+legacy creation check name then means route presence, not new creation. See
+[the incoming report](../../docs/macos-incoming-trade-validation.md) for commands,
+evidence limits, affected-save compatibility and physical standard/EUI coverage.

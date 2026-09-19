@@ -58,3 +58,8 @@ so neither is claimed as the final clean release artifact.
 The populated incoming tooltip still needs native/physical evidence. Other
 localized languages, all six yield types in actual gameplay, and standard
 physical tooltip rendering are not established by this focused retest.
+
+Subsequent [incoming-route checks](macos-incoming-trade-validation.md) add native
+populated incoming 2.5/2 gold and 1 science, plus actual standard/EUI incoming
+and outgoing tooltip rendering. The limits above describe this report's first
+retest; broader yields and languages still remain outside the combined evidence.

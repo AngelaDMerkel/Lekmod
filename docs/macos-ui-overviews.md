@@ -230,3 +230,13 @@ division is now corrected; the [precision report](macos-trade-tooltip-validation
 records native/reload checks and the physical EUI retest with 1.75/3.5 visible.
 This does not change the successful table-interaction observations. Populated incoming routes
 and foreign Great Work exchange remain open.
+
+
+## Populated incoming tables and tooltip parity
+
+The [incoming-trade report](macos-incoming-trade-validation.md) records actual
+standard/EUI incoming-tab, destination/countdown sorting, Close/reopen and normal
+exit checks on two Belgian routes. It includes native creation, affected-save
+identity correction, exact reload and physical fractional tooltips in both UIs.
+This closes the earlier populated-incoming gap at the tested display size.
+Foreign Great Work exchange and the report's additional data boundaries remain.

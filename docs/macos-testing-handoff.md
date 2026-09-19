@@ -1,15 +1,16 @@
 # Lekmod macOS single-player testing handoff
 
 **Testing resumed at the user's request, 2026-09-19.** The current standard test
-package is `build/macos/Lekmod-trade-tooltip-20260919.zip`, archive SHA-256
-`16d26d3215bb6d01180c65f0e4fba38e7f5a4e4d9ac9dd091edcaf5219da42b8`,
+package is `build/macos/Lekmod-incoming-owner-20260919.zip`, archive SHA-256
+`820ca7ca27bd1aeb9dddb3b716a8d8ce6c18d0835339a9cc313f16b6129b767f`,
 with signed GameCore
-`e931774c13af9edbbdeb3a1b36d97e25aa12c267c0a637954134b8a2855a38bd`.
+`2995cf0267255023fb1f98517291c7070d8ee2ea3046b57c4b5611852a0104e7`.
 
-The latest [trade-tooltip precision fix](macos-trade-tooltip-validation.md)
-passed native read-only/reload checks and physical EUI retesting. The private
+The latest [incoming-route owner correction](macos-incoming-trade-validation.md)
+passed affected-save/reload checks and physical standard/EUI incoming-table tests.
+The preceding shared tooltip precision fix is also verified in both UIs. The private
 EUI wrapper restored this exact standard package, text and options. The package
-is an intermediate artifact built with the precision changes uncommitted, not a
+is an intermediate artifact built with the incoming-owner change uncommitted, not a
 final clean release. Recent Māori/Moors fixes and Cuba/Admiral/nuclear/trade UI
 coverage are recorded in the expanded ledger and their linked reports.
 Remaining civilization and system coverage is still open. Always inspect current

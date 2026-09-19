@@ -5016,7 +5016,7 @@ int CvLuaPlayer::lGetTradeRoutesToYou(lua_State* L)
 		lua_pushinteger(L, pConnection->m_eConnectionType);
 		lua_setfield(L, t, "ConnectionType");
 #endif
-		lua_pushinteger(L, pkPlayer->getCivilizationType());
+		lua_pushinteger(L, pFromPlayer->getCivilizationType());
 		lua_setfield(L, t, "FromCivilizationType");
 		lua_pushinteger(L , pFromCity->getOwner());
 		lua_setfield(L, t, "FromID");

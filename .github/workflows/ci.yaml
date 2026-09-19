@@ -98,6 +98,7 @@ jobs:
           python3 LEKMOD_DLL/macos/test-lua-team-tech.py
           python3 LEKMOD_DLL/macos/test-trade-building-cache.py
           python3 LEKMOD_DLL/macos/test-trade-tooltip-precision.py
+          python3 LEKMOD_DLL/macos/test-trade-incoming-owner.py
           python3 LEKMOD_DLL/macos/test-religion-diversity-cache.py
           python3 LEKMOD_DLL/macos/test-lua-stack-moves.py
           build/macos/test-deps/lua-5.1.4/src/lua LEKMOD_DLL/macos/test-maori-expiry.lua LEKMOD/Lua/Civilizations/Lekmod_maori.lua
