@@ -992,3 +992,18 @@ position inputs, and exact gold/reveal checks. Both support zero-turn exact
 reload. See [the Nabataean report](../../docs/macos-nabatea-validation.md).
 Do not reactivate MC_NabateaAddin for these tests: its old purchase UI is disabled
 in the shipped InGame loader and is not the current farming trait.
+
+
+`test-tech-trait-yield-cache.py [--source OLD_CPP]` tests the actual trait-refresh
+statements and owned-plot refresh under sanitizers with controlled trait/plot/city
+sinks. Native `nabatea-farms` supplies legal fresh/dry Farms and technologies,
+then compares cached/calculated yields for Nabataean and Roman owners at
+Mathematics/Civil Service. Three observations follow each transition, with no
+yield setters. Its exact Farm/technology snapshot supports zero-turn reload.
+See the Nabataean report for evidence and remaining natural-research boundaries.
+
+`nabatea-research --scenario-turns 2` loads the retained Mathematics-only Farm
+save, supplies near-complete research and uses ordinary research/plot-assignment
+commands. A native technology event, exact worked-city yield increase and next
+turn food-storage settlement are required. Setup never sets yield or city food.
+The outcome snapshot supports exact zero-turn reload.

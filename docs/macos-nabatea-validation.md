@@ -1,4 +1,4 @@
-# Nabataean Zabonah discovery and lifecycle, 2026-09-19
+# Nabataean farm yields, Zabonah discovery and lifecycle, 2026-09-19
 
 ## Off-map removal defect
 
@@ -66,7 +66,8 @@ source files but 25 explicit active civilization contexts, plus that dormant
 legacy add-in. This source audit is not evidence for arbitrary third-party mods.
 
 The current Nabataean trait is the freshwater-farm bonus at Mathematics until
-Civil Service. That trait, Rock-Cut Tomb yields/resources/trade effects, AI
+Civil Service. The farm transition tests below cover that trait; Rock-Cut Tomb
+yields/resources/trade effects, AI
 Zabonah movement and city-state-capital discovery remain separate native gaps.
 The present native discovery case uses a major capital; AI reward logic and
 noncapital/missing-owner boundaries are isolated Lua evidence.
@@ -94,3 +95,90 @@ Exact disband-state reload `20260919T093907Z` passed with normal exit (0),
 settings/hooks/manual preservation and no Lua/protocol/synchronization errors.
 Save SHA-256:
 `9e913405f8ad907ce731e45ea39674c22400a6f0448a4d6c061a3815775d49d7`.
+
+## Farm technology cache correction
+
+Native baseline `20260919T094938Z` and three-sample confirmation
+`20260919T095253Z` provided legal fresh-water/dry Farm plots and query Workers
+for human Nabatea and Roman AI in the preserved Ancient/Small/Pangaea opening.
+No plot yield was assigned. After supplied Mathematics, the Nabataean fresh-water
+Farm calculated three food but its cached yield remained two across all three
+read-only observations. Dry and Roman controls stayed unchanged. The retained
+confirmation save is `79b3a199f593e2085d99f8ae7641230e6e47787f7cabf4ba900eeb8b30890e16`;
+the run remained FAIL, with settings/hooks/saves restored and native return 0
+after a recorded runner SIGTERM. No normal-exit pass is claimed for that baseline.
+
+`CvTeam::processTech` applied improvement changes before resetting/rebuilding
+player traits, then left existing plots with the old trait-dependent cache.
+The correction calls the existing owned-plot `updateYield` after rebuilding
+the trait state. That path also reconciles a worked plot's contribution to
+its city. Technology values, trait data, saves and synchronization rules are
+unchanged. The refresh runs once per affected player after each technology
+update, including activation and obsolescence.
+
+`test-tech-trait-yield-cache.py` extracts the actual trait-refresh statements
+and `CvPlayer::updateYield`. With controlled trait/plot/city sinks it covers
+24 transitions: activation/removal, Civil Service replacement/removal,
+unrelated technology, either owner, dry/fresh and worked/unworked plots,
+other-owner/unowned exclusions and repeated refresh. Eight fail on the original
+source; all 24 pass with ASan/UBSan after the correction. These stand-ins do not
+claim native trait-data, research or city settlement coverage. All 32 runner
+regressions also pass.
+
+Fixed native run `20260919T112431Z` reused the exact initial fixture
+`5e42a17876bc4a8b16fc829ff69ee421a57001ef12b0e382d98d796208c7c0d7`.
+All four checks passed without a turn: Nabataean fresh Farm 2→3 at Mathematics;
+Roman fresh Farm remains 3 at Mathematics; Nabataean fresh Farm remains 3 at
+Civil Service rather than stacking; Roman fresh Farm becomes 4 at Civil Service.
+Both dry Farms remain 3 throughout. Cached and calculated values agree in three
+observations at each transition. Technologies, cities, Farms and Workers were
+explicit setup inputs; this is not natural research or construction evidence.
+The resulting save SHA-256 is
+`f5090460073a7801399f6c6ed41929d1441da1d111cde4a751083a31717c5f42`.
+Exact zero-turn reload `20260919T112602Z` preserved the complete Farm/technology
+snapshot; save SHA-256
+`840cae5cae44299a796b45c53b7afb01d181a36fa955a667e7ebd4834ae99424`.
+Both runs exited normally (0), restored hooks/settings, preserved manual saves,
+and recorded no Lua/synchronization errors or new diagnostics.
+
+Use `--scenario nabatea-farms --scenario-turns 1` with the initial fixture under
+`094938Z/autosaves-after/AutoSave_Initial_0000 BC-4000.Civ5Save`; the turn allowance
+enables ordinary informational-popup handlers, but the scenario requests no turn.
+For exact reload use its saved file and `--expected-state` report with zero turns.
+Intermediate archive `Lekmod-nabatea-farm-cache-20260919.zip`:
+`cb8957791a1f45e80039172eba8ed4e4be7b0ab8611b4c581205a671a4e0dcf9`;
+signed core `9fc0cdb769db894b425c5562c8cfb2bf1abd30912fec9f66514e3615d99f6a35`.
+This is a pre-commit test artifact, not a final clean release.
+
+## Ordinary research and worked-city food
+
+`20260919T112824Z` loaded the preserved failed Mathematics-only Farm save.
+Removing its supplied Mathematics and setting research one point below its
+cost were explicit inputs, with 500 gold supplied for upkeep. A normal city
+plot-assignment network command selected/locked the fresh-water Farm; a normal
+research command selected Mathematics. The next ordinary turn completed it and
+emitted the real TeamTechResearched event. The worked Farm changed 2→3 food,
+its city terrain yield changed 5→6, the dry Farm stayed 3, and population stayed 1.
+No yield, movement, city-food or synchronization value was assigned.
+
+A second ordinary turn settled exactly the quoted 400 food hundredths: storage
+300→700 with the same population and worked Farm. All three checks passed and
+normal save/exit (0) completed, with hooks/settings/manual saves preserved and
+no Lua/synchronization failures or new diagnostics. Save SHA-256:
+`657f211bf826d642c1fb4df9393039231190ee3bd811eb56ed5832335ff410d5`.
+This verifies the ordinary completion path with near-complete research supplied;
+it does not claim that the full technology cost was naturally earned.
+
+Reproduce with `--scenario nabatea-research --scenario-turns 2`, the
+`095253Z/Lekmod-Functional-20260919T095253Z.Civ5Save` input and normal
+`--mode single-player-smoke --turns 3 --timeout 480 --stall-seconds 240
+--save-and-exit`. Its snapshot includes the Farm cache/calculation, dry control,
+worked/forced flags, city terrain/gross food, stored food, population and turn.
+
+Exact reload `20260919T113038Z` matched the complete ordinary-research/food
+snapshot, then saved/exited normally (0). Save SHA-256:
+`41e928bce502eefee9a69660af844f2f7639e9f4e81033056666dea419873f59`.
+Hooks/settings/manual saves were preserved, with no Lua/sync errors or new
+diagnostics. The farm transition and worked-city paths are now covered on
+this artifact; AI Nabataean ordinary research and other terrain combinations
+remain outside these specific native cases.

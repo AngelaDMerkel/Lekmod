@@ -1500,3 +1500,14 @@ retest. Normal Scout/Zabonah movement separates extended capital discovery from
 ordinary sight, awards exactly ten gold and rejects repeat rewards under a Roman
 owner with Nabatea absent. Discovery persistence passed. The old food-purchase
 addin is dormant in the shipped loader; current farm/Tomb mechanics remain open.
+
+
+### Nabataean farm technology yields
+
+The [Nabataean report](macos-nabatea-validation.md) records the confirmed stale
+fresh-water Farm cache after Mathematics, the post-trait refresh correction,
+24 sanitizer cases and native activation/Civil Service replacement/Roman/dry
+controls with exact reload. Technology and Farm setup was supplied. A separate two-turn native check
+completed Mathematics through ordinary research with near-complete progress
+supplied, updated the worked city and settled exactly four food next turn.
+Further unique mechanics remain separate.

@@ -1,5 +1,22 @@
 # Lekmod macOS single-player testing handoff
 
+**Testing resumed with a quota limit on 2026-09-19.** The user requested testing
+until quota reaches 30%, interpreted as 30% remaining. The live account check
+started at 40% used / 60% remaining. Check it periodically and reserve enough
+quota to restore temporary hooks/settings and stock installation when stopping.
+The earlier pause below is historical.
+
+Current intermediate test archive is `build/macos/Lekmod-nabatea-farm-cache-20260919.zip`,
+SHA-256 `cb8957791a1f45e80039172eba8ed4e4be7b0ab8611b4c581205a671a4e0dcf9`,
+with signed core `9fc0cdb769db894b425c5562c8cfb2bf1abd30912fec9f66514e3615d99f6a35`.
+The farm cache correction passed technology activation/obsolescence controls
+and exact reload; ordinary research, worked-city food settlement and its exact
+reload also passed. See
+[the Nabataean report](macos-nabatea-validation.md), live processes and
+`build/macos/continuation-state.json` before another launch.
+
+## Previous stock pause
+
 **Current status: testing paused; stock restored and verified (2026-09-19 10:01 UTC).**
 The user requested a return to stock and continuation later. The central installer
 now reports stock GameCore `0da6a5ffc283c3f147b20a7ec426e4ed85a6838ab891faf61b50af4e25c4a09c`;

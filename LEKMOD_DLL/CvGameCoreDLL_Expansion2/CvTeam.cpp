@@ -6898,10 +6898,14 @@ void CvTeam::processTech(TechTypes eTech, int iChange)
 					kPlayer.ChangeFreePromotionCount(ePromotion, iChange);
 			}
 
-			// Update our traits (some may have become obsolete)
+			// Update our traits (some may have become active or obsolete).
 			kPlayer.GetPlayerTraits()->Reset();
 			kPlayer.GetPlayerTraits()->InitPlayerTraits();
 			kPlayer.recomputePolicyCostModifier();
+
+			// Technology improvement yields were processed before rebuilding traits.
+			// Refresh owned plots with the final trait state, including worked-city yields.
+			kPlayer.updateYield();
 
 			// Does our trait give us a new unit when we reach this tech?
 			UnitTypes eLoopUnit;

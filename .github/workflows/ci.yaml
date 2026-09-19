@@ -104,6 +104,7 @@ jobs:
           python3 LEKMOD_DLL/macos/test-trade-removal-event.py
           python3 LEKMOD_DLL/macos/test-great-work-swap-ui.py
           python3 LEKMOD_DLL/macos/test-religion-diversity-cache.py
+          python3 LEKMOD_DLL/macos/test-tech-trait-yield-cache.py
           python3 LEKMOD_DLL/macos/test-lua-stack-moves.py
           build/macos/test-deps/lua-5.1.4/src/lua LEKMOD_DLL/macos/test-maori-expiry.lua LEKMOD/Lua/Civilizations/Lekmod_maori.lua
           build/macos/test-deps/lua-5.1.4/src/lua LEKMOD_DLL/macos/test-cuba-capital-culture.lua LEKMOD/Lua/Civilizations/Lekmod_cuba.lua
