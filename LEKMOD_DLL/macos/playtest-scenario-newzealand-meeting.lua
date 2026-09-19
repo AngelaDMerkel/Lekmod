@@ -1,19 +1,28 @@
 -- Supplied unit positions create one legal exploration boundary. The first
 -- meeting uses a normal human move. Later contacts use the engine Meet API
 -- explicitly as fixture input; no product callback or random result is assigned.
-LekmodScenario={name="newzealand-meeting",items={"valid-distinct-player-colors","NZ-movement-first-contact","NZ-both-owner-rewards","NZ-native-reward-branches","NZ-meeting-no-repeat","NZ-Roman-no-reward"}}
+local researchMode=LekmodNZSelectedResearch==true
+local selectedScience=false
+LekmodScenario={name=researchMode and "newzealand-research"or"newzealand-meeting",items={"valid-distinct-player-colors","NZ-movement-first-contact","NZ-both-owner-rewards","NZ-native-reward-branches","NZ-meeting-no-repeat","NZ-Roman-no-reward"}}
+if researchMode then table.insert(LekmodScenario.items,"NZ-selected-research-science")end
 local phase="init"
 local unitID,targetPlot,before,eventBefore,contacts,contactIndex= nil,nil,nil,nil,{},1
 local events,branches={},{}
 local actualContacts=0
 local function balance(p)
- return {gold=p:GetGold(),faith=p:GetFaith(),culture=p:GetJONSCulture(),science=p:GetOverflowResearch(),research=p:GetCurrentResearch()}
+ local result={gold=p:GetGold(),faith=p:GetFaith(),culture=p:GetJONSCulture(),science=p:GetOverflowResearch(),research=p:GetCurrentResearch()}
+ if researchMode then
+  result.overflow=p:GetOverflowResearch()
+  result.progress=result.research>=0 and Teams[p:GetTeam()]:GetTeamTechs():GetResearchProgress(result.research)or 0
+  result.science=result.overflow+result.progress
+ end
+ return result
 end
 local function allBalances()
  local result={};for id=0,11 do assert(Players[id]and Players[id]:IsAlive(),"twelve live major slots required");result[id]=balance(Players[id])end;return result
 end
 local function reward(old,new,owner,expected)
- assert(old.research==-1 and new.research==-1,"meeting reward fixture must have no selected research")
+ assert(old.research==new.research and(researchMode or old.research==-1),"meeting unexpectedly changed or completed selected research")
  local changed,kind=0,nil
  for _,key in ipairs({"gold","faith","culture","science"})do
   local delta=new[key]-old[key]
@@ -25,6 +34,10 @@ local function reward(old,new,owner,expected)
   end
  end
  assert(changed==(expected and 1 or 0),"meeting awarded the wrong number of reward types")
+ if kind=="science"and researchMode then
+  if owner==0 then assert(new.progress-old.progress==12 and new.overflow==old.overflow,"selected research did not receive exactly12 science");selectedScience=true
+  else assert(new.research==-1 and new.overflow-old.overflow==12,"AI no-research overflow reward differs")end
+ end
  if kind then branches[kind]=true;LekmodScenarioEvent("NZ-native-meeting-reward",{owner=owner,kind=kind,before=old,after=new})end
 end
 GameEvents.TeamMeet.Add(function(a,b)
@@ -58,6 +71,15 @@ end
 function LekmodScenario.step(player)
  assert(player:GetCivilizationType()==GameInfoTypes.CIVILIZATION_NEW_ZEALAND and Players[1]:GetCivilizationType()==GameInfoTypes.CIVILIZATION_NEW_ZEALAND)
  for id=2,11 do assert(Players[id]:GetCivilizationType()==GameInfoTypes.CIVILIZATION_ROME)end
+ if researchMode and phase=="init"and not player:GetCapitalCity()then
+  for u in player:Units()do if GameInfo.Units[u:GetUnitType()].Found and u:CanFound(u:GetPlot())then
+   UI.SelectUnit(u);for i=0,#GameInfoActions do if GameInfoActions[i]and GameInfoActions[i].Type=="MISSION_FOUND"then
+    assert(Game.CanHandleAction(i));Game.HandleAction(i);phase="founding";return false
+   end end
+  end end
+  error("normal Found action unavailable for research prerequisite")
+ end
+ if phase=="founding"then if not LekmodScenarioAwait("NZ-capital-founded",player:GetCapitalCity()~=nil)then return false end;phase="init"end
  if phase=="init"then
   local colors,seen={},{}
   for id=0,11 do local color=Players[id]:GetPlayerColor();local entry=GameInfo.PlayerColors[color]
@@ -82,6 +104,17 @@ function LekmodScenario.step(player)
   local u=assert(player:InitUnit(GameInfoTypes.UNIT_SCOUT,start:GetX(),start:GetY()));unitID=u:GetID()
   LekmodScenarioEvent("fixture-setup",{operation="provided-isolated-meeting-units",human_unit=unitID,AI_unit=foreignUnit:GetID(),human_x=start:GetX(),human_y=start:GetY(),AI_x=foreign:GetX(),AI_y=foreign:GetY()})
   assert(not Teams[player:GetTeam()]:IsHasMet(Players[1]:GetTeam()),"unit setup already caused first contact")
+  if researchMode then
+   for row in GameInfo.Technology_PrereqTechs{TechType="TECH_ASTRONOMY"}do LekmodScenarioGrantTech(player,row.PrereqTech)end
+   local tech=GameInfoTypes.TECH_ASTRONOMY
+   LekmodScenarioEvent("NZ-research-gates",{cities=player:GetNumCities(),can_research=player:CanResearch(tech),cost=player:GetResearchCost(tech),progress=Teams[player:GetTeam()]:GetTeamTechs():GetResearchProgress(tech)})
+   assert(player:CanResearch(tech)and player:GetResearchCost(tech)-Teams[player:GetTeam()]:GetTeamTechs():GetResearchProgress(tech)>132,"research target must fit every possible meeting reward without completing")
+   LekmodScenarioEvent("fixture-setup",{operation="provided-research-prerequisites-and-selected-target",target=tech,cost=player:GetResearchCost(tech)})
+   Network.SendResearch(tech,0,-1,false);phase="research-selected"
+  else phase="move"end
+  return false
+ elseif phase=="research-selected"then
+  if not LekmodScenarioAwait("NZ-Astronomy-selected",player:GetCurrentResearch()==GameInfoTypes.TECH_ASTRONOMY)then return false end
   phase="move";return false
  elseif phase=="move"then
   local u=assert(player:GetUnitByID(unitID));assert(u:GetMoves()>0 and u:CanMoveOrAttackInto(targetPlot))
@@ -110,6 +143,7 @@ function LekmodScenario.step(player)
   LekmodScenarioEvent("NZ-observed-reward-branches",{branches=branches,contacts=actualContacts})
   assert(branches.gold and branches.faith and branches.culture and branches.science,"this deterministic fixture did not observe all four random reward branches")
   LekmodScenarioRecord("NZ-native-reward-branches","PASS","four naturally drawn reward branches observed; contacts supplied; no RNG or reward setter")
+  if researchMode then assert(selectedScience,"selected-research reward not drawn");LekmodScenarioRecord("NZ-selected-research-science","PASS","naturally drawn science rewards add12 to selected research and preserve overflow; AI no-research control uses overflow")end
   before=allBalances();eventBefore=#events
   Teams[player:GetTeam()]:Meet(Players[1]:GetTeam(),true);phase="repeat";return false
  elseif phase=="repeat"then

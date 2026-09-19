@@ -1548,3 +1548,8 @@ reward branches via explicitly supplied engine contacts, known-contact and
 Roman exclusions, and exact balance/contact/color persistence. Science used
 the no-selected-research overflow path. Battalion/Defender and other native
 boundaries remain separate.
+
+The selected-research New Zealand variant also passed: normal Found and research
+selection, supplied prerequisites, naturally drawn +12-science rewards into
+Astronomy progress with unchanged human overflow, AI overflow control and exact
+reload. Technology completion/overflow is a separate boundary.

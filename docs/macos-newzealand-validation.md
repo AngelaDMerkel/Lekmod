@@ -68,3 +68,33 @@ signed core `4e1a94b9ea8c61c16e18e2bc32a6f46a54941c056bb804b14cfd4c8066bc764b`.
 No New Zealand gameplay change was needed. Battalion influence, Defender
 radius/friendship behavior, selected-research rewards and city-state contacts
 remain distinct native cases; this is not full civilization certification.
+
+## Science with selected research
+
+`20260919T121257Z` loaded the preserved initial twelve-player opening
+(SHA-256 `65e0a54a66de72375d2ca0619ded784254e548868e189b850274ccf255adcaad`).
+The human starting Settler used ordinary Found, then Astronomy prerequisites
+were explicitly supplied and the normal research command selected Astronomy
+(cost 603). No research progress, overflow or reward value was set. The first
+movement contact and twenty supplied engine contacts then repeated the owner,
+Roman, no-repeat and naturally drawn reward checks.
+
+All seven checks passed: human science rewards added exactly 12 progress each,
+ending at Astronomy 36 with overflow 0; the AI retained no selected research and
+received overflow 60. Human/AI faith, culture and gold totals matched the earlier
+reward draw counts. No ordinary turn advanced. Normal save/exit (0), cleanup
+and no Lua/synchronization errors or new diagnostics were verified. Save SHA-256:
+`c69c1447f0a67bbd5299cf8664db8167b1241e18938c419bdcad06a95a56f20e`.
+
+The preceding `120929Z` attempt remained a driver failure: research requires a
+founded city, and its fixture lacked one. The correction used the real Found
+action; no city-founded/research eligibility flag was bypassed. No product
+change was required. `newzealand-research` shares the meeting scenario through
+a temporary helper that the runner restores/removes. The complete snapshot
+includes selected technology, progress, overflow and all contact/reward balances.
+
+Exact selected-research reload `20260919T121530Z` passed with normal exit (0),
+restored settings/hooks/manual saves and no Lua/sync errors or new diagnostics.
+Save SHA-256: `0f0798b2cee235b323163a519184aaf5d52fa69dedabfe29ba90f907b29bb1e4`.
+All 32 runner regressions pass. Technology-completion overflow remains a
+separate boundary from the non-completing progress test.

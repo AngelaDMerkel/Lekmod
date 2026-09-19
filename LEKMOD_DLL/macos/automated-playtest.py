@@ -174,6 +174,7 @@ SCENARIO_ITEMS = {"inventory": {"system-inventory"},
                   "philippines-gerilya-return": {"gerilya-normal-disembark", "gerilya-land-move-boundary"},
                   "oman-minaa": {"minaa-enemy-sea", "minaa-embarked", "minaa-lethal-stack", "minaa-own-land-distance-controls"},
                   "ottoman-promotions": {"ottoman-human-first", "ottoman-human-second", "ottoman-AI-faith", "promotion-other-owner-no-faith"},
+                  "newzealand-research": {"valid-distinct-player-colors", "NZ-movement-first-contact", "NZ-both-owner-rewards", "NZ-native-reward-branches", "NZ-meeting-no-repeat", "NZ-Roman-no-reward", "NZ-selected-research-science"},
                   "newzealand-meeting": {"valid-distinct-player-colors", "NZ-movement-first-contact", "NZ-both-owner-rewards", "NZ-native-reward-branches", "NZ-meeting-no-repeat", "NZ-Roman-no-reward"},
                   "zabonah-ai-minor": {"AI-Zabonah-Scout-control", "AI-Zabonah-minor-capital", "AI-Zabonah-no-repeat"},
                   "nabatea-tomb": {"tomb-prerequisites-controls", "tomb-normal-construction", "tomb-yields-horses", "tomb-six-route-quotes", "tomb-land-route-bonuses"},
@@ -465,8 +466,8 @@ def main():
         parser.error("Foreground UI tests require --mode ui-interaction or single-player-smoke and --timeout at most 3600; the flag does not grant user permission")
     if args.production_completion and (args.mode != "human-turns" or args.turns != 3 or not args.load_save or args.timeout > 600):
         parser.error("Production completion requires --mode human-turns, --turns 3, --load-save and --timeout at most 600")
-    if args.scenario and (args.mode != "single-player-smoke" or (not args.load_save and args.scenario not in ("congress", "endgame", "bolivia", "mughals", "worker", "buganda-lake", "georgia", "georgia-upgrade", "cuba-greatworks", "cuba-ideology", "diplomacy-assets", "palmyra", "venice", "venice-known-compass", "italy", "setup", "uae-raider", "aksum-heal-domain", "budget-settlement", "mexico-discovery", "phoenicia-founding", "philippines-founding", "oman-minaa", "ottoman-promotions", "tonga-vision", "maori-movement", "maori-era", "cuba-capital", "moors-founding", "kilwa-routes", "kilwa-sea-plunder", "polynesia-upgrade", "nabatea-disband", "nabatea-discovery", "nabatea-farms", "zabonah-ai-minor", "newzealand-meeting")) or args.city_controls or args.timeout > 1800):
-        parser.error("Scenarios require --mode single-player-smoke, --load-save (except congress/endgame/bolivia/mughals/worker/buganda-lake/georgia/georgia-upgrade/cuba-greatworks/cuba-ideology/diplomacy-assets/palmyra/venice/venice-known-compass/italy/setup/uae-raider/aksum-heal-domain/budget-settlement/mexico-discovery/phoenicia-founding/philippines-founding/oman-minaa/ottoman-promotions/tonga-vision/maori-movement/maori-era/cuba-capital/moors-founding/kilwa-routes/kilwa-sea-plunder/polynesia-upgrade/nabatea-disband/nabatea-discovery/nabatea-farms/zabonah-ai-minor/newzealand-meeting), no --city-controls and --timeout at most 1800")
+    if args.scenario and (args.mode != "single-player-smoke" or (not args.load_save and args.scenario not in ("congress", "endgame", "bolivia", "mughals", "worker", "buganda-lake", "georgia", "georgia-upgrade", "cuba-greatworks", "cuba-ideology", "diplomacy-assets", "palmyra", "venice", "venice-known-compass", "italy", "setup", "uae-raider", "aksum-heal-domain", "budget-settlement", "mexico-discovery", "phoenicia-founding", "philippines-founding", "oman-minaa", "ottoman-promotions", "tonga-vision", "maori-movement", "maori-era", "cuba-capital", "moors-founding", "kilwa-routes", "kilwa-sea-plunder", "polynesia-upgrade", "nabatea-disband", "nabatea-discovery", "nabatea-farms", "zabonah-ai-minor", "newzealand-meeting", "newzealand-research")) or args.city_controls or args.timeout > 1800):
+        parser.error("Scenarios require --mode single-player-smoke, --load-save (except congress/endgame/bolivia/mughals/worker/buganda-lake/georgia/georgia-upgrade/cuba-greatworks/cuba-ideology/diplomacy-assets/palmyra/venice/venice-known-compass/italy/setup/uae-raider/aksum-heal-domain/budget-settlement/mexico-discovery/phoenicia-founding/philippines-founding/oman-minaa/ottoman-promotions/tonga-vision/maori-movement/maori-era/cuba-capital/moors-founding/kilwa-routes/kilwa-sea-plunder/polynesia-upgrade/nabatea-disband/nabatea-discovery/nabatea-farms/zabonah-ai-minor/newzealand-meeting/newzealand-research), no --city-controls and --timeout at most 1800")
     if args.scenario == "endgame" and (args.load_save or args.expected_state or args.save_and_exit or args.scenario_turns != 2):
         parser.error("Endgame requires a new two-turn scenario, without save/reload options")
     if args.expect_human_victory and args.scenario != "endgame":
@@ -610,6 +611,11 @@ def main():
                 ui_templates[APP / "Contents/Assets/Assets/DLC/Expansion2/UI/InGame/LeaderHead/LeaderHeadRoot.lua"] = "playtest-scenario-peace-root.lua"
                 ui_templates[ui_dir / "TradeLogic.lua"] = "playtest-scenario-peace-popup.lua"
                 ui_templates[ui_dir / "DiscussionDialog.lua"] = "playtest-scenario-peace-reply.lua"
+            if args.scenario == "newzealand-research":
+                helper = ui_dir / "LekmodNZMeeting.lua"
+                if helper.exists():
+                    raise SystemExit("Temporary New Zealand meeting module already exists")
+                ui_templates[helper] = "playtest-scenario-newzealand-meeting.lua"
             if args.scenario == "unit-owners":
                 ui_templates[ui_dir.parent / "Lekmod_units.lua"] = "playtest-scenario-unit-owner-observer.lua"
             if args.scenario == "endgame":

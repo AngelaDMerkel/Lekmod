@@ -1037,3 +1037,10 @@ movement-triggered TeamMeet; further explicitly supplied native engine contacts
 sample the unchanged RNG rewards. Both-owner, unrelated-Roman and repeat-contact
 checks require exact balances and native event counts. Twelve valid distinct
 colors and the complete contact/balance snapshot support exact reload.
+
+`newzealand-research` reuses the meeting checks after a normal initial Found,
+supplied Astronomy prerequisites and ordinary research selection. Naturally
+drawn science rewards must add12 progress without changing human overflow;
+the AI no-selected-research control uses overflow. No research progress is
+assigned in this variant. The shared temporary helper is guarded and restored,
+and the extended progress/overflow snapshot supports exact reload.
