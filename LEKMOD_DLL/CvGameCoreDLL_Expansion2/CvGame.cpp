@@ -675,7 +675,8 @@ void CvGame::InitPlayers()
 				{
 					for(iK = 0; iK < iNumPlayerColorInfos; iK++)
 					{
-						if(iK != barbarianPlayerColor)
+						// PlayerColors IDs can have holes; never assign a missing entry.
+						if(iK != barbarianPlayerColor && GC.GetPlayerColorInfo((PlayerColorTypes)iK) != NULL)
 						{
 							bValid = true;
 

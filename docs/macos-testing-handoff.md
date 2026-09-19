@@ -6,14 +6,15 @@ started at 40% used / 60% remaining. Check it periodically and reserve enough
 quota to restore temporary hooks/settings and stock installation when stopping.
 The earlier pause below is historical.
 
-Current intermediate test archive is `build/macos/Lekmod-nabatea-farm-cache-20260919.zip`,
-SHA-256 `cb8957791a1f45e80039172eba8ed4e4be7b0ab8611b4c581205a671a4e0dcf9`,
-with signed core `9fc0cdb769db894b425c5562c8cfb2bf1abd30912fec9f66514e3615d99f6a35`.
-The farm cache correction passed technology activation/obsolescence controls
-and exact reload; ordinary research, worked-city food settlement and its exact
-reload also passed. See
-[the Nabataean report](macos-nabatea-validation.md), live processes and
-`build/macos/continuation-state.json` before another launch.
+Current intermediate test archive is `build/macos/Lekmod-player-color-holes-20260919.zip`,
+SHA-256 `9d31987e6fc86240d7c113b3c76dfb2af788f36b72716a4cf6b0d6923c4ac91a`,
+with signed core `4e1a94b9ea8c61c16e18e2bc32a6f46a54941c056bb804b14cfd4c8066bc764b`.
+The [player-color allocator fix](macos-player-color-validation.md) corrects a
+new-game SIGSEGV with repeated civilizations; exact native retest/reload passed.
+It includes the committed farm cache correction (`2f86e2b2`). Tomb and AI Zabonah
+cases are committed in `ad9d520c` and `8b1b1b12`. Inspect live processes and
+`build/macos/continuation-state.json` before another launch. Broader coverage
+and intermittent localization startup failures remain open.
 
 ## Previous stock pause
 

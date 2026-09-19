@@ -1529,3 +1529,12 @@ AI-owner-turn Scout/Zabonah comparison, city-state capital reveal beyond normal
 sight, exact ten-gold reward and no-repeat movement. Supplied units/positions
 are distinguished from normal native mission/reward outcomes; autonomous AI
 exploration strategy is not claimed.
+
+
+### Duplicate-civilization color allocation
+
+A reproducible new-game SIGSEGV with two New Zealand and ten Roman players
+was caused by assigning missing PlayerColors ID 174. The [allocator correction](macos-player-color-validation.md)
+skips nonexistent rows. Thirty-seven sanitizer cases, the formerly crashing
+native setup, all twelve valid/distinct colors and exact reload pass. This is
+a separate failure from the still-open intermittent localization startup issue.

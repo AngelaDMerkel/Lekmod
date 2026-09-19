@@ -1023,3 +1023,10 @@ movement. The driver verifies no Scout reward, exactly ten gold for a previously
 unrevealed minor capital beyond ordinary sight, and no repeat reward. It never
 uses direct missions on a human unit or alters synchronization state. Its
 AI treasury/unit/city-state visibility snapshot supports exact reload.
+
+`test-player-color-holes.py [--source OLD_CPP]` executes the actual initial
+player-color allocator using shipped XML defaults and sparse color IDs under
+ASan/UBSan. Native `newzealand-meeting` also verifies twelve duplicate-civilization
+players have distinct valid color rows and components, with exact color persistence
+on reload. See `docs/macos-player-color-validation.md` for both preserved native
+SIGSEGV baselines, the correction and unchanged-database evidence.
