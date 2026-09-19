@@ -1538,3 +1538,13 @@ was caused by assigning missing PlayerColors ID 174. The [allocator correction](
 skips nonexistent rows. Thirty-seven sanitizer cases, the formerly crashing
 native setup, all twelve valid/distinct colors and exact reload pass. This is
 a separate failure from the still-open intermittent localization startup issue.
+
+
+### New Zealand contact rewards
+
+[Native New Zealand checks](macos-newzealand-validation.md) cover a normal
+movement-triggered first contact, human/AI awards, all four naturally drawn
+reward branches via explicitly supplied engine contacts, known-contact and
+Roman exclusions, and exact balance/contact/color persistence. Science used
+the no-selected-research overflow path. Battalion/Defender and other native
+boundaries remain separate.

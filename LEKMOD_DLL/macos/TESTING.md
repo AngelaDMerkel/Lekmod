@@ -1030,3 +1030,10 @@ ASan/UBSan. Native `newzealand-meeting` also verifies twelve duplicate-civilizat
 players have distinct valid color rows and components, with exact color persistence
 on reload. See `docs/macos-player-color-validation.md` for both preserved native
 SIGSEGV baselines, the correction and unchanged-database evidence.
+
+`newzealand-meeting` uses two New Zealand players and ten Roman controls on
+Standard Ancient Pangaea. One supplied Scout/Warrior boundary produces a real
+movement-triggered TeamMeet; further explicitly supplied native engine contacts
+sample the unchanged RNG rewards. Both-owner, unrelated-Roman and repeat-contact
+checks require exact balances and native event counts. Twelve valid distinct
+colors and the complete contact/balance snapshot support exact reload.
