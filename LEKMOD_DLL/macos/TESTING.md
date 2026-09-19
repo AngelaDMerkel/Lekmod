@@ -838,3 +838,11 @@ CityTrained and first-playable/next-turn states verify birth-turn protection.
 recorded case is Classical), supplies two land probes and checks all elapsed
 turns 0–4 plus normal expiry at elapsed five. Neither scenario assigns unit
 promotions, movement or turn counters. Both support exact snapshot reload.
+
+
+`test-cuba-capital-culture.lua PRODUCT_LUA` runs sixteen isolated actual-handler
+cases for culture thresholds, per-capital rounding, met/unmet/self exclusions,
+team/player ID routing, missing capitals, independent AI-owner updates, clearing
+stale counts and non-stacking. Capital culture is a supplied quote: this does
+not establish native yield settlement, capital transfer or feedback between
+multiple Cuban capitals. Existing native ideology/Dance Hall evidence is separate.

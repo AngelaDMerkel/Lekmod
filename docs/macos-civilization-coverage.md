@@ -33,7 +33,7 @@ All 114 playable civilizations and 26 civilization Lua files are listed below. A
 | `CIVILIZATION_CHILE` | `TRAIT_BY_REASON` | UNIT_CARDOEN, BUILDING_COOPERATIVE | — | Unique mechanics pending. |
 | `CIVILIZATION_CHINA` | `TRAIT_ART_OF_WAR` | UNIT_CHINESE_CHUKONU, BUILDING_PAPER_MAKER | — | Unique mechanics pending. |
 | `CIVILIZATION_COLOMBIA` | `TRAIT_INDEPENDENCE` | UNIT_COLOMBIAN_CAVALRY, BUILDING_COLOMBIAN_GRANARY | — | Unique mechanics pending. |
-| `CIVILIZATION_CUBA` | `TRAIT_UC_BATISTA` | UNIT_GUERRILLERO, BUILDING_DANCE_HALL | Lekmod_cuba.lua | Dance Hall music bonuses, transfers and persistence native. First-tenet unlock/two-unit reward and non-repeat native; capital-culture handler pending. |
+| `CIVILIZATION_CUBA` | `TRAIT_UC_BATISTA` | UNIT_GUERRILLERO, BUILDING_DANCE_HALL | Lekmod_cuba.lua | Dance Hall music bonuses, transfers and persistence native. First-tenet unlock/two-unit reward and non-repeat native; Capital-culture callback has 16 offline rounding/contact/owner/update cases; native capital-culture behavior remains pending. |
 | `CIVILIZATION_CZECHIA` | `TRAIT_CZECHIA` | UNIT_CZECHIA_FOREIGN_LEGION, BUILDING_CZECHIA_MINT | — | Unique mechanics pending. |
 | `CIVILIZATION_DENMARK` | `TRAIT_VIKING_FURY` | UNIT_DANISH_BERSERKER, UNIT_DANISH_LONGSHIP | — | Unique mechanics pending. |
 | `CIVILIZATION_EGYPT` | `TRAIT_WONDER_BUILDER` | UNIT_EGYPTIAN_WARCHARIOT, BUILDING_BURIAL_TOMB | — | Unique mechanics pending. |
