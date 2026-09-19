@@ -174,6 +174,8 @@ SCENARIO_ITEMS = {"inventory": {"system-inventory"},
                   "philippines-gerilya-return": {"gerilya-normal-disembark", "gerilya-land-move-boundary"},
                   "oman-minaa": {"minaa-enemy-sea", "minaa-embarked", "minaa-lethal-stack", "minaa-own-land-distance-controls"},
                   "ottoman-promotions": {"ottoman-human-first", "ottoman-human-second", "ottoman-AI-faith", "promotion-other-owner-no-faith"},
+                  "greatwork-exchange-verify": {"exchange-controllers", "exchange-slot-counts", "exchange-theme-yields", "exchange-offers-cleared"},
+                  "greatwork-exchange-prep": {"foreign-works-created", "foreign-work-offer", "exchange-ready"},
                   "trade-incoming": {"incoming-route-creation", "incoming-route-identity", "incoming-route-accounting", "incoming-route-tooltip", "incoming-route-tourism"},
                   "trade-tooltip": {"trade-tooltip-food-precision", "trade-tooltip-production-precision", "trade-tooltip-data-preserved"},
                   "nuclear": {"nuclear-range-restrictions", "nuclear-unit-blast-radius", "nuclear-immunity", "nuclear-fallout-pillage", "nuclear-missile-consumption"},
@@ -607,6 +609,11 @@ def main():
             if args.scenario == "domination":
                 ui_templates[ui_dir / "EndGameMenu.lua"] = "playtest-scenario-domination-victory-popup.lua"
                 ui_templates[frontend / "ExitConfirm.lua"] = "playtest-exit-confirm.lua"
+            if args.scenario.startswith("greatwork-exchange"):
+                exchange_module = ui_dir / "LekmodTestGreatWorkExchange.lua"
+                if exchange_module.exists():
+                    raise SystemExit("Temporary Great Work exchange module already exists")
+                ui_templates[exchange_module] = "playtest-great-work-exchange-common.lua"
             if args.scenario in ("culture-prelaunch", "culture-launch"):
                 culture_module = ui_dir / "LekmodTestCulture.lua"
                 if culture_module.exists():

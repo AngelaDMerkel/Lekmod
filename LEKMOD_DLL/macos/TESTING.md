@@ -919,3 +919,15 @@ query directions; use the preserved `20260916T050343Z` Great Works fixture for
 nonzero tourism. Zero-only comparisons are labeled in the recorded event and do
 not establish nonzero routing. The incoming report includes the failed baseline,
 correction, affected-save retest and exact reload.
+
+
+`test-great-work-swap-ui.py` runs actual CultureOverview swap callbacks against
+stock, zero-based and permuted class IDs. `greatwork-exchange-prep` uses the
+preserved two-artwork save `20260916T050343Z`, supplied AI great people/buildings
+and at most two ordinary turns to prepare real foreign works and scripted
+offers. `greatwork-exchange-verify` reads the specific physical Self portrait /
+Dutch men-o'-war exchange result with no setup mutations or turns. Both use a
+temporary shared snapshot module, removed by normal runner cleanup. See
+[the exchange report](../../docs/macos-great-work-exchange.md) for hashes and
+evidence limits. Preserve the current quicksave before physical F11 and restore
+it only after copying the test result and verifying the owned game has exited.

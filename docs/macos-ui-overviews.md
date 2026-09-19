@@ -240,3 +240,14 @@ exit checks on two Belgian routes. It includes native creation, affected-save
 identity correction, exact reload and physical fractional tooltips in both UIs.
 This closes the earlier populated-incoming gap at the tested display size.
 Foreign Great Work exchange and the report's additional data boundaries remain.
+
+
+## Foreign artwork exchange
+
+The [exchange report](macos-great-work-exchange.md) records a reproduced missing
+Art-dropdown/selected-icon defect caused by fixed class IDs, its shared UI fix,
+and actual standard/EUI offer, mismatch rejection, Clear, artwork swap and F11
+save workflows. EUI additionally withdrew and reoffered the artwork. Native
+controller/slot checks and an exact cross-UI snapshot comparison passed. Original
+quicksave/settings/hooks/text/options were restored. Other work classes and
+additional boundaries are outside that paired artwork evidence.

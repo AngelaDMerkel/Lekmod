@@ -1336,16 +1336,16 @@ function CheckAvailableSwap ()
 		-- get item type
 		local iTheirClass = Game.GetGreatWorkClass(g_iTheirItem);
 		local iYourItem = -1;
-		if (iTheirClass == 1) then
+		if (iTheirClass == GameInfoTypes.GREAT_WORK_ART) then
 			-- art(?)
 			iYourItem = activePlayer:GetSwappableGreatArt();
-		elseif (iTheirClass == 2) then
+		elseif (iTheirClass == GameInfoTypes.GREAT_WORK_ARTIFACT) then
 			-- artifact(?)
 			iYourItem = activePlayer:GetSwappableGreatArtifact();
-		elseif (iTheirClass == 3) then
+		elseif (iTheirClass == GameInfoTypes.GREAT_WORK_LITERATURE) then
 			-- writing
 			iYourItem = activePlayer:GetSwappableGreatWriting();
-		elseif (iTheirClass == 4) then
+		elseif (iTheirClass == GameInfoTypes.GREAT_WORK_MUSIC) then
 			-- music
 			iYourItem = activePlayer:GetSwappableGreatMusic();
 		end
@@ -1390,17 +1390,17 @@ function SelectYourWork (iIndex)
 		local iClass = Game.GetGreatWorkClass(iIndex);
 	
 		local strTexture = "";
-		if (iClass == 1) then
+		if (iClass == GameInfoTypes.GREAT_WORK_ART) then
 			strTexture = "GreatWorks.dds";
-		elseif (iClass == 2) then
+		elseif (iClass == GameInfoTypes.GREAT_WORK_ARTIFACT) then
 			strTexture = "GreatWorks.dds";
-		elseif (iClass == 3) then
+		elseif (iClass == GameInfoTypes.GREAT_WORK_LITERATURE) then
 			strTexture = "GreatWorks_Book.dds";
-		elseif (iClass == 4) then
+		elseif (iClass == GameInfoTypes.GREAT_WORK_MUSIC) then
 			strTexture = "GreatWorks_Music.dds";
 		end
 
-		if (strImg ~= "") then
+		if (strTexture ~= "") then
 			Controls.SwapOursIcon:SetTexture(strTexture);
 		end
 
@@ -1464,17 +1464,17 @@ function SelectOthersWork (iIndex)
 	else
 		local iClass = Game.GetGreatWorkClass(iIndex);
 		local strTexture = "";
-		if (iClass == 1) then
+		if (iClass == GameInfoTypes.GREAT_WORK_ART) then
 			strTexture = "GreatWorks.dds";
-		elseif (iClass == 2) then
+		elseif (iClass == GameInfoTypes.GREAT_WORK_ARTIFACT) then
 			strTexture = "GreatWorks.dds";
-		elseif (iClass == 3) then
+		elseif (iClass == GameInfoTypes.GREAT_WORK_LITERATURE) then
 			strTexture = "GreatWorks_Book.dds";
-		elseif (iClass == 4) then
+		elseif (iClass == GameInfoTypes.GREAT_WORK_MUSIC) then
 			strTexture = "GreatWorks_Music.dds";
 		end
 		
-		if (strImg ~= "") then
+		if (strTexture ~= "") then
 			Controls.SwapTheirsIcon:SetTexture(strTexture);
 		end
 
@@ -1613,7 +1613,7 @@ function RefreshSwappingItems()
 	
 	local pullDown = Controls.YourWritingPullDown;
 	pullDown:GetButton():SetToolTipString(strTT);
-	PopulatePullDown(pullDown, 3)
+	PopulatePullDown(pullDown, GameInfoTypes.GREAT_WORK_LITERATURE)
 		
 	local iArtSwapIndex = activePlayer:GetSwappableGreatArt();
 	local strTT = Locale.Lookup("TXT_KEY_ART_SLOT_TT");
@@ -1640,7 +1640,7 @@ function RefreshSwappingItems()
 	
 	local pullDown = Controls.YourArtPullDown;
 	pullDown:GetButton():SetToolTipString(strTT);
-	PopulatePullDown(pullDown, 1)
+	PopulatePullDown(pullDown, GameInfoTypes.GREAT_WORK_ART)
 		
 	local strTT = Locale.Lookup("TXT_KEY_ARTIFACT_SLOT_TT");
 	local iArtifactSwapIndex = activePlayer:GetSwappableGreatArtifact();
@@ -1666,7 +1666,7 @@ function RefreshSwappingItems()
 	
 	local pullDown = Controls.YourArtifactPullDown;
 	pullDown:GetButton():SetToolTipString(strTT);
-	PopulatePullDown(pullDown, 2)
+	PopulatePullDown(pullDown, GameInfoTypes.GREAT_WORK_ARTIFACT)
 	
 	--local strTT = Locale.Lookup("TXT_KEY_MUSIC_SLOT_TT");
 	--local iMusicSwapIndex = activePlayer:GetSwappableGreatMusic();

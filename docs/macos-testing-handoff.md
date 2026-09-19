@@ -1,23 +1,21 @@
 # Lekmod macOS single-player testing handoff
 
 **Testing resumed at the user's request, 2026-09-19.** The current standard test
-package is `build/macos/Lekmod-incoming-tourism-20260919.zip`, archive SHA-256
-`12d4b35184b78fc9ed1ef176cd73ff6f176f2ba3f0c16d31fcd02c88b88c2149`,
+package is `build/macos/Lekmod-greatwork-swap-20260919.zip`, archive SHA-256
+`014077403f0f6d991f4ff27a5b42955bb2cf3bdbceda9c4239275780da4add0f`,
 with signed GameCore
 `689df45d69b4b772e408155c4f443d09ad6a936039205cee6e62747fd8cca3d6`.
 
-The [incoming-route owner correction](macos-incoming-trade-validation.md) passed
-affected-save/reload and physical standard/EUI incoming-table tests. A subsequent
-nonzero-tourism fixture exposed another recipient-ID error; its correction passed
-affected-save and exact-reload tests. The shared tooltip precision fix is verified
-in both UIs. The current standard package was installed through the managed
-installer after EUI testing had restored its preceding artifact, text and options. The package
-is an intermediate artifact built with the incoming-tourism change uncommitted, not a
-final clean release. Recent Māori/Moors fixes and Cuba/Admiral/nuclear/trade UI
-coverage are recorded in the expanded ledger and their linked reports.
-Remaining civilization and system coverage is still open. Always inspect current
-processes and `build/macos/continuation-state.json` before a launch. The historical
-pause below does not describe the current installation.
+The latest [Great Work swap correction](macos-great-work-exchange.md) replaces
+fixed class IDs in the shared UI. Actual standard/EUI exchange, saved native
+controller/slot checks and exact cross-UI state comparison passed. Incoming-route
+identity/tourism and tooltip precision corrections have their own scoped reports.
+This intermediate package was built with the UI correction uncommitted; it is
+not the final clean release. Always inspect current processes and
+`build/macos/continuation-state.json` before launching. The original quicksave
+was preserved and restored after both physical tests. Remaining
+civilization/system coverage is open; the historical pause below does not
+describe the current installation.
 
 ## Previous pause
 
