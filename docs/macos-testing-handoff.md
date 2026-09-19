@@ -1,5 +1,33 @@
 # Lekmod macOS single-player testing handoff
 
+**Testing resumed at the user's request, 2026-09-19.** The separate stock game
+had closed and the desktop was unlocked. The current standard test package is
+`build/macos/Lekmod-maori-opening-window-20260919.zip`, archive SHA-256
+`f750e49ec4f4de98e9fe5f28396983aae2d8db43d42338ffea85fbcc187583ac`,
+with signed GameCore
+`80a9ec3f54b96485606228c067f3656e727c2bf6b16c2c977cbf6c19bb85b8c1`.
+
+Māori movement-budget, production birth-turn and later-era opening-window fixes
+are committed in `d2c000a8`; native regressions and exact reloads passed. See
+[the Māori report](macos-maori-validation.md). The package is an intermediate
+artifact built while those changes were uncommitted, not a final release.
+Remaining ownership, civilization and system coverage is still open. Always
+inspect current processes and `build/macos/continuation-state.json` before a
+launch. The historical pause below does not describe the current installation.
+
+## Previous pause
+
+At the user-requested pause on 2026-09-19 UTC, stock Civ V was restored and
+verified. Installed GameCore, canonical stock and Aspyr backup all matched
+`0da6a5ffc283c3f147b20a7ec426e4ed85a6838ab891faf61b50af4e25c4a09c`.
+Lekmod/private EUI were inactive. Settings, 216 manual saves and stock UI files
+were verified. A separate Civ V process appeared afterward and was left untouched.
+
+Source was then `0a4521b7` with the Māori changes uncommitted and the later-era
+test unrun. Evidence is retained in
+`build/macos/stock-pause-verification-20260919.json`. Use the resumed status at
+the top and the current continuation record for the latest installation and work.
+
 Last updated: 2026-09-16. This is a same-machine, same-workspace handoff, not a
 claim that the macOS port is fully certified. No new task or schedule was created.
 
