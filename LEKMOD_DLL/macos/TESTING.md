@@ -1015,3 +1015,11 @@ type/domain contribution queries and an actual external land route are checked
 separately. The route table has no FromFood field: use the native total-value
 query and independently verify the origin city's actual gross food. The
 complete two-owner city/resource/route snapshot supports exact zero-turn reload.
+
+`zabonah-ai-minor --scenario-turns 3` starts two Roman majors/two city-states
+on Small Ancient Pangaea with Always Peace/no barbarians/no huts. On the real
+AI owner turn, supplied Scout and Zabonah units use normal AI PushMission
+movement. The driver verifies no Scout reward, exactly ten gold for a previously
+unrevealed minor capital beyond ordinary sight, and no repeat reward. It never
+uses direct missions on a human unit or alters synchronization state. Its
+AI treasury/unit/city-state visibility snapshot supports exact reload.

@@ -1520,3 +1520,12 @@ technology/replacement controls, exact flat yields and two horses, six native
 trade contribution queries with Roman controls, and an actual international
 land route matching its income/food quote. Other route domains/types are query
 coverage only. Prior test-driver failures remain recorded separately.
+
+
+### AI Zabonah city-state discovery
+
+The [Nabataean report](macos-nabatea-validation.md) adds a controlled real
+AI-owner-turn Scout/Zabonah comparison, city-state capital reveal beyond normal
+sight, exact ten-gold reward and no-repeat movement. Supplied units/positions
+are distinguished from normal native mission/reward outcomes; autonomous AI
+exploration strategy is not claimed.

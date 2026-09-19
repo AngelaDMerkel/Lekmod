@@ -235,3 +235,36 @@ snapshot and exited normally (0), with hooks/settings/manual-save preservation
 and no Lua/sync errors or new diagnostics. Save SHA-256:
 `6433cd99ef37c2727efd24a8ad199040cf08147f8d42a24cbcf03db260ab469b`.
 All 32 runner regressions pass.
+
+## AI-owned Zabonah and city-state capitals
+
+`20260919T114525Z` started a normal Ancient/Small/Pangaea single-player game
+with two Roman majors, two city-states, Always Peace, no barbarians and no huts.
+Nabatea was absent. On a real active AI owner turn, supplied Scout/Zabonah
+probes used ordinary AI movement missions along a bare, river-free boundary.
+No human unit used direct PushMission. Capital/visibility, gold and unit movement
+were outcomes, never assigned to satisfy a check.
+
+The AI Scout moved to distance five and received no extended reveal or gold.
+After an explicitly supplied reposition cleared that control, the AI Zabonah
+moved to the same boundary: ordinary sight was two, the city-state capital
+(owner 23) became revealed, and treasury changed exactly 33→43. Its second
+normal move inside the radius gave no further reward. All three checks passed.
+The final ordinary AI processing was allowed to continue, so final positions
+are separate from the immediate mission observations. Two normal turns elapsed;
+this does not reopen the completed long stability phase.
+
+Normal save/exit (0), hooks/settings/manual-save preservation and no Lua/sync
+errors or new diagnostics were recorded. Save SHA-256:
+`d0e8dc1eb5cae4933ac3af74886bb13ebf1aeb8ef90c6a0dcce5f412892c818a`.
+This closes the controlled AI-owner/city-state-capital and non-repeat cases;
+it does not claim unscripted AI exploration strategy or every terrain boundary.
+The units and staging positions were supplied; no additional product fix was
+needed. Use `--scenario zabonah-ai-minor --scenario-turns 3` with the described
+new-game configuration; the complete AI treasury/unit/minor-visibility snapshot
+supports exact zero-turn reload.
+
+Exact AI/minor reload `20260919T114711Z` matched the entire saved snapshot and
+exited normally (0), with hooks/settings/manual-save preservation and no
+Lua/synchronization errors or new diagnostics. Save SHA-256:
+`cf6690f57cb44cc457dc440a6aaef5c04a0a3c39219155ac5403d4acf7e08554`.
