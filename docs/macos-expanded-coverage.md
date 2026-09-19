@@ -1480,3 +1480,13 @@ expiry and war-cancellation regressions passed; the old failed save remains
 playable and recovers its stored marker through one ordinary AI turn. The
 case uses supplied cities/units and scripted normal commands, with no physical
 input or broader growth-accrual claim.
+
+
+### Polynesian conversion and saved ocean access
+
+[Polynesian evidence](macos-polynesia-validation.md) confirms and corrects ocean
+restrictions restored by paid ship conversion, then reconciles already-affected
+saved ships at normal initialization. Native human/AI upgrades, Roman controls,
+real ocean movement, outgoing/incoming gifts, exact reloads and an old-save
+movement retest passed. Supplied inputs and failed setup/diagnostic attempts are
+explicitly separated. Other Polynesian uniques and land/capture boundaries remain.

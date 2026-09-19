@@ -62,7 +62,9 @@ local function fixture(file,active)
  e.LekmodUtilities={is_civilization_active=function()return active~=false end,
   get_random_between=function(_,a,b)assert(a==1 and b==4);e.randomCalls=e.randomCalls+1;return e.random end}
  e.Locale={ConvertTextKey=function(...)return "text" end}
- e.Events={GameplayAlertMessage=function()e.alerts=e.alerts+1 end,AddPopupTextEvent=function()e.popups=e.popups+1 end}
+ e.Events=setmetatable({GameplayAlertMessage=function()e.alerts=e.alerts+1 end,AddPopupTextEvent=function()e.popups=e.popups+1 end},{__index=function(_,name)return {Add=function(fn)
+  e.events[name]=e.events[name]or{};table.insert(e.events[name],fn)
+ end}end})
  e.Vector2=function(x,y)return {x,y}end;e.ToHexFromGrid=function(p)return p end;e.HexToWorld=function(p)return p end
  local chunk=assert(loadfile(root.."/Lekmod_"..file..".lua"));setfenv(chunk,e);chunk()
  function e:emit(name,...)assert(self.events[name],"missing event "..name);for _,fn in ipairs(self.events[name])do fn(...)end end
@@ -99,6 +101,42 @@ for _,kind in ipairs({"unrelated","dead"})do test("Polynesia excludes "..kind.."
  local e=fixture("polynesia");local p=e.Players[0];p.civ=kind=="dead" and 11 or -1;p.alive=kind~="dead";p.units={unit(8192,{[103]=true})}
  e:emit("UnitCreated",0,8192,12,14);assert(p.units[1]:IsHasPromotion(103))
 end)end
+for _,owner in ipairs({0,1})do test("Polynesia post-upgrade restores ocean access for owner "..owner,function()
+ local e=fixture("polynesia");local p=e.Players[owner];p.civ=11;local u=unit(16384,{[103]=true,[999]=true});p.units={u}
+ e:emit("UnitCreated",owner,16384,12,14);assert(not u:IsHasPromotion(103))
+ -- The actual C++ conversion reapplies the upgraded type's free promotions.
+ u.promotions[103]=true;e:emit("UnitConverted",owner,owner,8192,16384,true)
+ assert(not u:IsHasPromotion(103)and u:IsHasPromotion(999))
+end)end
+test("Polynesia incoming gift refreshes the new owner",function()
+ local e=fixture("polynesia");e.Players[1].civ=11;e.Players[0].units={unit(8192,{[103]=true})};e.Players[1].units={unit(8192,{[103]=true})}
+ e:emit("UnitConverted",0,1,8192,8192,false)
+ assert(e.Players[0].units[1]:IsHasPromotion(103)and not e.Players[1].units[1]:IsHasPromotion(103))
+end)
+test("Polynesia outgoing gift leaves foreign restriction intact",function()
+ local e=fixture("polynesia");e.Players[0].civ=11;e.Players[0].units={unit(8192,{[103]=true})};e.Players[1].units={unit(16384,{[103]=true})}
+ e:emit("UnitConverted",0,1,8192,16384,false)
+ assert(e.Players[0].units[1]:IsHasPromotion(103)and e.Players[1].units[1]:IsHasPromotion(103))
+end)
+test("Polynesia conversion excludes dead recipient",function()
+ local e=fixture("polynesia");local p=e.Players[1];p.civ=11;p.alive=false;p.units={unit(8192,{[103]=true})}
+ e:emit("UnitConverted",0,1,8192,8192,false);assert(p.units[1]:IsHasPromotion(103))
+end)
+test("Polynesia conversion leaves third owner untouched",function()
+ local e=fixture("polynesia");for _,owner in ipairs({1,2})do e.Players[owner].civ=11;e.Players[owner].units={unit(8192,{[103]=true})}end
+ e:emit("UnitConverted",0,1,8192,8192,false)
+ assert(not e.Players[1].units[1]:IsHasPromotion(103)and e.Players[2].units[1]:IsHasPromotion(103))
+end)
+test("Polynesia initialization reconciles saved human and AI ships",function()
+ local e=fixture("polynesia")
+ for _,owner in ipairs({0,1})do e.Players[owner].civ=11;e.Players[owner].units={unit(8192,{[103]=true,[999]=true})}end
+ e:emit("SequenceGameInitComplete");e:emit("SequenceGameInitComplete")
+ for _,owner in ipairs({0,1})do local u=e.Players[owner].units[1];assert(not u:IsHasPromotion(103)and u:IsHasPromotion(999)and u.writes==1)end
+end)
+test("Polynesia initialization excludes foreign and dead owners",function()
+ local e=fixture("polynesia");e.Players[2].units={unit(8192,{[103]=true})};e.Players[3].civ=11;e.Players[3].alive=false;e.Players[3].units={unit(8192,{[103]=true})}
+ e:emit("SequenceGameInitComplete");assert(e.Players[2].units[1]:IsHasPromotion(103)and e.Players[3].units[1]:IsHasPromotion(103))
+end)
 test("Polynesia inactive civilization registers no callback",function()local e=fixture("polynesia",false);assert(next(e.events)==nil)end)
 local function battalion(owner,territory,level,promotion)
  local e=fixture("newzealand",false);e.Players[4].friendshipLevel=level or 0

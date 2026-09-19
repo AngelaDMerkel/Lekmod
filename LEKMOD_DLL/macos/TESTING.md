@@ -745,7 +745,7 @@ and immediate founding-event registration/routing. Native production modifiers
 and first-playable founding behavior are verified separately. All 26 civilization Lua files also pass the pinned Lua 5.1 syntax check.
 
 
-`test-unit-owner-boundaries.lua LEKMOD/Lua/Civilizations` runs 39 isolated
+`test-unit-owner-boundaries.lua LEKMOD/Lua/Civilizations` runs 47 isolated
 actual-handler cases using Lua 5.1 and the C++ event argument order: Swiss
 creation/movement promotions; Polynesian creation cleanup; New Zealand meeting
 rewards, Battalion influence and Defender city-radius/friendship filtering.
@@ -970,3 +970,14 @@ never invokes Unit:PushMission directly. `kilwa-sea-continue` loads the preserve
 pre-fix sea-plunder save for at most one ordinary AI turn. See the
 [removal report](../../docs/macos-trade-removal-validation.md) for exact scope and
 artifact hashes.
+
+
+`polynesia-upgrade` uses supplied coastal homes, Compass/gold and Galleys, then
+normal human/AI paid upgrades and synchronized ocean movement. AI probes pending
+deletion are not revived: fresh controlled inputs are supplied on the real owner
+turn and still must pass all upgrade gates. `polynesia-gifts` checks real
+human/AI gift commands and received-ship movement. `polynesia-load` reads the
+preserved failed upgrade save and attempts only normal ocean movement, with no
+fixture mutation or turn. All support exact reload; see
+[the Polynesian report](../../docs/macos-polynesia-validation.md). The owner-boundary
+suite contains 13 Polynesia cases within 47 total Swiss/Polynesia/New Zealand cases.

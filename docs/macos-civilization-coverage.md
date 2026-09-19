@@ -91,7 +91,7 @@ All 114 playable civilizations and 26 civilization Lua files are listed below. A
 | `CIVILIZATION_PHILIPPINES` | `TRAIT_GOOD_FIGHT` | UNIT_PHILIPINO_MARINE, BUILDING_NATIONALCHURCH | Lekmod_philippines.lua | [Founding quota](macos-philippines-validation.md): first-two/capital/third/other-owner boundaries, actual AI capture/later founding, lifetime-counter correction and exact reload native. Worker/Settler/Scientist owned-neutral movement and ordinary refresh/reload native. National Church prerequisites/yields/actual training XP/reload native. Gerilya/control strength, real embark/disembark, movement refresh and reloads native. Further territory/domain/production/combat branches remain. |
 | `CIVILIZATION_PHOENICIAN` | `TRAIT_LEADER_HIRAM` | UNIT_SQUARE_SAIL_SHIP, BUILDING_TRADE_HARBOUR | Lekmod_phoenicia.lua | [Optics founding reward](macos-phoenicia-validation.md), human/AI and pre-tech/existing-city/other-owner controls, exact reload native. Sailing/Trade Harbour and remaining boundaries pending. |
 | `CIVILIZATION_POLAND` | `TRAIT_SOLIDARITY` | UNIT_POLISH_WINGED_HUSSAR, BUILDING_DUCAL_STABLE | — | Unique mechanics pending. |
-| `CIVILIZATION_POLYNESIA` | `TRAIT_WAYFINDING` | UNIT_MC_HAWAIIAN_KOA | Lekmod_polynesia.lua | Five isolated actual-handler cases cover creation cleanup for human/AI units, unrelated/dead-owner exclusion and inactive registration. Native ocean movement and post-conversion upgrade timing pending. |
+| `CIVILIZATION_POLYNESIA` | `TRAIT_WAYFINDING` | UNIT_MC_HAWAIIAN_KOA | Lekmod_polynesia.lua | [Native upgrade/gift/ocean access](macos-polynesia-validation.md): creation-time cleanup missed copied upgrade promotions; post-conversion and load reconciliation fixes passed human/AI paid upgrades, Roman controls, actual ocean moves, gifts and affected-save checks/reloads. Thirteen isolated Polynesia cases cover owner/load boundaries. Koa/Moai, land embarkation and capture variants remain. |
 | `CIVILIZATION_PORTUGAL` | `TRAIT_EXTRA_TRADE` | UNIT_PORTUGUESE_NAU, UNIT_VENEZ_CARAVAN, UNIT_VENEZ_CARGO_SHIP, BUILDING_FEITORIA | — | Unique mechanics pending. |
 | `CIVILIZATION_PRUSSIA` | `TRAIT_PRUSSIA` | UNIT_LANDWHER, BUILDING_PRUSSIAN_FACTORY | — | Unique mechanics pending. |
 | `CIVILIZATION_ROMANIA` | `TRAIT_MC_NIHIL_SINE_DEO` | UNIT_MC_ROMANIAN_VINATOR, BUILDING_MC_ROMANIAN_PAINTED_MONASTERY | Lekmod_romania.lua | Eight isolated actual-handler cases cover capture recipient routing, four game-speed inputs, independent owners, dead/other-owner exclusions and inactive registration. Native capture/liberation/gift distinctions and other unique mechanics pending. |
@@ -123,19 +123,19 @@ All 114 playable civilizations and 26 civilization Lua files are listed below. A
 
 ## Civilization Lua event inventory
 
-These are registrations found in source, not executed-event coverage. Helpers with no direct registration may be called by another context.
+The event table was refreshed from current uncommented registrations on 2026-09-19. These are registrations found in source, not executed-event coverage. Helpers with no direct registration may be called by another context.
 
 | File | Civilization references | Registered events |
 | --- | --- | --- |
 | `Lekmod_aksum.lua` | CIVILIZATION_AKSUM | ReligionFounded, UnitHealed |
-| `Lekmod_bolivia.lua` | CIVILIZATION_BOLIVIA | CityCaptureComplete, GreatPersonExpended, PlayerCityFounded, PlayerDoTurn, PlayerHappinessChanged, UnitCreated |
+| `Lekmod_bolivia.lua` | CIVILIZATION_BOLIVIA | CityCaptureComplete, GreatPersonExpended, PlayerCityFounded, PlayerHappinessChanged, UnitCreated |
 | `Lekmod_cuba.lua` | CIVILIZATION_CUBA | PlayerAdoptPolicy, PlayerDoTurn |
 | `Lekmod_georgia.lua` | CIVILIZATION_GEORGIA | GreatPersonExpended, PlayerDoTurn, UnitConverted, UnitCreated |
 | `Lekmod_italy.lua` | CIVILIZATION_ITALY | PlayerAdoptPolicy |
-| `Lekmod_kilwa.lua` | CIVILIZATION_KILWA | PlayerDoTurn, UnitPrekill |
+| `Lekmod_kilwa.lua` | CIVILIZATION_KILWA | DeclareWar, PlayerDoTurn, TradeRouteRemoved, UnitPrekill |
 | `Lekmod_maori.lua` | CIVILIZATION_MAORI | PlayerDoTurn |
 | `Lekmod_mexico.lua` | CIVILIZATION_MEXICO | SequenceGameInitComplete, PlayerCityFounded |
-| `Lekmod_moors.lua` | CIVILIZATION_MOORS | PlayerDoTurn, TeamSetEra |
+| `Lekmod_moors.lua` | CIVILIZATION_MOORS | PlayerCityFounded, PlayerDoTurn, TeamSetEra |
 | `Lekmod_mughals.lua` | CIVILIZATION_MUGHALS | CityCaptureComplete, CityConvertsReligion, PlayerCityFounded, PlayerDoTurn |
 | `Lekmod_nabatea.lua` | CIVILIZATION_NABATEA | UnitSetXY |
 | `Lekmod_newzealand.lua` | CIVILIZATION_NEW_ZEALAND | PlayerDoTurn, TeamMeet |
@@ -144,12 +144,12 @@ These are registrations found in source, not executed-event coverage. Helpers wi
 | `Lekmod_palmyra.lua` | CIVILIZATION_PALMYRA | CityCaptureComplete, PlayerCityFounded |
 | `Lekmod_philippines.lua` | CIVILIZATION_PHILIPPINES | PlayerCityFounded |
 | `Lekmod_phoenicia.lua` | CIVILIZATION_PHOENICIAN | PlayerCityFounded |
-| `Lekmod_polynesia.lua` | CIVILIZATION_POLYNESIA | UnitCreated |
+| `Lekmod_polynesia.lua` | CIVILIZATION_POLYNESIA | SequenceGameInitComplete, UnitConverted, UnitCreated |
 | `Lekmod_romania.lua` | CIVILIZATION_ROMANIA | CityCaptureComplete |
 | `Lekmod_switzerland.lua` | CIVILIZATION_SWISS | UnitCreated, UnitSetXY |
 | `Lekmod_tonga.lua` | CIVILIZATION_TONGA | SequenceGameInitComplete |
 | `Lekmod_uae.lua` | CIVILIZATION_UAE | CityConstructed, PlayerDoTurn, UnitPillaged, UnitPlundered |
 | `Lekmod_vatican.lua` | CIVILIZATION_VATICAN | CityCaptureComplete, CityConvertsReligion |
-| `Lekmod_venice.lua` | CIVILIZATION_VENEZ | TeamTechResearched |
+| `Lekmod_venice.lua` | CIVILIZATION_VENEZ | SequenceGameInitComplete, TeamTechResearched |
 | `Lekmod_yugoslavia.lua` | CIVILIZATION_YUGOSLAVIA | PlayerPolicyBranchUnlocked |
 | `MC_NabateaAddin.lua` | CIVILIZATION_NABATEA | PlayerDoTurn, SequenceGameInitComplete, SerialEventCityInfoDirty, SerialEventCityScreenDirty, SerialEventEnterCityScreen, SerialEventGameDataDirty |

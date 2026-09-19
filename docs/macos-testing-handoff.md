@@ -1,22 +1,23 @@
 # Lekmod macOS single-player testing handoff
 
 **Testing resumed at the user's request, 2026-09-19.** The current standard test
-package is `build/macos/Lekmod-trade-removal-20260919.zip`, archive SHA-256
-`f1e5dc58f79a2308c3e971529066d17edd513f1606b9f55a9fe29f9aab9db5cd`,
+package is `build/macos/Lekmod-polynesia-load-20260919.zip`, archive SHA-256
+`b3e0b9ade0db1542d8385a06d0a644fd9643ff7c5f23a8304950f757cce96999`,
 with signed GameCore
 `7a4a5abb38928278e940bdd83ee05d234972d1ffceef4125d46b637e8c8fdca9`.
 
-The latest [trade-removal correction](macos-trade-removal-validation.md) emits
-a normal post-clear event and uses it to remove Kilwa's stale food bonus after
-naval plunder. Native AI sea-route/plunder, exact reload and short expiry/war
-regressions passed. Earlier Kilwa war cancellation and standard/EUI Great Work
-exchange fixes have their own scoped native and persistence evidence. Startup
-exit 255 remains intermittent and open. This intermediate package was built
-with the removal correction uncommitted and is not the final clean release.
-Always inspect processes and `build/macos/continuation-state.json` before a
-launch. Original quicksave, canonical stock and Aspyr backup remain preserved.
-The broad civilization/system ledger is still open; the historical pause below
-does not describe the current installation.
+The latest [Polynesian conversion/load correction](macos-polynesia-validation.md)
+preserves ocean access through paid upgrades and gifts and reconciles already-
+affected saved ships. Native human/AI controls, actual ocean movement, gift and
+old-save checks passed; inspect the continuation record for the latest reload.
+Trade-removal/Kilwa and standard/EUI Great Work fixes have separate scoped
+native and persistence evidence. Startup exit 255 remains intermittent and open.
+This intermediate package was built with the Polynesia changes uncommitted and
+is not the final clean release. Always inspect processes and
+`build/macos/continuation-state.json` before launching. Original quicksave,
+canonical stock and Aspyr backup remain preserved. The broad civilization/system
+ledger is still open; the historical pause below does not describe the current
+installation.
 
 ## Previous pause
 
