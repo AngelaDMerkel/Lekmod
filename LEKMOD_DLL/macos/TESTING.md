@@ -981,3 +981,14 @@ preserved failed upgrade save and attempts only normal ocean movement, with no
 fixture mutation or turn. All support exact reload; see
 [the Polynesian report](../../docs/macos-polynesia-validation.md). The owner-boundary
 suite contains 13 Polynesia cases within 47 total Swiss/Polynesia/New Zealand cases.
+
+
+`test-nabatea-exploration.lua` executes the actual Zabonah reward handler with
+13 owner/reveal/lifecycle cases. `nabatea-disband` uses the ordinary delete action
+and Yes confirmation to verify off-map removal without Lua errors; a disposal
+assertion alone is insufficient if the runner records a runtime error.
+`nabatea-discovery` uses real synchronized Scout/Zabonah moves, supplied city and
+position inputs, and exact gold/reveal checks. Both support zero-turn exact
+reload. See [the Nabataean report](../../docs/macos-nabatea-validation.md).
+Do not reactivate MC_NabateaAddin for these tests: its old purchase UI is disabled
+in the shipped InGame loader and is not the current farming trait.

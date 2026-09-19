@@ -2,7 +2,7 @@
 
 Generated from the shipped XML and civilization Lua on 2026-09-16. This is a queue for coverage, not a statement that all listed mechanics have passed. The current-Mac scope, accepted stability campaign and deferred multiplayer scope remain unchanged. See [the completion ledger](macos-expanded-coverage.md) for exact evidence and fixture limits.
 
-All 114 playable civilizations and 26 civilization Lua files are listed below. A general engine test or a successful start with one civilization does not validate all of its unique abilities. Data overrides list only non-default units/buildings; shared trait fields and linked trait tables still require family-level or civilization-specific assertions.
+All 114 playable civilizations and 26 civilization Lua source files are listed below. The shipped InGame template explicitly loads 25 civilization contexts; MC_NabateaAddin is a dormant legacy context with its load call commented out. A general engine test or a successful start with one civilization does not validate all of its unique abilities. Data overrides list only non-default units/buildings; shared trait fields and linked trait tables still require family-level or civilization-specific assertions.
 
 | Civilization | Trait | Unique overrides | Lua | Current evidence |
 | --- | --- | --- | --- | --- |
@@ -78,7 +78,7 @@ All 114 playable civilizations and 26 civilization Lua files are listed below. A
 | `CIVILIZATION_MOROCCO` | `TRAIT_GATEWAY_AFRICA` | UNIT_BERBER_CAVALRY | — | Unique mechanics pending. |
 | `CIVILIZATION_MUGHALS` | `TRAIT_MUGHALS` | UNIT_MUGHALS_CANNON, BUILDING_MUGHALS_CARAVANSARY | Lekmod_mughals.lua | Holy-city conversion benefits native; supplied religions/conversions. Other uniques pending. |
 | `CIVILIZATION_MYSORE` | `TRAIT_UNHAPPY_ELITE` | UNIT_ROCKET_CORPS, BUILDING_MYSORE_PALACE | — | Unique mechanics pending. |
-| `CIVILIZATION_NABATEA` | `TRAIT_FOOD_FOR_TOUGHT` | UNIT_MC_ZABONAH, BUILDING_MC_KOKH | Lekmod_nabatea.lua, MC_NabateaAddin.lua | Unique mechanics pending. |
+| `CIVILIZATION_NABATEA` | `TRAIT_FOOD_FOR_TOUGHT` | UNIT_MC_ZABONAH, BUILDING_MC_KOKH | Lekmod_nabatea.lua; MC_NabateaAddin.lua dormant | [Zabonah lifecycle/discovery](macos-nabatea-validation.md): normal disband exposed and fixed an off-map Lua error; Roman-owned movement reveals a capital beyond sight, gives exactly10gold and does not repeat; exact reload passed. Thirteen handler cases pass. Farm trait, Tomb and other native owner/terrain boundaries remain. |
 | `CIVILIZATION_NETHERLANDS` | `TRAIT_LUXURY_RETENTION` | UNIT_DUTCH_SEA_BEGGAR | — | Unique mechanics pending. |
 | `CIVILIZATION_NEW_ZEALAND` | `TRAIT_WHERE_SHE_GOES` | UNIT_JFD_DEFENDER, UNIT_MC_NEW_ZEALAND_MAORI_BATTALION | Lekmod_newzealand.lua | Twenty-eight isolated actual-handler cases cover meeting reward branches/team routing, Battalion influence eligibility and non-major exclusions, Defender city/friendship boundaries and inactive registration. Native gameplay/event timing and persistence pending. |
 | `CIVILIZATION_NORMANDY` | `TRAIT_WIRR` | UNIT_PEDITE | — | Unique mechanics pending. |
@@ -152,4 +152,4 @@ The event table was refreshed from current uncommented registrations on 2026-09-
 | `Lekmod_vatican.lua` | CIVILIZATION_VATICAN | CityCaptureComplete, CityConvertsReligion |
 | `Lekmod_venice.lua` | CIVILIZATION_VENEZ | SequenceGameInitComplete, TeamTechResearched |
 | `Lekmod_yugoslavia.lua` | CIVILIZATION_YUGOSLAVIA | PlayerPolicyBranchUnlocked |
-| `MC_NabateaAddin.lua` | CIVILIZATION_NABATEA | PlayerDoTurn, SequenceGameInitComplete, SerialEventCityInfoDirty, SerialEventCityScreenDirty, SerialEventEnterCityScreen, SerialEventGameDataDirty |
+| `MC_NabateaAddin.lua` (dormant) | CIVILIZATION_NABATEA | PlayerDoTurn, SequenceGameInitComplete, SerialEventCityInfoDirty, SerialEventCityScreenDirty, SerialEventEnterCityScreen, SerialEventGameDataDirty |

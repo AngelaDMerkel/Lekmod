@@ -1490,3 +1490,13 @@ saved ships at normal initialization. Native human/AI upgrades, Roman controls,
 real ocean movement, outgoing/incoming gifts, exact reloads and an old-save
 movement retest passed. Supplied inputs and failed setup/diagnostic attempts are
 explicitly separated. Other Polynesian uniques and land/capture boundaries remain.
+
+
+### Zabonah lifecycle and discovery
+
+[Nabatean evidence](macos-nabatea-validation.md) records a confirmed off-map
+UnitSetXY Lua error during normal disbanding, its guarded fix and same-input
+retest. Normal Scout/Zabonah movement separates extended capital discovery from
+ordinary sight, awards exactly ten gold and rejects repeat rewards under a Roman
+owner with Nabatea absent. Discovery persistence passed. The old food-purchase
+addin is dormant in the shipped loader; current farm/Tomb mechanics remain open.

@@ -11,11 +11,14 @@ function lekmod_nabatea_unit_exploration(player_id, unit, unit_x, unit_y)
 
    local nabatea_unit = GameInfoTypes["UNIT_MC_ZABONAH"]
 	local player = Players[player_id]
+	if not player or not player:IsAlive() then return end
 	local unit_id = player:GetUnitByID(unit)
-	if unit_id:GetUnitType() ~= nabatea_unit then return end
+	if not unit_id or unit_id:IsDelayedDeath() or unit_id:GetUnitType() ~= nabatea_unit then return end
 
-	local unit_team = unit_id:GetTeam()
+	-- Unit removal also emits UnitSetXY with an invalid map position.
 	local unit_plot = Map.GetPlot(unit_x, unit_y)
+	if not unit_plot then return end
+	local unit_team = unit_id:GetTeam()
 
 	for loop_plot in PlotAreaSweepIterator(unit_plot, unit_id:VisibilityRange() + 3, SECTOR_NORTH, DIRECTION_CLOCKWISE, DIRECTION_OUTWARDS, CENTRE_EXCLUDE) do
 		local city = loop_plot:GetPlotCity()

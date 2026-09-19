@@ -174,6 +174,8 @@ SCENARIO_ITEMS = {"inventory": {"system-inventory"},
                   "philippines-gerilya-return": {"gerilya-normal-disembark", "gerilya-land-move-boundary"},
                   "oman-minaa": {"minaa-enemy-sea", "minaa-embarked", "minaa-lethal-stack", "minaa-own-land-distance-controls"},
                   "ottoman-promotions": {"ottoman-human-first", "ottoman-human-second", "ottoman-AI-faith", "promotion-other-owner-no-faith"},
+                  "nabatea-discovery": {"zabonah-scout-control", "zabonah-capital-discovery", "zabonah-no-repeat"},
+                  "nabatea-disband": {"zabonah-disband"},
                   "polynesia-load": {"polynesia-saved-restrictions", "polynesia-saved-roman-control", "polynesia-saved-ocean-move"},
                   "polynesia-gifts": {"polynesia-gift-away", "polynesia-gift-incoming", "polynesia-gift-ocean-move"},
                   "polynesia-upgrade": {"polynesia-fresh-ocean-access", "polynesia-paid-upgrades", "polynesia-converted-ocean-access", "polynesia-roman-ocean-control", "polynesia-ocean-movement"},
@@ -458,8 +460,8 @@ def main():
         parser.error("Foreground UI tests require --mode ui-interaction or single-player-smoke and --timeout at most 3600; the flag does not grant user permission")
     if args.production_completion and (args.mode != "human-turns" or args.turns != 3 or not args.load_save or args.timeout > 600):
         parser.error("Production completion requires --mode human-turns, --turns 3, --load-save and --timeout at most 600")
-    if args.scenario and (args.mode != "single-player-smoke" or (not args.load_save and args.scenario not in ("congress", "endgame", "bolivia", "mughals", "worker", "buganda-lake", "georgia", "georgia-upgrade", "cuba-greatworks", "cuba-ideology", "diplomacy-assets", "palmyra", "venice", "venice-known-compass", "italy", "setup", "uae-raider", "aksum-heal-domain", "budget-settlement", "mexico-discovery", "phoenicia-founding", "philippines-founding", "oman-minaa", "ottoman-promotions", "tonga-vision", "maori-movement", "maori-era", "cuba-capital", "moors-founding", "kilwa-routes", "kilwa-sea-plunder", "polynesia-upgrade")) or args.city_controls or args.timeout > 1800):
-        parser.error("Scenarios require --mode single-player-smoke, --load-save (except congress/endgame/bolivia/mughals/worker/buganda-lake/georgia/georgia-upgrade/cuba-greatworks/cuba-ideology/diplomacy-assets/palmyra/venice/venice-known-compass/italy/setup/uae-raider/aksum-heal-domain/budget-settlement/mexico-discovery/phoenicia-founding/philippines-founding/oman-minaa/ottoman-promotions/tonga-vision/maori-movement/maori-era/cuba-capital/moors-founding/kilwa-routes/kilwa-sea-plunder/polynesia-upgrade), no --city-controls and --timeout at most 1800")
+    if args.scenario and (args.mode != "single-player-smoke" or (not args.load_save and args.scenario not in ("congress", "endgame", "bolivia", "mughals", "worker", "buganda-lake", "georgia", "georgia-upgrade", "cuba-greatworks", "cuba-ideology", "diplomacy-assets", "palmyra", "venice", "venice-known-compass", "italy", "setup", "uae-raider", "aksum-heal-domain", "budget-settlement", "mexico-discovery", "phoenicia-founding", "philippines-founding", "oman-minaa", "ottoman-promotions", "tonga-vision", "maori-movement", "maori-era", "cuba-capital", "moors-founding", "kilwa-routes", "kilwa-sea-plunder", "polynesia-upgrade", "nabatea-disband", "nabatea-discovery")) or args.city_controls or args.timeout > 1800):
+        parser.error("Scenarios require --mode single-player-smoke, --load-save (except congress/endgame/bolivia/mughals/worker/buganda-lake/georgia/georgia-upgrade/cuba-greatworks/cuba-ideology/diplomacy-assets/palmyra/venice/venice-known-compass/italy/setup/uae-raider/aksum-heal-domain/budget-settlement/mexico-discovery/phoenicia-founding/philippines-founding/oman-minaa/ottoman-promotions/tonga-vision/maori-movement/maori-era/cuba-capital/moors-founding/kilwa-routes/kilwa-sea-plunder/polynesia-upgrade/nabatea-disband/nabatea-discovery), no --city-controls and --timeout at most 1800")
     if args.scenario == "endgame" and (args.load_save or args.expected_state or args.save_and_exit or args.scenario_turns != 2):
         parser.error("Endgame requires a new two-turn scenario, without save/reload options")
     if args.expect_human_victory and args.scenario != "endgame":
@@ -559,7 +561,7 @@ def main():
                 ui_templates[ui_dir / "CityView.lua"] = "playtest-scenario-city-sale.lua"
             if args.scenario in ("city-capture", "palmyra"):
                 ui_templates[APP / "Contents/Assets/Assets/UI/InGame/Popups/GenericPopup.lua"] = "playtest-scenario-city-capture-popup.lua"
-            if args.scenario == "unit-utility":
+            if args.scenario in ("unit-utility", "nabatea-disband"):
                 ui_templates[APP / "Contents/Assets/Assets/UI/InGame/Popups/GenericPopup.lua"] = "playtest-scenario-unit-confirm.lua"
             if args.scenario == "minor-greeting":
                 ui_templates[ui_dir / "CityStateGreetingPopup.lua"] = "playtest-scenario-minor-greeting-popup.lua"

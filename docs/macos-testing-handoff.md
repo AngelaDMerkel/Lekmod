@@ -1,23 +1,22 @@
 # Lekmod macOS single-player testing handoff
 
 **Testing resumed at the user's request, 2026-09-19.** The current standard test
-package is `build/macos/Lekmod-polynesia-load-20260919.zip`, archive SHA-256
-`b3e0b9ade0db1542d8385a06d0a644fd9643ff7c5f23a8304950f757cce96999`,
+package is `build/macos/Lekmod-zabonah-removal-20260919.zip`, archive SHA-256
+`9d10cd396769a678ebd23da76a017fd171bd3050976195caf34c14c6f63fbbfb`,
 with signed GameCore
 `7a4a5abb38928278e940bdd83ee05d234972d1ffceef4125d46b637e8c8fdca9`.
 
-The latest [Polynesian conversion/load correction](macos-polynesia-validation.md)
-preserves ocean access through paid upgrades and gifts and reconciles already-
-affected saved ships. Native human/AI controls, actual ocean movement, gift and
-old-save checks passed; inspect the continuation record for the latest reload.
-Trade-removal/Kilwa and standard/EUI Great Work fixes have separate scoped
-native and persistence evidence. Startup exit 255 remains intermittent and open.
-This intermediate package was built with the Polynesia changes uncommitted and
-is not the final clean release. Always inspect processes and
-`build/macos/continuation-state.json` before launching. Original quicksave,
-canonical stock and Aspyr backup remain preserved. The broad civilization/system
-ledger is still open; the historical pause below does not describe the current
-installation.
+The latest [Zabonah lifecycle correction](macos-nabatea-validation.md) guards
+missing, inactive and off-map unit states. Normal disbanding no longer raises a
+Lua error; a Roman-owned Zabonah still receives its exact capital-discovery reward
+through normal movement. Polynesian conversion/load, trade-removal/Kilwa and
+standard/EUI Great Work fixes have separate native/persistence reports. Startup
+exit 255 remains intermittent and open. This intermediate package was built
+with the Zabonah change uncommitted and is not the final clean release. Inspect
+processes and `build/macos/continuation-state.json` before launching. Original
+quicksave, canonical stock and Aspyr backup remain preserved. The broad
+civilization/system ledger is still open; the historical pause below does not
+describe the current installation.
 
 ## Previous pause
 
