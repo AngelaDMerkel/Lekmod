@@ -319,3 +319,21 @@ Exit confirmation. Its retained `stall.sample.txt` again shows main-thread
 and restored settings/hooks/manual saves. A separate retry passed. This third
 matching sample strengthens the recurring shutdown observation but does not
 identify its cause or justify bypassing synchronization.
+
+
+`20260919T025740Z` reproduced startup exit 255 at 20.4 seconds before any Māori
+gift action. Database.log again reports failure to attach the merged localization
+cache. The host error observer returned 0; descriptor usage was 122 against a
+soft limit of 10,240. A 25,509,888-byte cache retained its localization tables and
+passed SQLite quick_check. All 21 files and hashes were preserved under
+`build/macos/cache-investigation/20260919T025740Z`; no healthy cache was removed.
+
+The same fixture/artifact with only the runner's intro-skip setting changed to
+0 reached gameplay in `20260919T030214Z`. No foreground activation or physical
+input was used; the owned-window capture shows gameplay at turn seven. Native
+gift checks then exposed a separate ownership bug, so the overall scenario is
+FAIL despite normal save/exit 0 at 264 seconds. Settings/hooks/manual saves were
+restored. The cache became 27,500,544 bytes. This successful startup comparison
+does not isolate the intermittent cause: the first attempt had already processed
+cache state, and one successful retry is insufficient. Startup reliability
+remains open.
