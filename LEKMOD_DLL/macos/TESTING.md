@@ -892,3 +892,12 @@ The scenario waits for the missile's actual EndCombatSim event before returning
 for save; visible damage alone is not sufficient. The passing run advances no
 turn, and the outcome snapshot supports exact reload. City/population effects,
 weapon production and natural cleanup are separate coverage.
+
+
+`test-trade-tooltip-precision.py [--source OLD_CPP]` compiles the actual outgoing
+and incoming tooltip bindings with sanitizer-backed numeric/localization sinks.
+It checks 183 yield-precision and route-filter cases across origin, destination
+and incoming paths. The sinks do not test locale rendering. Native
+`trade-tooltip --load-save PATH --save-and-exit` uses the two-route internal
+fixture to require real localized 1.75 food/3.5 production strings and unchanged
+175/350-hundredths route data. Its snapshot supports exact reload.

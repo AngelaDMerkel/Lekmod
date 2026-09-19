@@ -226,6 +226,7 @@ Retained screenshots and hashes:
 The counter tooltip exposed a separate precision defect: it showed 1 food and
 3 production despite native 1.75/3.5 rates and the table's rounded 1.8/3.5. Both
 standard and EUI top panels consume the same core tooltip string. Its integer
-division is under separate correction and native verification. This does not
-change the successful table-interaction observations. Populated incoming routes
+division is now corrected; the [precision report](macos-trade-tooltip-validation.md)
+records native/reload checks and the physical EUI retest with 1.75/3.5 visible.
+This does not change the successful table-interaction observations. Populated incoming routes
 and foreign Great Work exchange remain open.

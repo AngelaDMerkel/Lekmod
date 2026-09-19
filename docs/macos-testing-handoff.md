@@ -1,19 +1,20 @@
 # Lekmod macOS single-player testing handoff
 
-**Testing resumed at the user's request, 2026-09-19.** The separate stock game
-had closed and the desktop was unlocked. The current standard test package is
-`build/macos/Lekmod-maori-opening-window-20260919.zip`, archive SHA-256
-`f750e49ec4f4de98e9fe5f28396983aae2d8db43d42338ffea85fbcc187583ac`,
+**Testing resumed at the user's request, 2026-09-19.** The current standard test
+package is `build/macos/Lekmod-trade-tooltip-20260919.zip`, archive SHA-256
+`16d26d3215bb6d01180c65f0e4fba38e7f5a4e4d9ac9dd091edcaf5219da42b8`,
 with signed GameCore
-`80a9ec3f54b96485606228c067f3656e727c2bf6b16c2c977cbf6c19bb85b8c1`.
+`e931774c13af9edbbdeb3a1b36d97e25aa12c267c0a637954134b8a2855a38bd`.
 
-Māori movement-budget, production birth-turn and later-era opening-window fixes
-are committed in `d2c000a8`; native regressions and exact reloads passed. See
-[the Māori report](macos-maori-validation.md). The package is an intermediate
-artifact built while those changes were uncommitted, not a final release.
-Remaining ownership, civilization and system coverage is still open. Always
-inspect current processes and `build/macos/continuation-state.json` before a
-launch. The historical pause below does not describe the current installation.
+The latest [trade-tooltip precision fix](macos-trade-tooltip-validation.md)
+passed native read-only/reload checks and physical EUI retesting. The private
+EUI wrapper restored this exact standard package, text and options. The package
+is an intermediate artifact built with the precision changes uncommitted, not a
+final clean release. Recent Māori/Moors fixes and Cuba/Admiral/nuclear/trade UI
+coverage are recorded in the expanded ledger and their linked reports.
+Remaining civilization and system coverage is still open. Always inspect current
+processes and `build/macos/continuation-state.json` before a launch. The historical
+pause below does not describe the current installation.
 
 ## Previous pause
 

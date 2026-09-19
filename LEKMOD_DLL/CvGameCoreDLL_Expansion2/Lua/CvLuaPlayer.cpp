@@ -4402,22 +4402,22 @@ int CvLuaPlayer::lGetTradeYourRoutesTTString(lua_State* L)
 					switch (eYield)
 					{
 					case YIELD_FOOD:
-						strOriginYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_FOOD_YIELD_TT", iYieldQuantity / 100);
+						strOriginYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_FOOD_YIELD_TT", iYieldQuantity / 100.0f);
 						break;
 					case YIELD_PRODUCTION:
-						strOriginYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_PRODUCTION_YIELD_TT", iYieldQuantity / 100);
+						strOriginYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_PRODUCTION_YIELD_TT", iYieldQuantity / 100.0f);
 						break;
 					case YIELD_GOLD:
-						strOriginYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_GOLD_YIELD_TT", iYieldQuantity / 100);
+						strOriginYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_GOLD_YIELD_TT", iYieldQuantity / 100.0f);
 						break;
 					case YIELD_SCIENCE:
-						strOriginYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_SCIENCE_YIELD_TT", iYieldQuantity / 100);
+						strOriginYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_SCIENCE_YIELD_TT", iYieldQuantity / 100.0f);
 						break;
 					case YIELD_CULTURE:
-						strOriginYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_CULTURE_YIELD_TT", iYieldQuantity / 100);
+						strOriginYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_CULTURE_YIELD_TT", iYieldQuantity / 100.0f);
 						break;
 					case YIELD_FAITH:
-						strOriginYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_FAITH_YIELD_TT", iYieldQuantity / 100);
+						strOriginYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_FAITH_YIELD_TT", iYieldQuantity / 100.0f);
 						break;
 					}
 				}
@@ -4433,22 +4433,22 @@ int CvLuaPlayer::lGetTradeYourRoutesTTString(lua_State* L)
 					switch (eYield)
 					{
 					case YIELD_FOOD:
-						strDestYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_FOOD_YIELD_TT", iYieldQuantity / 100);
+						strDestYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_FOOD_YIELD_TT", iYieldQuantity / 100.0f);
 						break;
 					case YIELD_PRODUCTION:
-						strDestYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_PRODUCTION_YIELD_TT", iYieldQuantity / 100);
+						strDestYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_PRODUCTION_YIELD_TT", iYieldQuantity / 100.0f);
 						break;
 					case YIELD_GOLD:
-						strDestYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_GOLD_YIELD_TT", iYieldQuantity / 100);
+						strDestYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_GOLD_YIELD_TT", iYieldQuantity / 100.0f);
 						break;
 					case YIELD_SCIENCE:
-						strDestYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_SCIENCE_YIELD_TT", iYieldQuantity / 100);
+						strDestYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_SCIENCE_YIELD_TT", iYieldQuantity / 100.0f);
 						break;
 					case YIELD_CULTURE:
-						strDestYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_CULTURE_YIELD_TT", iYieldQuantity / 100);
+						strDestYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_CULTURE_YIELD_TT", iYieldQuantity / 100.0f);
 						break;
 					case YIELD_FAITH:
-						strDestYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_FAITH_YIELD_TT", iYieldQuantity / 100);
+						strDestYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_FAITH_YIELD_TT", iYieldQuantity / 100.0f);
 						break;
 					}
 				}
@@ -4613,22 +4613,22 @@ int CvLuaPlayer::lGetTradeToYouRoutesTTString(lua_State* L)
 					switch (eYield)
 					{
 					case YIELD_FOOD:
-						strDestYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_FOOD_YIELD_TT", iYieldQuantity / 100);
+						strDestYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_FOOD_YIELD_TT", iYieldQuantity / 100.0f);
 						break;
 					case YIELD_PRODUCTION:
-						strDestYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_PRODUCTION_YIELD_TT", iYieldQuantity / 100);
+						strDestYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_PRODUCTION_YIELD_TT", iYieldQuantity / 100.0f);
 						break;
 					case YIELD_GOLD:
-						strDestYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_GOLD_YIELD_TT", iYieldQuantity / 100);
+						strDestYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_GOLD_YIELD_TT", iYieldQuantity / 100.0f);
 						break;
 					case YIELD_SCIENCE:
-						strDestYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_SCIENCE_YIELD_TT", iYieldQuantity / 100);
+						strDestYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_SCIENCE_YIELD_TT", iYieldQuantity / 100.0f);
 						break;
 					case YIELD_CULTURE:
-						strDestYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_CULTURE_YIELD_TT", iYieldQuantity / 100);
+						strDestYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_CULTURE_YIELD_TT", iYieldQuantity / 100.0f);
 						break;
 					case YIELD_FAITH:
-						strDestYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_FAITH_YIELD_TT", iYieldQuantity / 100);
+						strDestYieldsStr += GetLocalizedText("TXT_KEY_TOP_PANEL_ITR_FAITH_YIELD_TT", iYieldQuantity / 100.0f);
 						break;
 					}
 				}
