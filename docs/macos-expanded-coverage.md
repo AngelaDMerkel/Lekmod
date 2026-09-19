@@ -23,7 +23,7 @@ mean every possible combination of game state has been tested.
 | Diplomatic victory | World Leader session, vote eligibility/count, winning resolution and victory | Passed with supplied technology/gold; natural gifts, sessions and ballots |
 | Score victory | Score resolution, human victory and defeat presentation | Passed |
 | Combat | Human melee/ranged/city attacks, unit death/capture, terrain/war restrictions, naval and air actions | Core land/city/naval attacks, death/capture and reload passed; actual air strike/interception, ground sweep, carrier capacity/movement and exact reload passed |
-| Unit lifecycle | Founding, movement/pathing, embark/disembark, promotion/upgrade, worker build/repair/pillage, healing, gifting/deletion, great-person actions | Promotion/upgrade/heal/embark, farm/road/repair, disband/gift and great-person actions passed; pillage, road repair/travel and exact reload passed; Academy/Manufactory/Customs House/Holy Site/Citadel construction and reload passed; other great-person cases remain |
+| Unit lifecycle | Founding, movement/pathing, embark/disembark, promotion/upgrade, worker build/repair/pillage, healing, gifting/deletion, great-person actions | Promotion/upgrade/heal/embark, farm/road/repair, disband/gift and great-person actions passed; pillage, road repair/travel and exact reload passed; Academy/Manufactory/Customs House/Holy Site/Citadel construction and reload passed; [Great Admiral Repair Fleet and controls/reload](macos-admiral-validation.md) passed; further great-person cases remain |
 | City lifecycle | Additional founding, capture/puppet/annex/raze/liberation, growth/starvation, building sale, specialists/great works | Core lifecycle, artwork movement/theming and exact reloads passed; Dance Hall bonuses and ordinary artifact/landmark digs passed; further cultural UI/branches remain |
 | Economy and policies | Research/free tech, policy/tenet acquisition and switching, happiness/golden age, resources, treasury boundaries | Policy/tenet confirmations, spending and Cuba reward boundaries passed; pressure/revolution, natural anarchy expiry and exact reload passed; [budget/science floor and ordinary recovery](macos-economy-boundaries.md) with exact reload passed; further economy cases pending |
 | Diplomacy | War/peace, friendship/denunciation, resources/GPT/open borders, non-aggression pacts and configured agreement restrictions, city-state interactions | Luxury/GPT gifts, mutual embassies, open borders and persistence passed; natural contract expiry and permanent embassies passed; friendship/denunciation and reload passed; non-aggression creation/expiry and configured-off agreement UI passed; negotiated peace/protection/expiry and reload passed |
@@ -1436,3 +1436,12 @@ mixed-era and first-founded-capital reloads passed in `034455Z` and `034729Z`.
 Fourteen isolated callbacks and 32 runner checks pass. Research and the extra
 Settler were supplied inputs; actual building completion and capture remain
 separate. All successful native runs exited normally with cleanup verified.
+
+
+### Great Admiral repair
+
+[Repair Fleet](macos-admiral-validation.md) passed same/adjacent owned sea and
+embarked healing, foreign/land/radius-two exclusions, healthy control and Admiral
+consumption (`20260919T035252Z`), followed by exact reload (`035455Z`). Health,
+units, positions and the embarked flag were supplied inputs. Both runs exited
+0 with cleanup verified. No natural-damage, embarkation or mouse claim is made.

@@ -873,3 +873,11 @@ Library bonus. `moors-eras --scenario-turns 2` loads that save, observes normal
 AI foundations, supplies Acoustics/Scientific Theory research and one Settler,
 and checks native era events, team isolation, immediate Renaissance founding
 and Industrial expiry. Both snapshots support exact reload.
+
+
+`admiral-repair --load-save PATH --scenario-turns 1 --save-and-exit` uses a
+coastal fixture. Units/health/positions and one embarked-state input are labeled.
+The normal Repair Fleet action must heal owned sea/embarked targets, preserve
+foreign/land/radius-two/healthy controls and consume the Admiral. The turn
+allowance enables ordinary popup handlers; the passing run advanced no turn.
+The live-unit snapshot supports exact reload.
