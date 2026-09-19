@@ -1,5 +1,25 @@
 # Lekmod macOS single-player testing handoff
 
+**Current status: testing paused; stock restored and verified (2026-09-19 10:01 UTC).**
+The user requested a return to stock and continuation later. The central installer
+now reports stock GameCore `0da6a5ffc283c3f147b20a7ec426e4ed85a6838ab891faf61b50af4e25c4a09c`;
+Lekmod and private EUI are inactive. No game or test runner is running. All
+392 save files, both stock/Aspyr backups, settings and 32 restored stock UI files
+matched their pre-restoration hashes. Verification: `build/macos/stock-pause-verification-20260919T100137Z.json`.
+
+Source is `205bfcca`, with the uncommitted farm scenario and its runner registration
+preserved. Last run `20260919T095253Z` failed the Nabataean Mathematics farm check:
+three read-only samples showed cached food 2 versus calculated food 3. No farm
+product fix has been made; Civil Service and persistence checks remain pending.
+The runner restored settings/hooks and preserved saves. Its report records
+SIGTERM and native return code 0, so this is not claimed as a normal-exit pass.
+The failed save SHA-256 is
+`79b3a199f593e2085d99f8ae7641230e6e47787f7cabf4ba900eeb8b30890e16`.
+See `build/macos/continuation-state.json` when testing is explicitly resumed.
+The resumed installation described below is historical.
+
+## Previous resumed session
+
 **Testing resumed at the user's request, 2026-09-19.** The current standard test
 package is `build/macos/Lekmod-zabonah-removal-20260919.zip`, archive SHA-256
 `9d10cd396769a678ebd23da76a017fd171bd3050976195caf34c14c6f63fbbfb`,
