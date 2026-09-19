@@ -931,3 +931,14 @@ temporary shared snapshot module, removed by normal runner cleanup. See
 [the exchange report](../../docs/macos-great-work-exchange.md) for hashes and
 evidence limits. Preserve the current quicksave before physical F11 and restore
 it only after copying the test result and verifying the owned game has exited.
+
+
+`kilwa-routes` uses the preserved Industrial opening documented in the
+[Kilwa report](../../docs/macos-kilwa-validation.md). It founds the capital with
+the normal Settler action, explicitly supplies fixture cities/buildings/caravans
+and issues the trade popup's ordinary synchronized mission message. Direct human
+`Unit:PushMission` is invalid outside a game-network message and produced a
+retained protocol failure; do not use it to manufacture a pass. The accepted
+scenario checks route markers/rates, internal exclusion/four-gold accounting and
+one ordinary food-storage settlement. Use a two-turn bound for setup and zero
+turns with `--expected-state` for exact reload.

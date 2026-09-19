@@ -1458,3 +1458,13 @@ exited normally. Exact reload `041156Z` passed with cleanup verified. Units,
 resources, visibility and the target Farm were supplied inputs. No product
 change or wait-flag bypass was used; city effects and other nuclear branches
 remain separate.
+
+
+### Kilwa trade bonuses
+
+[Native Kilwa evidence](macos-kilwa-validation.md) covers one/two international
+route food modifiers, the internal-route count exclusion and four-gold accounting,
+city/owner controls, one ordinary food settlement and exact reload. Earlier
+fixture/popup/protocol failures remain failed and are excluded from accepted
+coverage. No Kilwa product change was required. Lifecycle/naval/AI boundaries
+remain separate.
