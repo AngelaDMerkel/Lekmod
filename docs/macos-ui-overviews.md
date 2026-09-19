@@ -148,3 +148,51 @@ The session exited normally through physical Return / Escape / Exit to Windows
 / Yes, returned 0 and preserved original manual saves, settings, graphics and
 hooks. No Lua/sync errors were recorded. Its source quicksave remains byte
 identical; these later standard-UI changes were not saved.
+
+
+## Populated standard trade overview, 2026-09-19
+
+Foreground session `20260919T041547Z` loaded the preserved internal land/sea
+route fixture `20260916T080553Z` at requested 1440×900. Actual CUA mouse clicks
+opened Additional Information → Trade Route Overview. No gameplay callback
+selected a route, and no turn advanced.
+
+Your Trade Routes showed Antium→Rome land food 1.8/19 turns and Antium→Cumae
+sea production 3.5/24 turns. These match the saved native route values of
+175 hundredths food (rounded to one decimal), 350 hundredths production, and
+19/24 remaining turns. Destination sorting toggled Cumae/Rome order and back;
+remaining-turn sorting toggled 19/24 to 24/19 without detaching route values.
+
+Trade Routes Available displayed populated internal and international choices.
+A real origin-gold header click sorted the visible external quotes as
+11.3, 7.6, 7.5, 6 and 5.8, followed by zero-gold internal choices. Column and
+tab tooltips were readable. A scrollbar-thumb drag reached the final rows with
+headers and Close still visible. Wheel movement was observed, but the retained
+end-of-list evidence uses the verified thumb drag. Different food/production
+choices for the same city pair are kept distinct.
+
+Trade Routes with You was empty in this fixture; populated incoming routes
+are not covered by this session. Returning to Your Trade Routes restored its
+two unchanged rows. Actual Close returned to the map, then Escape → Exit to
+Windows → Yes closed the game normally (0) after 367 seconds without a
+supervisor signal. Settings/resolution/hooks and manual saves were restored.
+No Lua errors, synchronization failures or new diagnostics were reported.
+The read-only observer logged one unchanged game-state signature; displayed
+turn 180 and treasury 2,202 stayed unchanged. No new save was requested.
+
+The automatic runner labels this `ended-manual-ui-session`; physical evidence
+is recorded separately in `physical-overview-events.json` and
+`physical-completion.json` under the run directory. Retained screenshot hashes:
+
+| Screenshot | SHA-256 |
+| --- | --- |
+| `trade-own-routes.png` | `e63303e76edb99707b890007272f621b4aada2a3d8ebd3934c0b0e79e22036bb` |
+| `trade-sort-desc.png` | `491a63f0ca0ed8178b5697a1aa40fd581942b99725bb845f587009efa68bd675` |
+| `trade-available-gold.png` | `96e35c5ec1f1b57f27bf4c0f06a510966c9e5b7b911c35f99a28720c3cfc542e` |
+| `trade-available-bottom.png` | `5f183b2d75a564fbbdcd3bfc3fc8ca9906eb976d6ed04b7595508c8a74289b64` |
+| `trade-overview-closed.png` | `7911b4f34a55a26597c082ea27f357a0b570fb8884d2386d83c8646d85ace363` |
+
+This closes the populated standard own/available table interaction on the
+tested display. Populated incoming routes, EUI parity for these rows and foreign
+Great Work exchange remain separate checks. The installed package/core were
+the Moors-founding intermediate artifact recorded in its validation report.
