@@ -881,3 +881,14 @@ The normal Repair Fleet action must heal owned sea/embarked targets, preserve
 foreign/land/radius-two/healthy controls and consume the Admiral. The turn
 allowance enables ordinary popup handlers; the passing run advanced no turn.
 The live-unit snapshot supports exact reload.
+
+
+`nuclear --load-save PATH --scenario-turns 1 --save-and-exit` supplies a missile,
+uranium, full-health barbarian targets, target visibility and a compatible Farm
+in an isolated unowned region. It checks range/self/non-nuclear restrictions,
+level-two radius outcomes, shipped GDR immunity, fallout/pillage and consumption.
+The own-city-overlap query is allowed by this engine and is never executed.
+The scenario waits for the missile's actual EndCombatSim event before returning
+for save; visible damage alone is not sufficient. The passing run advances no
+turn, and the outcome snapshot supports exact reload. City/population effects,
+weapon production and natural cleanup are separate coverage.

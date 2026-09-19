@@ -22,7 +22,7 @@ mean every possible combination of game state has been tested.
 | Cultural victory | Tourism/influence, musician action, threshold crossing and victory | Passed with supplied great people and staging positions |
 | Diplomatic victory | World Leader session, vote eligibility/count, winning resolution and victory | Passed with supplied technology/gold; natural gifts, sessions and ballots |
 | Score victory | Score resolution, human victory and defeat presentation | Passed |
-| Combat | Human melee/ranged/city attacks, unit death/capture, terrain/war restrictions, naval and air actions | Core land/city/naval attacks, death/capture and reload passed; actual air strike/interception, ground sweep, carrier capacity/movement and exact reload passed |
+| Combat | Human melee/ranged/city attacks, unit death/capture, terrain/war restrictions, naval and air actions | Core land/city/naval attacks, death/capture and reload passed; actual air strike/interception, ground sweep, carrier capacity/movement and exact reload passed; [nuclear mission/radius/immunity/fallout and reload](macos-nuclear-validation.md) passed with supplied inputs; further nuclear branches remain |
 | Unit lifecycle | Founding, movement/pathing, embark/disembark, promotion/upgrade, worker build/repair/pillage, healing, gifting/deletion, great-person actions | Promotion/upgrade/heal/embark, farm/road/repair, disband/gift and great-person actions passed; pillage, road repair/travel and exact reload passed; Academy/Manufactory/Customs House/Holy Site/Citadel construction and reload passed; [Great Admiral Repair Fleet and controls/reload](macos-admiral-validation.md) passed; further great-person cases remain |
 | City lifecycle | Additional founding, capture/puppet/annex/raze/liberation, growth/starvation, building sale, specialists/great works | Core lifecycle, artwork movement/theming and exact reloads passed; Dance Hall bonuses and ordinary artifact/landmark digs passed; further cultural UI/branches remain |
 | Economy and policies | Research/free tech, policy/tenet acquisition and switching, happiness/golden age, resources, treasury boundaries | Policy/tenet confirmations, spending and Cuba reward boundaries passed; pressure/revolution, natural anarchy expiry and exact reload passed; [budget/science floor and ordinary recovery](macos-economy-boundaries.md) with exact reload passed; further economy cases pending |
@@ -1445,3 +1445,16 @@ embarked healing, foreign/land/radius-two exclusions, healthy control and Admira
 consumption (`20260919T035252Z`), followed by exact reload (`035455Z`). Health,
 units, positions and the embarked flag were supplied inputs. Both runs exited
 0 with cleanup verified. No natural-damage, embarkation or mouse claim is made.
+
+
+### Nuclear mission and save timing
+
+[Nuclear checks](macos-nuclear-validation.md) passed range/self/non-nuclear
+eligibility, radius-two unit destruction, a radius-three control, GDR immunity,
+fallout/pillage and missile consumption. The test initially saved before combat
+presentation completed; that attempt remains failed. Event-driven run
+`20260919T041001Z` waited for the missile's real EndCombatSim event, saved and
+exited normally. Exact reload `041156Z` passed with cleanup verified. Units,
+resources, visibility and the target Farm were supplied inputs. No product
+change or wait-flag bypass was used; city effects and other nuclear branches
+remain separate.
