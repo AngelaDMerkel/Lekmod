@@ -196,3 +196,36 @@ This closes the populated standard own/available table interaction on the
 tested display. Populated incoming routes, EUI parity for these rows and foreign
 Great Work exchange remain separate checks. The installed package/core were
 the Moors-founding intermediate artifact recorded in its validation report.
+
+
+## Paired populated EUI trade overview
+
+Foreground EUI session `20260919T042745Z` used the same turn-180 save and
+1440×900 request. Actual mouse input opened the overview from the route counter,
+toggled destination ordering in both directions, selected Available, sorted
+origin gold, dragged the scrollbar to the final rows, visited the empty incoming
+tab, returned to the two active routes and used Close. The same 1.8 food/3.5
+production and 19/24 turns were visible. External gold quotes sorted as
+11.3, 7.6, 7.5, 6 and 5.8. Equal-zero-gold rows were not asserted to have a
+stable tie order. Header, tooltips and Close remained accessible.
+
+Actual Escape → Exit to Windows → Yes exited 0 after 298.4 seconds without
+termination signals. No turn advanced and no new save was requested. Settings,
+resolution, hooks and manual saves were preserved; no Lua/sync errors or new
+diagnostics occurred. Wrapper `eui-tests/20260919T042736Z` verified restoration
+of the exact standard package, EUI text and original options database. The
+private variant SHA-256 is
+`b19f146ad149e955f8ff665fe72b57ab6442b5553759e245afce2dada9238c23`.
+
+Retained screenshots and hashes:
+
+- `eui-trade-own-and-tooltip.png`: `e58e33d2a1ab61ba6e91bad1d5130fc30ee9edfdbe19619483cefdadbe2e50e0`
+- `eui-trade-available-sort.png`: `38610d451a4c68f2db76ff608027e09c9a501978fe3573bd011c68d55cb5ffda`
+- `eui-trade-bottom.png`: `93aecd0ad7dbf4d046d23bd7ebc18dd7372c3cc0ce8942bc4b09382841735cc2`
+
+The counter tooltip exposed a separate precision defect: it showed 1 food and
+3 production despite native 1.75/3.5 rates and the table's rounded 1.8/3.5. Both
+standard and EUI top panels consume the same core tooltip string. Its integer
+division is under separate correction and native verification. This does not
+change the successful table-interaction observations. Populated incoming routes
+and foreign Great Work exchange remain open.
