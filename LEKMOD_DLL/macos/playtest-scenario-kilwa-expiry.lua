@@ -1,11 +1,18 @@
--- Observe only the three preserved contracts through natural expiration.
+-- Observe remaining contracts from the preserved three-route expiry fixture.
 -- No route duration, marker, food or unit-return state is assigned.
-LekmodScenario={name="kilwa-expiry",items={"kilwa-natural-expiry","kilwa-expiry-markers","kilwa-returned-caravans","kilwa-expired-cargo"}}
-local start,deadline,used,unitCount,lastTurn,markerTurn,markerWait
+LekmodScenario={name="kilwa-expiry",items={"kilwa-natural-expiry","kilwa-expiry-markers","kilwa-returned-caravans","kilwa-expired-cargo","kilwa-expiry-post-event"}}
+local start,deadline,used,unitCount,lastTurn,markerTurn,markerWait,initialCount
+local removed=0
 local ends,origins,mismatches={},{},{}
 local marker=GameInfoTypes.BUILDING_KILWA_TRAIT
 local function key(r)return table.concat({r.Domain,r.FromID,r.FromCity:GetID(),r.ToID,r.ToCity:GetID(),r.ConnectionType},":")end
 local function trade(c,y)return c:GetYieldRateTimes100(y,false)-c:GetYieldRateTimes100(y,true)end
+GameEvents.TradeRouteRemoved.Add(function(owner,destination)
+ if owner==Game.GetActivePlayer()then
+  removed=removed+1
+  LekmodScenarioEvent("expiry-post-removal-event",{owner=owner,destination=destination,remaining=#Players[owner]:GetTradeRoutes()})
+ end
+end)
 function LekmodScenario.snapshot(player)
  local cities,units,routes={},{},{}
  for c in player:Cities()do cities[c:GetID()]={marker=c:GetNumRealBuilding(marker),food=c:GetFoodTimes100(),population=c:GetPopulation(),food_trade=trade(c,YieldTypes.YIELD_FOOD),production_trade=trade(c,YieldTypes.YIELD_PRODUCTION),gold_trade=trade(c,YieldTypes.YIELD_GOLD),food_modifier=c:GetBaseYieldRateModifier(YieldTypes.YIELD_FOOD)}end
@@ -18,7 +25,8 @@ function LekmodScenario.step(player)
  local routes=player:GetTradeRoutes();local now=Game.GetGameTurn()
  if not start then
   assert(Game.IsOption(GameInfoTypes.GAMEOPTION_ALWAYS_PEACE)and Game.IsOption(GameInfoTypes.GAMEOPTION_NO_BARBARIANS),"natural expiry requires the explicit peace/no-barbarian fixture")
-  assert(#routes==3,"requires the accepted three-route Kilwa save")
+  assert(#routes>=1 and #routes<=3,"requires an accepted Kilwa route save or its late autosave")
+  initialCount=#routes
   start=now;deadline=now;used=player:GetNumInternationalTradeRoutesUsed();unitCount=0
   for u in player:Units()do if u:IsTrade()then unitCount=unitCount+1 end end
   assert(unitCount==3 and used==3,"fixture trade unit inventory differs")
@@ -52,7 +60,7 @@ function LekmodScenario.step(player)
  end
  if #routes>0 then assert(now<=deadline,"contracts exceeded their quoted end");return "turn"end
  assert(now==deadline,"all contracts ended at an unexpected turn")
- LekmodScenarioRecord("kilwa-natural-expiry","PASS","three original contracts ended naturally; elapsed="..now-start)
+ LekmodScenarioRecord("kilwa-natural-expiry","PASS","observed contracts="..initialCount.." ended naturally; elapsed="..now-start)
  LekmodScenarioRecord("kilwa-expiry-markers",#mismatches==0 and"PASS"or"FAIL","stable marker/count mismatches="..#mismatches)
  local returned=0;local correctLocations=true
  for u in player:Units()do if u:IsTrade()then
@@ -63,6 +71,7 @@ function LekmodScenario.step(player)
  local cargoGone=true
  for c in player:Cities()do if trade(c,YieldTypes.YIELD_FOOD)~=0 or trade(c,YieldTypes.YIELD_PRODUCTION)~=0 then cargoGone=false end end
  LekmodScenarioRecord("kilwa-expired-cargo",cargoGone and"PASS"or"FAIL","no own outgoing routes; former internal food cargo cleared; treasury settlement not asserted")
+ LekmodScenarioRecord("kilwa-expiry-post-event",removed==initialCount and"PASS"or"FAIL","post-removal events="..removed.." contracts="..initialCount)
  LekmodScenarioEvent("kilwa-expiry-final",{mismatches=mismatches,state=LekmodScenario.snapshot(player)})
  return true
 end

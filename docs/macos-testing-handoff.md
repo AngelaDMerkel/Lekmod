@@ -1,23 +1,22 @@
 # Lekmod macOS single-player testing handoff
 
 **Testing resumed at the user's request, 2026-09-19.** The current standard test
-package is `build/macos/Lekmod-kilwa-war-20260919.zip`, archive SHA-256
-`e4d8d01a89b8cdce9cf1420eac61bb94c0a0dbfd151b770acd1396473aefc13c`,
+package is `build/macos/Lekmod-trade-removal-20260919.zip`, archive SHA-256
+`f1e5dc58f79a2308c3e971529066d17edd513f1606b9f55a9fe29f9aab9db5cd`,
 with signed GameCore
-`689df45d69b4b772e408155c4f443d09ad6a936039205cee6e62747fd8cca3d6`.
+`7a4a5abb38928278e940bdd83ee05d234972d1ffceef4125d46b637e8c8fdca9`.
 
-The latest [Kilwa war-cancellation correction](macos-kilwa-validation.md)
-clears a stale food marker through the normal post-cancellation war event.
-Native same-input retest, exact reload and affected-save ordinary-turn recovery
-passed. Human route creation/food settlement and bounded natural expiry also
-passed. The shared Great Work swap UI fix has actual standard/EUI exchange and
-exact cross-UI state evidence. Startup exit 255 remains intermittent and open.
-This intermediate package was built with the Kilwa fix uncommitted and is not
-the final clean release. Always inspect processes and
-`build/macos/continuation-state.json` before launching. The original quicksave,
-canonical stock and Aspyr backup remain preserved. Remaining civilization and
-system coverage is open; the historical pause below does not describe the
-current installation.
+The latest [trade-removal correction](macos-trade-removal-validation.md) emits
+a normal post-clear event and uses it to remove Kilwa's stale food bonus after
+naval plunder. Native AI sea-route/plunder, exact reload and short expiry/war
+regressions passed. Earlier Kilwa war cancellation and standard/EUI Great Work
+exchange fixes have their own scoped native and persistence evidence. Startup
+exit 255 remains intermittent and open. This intermediate package was built
+with the removal correction uncommitted and is not the final clean release.
+Always inspect processes and `build/macos/continuation-state.json` before a
+launch. Original quicksave, canonical stock and Aspyr backup remain preserved.
+The broad civilization/system ledger is still open; the historical pause below
+does not describe the current installation.
 
 ## Previous pause
 

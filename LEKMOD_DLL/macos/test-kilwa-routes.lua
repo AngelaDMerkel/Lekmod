@@ -102,6 +102,21 @@ test("war excludes dead Kilwa owners",function()
  local e=fixture();e.Players[0].alive=false;assert(e.events.DeclareWar,"war callback missing");e.events.DeclareWar(0,2)
  assert(not e.Players[0].cities[1].buildings[100])
 end)
+test("post-removal event clears the origin's stale marker",function()
+ local e=fixture();local p=e.Players[0];e.events.PlayerDoTurn(0);p.routes={}
+ assert(e.events.TradeRouteRemoved,"post-removal callback missing");e.events.TradeRouteRemoved(0,2)
+ assert(p.cities[1].buildings[100]==0 and p.cities[2].buildings[100]==0)
+end)
+test("post-removal retains other active foreign routes",function()
+ local e=fixture();local p=e.Players[0];e.events.PlayerDoTurn(0)
+ p.routes={{FromCity=p.cities[2],ToCity=e.Players[2].cities[1],Domain=0}}
+ assert(e.events.TradeRouteRemoved,"post-removal callback missing");e.events.TradeRouteRemoved(0,2)
+ assert(p.cities[1].buildings[100]==0 and p.cities[2].buildings[100]==1)
+end)
+test("post-removal refreshes the origin without changing another owner",function()
+ local e=fixture();assert(e.events.TradeRouteRemoved,"post-removal callback missing");e.events.TradeRouteRemoved(0,1)
+ assert(e.Players[0].cities[1].buildings[100]==2 and not e.Players[1].cities[1].buildings[100])
+end)
 test("inactive Kilwa registers no callbacks",function()local e=fixture(false);assert(next(e.events)==nil)end)
 local failed=0
 for _,t in ipairs(tests)do local ok,err=pcall(t[2]);print((ok and "PASS " or "FAIL ")..t[1]..(ok and "" or ": "..tostring(err)));if not ok then failed=failed+1 end end

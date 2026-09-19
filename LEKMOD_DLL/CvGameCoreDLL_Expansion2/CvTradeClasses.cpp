@@ -1090,6 +1090,18 @@ bool CvGameTrade::EmptyTradeRoute(int iIndex)
 	GET_PLAYER(eDestPlayer).GetTrade()->UpdateTradeConnectionValues();
 
 	gDLL->TradeVisuals_DestroyRoute(iIndex, eOriginPlayer);
+
+	// UnitPrekill/UnitPlundered observe the old connection. Notify listeners
+	// after clearing connection/yield data and requesting visual teardown.
+	ICvEngineScriptSystem1* pkScriptSystem = gDLL->GetScriptSystem();
+	if (pkScriptSystem)
+	{
+		CvLuaArgsHandle args;
+		args->Push(eOriginPlayer);
+		args->Push(eDestPlayer);
+		bool bResult = false;
+		LuaSupport::CallHook(pkScriptSystem, "TradeRouteRemoved", args.get(), bResult);
+	}
 	return true;
 }
 

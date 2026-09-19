@@ -193,3 +193,11 @@ save. Both use the common explicit smoke-mode/time-budget/save-exit options.
 Exact recovered-state reload `20260919T071156Z` also passed with normal exit,
 settings/hooks/manual preservation and no Lua/synchronization errors. Save
 SHA-256: `87aee9631f16269686dfb7527bbe2c43b1b2d1d95bb79ae030601d8e3db5c729`.
+
+
+The [post-removal report](macos-trade-removal-validation.md) adds native AI sea
+route creation, Roman/other-city controls, unrelated-war retention and naval
+plunder. It confirms and corrects a separate stale 5% marker after plunder through
+a new post-clear GameCore event, with exact reload and short expiry/war
+regressions. The actual handler suite now has 26 cases. Other unique buildings,
+units and remaining boundaries are not implicitly covered by these route tests.

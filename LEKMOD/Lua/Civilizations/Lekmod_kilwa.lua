@@ -34,5 +34,6 @@ end
 if is_active then
    GameEvents.PlayerDoTurn.Add(lekmod_kilwa_ua_food)
    GameEvents.UnitPrekill.Add(lekmod_kilwa_ua_food)
+   GameEvents.TradeRouteRemoved.Add(lekmod_kilwa_ua_food)
    GameEvents.DeclareWar.Add(lekmod_kilwa_on_war)
 end

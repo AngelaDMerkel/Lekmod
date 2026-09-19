@@ -958,3 +958,15 @@ at most one ordinary owner turn, distinguishing saved-marker recovery from
 immediate cancellation. Both support exact zero-turn reload. The native
 DeclareWar callback receives team IDs; its multi-owner routing/exclusions are
 covered by the 23-case actual Lua handler suite.
+
+
+`test-trade-removal-event.py` executes actual EmptyTradeRoute code with sanitizer
+checks for post-clear event ordering and owner arguments. The new normal hook is
+`TradeRouteRemoved(originPlayerID, destinationPlayerID)`; UnitPlundered remains a
+pre-removal event and must not be treated as completion. `kilwa-sea-plunder`
+prepares an explicitly supplied AI sea-route fixture and uses real AI owner-turn
+mission processing plus synchronized human war/plunder actions. The human side
+never invokes Unit:PushMission directly. `kilwa-sea-continue` loads the preserved
+pre-fix sea-plunder save for at most one ordinary AI turn. See the
+[removal report](../../docs/macos-trade-removal-validation.md) for exact scope and
+artifact hashes.

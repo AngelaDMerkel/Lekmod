@@ -1469,3 +1469,14 @@ fixture/popup/protocol failures remain failed and are excluded from accepted
 coverage. No Kilwa product change was required. Natural expiry, bonus removal and returned units/reload also passed in an
 explicit single-player peace/no-barbarian fixture. Human war cancellation exposed and corrected a stale food marker; native retest
 and saved-state checks passed. Plunder/naval/AI boundaries remain separate.
+
+
+### Post-removal route state
+
+[AI sea-route/plunder evidence](macos-trade-removal-validation.md) exposed and
+corrected a stale Kilwa food marker after naval plunder. A normal post-clear
+GameCore event now triggers its refresh. Native retest/reload, short natural
+expiry and war-cancellation regressions passed; the old failed save remains
+playable and recovers its stored marker through one ordinary AI turn. The
+case uses supplied cities/units and scripted normal commands, with no physical
+input or broader growth-accrual claim.
