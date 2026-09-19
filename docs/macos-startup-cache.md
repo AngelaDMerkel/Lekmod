@@ -337,3 +337,58 @@ restored. The cache became 27,500,544 bytes. This successful startup comparison
 does not isolate the intermittent cause: the first attempt had already processed
 cache state, and one successful retry is insufficient. Startup reliability
 remains open.
+
+
+`20260919T054410Z` failed before gameplay with exit 255 after 20.4 seconds
+during the separate exact reload of the physical foreign-artwork exchange.
+Database.log reports another failure to attach Localization-Merged.db. The
+25,509,888-byte merged file retained tables and passed read-only SQLite
+quick_check. All 21 files were preserved under
+`build/macos/cache-investigation/20260919T054410Z`; merged SHA-256 is
+`d2d1d0ed5e6371a370661806e63d75c45d75517fa9e54f8eaaab0d5578d37d36`.
+No original cache file was removed or changed by diagnosis. The earlier
+physical-save verification `054229Z` passed; this later startup remains failed.
+A separate intro-enabled comparison uses the same package/save, with no
+foreground activation or physical input. Its result must be recorded separately.
+
+The intro-enabled comparison `20260919T054714Z` also failed with exit 255,
+after 196.8 seconds and before gameplay. It left a zero-byte merged cache;
+Database.log reports Failed to Load database and missing Languages/LocalizedText.
+This counterexample means the prior successful intro-enabled run is not a
+reliable workaround. Settings/hooks/manual saves were restored. With the game
+closed and no sidecars, the guarded tool preserved that zero-byte file under
+`build/macos/cache-repairs/20260919T054714Z` before removing only that generated
+empty file. A following default-setting attempt is separately recorded.
+
+The following default-setting reload `20260919T055136Z` also failed before
+gameplay (255, 20.4 seconds), again leaving a zero-byte cache. It was preserved
+by the guarded repair under its matching `cache-repairs` directory. The next
+original-settings foreground control `native-startup-controls/20260919T055351Z`
+used no temporary UI hooks or injected library and made no settings changes.
+Actual Escape reached Loading, but the host exited 255 after 37.3 seconds before
+the menu. Settings remained byte-identical and manual saves were preserved.
+The resulting empty cache was separately preserved by the guarded repair.
+
+The central installer temporarily restored canonical stock. Menu-only control
+`native-startup-controls/20260919T055829Z` reached the original movie, copyright
+notice and stock main menu using actual Escape/Continue input. Actual Exit/Yes
+returned 0 after 292.2 seconds, with no game termination signals, settings changes
+or manual-save loss. Its `stock-menu.png` SHA-256 is
+`5f8ce46b22d5cf61f6d57c35657f032b6e2dab28153215f104e5428f1366e0d2`.
+An old test launcher (84239) intercepted attachment initially; it ignored SIGTERM
+and was stopped with scoped SIGKILL. The separately owned stock game (84531)
+was left running and subsequently exited normally. This launcher cleanup is
+separate from the game's exit evidence. No modded save was loaded under stock.
+
+The exact standard `Lekmod-greatwork-swap-20260919.zip` archive
+`014077403f0f6d991f4ff27a5b42955bb2cf3bdbceda9c4239275780da4add0f`
+was reinstalled through the central installer, restoring signed core
+`689df45d69b4b772e408155c4f443d09ad6a936039205cee6e62747fd8cca3d6`.
+The stock comparison does not isolate the underlying cause: product content,
+cache history and timing differed. Original failures remain failed.
+
+After reinstallation, default background exact reload `20260919T060419Z` matched
+the recorded exchange state and saved/exited normally (0, 58.9 seconds). Settings,
+hooks and manual saves were preserved without Lua/sync errors or new diagnostics.
+Save SHA-256: `9f90f8777c4b16c8f7a8306da8ff43a9dc12b8471d8da1b27f80d5298d50cfeb`.
+This establishes resumed functionality, not elimination of the startup defect.
