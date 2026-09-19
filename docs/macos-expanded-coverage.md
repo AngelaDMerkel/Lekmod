@@ -1557,3 +1557,8 @@ reload. Technology completion/overflow is a separate boundary.
 New Zealand's contact-science completion boundary also passed: supplied
 597/603 progress, a naturally drawn12-science reward, real technology completion,
 exact6 overflow, no-repeat/unrelated-owner controls and exact reload.
+
+New Zealand Battalion influence now has native human/AI owner-turn evidence,
+normal-unit/unfriendly/unowned exclusions, foreign-owner checks and exact reload.
+A temporary read-only observer brackets the real callback; supplied friendship
+is explicitly separated from earned influence.

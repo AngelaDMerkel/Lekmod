@@ -124,3 +124,43 @@ Roman contacts until a real science reward is drawn, and fails if the fixture
 exhausts them. It never changes RNG state to obtain a pass. This fixture drew
 science on the first supplied contact; the previous 597 progress was an explicit
 input, not an earned-research claim. No additional product fix was required.
+
+## Battalion influence on actual owner turns
+
+`20260919T122718Z` loaded the preserved two-Rome/two-city-state AI Zabonah
+fixture; New Zealand was absent. Units, treasury and friendship values were
+explicit inputs. Two human-owned Battalions occupied friendly city-state 22's
+land, with an ordinary Warrior there, a Battalion in unfriendly city-state 23
+and a Battalion on unowned land as negative controls. A fresh AI-owned Battalion
+was supplied during the real AI owner turn. No promotion was assigned; the
+native unit type supplied its own influence marker.
+
+A read-only observer appended after the actual New Zealand Lua registrations
+bracketed the automatically dispatched PlayerDoTurn handler, separating its
+reward from ordinary city-state decay or other AI actions. The AI case changed
+friendship 45→46 and left its neutral control at 0. At the next human owner turn,
+the friendly standing changed 43→45 while the unfriendly value stayed -6.
+The normal-unit and unowned-plot controls did not increase the expected two-unit
+reward. Both Roman owners demonstrate the unit ability with its civilization
+absent. This is native handler timing/outcomes with supplied units/standing,
+not earned unit production or a naturally negotiated friendship.
+
+The first attempt `122405Z` remained FAIL: its AI neutral precondition had changed
+before measurement. In the corrected fixture, the logged AI value was 45 at
+that point, so the intended neutral standing was supplied after preceding AI
+processing/unit creation and before the measured handler. The input and before/
+after observations are separate; no reward or synchronization flag was set.
+The original failed report remains unchanged.
+
+All four checks passed after one ordinary turn (2→3), with normal save/exit (0),
+settings/hooks/manual-save preservation, no Lua/sync errors and no new diagnostics.
+The appended observer and original product script were restored. Save SHA-256:
+`277c1a6e82ddc05a3c57c8161ab0aaf58edb8df241a25ebdd1978234c58c0e96`.
+Exact reload `20260919T122938Z` preserved influence and all recorded owner/unit
+states, then exited normally with the same cleanup. Reload save SHA-256:
+`ff995e4059ce804fdde51100cd3d0506856e6f84559de7066246384d6bd40104`.
+
+Use `--scenario newzealand-battalion --scenario-turns 2` with the `114525Z` save,
+then exact zero-turn reload. No product change was needed. Minor/barbarian-owned
+Battalion exclusion remains isolated-handler coverage; further defender geometry
+and real zone-of-control movement are separate native cases.

@@ -174,6 +174,7 @@ SCENARIO_ITEMS = {"inventory": {"system-inventory"},
                   "philippines-gerilya-return": {"gerilya-normal-disembark", "gerilya-land-move-boundary"},
                   "oman-minaa": {"minaa-enemy-sea", "minaa-embarked", "minaa-lethal-stack", "minaa-own-land-distance-controls"},
                   "ottoman-promotions": {"ottoman-human-first", "ottoman-human-second", "ottoman-AI-faith", "promotion-other-owner-no-faith"},
+                  "newzealand-battalion": {"Battalion-human-friendly", "Battalion-AI-friendly", "Battalion-negative-controls", "Battalion-foreign-owners"},
                   "newzealand-science-completion": {"NZ-science-completion", "NZ-completion-overflow", "NZ-completed-contact-no-repeat"},
                   "newzealand-research": {"valid-distinct-player-colors", "NZ-movement-first-contact", "NZ-both-owner-rewards", "NZ-native-reward-branches", "NZ-meeting-no-repeat", "NZ-Roman-no-reward", "NZ-selected-research-science"},
                   "newzealand-meeting": {"valid-distinct-player-colors", "NZ-movement-first-contact", "NZ-both-owner-rewards", "NZ-native-reward-branches", "NZ-meeting-no-repeat", "NZ-Roman-no-reward"},
@@ -617,6 +618,8 @@ def main():
                 if helper.exists():
                     raise SystemExit("Temporary New Zealand meeting module already exists")
                 ui_templates[helper] = "playtest-scenario-newzealand-meeting.lua"
+            if args.scenario == "newzealand-battalion":
+                ui_templates[ui_dir.parent / "Civilizations/Lekmod_newzealand.lua"] = "playtest-nz-owner-observer.lua"
             if args.scenario == "unit-owners":
                 ui_templates[ui_dir.parent / "Lekmod_units.lua"] = "playtest-scenario-unit-owner-observer.lua"
             if args.scenario == "endgame":

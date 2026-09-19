@@ -1051,3 +1051,11 @@ of Astronomy. Native first contacts must naturally draw science, complete the
 tech through TeamTechResearched and carry exactly six excess points to overflow.
 Known-contact and unrelated-owner controls plus exact reload are required;
 no RNG/tech-completion flag is assigned.
+
+`newzealand-battalion` uses the two-Rome/two-city-state saved fixture. Supplied
+units and standing are measured immediately before/after the actual PlayerDoTurn
+handler via a temporary read-only observer appended after real registrations.
+Human two-unit and AI one-unit influence, normal-unit/unfriendly/unowned controls
+and foreign owners are distinct checks; no product handler is called manually.
+The runner restores the original civilization script. Exact unit/influence
+state supports zero-turn reload.
