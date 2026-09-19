@@ -153,6 +153,7 @@ void CvLuaUnit::PushMethods(lua_State* L, int t)
 	Method(VisibilityRange);
 
 	Method(MaxMoves);
+	Method(MaxMovesWithStack);
 	Method(MovesLeft);
 
 	Method(CanMove);
@@ -1738,6 +1739,24 @@ int CvLuaUnit::lMaxMoves(lua_State* L)
 	CvUnit* pkUnit = GetInstance(L);
 
 	const int iResult = pkUnit->maxMoves();
+	lua_pushinteger(L, iResult);
+	return 1;
+}
+//------------------------------------------------------------------------------
+// Maximum movement allowance including the stack bonuses used by DoUnitReset.
+// This query does not reset movement or override activity/mission restrictions.
+int CvLuaUnit::lMaxMovesWithStack(lua_State* L)
+{
+	CvUnit* pkUnit = GetInstance(L);
+	int iResult = pkUnit->maxMoves();
+	if (pkUnit->IsGreatGeneral())
+		iResult = max(iResult, pkUnit->GetGreatGeneralStackMovement());
+	if (pkUnit->isEmbarked())
+		iResult = max(iResult, pkUnit->GetEmbarkedUnitStackMovement());
+#ifdef LEKMOD_LONGSHIP_ALL_PROMO
+	else if (pkUnit->getDomainType() == DOMAIN_LAND && !pkUnit->IsCombatUnit())
+		iResult = max(iResult, pkUnit->GetLandUnitStackMovement());
+#endif
 	lua_pushinteger(L, iResult);
 	return 1;
 }

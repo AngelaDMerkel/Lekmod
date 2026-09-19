@@ -811,3 +811,30 @@ pressure transfers with unchanged majority/followers. Native faith and science
 religion caches must update, minority removal must clear the Candi bonus, and
 the other-owner control must stay unchanged. The two-religion Gurdwara snapshot
 supports exact reload. This is not construction, purchase or turn settlement.
+
+
+`--scenario maori-movement --scenario-turns 6` uses normal human/AI Māori and
+Roman control on an Ancient start. It supplies units/upkeep and observes early
+limits, recon/air exclusions, ordinary turn-five expiry and late creation/next
+turn expiry. A read-only `maori-refresh --scenario-turns 1` replay of the retained
+post-turn-five fixture takes two stable observations and can save a failing
+budget for diagnosis. `maori-stack --scenario-turns 1` loads a turn-six fixture,
+supplies Worker/Akkad and General/Hakkapeliitta stacks and checks that expiry
+preserves their legitimate escort allowances. All support exact snapshot reload.
+Test adapters never set unit movement or promotions to obtain a pass.
+
+`test-maori-expiry.lua PRODUCT_LUA` runs twenty-one isolated actual-handler cases
+for expiry, spent movement, donor iteration order, owner filters and legacy-DLL
+compatibility. `test-lua-stack-moves.py` runs 22 actual-binding Lua/sanitizer
+cases with the land-stack feature both enabled and disabled. The new query is
+read-only; the product expiry callback only reduces excess movement after
+removing the expired promotions. These tests do not bypass synchronization.
+
+
+`maori-trained --scenario-turns 2` loads a post-opening Māori fixture, selects
+a legal city training order and supplies production one hammer short. Actual
+CityTrained and first-playable/next-turn states verify birth-turn protection.
+`maori-era --scenario-turns 5` uses a normally selected later-era start (the
+recorded case is Classical), supplies two land probes and checks all elapsed
+turns 0–4 plus normal expiry at elapsed five. Neither scenario assigns unit
+promotions, movement or turn counters. Both support exact snapshot reload.

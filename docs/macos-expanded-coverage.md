@@ -1384,3 +1384,19 @@ addition/removal, unchanged-majority rate updates, Roman controls and exact
 two-religion saved-state reload (`20260918T234916Z`, `235038Z`). The buildings
 and pressure transfers were supplied inputs; construction, purchase and ordinary
 yield settlement are separate. Both runs exited normally with cleanup verified.
+
+
+### Māori movement lifetime
+
+The [Māori report](macos-maori-validation.md) separates three native defects:
+expired promotions left excess movement; normal production lost the bonus
+before the first playable turn; later-era starts compared the five-turn window
+with the calendar counter. Corrections use a read-only stack-aware allowance,
+two-pass expiry, a creation-turn guard and an elapsed-turn opening window.
+Twenty-one actual Lua cases, 22 native-binding sanitizer cases and 32 runner
+checks pass. Native supplied-unit/owner/control, normal production, escort and
+Classical-window tests plus exact reloads passed with normal exit and cleanup.
+The final Ancient regression and all-owner reload are `20260919T024720Z` and
+`025044Z`; the Classical replay/reload are `024338Z` and `024539Z`. Gift/upgrade
+and other unique mechanics remain open. No long campaign or multiplayer phase
+was reopened, and this does not complete the broader civilization inventory.

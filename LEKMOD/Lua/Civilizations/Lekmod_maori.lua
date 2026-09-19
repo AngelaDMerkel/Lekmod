@@ -6,8 +6,8 @@ local this_civ = GameInfoTypes["CIVILIZATION_MAORI"]
 local is_active = LekmodUtilities:is_civilization_active(this_civ)
 
 ------------------------------------------------------------------------------------------------------------------------
--- Moari UA. Remove the Maori promotion from all units if the game turn is greater than 5.
--- This creates a desired effect of having units always start with additional movement for at least 1 turn after turn 5.
+-- Maori UA. Remove the opening bonus after five elapsed turns, then expire new units
+-- on their next owner turn. Movement was refreshed before this callback.
 ------------------------------------------------------------------------------------------------------------------------
 function lekmod_maori_ua(player_id)
 
@@ -19,16 +19,28 @@ function lekmod_maori_ua(player_id)
 
 	if not player:IsAlive() or player:GetCivilizationType() ~= this_civ then return end
 
-	for unit in player:Units() do
+   if Game.GetElapsedGameTurns() < 5 then return end
 
-		if game_turn < 5 then -- skip
-		elseif unit:IsHasPromotion(maori_promotion_id) then
-		   unit:SetHasPromotion(maori_promotion_id, false)
-		elseif unit:IsHasPromotion(maori_promotion_civilian_id) then
-			unit:SetHasPromotion(maori_promotion_civilian_id, false)
-		end
+   -- City production runs before PlayerDoTurn; newborn units keep their first turn.
+   local expired_units = {}
+   for unit in player:Units() do
+      if unit:GetGameTurnCreated() < game_turn and (unit:IsHasPromotion(maori_promotion_id) or unit:IsHasPromotion(maori_promotion_civilian_id)) then
+         unit:SetHasPromotion(maori_promotion_id, false)
+         unit:SetHasPromotion(maori_promotion_civilian_id, false)
+         expired_units[#expired_units + 1] = unit
+      end
+   end
 
-	end
+   -- Remove all bonuses before querying stack donors; iterator order must not
+   -- preserve a donor's expired movement. Never increase spent movement.
+   for _, unit in ipairs(expired_units) do
+      -- Older DLLs do not expose the stack-aware query; preserve compatibility.
+      if unit.MaxMovesWithStack then
+         local allowance = unit:MaxMovesWithStack()
+         if unit:GetMoves() > allowance then unit:SetMoves(allowance) end
+      end
+   end
+
 end
 ------------------------------------------------------------------------------------------------------------------------
 if is_active then

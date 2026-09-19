@@ -159,6 +159,7 @@ protected:
 	static int lVisibilityRange(lua_State* L);
 
 	static int lMaxMoves(lua_State* L);
+	static int lMaxMovesWithStack(lua_State* L);
 	static int lMovesLeft(lua_State* L);
 
 	static int lCanMove(lua_State* L);
