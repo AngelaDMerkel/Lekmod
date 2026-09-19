@@ -950,3 +950,11 @@ was interrupted by a normal Roman declaration of war. It never changes duration
 or forces a returned unit; it verifies marker removal, caravan return and cargo
 removal, then supports exact zero-turn reload. This functional bound does not
 reopen the accepted long turn campaign.
+
+`kilwa-war` sends a normal synchronized war command from the unrestricted
+three-route Kilwa save and takes three stable observations without requesting
+a turn. `kilwa-war-continue` loads its preserved pre-fix wartime save and permits
+at most one ordinary owner turn, distinguishing saved-marker recovery from
+immediate cancellation. Both support exact zero-turn reload. The native
+DeclareWar callback receives team IDs; its multi-owner routing/exclusions are
+covered by the 23-case actual Lua handler suite.

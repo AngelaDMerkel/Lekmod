@@ -1,21 +1,23 @@
 # Lekmod macOS single-player testing handoff
 
 **Testing resumed at the user's request, 2026-09-19.** The current standard test
-package is `build/macos/Lekmod-greatwork-swap-20260919.zip`, archive SHA-256
-`014077403f0f6d991f4ff27a5b42955bb2cf3bdbceda9c4239275780da4add0f`,
+package is `build/macos/Lekmod-kilwa-war-20260919.zip`, archive SHA-256
+`e4d8d01a89b8cdce9cf1420eac61bb94c0a0dbfd151b770acd1396473aefc13c`,
 with signed GameCore
 `689df45d69b4b772e408155c4f443d09ad6a936039205cee6e62747fd8cca3d6`.
 
-The latest [Great Work swap correction](macos-great-work-exchange.md) replaces
-fixed class IDs in the shared UI. Actual standard/EUI exchange, saved native
-controller/slot checks and exact cross-UI state comparison passed. Incoming-route
-identity/tourism and tooltip precision corrections have their own scoped reports.
-This intermediate package was built with the UI correction uncommitted; it is
-not the final clean release. Always inspect current processes and
-`build/macos/continuation-state.json` before launching. The original quicksave
-was preserved and restored after both physical tests. Remaining
-civilization/system coverage is open; the historical pause below does not
-describe the current installation.
+The latest [Kilwa war-cancellation correction](macos-kilwa-validation.md)
+clears a stale food marker through the normal post-cancellation war event.
+Native same-input retest, exact reload and affected-save ordinary-turn recovery
+passed. Human route creation/food settlement and bounded natural expiry also
+passed. The shared Great Work swap UI fix has actual standard/EUI exchange and
+exact cross-UI state evidence. Startup exit 255 remains intermittent and open.
+This intermediate package was built with the Kilwa fix uncommitted and is not
+the final clean release. Always inspect processes and
+`build/macos/continuation-state.json` before launching. The original quicksave,
+canonical stock and Aspyr backup remain preserved. Remaining civilization and
+system coverage is open; the historical pause below does not describe the
+current installation.
 
 ## Previous pause
 

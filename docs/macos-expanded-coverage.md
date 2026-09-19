@@ -1467,5 +1467,5 @@ route food modifiers, the internal-route count exclusion and four-gold accountin
 city/owner controls, one ordinary food settlement and exact reload. Earlier
 fixture/popup/protocol failures remain failed and are excluded from accepted
 coverage. No Kilwa product change was required. Natural expiry, bonus removal and returned units/reload also passed in an
-explicit single-player peace/no-barbarian fixture. Plunder/war/naval/AI boundaries
-remain separate.
+explicit single-player peace/no-barbarian fixture. Human war cancellation exposed and corrected a stale food marker; native retest
+and saved-state checks passed. Plunder/naval/AI boundaries remain separate.

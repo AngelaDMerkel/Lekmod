@@ -72,7 +72,7 @@ Only `062930Z` and its exact reload support the accepted native claims above.
 
 ## Scope and artifact
 
-No Kilwa product defect was confirmed or changed in this phase. The earlier
+No product correction was needed for the creation/settlement checks above. The earlier
 17 isolated utility/handler cases remain offline evidence. Native AI-owner,
 sea-route, expiry/plunder removal, city-transfer and other Kilwa unique mechanics
 remain open. Four-gold route accounting is verified; its isolated treasury
@@ -130,3 +130,66 @@ Reproduce with `--mode single-player-smoke --turns 3 --timeout 900
 --stall-seconds 240 --scenario kilwa-expiry --scenario-turns 19 --load-save`
 pointing to the `064355Z` save, plus `--save-and-exit`. The scenario requires the
 explicit peace/no-barbarian fixture and verifies its options again on reload.
+
+
+## War cancellation: stale food modifier corrected
+
+The unrestricted pre-war save `062930Z` supports a separate zero-turn cancellation
+check. Baseline `20260919T065839Z` submitted the normal synchronized
+`Network.SendChangeWar` command. Both foreign routes and the attacker's two
+caravans were removed; the internal food/four-gold route and its caravan remained.
+However, three successive stable observations at turn 166 retained capital
+marker 1, modifier 105% and gross food 10.5 instead of 0/100%/10. The run recorded
+the marker assertion as FAIL, saved the result and exited 0; the overall test
+remains failed. No turn advanced, so this proves a stale rate/marker, not an
+excess food-storage award. Failed save SHA-256:
+`e33d388cf0f7bd990b45bf7878ef8c6e7a488308f838af99116aed2448547060`.
+
+`UnitPrekill` runs before its route is cleared, so the existing callback can
+observe the last soon-to-be-cancelled connection. The native `DeclareWar` event
+runs after cancellation. The product now refreshes Kilwa players belonging to
+either affected **team**, preserving the alive/civilization checks in the
+existing ability function. It does not treat team IDs as player IDs.
+
+The actual Lua utility/handler suite now has 23 cases. Six new cases failed before
+and all pass after: stale prekill count followed by cancellation, internal-route
+exclusion, all owners on a matching team, unrelated teams, non-Kilwa participants
+and dead owners. Inactive civilization registration remains covered. Native
+war testing here is the human attacker case; multiple owners sharing a team
+and other owner exclusions are isolated Lua evidence.
+
+Fixed same-input run `20260919T070417Z` passed all three checks, with marker 0,
+modifier 100% and gross food 10 across all three observations. The complete
+recorded before/after snapshots differ only in those three capital fields;
+stored food, route/cargo, caravan, occupied capacity, war and turn are unchanged.
+Normal save/exit returned 0 after 61.0 seconds. Save SHA-256:
+`df23b6658214de0ecc8daba455ba6b24cccb96ea621bbdc42feafd40d740fc2d`.
+Exact reload `20260919T070759Z` passed, save SHA-256:
+`0a791ea12962faf0db2daa2e68af1bf3cd44b8582f94969de897025f15fbb94c`.
+Both preserved settings/hooks/manual saves without Lua/protocol/sync errors or
+new diagnostics.
+
+Affected-save continuation `20260919T070930Z` loaded the preserved failure save.
+It initially retained marker 1, as serialized. One ordinary turn (166→167) let
+the preexisting PlayerDoTurn handler clear it; all owned city markers became
+zero, with the internal route still carrying 175 food/400 gold hundredths and
+13 turns remaining. No marker was assigned by the test. This is backward-save
+playability and ordinary-turn recovery, not immediate repair on load or a new
+food-accrual fix. It saved/exited normally (0) with cleanup verified, save
+SHA-256 `72752d1bf58aec1f70743e709acf705c21ffb8ceae521f668724ce4d66a56bce`.
+
+The new intermediate standard archive is `Lekmod-kilwa-war-20260919.zip`, SHA-256
+`e4d8d01a89b8cdce9cf1420eac61bb94c0a0dbfd151b770acd1396473aefc13c`.
+The signed core remains `689df45d69b4b772e408155c4f443d09ad6a936039205cee6e62747fd8cca3d6`;
+the product change is Lua-only. The package was built before this fix's commit
+and is not the final clean release.
+
+Reproduce fresh cancellation with `--scenario kilwa-war --scenario-turns 1`
+using the unrestricted `062930Z` save; the single allowed turn enables ordinary
+notification handling but the scenario requests no turn. Use
+`--scenario kilwa-war-continue --scenario-turns 1` for the affected `065839Z`
+save. Both use the common explicit smoke-mode/time-budget/save-exit options.
+
+Exact recovered-state reload `20260919T071156Z` also passed with normal exit,
+settings/hooks/manual preservation and no Lua/synchronization errors. Save
+SHA-256: `87aee9631f16269686dfb7527bbe2c43b1b2d1d95bb79ae030601d8e3db5c729`.

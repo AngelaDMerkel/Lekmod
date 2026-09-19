@@ -12,8 +12,8 @@ local function fixture(active)
  e.SlotStatus={SS_TAKEN=1,SS_COMPUTER=2};e.PreGame={GetSlotStatus=function(id)return id<2 and id+1 or 0 end,GetCivilization=function(id)return active~=false and 1 or 2 end}
  e.GameEvents=setmetatable({},{__index=function(_,name)return {Add=function(f)e.events[name]=f end}end})
  for id=0,2 do
-  local p={id=id,civ=id<2 and 1 or 2,alive=true,cities={city(id,0),city(id,1)},routes={}}
-  function p:GetID()return self.id end;function p:GetCivilizationType()return self.civ end
+  local p={id=id,team=id,civ=id<2 and 1 or 2,alive=true,cities={city(id,0),city(id,1)},routes={}}
+  function p:GetID()return self.id end;function p:GetTeam()return self.team end;function p:GetCivilizationType()return self.civ end
   function p:IsAlive()return self.alive end;function p:GetTradeRoutes()return self.routes end
   function p:Cities()local i=0;return function()i=i+1;return self.cities[i]end end
   e.Players[id]=p
@@ -68,6 +68,39 @@ test("Kilwa other civilization is excluded",function()
 end)
 test("Kilwa dead owner is excluded",function()
  local e=fixture();e.Players[0].alive=false;e.events.PlayerDoTurn(0);assert(not e.Players[0].cities[1].buildings[100])
+end)
+test("war cancellation refreshes after the prekill stale count",function()
+ local e=fixture();local p=e.Players[0]
+ e.events.PlayerDoTurn(0);assert(p.cities[1].buildings[100]==2)
+ p.routes={{FromCity=p.cities[1],ToCity=e.Players[2].cities[1],Domain=0}}
+ e.events.UnitPrekill(0,8192,42,12,14,false,2);assert(p.cities[1].buildings[100]==1)
+ p.routes={};assert(e.events.DeclareWar,"post-cancellation war callback missing");e.events.DeclareWar(0,2)
+ assert(p.cities[1].buildings[100]==0 and p.cities[2].buildings[100]==0)
+end)
+test("war refresh retains internal-route exclusion",function()
+ local e=fixture();local p=e.Players[0];e.events.PlayerDoTurn(0)
+ p.routes={{FromCity=p.cities[1],ToCity=p.cities[2],Domain=0}}
+ assert(e.events.DeclareWar,"war callback missing");e.events.DeclareWar(0,2)
+ assert(p.cities[1].buildings[100]==0)
+end)
+test("war team IDs update every matching Kilwa owner",function()
+ local e=fixture();local a,b=e.Players[0],e.Players[1];a.team=7;b.team=7;e.Players[2].team=8
+ b.routes={{FromCity=b.cities[1],ToCity=e.Players[2].cities[1],Domain=1}}
+ e.events.PlayerDoTurn(0);e.events.PlayerDoTurn(1);a.routes={};b.routes={}
+ assert(e.events.DeclareWar,"war callback missing");e.events.DeclareWar(7,8)
+ assert(a.cities[1].buildings[100]==0 and b.cities[1].buildings[100]==0)
+end)
+test("war excludes unrelated teams",function()
+ local e=fixture();assert(e.events.DeclareWar,"war callback missing");e.events.DeclareWar(2,3)
+ assert(not e.Players[0].cities[1].buildings[100]and not e.Players[1].cities[1].buildings[100])
+end)
+test("war excludes non-Kilwa participants",function()
+ local e=fixture();assert(e.events.DeclareWar,"war callback missing");e.events.DeclareWar(0,2)
+ assert(not e.Players[2].cities[1].buildings[100])
+end)
+test("war excludes dead Kilwa owners",function()
+ local e=fixture();e.Players[0].alive=false;assert(e.events.DeclareWar,"war callback missing");e.events.DeclareWar(0,2)
+ assert(not e.Players[0].cities[1].buildings[100])
 end)
 test("inactive Kilwa registers no callbacks",function()local e=fixture(false);assert(next(e.events)==nil)end)
 local failed=0
