@@ -1423,3 +1423,16 @@ source-reduction updates, observed rate decreases and a Roman owner control
 exited normally and restored settings/hooks/manual saves. Culture buildings and
 contact were supplied inputs. Capital transfer and other culture sources remain
 separate, and no product correction was needed.
+
+
+### Moors immediate founding bonus
+
+The [Moors report](macos-moors-validation.md) records normal Medieval founding
+with a missing 30% ordinary-building bonus (`20260919T033626Z`). Registering the
+existing era update on PlayerCityFounded corrected the first playable state
+(`034123Z`). Native Renaissance/Industrial team transitions, new Renaissance
+founding, AI/team controls and wonder exclusion passed in `034302Z`; exact
+mixed-era and first-founded-capital reloads passed in `034455Z` and `034729Z`.
+Fourteen isolated callbacks and 32 runner checks pass. Research and the extra
+Settler were supplied inputs; actual building completion and capture remain
+separate. All successful native runs exited normally with cleanup verified.

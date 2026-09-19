@@ -738,11 +738,11 @@ through ordinary unit turns; human promotion actions and normal AI promotions
 must produce the event-time faith reward, while Rome gains none. All owner unit
 levels/XP/promotions and faith values support exact reload.
 
-`test-moors-era.lua LEKMOD/Lua/Civilizations/Lekmod_moors.lua` executes ten
+`test-moors-era.lua LEKMOD/Lua/Civilizations/Lekmod_moors.lua` executes fourteen
 offline handler cases for Medieval/Renaissance counts, later-era clearing,
-human/AI team routing, unrelated/dead-owner exclusions and per-owner-turn
-updates. It does not establish native production modifiers or immediate new-city
-behavior. All 26 civilization Lua files also pass the pinned Lua 5.1 syntax check.
+human/AI team routing, unrelated/dead-owner exclusions, per-owner-turn updates
+and immediate founding-event registration/routing. Native production modifiers
+and first-playable founding behavior are verified separately. All 26 civilization Lua files also pass the pinned Lua 5.1 syntax check.
 
 
 `test-unit-owner-boundaries.lua LEKMOD/Lua/Civilizations` runs 39 isolated
@@ -864,3 +864,12 @@ source-reduction decreases and the Roman no-marker control. It requires an
 initially unmet Roman source. Snapshot reload includes rates, marker counts,
 contacts, buildings and turn. This does not claim normal building construction
 or culture-bank settlement.
+
+
+`moors-founding` starts a normal Medieval human/AI Moors plus Roman-control
+fixture and uses the starting Settler's actual Found action. The first playable
+city state must have two markers, +30% Market/Library modifiers and no Great
+Library bonus. `moors-eras --scenario-turns 2` loads that save, observes normal
+AI foundations, supplies Acoustics/Scientific Theory research and one Settler,
+and checks native era events, team isolation, immediate Renaissance founding
+and Industrial expiry. Both snapshots support exact reload.

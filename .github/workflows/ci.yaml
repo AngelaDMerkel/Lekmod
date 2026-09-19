@@ -101,6 +101,7 @@ jobs:
           python3 LEKMOD_DLL/macos/test-lua-stack-moves.py
           build/macos/test-deps/lua-5.1.4/src/lua LEKMOD_DLL/macos/test-maori-expiry.lua LEKMOD/Lua/Civilizations/Lekmod_maori.lua
           build/macos/test-deps/lua-5.1.4/src/lua LEKMOD_DLL/macos/test-cuba-capital-culture.lua LEKMOD/Lua/Civilizations/Lekmod_cuba.lua
+          build/macos/test-deps/lua-5.1.4/src/lua LEKMOD_DLL/macos/test-moors-era.lua LEKMOD/Lua/Civilizations/Lekmod_moors.lua
           python3 LEKMOD_DLL/macos/test-lua-script-data.py
           python3 LEKMOD_DLL/macos/test-batch-allocate.py
           clang++ -std=c++11 LEKMOD_DLL/macos/test-random-seed.cpp -o "$RUNNER_TEMP/test-random-seed"

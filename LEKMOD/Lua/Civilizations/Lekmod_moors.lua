@@ -51,4 +51,5 @@ end
 if is_active then
    GameEvents.TeamSetEra.Add(lekmod_moors_on_era_ua)
    GameEvents.PlayerDoTurn.Add(lekmod_moors_on_turn_ua)
+   GameEvents.PlayerCityFounded.Add(lekmod_moors_on_turn_ua)
 end
