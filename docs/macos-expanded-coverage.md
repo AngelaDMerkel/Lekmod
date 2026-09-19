@@ -1400,3 +1400,15 @@ The final Ancient regression and all-owner reload are `20260919T024720Z` and
 `025044Z`; the Classical replay/reload are `024338Z` and `024539Z`. Gift/upgrade
 and other unique mechanics remain open. No long campaign or multiplayer phase
 was reopened, and this does not complete the broader civilization inventory.
+
+
+### Māori inherited bonuses
+
+The [Māori report](macos-maori-validation.md) records actual gifts that left
+temporary bonuses indefinitely on Roman units (`20260919T030214Z`). Expiry now
+follows the promotion across living owners. Three-gift retest `031132Z` and
+exact reload `031848Z` passed; an ordinary recipient turn repaired the affected
+save in `032022Z`, followed by exact reload `032226Z`. All successful runs exited
+0 with cleanup verified. The 24-case isolated suite distinguishes native major
+recipient evidence from offline non-major handling. Broader ownership/unique
+mechanics and the separate startup-reliability issue remain open.

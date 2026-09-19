@@ -41,8 +41,8 @@ movement is never increased and units without the expired promotion are untouche
 A new read-only `Unit:MaxMovesWithStack()` binding returns the maximum of native
 movement and applicable Great General, embarked or land-civilian stack allowances,
 matching the ordinary reset's movement calculations. It does not reset movement
-or change activity, missions, synchronization or waiting state. Twenty-one actual
-Lua-handler cases pass (including birth-turn and later-era cases); 22 real-Lua sanitizer
+or change activity, missions, synchronization or waiting state. Twenty-four actual
+Lua-handler cases pass (including birth-turn, later-era and owner cases); 22 real-Lua sanitizer
 binding cases pass across enabled/disabled land-stack configurations.
 
 The optional-method guard keeps older DLLs from raising a missing-method Lua
@@ -150,5 +150,53 @@ Archive SHA-256: `acff3463ddfa4c248a32fe373db7ed12664f550f70c5c33e27ab4202ad5c34
 Signed installed core: `80a9ec3f54b96485606228c067f3656e727c2bf6b16c2c977cbf6c19bb85b8c1`.
 The central installer preserved the stock backup. This dirty-manifest test
 package includes prior religion/Tonga fixes and is not the final clean release.
-Gift/upgrade ownership, other Māori uniques, sea-unit creation and actual
+Upgrade/capture ownership, other Māori uniques, sea-unit creation and actual
 movement-path outcomes remain separate coverage.
+
+
+## Gifted-unit expiry
+
+`20260919T030214Z` used three actual gift actions after supplying units, peaceful
+contact and staging positions: a Warrior to the Māori AI, then a Warrior and
+Worker to Rome. Native UnitConverted events and source removal verified the
+transfers. After both recipients' real turns six and seven, the Māori unit had
+expired, but both Roman units retained their temporary promotions, four-move
+limits and sight three. Their inherited creation turn remained six. The owner
+civilization filter prevented the temporary state from ever expiring in Rome.
+The failed state saved/exited 0, SHA-256:
+`0a24143b5068993fd0c2127204c9f8f09597edc4d439e4609fc5fdfe196a6f79`.
+The earlier `025740Z` attempt failed during startup; no gift action ran there.
+See the [startup report](macos-startup-cache.md) for the preserved cache and
+intro-setting comparison.
+
+Expiry now follows the inherited promotion for each living owner, preserving
+the same opening window and first creation turn. Units without the temporary
+promotion remain untouched. The isolated suite now has 24 cases; foreign and
+non-major expiry cases fail against the former owner filter. Non-major handling
+is isolated evidence, not a native city-state/barbarian gift test.
+
+`20260919T031132Z` replayed the three gifts on the correction. Both recipients'
+units expired after the observed ordinary owner turns, and all three checks
+passed. Save SHA-256:
+`2a1fc3f7fa67b6ff69681ddc7767fddc60f7ec541aa69d925d21b60344d56226`.
+Exact three-owner reload `031848Z` produced save SHA-256
+`15ac61c5767577f4cd69f536b61de10a54d216665d96f3435e68cd3499617a63`.
+The native replay retained the baseline's intro-enabled setting; reload used
+the usual intro-skip setting and also started successfully. This does not
+resolve the intermittent startup issue.
+
+`20260919T032022Z` loaded the retained affected save. One ordinary Roman turn
+cleared both stale bonuses; their limits/remaining movement became 120 and
+sight two. No test-side movement/promotion or turn assignment was used.
+Save SHA-256: `d9c024e0b7ad9d696cd20f1326edbc6f693f864e22b3ada70f03c6fc876eb7b8`.
+Exact repaired-state reload `032226Z` produced
+`593009b6bf975eaea1ac2956fce70d05915ad1f4923a7f358475f0676b58f14f`.
+All four successful runs exited 0, restored settings/hooks and preserved manual
+saves, with no Lua errors, synchronization failures or new diagnostics. These
+are scripted gift commands and native outcomes; no mouse input was used.
+
+Latest intermediate package: `build/macos/Lekmod-maori-owner-expiry-20260919.zip`,
+SHA-256 `9d089034c691def6596acf7ef8af02eee9cfd7b641e92e022c8278197d7aa46e`.
+The signed GameCore remains
+`80a9ec3f54b96485606228c067f3656e727c2bf6b16c2c977cbf6c19bb85b8c1`;
+this follow-up changed Lua only. This is not the final clean release package.

@@ -17,14 +17,15 @@ function lekmod_maori_ua(player_id)
 	local player = Players[player_id]
 	local game_turn = Game.GetGameTurn()
 
-	if not player:IsAlive() or player:GetCivilizationType() ~= this_civ then return end
+	-- The temporary promotion can be inherited through gifts or capture.
+   if not player:IsAlive() then return end
 
    if Game.GetElapsedGameTurns() < 5 then return end
 
    -- City production runs before PlayerDoTurn; newborn units keep their first turn.
    local expired_units = {}
    for unit in player:Units() do
-      if unit:GetGameTurnCreated() < game_turn and (unit:IsHasPromotion(maori_promotion_id) or unit:IsHasPromotion(maori_promotion_civilian_id)) then
+      if (unit:IsHasPromotion(maori_promotion_id) or unit:IsHasPromotion(maori_promotion_civilian_id)) and unit:GetGameTurnCreated() < game_turn then
          unit:SetHasPromotion(maori_promotion_id, false)
          unit:SetHasPromotion(maori_promotion_civilian_id, false)
          expired_units[#expired_units + 1] = unit

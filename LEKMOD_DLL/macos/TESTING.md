@@ -823,7 +823,7 @@ supplies Worker/Akkad and General/Hakkapeliitta stacks and checks that expiry
 preserves their legitimate escort allowances. All support exact snapshot reload.
 Test adapters never set unit movement or promotions to obtain a pass.
 
-`test-maori-expiry.lua PRODUCT_LUA` runs twenty-one isolated actual-handler cases
+`test-maori-expiry.lua PRODUCT_LUA` runs twenty-four isolated actual-handler cases
 for expiry, spent movement, donor iteration order, owner filters and legacy-DLL
 compatibility. `test-lua-stack-moves.py` runs 22 actual-binding Lua/sanitizer
 cases with the land-stack feature both enabled and disabled. The new query is
@@ -846,3 +846,12 @@ team/player ID routing, missing capitals, independent AI-owner updates, clearing
 stale counts and non-stacking. Capital culture is a supplied quote: this does
 not establish native yield settlement, capital transfer or feedback between
 multiple Cuban capitals. Existing native ideology/Dance Hall evidence is separate.
+
+
+`maori-gift --scenario-turns 2` loads the turn-six Māori fixture, supplies three
+units/peaceful staging positions and uses actual gift commands to Māori/Roman
+AI recipients. Real recipient turns must expire inherited bonuses. It follows
+unit-conversion IDs and saves the full three-owner state for exact reload.
+`maori-gift-repair --scenario-turns 1` loads the retained affected save and
+requires the next normal Roman turn to clear the stale promotions. No test
+adapter sets movement, promotions or ownership to obtain those outcomes.
