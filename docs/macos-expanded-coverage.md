@@ -1553,3 +1553,7 @@ The selected-research New Zealand variant also passed: normal Found and research
 selection, supplied prerequisites, naturally drawn +12-science rewards into
 Astronomy progress with unchanged human overflow, AI overflow control and exact
 reload. Technology completion/overflow is a separate boundary.
+
+New Zealand's contact-science completion boundary also passed: supplied
+597/603 progress, a naturally drawn12-science reward, real technology completion,
+exact6 overflow, no-repeat/unrelated-owner controls and exact reload.

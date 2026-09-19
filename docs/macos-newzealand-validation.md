@@ -98,3 +98,29 @@ restored settings/hooks/manual saves and no Lua/sync errors or new diagnostics.
 Save SHA-256: `0f0798b2cee235b323163a519184aaf5d52fa69dedabfe29ba90f907b29bb1e4`.
 All 32 runner regressions pass. Technology-completion overflow remains a
 separate boundary from the non-completing progress test.
+
+## Contact reward completes research
+
+`20260919T121827Z` used the same preserved initial opening, normal capital
+Found and research selection, supplied prerequisites and 597 of Astronomy's
+603 required progress. A supplied native first contact with Roman player 2
+naturally drew the 12-science reward. No random result or completion flag was
+assigned. The engine emitted TeamTechResearched, marked Astronomy known,
+cleared the completed selection and carried exactly six science into overflow.
+Stored target progress was 609; unrelated AI New Zealand and the Roman recipient
+received no reward, and human gold/faith/culture were unchanged. Repeating the
+known contact changed nothing and emitted no additional completion.
+
+All three checks passed on turn zero, followed by normal save/exit (0), settings/
+hooks/manual-save preservation and no Lua/sync errors or new diagnostics.
+Save SHA-256: `fa9957023abae74bd33518543d86cd5e59063e90f8e255f4b5847e6e6b959013`.
+Exact reload `20260919T122051Z` preserved completed tech, raw progress, overflow
+and contacts/balances, then exited normally with the same cleanup checks.
+Reload SHA-256: `f3afde520a03fc36fd011b4df3cf3e13dbca86c513975d99b9e9dc9d332bb832`.
+
+Use `--scenario newzealand-science-completion --scenario-turns 1` with the
+`120139Z` initial save; no turn was requested. The script tries distinct unmet
+Roman contacts until a real science reward is drawn, and fails if the fixture
+exhausts them. It never changes RNG state to obtain a pass. This fixture drew
+science on the first supplied contact; the previous 597 progress was an explicit
+input, not an earned-research claim. No additional product fix was required.

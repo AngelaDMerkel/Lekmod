@@ -1044,3 +1044,10 @@ drawn science rewards must add12 progress without changing human overflow;
 the AI no-selected-research control uses overflow. No research progress is
 assigned in this variant. The shared temporary helper is guarded and restored,
 and the extended progress/overflow snapshot supports exact reload.
+
+`newzealand-science-completion` loads the retained twelve-major initial save,
+uses normal Found/research selection and supplies progress six points short
+of Astronomy. Native first contacts must naturally draw science, complete the
+tech through TeamTechResearched and carry exactly six excess points to overflow.
+Known-contact and unrelated-owner controls plus exact reload are required;
+no RNG/tech-completion flag is assigned.
