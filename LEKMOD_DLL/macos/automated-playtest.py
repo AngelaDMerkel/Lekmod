@@ -174,6 +174,7 @@ SCENARIO_ITEMS = {"inventory": {"system-inventory"},
                   "philippines-gerilya-return": {"gerilya-normal-disembark", "gerilya-land-move-boundary"},
                   "oman-minaa": {"minaa-enemy-sea", "minaa-embarked", "minaa-lethal-stack", "minaa-own-land-distance-controls"},
                   "ottoman-promotions": {"ottoman-human-first", "ottoman-human-second", "ottoman-AI-faith", "promotion-other-owner-no-faith"},
+                  "kilwa-expiry": {"kilwa-natural-expiry", "kilwa-expiry-markers", "kilwa-returned-caravans", "kilwa-expired-cargo"},
                   "kilwa-routes": {"kilwa-first-route", "kilwa-second-route", "kilwa-internal-exclusion", "kilwa-internal-gold", "kilwa-owner-city-controls", "kilwa-food-settlement"},
                   "greatwork-exchange-verify": {"exchange-controllers", "exchange-slot-counts", "exchange-theme-yields", "exchange-offers-cleared"},
                   "greatwork-exchange-prep": {"foreign-works-created", "foreign-work-offer", "exchange-ready"},
@@ -360,6 +361,7 @@ SINGLE_PLAYER_SETUP_OPTIONS = frozenset({
     "GAMEOPTION_NO_BARBARIANS", "GAMEOPTION_RAGING_BARBARIANS", "GAMEOPTION_NO_GOODY_HUTS",
     "GAMEOPTION_NO_SCIENCE", "GAMEOPTION_NO_POLICIES", "GAMEOPTION_NO_RELIGION",
     "GAMEOPTION_NO_ESPIONAGE", "GAMEOPTION_ONE_CITY_CHALLENGE", "GAMEOPTION_NO_CITY_RAZING",
+    "GAMEOPTION_ALWAYS_PEACE",
 })
 
 def parse_slot_civilization(value):

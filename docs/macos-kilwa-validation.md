@@ -83,3 +83,50 @@ Installed standard archive `Lekmod-greatwork-swap-20260919.zip` SHA-256:
 signed core `689df45d69b4b772e408155c4f443d09ad6a936039205cee6e62747fd8cca3d6`.
 This remains the documented intermediate artifact. These tests changed only
 temporary drivers and recorded fixtures, not the product package.
+
+
+## Natural expiry with controlled single-player options
+
+The first expiry attempt, `20260919T063743Z`, loaded the accepted three-route
+save at turn 166, with quoted completion turns 180/184/180. Through turn 171
+all three remained active and markers matched. Rome then declared war; the
+scenario correctly rejected the early disappearance of foreign contracts. The
+war log and `validation-notes.json` retain that interruption. The run stopped
+with -9 and remains failed, not a natural-expiry result.
+
+A separate fixture used `GAMEOPTION_ALWAYS_PEACE=1` and
+`GAMEOPTION_NO_BARBARIANS=1` through normal single-player setup. The shipped
+Always Peace option is hidden in the ordinary UI but explicitly supports single
+player; its use here is a labeled test input, not multiplayer coverage. The
+runner accepts that known boolean option while continuing to reject multiplayer
+turn settings; all 32 parser/guard tests pass. Native `064355Z` confirmed both
+flags true and passed the six route/food checks again with normal exit/cleanup.
+Its save SHA-256 is
+`1463c9a99c6e093e7ab236dd4a9cdeecc600a7e21eae1016427cc89b4b224a7b`.
+
+`kilwa-expiry`, run `20260919T064632Z`, followed only those contracts from turn
+166 through 184, bounded to 19 ordinary turns and a 900-second recovery timeout.
+No duration, marker, yield, return-unit or synchronization flag was assigned.
+The countdowns continued to match their original quoted ends. Two contracts
+ended at 180, leaving one foreign route and marker 1. The final route ended at
+184; both city markers became zero and food modifiers returned to 100%. No
+stable marker/count mismatch was observed. All three caravans returned to the
+origin city, with occupied capacity still 3. The former internal food cargo
+cleared; final food/production trade contributions were zero. This is a bounded
+contract lifecycle test, not a reopened long stability campaign.
+
+All four assertions passed, with normal save/exit (0) after 304.9 seconds.
+Settings/hooks/manual saves were preserved, with no Lua/protocol/synchronization
+errors or new diagnostics. Save SHA-256:
+`e49e99bf228ca9453cdfee3435b10a730c8c335760773f43491e489cd5e3f724`.
+Exact zero-turn reload `20260919T065236Z` matched options, zero routes/markers,
+city food/yield/population states, three returned caravans, capacity and gold.
+It exited normally (0) with cleanup verified; save SHA-256:
+`4359ede75061922f832be49e7989b5e5951e74cf8937d941591f949f01b178e9`.
+No product correction was needed. AI/naval/plunder/war and other unique-content
+boundaries remain separate from the natural-expiry evidence.
+
+Reproduce with `--mode single-player-smoke --turns 3 --timeout 900
+--stall-seconds 240 --scenario kilwa-expiry --scenario-turns 19 --load-save`
+pointing to the `064355Z` save, plus `--save-and-exit`. The scenario requires the
+explicit peace/no-barbarian fixture and verifies its options again on reload.

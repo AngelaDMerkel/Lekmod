@@ -942,3 +942,11 @@ retained protocol failure; do not use it to manufacture a pass. The accepted
 scenario checks route markers/rates, internal exclusion/four-gold accounting and
 one ordinary food-storage settlement. Use a two-turn bound for setup and zero
 turns with `--expected-state` for exact reload.
+
+`kilwa-expiry` observes the three preserved contracts through their quoted ends
+with a 19-turn maximum. Its fixture requires the explicitly supplied single-player
+Always Peace/no-barbarian options, because the first uncontrolled expiry attempt
+was interrupted by a normal Roman declaration of war. It never changes duration
+or forces a returned unit; it verifies marker removal, caravan return and cargo
+removal, then supports exact zero-turn reload. This functional bound does not
+reopen the accepted long turn campaign.

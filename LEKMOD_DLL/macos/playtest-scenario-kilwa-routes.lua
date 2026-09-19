@@ -73,6 +73,7 @@ function LekmodScenario.step(player)
  assert(capital,"Kilwa capital missing after normal founding")
  if phase=="init"then
   assert(#player:GetTradeRoutes()==0,"fresh route fixture required");capitalID=capital:GetID()
+  LekmodScenarioEvent("kilwa-fixture-options",{always_peace=Game.IsOption(GameInfoTypes.GAMEOPTION_ALWAYS_PEACE),no_barbarians=Game.IsOption(GameInfoTypes.GAMEOPTION_NO_BARBARIANS)})
   assert(not Teams[player:GetTeam()]:IsAtWar(other:GetTeam()),"fixture must begin at peace")
   if not Teams[player:GetTeam()]:IsHasMet(other:GetTeam())then Teams[player:GetTeam()]:Meet(other:GetTeam(),false);LekmodScenarioEvent("fixture-setup",{operation="provided-contact",other=1})end
   homeID=provideCity(0,capital,"internal-destination"):GetID()

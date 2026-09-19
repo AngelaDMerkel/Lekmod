@@ -168,6 +168,7 @@ class PlaytestEvidenceTests(unittest.TestCase):
 
     def test_setup_options_are_single_player_bounded_values(self):
         self.assertEqual(playtest.parse_game_option("GAMEOPTION_NO_BARBARIANS=1"), ("GAMEOPTION_NO_BARBARIANS", 1))
+        self.assertEqual(playtest.parse_game_option("GAMEOPTION_ALWAYS_PEACE=1"), ("GAMEOPTION_ALWAYS_PEACE", 1))
         for value in ("GAMEOPTION_NO_SCIENCE=2", "GAMEOPTION_NO_SCIENCE=true", "GAMEOPTION_SIMULTANEOUS_TURNS=1", "NO_BARBARIANS=1", "GAMEOPTION_UNKNOWN=0"):
             with self.assertRaises(playtest.argparse.ArgumentTypeError):
                 playtest.parse_game_option(value)
