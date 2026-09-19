@@ -1412,3 +1412,14 @@ save in `032022Z`, followed by exact reload `032226Z`. All successful runs exite
 0 with cleanup verified. The 24-case isolated suite distinguishes native major
 recipient evidence from offline non-major handling. Broader ownership/unique
 mechanics and the separate startup-reliability issue remain open.
+
+
+### Cuba capital culture
+
+[Native Cuba capital-culture checks](macos-cuba-capital-validation.md) passed
+unmet-source exclusion, contact-driven human/AI increases, per-capital rounding,
+source-reduction updates, observed rate decreases and a Roman owner control
+(`20260919T032904Z`). Exact reload `033057Z` matched the recorded state; both
+exited normally and restored settings/hooks/manual saves. Culture buildings and
+contact were supplied inputs. Capital transfer and other culture sources remain
+separate, and no product correction was needed.

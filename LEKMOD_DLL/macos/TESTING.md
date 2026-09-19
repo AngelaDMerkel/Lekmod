@@ -855,3 +855,12 @@ unit-conversion IDs and saves the full three-owner state for exact reload.
 `maori-gift-repair --scenario-turns 1` loads the retained affected save and
 requires the next normal Roman turn to clear the stale promotions. No test
 adapter sets movement, promotions or ownership to obtain those outcomes.
+
+
+`cuba-capital --scenario-turns 5` supports a normal human Cuba/Roman AI/Cuban
+AI opening. It supplies Monument/Amphitheater inputs and contact, captures source
+quotes on real owner turns, and verifies unmet exclusion, met-capital increases,
+source-reduction decreases and the Roman no-marker control. It requires an
+initially unmet Roman source. Snapshot reload includes rates, marker counts,
+contacts, buildings and turn. This does not claim normal building construction
+or culture-bank settlement.
