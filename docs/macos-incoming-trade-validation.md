@@ -102,3 +102,58 @@ This closes the two-row incoming-table workflow at this display size, alongside
 the earlier own/available-table checks. Dense incoming scrolling, nonzero
 religion/tourism data, additional languages and foreign Great Work exchange are
 not covered here. Full single-player coverage remains open in the expanded ledger.
+
+
+## Nonzero tourism follow-up
+
+The first incoming fixture had no Great Works and zero tourism, so equal zeros
+could not validate partner routing. The same scenario now compares incoming and
+outgoing tourism fields and records whether any compared row is nonzero.
+
+`20260919T051728Z` loaded preserved two-artwork fixture `20260916T050343Z`, then
+supplied the same kind of legal Belgian city, range building/reveal and two
+caravans. Two real AI-owner-turn route missions completed after one ordinary
+turn (179→180). Rome retained base tourism 6; Antium and Liege had zero. Incoming
+Liege→Rome reported `FromTourism=0`, while Belgium's outgoing view reported 150
+hundredths. The Antium route remained zero in both views. The four earlier
+checks passed; the new tourism check explicitly failed. The failure was saved
+and the game exited 0 without a supervisor signal; the overall test remains
+failed. Save SHA-256:
+`6658aab6fa9f26daa14c544889021765fa9f9a7b5259b038ff86f53999d4f0eb`.
+
+The incoming binding passed the querying recipient's own ID to the destination
+city's tourism multiplier. The correction passes the origin player ID, matching
+the outgoing view. This changes the route-data query, not city tourism production
+or influence settlement. `test-trade-incoming-tourism.py` extracts both actual
+expressions and checks 324 owner/base-tourism/modifier combinations plus target
+IDs under ASan/UBSan. All 324 routing checks failed before and pass after. Zero
+base/modifier combinations still check the recipient argument; they are not
+claimed as 324 distinct native nonzero outcomes.
+
+Affected-save read-only retest `20260919T052043Z` passed all five checks with
+both views now reporting 150, and the zero route unchanged. Its complete recorded
+snapshot differs from the baseline only at `/incoming/1/FromTourism`, 0→150.
+No turn advanced or fixture input changed. Save SHA-256:
+`5fb5348d0fc0fc54a784933c763310d98d4890ecd85dc048c9ad66ab3e145a7b`.
+Exact reload `20260919T052210Z` passed, save SHA-256:
+`22154d21dcd9700dc167fe831947bc38310d77cf22409697296e02aedc9e1200`.
+Both retests exited normally (0), preserved settings/hooks/manual saves and
+reported no Lua/synchronization errors or new diagnostics. These add nonzero
+tourism query evidence; actual tourism settlement, religion pressure, additional
+modifiers and physical tourism display are not established here.
+
+The source-only incremental rebuild passed ABI checks. Current standard archive
+`Lekmod-incoming-tourism-20260919.zip` SHA-256:
+`12d4b35184b78fc9ed1ef176cd73ff6f176f2ba3f0c16d31fcd02c88b88c2149`;
+signed core:
+`689df45d69b4b772e408155c4f443d09ad6a936039205cee6e62747fd8cca3d6`.
+It was built with the tourism correction uncommitted and is not the final clean
+release. The earlier physical UI evidence used the preceding owner-fix artifact.
+
+Reproduce fresh nonzero setup with `--scenario trade-incoming --scenario-turns 2
+--load-save build/macos/playtests/20260916T050343Z/Lekmod-Functional-20260916T050343Z.Civ5Save`.
+Use `--mode single-player-smoke --turns 3 --timeout 360 --stall-seconds 180
+--save-and-exit`. For the affected-save retest substitute the `051728Z` save
+and `--scenario-turns 0`. For exact reload substitute the corrected saved file
+and pass `--expected-state` pointing to its report. These commands use the
+runner's desktop-lock, existing-Steam, synchronization and cleanup guards.

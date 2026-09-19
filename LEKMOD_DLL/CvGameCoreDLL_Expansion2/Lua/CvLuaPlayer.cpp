@@ -5067,7 +5067,7 @@ int CvLuaPlayer::lGetTradeRoutesToYou(lua_State* L)
 		lua_setfield(L, t, "FromPressure");
 
 		int iToDelta = pFromCity->GetCityCulture()->GetBaseTourism() * pFromCity->GetCityCulture()->GetTourismMultiplier(pToPlayer->GetID(), true, true, false, true, true);
-		int iFromDelta = pToCity->GetCityCulture()->GetBaseTourism() * pToCity->GetCityCulture()->GetTourismMultiplier(pkPlayer->GetID(), true, true, false, true, true);
+		int iFromDelta = pToCity->GetCityCulture()->GetBaseTourism() * pToCity->GetCityCulture()->GetTourismMultiplier(pFromPlayer->GetID(), true, true, false, true, true);
 		lua_pushinteger(L, iFromDelta);
 		lua_setfield(L, t, "FromTourism");
 		lua_pushinteger(L, iToDelta);

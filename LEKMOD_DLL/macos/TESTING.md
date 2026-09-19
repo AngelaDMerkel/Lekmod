@@ -912,3 +912,10 @@ read-only checks; `--expected-state` compares the exact recorded snapshot. The
 legacy creation check name then means route presence, not new creation. See
 [the incoming report](../../docs/macos-incoming-trade-validation.md) for commands,
 evidence limits, affected-save compatibility and physical standard/EUI coverage.
+
+`test-trade-incoming-tourism.py` executes the actual incoming tourism expressions
+with distinct owner/recipient targets. `trade-incoming` additionally compares both
+query directions; use the preserved `20260916T050343Z` Great Works fixture for
+nonzero tourism. Zero-only comparisons are labeled in the recorded event and do
+not establish nonzero routing. The incoming report includes the failed baseline,
+correction, affected-save retest and exact reload.

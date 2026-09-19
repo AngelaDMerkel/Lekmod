@@ -1,16 +1,18 @@
 # Lekmod macOS single-player testing handoff
 
 **Testing resumed at the user's request, 2026-09-19.** The current standard test
-package is `build/macos/Lekmod-incoming-owner-20260919.zip`, archive SHA-256
-`820ca7ca27bd1aeb9dddb3b716a8d8ce6c18d0835339a9cc313f16b6129b767f`,
+package is `build/macos/Lekmod-incoming-tourism-20260919.zip`, archive SHA-256
+`12d4b35184b78fc9ed1ef176cd73ff6f176f2ba3f0c16d31fcd02c88b88c2149`,
 with signed GameCore
-`2995cf0267255023fb1f98517291c7070d8ee2ea3046b57c4b5611852a0104e7`.
+`689df45d69b4b772e408155c4f443d09ad6a936039205cee6e62747fd8cca3d6`.
 
-The latest [incoming-route owner correction](macos-incoming-trade-validation.md)
-passed affected-save/reload checks and physical standard/EUI incoming-table tests.
-The preceding shared tooltip precision fix is also verified in both UIs. The private
-EUI wrapper restored this exact standard package, text and options. The package
-is an intermediate artifact built with the incoming-owner change uncommitted, not a
+The [incoming-route owner correction](macos-incoming-trade-validation.md) passed
+affected-save/reload and physical standard/EUI incoming-table tests. A subsequent
+nonzero-tourism fixture exposed another recipient-ID error; its correction passed
+affected-save and exact-reload tests. The shared tooltip precision fix is verified
+in both UIs. The current standard package was installed through the managed
+installer after EUI testing had restored its preceding artifact, text and options. The package
+is an intermediate artifact built with the incoming-tourism change uncommitted, not a
 final clean release. Recent Māori/Moors fixes and Cuba/Admiral/nuclear/trade UI
 coverage are recorded in the expanded ledger and their linked reports.
 Remaining civilization and system coverage is still open. Always inspect current

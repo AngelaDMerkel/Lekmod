@@ -1,6 +1,6 @@
 -- Supplies one legal AI city, range reveal/building and two caravans. Routes
 -- execute during the AI's real turn; no route or yield outcome is assigned.
-LekmodScenario={name="trade-incoming",items={"incoming-route-creation","incoming-route-identity","incoming-route-accounting","incoming-route-tooltip"}}
+LekmodScenario={name="trade-incoming",items={"incoming-route-creation","incoming-route-identity","incoming-route-accounting","incoming-route-tooltip","incoming-route-tourism"}}
 local phase,origin,started,aiError="init"
 local requests={}
 local function packRoutes(rows)
@@ -84,6 +84,7 @@ function LekmodScenario.step(player)
   local rows=player:GetTradeRoutesToYou()
   if #rows<2 then assert(Game.GetGameTurn()-started<2,"AI did not create both routes on its ordinary turn");return "turn"end
   assert(#rows==2,"unexpected extra incoming routes")
+  local tourism={};local tourismMatches=true;local nonzero=0
   local totals={};local tooltip=player:GetTradeToYouRoutesTTString()
   for _,r in ipairs(rows)do
    assert(r.FromID==1 and r.ToID==0 and r.FromCity:GetID()==origin,"incoming route has unexpected owner or origin")
@@ -91,6 +92,9 @@ function LekmodScenario.step(player)
    for _,a in ipairs(other:GetTradeRoutes())do if a.FromCity:GetID()==r.FromCity:GetID()and a.ToID==0 and a.ToCity:GetID()==r.ToCity:GetID()then match=a;break end end
    assert(match and r.TurnsLeft>0 and r.TurnsLeft==match.TurnsLeft and r.FromGPT==match.FromGPT and r.ToGPT==match.ToGPT and r.ToScience==match.ToScience,"incoming/outgoing API values differ")
    assert(r.FromCivilizationType==other:GetCivilizationType() and r.FromCivilizationType==match.FromCivilizationType and r.ToCivilizationType==player:GetCivilizationType() and r.ToCivilizationType==match.ToCivilizationType,"incoming route civilization identity differs from its real owners")
+   tourism[#tourism+1]={from=r.FromCity:GetID(),to=r.ToCity:GetID(),incoming_from=r.FromTourism,outgoing_from=match.FromTourism,incoming_to=r.ToTourism,outgoing_to=match.ToTourism,origin_base=r.FromCity:GetBaseTourism(),destination_base=r.ToCity:GetBaseTourism()}
+   if r.FromTourism~=match.FromTourism or r.ToTourism~=match.ToTourism then tourismMatches=false end
+   if r.FromTourism~=0 or r.ToTourism~=0 or match.FromTourism~=0 or match.ToTourism~=0 then nonzero=nonzero+1 end
    totals[r.ToCity:GetID()]=(totals[r.ToCity:GetID()]or 0)+r.ToGPT
    assert(string.find(tooltip,r.FromCity:GetName(),1,true)and string.find(tooltip,r.ToCity:GetName(),1,true),"tooltip lacks route city names")
    for _,field in ipairs({{"ToGPT","GOLD"},{"ToScience","SCIENCE"},{"ToFood","FOOD"},{"ToProduction","PRODUCTION"}})do
@@ -102,11 +106,13 @@ function LekmodScenario.step(player)
    local actual=c:GetYieldRateTimes100(YieldTypes.YIELD_GOLD,false)-c:GetYieldRateTimes100(YieldTypes.YIELD_GOLD,true)
    assert(actual==(totals[c:GetID()]or 0),"incoming gold does not match recipient city trade contribution")
   end
+  LekmodScenarioEvent("incoming-tourism-comparison",{routes=tourism,nonzero_rows=nonzero})
   LekmodScenarioEvent("incoming-route-observed",LekmodScenario.snapshot(player))
   LekmodScenarioRecord("incoming-route-creation","PASS","two native AI routes; setup command events distinguish fresh creation from read-only saved-fixture checks")
   LekmodScenarioRecord("incoming-route-identity","PASS","both civilization types match actual owners and outgoing rows")
   LekmodScenarioRecord("incoming-route-accounting","PASS","incoming/outgoing count, gold, science and countdown agree; recipient city gold contributions match")
   LekmodScenarioRecord("incoming-route-tooltip","PASS","actual localized names and available nonzero gold/science/food/production values")
+  LekmodScenarioRecord("incoming-route-tourism",tourismMatches and "PASS"or "FAIL","incoming/outgoing tourism agreement; nonzero_rows="..nonzero)
   return true
  end
 end
