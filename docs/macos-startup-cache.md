@@ -392,3 +392,32 @@ the recorded exchange state and saved/exited normally (0, 58.9 seconds). Setting
 hooks and manual saves were preserved without Lua/sync errors or new diagnostics.
 Save SHA-256: `9f90f8777c4b16c8f7a8306da8ff43a9dc12b8471d8da1b27f80d5298d50cfeb`.
 This establishes resumed functionality, not elimination of the startup defect.
+
+
+Polynesian eligibility diagnostic `20260919T080901Z` failed at startup with
+exit 255 after 20.5 seconds, before any gameplay diagnostic. The usual merged-
+localization attach failure recurred. Its 25,509,888-byte cache passed SQLite
+quick_check; all 21 files were preserved unchanged under
+`build/macos/cache-investigation/20260919T080901Z`. Merged SHA-256:
+`cc10eea469c1a8c774503cca1d4d49dbc620584b28af0849fa4ec7faca2a9890`.
+No healthy cache file was deleted.
+
+After managed stock restoration, original-settings/no-injection menu control
+`native-startup-controls/20260919T081601Z` reached the menu through actual
+Escape/copyright Continue input. Actual Exit/Yes returned 0 after 237.2 seconds,
+with no settings changed, no game termination signals and manual saves preserved.
+No saved game was loaded. Screenshot `stock-menu.png` SHA-256:
+`9f6814ce7c4a7dd2f6772afbdca9b0bfa6a2392c7c727736fd595da22e253805`.
+The exact `Lekmod-trade-removal-20260919.zip` archive `f1e5dc58…db5cd` and signed
+core `7a4a5abb…fdca9` were reinstalled through the central installer afterward.
+This recovery comparison does not resolve the underlying intermittent trigger.
+
+Automatic approval review initially rejected the foreground control using the
+superseded one-session limit. The rejected command did not run. Repeating the
+same bounded control with the user's later explicit restored permission and
+unlimited-session wording was approved; no current permission block remains.
+
+The restored-package diagnostic `20260919T082057Z` reached gameplay. It then
+failed the independent AI upgrade fixture gate, so it remains a functional
+failure rather than a completed scenario. Further read-only diagnosis identified
+pending-deletion AI probe ships; this is unrelated to the startup comparison.
