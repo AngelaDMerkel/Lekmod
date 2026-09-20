@@ -1069,3 +1069,10 @@ Human two-unit and AI one-unit influence, normal-unit/unfriendly/unowned control
 and foreign owners are distinct checks; no product handler is called manually.
 The runner restores the original civilization script. Exact unit/influence
 state supports zero-turn reload.
+
+`test-optional-options-control.py [--source OLD_LUA]` executes the actual
+AI-deals checkbox binding/update/callback fragments with present/absent box and
+checkbox controls. The missing-control path must preserve the game option and
+suppress its change notification; present controls retain normal behavior.
+The shared frontend script can initialize during single-player reloads. These
+checks do not establish multiplayer lobby or gameplay support.

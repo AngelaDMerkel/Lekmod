@@ -341,7 +341,7 @@ function UpdateGameOptionsDisplay(bUpdateOnly)
 		Controls.AICannotSpreadReligionHumansBox:SetHide( true );
 		Controls.AICannotVoteInCongressBox:SetHide( true );
 		Controls.AICannotBeLiberatedBox:SetHide( true );
-		Controls.AICannotHaveWealsWithHumansBox:SetHide( true );
+		if Controls.AICannotHaveWealsWithHumansBox then Controls.AICannotHaveWealsWithHumansBox:SetHide( true ); end
 		Controls.DisableAIDemographicsBox:SetHide( true );
 		Controls.NoAIStartAdvantageBox:SetHide( true );
 		Controls.NoPenaltyForExpansionBox:SetHide( true );
@@ -358,7 +358,7 @@ function UpdateGameOptionsDisplay(bUpdateOnly)
 		Controls.AICannotSpreadReligionHumansBox:SetHide( false );
 		Controls.AICannotVoteInCongressBox:SetHide( false );
 		Controls.AICannotBeLiberatedBox:SetHide( false );
-		Controls.AICannotHaveWealsWithHumansBox:SetHide( false );
+		if Controls.AICannotHaveWealsWithHumansBox then Controls.AICannotHaveWealsWithHumansBox:SetHide( not Controls.AICannotHaveWealsWithHumansCheck ); end
 		Controls.DisableAIDemographicsBox:SetHide( false );
 		Controls.NoAIStartAdvantageBox:SetHide( false );
 		Controls.NoPenaltyForExpansionBox:SetHide( false );
@@ -373,7 +373,7 @@ function UpdateGameOptionsDisplay(bUpdateOnly)
 		Controls.AICannotSpreadRelHumansCheck:SetDisabled( not bCanEdit );
 		Controls.AICannotVoteInCongressCheck:SetDisabled( not bCanEdit );
 		Controls.AICannotBeLiberatedCheck:SetDisabled( not bCanEdit );
-		Controls.AICannotHaveWealsWithHumansCheck:SetDisabled( not bCanEdit );
+		if Controls.AICannotHaveWealsWithHumansCheck then Controls.AICannotHaveWealsWithHumansCheck:SetDisabled( not bCanEdit ); end
 		Controls.DisableAIDemographicsCheck:SetDisabled( not bCanEdit );
 		Controls.NoAIStartAdvantageCheck:SetDisabled( not bCanEdit );
 		Controls.NoPenaltyForExpansionCheck:SetDisabled( not bCanEdit );
@@ -441,9 +441,9 @@ function UpdateGameOptionsDisplay(bUpdateOnly)
 	end
 
 	if PreGame.GetGameOption("GAMEOPTION_AI_GIMP_NO_DEALS") <= 0 then
-		Controls.AICannotHaveWealsWithHumansCheck:SetCheck( false );
+		if Controls.AICannotHaveWealsWithHumansCheck then Controls.AICannotHaveWealsWithHumansCheck:SetCheck( false ); end
 	else
-		Controls.AICannotHaveWealsWithHumansCheck:SetCheck( true );
+		if Controls.AICannotHaveWealsWithHumansCheck then Controls.AICannotHaveWealsWithHumansCheck:SetCheck( true ); end
 	end
 
 	if PreGame.GetGameOption("GAMEOPTION_AI_GIMP_NO_DEMOGRAPHICS") <= 0 then
@@ -1138,7 +1138,7 @@ function SetAIOptionsOption()
 	Controls.AICannotSpreadReligionHumansBox:SetHide( not isChecked );
 	Controls.AICannotVoteInCongressBox:SetHide( not isChecked );
 	Controls.AICannotBeLiberatedBox:SetHide( not isChecked );
-	Controls.AICannotHaveWealsWithHumansBox:SetHide( not isChecked );
+	if Controls.AICannotHaveWealsWithHumansBox then Controls.AICannotHaveWealsWithHumansBox:SetHide( not isChecked or not Controls.AICannotHaveWealsWithHumansCheck ); end
 	Controls.DisableAIDemographicsBox:SetHide( not isChecked );
 	Controls.NoAIStartAdvantageBox:SetHide( not isChecked );
 	Controls.NoPenaltyForExpansionBox:SetHide( not isChecked );
@@ -1327,20 +1327,24 @@ Controls.AICannotBeLiberatedCheck:RegisterCallback( Mouse.eLClick, OnAICannotBeL
 
 -------------------------------------------------
 -------------------------------------------------
+-- A shared frontend context can load without this optional checkbox during
+-- single-player reloads. Do not invent a value or change its game option.
 function SetAICannotHaveWealsWithHumansOption()
-	local isChecked = Controls.AICannotHaveWealsWithHumansCheck:IsChecked();
+ local control = Controls.AICannotHaveWealsWithHumansCheck;
+ if not control then return false; end
+ local isChecked = control:IsChecked();
 	PreGame.SetGameOption("GAMEOPTION_AI_GIMP_NO_DEALS", isChecked);
 
 	UpdateGameOptionsDisplay();
+ return true;
 end
 
 -------------------------------------------------
 -------------------------------------------------
 function OnAICannotHaveWealsWithHumansChecked()
-	SetAICannotHaveWealsWithHumansOption();
-	SendGameOptionChanged();
+	if SetAICannotHaveWealsWithHumansOption() then SendGameOptionChanged(); end
 end
-Controls.AICannotHaveWealsWithHumansCheck:RegisterCallback( Mouse.eLClick, OnAICannotHaveWealsWithHumansChecked );
+if Controls.AICannotHaveWealsWithHumansCheck then Controls.AICannotHaveWealsWithHumansCheck:RegisterCallback( Mouse.eLClick, OnAICannotHaveWealsWithHumansChecked ); end
 
 -------------------------------------------------
 -------------------------------------------------
