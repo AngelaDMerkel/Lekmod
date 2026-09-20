@@ -755,7 +755,7 @@ and immediate founding-event registration/routing. Native production modifiers
 and first-playable founding behavior are verified separately. All 26 civilization Lua files also pass the pinned Lua 5.1 syntax check.
 
 
-`test-unit-owner-boundaries.lua LEKMOD/Lua/Civilizations` runs 47 isolated
+`test-unit-owner-boundaries.lua LEKMOD/Lua/Civilizations` runs 57 isolated
 actual-handler cases using Lua 5.1 and the C++ event argument order: Swiss
 creation/movement promotions; Polynesian creation cleanup; New Zealand meeting
 rewards, Battalion influence and Defender city-radius/friendship filtering.

@@ -198,3 +198,25 @@ exact reload and affected-save recovery on the next ordinary owner turn when
 authorized to resume. Do not clear an earned start-of-turn effect merely because
 a ship moved farther away before saving/loading. Real zone-of-control movement
 and further owner boundaries remain separate checks.
+
+## Defender correction: native batch retest and reload
+
+The resumed single-process pilot `20260920T224820Z` (PID 45746) passed all five
+Defender assertions on the preserved Rome/Argentina friendship fixture. Owned
+and DoF-city distance two activated the promotion; both distance-three probes
+correctly remained inactive; far Defender/ordinary Ironclad controls remained
+unchanged. It used one ordinary turn. The run checkpoint SHA-256 is
+`be3fd61fe85c7af2d3cce873b61dce6095fb279bbdaf204be9eb13d21f665045`.
+
+An exact checkpoint reload in the same native process preserved all city,
+friendship, unit-position/movement and promotion fields. Reload checkpoint:
+`d431b6ad9ac3a26a28a5f2e478a678051a25dec7031eff57d24200edee843b98`.
+The process then passed Great Admiral repair and its reload before normal exit
+(0). All temporary hooks/settings and manual saves were preserved, with no
+Lua/synchronization errors or new diagnostics. The managed wrapper restored stock.
+
+The candidate Defender correction is now supported by the 57-case actual-handler
+suite (four pre-fix distance/stale-state failures), the native boundary retest
+and exact reload. It retains start-of-turn timing; real enemy-zone movement and
+recovery of an old affected save on its next owner turn remain additional cases.
+This evidence verifies the promotion boundary, not every Defender combat path.

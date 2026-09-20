@@ -92,6 +92,17 @@ end
 ------------------------------------------------------------------------------------------------------------------------
 -- New Zealand UU ironclad. Set a promotion that ignores ZoC on the unit if it is a near a friendly city.
 ------------------------------------------------------------------------------------------------------------------------
+-- The Defender's starting-turn range is two tiles. IsPlayerCityRadius uses
+-- the city's wider workable radius, so it also admits distance-three plots.
+local function lekmod_new_zealand_near_city(player, plot)
+   for city in player:Cities() do
+      if Map.PlotDistance(plot:GetX(), plot:GetY(), city:GetX(), city:GetY()) <= 2 then
+         return true
+      end
+   end
+   return false
+end
+
 function lekmod_new_zealand_uu_defender(player_id)
 
    local defender_promotion_zoc_id = GameInfoTypes["PROMOTION_JFD_DEFENDER_ACTIVE"]
@@ -106,7 +117,7 @@ function lekmod_new_zealand_uu_defender(player_id)
 		if (unit and (unit:IsHasPromotion(defender_promotion_zoc_id)
       or unit:IsHasPromotion(defender_promotion_default_id))) then
 			local plot = unit:GetPlot()
-			if plot and plot:IsPlayerCityRadius(player_id) then
+			if plot and lekmod_new_zealand_near_city(player, plot) then
             print("New Zealand UU defender is in city radius")
 				is_promotion_valid = true
 			elseif plot and not player:IsMinorCiv() then
@@ -114,7 +125,7 @@ function lekmod_new_zealand_uu_defender(player_id)
 					local loop_player = Players[loop_player_id]
 					if not loop_player:IsAlive() or loop_player_id == player_id then -- skip
                elseif loop_player:IsDoF(player_id) then
-                  if plot:IsPlayerCityRadius(loop_player_id) then
+                  if lekmod_new_zealand_near_city(loop_player, plot) then
                      is_promotion_valid = true
                      break
                   end

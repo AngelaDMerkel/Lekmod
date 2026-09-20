@@ -1562,3 +1562,12 @@ New Zealand Battalion influence now has native human/AI owner-turn evidence,
 normal-unit/unfriendly/unowned exclusions, foreign-owner checks and exact reload.
 A temporary read-only observer brackets the real callback; supplied friendship
 is explicitly separated from earned influence.
+
+
+### Defender range correction
+
+The [New Zealand report](macos-newzealand-validation.md) confirms and corrects
+a native distance-three activation despite the documented two-tile rule. The
+57-case handler suite, owned/DoF distance-two positives and distance-three
+negatives, ordinary/far controls, and exact same-process reload pass. The
+start-of-turn contract remains intact; real enemy-zone movement is separate.

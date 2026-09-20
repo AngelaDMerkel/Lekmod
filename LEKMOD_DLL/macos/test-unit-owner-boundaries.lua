@@ -9,9 +9,10 @@ local function iterator(values)
  local i=0;return function()i=i+1;return values[i]end
 end
 local function plot(owner,radii)
- local p={owner=owner or -1,radii=radii or {}}
+ local p={owner=owner or -1,radii=radii or {},x=0,y=0}
  function p:GetOwner()return self.owner end
- function p:IsPlayerCityRadius(id)return self.radii[id] or false end
+ function p:IsPlayerCityRadius(id)local v=self.radii[id];return v==true or(type(v)=="number"and v<=3)end
+ function p:GetX()return self.x end;function p:GetY()return self.y end
  return p
 end
 local function unit(id,promotions,p)
@@ -28,12 +29,13 @@ local function unit(id,promotions,p)
 end
 local function player(id,civ)
  local p={id=id,civ=civ or -1,alive=true,minor=false,barbarian=false,human=id==0,
- units={},friends={},influence={},friendshipLevel=0,faith=0,culture=0,gold=0,overflow=0,research=-1,team=id+7}
+ units={},cities={},friends={},influence={},friendshipLevel=0,faith=0,culture=0,gold=0,overflow=0,research=-1,team=id+7}
  function p:GetID()return self.id end;function p:GetName()return "Owner "..self.id end
  function p:GetCivilizationType()return self.civ end;function p:IsAlive()return self.alive end
  function p:IsMinorCiv()return self.minor end;function p:IsBarbarian()return self.barbarian end
  function p:IsHuman()return self.human end;function p:GetTeam()return self.team end
  function p:Units()return iterator(self.units)end
+ function p:Cities()return iterator(self.cities)end
  function p:GetUnitByID(id)for _,u in ipairs(self.units)do if u.id==id then return u end end end
  function p:IsDoF(id)assert(id<4,"friendship query used a non-major ID");return self.friends[id] or false end
  function p:GetMinorCivFriendshipLevelWithMajor(id)assert(id<4);return self.friendshipLevel end
@@ -53,6 +55,7 @@ local function fixture(file,active)
   e.Teams[p.team]={GetLeaderID=function()return id end,GetTeamTechs=function()return {
    ChangeResearchProgress=function(_,tech,n,owner)table.insert(e.researchAwards,{team=p.team,tech=tech,amount=n,owner=owner})end}end}
  end
+ e.Map={PlotDistance=function(x,y,cx,cy)return math.max(math.abs(x-cx),math.abs(y-cy),math.abs(x-cx+y-cy))end}
  e.GameDefines={MAX_MAJOR_CIVS=4}
  e.Game={GetActivePlayer=function()return 0 end}
  e.GameEvents=setmetatable({},{__index=function(_,name)return {Add=function(fn)
@@ -159,13 +162,14 @@ test("Battalion dead owner gets no reward",function()
 end)
 local function defender(owner,radii,friend)
  local e=fixture("newzealand",false);local u=unit(8192,{[106]=true},plot(-1,radii));e.Players[owner].units={u}
+ for id,value in pairs(radii)do if value then local distance=value==true and 2 or value;e.Players[id].cities={{GetX=function()return distance end,GetY=function()return 0 end}}end end
  if friend then e.Players[1].friends[owner]=true end;e:emit("PlayerDoTurn",owner);return e,u
 end
 test("Defender own-city radius toggles to active promotion",function()local _,u=defender(0,{[0]=true});assert(u:IsHasPromotion(105) and not u:IsHasPromotion(106))end)
 test("Defender living friend city radius enables bonus",function()local _,u=defender(0,{[1]=true},true);assert(u:IsHasPromotion(105))end)
 test("Defender foreign nonfriend city radius is excluded",function()local _,u=defender(0,{[1]=true});assert(not u:IsHasPromotion(105) and u:IsHasPromotion(106))end)
 test("Defender leaving radius restores default promotion",function()
- local e,u=defender(0,{[0]=true});u.plot.radii={};e:emit("PlayerDoTurn",0);assert(not u:IsHasPromotion(105) and u:IsHasPromotion(106))
+ local e,u=defender(0,{[0]=true});u.plot.radii={};u.plot.x=8;e:emit("PlayerDoTurn",0);assert(not u:IsHasPromotion(105) and u:IsHasPromotion(106))
 end)
 test("Defender losing friendship clears active promotion",function()
  local e,u=defender(0,{[1]=true},true);e.Players[1].friends[0]=false;e:emit("PlayerDoTurn",0);assert(not u:IsHasPromotion(105) and u:IsHasPromotion(106))
@@ -178,6 +182,18 @@ test("Defender minor outside own radius does not query major friendship",functio
 test("Defender barbarian owner is excluded",function()local _,u=defender(5,{[5]=true});assert(not u:IsHasPromotion(105))end)
 test("Defender unrelated unit is untouched",function()
  local e=fixture("newzealand");local u=unit(1,{},plot(-1,{[0]=true}));e.Players[0].units={u};e:emit("PlayerDoTurn",0);assert(u.writes==0)
+end)
+for _,distance in ipairs({0,1,2,3,4})do test("Defender exact own-city distance "..distance,function()
+ local _,u=defender(0,{[0]=distance});assert(u:IsHasPromotion(105)==(distance<=2))
+end)end
+test("Defender exact friendly-city distance three is excluded",function()local _,u=defender(0,{[1]=3},true);assert(not u:IsHasPromotion(105))end)
+test("Defender minor distance three is excluded",function()local _,u=defender(4,{[4]=3});assert(not u:IsHasPromotion(105))end)
+test("Defender AI distance two works",function()local _,u=defender(2,{[2]=2});assert(u:IsHasPromotion(105))end)
+test("Defender stale distance-three active flag clears",function()
+ local e,u=defender(0,{[0]=3});u.promotions[105]=true;u.promotions[106]=false;e:emit("PlayerDoTurn",0);assert(not u:IsHasPromotion(105)and u:IsHasPromotion(106))
+end)
+test("Defender nil plot does not activate or query cities",function()
+ local e=fixture("newzealand",false);local u=unit(1,{[106]=true});u.plot=nil;e.Players[0].units={u};e:emit("PlayerDoTurn",0);assert(not u:IsHasPromotion(105)and u:IsHasPromotion(106))
 end)
 for _,v in ipairs({{1,"faith",10},{2,"culture",6},{3,"overflow",12},{4,"gold",40}})do test("New Zealand meeting reward "..v[2],function()
  local e=fixture("newzealand");e.Players[0].civ=12;e.random=v[1];e:emit("TeamMeet",8,7)
