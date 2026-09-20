@@ -37,6 +37,12 @@ class BatchTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'duplicate'):self.load()
         self.raw['stages']=self.raw['stages'][:1];self.raw['stages'][0]['scenario']='not-reviewed'
         with self.assertRaisesRegex(ValueError,'Unsupported'):self.load()
+    def test_unprovided_ui_response_is_rejected_before_launch(self):
+        source=self.code/'playtest-scenario-inventory.lua'
+        source.write_text('LuaEvents.LekmodMissingResponse.Add(function()end)')
+        with self.assertRaisesRegex(ValueError,'Missing UI response adapter'):self.load()
+        source.write_text(source.read_text()+'\nLuaEvents.LekmodMissingResponse()')
+        self.assertEqual(len(self.load()['stages']),1)
     def test_total_turns_bound(self):
         row=self.raw['stages'][0];row['max_turns']=19
         self.raw['stages'].append({**row,'id':'two'})
@@ -86,6 +92,16 @@ class BatchTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'changed during batch'):
             s.update(self.event(r)+self.save(s,r),'abc')
         self.assertEqual(s.command,0)
+    def test_adapter_bridge_preserves_print_and_forwards_only_this_run(self):
+        root=Path(__file__).resolve().parents[2];interpreter=root/'build/macos/test-deps/lua-5.1.4/src/lua'
+        p=self.root/'bridge.lua'
+        setup='LuaEvents={LekmodBatchAssertion=function(item,status,detail)print("BRIDGE",item,status,detail)end}\n'
+        code='function callback()print("[LEKMOD_FUNCTIONAL] run=test item=cancel status=PASS original-detail");print("[LEKMOD_FUNCTIONAL] run=old item=cancel status=FAIL stale")end'
+        p.write_text(setup+batch.wrap_adapter(code).replace('__TEST_RUN__','test')+'callback()\n')
+        out=subprocess.check_output([str(interpreter),str(p)],text=True)
+        self.assertIn('run=test item=cancel status=PASS original-detail',out)
+        self.assertIn('BRIDGE\tcancel\tPASS\toriginal-detail',out)
+        self.assertEqual(out.count('BRIDGE'),1)
     def test_lua_serialization_roundtrips_utf8_and_escapes(self):
         root=Path(__file__).resolve().parents[2];interpreter=root/'build/macos/test-deps/lua-5.1.4/src/lua'
         value='quote"\\\nMāori\x00end';p=self.root/'literal.lua';p.write_text('io.write('+batch.lua(value)+')')

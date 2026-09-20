@@ -104,7 +104,7 @@ existing runner's restoration checks.
 
 ## Commissioning evidence
 
-Offline tests currently cover 13 supervisor/plan cases, 15 actual Lua dispatcher
+Offline tests currently cover 15 supervisor/plan cases, 17 actual Lua dispatcher
 cases and 33 existing/extended runner cases. The suite tests immutable fixture
 hashes, required save acknowledgements, sticky failures, callback cleanup,
 independent continuation, exact snapshot mismatches, turn limits, load-interval
@@ -124,3 +124,39 @@ terminated by cleanup; no normal exit is claimed.
 The next pilot launch was blocked before launch because the desktop was locked.
 Final pilot and full comprehensive execution must still be recorded. No new
 scheduled task was created.
+
+## Completed resumed pilot
+
+`20260920T224820Z` completed both scenarios and their exact checkpoint reloads
+in one native process (PID 45746), in 107.5 seconds. Nine functional assertions
+and two reload comparisons passed. The Defender stage used one ordinary turn;
+the Admiral stage used none. Normal exit (0), original settings/UI-hook/manual-save
+preservation, and no Lua/synchronization errors or new diagnostics were verified.
+The managed launcher restored stock successfully. Checkpoints and their hashes
+are recorded in that run's `batch-report.json`. This commissions the two-stage
+pilot; the full comprehensive run is being recorded separately.
+
+## Full-plan commissioning corrections
+
+The first comprehensive attempt, `20260920T225052Z` (PID 45975), preserved seven
+passing scenario/reload pairs before encountering batch-specific adapter gaps.
+City lifecycle and internal trade executed their cancellation checks, but those
+UI contexts printed verdicts directly rather than adding them to the stage ledger;
+the required stage assertions correctly remained failed. Great Works then stalled
+because its popup-closing adapter was missing from the batch map. The stall guard
+terminated the owned game; overall status remains `failed-stall`, native -9.
+Settings/hooks/manual saves were preserved, with no synchronization errors,
+Lua runtime errors or new diagnostics. The wrapper restored stock.
+
+Batch-specific UI adapters now forward their existing assertion prints through a
+scoped Lua event, retaining the original print and standalone behavior. Inactive
+completed stages ignore late reports; failures remain sticky. Great Works now
+includes its required popup adapter. Preflight checks that each test-only Lua
+response event subscribed to by a stage has a producer in its supplied adapters
+or source, catching this missing dependency before launch.
+
+New regressions cover external-UI assertion routing, failure retention, stale-run
+filtering and missing response adapters. The follow-up plan contains only the
+two failed and seven unfinished stages, using the original hashed fixtures;
+completed independent cases are not silently rerun or relabeled. Its results
+are recorded separately from the failed comprehensive attempt.

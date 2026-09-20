@@ -8,6 +8,7 @@ from pathlib import Path
 
 # Only scenarios with reviewed, compatible temporary adapters are admitted.
 HOOKS = {
+    'greatworks': {'@DLC/Expansion2/UI/InGame/Popups/GreatWorkPopup.lua': 'playtest-culture-great-work-popup.lua'},
     'newzealand-defender': {'Civilizations/Lekmod_newzealand.lua': 'playtest-nz-owner-observer.lua'},
     'newzealand-battalion': {'Civilizations/Lekmod_newzealand.lua': 'playtest-nz-owner-observer.lua'},
     'unit-utility': {'@UI/InGame/Popups/GenericPopup.lua': 'playtest-scenario-unit-confirm.lua'},
@@ -30,6 +31,19 @@ def lua(value):
     if isinstance(value, list): return '{' + ','.join(lua(v) for v in value) + '}'
     if isinstance(value, dict): return '{' + ','.join('['+lua(str(k))+']='+lua(v) for k,v in sorted(value.items())) + '}'
     raise ValueError('unsupported Lua value')
+
+def wrap_adapter(code):
+    # Route test assertions from separate UI contexts without changing product print().
+    return r'''do
+local originalPrint=print
+local function print(message,...)
+ originalPrint(message,...)
+ if type(message)=="string"then
+  local item,status,detail=string.match(message,"^%[LEKMOD_FUNCTIONAL%] run=__TEST_RUN__ item=(%S+) status=(%S+)%s*(.*)$")
+  if item then LuaEvents.LekmodBatchAssertion(item,status,detail)end
+ end
+end
+''' + code + '\nend\n'
 
 def load_plan(path, repo, items):
     source = json.loads(path.read_text())
@@ -57,6 +71,12 @@ def load_plan(path, repo, items):
             hooks[target]=adapter
         result.append(dict(id=ident,scenario=scenario,fixture=str(fixture),sha256=row['sha256'],max_turns=turns,
                            items=sorted(items[scenario]),code=code,source_sha256=sha(code_path)))
+    providers='\n'.join((repo/'LEKMOD_DLL/macos'/adapter).read_text() for adapter in set(hooks.values()))
+    for stage in result:
+        listeners=set(re.findall(r'LuaEvents\.(Lekmod\w+)\.Add',stage['code']))
+        emitters=set(re.findall(r'LuaEvents\.(Lekmod\w+)\s*\(',providers+'\n'+stage['code']))
+        missing=listeners-emitters
+        if missing:raise ValueError('Missing UI response adapter for '+stage['id']+': '+', '.join(sorted(missing)))
     if total>30: raise ValueError('Batch exceeds 30 total bounded functional turns; no long campaign')
     return dict(schema=1,name=source['name'],stages=result,hooks=hooks,max_turns=total)
 

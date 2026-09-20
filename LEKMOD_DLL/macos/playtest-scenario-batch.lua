@@ -84,6 +84,11 @@ local function checkpoint()
  emit("checkpoint",row)
  LuaEvents.LekmodFunctionalSave(name)
 end
+LuaEvents.LekmodBatchAssertion.Add(function(item,status,detail)
+ if current and current.active and current.mode=="run"then
+  current.env.LekmodScenarioRecord(item,status,detail)
+ end
+end)
 LuaEvents.LekmodBatchSaved.Add(function(name)
  if pendingSave==name then pendingSave=nil end
 end)

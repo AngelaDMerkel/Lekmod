@@ -724,7 +724,7 @@ def main():
         lua_root = base / "DLC/LEKMOD/Lua"
         for target, adapter in batch_plan["hooks"].items():
             path = base / target[1:] if target.startswith("@") else lua_root / target
-            ui_templates[path] = adapter
+            ui_templates[path] = "@batch-ui:" + adapter
         for name, adapter in (("LekmodBatchPlan.lua", "@batch-plan"), ("LekmodBatchControl.lua", "@batch-control")):
             path = lua_root / "UI" / name
             if path.exists():
@@ -864,7 +864,14 @@ def main():
                         "__TEST_TURNS__": str(args.turns + 2)}
         report["initial_ui_hooks"] = []
         for path, template in ui_templates.items():
-            code = (batch_session.plan_code() if template == "@batch-plan" else batch_session.initial_control() if template == "@batch-control" else Path(__file__).with_name(template).read_text())
+            if template == "@batch-plan":
+                code = batch_session.plan_code()
+            elif template == "@batch-control":
+                code = batch_session.initial_control()
+            elif template.startswith("@batch-ui:"):
+                code = playtest_batch.wrap_adapter(Path(__file__).with_name(template.split(":", 1)[1]).read_text())
+            else:
+                code = Path(__file__).with_name(template).read_text()
             for key, value in replacements.items():
                 code = code.replace(key, value)
             contents = (ui_backups[path] or b"") + b"\n" + code.encode()
