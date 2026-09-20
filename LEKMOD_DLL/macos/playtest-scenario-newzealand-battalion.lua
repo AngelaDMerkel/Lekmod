@@ -23,7 +23,7 @@ local function input(owner,landOwner,kind,typeID)
  LekmodScenarioEvent("fixture-setup",{operation="provided-Battalion-control-unit",owner=owner,kind=kind,state=unitState(u)})
  return u
 end
-GameEvents.PlayerDoTurn.Add(function(owner)
+LuaEvents.LekmodNZBeforeOwnerTurn.Add(function(owner)
  if not friend or(owner~=0 and owner~=1)then return end
  local ok,e=pcall(function()
   if owner==1 and AIpending then

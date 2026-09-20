@@ -220,3 +220,10 @@ suite (four pre-fix distance/stale-state failures), the native boundary retest
 and exact reload. It retains start-of-turn timing; real enemy-zone movement and
 recovery of an old affected save on its next owner turn remain additional cases.
 This evidence verifies the promotion boundary, not every Defender combat path.
+
+The dynamic batch's Battalion ordering assumption was corrected separately from
+gameplay: test-only signals now bracket the real product registrations, so a
+late stage can observe the actual before/after states. Targeted batch
+`20260920T233452Z` passed all four Battalion checks and exact reload, with normal
+exit (0), complete cleanup and no Lua/sync errors or diagnostics. The failed
+Battalion verdict in full batch `231930Z` remains unchanged; see the batch guide.

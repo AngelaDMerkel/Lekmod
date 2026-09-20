@@ -875,6 +875,13 @@ def main():
             for key, value in replacements.items():
                 code = code.replace(key, value)
             contents = (ui_backups[path] or b"") + b"\n" + code.encode()
+            adapter_name = template.split(":", 1)[1] if template.startswith("@batch-ui:") else template
+            prefix_name = playtest_batch.PREFIXES.get(adapter_name)
+            if prefix_name:
+                prefix = Path(__file__).with_name(prefix_name).read_text()
+                for key, value in replacements.items():
+                    prefix = prefix.replace(key, value)
+                contents = prefix.encode() + b"\n" + contents
             hook = preserve_injected_ui(output, APP, path, contents)
             report["initial_ui_hooks"].append({**hook, "adapter": template})
             path.write_bytes(contents)

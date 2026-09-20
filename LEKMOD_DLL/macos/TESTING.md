@@ -1064,7 +1064,7 @@ no RNG/tech-completion flag is assigned.
 
 `newzealand-battalion` uses the two-Rome/two-city-state saved fixture. Supplied
 units and standing are measured immediately before/after the actual PlayerDoTurn
-handler via a temporary read-only observer appended after real registrations.
+handler via a temporary read-only observers placed before and after real registrations.
 Human two-unit and AI one-unit influence, normal-unit/unfriendly/unowned controls
 and foreign owners are distinct checks; no product handler is called manually.
 The runner restores the original civilization script. Exact unit/influence
@@ -1076,3 +1076,9 @@ checkbox controls. The missing-control path must preserve the game option and
 suppress its change notification; present controls retain normal behavior.
 The shared frontend script can initialize during single-player reloads. These
 checks do not establish multiplayer lobby or gameplay support.
+
+The New Zealand observer adapter has an explicit prefix and suffix. The prefix
+emits a test-only before-owner-turn signal ahead of the product registrations;
+the suffix emits the after signal. This preserves ordering when a batch stage
+subscribes after world initialization. The runner restores the original product
+file bytes. Gameplay handlers are still dispatched only by the native engine.

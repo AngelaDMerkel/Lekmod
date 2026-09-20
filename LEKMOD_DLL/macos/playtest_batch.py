@@ -16,6 +16,8 @@ HOOKS = {
     'trade-internal': {'UI/ChooseInternationalTradeRoutePopup.lua': 'playtest-scenario-trade-popup.lua', '@DLC/Expansion2/UI/InGame/Popups/ChooseTradeUnitNewHome.lua': 'playtest-scenario-trade-home-popup.lua'},
     'religion-benefits': {'UI/ProductionPopup.lua': 'playtest-scenario-purchase-popup.lua'},
 }
+PREFIXES = {'playtest-nz-owner-observer.lua': 'playtest-nz-owner-before-observer.lua'}
+
 SUPPORTED = set(HOOKS) | {'inventory', 'admiral-repair', 'worker', 'unit-actions', 'great-person-builds', 'budget-settlement', 'nuclear', 'air-operations', 'greatworks', 'trade-tooltip', 'trade-countdown', 'nabatea-farms', 'nabatea-tomb', 'newzealand-science-completion'}
 
 def sha(path):
@@ -71,7 +73,8 @@ def load_plan(path, repo, items):
             hooks[target]=adapter
         result.append(dict(id=ident,scenario=scenario,fixture=str(fixture),sha256=row['sha256'],max_turns=turns,
                            items=sorted(items[scenario]),code=code,source_sha256=sha(code_path)))
-    providers='\n'.join((repo/'LEKMOD_DLL/macos'/adapter).read_text() for adapter in set(hooks.values()))
+    adapters=set(hooks.values());adapters.update(PREFIXES[a]for a in list(adapters)if a in PREFIXES)
+    providers='\n'.join((repo/'LEKMOD_DLL/macos'/adapter).read_text() for adapter in adapters)
     for stage in result:
         listeners=set(re.findall(r'LuaEvents\.(Lekmod\w+)\.Add',stage['code']))
         emitters=set(re.findall(r'LuaEvents\.(Lekmod\w+)\s*\(',providers+'\n'+stage['code']))

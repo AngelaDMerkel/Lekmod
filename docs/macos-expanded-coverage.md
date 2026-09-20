@@ -1571,3 +1571,14 @@ a native distance-three activation despite the documented two-tile rule. The
 57-case handler suite, owned/DoF distance-two positives and distance-three
 negatives, ordinary/far controls, and exact same-process reload pass. The
 start-of-turn contract remains intact; real enemy-zone movement is separate.
+
+
+### Longer single-process batch coverage
+
+The [batch guide](macos-batch-testing.md) records 16 scheduled scenarios with
+81 functional checks and 16 exact checkpoint reloads. Fifteen pairs passed in
+one 783.8-second native process; the final Battalion pair passed in an 83.2-second
+targeted run after fixing test-observer order. All planned checks now have scoped
+passing evidence, while the original failed full-run verdict is retained.
+The suite remains scripted native gameplay/query/callback coverage, not new
+physical mouse, multiplayer or complete 114-civilization certification.

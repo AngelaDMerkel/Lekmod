@@ -29,14 +29,14 @@ python3 LEKMOD_DLL/macos/batch-playtest.py --plan comprehensive --minutes 60
 ```
 
 From stock, the optional managed-package mode installs this preserved candidate
-and restores stock in its cleanup. The candidate contains the pending Defender
-correction; its wider native verification remains in progress:
+and restores stock in its cleanup. The identified intermediate package contains the verified Defender correction
+and optional-control reload guard:
 
 ```sh
 python3 LEKMOD_DLL/macos/batch-playtest.py \
   --plan comprehensive --minutes 60 \
-  --package build/macos/Lekmod-defender-radius-20260919.zip \
-  --sha256 c12bf01668c657ddea481c4f265b0ce12bc98490ca9bf92fad32c2c1c966db94
+  --package build/macos/Lekmod-optional-control-20260920.zip \
+  --sha256 f054823b392cd282e7635a475e65b91fe3240b35f29cdfa8e0d3adfe224bd21e
 ```
 
 Steam must already be signed in, Civ V must be closed and the local desktop must
@@ -104,7 +104,7 @@ existing runner's restoration checks.
 
 ## Commissioning evidence
 
-Offline tests currently cover 15 supervisor/plan cases, 17 actual Lua dispatcher
+Offline tests currently cover 15 supervisor/plan cases, 18 actual Lua dispatcher
 cases and 33 existing/extended runner cases. The suite tests immutable fixture
 hashes, required save acknowledgements, sticky failures, callback cleanup,
 independent continuation, exact snapshot mismatches, turn limits, load-interval
@@ -160,3 +160,38 @@ filtering and missing response adapters. The follow-up plan contains only the
 two failed and seven unfinished stages, using the original hashed fixtures;
 completed independent cases are not silently rerun or relabeled. Its results
 are recorded separately from the failed comprehensive attempt.
+
+## Latest full-plan and targeted results
+
+`20260920T231930Z` ran all 16 stages in one process (PID 47872) in 783.8 seconds
+with package `f054823b…bd21e`. Fifteen stages, containing 77 planned functional
+checks, and all fifteen corresponding exact reloads passed. The process exited
+normally (0), and settings, temporary hooks and manual saves were preserved.
+There were no Lua runtime errors, synchronization failures or new diagnostics.
+The optional shared-options UI guard is documented in
+[its validation report](macos-optional-options-control.md).
+
+The overall full-run verdict remains FAIL because Battalion's test-only before
+observer was registered after the gameplay handler when loaded dynamically.
+Its one-turn limit correctly prevented extending the test to hide that ordering
+problem. The harness now prepends a before signal ahead of the actual product
+registrations and appends the existing after signal. Stage observers subscribe
+to those signals; they never call the product handler themselves. A regression
+executes the real prefix/suffix observers with late stage registration and checks
+both their order and removal of stage listeners.
+
+Targeted batch `20260920T233452Z` (PID 49644) passed Battalion's four functional
+checks and exact reload in 83.2 seconds, with one ordinary turn. Normal exit (0),
+settings/hooks/manual-save preservation and no Lua/sync errors or diagnostics
+were verified. The managed wrapper restored stock after both attempts.
+
+All **81 planned functional checks and 16 reload comparisons now have passing
+evidence** on the same product package, using the full run plus this targeted
+harness retest. This is not described as one untouched all-green 16-stage run:
+the full report retains its failed Battalion verdict, and the targeted result is
+separate. No passed reports or snapshots were rewritten.
+
+Current offline batch coverage is 15 supervisor cases, 18 dispatcher cases and
+33 runner cases. The separate optional-control product regression has 64 cases,
+and all nine UI assembly checks pass. The original single-player completion
+ledger still has broader civilization and system gaps.
