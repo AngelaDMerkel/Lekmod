@@ -15,6 +15,12 @@ spec.loader.exec_module(playtest)
 
 
 class PlaytestEvidenceTests(unittest.TestCase):
+    def test_load_epoch_with_zero_completed_turns_has_safe_progress_record(self):
+        record = playtest.turn_progress_record({"completed_turns": [], "turn_discontinuities": []})
+        self.assertEqual(record["completed_count"], 0)
+        self.assertIsNone(record["latest_turn"])
+        self.assertEqual(record["turn_discontinuities"], [])
+
     def test_exit_classification_waits_for_actual_process_status(self):
         self.assertIsNone(playtest.process_exit_status("ui-interaction",None))
         self.assertIsNone(playtest.process_exit_status("single-player-smoke",None))

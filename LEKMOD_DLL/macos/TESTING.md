@@ -5,6 +5,16 @@ this user's tests. [Validation status](../../docs/macos-validation.md) records
 what actually passed and what remains untested. These tools are not a full-port
 certification suite or part of the installed mod UI.
 
+## Multi-scenario batches
+
+Use [the batch operator guide](../../docs/macos-batch-testing.md) for longer runs.
+`batch-playtest.py --preflight-only` validates the comprehensive plan's 16 stages,
+81 functional assertions, 16 reload checks and 28-turn aggregate cap. The default
+run budget is 60 minutes. Each stage uses an independent hashed fixture and its
+own checkpoint; fixture loads stay in one native process. Commissioning limits
+and retained pilot failures are recorded in the guide. Do not infer that the full
+batch has passed merely from successful preflight or isolated scenario evidence.
+
 ## Offline checks (do not launch the game)
 
 From the repository root, with Python 3 and Xcode Command Line Tools:

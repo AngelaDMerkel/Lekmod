@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "name": "naval-pilot",
+  "stages": [
+    {
+      "id": "defender",
+      "scenario": "newzealand-defender",
+      "fixture": "build/macos/playtests/20260916T105738Z/Lekmod-Functional-20260916T105738Z.Civ5Save",
+      "sha256": "4257141f236b0c8e43c1216b0f2b5a5b492a8bbb5e9d5f43606fef07177901a0",
+      "max_turns": 2
+    },
+    {
+      "id": "admiral",
+      "scenario": "admiral-repair",
+      "fixture": "build/macos/playtests/20260918T101851Z/Lekmod-Functional-20260918T101851Z.Civ5Save",
+      "sha256": "2a0c33f643d2d13ac839392a4cada955eec4caa17ac4dd255ca8dab8d89a0d6d",
+      "max_turns": 0
+    }
+  ]
+}

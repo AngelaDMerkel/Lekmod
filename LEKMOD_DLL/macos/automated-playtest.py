@@ -15,6 +15,7 @@ import re
 import shutil
 import subprocess
 import time
+import playtest_batch
 
 
 DATA = Path.home() / "Library/Application Support/Sid Meier's Civilization 5"
@@ -126,6 +127,13 @@ def localization_startup_failure(database_text):
              "no such table: Languages" in database_text))
 
 
+def turn_progress_record(state):
+    turns = state["completed_turns"]
+    return {"event": "turn-progress", "completed_count": len(turns),
+            "latest_turn": turns[-1] if turns else None,
+            "turn_discontinuities": state["turn_discontinuities"]}
+
+
 def process_exit_status(mode, returncode):
     # pgrep can lose a terminating process before Popen has its exit status.
     # An unavailable status is still pending, not an early-exit failure.
@@ -151,7 +159,7 @@ def human_turn_results(text):
 FUNCTIONAL_ITEMS = {"script-data", "science-overflow", "unit-position-flags", "city-focus", "avoid-growth", "tech-tree",
                     "production-unit", "production-building", "production-wonder", "production-process"}
 PRODUCTION_COMPLETION_ITEMS = {"production-completion-unit", "production-completion-building"}
-SCENARIO_ITEMS = {"inventory": {"system-inventory"},
+SCENARIO_ITEMS = {"batch": {"batch-complete"}, "inventory": {"system-inventory"},
                   "ideology-inventory": {"ideology-input-inventory"},
                   "setup": {"setup-configuration", "setup-options", "setup-two-human-turns"},
                   "uae-raider": {"uae-sea-plunder", "uae-raider-experience", "uae-raider-movement"},
@@ -174,6 +182,7 @@ SCENARIO_ITEMS = {"inventory": {"system-inventory"},
                   "philippines-gerilya-return": {"gerilya-normal-disembark", "gerilya-land-move-boundary"},
                   "oman-minaa": {"minaa-enemy-sea", "minaa-embarked", "minaa-lethal-stack", "minaa-own-land-distance-controls"},
                   "ottoman-promotions": {"ottoman-human-first", "ottoman-human-second", "ottoman-AI-faith", "promotion-other-owner-no-faith"},
+                  "newzealand-defender": {"Defender-own-two", "Defender-own-three-rejected", "Defender-friend-two", "Defender-friend-three-rejected", "Defender-far-and-normal-controls"},
                   "newzealand-battalion": {"Battalion-human-friendly", "Battalion-AI-friendly", "Battalion-negative-controls", "Battalion-foreign-owners"},
                   "newzealand-science-completion": {"NZ-science-completion", "NZ-completion-overflow", "NZ-completed-contact-no-repeat"},
                   "newzealand-research": {"valid-distinct-player-colors", "NZ-movement-first-contact", "NZ-both-owner-rewards", "NZ-native-reward-branches", "NZ-meeting-no-repeat", "NZ-Roman-no-reward", "NZ-selected-research-science"},
@@ -437,7 +446,20 @@ def main():
     parser.add_argument("--trace-loaded-libraries", action="store_true", help="Record dyld image loading in the test process log for startup diagnosis")
     parser.add_argument("--activation-only", action="store_true", help="Startup diagnostic control: retain background activation guard without syscall/stream observers or a log-flush timer")
     parser.add_argument("--expected-state", type=Path, help="Verify the saved-state fingerprint from an earlier --save-and-exit report before any functional mutations")
+    parser.add_argument("--batch-plan", type=Path, help="Reviewed multi-fixture single-process test plan")
     args = parser.parse_args()
+    batch_plan = None
+    if args.batch_plan:
+        try:
+            batch_plan = playtest_batch.load_plan(args.batch_plan, REPO, SCENARIO_ITEMS)
+        except (ValueError, KeyError, OSError) as error:
+            parser.error(str(error))
+        if args.mode != "single-player-smoke" or args.scenario != "batch" or args.expected_state or not args.save_and_exit or not args.load_save or args.timeout > 3600 or args.scenario_turns != 30:
+            parser.error("Batch requires smoke mode, scenario batch, first fixture, save-and-exit, scenario-turns 30, no expected-state, timeout <=3600")
+        if args.load_save.resolve() != Path(batch_plan["stages"][0]["fixture"]):
+            parser.error("Batch load-save must match the first hashed fixture")
+    elif args.scenario == "batch":
+        parser.error("Batch scenario requires --batch-plan")
     if len(dict(args.game_option)) != len(args.game_option):
         parser.error("Do not specify a game option more than once")
     if len(dict(args.slot_civilization)) != len(args.slot_civilization):
@@ -468,7 +490,7 @@ def main():
         parser.error("Foreground UI tests require --mode ui-interaction or single-player-smoke and --timeout at most 3600; the flag does not grant user permission")
     if args.production_completion and (args.mode != "human-turns" or args.turns != 3 or not args.load_save or args.timeout > 600):
         parser.error("Production completion requires --mode human-turns, --turns 3, --load-save and --timeout at most 600")
-    if args.scenario and (args.mode != "single-player-smoke" or (not args.load_save and args.scenario not in ("congress", "endgame", "bolivia", "mughals", "worker", "buganda-lake", "georgia", "georgia-upgrade", "cuba-greatworks", "cuba-ideology", "diplomacy-assets", "palmyra", "venice", "venice-known-compass", "italy", "setup", "uae-raider", "aksum-heal-domain", "budget-settlement", "mexico-discovery", "phoenicia-founding", "philippines-founding", "oman-minaa", "ottoman-promotions", "tonga-vision", "maori-movement", "maori-era", "cuba-capital", "moors-founding", "kilwa-routes", "kilwa-sea-plunder", "polynesia-upgrade", "nabatea-disband", "nabatea-discovery", "nabatea-farms", "zabonah-ai-minor", "newzealand-meeting", "newzealand-research")) or args.city_controls or args.timeout > 1800):
+    if args.scenario and (args.mode != "single-player-smoke" or (not args.load_save and args.scenario not in ("congress", "endgame", "bolivia", "mughals", "worker", "buganda-lake", "georgia", "georgia-upgrade", "cuba-greatworks", "cuba-ideology", "diplomacy-assets", "palmyra", "venice", "venice-known-compass", "italy", "setup", "uae-raider", "aksum-heal-domain", "budget-settlement", "mexico-discovery", "phoenicia-founding", "philippines-founding", "oman-minaa", "ottoman-promotions", "tonga-vision", "maori-movement", "maori-era", "cuba-capital", "moors-founding", "kilwa-routes", "kilwa-sea-plunder", "polynesia-upgrade", "nabatea-disband", "nabatea-discovery", "nabatea-farms", "zabonah-ai-minor", "newzealand-meeting", "newzealand-research")) or args.city_controls or args.timeout > (3600 if batch_plan else 1800)):
         parser.error("Scenarios require --mode single-player-smoke, --load-save (except congress/endgame/bolivia/mughals/worker/buganda-lake/georgia/georgia-upgrade/cuba-greatworks/cuba-ideology/diplomacy-assets/palmyra/venice/venice-known-compass/italy/setup/uae-raider/aksum-heal-domain/budget-settlement/mexico-discovery/phoenicia-founding/philippines-founding/oman-minaa/ottoman-promotions/tonga-vision/maori-movement/maori-era/cuba-capital/moors-founding/kilwa-routes/kilwa-sea-plunder/polynesia-upgrade/nabatea-disband/nabatea-discovery/nabatea-farms/zabonah-ai-minor/newzealand-meeting/newzealand-research), no --city-controls and --timeout at most 1800")
     if args.scenario == "endgame" and (args.load_save or args.expected_state or args.save_and_exit or args.scenario_turns != 2):
         parser.error("Endgame requires a new two-turn scenario, without save/reload options")
@@ -618,7 +640,7 @@ def main():
                 if helper.exists():
                     raise SystemExit("Temporary New Zealand meeting module already exists")
                 ui_templates[helper] = "playtest-scenario-newzealand-meeting.lua"
-            if args.scenario == "newzealand-battalion":
+            if args.scenario in ("newzealand-battalion", "newzealand-defender"):
                 ui_templates[ui_dir.parent / "Civilizations/Lekmod_newzealand.lua"] = "playtest-nz-owner-observer.lua"
             if args.scenario == "unit-owners":
                 ui_templates[ui_dir.parent / "Lekmod_units.lua"] = "playtest-scenario-unit-owner-observer.lua"
@@ -695,6 +717,20 @@ def main():
                 ui_templates[path] = "playtest-trade.lua"
             elif path.name == "DiscussionDialog.lua":
                 ui_templates.setdefault(path, "playtest-discussion.lua")
+    batch_session = None
+    if batch_plan:
+        batch_session = playtest_batch.Session(batch_plan, output, APP, DATA, stamp)
+        base = APP / "Contents/Assets/Assets"
+        lua_root = base / "DLC/LEKMOD/Lua"
+        for target, adapter in batch_plan["hooks"].items():
+            path = base / target[1:] if target.startswith("@") else lua_root / target
+            ui_templates[path] = adapter
+        for name, adapter in (("LekmodBatchPlan.lua", "@batch-plan"), ("LekmodBatchControl.lua", "@batch-control")):
+            path = lua_root / "UI" / name
+            if path.exists():
+                raise SystemExit("Temporary batch file already exists: " + str(path))
+            ui_templates[path] = adapter
+        ui_templates[base / "UI/InGame/Menus/SaveMenu.lua"] = "playtest-batch-save-menu.lua"
     ui_backups = {path: path.read_bytes() if path.exists() else None for path in ui_templates}
     for path, data in ui_backups.items():
         relative = path.relative_to(APP)
@@ -828,7 +864,7 @@ def main():
                         "__TEST_TURNS__": str(args.turns + 2)}
         report["initial_ui_hooks"] = []
         for path, template in ui_templates.items():
-            code = Path(__file__).with_name(template).read_text()
+            code = (batch_session.plan_code() if template == "@batch-plan" else batch_session.initial_control() if template == "@batch-control" else Path(__file__).with_name(template).read_text())
             for key, value in replacements.items():
                 code = code.replace(key, value)
             contents = (ui_backups[path] or b"") + b"\n" + code.encode()
@@ -875,15 +911,13 @@ def main():
                 if len(raw) < offset:
                     offset = 0
                 current_text = raw[offset:].decode(errors="replace")
-            state = summarize(current_text)
+            state = summarize(batch_session.epoch_text(current_text) if batch_session else current_text)
             if state["last_record"] and not engine_started:
                 engine_started = True
                 last_progress = time.monotonic()
             count = len(state["completed_turns"])
             if count != previous_count:
-                print(json.dumps({"event": "turn-progress", "completed_count": count,
-                                  "latest_turn": state["completed_turns"][-1],
-                                  "turn_discontinuities": state["turn_discontinuities"]}), flush=True)
+                print(json.dumps(turn_progress_record(state)), flush=True)
                 last_progress = time.monotonic()
                 previous_count = count
                 held_reason = None
@@ -906,6 +940,25 @@ def main():
                 break
             lua_path = logs / "Lua.log"
             current_lua = lua_path.read_text(errors="replace") if lua_path.exists() else ""
+            if batch_session:
+                current_lua = batch_session.collect(current_lua)
+                try:
+                    batch_progress = batch_session.update(current_lua, current_text)
+                except (ValueError, OSError) as error:
+                    report["status"] = "failed-batch-protocol"
+                    report["batch_error"] = str(error)
+                    break
+                if batch_progress:
+                    last_progress = time.monotonic()
+                    report["batch"] = {"index": batch_session.index, "mode": batch_session.mode, "complete": batch_session.done, "failed": batch_session.failed}
+                    (output / "run-state.json").write_text(json.dumps({**report, **state}, indent=2) + "\n")
+                    print(json.dumps({"event": "batch-progress", **report["batch"]}), flush=True)
+                if re.search(r"run=" + re.escape(stamp) + r" item=(?:batch-save|scenario-batch) status=FAIL", current_lua):
+                    report["status"] = "failed-batch-driver"
+                    break
+                if "Runtime Error:" in current_lua:
+                    report["status"] = "failed-lua-runtime-error"
+                    break
             recent_lua = current_lua[-16384:]
             if args.production_completion:
                 completion = production_completion_results(recent_lua, stamp)
@@ -930,17 +983,17 @@ def main():
                         report.setdefault("panel_captures", {})[panel] = success
                 functional = functional_results(current_lua, stamp, required_functional_items)
                 report["functional_checks"] = functional
-                if functional["failed"] or functional["complete"]:
+                if (functional["failed"] or functional["complete"]) and (not batch_session or batch_session.done):
                     report["status"] = ("passed-available-functional-checks-only" if functional["verified"]
                                         else "failed-functional-checks")
                     if args.scenario and functional["verified"]:
                         report["status"] = "passed-scenario-reload-only" if args.expected_state else "passed-scenario-checks-only"
-                    if (not args.save_and_exit and args.scenario not in ("endgame", "science-launch", "domination", "culture-launch", "diplo-victory-launch")) or functional["failed"]:
+                    if (not args.save_and_exit and args.scenario not in ("endgame", "science-launch", "domination", "culture-launch", "diplo-victory-launch")) or (functional["failed"] and not batch_session):
                         break
                     returncode = game_process.poll()
                     if returncode is not None:
                         exited_normally = returncode == 0
-                        saved = generated_save.is_file() and generated_save.stat().st_size > 0
+                        saved = bool(batch_session.results) if batch_session else generated_save.is_file() and generated_save.stat().st_size > 0
                         confirmed = "run=" + stamp + " event=exit-confirmed" in recent_lua
                         report["normal_exit_verified"] = exited_normally and confirmed
                         if args.save_and_exit:
@@ -1067,7 +1120,7 @@ def main():
             report["status"] = "failed-synchronization-check"
         if args.mode in ("human-turns", "single-player-smoke", "ui-interaction"):
             lua_log = logs / "Lua.log"
-            lua_text = lua_log.read_text(errors="replace") if lua_log.exists() else ""
+            lua_text = (batch_session.collect(lua_log.read_text(errors="replace") if lua_log.exists() else "") if batch_session else lua_log.read_text(errors="replace") if lua_log.exists() else "")
             report["human_test_records"] = [line.strip() for line in lua_text.splitlines()
                                              if "[LEKMOD_TEST]" in line]
             report["lua_runtime_errors"] = [line.strip() for line in lua_text.splitlines()
@@ -1122,6 +1175,12 @@ def main():
         for path in new_reports:
             if path.is_file():
                 shutil.copy2(path, output / path.name)
+        if batch_session:
+            batch_session.persist(report["status"])
+            report["batch_results"] = batch_session.results
+            report["batch_complete"] = batch_session.done
+            if not batch_session.done and report["status"].startswith("passed"):
+                report["status"] = "failed-incomplete-batch"
         (output / "report.json").write_text(json.dumps(report, indent=2) + "\n")
         (output / "run-state.json").write_text(json.dumps(report, indent=2) + "\n")
         print(json.dumps(report, indent=2), flush=True)

@@ -1,0 +1,118 @@
+{
+  "schema": 1,
+  "name": "comprehensive-single-player",
+  "stages": [
+    {
+      "id": "defender",
+      "scenario": "newzealand-defender",
+      "fixture": "build/macos/playtests/20260916T105738Z/Lekmod-Functional-20260916T105738Z.Civ5Save",
+      "sha256": "4257141f236b0c8e43c1216b0f2b5a5b492a8bbb5e9d5f43606fef07177901a0",
+      "max_turns": 2
+    },
+    {
+      "id": "admiral",
+      "scenario": "admiral-repair",
+      "fixture": "build/macos/playtests/20260918T101851Z/Lekmod-Functional-20260918T101851Z.Civ5Save",
+      "sha256": "2a0c33f643d2d13ac839392a4cada955eec4caa17ac4dd255ca8dab8d89a0d6d",
+      "max_turns": 0
+    },
+    {
+      "id": "worker",
+      "scenario": "worker",
+      "fixture": "build/macos/playtests/20260916T010732Z/autosaves-after/AutoSave_Initial_0000 BC-4000.Civ5Save",
+      "sha256": "aa09bfd5c2997956596efd071f276766806742f07b0bc5133203072e3121c399",
+      "max_turns": 9
+    },
+    {
+      "id": "unit-actions",
+      "scenario": "unit-actions",
+      "fixture": "build/macos/playtests/20260914T030822Z/Lekmod-Functional-20260914T030822Z.Civ5Save",
+      "sha256": "c2ca4e6c8c3a16ae7b6e7ed3294df1d2f733d8f815d43c820090302328ad95ea",
+      "max_turns": 7
+    },
+    {
+      "id": "great-person-builds",
+      "scenario": "great-person-builds",
+      "fixture": "build/macos/playtests/20260916T094500Z/Lekmod-Functional-20260916T094500Z.Civ5Save",
+      "sha256": "06c02596f0897494dd5ebbb80dc365fb6f57775607fda8c21b1bf5755386292c",
+      "max_turns": 0
+    },
+    {
+      "id": "unit-utility",
+      "scenario": "unit-utility",
+      "fixture": "build/macos/playtests/20260914T030822Z/Lekmod-Functional-20260914T030822Z.Civ5Save",
+      "sha256": "c2ca4e6c8c3a16ae7b6e7ed3294df1d2f733d8f815d43c820090302328ad95ea",
+      "max_turns": 0
+    },
+    {
+      "id": "city-lifecycle",
+      "scenario": "city-basics",
+      "fixture": "build/macos/playtests/20260914T030822Z/Lekmod-Functional-20260914T030822Z.Civ5Save",
+      "sha256": "c2ca4e6c8c3a16ae7b6e7ed3294df1d2f733d8f815d43c820090302328ad95ea",
+      "max_turns": 4
+    },
+    {
+      "id": "budget",
+      "scenario": "budget-settlement",
+      "fixture": "build/macos/playtests/20260918T065530Z/autosaves-after/AutoSave_Initial_0000 BC-4000.Civ5Save",
+      "sha256": "4fabad2f06fb5820f911ee14d0e45bf00fa84426699c9a1d60d6a1d63c6bc274",
+      "max_turns": 3
+    },
+    {
+      "id": "internal-trade",
+      "scenario": "trade-internal",
+      "fixture": "build/macos/playtests/20260914T030822Z/Lekmod-Functional-20260914T030822Z.Civ5Save",
+      "sha256": "c2ca4e6c8c3a16ae7b6e7ed3294df1d2f733d8f815d43c820090302328ad95ea",
+      "max_turns": 1
+    },
+    {
+      "id": "greatworks",
+      "scenario": "greatworks",
+      "fixture": "build/macos/playtests/20260914T030822Z/Lekmod-Functional-20260914T030822Z.Civ5Save",
+      "sha256": "c2ca4e6c8c3a16ae7b6e7ed3294df1d2f733d8f815d43c820090302328ad95ea",
+      "max_turns": 0
+    },
+    {
+      "id": "air",
+      "scenario": "air-operations",
+      "fixture": "build/macos/playtests/20260914T030822Z/Lekmod-Functional-20260914T030822Z.Civ5Save",
+      "sha256": "c2ca4e6c8c3a16ae7b6e7ed3294df1d2f733d8f815d43c820090302328ad95ea",
+      "max_turns": 0
+    },
+    {
+      "id": "nuclear",
+      "scenario": "nuclear",
+      "fixture": "build/macos/playtests/20260918T101851Z/Lekmod-Functional-20260918T101851Z.Civ5Save",
+      "sha256": "2a0c33f643d2d13ac839392a4cada955eec4caa17ac4dd255ca8dab8d89a0d6d",
+      "max_turns": 0
+    },
+    {
+      "id": "religion",
+      "scenario": "religion-benefits",
+      "fixture": "build/macos/playtests/20260916T092352Z/Lekmod-Functional-20260916T092352Z.Civ5Save",
+      "sha256": "d1af3d1cc0266cbe788fe8b797b90eb64dcf87aa81449feb635132d0d1dbf08d",
+      "max_turns": 0
+    },
+    {
+      "id": "nabatea-farms",
+      "scenario": "nabatea-farms",
+      "fixture": "build/macos/playtests/20260919T094938Z/autosaves-after/AutoSave_Initial_0000 BC-4000.Civ5Save",
+      "sha256": "5e42a17876bc4a8b16fc829ff69ee421a57001ef12b0e382d98d796208c7c0d7",
+      "max_turns": 0
+    },
+    {
+      "id": "nabatea-tomb",
+      "scenario": "nabatea-tomb",
+      "fixture": "build/macos/playtests/20260919T112824Z/Lekmod-Functional-20260919T112824Z.Civ5Save",
+      "sha256": "657f211bf826d642c1fb4df9393039231190ee3bd811eb56ed5832335ff410d5",
+      "max_turns": 1
+    },
+    {
+      "id": "battalion",
+      "scenario": "newzealand-battalion",
+      "fixture": "build/macos/playtests/20260919T114525Z/Lekmod-Functional-20260919T114525Z.Civ5Save",
+      "sha256": "d0e8dc1eb5cae4933ac3af74886bb13ebf1aeb8ef90c6a0dcce5f412892c818a",
+      "max_turns": 1
+    }
+  ]
+}
