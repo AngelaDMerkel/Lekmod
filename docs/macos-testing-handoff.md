@@ -1,5 +1,25 @@
 # Lekmod macOS single-player testing handoff
 
+**Latest: batch tooling implemented; native commissioning blocked by locked desktop (2026-09-20 19:45 UTC).**
+The user requested a longer broad test. Commit `3693e72b` adds a single-process
+runner with 16 scenarios, 81 functional assertions, 16 checkpoint reload checks,
+a 60-minute default and a 28-turn aggregate bound across independent fixtures.
+See [the batch guide](macos-batch-testing.md) for commands and precise validation
+limits. All 61 offline checks pass. Two pilot driver failures are preserved; both
+causes are corrected, but the next launch was blocked before starting because
+the desktop is locked. The full new batch is not yet certified.
+
+Stock is restored and no game/test process is running. All 416 current save files,
+settings, stock UI and both backups were verified unchanged. Evidence:
+`docs/macos-testing-handoff.md`.
+The Defender product fix and expanded owner tests remain uncommitted. Its five
+native boundary assertions passed inside the second pilot, but checkpoint
+reload/normal completion remain pending. Start with the managed `--plan pilot`
+command in the guide once the desktop is unlocked, then run comprehensive.
+The earlier pause and quota-target notes below are historical. Nothing was pushed.
+
+## Previous state
+
 **Current status: paused at the user's request; stock restored (2026-09-20 16:52 UTC).**
 The latest stop instruction supersedes the earlier quota target. No game or test
 runner is active. Stock GameCore and both backups match
