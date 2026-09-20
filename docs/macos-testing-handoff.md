@@ -1,5 +1,25 @@
 # Lekmod macOS single-player testing handoff
 
+**Current status: paused at the user's request; stock restored (2026-09-20 16:52 UTC).**
+The latest stop instruction supersedes the earlier quota target. No game or test
+runner is active. Stock GameCore and both backups match
+`0da6a5ffc283c3f147b20a7ec426e4ed85a6838ab891faf61b50af4e25c4a09c`;
+Lekmod/private EUI are inactive. All 413 save files, settings, 32 stock UI
+files and four pending source/test files were verified unchanged. Evidence:
+`build/macos/stock-pause-verification-20260920T165250Z.json`.
+
+Latest completed source is `389871fd`. The Defender native baseline confirmed
+an incorrect distance-three bonus for owned and actual-friendship cities. A
+two-tile Lua correction passes all 57 owner/handler cases (four new failures
+before the fix), and 32 runner regressions pass. **The corrected Defender package
+has not been installed or native-retested; four related files remain uncommitted.**
+Candidate archive `build/macos/Lekmod-defender-radius-20260919.zip` has SHA-256
+`c12bf01668c657ddea481c4f265b0ce12bc98490ca9bf92fad32c2c1c966db94`.
+See the [New Zealand report](macos-newzealand-validation.md) and
+`build/macos/continuation-state.json` for the precise next retest. Nothing was pushed.
+
+## Previous quota-limited session
+
 **Testing resumed with a quota limit on 2026-09-19.** The user requested testing
 until quota reaches 30%, interpreted as 30% remaining. The live account check
 started at 40% used / 60% remaining. Check it periodically and reserve enough

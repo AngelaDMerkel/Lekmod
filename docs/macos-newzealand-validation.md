@@ -164,3 +164,37 @@ Use `--scenario newzealand-battalion --scenario-turns 2` with the `114525Z` save
 then exact zero-turn reload. No product change was needed. Minor/barbarian-owned
 Battalion exclusion remains isolated-handler coverage; further defender geometry
 and real zone-of-control movement are separate native cases.
+
+## Defender boundary defect: paused before native retest
+
+`20260919T123456Z` loaded the retained actual Rome/Argentina friendship save
+`20260916T105738Z` (SHA-256
+`4257141f236b0c8e43c1216b0f2b5a5b492a8bbb5e9d5f43606fef07177901a0`).
+Coastal cities, five Defender probes, one ordinary Ironclad and upkeep were
+explicit inputs. After one ordinary turn (20→21), the actual owner-turn handler
+activated the ignore-ZOC promotion at distance three from both owned and
+Declaration-of-Friendship cities. The documented Help, Strategy and promotion
+text all specify two tiles. Distance-two positives, the far-away Defender and
+ordinary Ironclad controls behaved correctly. No promotion outcome was assigned.
+
+The baseline remains FAIL. Its saved state is
+`91586434b2476e3cd1e981c26c2c2a5cb2e462d714bdc76b29855fbc68667db6`.
+The runner terminated the process (-9), so this is not normal-exit evidence.
+Temporary hooks/settings were restored and manual saves preserved; no Lua/sync
+errors or new diagnostics were recorded.
+
+The uncommitted correction replaces IsPlayerCityRadius, which describes the
+wider workable radius, with Map.PlotDistance against each qualifying owner's
+cities and an explicit two-tile limit. The existing start-of-turn timing stays
+unchanged. The expanded 57-case actual-handler suite has four distance-three/
+stale-state failures before the fix and zero afterward; all 32 runner regressions
+pass. Geometry/engine objects in those isolated tests are stand-ins.
+
+Candidate archive `Lekmod-defender-radius-20260919.zip` was built successfully
+with SHA-256 `c12bf01668c657ddea481c4f265b0ce12bc98490ca9bf92fad32c2c1c966db94`.
+The user stopped testing before installation/native retest. Stock is restored.
+Preserve the four uncommitted files and finish the same-fixture native retest,
+exact reload and affected-save recovery on the next ordinary owner turn when
+authorized to resume. Do not clear an earned start-of-turn effect merely because
+a ship moved farther away before saving/loading. Real zone-of-control movement
+and further owner boundaries remain separate checks.
