@@ -11,7 +11,7 @@ the desktop is locked. The full new batch is not yet certified.
 
 Stock is restored and no game/test process is running. All 416 current save files,
 settings, stock UI and both backups were verified unchanged. Evidence:
-`docs/macos-testing-handoff.md`.
+`build/macos/batch-stock-verification-20260920T194554Z.json`.
 The Defender product fix and expanded owner tests remain uncommitted. Its five
 native boundary assertions passed inside the second pilot, but checkpoint
 reload/normal completion remain pending. Start with the managed `--plan pilot`
