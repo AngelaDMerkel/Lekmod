@@ -1,5 +1,27 @@
 # Lekmod macOS single-player testing handoff
 
+**Latest: batch commissioning completed; stock restored (2026-09-20 23:41 UTC).**
+All 81 planned functional checks and 16 exact reload comparisons now have passing
+evidence: fifteen pairs in the 783.8-second full run `20260920T231930Z`, plus
+Battalion's targeted 83.2-second run `20260920T233452Z` after a test-observer-order
+correction. The original full-run FAIL verdict is retained. See the
+[batch guide](macos-batch-testing.md) and local
+`build/macos/batch-validation-summary-20260920.md`. This is scoped functional
+coverage, not full single-player certification or new physical mouse coverage.
+
+Focused local commits: Defender radius `54424e5c`, scoped UI assertions
+`474de5f1`, optional-control reload guard `729d16a2`, and observer order `805260e4`.
+Nothing was pushed. Tested intermediate archive:
+`build/macos/Lekmod-optional-control-20260920.zip`, SHA-256
+`f054823b392cd282e7635a475e65b91fe3240b35f29cdfa8e0d3adfe224bd21e`.
+Game/test processes are closed; stock and both backups match the canonical hash.
+All 366 prior manual saves, the original quicksave, settings and stock UI were
+verified preserved. Verification:
+`build/macos/batch-final-stock-verification-20260920T234126Z.json`.
+Broader remaining work is recorded in the expanded ledger and continuation state.
+
+## Previous commissioning state
+
 **Latest: batch tooling implemented; native commissioning blocked by locked desktop (2026-09-20 19:45 UTC).**
 The user requested a longer broad test. Commit `3693e72b` adds a single-process
 runner with 16 scenarios, 81 functional assertions, 16 checkpoint reload checks,
