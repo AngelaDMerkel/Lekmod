@@ -1,5 +1,28 @@
 # Lekmod macOS single-player testing handoff
 
+**Latest: clean release candidate passed the complete batch; stock restored
+(2026-09-21 00:53 UTC).** Run `20260921T002839Z` passed all 16 stages, 81 functional
+checks and 16 exact reloads in one process (813.7 seconds, 23 functional turns),
+with normal exit and complete cleanup. All 32 checkpoint hashes were verified.
+See [release qualification](macos-release-qualification.md) for the exact clean
+`f40fd2b2` artifact, evidence and next command. This adds no physical mouse coverage.
+
+The next five startup/shutdown cycles were blocked **before launch** by the locked
+desktop; zero cycles ran. An unlock request is pending. Do not launch while locked.
+The user has already authorized foreground testing for as long as needed, but
+background remains the default. Startup-255 failures and shutdown stalls remain
+unresolved; broader functional/civilization gaps remain in the ledgers. The long
+campaign is closed, multiplayer deferred, and there is no active quota target.
+
+Lifecycle tooling and interruption cleanup are committed locally in `a8ffabb3`.
+Stock, both backups, 368 prior manual saves, the original quicksave, settings and
+35 stock UI files were verified; Lekmod/private EUI are inactive and no test/game
+process remains. Nothing was pushed. Current local evidence:
+`build/macos/release-qualification-20260921.json` and
+`build/macos/release-stock-verification-20260921.json`.
+
+## Previous completed commissioning state
+
 **Latest: batch commissioning completed; stock restored (2026-09-20 23:41 UTC).**
 All 81 planned functional checks and 16 exact reload comparisons now have passing
 evidence: fifteen pairs in the 783.8-second full run `20260920T231930Z`, plus

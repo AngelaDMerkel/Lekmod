@@ -195,3 +195,20 @@ Current offline batch coverage is 15 supervisor cases, 18 dispatcher cases and
 33 runner cases. The separate optional-control product regression has 64 cases,
 and all nine UI assembly checks pass. The original single-player completion
 ledger still has broader civilization and system gaps.
+
+
+## Clean-source full-plan pass (2026-09-21 UTC)
+
+`20260921T002839Z` passed all **16 stages / 81 functional checks / 16 exact
+reload comparisons** in one process, in 813.7 seconds with 23 ordinary functional
+turns. All 32 checkpoint files match their recorded hashes. Normal exit (0),
+settings/hooks/manual-save preservation, and no Lua/synchronization errors or
+new diagnostics were verified. The managed wrapper restored stock.
+
+The package was built from clean commit `f40fd2b2`; its archive SHA-256 is
+`e6904b434b3a3a7bebea4c2a83d1709c3aaf73d55a096237b6ed87f07fefcffc`.
+See [release qualification](macos-release-qualification.md) for full provenance,
+commands and preservation checks. Earlier failed runs retain their verdicts.
+The supervisor now has 17 offline cases, including direct and terminal-group
+interrupt cleanup. This run adds scripted/native coverage, not physical input.
+Startup/shutdown reliability and the broader single-player ledger remain open.
