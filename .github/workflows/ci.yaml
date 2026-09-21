@@ -89,6 +89,7 @@ jobs:
           python3 LEKMOD_DLL/macos/bootstrap-test-lua.py
           python3 LEKMOD_DLL/macos/test-optional-options-control.py
           python3 LEKMOD_DLL/macos/test-playtest-batch.py
+          python3 LEKMOD_DLL/macos/test-lifecycle-playtest.py
           build/macos/test-deps/lua-5.1.4/src/lua LEKMOD_DLL/macos/test-batch-driver.lua LEKMOD_DLL/macos
           build/macos/test-deps/lua-5.1.4/src/lua LEKMOD_DLL/macos/test-unit-owner-boundaries.lua LEKMOD/Lua/Civilizations
           build/macos/test-deps/lua-5.1.4/src/lua LEKMOD_DLL/macos/test-nabatea-exploration.lua LEKMOD/Lua/Civilizations/Lekmod_nabatea.lua

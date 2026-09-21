@@ -54,10 +54,10 @@ def main():
                 if status.get('product')!='stock':p.error('Package-managed batches require stock initially; existing product left unchanged')
                 subprocess.run([sys.executable,str(a.installer),'--gamecore','lekmod','--gamecore-package',str(a.package.resolve()),'--gamecore-sha256',a.sha256,'--yes'],check=True)
                 installed=True
-            result=subprocess.run([sys.executable,str(PORT/'automated-playtest.py'),'--mode','single-player-smoke','--turns','3',
+            returncode=playtest_batch.run_owned_runner([sys.executable,str(PORT/'automated-playtest.py'),'--mode','single-player-smoke','--turns','3',
                 '--timeout',str(a.minutes*60),'--stall-seconds','240','--scenario','batch','--scenario-turns','30',
                 '--batch-plan',str(actual),'--load-save',plan['stages'][0]['fixture'],'--save-and-exit'],cwd=ROOT)
-            return result.returncode
+            return returncode
         finally:
             if installed:
                 subprocess.run([sys.executable,str(a.installer),'--gamecore','stock','--yes'],check=True)

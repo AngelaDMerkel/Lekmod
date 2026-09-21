@@ -2,8 +2,12 @@
 """Protocol, persistence, fixture-integrity and fail-closed batch regression tests."""
 import importlib.util
 import json
+import os
 from pathlib import Path
 import subprocess
+import signal
+import sys
+import time
 import tempfile
 import unittest
 import playtest_batch as batch
@@ -29,6 +33,28 @@ class BatchTests(unittest.TestCase):
     def save(self,session,row):
         (session.data/'Saves/single'/(row['save_name']+'.Civ5Save')).write_bytes(b'checkpoint')
         return '[LEKMOD_BATCH] run=test event=saved value='+json.dumps(row['save_name'])+'\n'
+    def test_wrapper_interrupt_allows_real_child_finally_cleanup(self):
+        self.check_owned_cleanup(False)
+    def test_terminal_group_interrupt_allows_real_child_finally_cleanup(self):
+        self.check_owned_cleanup(True)
+    def check_owned_cleanup(self, group_interrupt):
+        port=Path(__file__).resolve().parent
+        ready=self.root/'ready';clean=self.root/'clean'
+        child=self.root/'child.py';child.write_text('from pathlib import Path\nimport time\ntry:\n Path('+repr(str(ready))+').write_text("ready")\n time.sleep(60)\nfinally:\n Path('+repr(str(clean))+').write_text("restored")\n')
+        controller=self.root/'controller.py';controller.write_text('import sys\nsys.path.insert(0,'+repr(str(port))+')\nimport playtest_batch\ncode=playtest_batch.run_owned_runner([sys.executable,'+repr(str(child))+'])\nprint("child-exit",code)\n')
+        process=subprocess.Popen([sys.executable,str(controller)],stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True,start_new_session=True)
+        try:
+            deadline=time.monotonic()+5
+            while not ready.exists() and time.monotonic()<deadline:time.sleep(0.02)
+            self.assertTrue(ready.exists())
+            if group_interrupt:os.killpg(process.pid,signal.SIGINT)
+            else:process.send_signal(signal.SIGINT)
+            out,err=process.communicate(timeout=10)
+            self.assertEqual(process.returncode,0,err)
+            self.assertIn('child-exit',out)
+            self.assertEqual(clean.read_text(),'restored')
+        finally:
+            if process.poll() is None:process.kill();process.wait()
     def test_hash_mismatch_rejected(self):
         self.fixture.write_bytes(b'changed')
         with self.assertRaisesRegex(ValueError,'hash mismatch'):self.load()

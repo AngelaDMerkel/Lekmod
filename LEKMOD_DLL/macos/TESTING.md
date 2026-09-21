@@ -15,6 +15,40 @@ own checkpoint; fixture loads stay in one native process. Commissioning limits
 and retained pilot failures are recorded in the guide. Do not infer that the full
 batch has passed merely from successful preflight or isolated scenario evidence.
 
+## Bounded startup/shutdown cycles
+
+`lifecycle-playtest.py` installs a verified package once, then performs 1–5
+cold-launch/read-only inventory/save/normal-exit cycles against one hashed fixture.
+The first passing inventory becomes the state oracle for later cycles. It retains
+the installed product and generated cache between launches, stops at the first
+failure, and restores stock through the central installer. It requires stock
+initially and checks for an unlocked desktop and existing Steam session before
+each launch. It does not advance a campaign or retry a failed cycle.
+
+Before installation and before/after each cycle, it hashes cache files and copies
+the `Localization-Merged.db` family into its evidence directory. It never repairs
+or removes cache files. The central installer normally invalidates generated
+caches when switching products; distinguish that first launch from subsequent
+launches with the same installation/cache. Existing diagnostic/activation guards
+and dyld image tracing are identical in each cycle. These are instrumented checks,
+not physical interaction or original-settings controls.
+
+See [release qualification](../../docs/macos-release-qualification.md) for the
+exact candidate command and evidence. Offline checks:
+
+```sh
+python3 LEKMOD_DLL/macos/test-playtest-batch.py
+python3 LEKMOD_DLL/macos/test-lifecycle-playtest.py
+```
+
+Batch and lifecycle wrappers give their owned Python runner a separate session.
+On SIGINT they forward one interrupt and allow up to 60 seconds for its settings/UI
+restoration before attempting stock restoration. Repeated wrapper interrupts do
+not repeatedly interrupt the child's cleanup. An unfinished cleanup is an error;
+inspect the recorded PID and evidence before recovery. Offline subprocess tests
+exercise both a direct wrapper interrupt and a terminal process-group interrupt;
+no interrupted native-game cleanup is claimed from those tests.
+
 ## Offline checks (do not launch the game)
 
 From the repository root, with Python 3 and Xcode Command Line Tools:

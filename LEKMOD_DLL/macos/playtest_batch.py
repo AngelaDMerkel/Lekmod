@@ -3,6 +3,8 @@ import hashlib
 import json
 import re
 import shutil
+import signal
+import subprocess
 import time
 from pathlib import Path
 
@@ -19,6 +21,26 @@ HOOKS = {
 PREFIXES = {'playtest-nz-owner-observer.lua': 'playtest-nz-owner-before-observer.lua'}
 
 SUPPORTED = set(HOOKS) | {'inventory', 'admiral-repair', 'worker', 'unit-actions', 'great-person-builds', 'budget-settlement', 'nuclear', 'air-operations', 'greatworks', 'trade-tooltip', 'trade-countdown', 'nabatea-farms', 'nabatea-tomb', 'newzealand-science-completion'}
+
+def run_owned_runner(command, **kwargs):
+    """Let the child restore its UI/settings when this wrapper is interrupted."""
+    # A terminal Ctrl-C must reach the child only once, through this owner.
+    child = subprocess.Popen(command, start_new_session=True, **kwargs)
+    try:
+        return child.wait()
+    except KeyboardInterrupt:
+        if child.poll() is None:
+            child.send_signal(signal.SIGINT)
+        deadline = time.monotonic() + 60
+        while True:
+            try:
+                return child.wait(timeout=max(0.1, deadline - time.monotonic()))
+            except KeyboardInterrupt:
+                # Repeated interrupts must not SIGKILL the restoration owner.
+                if time.monotonic() >= deadline:
+                    raise RuntimeError("Owned runner cleanup did not finish; PID " + str(child.pid))
+            except subprocess.TimeoutExpired as error:
+                raise RuntimeError("Owned runner cleanup did not finish; PID " + str(child.pid)) from error
 
 def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
