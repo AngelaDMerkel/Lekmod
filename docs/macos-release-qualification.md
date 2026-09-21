@@ -51,12 +51,29 @@ remain unchanged. The run uses scripted setup/commands, scoped callback checks
 and native gameplay outcomes as documented by each scenario. It adds no physical
 mouse coverage and is not a naturally progressed long campaign.
 
-## Next: controlled startup and shutdown reliability
+## Controlled startup and shutdown reliability
 
-The next five-cycle test was refused before launch because the desktop was
-locked. **Zero lifecycle cycles ran.** No installation or settings change was
-made by that attempt. Its blocked log is
-`build/macos/lifecycle-release-candidate-f40fd2b2.log`.
+The first attempt was refused before launch because the desktop was locked;
+its log remains `build/macos/lifecycle-release-candidate-f40fd2b2.log`. A subsequent
+mistyped fixture hash was also rejected before installation/launch. Neither is a
+native test result.
+
+After unlock, **all five cycles passed** in
+`build/macos/lifecycle-tests/20260921T011003Z/report.json`. Native runs were
+`20260921T011008Z`, `20260921T011107Z`, `20260921T011203Z`, `20260921T011259Z`, `20260921T011354Z`. Durations were 57.0,
+54.9, 54.9, 54.9 and 54.9 seconds. The first cycle ran inventory checks; the
+remaining four exactly compared the same fixture state with that first result.
+All five saved and exited normally, restored settings/hooks, preserved prior
+manual saves, and had no Lua/synchronization errors or new diagnostics. Stock
+restoration returned 0. The wrapper log is
+`build/macos/lifecycle-release-candidate-f40fd2b2-resumed-2.log`.
+
+The first managed launch began without a merged cache and created a
+27,500,544-byte file. Its SHA-256 was
+`79a26afd7d720159152247b84959e5fcedb6c8e7342dd87656b3d9a7f5c35d3f`
+after every cycle and before cycles 2–5. Preserved copies were independently
+rehashed. No cache repair occurred. This adds bounded positive reliability
+evidence; it does not isolate or fix the earlier intermittent failures.
 
 After verifying an unlocked desktop and closed game, run:
 
@@ -72,9 +89,8 @@ The harness installs once, retains cache between cycles, captures cache evidence
 and stops on the first failure. See [the operator guide](../LEKMOD_DLL/macos/TESTING.md).
 Its four offline safety/evidence tests and 17 batch supervisor tests pass;
 the latter include two actual Python subprocess interruption tests. Native
-lifecycle commissioning is still pending. Successful cycles would provide bounded
-reliability evidence, not establish a root cause or erase historical startup-255
-failures and shutdown stalls. See [the startup investigation](macos-startup-cache.md).
+lifecycle commissioning passed the five cycles above. Those passes do not establish
+a root cause or erase historical startup-255 failures and shutdown stalls. See [the startup investigation](macos-startup-cache.md).
 
 ## Current installation and remaining limits
 

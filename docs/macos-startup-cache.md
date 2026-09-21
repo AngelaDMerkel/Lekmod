@@ -421,3 +421,19 @@ The restored-package diagnostic `20260919T082057Z` reached gameplay. It then
 failed the independent AI upgrade fixture gate, so it remains a functional
 failure rather than a completed scenario. Further read-only diagnosis identified
 pending-deletion AI probe ships; this is unrelated to the startup comparison.
+
+
+## Controlled five-cycle comparison (2026-09-21 UTC)
+
+The clean `f40fd2b2` release artifact passed five cold launch/load/save/normal-exit
+cycles with identical instrumentation and the same saved state. The first launch
+followed managed installation; the later four retained the same installed product
+and generated cache. The merged-cache bytes were identical after all five cycles.
+No retry or repair was needed, and the wrapper restored stock. Full reports,
+cache manifests/copies and exact artifact hashes are linked in
+[release qualification](macos-release-qualification.md).
+
+This separates product-switch cache invalidation from retained-cache launches in
+a controlled passing sequence. Earlier startup-255 and shutdown failures remain
+unresolved evidence. Five successful cycles do not justify a claim that their
+trigger has been fixed.
