@@ -15,8 +15,9 @@ Source: `e1d859c82372ab8e73c3b35e87f0d3757a17d749`, `dirty: false`.
 Core: `4e1a94b9ea8c61c16e18e2bc32a6f46a54941c056bb804b14cfd4c8066bc764b`.
 Payload: `094d1dcf9635d2d8392fd49bbe7c9a88dadf1767813f5383f0ddf6b708e19a3e`.
 The core and payload hashes match the native-tested intermediate archive. The
-clean archive itself has not yet been installed; the prepared replay pilot will
-exercise that transport/install step after the desktop is unlocked.
+clean archive was subsequently installed and exercised in replay pilot
+`20260922T233116Z`: both pinned state comparisons passed in one process, with
+normal exit/cleanup and stock restoration. See the [matrix report](macos-civilization-start-matrix.md).
 
 Stock/backups, 422 prior manual saves, quicksave, settings and 33 stock UI files
 were verified after restoration. No game/test is running. The remaining normal

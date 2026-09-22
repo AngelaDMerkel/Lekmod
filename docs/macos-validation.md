@@ -15,13 +15,18 @@ sessions. The user renewed foreground-testing permission for this task.
 
 ## Latest clean-artifact qualification
 
-Clean source `f40fd2b2` produced archive `e6904b43…cffc`. The complete batch
-`20260921T002839Z` passed all 81 functional checks and 16 exact reloads across
-16 stages in one process, with normal exit, cleanup and no Lua/synchronization
-errors. See [release qualification](macos-release-qualification.md) for full hashes
-and scope. This is scripted/native evidence, not new physical input. The next
-bounded lifecycle test was blocked before launch by the locked desktop; startup
-and shutdown reliability remain unresolved. Stock and preserved files are verified.
+The clean-source candidate `e1d859c8` includes the verified Tunisian Privateer
+flag correction. All 125 unique-unit creation cases and 125 normal disband/refund
+cases, each with exact reload, passed on its exact core/payload contents. The
+clean archive `f1a88db4…cc64c` itself passed the two-save replay pilot
+`20260922T233116Z`, including normal exit, cleanup and stock restoration.
+[Release qualification](macos-release-qualification.md) records full hashes and
+scope, including the earlier 81-check/16-reload comprehensive batch, five passing
+controlled lifecycle cycles and the unmodified physical acceptance session.
+
+Historical startup/shutdown failures remain unisolated, and broader civilization
+coverage is in progress. Scripted checks, native outcomes and physical UI actions
+remain distinct; no full single-player certification is inferred.
 
 ## Scope and acceptance
 

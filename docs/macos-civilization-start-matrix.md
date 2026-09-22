@@ -1,4 +1,4 @@
-# Civilization startup matrix: prepared, native commissioning pending
+# Civilization startup matrix
 
 Ten groups cover all 114 playable civilization choices exactly once (nine groups
 of 12 and one of six). The inventory is pinned to the shipped gameplay XML hash;
@@ -38,7 +38,7 @@ python3 LEKMOD_DLL/macos/test-playtest-batch.py
 Four matrix inventory/refusal/package-data tests, 23 batch supervisor cases and 33 runner
 cases pass. Four new supervisor cases cover replay-only startup/advance,
 report/save/hash mismatch, failed reports, partial settings and non-object
-snapshots. Native commissioning is pending because the desktop was locked.
+snapshots. Replay-only native commissioning passed as recorded below. Normal-start group commissioning is in progress; unrecorded groups remain untested.
 
 ## Next unlocked-session commands
 
@@ -65,3 +65,18 @@ writes reports, group logs and `replay-plan.json` under
 `build/macos/civilization-matrices/TIMESTAMP/`. Run that emitted plan through
 `batch-playtest.py` with the same verified package. Preserve failures and keep
 native setup, scripted callbacks and actual mouse interaction separate.
+
+
+## Native replay pilot: passed
+
+`20260922T233116Z` loaded both pinned inventory saves and exactly matched their
+original report snapshots in one native process, with zero ordinary turns.
+Duration was 71.1 seconds. Both output checkpoint hashes were independently
+verified. Native exit was normal (0); settings/hooks and manual saves were
+preserved, with no Lua/synchronization errors or new diagnostics. The wrapper
+restored stock. Evidence: `build/macos/playtests/20260922T233116Z/` and
+`build/macos/replay-pilot-clean-fixed-20260922.log`.
+
+This run installed and exercised the exact clean-source archive
+`f1a88db4…cc64c`, closing its pending transport/install step. It commissions
+replay-only batching, not the 114-civilization matrix or broader unique abilities.
