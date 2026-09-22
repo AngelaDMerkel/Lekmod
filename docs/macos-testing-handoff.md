@@ -1,5 +1,39 @@
 # Lekmod macOS single-player testing handoff
 
+**Latest completed milestone: additional combat/espionage cases and physical
+acceptance passed (2026-09-22 UTC).** Commits `3c19121f` and `ac81a266` add the
+five-case plan (20 assertions / five exact reloads / 27-turn aggregate bound),
+324 actual counterspy decision cases, and their verified evidence. Defender
+old-save recovery and real enemy-ZOC movement, Manhattan/missile production,
+real fallout cleanup/repair, city nuclear effects and AI counterspy interception
+all have passing native evidence. Earlier failed fixtures retain their verdicts.
+The combined five-stage plan itself has not been run uninterrupted.
+
+Physical control `20260922T205259Z` used original settings and no injected helper
+or UI hooks. Actual mouse/keyboard loading, spy-loss UI, surviving-agent relocation,
+new save, physical reload and normal exit passed. Stock/backups, 417 prior manual
+saves, original quicksave and settings were verified after restoration. See
+[the counterspy report](macos-counterspy-validation.md) and
+[release qualification](macos-release-qualification.md). No product changes were
+needed for these cases and nothing was pushed.
+
+**Testing remains active at the user's request.** A broader unique-unit catalogue
+scenario is being commissioned next; consult current process state and
+`build/macos/continuation-state.json` before touching the installation. Do not
+infer stock is currently installed from an earlier restoration verification.
+The five controlled lifecycle cycles also passed (commit `caec1035`), but historic
+startup-255/shutdown stalls remain unisolated. Remaining civilization/owner/system
+combinations are not passed implicitly. The long campaign stays closed; all
+multiplayer remains deferred. Foreground authorization persists, background is
+the default, and every new launch still requires an unlocked desktop.
+
+Older text below is historical: all five victory routes and the common static
+fallback for leaders missing scene definitions were covered in later work. Do not
+reopen Nubia's missing-scene limitation or other-victory gaps solely from the older
+handoff paragraphs; use the expanded ledger and physical validation reports.
+
+## Previous release qualification milestone
+
 **Latest: clean release candidate passed the complete batch; stock restored
 (2026-09-21 00:53 UTC).** Run `20260921T002839Z` passed all 16 stages, 81 functional
 checks and 16 exact reloads in one process (813.7 seconds, 23 functional turns),

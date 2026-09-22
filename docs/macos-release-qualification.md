@@ -102,9 +102,19 @@ No game/test process remains running.
 
 The [expanded ledger](macos-expanded-coverage.md) and
 [civilization inventory](macos-civilization-coverage.md) still contain untested
-mechanics, unique abilities and owner boundaries. Specific remaining cases include
-counterspy interception, nuclear city effects/production/cleanup and Defender
-movement through actual enemy zones of control. This package's broad batch does
-not replace those cases or a final original-settings manual acceptance check.
+mechanics, unique abilities and owner boundaries. The additional Defender old-save/actual-ZOC, nuclear production/cleanup/city,
+and counterspy-interception cases now have 20 passing functional assertions and
+five exact reloads across separately recorded runs. The new five-stage combined
+plan is preflighted, not claimed as one uninterrupted full-plan pass. See
+[New Zealand](macos-newzealand-validation.md), [nuclear](macos-nuclear-validation.md)
+and [counterspy](macos-counterspy-validation.md) evidence.
+
+Original-settings physical acceptance `20260922T205259Z` also passed startup,
+loading, espionage UI/dead-agent presentation, live-agent relocation, a new local
+save, physical reload/visible-state comparison and normal exit. No observer or UI
+hook was injected; original logging was disabled. Stock restoration and all 417
+prior manual saves, quicksave, settings and backups were verified afterward.
+This closes those specific qualification steps while broader civilization and
+system combinations and the historical intermittent-failure diagnosis remain.
 Only this Mac is in scope. Multiplayer/hotseat/PBEM remain deferred. The accepted
 long turn campaign remains closed. Nothing was pushed.
