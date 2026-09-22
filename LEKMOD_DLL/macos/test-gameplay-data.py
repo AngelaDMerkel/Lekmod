@@ -46,6 +46,26 @@ class GameplayDataTests(unittest.TestCase):
             self.assertIn(row.findtext("LeaderType"),leaders)
             self.assertIn(row.findtext("TraitType"),traits)
 
+    def test_unit_flag_atlases_have_valid_slots_and_shipped_custom_textures(self):
+        # These named stock/DLC atlases come from Aspyr's asset packs. Every
+        # custom flag must instead resolve to a file in the mod payload.
+        stock={"UNIT_FLAG_ATLAS", "GENGHIS_UNIT_FLAG_ATLAS", "KAMEHAMEHA_UNIT_FLAG_ATLAS",
+               "HARALD_UNIT_FLAG_ATLAS", "SEJONG_UNIT_FLAG_ATLAS", "NEB_UNIT_FLAG_ATLAS",
+               "CIVIL_WAR_UNIT_FLAG_ATLAS", "EXPANSION2_UNIT_FLAG_ATLAS", "RELIGION_ATLAS_WHITE",
+               "EXPANSION_UNIT_FLAG_ATLAS", "EXPANSION_SCEN_CIV_SYMBOLS_COLOR_ATLAS",
+               "EXPANSION_SCEN_UNIT_FLAG_ATLAS", "DLC02_UNIT_FLAG_ATLAS",
+               "SCRAMBLE_UNIT_FLAG_ATLAS", "WONDER_UNIT_FLAG_ATLAS"}
+        files={p.name.casefold() for p in (ROOT/"LEKMOD").rglob("*.dds")}
+        atlases={r.findtext("Atlas"):r for r in self.rows("IconTextureAtlases") if r.findtext("IconSize")=="32"}
+        for unit in self.rows("Units"):
+            name=unit.findtext("Type");atlas=unit.findtext("UnitFlagAtlas") or "UNIT_FLAG_ATLAS"
+            self.assertIn(atlas,atlases,name)
+            row=atlases[atlas];offset=int(unit.findtext("UnitFlagIconOffset","0"))
+            self.assertGreaterEqual(offset,0,name)
+            self.assertLess(offset,int(row.findtext("IconsPerRow"))*int(row.findtext("IconsPerColumn")),name)
+            if atlas not in stock:
+                self.assertTrue(row.findtext("Filename").casefold() in files,(name,atlas,row.findtext("Filename"),"missing custom flag texture"))
+
     def test_playable_leaders_have_scene_definitions(self):
         playable={row.findtext("Type") for row in self.rows("Civilizations")
                   if row.findtext("Playable","true").strip().lower() in ("true","1")

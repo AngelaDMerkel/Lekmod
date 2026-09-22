@@ -134247,13 +134247,6 @@
 			<IconsPerRow>2</IconsPerRow>
 			<IconsPerColumn>2</IconsPerColumn>
 		</Row>
-		<Row> 
-			<Atlas>LEKMOD_TUNISIA_PRIVATEER_FLAG</Atlas> 
-			<IconSize>32</IconSize> 
-			<Filename>tunis_xebec_flag_32.dds</Filename> 
-			<IconsPerRow>1</IconsPerRow> 
-			<IconsPerColumn>1</IconsPerColumn> 
-		</Row>
 		<Row>
 			<Atlas>LEKMOD_TUNISIA_ICON_ALPHA</Atlas>
 			<IconSize>128</IconSize>
@@ -273217,10 +273210,10 @@
 			<XPValueDefense>3</XPValueDefense>
 			<UnitArtInfo>ART_DEF_UNIT_XP_PRIVATEER</UnitArtInfo>
 			<MoveRate>WOODEN_BOAT</MoveRate>
-			<UnitFlagIconOffset>0</UnitFlagIconOffset>
+			<UnitFlagIconOffset>21</UnitFlagIconOffset>
 			<PortraitIndex>3</PortraitIndex>
 			<IconAtlas>LEKMOD_TUNISIA_ATLAS</IconAtlas>
-			<UnitFlagAtlas>LEKMOD_TUNISIA_PRIVATEER_FLAG</UnitFlagAtlas>
+			<UnitFlagAtlas>EXPANSION_UNIT_FLAG_ATLAS</UnitFlagAtlas>
 		</Row>
 		<Row>
 			<ID>264</ID>
