@@ -20,7 +20,7 @@ HOOKS = {
 }
 PREFIXES = {'playtest-nz-owner-observer.lua': 'playtest-nz-owner-before-observer.lua'}
 
-SUPPORTED = set(HOOKS) | {'inventory', 'admiral-repair', 'worker', 'unit-actions', 'great-person-builds', 'budget-settlement', 'nuclear', 'air-operations', 'greatworks', 'trade-tooltip', 'trade-countdown', 'nabatea-farms', 'nabatea-tomb', 'newzealand-science-completion'}
+SUPPORTED = set(HOOKS) | {'counterspy', 'nuclear-cities', 'nuclear-production', 'nuclear-cleanup', 'defender-zoc', 'inventory', 'admiral-repair', 'worker', 'unit-actions', 'great-person-builds', 'budget-settlement', 'nuclear', 'air-operations', 'greatworks', 'trade-tooltip', 'trade-countdown', 'nabatea-farms', 'nabatea-tomb', 'newzealand-science-completion'}
 
 def run_owned_runner(command, **kwargs):
     """Let the child restore its UI/settings when this wrapper is interrupted."""

@@ -159,7 +159,7 @@ def human_turn_results(text):
 FUNCTIONAL_ITEMS = {"script-data", "science-overflow", "unit-position-flags", "city-focus", "avoid-growth", "tech-tree",
                     "production-unit", "production-building", "production-wonder", "production-process"}
 PRODUCTION_COMPLETION_ITEMS = {"production-completion-unit", "production-completion-building"}
-SCENARIO_ITEMS = {"batch": {"batch-complete"}, "inventory": {"system-inventory"},
+SCENARIO_ITEMS = {"counterspy": {"counterspy-defender-arrival", "counterspy-intruder-surveillance", "counterspy-interception", "counterspy-no-science-award", "counterspy-defender-promotion"}, "nuclear-cities": {"nuclear-original-capital-survival", "nuclear-small-city-destruction", "nuclear-large-city-damage", "nuclear-shelter-population", "nuclear-war-and-diplomacy"}, 'nuclear-production': {'nuclear-project-gate', 'nuclear-Manhattan-production', 'nuclear-missile-production'}, 'nuclear-cleanup': {'nuclear-cleanup-restrictions', 'nuclear-fallout-cleanup', 'nuclear-farm-repair'}, "defender-zoc": {"Defender-oldsave-owner-turn-recovery", "Defender-active-ZOC-movement", "Defender-inactive-ZOC-stop", "Defender-normal-ZOC-stop"}, "batch": {"batch-complete"}, "inventory": {"system-inventory"},
                   "ideology-inventory": {"ideology-input-inventory"},
                   "setup": {"setup-configuration", "setup-options", "setup-two-human-turns"},
                   "uae-raider": {"uae-sea-plunder", "uae-raider-experience", "uae-raider-movement"},

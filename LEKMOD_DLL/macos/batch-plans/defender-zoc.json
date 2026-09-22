@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "name": "defender-zoc-and-oldsave",
+  "stages": [
+    {
+      "id": "defender-zoc",
+      "scenario": "defender-zoc",
+      "fixture": "build/macos/playtests/20260919T123456Z/Lekmod-Functional-20260919T123456Z.Civ5Save",
+      "sha256": "91586434b2476e3cd1e981c26c2c2a5cb2e462d714bdc76b29855fbc68667db6",
+      "max_turns": 1
+    }
+  ]
+}

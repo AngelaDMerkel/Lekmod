@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "name": "single-player-critical-gaps",
+  "stages": [
+    {
+      "id": "defender-zoc",
+      "scenario": "defender-zoc",
+      "fixture": "build/macos/playtests/20260919T123456Z/Lekmod-Functional-20260919T123456Z.Civ5Save",
+      "sha256": "91586434b2476e3cd1e981c26c2c2a5cb2e462d714bdc76b29855fbc68667db6",
+      "max_turns": 1
+    },
+    {
+      "id": "nuclear-production",
+      "scenario": "nuclear-production",
+      "fixture": "build/macos/playtests/20260918T101851Z/Lekmod-Functional-20260918T101851Z.Civ5Save",
+      "sha256": "2a0c33f643d2d13ac839392a4cada955eec4caa17ac4dd255ca8dab8d89a0d6d",
+      "max_turns": 3
+    },
+    {
+      "id": "nuclear-cleanup",
+      "scenario": "nuclear-cleanup",
+      "fixture": "build/macos/playtests/20260919T041001Z/Lekmod-Functional-20260919T041001Z.Civ5Save",
+      "sha256": "56d1809c8a412ce157fb2b5ad419995efa6fdf5af16904c2ca3c852f80d4a3d7",
+      "max_turns": 4
+    },
+    {
+      "id": "nuclear-cities",
+      "scenario": "nuclear-cities",
+      "fixture": "build/macos/playtests/20260918T101851Z/Lekmod-Functional-20260918T101851Z.Civ5Save",
+      "sha256": "2a0c33f643d2d13ac839392a4cada955eec4caa17ac4dd255ca8dab8d89a0d6d",
+      "max_turns": 0
+    },
+    {
+      "id": "counterspy",
+      "scenario": "counterspy",
+      "fixture": "build/macos/playtests/20260918T101851Z/Lekmod-Functional-20260918T101851Z.Civ5Save",
+      "sha256": "2a0c33f643d2d13ac839392a4cada955eec4caa17ac4dd255ca8dab8d89a0d6d",
+      "max_turns": 19
+    }
+  ]
+}
