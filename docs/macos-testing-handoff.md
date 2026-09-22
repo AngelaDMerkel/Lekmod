@@ -1,5 +1,41 @@
 # Lekmod macOS single-player testing handoff
 
+**Latest: broad unique-unit lifecycle passed; stock verified; live continuation
+blocked by locked desktop (2026-09-22 22:51 UTC).** The catalogue found a real
+blocking missing texture on the Tunisian Privateer. Commit `0049e794` uses the
+shipped Privateer flag; the gameplay-data regression catches missing custom unit
+flags and invalid atlas slots. All 125 unique unit types then passed native
+creation/event checks and exact reload (`20260922T213414Z`, 335.8 seconds), and
+all 125 normal Delete/Yes, pre-kill and refund checks plus exact reload passed
+(`20260922T214053Z`, 530.1 seconds). Both used zero ordinary turns and normal
+exit/complete cleanup. See [the catalogue report](macos-unit-catalogue.md).
+
+The clean `e1d859c8` archive is
+`build/macos/Lekmod-release-candidate-tunisian-fixed-20260922.zip`, SHA-256
+`f1a88db4b2f33def33ba263be95915eae401da3af2239a31fceb2cfacffcc64c`.
+Its core/payload hashes match the native-tested intermediate package exactly.
+This clean archive has not yet been installed; the next replay pilot will test
+its installation. Full single-player coverage is still not claimed.
+
+Commit `3f406931` prepares ten normal-start groups covering all 114 civilization
+choices, plus pinned replay-only batching to compare their saves in one process.
+Four matrix, 23 supervisor, 33 runner and 18 dispatcher checks pass offline.
+**Native commissioning is pending.** After actual unlock, follow
+[the exact next commands](macos-civilization-start-matrix.md): replay pilot first,
+then civilization group 1 and its replay, then remaining groups. No new game may
+launch while locked. An asynchronous unlock request remains pending. Existing
+foreground authorization persists; default to background.
+
+No game/test process remains running. Stock and both backups match the canonical
+hash; 422 prior manual saves, the original quicksave, settings and 33 stock UI
+files were independently verified. Lekmod/private EUI are inactive. Evidence:
+`build/macos/catalogue-final-stock-verification-20260922.json`. Work is committed
+locally; nothing was pushed. Historical startup-255/shutdown failures and broader
+civilization ability/building/mission/owner combinations remain open. The long
+campaign is closed and all multiplayer remains deferred.
+
+## Previous completed milestone
+
 **Latest completed milestone: additional combat/espionage cases and physical
 acceptance passed (2026-09-22 UTC).** Commits `3c19121f` and `ac81a266` add the
 five-case plan (20 assertions / five exact reloads / 27-turn aggregate bound),

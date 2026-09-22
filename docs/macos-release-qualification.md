@@ -1,5 +1,30 @@
 # Current-Mac release qualification
 
+## Latest fixed-content candidate (2026-09-22 UTC)
+
+The later 125-unit catalogue exposed a missing Tunisian Privateer flag that
+blocked the native renderer with a texture-load dialog. It is fixed in
+`0049e794`; all 125 unique-unit creation and normal removal/refund cases, plus
+their exact reloads, passed on the corrected contents. See
+[the full evidence and limitations](macos-unit-catalogue.md).
+
+Clean-source archive:
+`build/macos/Lekmod-release-candidate-tunisian-fixed-20260922.zip`.
+SHA-256: `f1a88db4b2f33def33ba263be95915eae401da3af2239a31fceb2cfacffcc64c`.
+Source: `e1d859c82372ab8e73c3b35e87f0d3757a17d749`, `dirty: false`.
+Core: `4e1a94b9ea8c61c16e18e2bc32a6f46a54941c056bb804b14cfd4c8066bc764b`.
+Payload: `094d1dcf9635d2d8392fd49bbe7c9a88dadf1767813f5383f0ddf6b708e19a3e`.
+The core and payload hashes match the native-tested intermediate archive. The
+clean archive itself has not yet been installed; the prepared replay pilot will
+exercise that transport/install step after the desktop is unlocked.
+
+Stock/backups, 422 prior manual saves, quicksave, settings and 33 stock UI files
+were verified after restoration. No game/test is running. The remaining normal
+civilization-start/replay matrix is [prepared but not commissioned](macos-civilization-start-matrix.md).
+Broader unique abilities and the intermittent startup/shutdown investigation
+remain open. The earlier batch qualification below is retained as historical
+scoped evidence; it does not erase the subsequently discovered texture defect.
+
 ## Clean artifact and complete batch
 
 The full comprehensive batch passed on a package built from clean source commit
