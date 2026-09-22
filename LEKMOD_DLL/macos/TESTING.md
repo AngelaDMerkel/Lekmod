@@ -15,6 +15,23 @@ own checkpoint; fixture loads stay in one native process. Commissioning limits
 and retained pilot failures are recorded in the guide. Do not infer that the full
 batch has passed merely from successful preflight or isolated scenario evidence.
 
+## Additional combat and espionage cases
+
+`batch-plans/critical-gaps.json` combines five independent cases: preserved
+Defender old-save recovery/actual ZOC movement, Manhattan/missile production,
+native fallout cleanup/repair, city nuclear effects and counterspy interception.
+It declares 20 checks, five reload comparisons and a 27-turn aggregate cap.
+The cases have passing native evidence across separate runs; the original
+three-stage commissioning report retains its later cleanup failure. The combined
+five-stage plan has been preflighted, not claimed as an untouched full-plan pass.
+Use the focused plan files or `--from-stage` when retesting only a changed case.
+
+See the [New Zealand](../../docs/macos-newzealand-validation.md),
+[nuclear](../../docs/macos-nuclear-validation.md) and
+[counterspy](../../docs/macos-counterspy-validation.md) reports for supplied inputs,
+actual outcomes, failure history, hashes and limits. The independent product-code
+boundary check is `python3 LEKMOD_DLL/macos/test-counterspy-outcomes.py`.
+
 ## Bounded startup/shutdown cycles
 
 `lifecycle-playtest.py` installs a verified package once, then performs 1–5

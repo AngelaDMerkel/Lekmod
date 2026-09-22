@@ -227,3 +227,29 @@ late stage can observe the actual before/after states. Targeted batch
 `20260920T233452Z` passed all four Battalion checks and exact reload, with normal
 exit (0), complete cleanup and no Lua/sync errors or diagnostics. The failed
 Battalion verdict in full batch `231930Z` remains unchanged; see the batch guide.
+
+
+## Defender old-save recovery and actual zone-of-control movement
+
+Stage `defender-zoc` in `20260921T011611Z` loaded the preserved pre-fix save
+`91586434…7db6`. Both incorrect distance-three bonuses were still present on
+load. One ordinary owner turn removed the owned/friend distance-three bonuses
+and retained the distance-two bonus, without assigning any promotion state.
+
+Three separate water triangles and hostile Triremes were explicit staging inputs.
+The normal human MOVE_TO command moved each ship between two tiles adjacent to
+its enemy. The active Defender spent 60 of its 180 movement points and retained
+120; the inactive Defender and ordinary Ironclad both spent all 180. Moving the
+active ship outside the city radius in the same turn preserved its earned
+start-of-turn effect. No movement, wait or promotion flag was set to obtain the
+result. Exact in-process reload preserved ships, enemy positions, movement and
+promotions. These four checks passed within an overall batch that later failed
+an independent cleanup fixture; that overall FAIL verdict remains unchanged.
+
+Checkpoint SHA-256:
+`24c129933896f911a1721a41e8554d33621f9fc6414fa0cf3c6b77fb32179e13`.
+Reload checkpoint:
+`c08b7d0ec360d389b56bee68be36ffce5c64a81e06521c72243f164247ef23ab`.
+Reproduction: `batch-playtest.py --plan LEKMOD_DLL/macos/batch-plans/defender-zoc.json`
+with the verified clean release package. This is native movement/outcome evidence,
+not mouse input. No additional Defender product change was needed.

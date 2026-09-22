@@ -52,3 +52,64 @@ signed core `80a9ec3f54b96485606228c067f3656e727c2bf6b16c2c977cbf6c19bb85b8c1`.
 These are scripted commands and native outcomes; no mouse interaction, weapon
 production, city effects, fallout cleanup or complete nuclear-system coverage
 is established by these checks.
+
+
+## Production, cleanup and city effects (2026-09-21/22 UTC)
+
+All runs below use the clean `f40fd2b2` release artifact, archive SHA-256
+`e6904b434b3a3a7bebea4c2a83d1709c3aaf73d55a096237b6ed87f07fefcffc`.
+No nuclear product change was necessary.
+
+The `nuclear-production` stage in `20260921T011611Z` supplied prerequisite
+technologies, uranium and production one hammer below completion. Missile
+production was rejected before the player's Manhattan Project. Normal project
+production completed Manhattan, rejected a duplicate project and unlocked the
+missile. Normal unit production emitted CityTrained without gold/faith purchase
+and created a range-12, level-two missile. Two ordinary turns were used. All three
+checks and exact reload passed; the overall batch remains FAIL because its later
+independent cleanup fixture failed. Checkpoint hashes are in that batch report.
+
+The first cleanup stage removed real blast-generated fallout but its supplied
+worker disappeared on an ordinary AI turn near the surviving immune GDR and
+outside-radius barbarian. It failed before repair; this is retained as a fixture
+failure, not a repair defect. The corrected fixture explicitly stages those two
+enemies at distant land sites before supplying its worker. It does not change
+AI turns or the real fallout/pillage outcomes being tested.
+
+`20260922T203810Z` passed cleanup eligibility (actual fallout versus clean city),
+normal scrub completion and repeat rejection, preservation of the pillaged Farm,
+normal Farm repair and exact reload. One ordinary turn, 97.5 seconds, normal exit
+0, full restoration/preservation, no Lua/synchronization errors or diagnostics.
+The repaired Farm's food yield is 3. Checkpoint:
+`0ac20155da0cc0243b23d6f8d858083eb71ff5a25ac3c31d9fe193dc502ab697`;
+reload: `bf80421e736577b0e06e68e7dc97084d5a775ee89d3392b1e4dbc13b366be45b`.
+
+`20260922T204010Z` supplied target cities/populations, launch sites, missiles,
+uranium and a Bomb Shelter. Four ordinary MISSION_NUKE commands each reached their
+actual EndCombatSim event before proceeding. Outcomes passed:
+
+- A population-four original capital survived, with configured HP and population
+  damage; the original-capital protection was observed.
+- A population-four noncapital was destroyed by the level-two strike.
+- A population-twelve city survived with configured HP loss and population loss
+  inside the native random bounds.
+- A population-twelve city with the -75% shelter modifier lost population inside
+  the reduced bounds; HP damage followed the separate native rule.
+- War and IsNukedBy diplomatic state were recorded, four explosion-count increments
+  occurred, and the four missiles were consumed.
+
+All five checks and exact city and nuclear-state reload passed in
+150.4 seconds, with zero ordinary turns. Normal exit, restoration/preservation,
+no Lua/synchronization errors or new diagnostics were verified. Checkpoint:
+`37f5add9746b16c72741c8cf5b48e336bc1ea4843c65ac153bb0a0e28bc70f39`;
+reload: `90468a9dd9197d3de7644a2966602ab167747115ad33eb1911ed1bee7ddb63bd`.
+All listed checkpoint hashes were independently reverified. No outcomes, RNG,
+wait flags or elapsed turns were assigned. These are scripted commands/native
+outcomes, not mouse input or earned research/production prerequisites.
+
+Reproduction plans are `batch-plans/critical-gaps.json` (use
+`--from-stage nuclear-cleanup` for the corrected cleanup case) and
+`batch-plans/nuclear-cities.json`, under `LEKMOD_DLL/macos`. Complete population,
+HP and fixture-input observations are in each run's `batch-lua.log`.
+The shipped Units table has no Atomic Bomb definition; residual art/localization
+references do not make level-one atomic weapon production a supported feature.
