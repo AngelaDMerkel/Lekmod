@@ -1,7 +1,9 @@
 # Civilization startup matrix
 
 Ten groups cover all 114 playable civilization choices exactly once (nine groups
-of 12 and one of six). The inventory is pinned to the shipped gameplay XML hash;
+of 12 and one of six). Ten selected civilizations occupy the human slot;
+the other 104 are AI-controlled opponents. This is not human-UI coverage for
+every civilization. The inventory is pinned to the shipped gameplay XML hash;
 a change requires review/regeneration. These are normal single-player starts on
 Huge Pangaea, Ancient/Quick/Prince, with no city-states, barbarians or ruins.
 
@@ -80,3 +82,20 @@ restored stock. Evidence: `build/macos/playtests/20260922T233116Z/` and
 This run installed and exercised the exact clean-source archive
 `f1a88db4…cc64c`, closing its pending transport/install step. It commissions
 replay-only batching, not the 114-civilization matrix or broader unique abilities.
+
+
+## First normal-start group and exact replay: passed
+
+Group 1 (`20260922T233312Z`) used normal setup with human Akkad and eleven AI
+opponents, from Aksum through Babylon in the pinned group list. All five checks
+passed: exact roster/roles, valid distinct player colors, ordinary generated
+units, real owner turns and native capital founding. Two ordinary turns produced
+12 capitals and 12 remaining units. Duration was 77.2 seconds. Save SHA-256:
+`903a1a869d99c11a2e7079995bbf0293b321035d2d1803a2912da05face90f1d`.
+
+Replay `20260922T233513Z` matched the complete recorded all-player snapshot in
+69.0 seconds, with zero ordinary turns. Both runs exited normally, restored
+settings/hooks and preserved prior manual saves, with no Lua/synchronization
+errors or new diagnostics. Both managed invocations restored stock. Group evidence
+is under `build/macos/civilization-matrices/20260922T233307Z/`. The remaining
+nine groups are recorded separately; planned groups are not counted as passed.
