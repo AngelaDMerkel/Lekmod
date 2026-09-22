@@ -4,6 +4,15 @@ Generated from the shipped XML and civilization Lua on 2026-09-16. This is a que
 
 All 114 playable civilizations and 26 civilization Lua source files are listed below. The shipped InGame template explicitly loads 25 civilization contexts; MC_NabateaAddin is a dormant legacy context with its load call commented out. A general engine test or a successful start with one civilization does not validate all of its unique abilities. Data overrides list only non-default units/buildings; shared trait fields and linked trait tables still require family-level or civilization-specific assertions.
 
+All **125 non-default unique unit types** referenced by these114 civilizations
+now passed native instantiation, UnitCreated events, identity/domain/health and
+exact saved-state reload while explicitly supplied to an Oman human owner. The
+same catalogue also passed125 normal Delete/Yes operations, UnitPrekill events,
+owned/neutral refund rules and exact final reload. A missing Tunisian flag texture
+was found and fixed. See [the catalogue report](macos-unit-catalogue.md). These
+foreign-owner cases do not close the individual civilizations' trait, unique
+building, production or unit-mission gaps listed below.
+
 | Civilization | Trait | Unique overrides | Lua | Current evidence |
 | --- | --- | --- | --- | --- |
 | `CIVILIZATION_AKKAD` | `TRAIT_AKKAD` | UNIT_AKKAD_SPEARMAN, BUILDING_AKKAD_LIBRARY | — | Unique mechanics pending. |

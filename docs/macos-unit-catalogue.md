@@ -69,6 +69,28 @@ Both are under `build/macos/playtests/20260922T213414Z/checkpoints/`.
 The normal completion beyond 240 seconds also commissions progress tracking for
 this long zero-turn stage; no wait or synchronization flag was changed.
 
-The disband scenario is prepared to load this complete saved catalogue, use
-actual Delete/Yes callbacks, verify UnitPrekill and owned/neutral refund rules,
-and compare its final saved state. Its execution is recorded separately.
+## Normal disband, refund and final persistence
+
+`20260922T214053Z` loaded the complete saved catalogue and passed all **125
+per-unit removal checks, three aggregate checks and exact reload** in 530.1
+seconds with zero ordinary turns. Each unit was selected and removed using the
+actual Delete/Yes confirmation callback. Native UnitPrekill was observed for
+every unit; no direct Kill call or outcome field was assigned.
+
+Alternating units were explicitly staged in the human capital. Each owned-tile
+removal increased treasury by its native GetScrapGold quote; neutral-tile removals
+gave zero. Total refunds were 1,373 gold, with the final treasury 2,429. Final
+remaining units and treasury matched exactly after reload. Normal exit 0,
+settings/hooks restoration, prior-manual-save preservation, and no Lua/runtime
+synchronization errors or new diagnostics were verified. The wrapper restored
+stock. These are scripted callbacks/native outcomes, not physical mouse actions.
+
+Verified final checkpoint SHA-256:
+`bb7706d267014c3c59a1459d9f0ccc6fe5884075d38bcbc644a628a16f50187f`.
+Reload checkpoint:
+`655094a2ae145d59c5266f9acf8bf9c448eb9d2788781369e543ac775f4fa5b8`.
+Reproduction plans are `batch-plans/unique-units.json` and
+`batch-plans/unique-unit-disband.json` under `LEKMOD_DLL/macos`. The latter pins
+the complete catalogue save and its hash. This broadens foreign-owner unit
+creation/removal coverage while civilization-specific abilities, production and
+mission combinations remain separate.

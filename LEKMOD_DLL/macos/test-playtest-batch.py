@@ -33,6 +33,26 @@ class BatchTests(unittest.TestCase):
     def save(self,session,row):
         (session.data/'Saves/single'/(row['save_name']+'.Civ5Save')).write_bytes(b'checkpoint')
         return '[LEKMOD_BATCH] run=test event=saved value='+json.dumps(row['save_name'])+'\n'
+    def test_new_completed_check_advances_progress_without_completing_stage(self):
+        s=self.session()
+        one='[LEKMOD_FUNCTIONAL] run=test item=one::created-A status=PASS native-event\n'
+        self.assertTrue(s.update(one,''))
+        self.assertFalse(s.update(one,''))
+        self.assertFalse(s.update(one+one,''))
+        two='[LEKMOD_FUNCTIONAL] run=test item=one::created-B status=PASS native-event\n'
+        self.assertTrue(s.update(one+two,''))
+        self.assertFalse(s.update(two,''))  # A log reset cannot recount a check.
+        self.assertFalse(s.done);self.assertEqual(s.results,[]);self.assertEqual(s.turns,0)
+    def test_progress_ignores_other_runs_stages_failures_and_observations(self):
+        s=self.session()
+        for line in (
+            '[LEKMOD_FUNCTIONAL] run=old item=one::check status=PASS old',
+            '[LEKMOD_FUNCTIONAL] run=test item=two::check status=PASS future',
+            '[LEKMOD_FUNCTIONAL] run=test item=one::check status=FAIL error',
+            '[LEKMOD_BATCH] run=test event=observation value={"index":1,"mode":"run","event":"waiting"}',
+        ):
+            self.assertFalse(s.update(line,''),line)
+        self.assertEqual(s.progress_items,set());self.assertFalse(s.done)
     def test_wrapper_interrupt_allows_real_child_finally_cleanup(self):
         self.check_owned_cleanup(False)
     def test_terminal_group_interrupt_allows_real_child_finally_cleanup(self):

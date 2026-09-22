@@ -10,6 +10,7 @@ from pathlib import Path
 
 # Only scenarios with reviewed, compatible temporary adapters are admitted.
 HOOKS = {
+    'unique-unit-disband': {'@UI/InGame/Popups/GenericPopup.lua': 'playtest-scenario-unit-confirm.lua'},
     'greatworks': {'@DLC/Expansion2/UI/InGame/Popups/GreatWorkPopup.lua': 'playtest-culture-great-work-popup.lua'},
     'newzealand-defender': {'Civilizations/Lekmod_newzealand.lua': 'playtest-nz-owner-observer.lua'},
     'newzealand-battalion': {'Civilizations/Lekmod_newzealand.lua': 'playtest-nz-owner-observer.lua'},
@@ -20,7 +21,7 @@ HOOKS = {
 }
 PREFIXES = {'playtest-nz-owner-observer.lua': 'playtest-nz-owner-before-observer.lua'}
 
-SUPPORTED = set(HOOKS) | {'counterspy', 'nuclear-cities', 'nuclear-production', 'nuclear-cleanup', 'defender-zoc', 'inventory', 'admiral-repair', 'worker', 'unit-actions', 'great-person-builds', 'budget-settlement', 'nuclear', 'air-operations', 'greatworks', 'trade-tooltip', 'trade-countdown', 'nabatea-farms', 'nabatea-tomb', 'newzealand-science-completion'}
+SUPPORTED = set(HOOKS) | {'unique-units', 'counterspy', 'nuclear-cities', 'nuclear-production', 'nuclear-cleanup', 'defender-zoc', 'inventory', 'admiral-repair', 'worker', 'unit-actions', 'great-person-builds', 'budget-settlement', 'nuclear', 'air-operations', 'greatworks', 'trade-tooltip', 'trade-countdown', 'nabatea-farms', 'nabatea-tomb', 'newzealand-science-completion'}
 
 def run_owned_runner(command, **kwargs):
     """Let the child restore its UI/settings when this wrapper is interrupted."""
@@ -110,6 +111,7 @@ class Session:
         self.plan=plan;self.output=output;self.app=app;self.data=data;self.stamp=stamp
         self.control=app/'Contents/Assets/Assets/DLC/LEKMOD/Lua/UI/LekmodBatchControl.lua'
         self.index=1;self.mode='run';self.command=0;self.seen=set();self.results=[];self.done=False;self.failed=False
+        self.progress_items=set()
         self.transcript='';previous_log=data/'Logs/Lua.log'
         self.last_lua=previous_log.read_text(errors='replace')if previous_log.exists()else''
         self.epoch_offset=0;self.transitioning=False
@@ -143,6 +145,15 @@ class Session:
         return self.transcript
     def update(self,text,render_text):
         progress=False
+        # Long zero-turn stages can finish many real checks before checkpointing.
+        # Only a new successful assertion in this run/current stage is progress;
+        # repeated messages, observations, other stages and FAIL are not keepalives.
+        if not self.done:
+            stage=self.plan['stages'][self.index-1]['id']
+            checks=r'\[LEKMOD_FUNCTIONAL\] run='+re.escape(self.stamp)+r' item=('+re.escape(stage)+r'::\S+) status=PASS(?:\s|$)'
+            for item in re.findall(checks,text):
+                if item not in self.progress_items:
+                    self.progress_items.add(item);progress=True
         pattern=r'\[LEKMOD_BATCH\] run='+re.escape(self.stamp)+r' event=(\S+) value=(\{[^\n]*\})'
         for match in re.finditer(pattern,text):
             event=match[1];value=json.loads(match[2]);key=(event,value.get('index'),value.get('mode'))

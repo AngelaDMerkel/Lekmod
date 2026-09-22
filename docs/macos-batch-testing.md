@@ -212,3 +212,35 @@ commands and preservation checks. Earlier failed runs retain their verdicts.
 The supervisor now has 17 offline cases, including direct and terminal-group
 interrupt cleanup. This run adds scripted/native coverage, not physical input.
 Startup/shutdown reliability and the broader single-player ledger remain open.
+
+
+## Progress inside long zero-turn stages
+
+The first long unit-catalogue run (`20260922T211144Z`) reached the 115th of 125
+units before the 240-second stage guard expired. The supervisor recognized only
+turns and stage/checkpoint transitions as progress. A later screenshot/sample in
+`20260922T212042Z` also identified a real blocking texture-load dialog at the same
+Tunisian Privateer: `tunis_xebec_flag_32.dds` is absent. The earlier failure must
+not be attributed solely to the timer. Both failed/interrupted reports are
+retained, with settings/hooks/manual-save restoration verified. The progress
+correction remains necessary for a valid 125-unit stage lasting over 240 seconds;
+it does not dismiss the native dialog or manufacture completion.
+
+The supervisor now counts each newly passed assertion for the active run/stage
+once. Long catalogue stages emit a per-unit PASS only after the real native
+creation or removal event and the asserted state/treasury result. Repeated
+assertions, other runs/stages, FAIL messages and ordinary observation messages
+do not reset the stall timer. Two regressions verify these boundaries and that
+partial progress cannot complete a stage or supply a checkpoint. All 19 supervisor
+and 33 runner tests pass. Existing synchronization, wall-clock, turn and final
+checkpoint rules are unchanged. Native retest results are recorded separately.
+
+
+The fixed-asset unit catalogue `20260922T213414Z` then completed all125 per-unit
+checks, aggregate checks and exact reload in335.8seconds; normal disband of the
+saved125-unit catalogue and exact reload completed in530.1seconds
+(`20260922T214053Z`). Both exited normally with full restoration/preservation and
+no Lua/synchronization errors or new diagnostics. This commissions the
+completed-check progress path beyond the240-second stall interval. See
+[the catalogue report](macos-unit-catalogue.md) for the actual missing-texture
+fix, retained failures, exact hashes and limits.

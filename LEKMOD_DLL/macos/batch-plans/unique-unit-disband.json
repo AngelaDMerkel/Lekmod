@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "name": "unique-unit-normal-disband",
+  "stages": [
+    {
+      "id": "unique-unit-disband",
+      "scenario": "unique-unit-disband",
+      "fixture": "build/macos/playtests/20260922T213414Z/checkpoints/Lekmod-Batch-20260922T213414Z-unique-units-run.Civ5Save",
+      "sha256": "3821b06e81f901faf9fb2b7adf2649023ca0ea70a0490079a9ab8cbe9a3eeced",
+      "max_turns": 0
+    }
+  ]
+}

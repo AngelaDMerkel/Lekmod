@@ -32,6 +32,18 @@ See the [New Zealand](../../docs/macos-newzealand-validation.md),
 actual outcomes, failure history, hashes and limits. The independent product-code
 boundary check is `python3 LEKMOD_DLL/macos/test-counterspy-outcomes.py`.
 
+## Broad unique-unit lifecycle catalogue
+
+`batch-plans/unique-units.json` creates every one of the125 unique unit types
+referenced by the114 playable civilizations, observes native creation events,
+and reloads the exact saved state. `batch-plans/unique-unit-disband.json` pins
+that resulting save and uses normal Delete/Yes commands, pre-kill events and
+owned/neutral treasury rules for all125 units, followed by exact reload. Both
+use zero ordinary turns. Their per-unit completed assertions keep the existing
+stall guard informed; repeated messages do not count as progress. See
+[the catalogue report](../../docs/macos-unit-catalogue.md) for proven scope,
+artifact hashes, the corrected missing flag and retained commissioning failures.
+
 ## Bounded startup/shutdown cycles
 
 `lifecycle-playtest.py` installs a verified package once, then performs 1–5
