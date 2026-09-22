@@ -21,7 +21,7 @@ HOOKS = {
 }
 PREFIXES = {'playtest-nz-owner-observer.lua': 'playtest-nz-owner-before-observer.lua'}
 
-SUPPORTED = set(HOOKS) | {'unique-units', 'counterspy', 'nuclear-cities', 'nuclear-production', 'nuclear-cleanup', 'defender-zoc', 'inventory', 'admiral-repair', 'worker', 'unit-actions', 'great-person-builds', 'budget-settlement', 'nuclear', 'air-operations', 'greatworks', 'trade-tooltip', 'trade-countdown', 'nabatea-farms', 'nabatea-tomb', 'newzealand-science-completion'}
+SUPPORTED = set(HOOKS) | {'civilization-start', 'unique-units', 'counterspy', 'nuclear-cities', 'nuclear-production', 'nuclear-cleanup', 'defender-zoc', 'inventory', 'admiral-repair', 'worker', 'unit-actions', 'great-person-builds', 'budget-settlement', 'nuclear', 'air-operations', 'greatworks', 'trade-tooltip', 'trade-countdown', 'nabatea-farms', 'nabatea-tomb', 'newzealand-science-completion'}
 
 def run_owned_runner(command, **kwargs):
     """Let the child restore its UI/settings when this wrapper is interrupted."""
@@ -89,13 +89,32 @@ def load_plan(path, repo, items):
         fixture=original.resolve()
         if not fixture.is_file() or fixture.suffix.lower()!='.civ5save' or original.is_symlink(): raise ValueError('Missing/invalid fixture: '+str(fixture))
         if not re.fullmatch('[a-f0-9]{64}',row.get('sha256','')) or sha(fixture)!=row['sha256']: raise ValueError('Fixture hash mismatch: '+ident)
+        expected=None;report_path=None
+        if bool(row.get('expected_report')) != bool(row.get('expected_report_sha256')):
+            raise ValueError('Replay requires both expected report and hash')
+        if row.get('expected_report'):
+            if turns!=0:raise ValueError('Replay-only stages require zero turns')
+            report_path=repo/row['expected_report']
+            if report_path.is_symlink()or not report_path.is_file():raise ValueError('Missing/invalid expected report')
+            report_bytes=report_path.read_bytes()
+            if hashlib.sha256(report_bytes).hexdigest()!=row['expected_report_sha256']:raise ValueError('Expected report hash mismatch')
+            report=json.loads(report_bytes)
+            if not str(report.get('status','')).startswith('passed-')or report.get('normal_exit_verified')is not True:
+                raise ValueError('Expected report is not a verified passing native run')
+            if report.get('scenario')!=scenario or report.get('saved_sha256')!=row['sha256']:
+                raise ValueError('Expected report scenario/save mismatch')
+            expected=report.get('saved_state')
+            if not isinstance(expected,str)or not isinstance(json.loads(expected),dict):raise ValueError('Expected report lacks a snapshot object')
+        if scenario=='civilization-start'and expected is None:raise ValueError('Civilization starts use the standalone runner; batch supports their exact replay only')
         code_path=repo/'LEKMOD_DLL/macos'/('playtest-scenario-'+scenario+'.lua')
         code=code_path.read_text()
         for target,adapter in HOOKS.get(scenario,{}).items():
             if target in hooks and hooks[target]!=adapter: raise ValueError('Conflicting adapters at '+target)
             hooks[target]=adapter
         result.append(dict(id=ident,scenario=scenario,fixture=str(fixture),sha256=row['sha256'],max_turns=turns,
-                           items=sorted(items[scenario]),code=code,source_sha256=sha(code_path)))
+                           items=[]if expected is not None else sorted(items[scenario]),code=code,source_sha256=sha(code_path),
+                           replay_only=expected is not None,expected=expected,expected_report=str(report_path.resolve())if report_path else None,
+                           expected_report_sha256=row.get('expected_report_sha256')))
     adapters=set(hooks.values());adapters.update(PREFIXES[a]for a in list(adapters)if a in PREFIXES)
     providers='\n'.join((repo/'LEKMOD_DLL/macos'/adapter).read_text() for adapter in adapters)
     for stage in result:
@@ -115,10 +134,11 @@ class Session:
         self.transcript='';previous_log=data/'Logs/Lua.log'
         self.last_lua=previous_log.read_text(errors='replace')if previous_log.exists()else''
         self.epoch_offset=0;self.transitioning=False
-        self.pending_expected=None;self.turns=0;self.started=time.monotonic();self.stage_started={}
+        self.pending_expected=plan['stages'][0].get('expected');self.turns=0;self.started=time.monotonic();self.stage_started={}
+        if plan['stages'][0].get('replay_only'):self.mode='reload'
         (output/'batch-plan.json').write_text(json.dumps({**plan,'stages':[{k:v for k,v in s.items()if k!='code'}for s in plan['stages']]},indent=2)+'\n')
     def initial_control(self):
-        return 'LekmodBatchControl='+lua(dict(run=self.stamp,command=0,index=1,mode='run'))+'\n'
+        return 'LekmodBatchControl='+lua(dict(run=self.stamp,command=0,index=1,mode=self.mode,expected=self.pending_expected))+'\n'
     def plan_code(self):
         return 'LekmodBatchPlan='+lua(self.plan)+'\n'
     def write_control(self,value):
@@ -186,7 +206,8 @@ class Session:
                     else:
                         stage=self.plan['stages'][self.index-1]
                         if sha(Path(stage['fixture']))!=stage['sha256']:raise ValueError('Fixture changed during batch')
-                        command=dict(index=self.index,mode='run',path=stage['fixture'])
+                        if stage.get('replay_only'):self.mode='reload';self.pending_expected=stage['expected']
+                        command=dict(index=self.index,mode=self.mode,path=stage['fixture'],expected=self.pending_expected)
                 self.epoch_offset=len(render_text);self.transitioning=not self.done
                 self.write_control(command)
                 self.persist()

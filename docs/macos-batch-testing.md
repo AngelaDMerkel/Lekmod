@@ -236,11 +236,11 @@ and 33 runner tests pass. Existing synchronization, wall-clock, turn and final
 checkpoint rules are unchanged. Native retest results are recorded separately.
 
 
-The fixed-asset unit catalogue `20260922T213414Z` then completed all125 per-unit
-checks, aggregate checks and exact reload in335.8seconds; normal disband of the
-saved125-unit catalogue and exact reload completed in530.1seconds
+The fixed-asset unit catalogue `20260922T213414Z` then completed all 125 per-unit
+checks, aggregate checks and exact reload in 335.8 seconds; normal disband of the
+saved 125-unit catalogue and exact reload completed in 530.1 seconds
 (`20260922T214053Z`). Both exited normally with full restoration/preservation and
 no Lua/synchronization errors or new diagnostics. This commissions the
-completed-check progress path beyond the240-second stall interval. See
+completed-check progress path beyond the 240-second stall interval. See
 [the catalogue report](macos-unit-catalogue.md) for the actual missing-texture
 fix, retained failures, exact hashes and limits.

@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "name": "existing-snapshot-replay-pilot",
+  "stages": [
+    {
+      "id": "inventory-1",
+      "scenario": "inventory",
+      "fixture": "build/macos/playtests/20260921T011008Z/Lekmod-Functional-20260921T011008Z.Civ5Save",
+      "sha256": "2ab4b9aad9b7e63625a8662eed1a331db30358dd791b4e740c23ed2354b05077",
+      "expected_report": "build/macos/playtests/20260921T011008Z/report.json",
+      "expected_report_sha256": "eb5b155559b7523c036b5900fee353f675ae06cd9195cd0b756e121d8a0d1907",
+      "max_turns": 0
+    },
+    {
+      "id": "inventory-2",
+      "scenario": "inventory",
+      "fixture": "build/macos/playtests/20260921T011107Z/Lekmod-Functional-20260921T011107Z.Civ5Save",
+      "sha256": "2236d7ed1cdf1376401a723e1528e8157bd11aeaffa09a3cfc25da26800ebea2",
+      "expected_report": "build/macos/playtests/20260921T011107Z/report.json",
+      "expected_report_sha256": "e19b7c47a91e6786d41482a63dc9e69df21da2bbdd9699cf7567bfda993aa3ee",
+      "max_turns": 0
+    }
+  ]
+}

@@ -34,15 +34,23 @@ boundary check is `python3 LEKMOD_DLL/macos/test-counterspy-outcomes.py`.
 
 ## Broad unique-unit lifecycle catalogue
 
-`batch-plans/unique-units.json` creates every one of the125 unique unit types
-referenced by the114 playable civilizations, observes native creation events,
+`batch-plans/unique-units.json` creates every one of the 125 unique unit types
+referenced by the 114 playable civilizations, observes native creation events,
 and reloads the exact saved state. `batch-plans/unique-unit-disband.json` pins
 that resulting save and uses normal Delete/Yes commands, pre-kill events and
-owned/neutral treasury rules for all125 units, followed by exact reload. Both
+owned/neutral treasury rules for all 125 units, followed by exact reload. Both
 use zero ordinary turns. Their per-unit completed assertions keep the existing
 stall guard informed; repeated messages do not count as progress. See
 [the catalogue report](../../docs/macos-unit-catalogue.md) for proven scope,
 artifact hashes, the corrected missing flag and retained commissioning failures.
+
+## All-civilization initialization preparation
+
+See [the prepared startup matrix](../../docs/macos-civilization-start-matrix.md)
+for the ten groups covering 114 normal civilization choices and the replay-only
+batch mode. Offline checks pass; native commissioning remains pending. Do not
+count planned groups as tested. Replay-only stages pin a passing source report
+and matching save hash and compare its original snapshot without running setup.
 
 ## Bounded startup/shutdown cycles
 

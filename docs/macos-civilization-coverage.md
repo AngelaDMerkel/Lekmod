@@ -4,7 +4,7 @@ Generated from the shipped XML and civilization Lua on 2026-09-16. This is a que
 
 All 114 playable civilizations and 26 civilization Lua source files are listed below. The shipped InGame template explicitly loads 25 civilization contexts; MC_NabateaAddin is a dormant legacy context with its load call commented out. A general engine test or a successful start with one civilization does not validate all of its unique abilities. Data overrides list only non-default units/buildings; shared trait fields and linked trait tables still require family-level or civilization-specific assertions.
 
-All **125 non-default unique unit types** referenced by these114 civilizations
+All **125 non-default unique unit types** referenced by these 114 civilizations
 now passed native instantiation, UnitCreated events, identity/domain/health and
 exact saved-state reload while explicitly supplied to an Oman human owner. The
 same catalogue also passed125 normal Delete/Yes operations, UnitPrekill events,

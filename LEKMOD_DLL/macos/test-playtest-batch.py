@@ -33,6 +33,41 @@ class BatchTests(unittest.TestCase):
     def save(self,session,row):
         (session.data/'Saves/single'/(row['save_name']+'.Civ5Save')).write_bytes(b'checkpoint')
         return '[LEKMOD_BATCH] run=test event=saved value='+json.dumps(row['save_name'])+'\n'
+    def expected_report(self, **changes):
+        p=self.root/'expected.json'
+        row=dict(status='passed-scenario-checks-only',normal_exit_verified=True,scenario='inventory',saved_sha256=batch.sha(self.fixture),saved_state='{}')
+        row.update(changes);p.write_text(json.dumps(row))
+        self.raw['stages'][0].update(expected_report='expected.json',expected_report_sha256=batch.sha(p),max_turns=0)
+        return p
+    def test_replay_only_starts_with_validated_snapshot_and_finishes_once(self):
+        self.expected_report();s=self.session()
+        self.assertEqual(s.mode,'reload');self.assertEqual(s.pending_expected,'{}')
+        self.assertEqual(s.plan['stages'][0]['items'],[])
+        self.assertIn('["mode"]="reload"',s.initial_control())
+        r=self.message('reload');s.update(self.event(r)+self.save(s,r),'')
+        self.assertTrue(s.done);self.assertEqual(len(s.results),1);self.assertEqual(s.turns,0)
+    def test_replay_requires_matching_passing_report_and_hash(self):
+        p=self.expected_report();p.write_text(p.read_text()+' ')
+        with self.assertRaisesRegex(ValueError,'report hash'):self.load()
+        self.expected_report(scenario='other')
+        with self.assertRaisesRegex(ValueError,'scenario/save'):self.load()
+        self.expected_report(saved_sha256='0'*64)
+        with self.assertRaisesRegex(ValueError,'scenario/save'):self.load()
+        self.expected_report(status='failed-stall')
+        with self.assertRaisesRegex(ValueError,'passing native'):self.load()
+        self.expected_report();self.raw['stages'][0]['max_turns']=1
+        with self.assertRaisesRegex(ValueError,'zero turns'):self.load()
+    def test_replay_rejects_partial_configuration_and_nonobject_snapshot(self):
+        self.expected_report();del self.raw['stages'][0]['expected_report_sha256']
+        with self.assertRaisesRegex(ValueError,'both expected'):self.load()
+        self.expected_report(saved_state='[]')
+        with self.assertRaisesRegex(ValueError,'snapshot object'):self.load()
+    def test_next_replay_stage_receives_its_pinned_expectation(self):
+        self.expected_report();self.raw['stages'].append({**self.raw['stages'][0],'id':'two'})
+        s=self.session();r=self.message('reload');s.update(self.event(r)+self.save(s,r),'abc')
+        c=json.loads((s.output/'batch-control.json').read_text())
+        self.assertEqual(c['index'],2);self.assertEqual(c['mode'],'reload');self.assertEqual(c['expected'],'{}')
+        self.assertFalse(s.done)
     def test_new_completed_check_advances_progress_without_completing_stage(self):
         s=self.session()
         one='[LEKMOD_FUNCTIONAL] run=test item=one::created-A status=PASS native-event\n'
