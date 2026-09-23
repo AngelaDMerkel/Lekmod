@@ -13,6 +13,12 @@ was found and fixed. See [the catalogue report](macos-unit-catalogue.md). These
 foreign-owner cases do not close the individual civilizations' trait, unique
 building, production or unit-mission gaps listed below.
 
+The [normal-start matrix](macos-civilization-start-matrix.md) also passed all
+114 civilization choices across ten human-led games (10 human / 104 AI roles),
+including native starting units, distinct colors, owner turns, actual capital
+founding and exact all-player state reload. It does not close the specific
+unique ability/building/mission gaps in the rows below.
+
 | Civilization | Trait | Unique overrides | Lua | Current evidence |
 | --- | --- | --- | --- | --- |
 | `CIVILIZATION_AKKAD` | `TRAIT_AKKAD` | UNIT_AKKAD_SPEARMAN, BUILDING_AKKAD_LIBRARY | — | Unique mechanics pending. |

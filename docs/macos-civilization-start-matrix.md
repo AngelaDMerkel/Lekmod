@@ -99,3 +99,40 @@ settings/hooks and preserved prior manual saves, with no Lua/synchronization
 errors or new diagnostics. Both managed invocations restored stock. Group evidence
 is under `build/macos/civilization-matrices/20260922T233307Z/`. The remaining
 nine groups are recorded separately; planned groups are not counted as passed.
+
+
+## Complete startup/founding/replay matrix: passed
+
+All 114 choices passed across ten groups: ten human leaders and 104 AI opponents.
+The ten source runs passed 50 aggregate functional assertions and used 20 ordinary
+turns total across independent fresh games. All 114 capitals were founded through
+the actual game flow. All ten all-player saved-state comparisons passed. This is
+initialization/founding/persistence coverage, not every unique ability or every
+civilization's human UI. No product correction was needed in this matrix.
+
+| Group | Human civilization | Choices | Native run | Exact replay |
+| --- | --- | --- | --- | --- |
+| 1 | `CIVILIZATION_AKKAD` | 12 | `20260922T233312Z` | `20260922T233513Z` |
+| 2 | `CIVILIZATION_BELGIUM` | 12 | `20260922T233722Z` | `20260922T235003Z` |
+| 3 | `CIVILIZATION_CHILE` | 12 | `20260922T233840Z` | `20260922T235003Z` |
+| 4 | `CIVILIZATION_GAUL` | 12 | `20260922T233959Z` | `20260922T235003Z` |
+| 5 | `CIVILIZATION_IRELAND` | 12 | `20260922T234117Z` | `20260922T235003Z` |
+| 6 | `CIVILIZATION_MADAGASCAR` | 12 | `20260922T234235Z` | `20260922T235003Z` |
+| 7 | `CIVILIZATION_NABATEA` | 12 | `20260922T234351Z` | `20260922T235003Z` |
+| 8 | `CIVILIZATION_POLAND` | 12 | `20260922T234507Z` | `20260922T235003Z` |
+| 9 | `CIVILIZATION_SPAIN` | 12 | `20260922T234627Z` | `20260922T235003Z` |
+| 10 | `CIVILIZATION_VENEZ` | 6 | `20260922T234743Z` | `20260922T235003Z` |
+
+The nine remaining replay comparisons shared one native process in
+`20260922T235003Z`, taking 237.7 seconds with zero ordinary turns. Every source and
+replay invocation exited normally, restored settings/hooks and preserved manual
+saves, with no Lua/synchronization errors or new diagnostics. Source and replay
+checkpoint hashes were independently reverified. The managed wrappers restored
+stock. Aggregate evidence, all civilization names and save hashes:
+`build/macos/civilization-start-validation-20260922.json`.
+
+The remaining-group source matrix is
+`build/macos/civilization-matrices/20260922T233717Z/`; its emitted
+`replay-plan.json` reproduces the nine reload comparisons. Broader building,
+ability, mission and ownership cases remain separate. Historical intermittent
+startup/shutdown failures are not relabeled by these successful runs.
