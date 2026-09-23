@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "name": "unique-building-prerequisite-recovery",
+  "stages": [
+    {
+      "id": "building-group-03",
+      "scenario": "unique-building-catalogue",
+      "fixture": "build/macos/playtests/20260922T233840Z/Lekmod-Functional-20260922T233840Z.Civ5Save",
+      "sha256": "1b239ce4280b2e4d6fc11997a830f7bd2861075e7074a39dd7e7d06b9d8d41e9",
+      "max_turns": 2
+    },
+    {
+      "id": "building-group-04",
+      "scenario": "unique-building-catalogue",
+      "fixture": "build/macos/playtests/20260922T233959Z/Lekmod-Functional-20260922T233959Z.Civ5Save",
+      "sha256": "7133ed700aedd71903a654af60706d271926479de59b219be7773256be797da7",
+      "max_turns": 2
+    },
+    {
+      "id": "building-group-05",
+      "scenario": "unique-building-catalogue",
+      "fixture": "build/macos/playtests/20260922T234117Z/Lekmod-Functional-20260922T234117Z.Civ5Save",
+      "sha256": "09c0d316e450943b2eafcd4e754b982dbdcde1ad5973bb9e408b1cdaee38726c",
+      "max_turns": 2
+    }
+  ]
+}

@@ -24,7 +24,11 @@ clean archive `f1a88db4…cc64c` itself passed the two-save replay pilot
 scope, including the earlier 81-check/16-reload comprehensive batch, five passing
 controlled lifecycle cycles and the unmodified physical acceptance session.
 
-Historical startup/shutdown failures remain unisolated, and broader civilization
+All 114 civilization choices passed initialization/founding and exact reload;
+87 unique building definitions passed owner-specific production and persistence.
+[Building evidence](macos-unique-building-validation.md) distinguishes supplied
+inputs, retained fixture failures and three separate acquisition cases.
+Historical startup/shutdown failures remain unisolated, and broader ability/effect
 coverage is in progress. Scripted checks, native outcomes and physical UI actions
 remain distinct; no full single-player certification is inferred.
 

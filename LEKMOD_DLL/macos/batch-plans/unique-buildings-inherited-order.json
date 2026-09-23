@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "name": "unique-building-inherited-order-recovery",
+  "stages": [
+    {
+      "id": "building-group-03",
+      "scenario": "unique-building-catalogue",
+      "fixture": "build/macos/playtests/20260922T233840Z/Lekmod-Functional-20260922T233840Z.Civ5Save",
+      "sha256": "1b239ce4280b2e4d6fc11997a830f7bd2861075e7074a39dd7e7d06b9d8d41e9",
+      "max_turns": 2
+    }
+  ]
+}

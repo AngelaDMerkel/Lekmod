@@ -44,13 +44,26 @@ stall guard informed; repeated messages do not count as progress. See
 [the catalogue report](../../docs/macos-unit-catalogue.md) for proven scope,
 artifact hashes, the corrected missing flag and retained commissioning failures.
 
-## All-civilization initialization preparation
+## All-civilization initialization
 
-See [the prepared startup matrix](../../docs/macos-civilization-start-matrix.md)
+See [the startup matrix](../../docs/macos-civilization-start-matrix.md)
 for the ten groups covering 114 normal civilization choices and the replay-only
-batch mode. Offline checks pass; native commissioning remains pending. Do not
-count planned groups as tested. Replay-only stages pin a passing source report
+batch mode. All 114 choices passed native initialization/founding and exact
+replays across ten games (10 human / 104 AI roles); individual unique mechanics
+remain separate. Replay-only stages pin a passing source report
 and matching save hash and compare its original snapshot without running setup.
+
+## Unique-building production catalogue
+
+`batch-plans/unique-building-catalogue.json` combines all ten saved civilization
+groups in one process (23-turn cap). All 87 regular-production unique buildings
+have passing completion/duplicate-rejection/reload evidence across commissioning
+and recovery runs; one uninterrupted full-plan pass is not claimed. Research,
+prerequisites, resources, legal extra cities and near-complete production are
+labeled inputs. The actual engine produces every target. Existing queues are
+continued; AI orders run only on the active owner's actual turn. Purchase-only,
+holy-city and occupied-city definitions are separate cases. See
+[exact evidence and retained fixture failures](../../docs/macos-unique-building-validation.md).
 
 ## Bounded startup/shutdown cycles
 

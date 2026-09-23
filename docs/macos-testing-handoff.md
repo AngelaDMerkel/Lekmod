@@ -1,38 +1,42 @@
 # Lekmod macOS single-player testing handoff
 
-**Latest: broad unique-unit lifecycle passed; stock verified; live continuation
-blocked by locked desktop (2026-09-22 22:51 UTC).** The catalogue found a real
-blocking missing texture on the Tunisian Privateer. Commit `0049e794` uses the
-shipped Privateer flag; the gameplay-data regression catches missing custom unit
-flags and invalid atlas slots. All 125 unique unit types then passed native
-creation/event checks and exact reload (`20260922T213414Z`, 335.8 seconds), and
-all 125 normal Delete/Yes, pre-kill and refund checks plus exact reload passed
-(`20260922T214053Z`, 530.1 seconds). Both used zero ordinary turns and normal
-exit/complete cleanup. See [the catalogue report](macos-unit-catalogue.md).
+**Latest: 114 civilization starts and 87 unique-building production paths passed;
+stock verified (2026-09-23 00:55 UTC).** All ten civilization groups passed normal
+initialization, native capital founding and exact all-player reload, with 10
+human / 104 AI roles. See [the matrix](macos-civilization-start-matrix.md).
+The clean `e1d859c8` archive itself was installed and passed native replay;
+its earlier transport/install gap is closed.
 
-The clean `e1d859c8` archive is
-`build/macos/Lekmod-release-candidate-tunisian-fixed-20260922.zip`, SHA-256
-`f1a88db4b2f33def33ba263be95915eae401da3af2239a31fceb2cfacffcc64c`.
-Its core/payload hashes match the native-tested intermediate package exactly.
-This clean archive has not yet been installed; the next replay pilot will test
-its installation. Full single-player coverage is still not claimed.
+The [building catalogue](macos-unique-building-validation.md) adds production,
+duplicate rejection and exact persistence for 87 of the 90 unique building
+definitions on their corresponding owners. These are supplied-prerequisite,
+scripted-input/native-outcome cases, not physical UI or complete ability-effect
+coverage. Passing evidence spans four runs; original failed batch verdicts remain.
+Recent failures were fixture assumptions about resource linkage, Coal, free
+walls, occupation and inherited queues, and required no product fix. Separate
+Akkad/Aksum quantitative yield checks also passed.
 
-Commit `3f406931` prepares ten normal-start groups covering all 114 civilization
-choices, plus pinned replay-only batching to compare their saves in one process.
-Four matrix, 23 supervisor, 33 runner and 18 dispatcher checks pass offline.
-**Native commissioning is pending.** After actual unlock, follow
-[the exact next commands](macos-civilization-start-matrix.md): replay pilot first,
-then civilization group 1 and its replay, then remaining groups. No new game may
-launch while locked. An asynchronous unlock request remains pending. Existing
-foreground authorization persists; default to background.
+The next dedicated cases are Israel National College (purchase-only), Vatican
+St Peter's (holy city), and Jerusalem Outremer (occupied city). Broader building
+abilities/unit missions/owner boundaries and historical startup-255/shutdown
+failures remain open. All 125 unique-unit creation/disband cases remain passed.
+Full single-player coverage is not claimed.
 
-No game/test process remains running. Stock and both backups match the canonical
-hash; 422 prior manual saves, the original quicksave, settings and 33 stock UI
-files were independently verified. Lekmod/private EUI are inactive. Evidence:
-`build/macos/catalogue-final-stock-verification-20260922.json`. Work is committed
-locally; nothing was pushed. Historical startup-255/shutdown failures and broader
-civilization ability/building/mission/owner combinations remain open. The long
-campaign is closed and all multiplayer remains deferred.
+Clean package: `build/macos/Lekmod-release-candidate-tunisian-fixed-20260922.zip`,
+SHA-256 `f1a88db4b2f33def33ba263be95915eae401da3af2239a31fceb2cfacffcc64c`.
+No test/game process remains after `20260923T005133Z`; it exited normally (0).
+Final independent stock verification preserved 473 prior manual saves, the
+original quicksave, 32 stock UI files, settings and both stock/Aspyr backups:
+`build/macos/building-catalogue-stock-verification-20260923.json`.
+The full catalogue's checkpoints and hashes are in
+`build/macos/unique-building-catalogue-validation-20260923.json`.
+
+Foreground permission persists, background is default, and every launch still
+requires an unlocked desktop. The accepted long campaign is closed, all
+multiplayer deferred, and no quota target or schedule is active. Work stays local;
+nothing was pushed. Inspect process/install state and the ignored continuation
+record before resuming; old locked-desktop and pending matrix claims below are
+historical.
 
 ## Previous completed milestone
 

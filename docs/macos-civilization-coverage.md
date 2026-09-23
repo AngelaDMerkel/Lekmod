@@ -19,6 +19,13 @@ including native starting units, distinct colors, owner turns, actual capital
 founding and exact all-player state reload. It does not close the specific
 unique ability/building/mission gaps in the rows below.
 
+The [unique-building catalogue](macos-unique-building-validation.md) now covers
+87 regular-production replacements on their actual civilization owners, with
+native completion, duplicate rejection and exact reload. Israel National
+College, Vatican St Peter's and Jerusalem Outremer require separate acquisition
+cases. Construction/persistence does not close the rows' individual effect or
+trait gaps; Akkad/Aksum also have the separate quantitative effect pilot.
+
 | Civilization | Trait | Unique overrides | Lua | Current evidence |
 | --- | --- | --- | --- | --- |
 | `CIVILIZATION_AKKAD` | `TRAIT_AKKAD` | UNIT_AKKAD_SPEARMAN, BUILDING_AKKAD_LIBRARY | — | [Library normal production, replacement restrictions, flat/per-population science and exact reload](macos-unique-building-validation.md) passed with supplied research/near-complete hammers. Other ability/unit/purchase paths pending. |
