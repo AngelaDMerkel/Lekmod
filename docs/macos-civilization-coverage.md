@@ -21,8 +21,8 @@ unique ability/building/mission gaps in the rows below.
 
 | Civilization | Trait | Unique overrides | Lua | Current evidence |
 | --- | --- | --- | --- | --- |
-| `CIVILIZATION_AKKAD` | `TRAIT_AKKAD` | UNIT_AKKAD_SPEARMAN, BUILDING_AKKAD_LIBRARY | — | Unique mechanics pending. |
-| `CIVILIZATION_AKSUM` | `TRAIT_AKSUM` | BUILDING_ASKUM_NATIONAL_EPIC | Lekmod_aksum.lua | Church land/sea/air/distance faith boundaries and exact reload native with supplied healing deltas. Other uniques/ordinary healing pending. |
+| `CIVILIZATION_AKKAD` | `TRAIT_AKKAD` | UNIT_AKKAD_SPEARMAN, BUILDING_AKKAD_LIBRARY | — | [Library normal production, replacement restrictions, flat/per-population science and exact reload](macos-unique-building-validation.md) passed with supplied research/near-complete hammers. Other ability/unit/purchase paths pending. |
+| `CIVILIZATION_AKSUM` | `TRAIT_AKSUM` | BUILDING_ASKUM_NATIONAL_EPIC | Lekmod_aksum.lua | Church land/sea/air/distance faith boundaries and exact reload native with supplied healing deltas. [National epic AI production, two-city Monument bonuses, own flat yields, foreign-owner control and exact reload](macos-unique-building-validation.md) passed with supplied prerequisites/near-complete hammers. Other ability/ordinary-healing boundaries pending. |
 | `CIVILIZATION_AMERICA` | `TRAIT_RIVER_EXPANSION` | UNIT_AMERICAN_MINUTEMAN, UNIT_PIONEER | — | Unique mechanics pending. |
 | `CIVILIZATION_ARABIA` | `TRAIT_LAND_TRADE_GOLD` | UNIT_ARABIAN_CAMELARCHER, BUILDING_BAZAAR | — | Unique mechanics pending. |
 | `CIVILIZATION_ARGENTINA` | `TRAIT_ARGENTINA` | UNIT_ARGENTINA_KNIGHT, BUILDING_ARGENTINA_STABLE | — | Unique mechanics pending. |

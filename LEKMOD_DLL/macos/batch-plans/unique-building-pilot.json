@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "name": "unique-building-production-pilot",
+  "stages": [
+    {
+      "id": "unique-building-pilot",
+      "scenario": "unique-building-pilot",
+      "fixture": "build/macos/playtests/20260922T233312Z/Lekmod-Functional-20260922T233312Z.Civ5Save",
+      "sha256": "903a1a869d99c11a2e7079995bbf0293b321035d2d1803a2912da05face90f1d",
+      "max_turns": 4
+    }
+  ]
+}
