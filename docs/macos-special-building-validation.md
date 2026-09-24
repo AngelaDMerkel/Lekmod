@@ -51,8 +51,10 @@ uses each number as a city slot. City loss can leave gaps, so a surviving city
 outside that range is skipped. The source regression executes the actual
 building-reward block with controlled city collections under ASan/UBSan: 64 of
 128 dense/empty/sparse collection, speed and research/overflow cases fail before
-the correction. This is a confirmed gameplay defect in shared source; native
-fix verification is still pending.
+the correction. This is a confirmed gameplay defect in shared source. Commit `f33cfd33`
+replaces the count-based loop with the existing firstCity/nextCity iterator. It
+changes no object layout or save format. All 128 source-block cases now pass
+under ASan/UBSan, including selected research and no-research overflow.
 
 Reproduction plans are `unique-building-special.json` and
 `unique-building-special-recovery.json` under `LEKMOD_DLL/macos/batch-plans`.
@@ -61,3 +63,44 @@ They pin the exact local fixtures. Both used clean archive
 Acquisition coverage does not establish every building effect: St Peter's
 religious-pressure/delegate effects and broader trait/mission boundaries remain
 separate. No full single-player certification is claimed.
+
+## Fixed-package native regression
+
+Clean-source `f33cfd33dfcb38ee7ab0d981b437067f07ad15c3` produced:
+
+- Archive `build/macos/Lekmod-college-city-iteration-20260924.zip`:
+  `9005a104f665ea4c5336c9ed8a85f31abdad782e33b277864a923ece3de09b01`.
+- Signed core: `2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1`.
+- Payload: `094d1dcf9635d2d8392fd49bbe7c9a88dadf1767813f5383f0ddf6b708e19a3e`
+  (unchanged from the prior fixed-content candidate).
+
+The exact packaged signed core passed ABI validation against this Mac's Civ V
+host. Run `20260924T220405Z` then passed the complete seven-stage regression in
+**264.1 seconds**, one native process, **33 functional checks and seven exact
+replays**, with five ordinary turns across independent fixtures. This includes
+all four acquisition cases again, baseline replay, normal College rewards and
+the identical preserved city-loss fixture. Both reward cases now grant exactly
+50 science and 50 faith through native Great Engineer expenditure and reload
+exactly; no expected reward or outcome was assigned. Native exit was normal (0).
+
+All 13 checkpoint hashes and every archive manifest entry were independently
+verified. There were no Lua/synchronization errors or new diagnostics. Stock,
+both canonical/Aspyr backups, 489 prior manual saves, the original quicksave,
+32 stock UI files and settings were verified after restoration. Lekmod/private
+EUI are inactive and no game/test process remains. Full per-stage hashes and
+restoration evidence: `build/macos/special-building-fixed-validation-20260924.json`.
+
+Reproduce this final batch with:
+
+```sh
+python3 LEKMOD_DLL/macos/batch-playtest.py \
+  --plan LEKMOD_DLL/macos/batch-plans/unique-building-fixed-regression.json \
+  --minutes 20 --package build/macos/Lekmod-college-city-iteration-20260924.zip \
+  --sha256 9005a104f665ea4c5336c9ed8a85f31abdad782e33b277864a923ece3de09b01
+```
+
+The retained original/recovery failures are not relabeled. The source-block
+regression covers 128 cases; dispatcher and runner checks pass 23 and 33 cases.
+All 90 unique building definitions now have at least one tested acquisition
+path and exact persistence evidence across the regular/special catalogues.
+This does not establish every building effect or owner/state combination.

@@ -38,7 +38,11 @@ mouse coverage in this catalogue.
 
 Three definitions remain outside this production phase: Israel's purchase-only
 National College, Vatican's holy-city St Peter's, and Jerusalem's occupied-city
-Outremer. Their acquisition gates and effects need dedicated cases.
+Outremer. Their acquisition gates, selected effects and exact reload now pass the
+[dedicated special-building cases](macos-special-building-validation.md). That
+work also found and fixed a missed College great-person reward after city loss.
+Together, the catalogues cover acquisition/persistence for all 90 definitions;
+individual effects remain separately scoped.
 
 ### Retained commissioning failures
 

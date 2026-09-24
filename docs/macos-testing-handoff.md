@@ -1,42 +1,49 @@
 # Lekmod macOS single-player testing handoff
 
-**Latest: 114 civilization starts and 87 unique-building production paths passed;
-stock verified (2026-09-23 00:55 UTC).** All ten civilization groups passed normal
-initialization, native capital founding and exact all-player reload, with 10
-human / 104 AI roles. See [the matrix](macos-civilization-start-matrix.md).
-The clean `e1d859c8` archive itself was installed and passed native replay;
-its earlier transport/install gap is closed.
+**Latest: all 90 unique building definitions have acquisition/reload coverage;
+College city-loss reward defect fixed; stock verified (2026-09-24 22:09 UTC).**
+The [special-building batch](macos-special-building-validation.md) closes Israel
+College gold/faith purchases, Vatican St Peter's holy-city/free-reward paths,
+and Jerusalem Outremer after real capture/annexation/resistance expiry. Together
+with the regular catalogue this covers acquisition/persistence for all 90,
+with explicitly supplied inputs and selected quantitative effects. It does not
+cover every ability/owner/state combination or add physical mouse coverage.
 
-The [building catalogue](macos-unique-building-validation.md) adds production,
-duplicate rejection and exact persistence for 87 of the 90 unique building
-definitions on their corresponding owners. These are supplied-prerequisite,
-scripted-input/native-outcome cases, not physical UI or complete ability-effect
-coverage. Passing evidence spans four runs; original failed batch verdicts remain.
-Recent failures were fixture assumptions about resource linkage, Coal, free
-walls, occupation and inherited queues, and required no product fix. Separate
-Akkad/Aksum quantitative yield checks also passed.
+The native College reward test found a real defect: after capture left a gap in
+city slots, a surviving city's College granted zero science/faith instead of
+50/50 on Quick. `f33cfd33` changes the reward loop to firstCity/nextCity; all
+128 source-block sanitizer cases pass. The same old save now grants 50/50 and
+reloads exactly. Earlier fixture failures (puppet IsOccupied expectations) and
+the original reward failure remain recorded, not relabeled.
 
-The next dedicated cases are Israel National College (purchase-only), Vatican
-St Peter's (holy city), and Jerusalem Outremer (occupied city). Broader building
-abilities/unit missions/owner boundaries and historical startup-255/shutdown
-failures remain open. All 125 unique-unit creation/disband cases remain passed.
-Full single-player coverage is not claimed.
+Clean package: `build/macos/Lekmod-college-city-iteration-20260924.zip`;
+SHA-256 `9005a104f665ea4c5336c9ed8a85f31abdad782e33b277864a923ece3de09b01`.
+Source `f33cfd33dfcb38ee7ab0d981b437067f07ad15c3`, dirty false; signed core
+`2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1`.
+Payload is unchanged from the earlier Tunisian-flag-fixed candidate.
 
-Clean package: `build/macos/Lekmod-release-candidate-tunisian-fixed-20260922.zip`,
-SHA-256 `f1a88db4b2f33def33ba263be95915eae401da3af2239a31fceb2cfacffcc64c`.
-No test/game process remains after `20260923T005133Z`; it exited normally (0).
-Final independent stock verification preserved 473 prior manual saves, the
-original quicksave, 32 stock UI files, settings and both stock/Aspyr backups:
-`build/macos/building-catalogue-stock-verification-20260923.json`.
-The full catalogue's checkpoints and hashes are in
-`build/macos/unique-building-catalogue-validation-20260923.json`.
+Run `20260924T220405Z` passed all 33 checks/seven exact replays in one native
+process, 264.1 seconds and five ordinary turns, normal exit 0. Exact signed-core
+ABI, every archive entry and all 13 checkpoint hashes were verified. Reproduce
+with `LEKMOD_DLL/macos/batch-plans/unique-building-fixed-regression.json`.
+Full evidence: `build/macos/special-building-fixed-validation-20260924.json`.
+Stock/backups, 489 prior manual saves, original quicksave, 32 stock UI files and
+settings are restored/preserved; Lekmod/private EUI are inactive and no game/test
+process remains. All work is committed locally; nothing was pushed.
+
+Remaining work concerns individual building/trait/unit mission effects and
+owner/state boundaries, plus unisolated historical startup-255/shutdown failures.
+For example, St Peter's pressure/delegate effects are not covered by its free
+rewards test. All 114 normal civilization starts and 125 unique-unit lifecycles
+remain passed under their recorded scopes/artifacts. Full single-player support
+is not claimed from acquisition coverage alone.
 
 Foreground permission persists, background is default, and every launch still
-requires an unlocked desktop. The accepted long campaign is closed, all
-multiplayer deferred, and no quota target or schedule is active. Work stays local;
-nothing was pushed. Inspect process/install state and the ignored continuation
-record before resuming; old locked-desktop and pending matrix claims below are
-historical.
+requires an unlocked desktop. The accepted long campaign is closed; all
+multiplayer is deferred. No quota target, schedule, Docker restart or Steam
+channel change is authorized by this continuation. Inspect process/install state
+and the ignored continuation record before resuming. Older pending matrix/building
+and locked-desktop statements below are historical.
 
 ## Previous completed milestone
 

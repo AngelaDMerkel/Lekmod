@@ -1,6 +1,29 @@
 # Current-Mac release qualification
 
-## Latest fixed-content candidate (2026-09-22 UTC)
+## Latest College reward correction (2026-09-24 UTC)
+
+Clean source `f33cfd33dfcb38ee7ab0d981b437067f07ad15c3` fixes great-person
+building rewards skipped after city loss. Exact package
+`build/macos/Lekmod-college-city-iteration-20260924.zip`:
+`9005a104f665ea4c5336c9ed8a85f31abdad782e33b277864a923ece3de09b01`.
+Signed core: `2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1`.
+Payload: `094d1dcf9635d2d8392fd49bbe7c9a88dadf1767813f5383f0ddf6b708e19a3e`.
+The manifest records clean source; compatibility remains `1663b23b`.
+
+Run `20260924T220405Z` passed all 33 affected functional checks and seven exact
+replays in one process (264.1 seconds, five ordinary turns), including the
+previously failing city-loss fixture. Normal exit, cleanup and stock restoration
+passed. Exact packaged-core ABI, every manifest file and all 13 checkpoints were
+verified. See [scope and reproduction](macos-special-building-validation.md).
+489 prior manual saves, quicksave, 32 stock UI files, settings and both stock
+backups were independently preserved. No native process remains.
+
+This is the current tested candidate. The prior comprehensive, lifecycle and
+physical results below concern their recorded artifacts; they are not silently
+reassigned to this new core. Historical startup/shutdown failures and broader
+ability/effect coverage remain open. No full single-player certification is claimed.
+
+## Previous fixed-content candidate (2026-09-22 UTC)
 
 The later 125-unit catalogue exposed a missing Tunisian Privateer flag that
 blocked the native renderer with a texture-load dialog. It is fixed in
@@ -20,8 +43,8 @@ clean archive was subsequently installed and exercised in replay pilot
 normal exit/cleanup and stock restoration. See the [matrix report](macos-civilization-start-matrix.md).
 
 Stock/backups, 422 prior manual saves, quicksave, settings and 33 stock UI files
-were verified after restoration. No game/test is running. The remaining normal
-civilization-start/replay matrix is [prepared but not commissioned](macos-civilization-start-matrix.md).
+were verified after restoration. No game/test is running. The later normal
+[civilization-start/replay matrix passed all 114 choices](macos-civilization-start-matrix.md).
 Broader unique abilities and the intermittent startup/shutdown investigation
 remain open. The earlier batch qualification below is retained as historical
 scoped evidence; it does not erase the subsequently discovered texture defect.

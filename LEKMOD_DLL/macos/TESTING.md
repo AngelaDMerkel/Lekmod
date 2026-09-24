@@ -65,6 +65,18 @@ continued; AI orders run only on the active owner's actual turn. Purchase-only,
 holy-city and occupied-city definitions are separate cases. See
 [exact evidence and retained fixture failures](../../docs/macos-unique-building-validation.md).
 
+## Special-building acquisition and College reward regression
+
+`batch-plans/unique-building-fixed-regression.json` runs seven stages in one
+process: exact baseline replay, Israel gold/faith purchases, Vatican St Peter's,
+Jerusalem Outremer after real capture, and College great-person rewards in normal
+and post-capture city collections. All 33 checks/seven replays passed on clean
+`f33cfd33`; the earlier failures are retained. See
+[the exact artifact, inputs and results](../../docs/macos-special-building-validation.md).
+The cap is 11 ordinary turns; the passing run used five. Offline reward-block
+regression: `python3 LEKMOD_DLL/macos/test-great-person-building-rewards.py`
+(128 dense/empty/sparse city, speed and research/overflow cases under sanitizers).
+
 ## Bounded startup/shutdown cycles
 
 `lifecycle-playtest.py` installs a verified package once, then performs 1–5

@@ -15,22 +15,28 @@ sessions. The user renewed foreground-testing permission for this task.
 
 ## Latest clean-artifact qualification
 
-The clean-source candidate `e1d859c8` includes the verified Tunisian Privateer
-flag correction. All 125 unique-unit creation cases and 125 normal disband/refund
-cases, each with exact reload, passed on its exact core/payload contents. The
-clean archive `f1a88db4…cc64c` itself passed the two-save replay pilot
-`20260922T233116Z`, including normal exit, cleanup and stock restoration.
-[Release qualification](macos-release-qualification.md) records full hashes and
-scope, including the earlier 81-check/16-reload comprehensive batch, five passing
-controlled lifecycle cycles and the unmodified physical acceptance session.
+Clean-source candidate `f33cfd33` fixes missing College great-person rewards
+after city loss. The source loop skipped surviving cities beyond the current
+city count; it now uses the engine's city iterator. The native failure granted
+zero science/faith after a real capture; the same saved fixture now grants the
+expected 50/50 on Quick. All 128 source-block sanitizer cases pass.
 
-All 114 civilization choices passed initialization/founding and exact reload;
-87 unique building definitions passed owner-specific production and persistence.
-[Building evidence](macos-unique-building-validation.md) distinguishes supplied
-inputs, retained fixture failures and three separate acquisition cases.
-Historical startup/shutdown failures remain unisolated, and broader ability/effect
-coverage is in progress. Scripted checks, native outcomes and physical UI actions
-remain distinct; no full single-player certification is inferred.
+The clean archive `9005a104…09b01` passed 33 functional checks and seven exact
+replays in one 264.1-second process, with normal exit and complete restoration.
+[Special-building evidence](macos-special-building-validation.md) records both
+purchase currencies, holy-city production/free rewards, real capture/annexation
+and Outremer effects, normal and post-capture College rewards, and full hashes.
+All 90 unique building definitions now have at least one acquisition/persistence
+path covered across the regular and special catalogues; not every effect or
+owner/state combination has been tested.
+
+The earlier Tunisian flag fix, 125 unique-unit creation/disband cases, 114 normal
+civilization starts/replays, 81-check comprehensive batch, five lifecycle cycles
+and physical UI acceptance remain scoped historical evidence.
+[Release qualification](macos-release-qualification.md) distinguishes artifacts.
+Historical startup/shutdown failures and broader ability/effect coverage remain
+open. Scripted callbacks, native outcomes and physical input remain distinct;
+full single-player certification is not claimed.
 
 ## Scope and acceptance
 
@@ -44,6 +50,7 @@ checks. Multiplayer, including hotseat and PBEM, is deferred and untested.
 
 | Item | Evidence | Commit |
 | --- | --- | --- |
+| Visit surviving cities after capture/raze when awarding great-person building yields | Native ordinary College reward 50/50; post-capture 0/0 before fix and 50/50 after; exact reload plus 128 source-block sanitizer cases | `f33cfd33` |
 | Preserve 32-bit LCG state on LP64 macOS | One million x86-64 regression transitions; native runs no longer showed the reproduced RNG mismatch/forced-resync loop | `1024d1e8` |
 | Return the actual Lua movement-query result | Native scripted moves to legal adjacent plots succeeded after the binding stopped always returning false | `5deafa1d` |
 | Keep unit script-data storage alive until Lua copies it | ASan reproduces the old heap-use-after-free; current binding passes, plus 400 native reads of empty/short/long/Unicode strings with original data restored | `e7cc7580` |
