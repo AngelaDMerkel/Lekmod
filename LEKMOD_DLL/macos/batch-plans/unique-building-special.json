@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "name": "unique-building-special-acquisition",
+  "stages": [
+    {
+      "fixture": "build/macos/playtests/20260924T214605Z/Lekmod-Functional-20260924T214605Z.Civ5Save",
+      "sha256": "cee385a99258c682176b8396600f3a27eafc0b98d81bb49e3e36ea95451bcd1a",
+      "id": "special-baseline",
+      "scenario": "civilization-start",
+      "max_turns": 0,
+      "expected_report": "build/macos/playtests/20260924T214605Z/report.json",
+      "expected_report_sha256": "fa9dcc950352cefe33fe6c95de227e70438bda655fb1446725fab1c93290a80f"
+    },
+    {
+      "fixture": "build/macos/playtests/20260924T214605Z/Lekmod-Functional-20260924T214605Z.Civ5Save",
+      "sha256": "cee385a99258c682176b8396600f3a27eafc0b98d81bb49e3e36ea95451bcd1a",
+      "id": "israel-college-gold",
+      "scenario": "israel-college-gold",
+      "max_turns": 0
+    },
+    {
+      "fixture": "build/macos/playtests/20260924T214605Z/Lekmod-Functional-20260924T214605Z.Civ5Save",
+      "sha256": "cee385a99258c682176b8396600f3a27eafc0b98d81bb49e3e36ea95451bcd1a",
+      "id": "israel-college-faith",
+      "scenario": "israel-college-faith",
+      "max_turns": 0
+    },
+    {
+      "fixture": "build/macos/playtests/20260924T214605Z/Lekmod-Functional-20260924T214605Z.Civ5Save",
+      "sha256": "cee385a99258c682176b8396600f3a27eafc0b98d81bb49e3e36ea95451bcd1a",
+      "id": "vatican-stpeters",
+      "scenario": "vatican-stpeters",
+      "max_turns": 3
+    },
+    {
+      "fixture": "build/macos/playtests/20260924T214605Z/Lekmod-Functional-20260924T214605Z.Civ5Save",
+      "sha256": "cee385a99258c682176b8396600f3a27eafc0b98d81bb49e3e36ea95451bcd1a",
+      "id": "jerusalem-outremer",
+      "scenario": "jerusalem-outremer",
+      "max_turns": 8
+    }
+  ]
+}

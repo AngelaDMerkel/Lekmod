@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "name": "special-building-capture-and-reward",
+  "stages": [
+    {
+      "fixture": "build/macos/playtests/20260924T214605Z/Lekmod-Functional-20260924T214605Z.Civ5Save",
+      "sha256": "cee385a99258c682176b8396600f3a27eafc0b98d81bb49e3e36ea95451bcd1a",
+      "id": "jerusalem-outremer",
+      "scenario": "jerusalem-outremer",
+      "max_turns": 8
+    },
+    {
+      "id": "college-reward-normal",
+      "scenario": "israel-college-reward",
+      "fixture": "build/macos/playtests/20260924T215211Z/checkpoints/Lekmod-Batch-20260924T215211Z-israel-college-gold-run.Civ5Save",
+      "sha256": "66e6cb85ea0deba270e25d557d73dc56f186bf44a10160774ae1875862f19982",
+      "max_turns": 0
+    },
+    {
+      "id": "college-reward-city-loss",
+      "scenario": "israel-college-reward",
+      "fixture": "build/macos/playtests/20260924T215211Z/checkpoints/Lekmod-Batch-20260924T215211Z-jerusalem-outremer-run.Civ5Save",
+      "sha256": "cf8fce37fe17d97ff643c7ddbeb848fb00004a236d49033fc81bd70fcc504d79",
+      "max_turns": 0
+    }
+  ]
+}

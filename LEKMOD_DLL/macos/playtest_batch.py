@@ -10,6 +10,9 @@ from pathlib import Path
 
 # Only scenarios with reviewed, compatible temporary adapters are admitted.
 HOOKS = {
+    'israel-college-reward': {'UI/ProductionPopup.lua': 'playtest-scenario-purchase-popup.lua'},
+    'israel-college-gold': {'UI/ProductionPopup.lua': 'playtest-scenario-purchase-popup.lua'},
+    'israel-college-faith': {'UI/ProductionPopup.lua': 'playtest-scenario-purchase-popup.lua'},
     'unique-unit-disband': {'@UI/InGame/Popups/GenericPopup.lua': 'playtest-scenario-unit-confirm.lua'},
     'greatworks': {'@DLC/Expansion2/UI/InGame/Popups/GreatWorkPopup.lua': 'playtest-culture-great-work-popup.lua'},
     'newzealand-defender': {'Civilizations/Lekmod_newzealand.lua': 'playtest-nz-owner-observer.lua'},
@@ -21,7 +24,7 @@ HOOKS = {
 }
 PREFIXES = {'playtest-nz-owner-observer.lua': 'playtest-nz-owner-before-observer.lua'}
 
-SUPPORTED = set(HOOKS) | {'unique-building-catalogue', 'unique-building-pilot', 'civilization-start', 'unique-units', 'counterspy', 'nuclear-cities', 'nuclear-production', 'nuclear-cleanup', 'defender-zoc', 'inventory', 'admiral-repair', 'worker', 'unit-actions', 'great-person-builds', 'budget-settlement', 'nuclear', 'air-operations', 'greatworks', 'trade-tooltip', 'trade-countdown', 'nabatea-farms', 'nabatea-tomb', 'newzealand-science-completion'}
+SUPPORTED = set(HOOKS) | {'vatican-stpeters', 'jerusalem-outremer', 'unique-building-catalogue', 'unique-building-pilot', 'civilization-start', 'unique-units', 'counterspy', 'nuclear-cities', 'nuclear-production', 'nuclear-cleanup', 'defender-zoc', 'inventory', 'admiral-repair', 'worker', 'unit-actions', 'great-person-builds', 'budget-settlement', 'nuclear', 'air-operations', 'greatworks', 'trade-tooltip', 'trade-countdown', 'nabatea-farms', 'nabatea-tomb', 'newzealand-science-completion'}
 
 def run_owned_runner(command, **kwargs):
     """Let the child restore its UI/settings when this wrapper is interrupted."""
