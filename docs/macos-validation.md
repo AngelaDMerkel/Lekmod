@@ -38,6 +38,18 @@ Historical startup/shutdown failures and broader ability/effect coverage remain
 open. Scripted callbacks, native outcomes and physical input remain distinct;
 full single-player certification is not claimed.
 
+## Latest civilization ability continuation
+
+The unchanged clean `f33cfd33` package now has [additional Vatican, Israel and
+Jerusalem evidence](macos-vatican-validation.md): 45 passing functional assertions
+across seven stage/reload pairs and a new Vatican-human baseline replay. This
+covers St Peter's pressure/delegates and actual settlement, both Courthouse event
+paths, all seven Great Person improvement bonus comparisons, capped kill faith,
+worked terrain yields, unique-unit acquisition and unit/trait reward stacking.
+The latest three-stage batch passed intact; earlier failed commissioning batches
+are retained with their specific fixture corrections. No new product fix was
+required. Remaining unit utilities and owner/state boundaries remain open.
+
 ## Scope and acceptance
 
 The user accepted the accumulated turn-testing evidence as sufficient on

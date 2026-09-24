@@ -60,9 +60,9 @@ Reproduction plans are `unique-building-special.json` and
 `unique-building-special-recovery.json` under `LEKMOD_DLL/macos/batch-plans`.
 They pin the exact local fixtures. Both used clean archive
 `f1a88db4b2f33def33ba263be95915eae401da3af2239a31fceb2cfacffcc64c`.
-Acquisition coverage does not establish every building effect: St Peter's
-religious-pressure/delegate effects and broader trait/mission boundaries remain
-separate. No full single-player certification is claimed.
+Acquisition coverage does not establish every building effect. The later
+[Vatican ability continuation](macos-vatican-validation.md) verifies St Peter's
+pressure/delegates/settlement; other trait/mission boundaries remain separate. No full single-player certification is claimed.
 
 ## Fixed-package native regression
 

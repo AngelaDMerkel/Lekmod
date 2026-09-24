@@ -77,6 +77,20 @@ The cap is 11 ordinary turns; the passing run used five. Offline reward-block
 regression: `python3 LEKMOD_DLL/macos/test-great-person-building-rewards.py`
 (128 dense/empty/sparse city, speed and research/overflow cases under sanitizers).
 
+## Religious civilization ability batches
+
+[The Vatican/Israel/Jerusalem report](../../docs/macos-vatican-validation.md)
+records pressure/delegate/settlement, capture/conversion Courthouse paths,
+14 paired Great Person builds, capped military kill faith/civilian controls,
+actual Worker Pastures, raw/working luxury faith and unique-unit acquisition
+and kill yields. Seven functional stage/reload pairs plus one baseline replay
+have passing evidence (45 assertions across recorded runs). The original failed
+commissioning batches retain their verdicts; aggregate one-process success is
+not inferred. `religious-terrain-and-units.json` itself passed all 15 checks and
+three replays in one 197.1-second native process. Earlier plans retain the exact
+fixture hashes for focused reproduction. Only scripted actions/native outcomes
+are covered here; there is no new physical mouse coverage.
+
 ## Bounded startup/shutdown cycles
 
 `lifecycle-playtest.py` installs a verified package once, then performs 1–5

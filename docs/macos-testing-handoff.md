@@ -1,5 +1,36 @@
 # Lekmod macOS single-player testing handoff
 
+**Continuous work is authorized until the user explicitly says stop.** Do not
+end at routine milestones. Current work stays in this checkout, background by
+default, with no push, multiplayer, schedules, Docker restart, channel change or
+new long campaign. Check the ignored continuation record and actual process/lock
+state before any installation or launch.
+
+**Latest ability milestone (2026-09-24 UTC):** [Vatican/Israel/Jerusalem cases](macos-vatican-validation.md)
+add 45 passing assertions across seven functional stage/reload pairs plus a new
+Vatican-human baseline replay. St Peter's pressure doubled 90→180, delegates
+increased 1→3 and pressure settled exactly; capture/conversion Courthouses,
+seven paired Great Person improvements, capped kill faith, Worker Pasture
+culture, raw/worked luxury faith, unique-unit acquisition and kill rewards pass.
+The final three-stage run `20260924T230221Z` passed 15 checks/three exact replays
+in 197.1 seconds, eight ordinary turns, normal exit 0 and full cleanup. Earlier
+fixture failures remain failed; no new product fix was needed.
+
+Latest independent stock evidence preserved 518 prior manual saves, original
+quicksave, 32 stock UI files, settings and both canonical/Aspyr backups. Evidence:
+`build/macos/religious-civilization-validation-20260924.json`. A locked-desktop
+launch attempt made no settings changes; the user subsequently unlocked and the
+new normally founded Vatican-human fixture `20260924T230005Z` passed. Its save
+hash is `7fb1cef635d7cf6425e18c1a7a1c6b23a59123fc0b5f8265071b2491a487af8d`.
+
+Next work: remaining Swiss Guard utility/promotion and Crusader movement/combat
+boundaries using the actually acquired unique-unit checkpoint in
+`20260924T230221Z`. Broader civilization/owner states and historical startup-255 /
+shutdown failures remain open. St Peter's pressure/delegate and terrain/unit
+kill-yield checks are now closed; do not reopen stale pending items below.
+
+## Previous College reward milestone
+
 **Latest: all 90 unique building definitions have acquisition/reload coverage;
 College city-loss reward defect fixed; stock verified (2026-09-24 22:09 UTC).**
 The [special-building batch](macos-special-building-validation.md) closes Israel

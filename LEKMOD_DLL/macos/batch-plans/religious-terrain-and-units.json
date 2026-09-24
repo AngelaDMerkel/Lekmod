@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "name": "religious-terrain-and-owned-unique-units",
+  "stages": [
+    {
+      "fixture": "build/macos/playtests/20260924T230005Z/Lekmod-Functional-20260924T230005Z.Civ5Save",
+      "sha256": "7fb1cef635d7cf6425e18c1a7a1c6b23a59123fc0b5f8265071b2491a487af8d",
+      "id": "vatican-roster",
+      "scenario": "civilization-start",
+      "max_turns": 0,
+      "expected_report": "build/macos/playtests/20260924T230005Z/report.json",
+      "expected_report_sha256": "18ac739bc565141abbe05f3063dd41d08038d6ce130b9fc9823924c4efe55f76"
+    },
+    {
+      "id": "religious-terrain",
+      "scenario": "religious-terrain",
+      "fixture": "build/macos/playtests/20260924T214605Z/Lekmod-Functional-20260924T214605Z.Civ5Save",
+      "sha256": "cee385a99258c682176b8396600f3a27eafc0b98d81bb49e3e36ea95451bcd1a",
+      "max_turns": 8
+    },
+    {
+      "fixture": "build/macos/playtests/20260924T230005Z/Lekmod-Functional-20260924T230005Z.Civ5Save",
+      "sha256": "7fb1cef635d7cf6425e18c1a7a1c6b23a59123fc0b5f8265071b2491a487af8d",
+      "id": "religious-unique-units",
+      "scenario": "religious-unique-units",
+      "max_turns": 8
+    }
+  ]
+}

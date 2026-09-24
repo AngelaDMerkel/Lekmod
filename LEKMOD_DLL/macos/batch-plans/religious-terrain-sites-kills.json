@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "name": "religious-terrain-sites-and-kill-faith",
+  "stages": [
+    {
+      "id": "vatican-great-sites",
+      "scenario": "vatican-great-improvements",
+      "fixture": "build/macos/playtests/20260924T214605Z/Lekmod-Functional-20260924T214605Z.Civ5Save",
+      "sha256": "cee385a99258c682176b8396600f3a27eafc0b98d81bb49e3e36ea95451bcd1a",
+      "max_turns": 4
+    },
+    {
+      "id": "religious-terrain",
+      "scenario": "religious-terrain",
+      "fixture": "build/macos/playtests/20260924T214605Z/Lekmod-Functional-20260924T214605Z.Civ5Save",
+      "sha256": "cee385a99258c682176b8396600f3a27eafc0b98d81bb49e3e36ea95451bcd1a",
+      "max_turns": 8
+    },
+    {
+      "id": "vatican-kill-faith",
+      "scenario": "vatican-kill-faith",
+      "fixture": "build/macos/playtests/20260924T214605Z/Lekmod-Functional-20260924T214605Z.Civ5Save",
+      "sha256": "cee385a99258c682176b8396600f3a27eafc0b98d81bb49e3e36ea95451bcd1a",
+      "max_turns": 6
+    }
+  ]
+}
