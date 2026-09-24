@@ -17891,16 +17891,11 @@ void CvPlayer::DoGreatPersonExpended(UnitTypes eGreatPersonUnit)
 			if(pkBuildingInfo)
 			{
 
-				// loop trough the player's cities and apply the yield for each city that has the building
-
-				int iNumCities = getNumCities();
-				for(int iCityLoop = 0; iCityLoop < iNumCities; iCityLoop++)
+				// Captured or razed cities leave gaps in the reusable city slots.
+				// Iterate surviving cities rather than treating the city count as slot bounds.
+				int iCityLoop;
+				for(CvCity* pCity = firstCity(&iCityLoop); pCity != NULL; pCity = nextCity(&iCityLoop))
 				{
-					CvCity* pCity = getCity(iCityLoop);
-					if(!pCity)
-					{
-						continue;
-					}
 					if(pCity->GetCityBuildings()->GetNumBuilding(eBuilding) <= 0)
 					{
 						continue;
