@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "name": "swiss-crusader-utility",
+  "stages": [
+    {
+      "fixture": "build/macos/playtests/20260924T230221Z/checkpoints/Lekmod-Batch-20260924T230221Z-religious-unique-units-run.Civ5Save",
+      "sha256": "cd2445e36ecab1163b3695a810c03198363b3cb9a875651391817b14faab0117",
+      "id": "swiss-utility",
+      "scenario": "swiss-utility",
+      "max_turns": 5
+    },
+    {
+      "fixture": "build/macos/playtests/20260924T230221Z/checkpoints/Lekmod-Batch-20260924T230221Z-religious-unique-units-run.Civ5Save",
+      "sha256": "cd2445e36ecab1163b3695a810c03198363b3cb9a875651391817b14faab0117",
+      "id": "crusader-borders",
+      "scenario": "crusader-borders",
+      "max_turns": 3
+    }
+  ]
+}

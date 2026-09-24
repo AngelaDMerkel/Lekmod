@@ -50,6 +50,12 @@ The latest three-stage batch passed intact; earlier failed commissioning batches
 are retained with their specific fixture corrections. No new product fix was
 required. Remaining unit utilities and owner/state boundaries remain open.
 
+The subsequent [Swiss/Crusader utility round](macos-swiss-crusader-validation.md)
+completed with Crusader/reload passed and two Swiss fixture/comparison checks
+still open. At the user's request testing stopped after that round. Stock,
+backups, 526 prior manual saves, quicksave, settings and 32 stock UI files were
+verified, with no game/test process left running.
+
 ## Scope and acceptance
 
 The user accepted the accumulated turn-testing evidence as sufficient on

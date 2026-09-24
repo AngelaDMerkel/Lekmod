@@ -91,6 +91,15 @@ three replays in one 197.1-second native process. Earlier plans retain the exact
 fixture hashes for focused reproduction. Only scripted actions/native outcomes
 are covered here; there is no new physical mouse coverage.
 
+## Swiss Guard / Crusader follow-up and current pause
+
+`swiss-crusader-utility.json` and `swiss-healing-mounted.json` retain the current
+utility/calculation fixtures. [The report](../../docs/macos-swiss-crusader-validation.md)
+distinguishes the passed Crusader/reload from partial Swiss assertions and the
+two pending fixture/comparison corrections. Both containing batches remain
+failed. The user requested a stop after the current round; no more tests should
+start until the user explicitly resumes. Stock and preservation were verified.
+
 ## Bounded startup/shutdown cycles
 
 `lifecycle-playtest.py` installs a verified package once, then performs 1–5

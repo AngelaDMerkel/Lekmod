@@ -143,3 +143,9 @@ stock verification preserved 518 prior manual saves, original quicksave,
 
 No product change was needed for these Vatican cases. Full single-player
 certification and all civilization/owner/state combinations are not claimed.
+
+Later [Swiss/Crusader utility checks](macos-swiss-crusader-validation.md) passed
+Crusader border entry/native +20 calculation with exact reload. Swiss free
+pillage/healing and mounted-melee calculation have partial positive evidence,
+but range-removal/matched mounted-ranged comparison and persistence remain open.
+Testing is paused after the user's requested stop at the end of that round.

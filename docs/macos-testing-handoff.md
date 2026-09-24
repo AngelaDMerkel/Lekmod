@@ -1,10 +1,29 @@
 # Lekmod macOS single-player testing handoff
 
-**Continuous work is authorized until the user explicitly says stop.** Do not
-end at routine milestones. Current work stays in this checkout, background by
-default, with no push, multiplayer, schedules, Docker restart, channel change or
-new long campaign. Check the ignored continuation record and actual process/lock
-state before any installation or launch.
+**Paused at the user's request after the current round (2026-09-24 UTC).**
+The user superseded the earlier continuous-work instruction with “Stop whenever
+you finish the current round of tests.” That round is complete; do not start
+another test until an explicit resumption. No game/test process remains and
+stock is restored.
+
+[Latest utility evidence](macos-swiss-crusader-validation.md): Crusader +20 native
+combat calculation, peaceful rival-territory entry/control and exact reload passed
+in `20260924T231805Z`. In `20260924T232415Z`, Swiss free pillage and ordinary healing
+(20 HP adjacent, 10 control, 15 self) passed as partial outcomes. Range-removal
+could not find a legal exit tile. Mounted melee calculation passed; mounted ranged
+had the expected +50 plus an independent +20 flanking term that the test did not
+account for. Both Swiss workflows retain FAIL and lack exact reload coverage.
+No new product defect was confirmed. First work after resumption is to correct
+those fixture/comparison conditions and retest them, without reopening Crusader.
+
+Independent stop verification preserved 526 prior manual saves, quicksave,
+32 stock UI files, settings and canonical/Aspyr backups. Lekmod/private EUI are
+inactive. Evidence: `build/macos/swiss-crusader-stop-verification-20260924.json`.
+All work stays local, no push. Foreground permission persists for an authorized
+resumption; background remains default and a locked desktop still blocks launch.
+No multiplayer, schedules, Docker restart, channel change or new long campaign.
+
+## Previous religious-civilization milestone
 
 **Latest ability milestone (2026-09-24 UTC):** [Vatican/Israel/Jerusalem cases](macos-vatican-validation.md)
 add 45 passing assertions across seven functional stage/reload pairs plus a new

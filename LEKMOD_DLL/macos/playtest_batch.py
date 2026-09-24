@@ -25,7 +25,7 @@ HOOKS = {
 }
 PREFIXES = {'playtest-nz-owner-observer.lua': 'playtest-nz-owner-before-observer.lua'}
 
-SUPPORTED = set(HOOKS) | {'vatican-kill-faith', 'religious-terrain', 'vatican-great-improvements', 'vatican-pressure-votes', 'vatican-courthouse', 'vatican-stpeters', 'jerusalem-outremer', 'unique-building-catalogue', 'unique-building-pilot', 'civilization-start', 'unique-units', 'counterspy', 'nuclear-cities', 'nuclear-production', 'nuclear-cleanup', 'defender-zoc', 'inventory', 'admiral-repair', 'worker', 'unit-actions', 'great-person-builds', 'budget-settlement', 'nuclear', 'air-operations', 'greatworks', 'trade-tooltip', 'trade-countdown', 'nabatea-farms', 'nabatea-tomb', 'newzealand-science-completion'}
+SUPPORTED = set(HOOKS) | {'swiss-mounted-calculation', 'swiss-utility', 'crusader-borders', 'vatican-kill-faith', 'religious-terrain', 'vatican-great-improvements', 'vatican-pressure-votes', 'vatican-courthouse', 'vatican-stpeters', 'jerusalem-outremer', 'unique-building-catalogue', 'unique-building-pilot', 'civilization-start', 'unique-units', 'counterspy', 'nuclear-cities', 'nuclear-production', 'nuclear-cleanup', 'defender-zoc', 'inventory', 'admiral-repair', 'worker', 'unit-actions', 'great-person-builds', 'budget-settlement', 'nuclear', 'air-operations', 'greatworks', 'trade-tooltip', 'trade-countdown', 'nabatea-farms', 'nabatea-tomb', 'newzealand-science-completion'}
 
 def run_owned_runner(command, **kwargs):
     """Let the child restore its UI/settings when this wrapper is interrupted."""
