@@ -6,14 +6,15 @@ local this_civ = GameInfoTypes["CIVILIZATION_YUGOSLAVIA"]
 local is_active = LekmodUtilities:is_civilization_active(this_civ)
 
 ------------------------------------------------------------------------------------------------------------------------
--- Yugoslavia UA: Award a free Tenet whenever the player adopts a new Ideology
+-- Yugoslavia UA: Award a free Tenet when adopting or switching Ideologies
 ------------------------------------------------------------------------------------------------------------------------
 function lekmod_yugoslavia_ideology_tenet(player_id, policy_branch_id)
 
    local player = Players[player_id]
    if player:GetCivilizationType() ~= this_civ or not player:IsAlive() then return end
 
-   if player:GetAnarchyNumTurns() > 0 then return end
+   -- Normal human and AI revolutions set anarchy before this event. The trait
+   -- also promises its free tenet when switching, so anarchy is not a rejection.
 
    if policy_branch_id == GameInfoTypes["POLICY_BRANCH_AUTOCRACY"]
    or policy_branch_id == GameInfoTypes["POLICY_BRANCH_FREEDOM"]

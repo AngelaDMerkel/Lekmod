@@ -88,10 +88,15 @@ test("Yugoslavia independent AI reward preserves existing tenets",function()
  local e=fixture("yugoslavia");e.Players[0].civ=3;e.Players[1].civ=3;e.Players[1].tenets=4
  e:emit("PlayerPolicyBranchUnlocked",1,11);assert(e.Players[1].tenets==5 and e.Players[0].tenets==2)
 end)
-for _,kind in ipairs({"ordinary branch","other civilization","dead owner","anarchy"})do test("Yugoslavia excludes "..kind,function()
+for _,kind in ipairs({"ordinary branch","other civilization","dead owner"})do test("Yugoslavia excludes "..kind,function()
  local e=fixture("yugoslavia");e.Players[0].civ=kind=="other civilization" and -1 or 3
- if kind=="dead owner" then e.Players[0].alive=false elseif kind=="anarchy" then e.Players[0].anarchy=1 end
+ if kind=="dead owner" then e.Players[0].alive=false end
  e:emit("PlayerPolicyBranchUnlocked",0,kind=="ordinary branch" and 1 or 10);assert(e.Players[0].tenetWrites==0)
+end)end
+for _,branch in ipairs({10,11,12})do test("Yugoslavia revolution into "..branch.." retains bonus during anarchy",function()
+ local e=fixture("yugoslavia");e.Players[0].civ=3;e.Players[0].anarchy=2;e.Players[0].tenets=7
+ e:emit("PlayerPolicyBranchUnlocked",0,branch)
+ assert(e.Players[0].tenets==8 and e.Players[0].countAsFree==true and e.Players[0].anarchy==2 and e.Players[1].tenets==2)
 end)end
 for _,file in ipairs({"romania","vatican","yugoslavia"})do test(file.." inactive civilization registers no callbacks",function()
  local e=fixture(file,false);assert(next(e.events)==nil)
