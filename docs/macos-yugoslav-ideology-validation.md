@@ -55,8 +55,8 @@ preserving anarchy and unrelated owners' tenets. All three cases fail with the
 original guard; all31 city/policy cases pass after the fix. These are offline
 callback checks. The previous offline expectation that anarchy must reject the
 reward contradicted the advertised switching behavior and has been replaced.
-The same native scenario and exact reload must pass on the new clean package
-before native closure is claimed. No retrospective tenet grant is inferred from
+The same native scenario and exact reload passed on the new clean package
+as recorded below. No retrospective tenet grant is inferred from
 older saves: their missing rewards cannot be reconstructed reliably from current
 state alone.
 
@@ -64,3 +64,49 @@ Rival-effect building presence passed natively for the human owner. A scratch
 plain-table `ipairs(Players)` mock incorrectly excluded that owner; its failures
 are not product defects. That experimental file/log remain ignored in
 `build/macos`; no shared global-effect handler was changed on that basis.
+
+## Fixed-package retest
+
+Fix `860573fa` is included in clean package source
+`11ede700237fbb580ca4646f904488baa56ce360`, archive
+`build/macos/Lekmod-yugoslav-revolution-20260926.zip`, SHA-256
+`dd82a625671b290c2dd83cbb0d34c735c558384385b92ed220f29a488d72cf0f`.
+Core remains `2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1`;
+payload SHA-256 `74b53e95cfc5215e901e1f5269731713110cb105f9744a4d84328bbb280257f2`.
+
+**`20260926T171207Z` passed all11 checks, exact functional reload and the baseline
+fixture replay**,197.7 seconds, four ordinary turns, normal exit0. The same
+revolution now produces the expected11 free tenets. Anarchy remains at its native
+required duration and expires through ordinary turns; both effect-building sets
+still match their selected ideology. Original/copy save bytes and hashes were
+independently checked, with no Lua/synchronization errors or new diagnostic and
+full runner restoration. Evidence: `build/macos/yugoslav-validation-20260926.json`.
+
+This verifies normal initial Freedom adoption and a real switch into Order.
+The saved-game continuation below also passed switches into Autocracy and back
+to Freedom. Presence of effect buildings does not
+by itself establish every yield/production outcome or all owner combinations.
+
+## All three switch destinations
+
+`20260926T171658Z` continued the fixed Order save through two more real human
+revolutions: Autocracy, then Freedom. Only the opponent's new ideology/cleared
+old tenets were supplied. Existing concert influence and ordinary turns generated
+the renewed pressure; human ideology, tenets, anarchy and yields were not assigned.
+The original cancel/confirm callbacks ran on both transitions. Each granted
+exactly one Yugoslav tenet beyond the normal calculated allowance, replaced the
+rival-effect building set, preserved culture and retained native anarchy until
+ordinary turns ended it. This stage passed ten checks and exact reload,201.6
+seconds, six ordinary turns, normal exit0 and full runner restoration.
+
+Together with the first retest,21 scoped assertions/two functional exact replays
+and one baseline replay now pass. Native switching into all three ideologies is
+covered. Initial adoption is natively covered for Freedom; all three branch
+callbacks are covered offline. Effect-building presence is covered across all
+three choices; per-specialist yield/production settlement, other owners and
+remaining unique content remain separate.
+
+The final local evidence is `build/macos/yugoslav-validation-20260926.json`.
+All stage save copies matched completed originals; original603 manual saves,
+quicksave/settings/backups and32 stock UI hashes were independently unchanged.
+Civ V was closed and stock restored before the next round. No push was made.

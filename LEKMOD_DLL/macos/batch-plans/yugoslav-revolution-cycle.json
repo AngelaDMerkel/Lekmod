@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "name": "yugoslav-revolution-cycle",
+  "stages": [
+    {
+      "id": "yugo-revolution-cycle",
+      "scenario": "yugoslav-revolution-cycle",
+      "fixture": "build/macos/playtests/20260926T171207Z/checkpoints/Lekmod-Batch-20260926T171207Z-yugoslavia-ideology-run.Civ5Save",
+      "sha256": "3df895cafa3b70858e9e804eee2f2fc8cc979e93409d0283c453cc4345cc8fb1",
+      "max_turns": 12
+    }
+  ]
+}

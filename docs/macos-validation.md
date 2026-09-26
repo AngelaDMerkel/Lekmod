@@ -15,6 +15,11 @@ verified; further conversion/owner boundaries remain separately scoped. Startup2
 recurred before an earlier attempt; startup/shutdown reliability is still open.
 
 
+The [Yugoslav revolution fix](macos-yugoslav-ideology-validation.md) has21 scoped
+native assertions/two functional replays plus baseline replay. Normal switches
+into all three ideologies grant the promised bonus while preserving anarchy.
+The current tested package is the Yugoslav archive named in the handoff.
+
 The [system outcomes](macos-single-player-systems.md) and
 [resumed single-player evidence](macos-single-player-20260913.md) separate
 physical mouse actions, scripted commands, gameplay outcomes, and incomplete

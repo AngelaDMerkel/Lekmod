@@ -32,6 +32,25 @@ nonempty localization cache are preserved. No root-cause fix is claimed; the
 later traced gameplay pass is independent. Further ability/state gaps and
 startup/shutdown reliability remain open.
 
+## Latest Yugoslav continuation on main
+
+The [Yugoslav revolution reward](macos-yugoslav-ideology-validation.md) was
+confirmed missing under normal anarchy in `20260926T170551Z` (expected11 free
+tenets, actual10). Focused fix `860573fa` is packaged from clean `11ede700`:
+`build/macos/Lekmod-yugoslav-revolution-20260926.zip`, archive SHA-256
+`dd82a625671b290c2dd83cbb0d34c735c558384385b92ed220f29a488d72cf0f`.
+This supersedes the Swiss package for new tests and includes its fix.
+
+`20260926T171207Z` and `20260926T171658Z` pass21 scoped assertions, two functional
+replays and a baseline replay, including switches into all three ideologies.
+Native anarchy and culture remain intact. All31 city/policy callback cases pass.
+Final preservation: stock/no game, original603 manual saves/quicksave/settings,
+32 stock UI hashes and both backups. Evidence:
+`build/macos/yugoslav-validation-20260926.json`. Startup255 also recurred during
+fixture creation (`20260926T170206Z`); its healthy cache is preserved, not fixed.
+Continue on `main`; next planned native round is Romania city gift/capture reward
+routing using the existing group8 fixture. Read continuation state for active work.
+
 ## Special unique-unit acquisition (September 26 UTC)
 
 [Special acquisition](macos-special-unit-acquisition.md) now closes the ten

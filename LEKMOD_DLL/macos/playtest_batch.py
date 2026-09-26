@@ -12,6 +12,7 @@ from playtest_save import CheckpointCopier, game_save_writer_open
 
 # Only scenarios with reviewed, compatible temporary adapters are admitted.
 HOOKS = {
+    'yugoslav-revolution-cycle': {'UI/SocialPolicyPopup.lua': 'playtest-scenario-revolution-popup.lua'},
     'yugoslavia-ideology': {'@DLC/Expansion2/UI/InGame/Popups/ChooseIdeologyPopup.lua': 'playtest-scenario-ideology-popup.lua', 'UI/SocialPolicyPopup.lua': 'playtest-scenario-revolution-popup.lua'},
     'swiss-purchase': {'UI/ProductionPopup.lua': 'playtest-scenario-purchase-popup.lua'},
     'unique-special-purchase': {'UI/ProductionPopup.lua': 'playtest-scenario-purchase-popup.lua'},
