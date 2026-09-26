@@ -44,6 +44,18 @@ stall guard informed; repeated messages do not count as progress. See
 [the catalogue report](../../docs/macos-unit-catalogue.md) for proven scope,
 artifact hashes, the corrected missing flag and retained commissioning failures.
 
+## Own-civilization unique-unit production
+
+The `unique-unit-production-a.json` and `unique-unit-production-b.json` plans
+cover ten independently loaded civilization groups, each batch capped at 21
+ordinary turns. All 115 production definitions have passing native acquisition
+and exact resulting-state replay across commissioning/recovery runs. The ten
+special-acquisition definitions remain separate. Inputs include tech, resources,
+population, legal cities/trade prerequisites, upkeep and near-complete hammers;
+actual queues remain unforced. See [the evidence and retained fixture failures](../../docs/macos-unit-production-validation.md).
+No uninterrupted all-groups run of the final harness is claimed. The focused
+recovery plans avoid rerunning already accepted groups.
+
 ## All-civilization initialization
 
 See [the startup matrix](../../docs/macos-civilization-start-matrix.md)

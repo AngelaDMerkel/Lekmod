@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "name": "unique-unit-production-trade-recovery",
+  "stages": [
+    {
+      "id": "unit-group-08",
+      "scenario": "unique-unit-production",
+      "fixture": "build/macos/playtests/20260922T234507Z/Lekmod-Functional-20260922T234507Z.Civ5Save",
+      "sha256": "7eeef6df14b51bcc7a21810c416b40695a3c54207c9543e7bce1df79dd48b9e0",
+      "max_turns": 7
+    }
+  ]
+}

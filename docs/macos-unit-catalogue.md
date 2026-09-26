@@ -7,6 +7,12 @@ identity/domain/health and persistence. This is broad foreign-owner instantiatio
 coverage, not each civilization's trait, earned production, unit mission or complete
 visual-art certification. Supplied script-data tags identify only the test units.
 
+The later [own-civilization production catalogue](macos-unit-production-validation.md)
+adds normal acquisition for all 115 production-capable definitions and ten exact
+replays. Its ten special-acquisition exclusions remain explicit. This later
+coverage does not change the scope or retained results of the creation/disband
+runs below.
+
 ## Retained commissioning failures
 
 - `20260922T210439Z`: 20 types created before the test's missing hover-domain

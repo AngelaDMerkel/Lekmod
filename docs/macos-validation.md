@@ -13,6 +13,29 @@ The [system outcomes](macos-single-player-systems.md) and
 physical mouse actions, scripted commands, gameplay outcomes, and incomplete
 sessions. The user renewed foreground-testing permission for this task.
 
+## Unique-unit production continuation (September 26 UTC)
+
+The [own-civilization production catalogue](macos-unit-production-validation.md)
+now covers all **115 production-capable unique definitions**: 145 functional
+assertions and ten exact replays across the saved civilization groups. The ten
+special-acquisition definitions remain separately enumerated. This adds native
+owner-production evidence (nine human / 106 AI acquisitions), not full unique-unit
+ability coverage or new physical mouse coverage.
+
+Three fixture issues were corrected: AI resource consumption before test setup,
+Colorado's dynamic strength expectation, and Portugal's actual trade-route
+prerequisites/three-round budget. The failed pilot and two mixed batches remain
+failed; passing stage/reload pairs and focused recoveries are identified in the
+report. No new gameplay defect or product fix was established. Startup255 recurred
+before one attempt; its nonempty healthy cache was preserved and the cause remains
+open. No healthy cache was manually deleted.
+
+Latest independent evidence: `build/macos/unit-production-validation-20260926.json`.
+Stock restored, Civ V closed, 569 prior manual saves, original quicksave, settings,
+32 stock UI files and both backups verified. Continue broader ability/owner/state
+and special-acquisition gaps; do not repeat the accepted campaign or claim full
+single-player support from this catalogue.
+
 ## Latest clean-artifact qualification
 
 Clean-source candidate `f33cfd33` fixes missing College great-person rewards

@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "name": "unique-unit-production-a",
+  "stages": [
+    {
+      "id": "unit-group-01",
+      "scenario": "unique-unit-production",
+      "fixture": "build/macos/playtests/20260922T233312Z/Lekmod-Functional-20260922T233312Z.Civ5Save",
+      "sha256": "903a1a869d99c11a2e7079995bbf0293b321035d2d1803a2912da05face90f1d",
+      "max_turns": 5
+    },
+    {
+      "id": "unit-group-02",
+      "scenario": "unique-unit-production",
+      "fixture": "build/macos/playtests/20260922T233722Z/Lekmod-Functional-20260922T233722Z.Civ5Save",
+      "sha256": "af6ed41409495c54f58080dff3446886fe1afb2ce36fd786272b3bab70da5023",
+      "max_turns": 3
+    },
+    {
+      "id": "unit-group-03",
+      "scenario": "unique-unit-production",
+      "fixture": "build/macos/playtests/20260922T233840Z/Lekmod-Functional-20260922T233840Z.Civ5Save",
+      "sha256": "1b239ce4280b2e4d6fc11997a830f7bd2861075e7074a39dd7e7d06b9d8d41e9",
+      "max_turns": 5
+    },
+    {
+      "id": "unit-group-04",
+      "scenario": "unique-unit-production",
+      "fixture": "build/macos/playtests/20260922T233959Z/Lekmod-Functional-20260922T233959Z.Civ5Save",
+      "sha256": "7133ed700aedd71903a654af60706d271926479de59b219be7773256be797da7",
+      "max_turns": 3
+    },
+    {
+      "id": "unit-group-05",
+      "scenario": "unique-unit-production",
+      "fixture": "build/macos/playtests/20260922T234117Z/Lekmod-Functional-20260922T234117Z.Civ5Save",
+      "sha256": "09c0d316e450943b2eafcd4e754b982dbdcde1ad5973bb9e408b1cdaee38726c",
+      "max_turns": 5
+    }
+  ]
+}

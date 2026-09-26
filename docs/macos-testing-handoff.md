@@ -1,9 +1,32 @@
 # Lekmod macOS single-player testing handoff
 
-**Resumed September 25; latest Swiss continuation verified September 26 UTC.**
+**Resumed September 25; latest unit-production continuation verified September 26 UTC.**
 The user explicitly resumed the earlier pause. Work stays in this checkout,
 background by default, with no push or new long campaign; multiplayer remains
 deferred. Always inspect current process/install/lock state before launch.
+
+## Unique-unit production continuation (September 26 UTC)
+
+The [own-civilization production catalogue](macos-unit-production-validation.md)
+now covers all **115 production-capable unique definitions**: 145 functional
+assertions and ten exact replays across the saved civilization groups. The ten
+special-acquisition definitions remain separately enumerated. This adds native
+owner-production evidence (nine human / 106 AI acquisitions), not full unique-unit
+ability coverage or new physical mouse coverage.
+
+Three fixture issues were corrected: AI resource consumption before test setup,
+Colorado's dynamic strength expectation, and Portugal's actual trade-route
+prerequisites/three-round budget. The failed pilot and two mixed batches remain
+failed; passing stage/reload pairs and focused recoveries are identified in the
+report. No new gameplay defect or product fix was established. Startup255 recurred
+before one attempt; its nonempty healthy cache was preserved and the cause remains
+open. No healthy cache was manually deleted.
+
+Latest independent evidence: `build/macos/unit-production-validation-20260926.json`.
+Stock restored, Civ V closed, 569 prior manual saves, original quicksave, settings,
+32 stock UI files and both backups verified. Continue broader ability/owner/state
+and special-acquisition gaps; do not repeat the accepted campaign or claim full
+single-player support from this catalogue.
 
 The [Swiss report](macos-swiss-crusader-validation.md) now closes the earlier
 healing-exit and mounted-comparison gaps: `20260926T000754Z` passed six checks/two
@@ -49,8 +72,8 @@ preserved546 prior manual saves, original quicksave,32 stock UI files, settings
 and both backups; no game process remained.
 
 Remaining work concerns broader civilization/owner/state boundaries. The saved
-114-civilization fixtures can support a future actual unique-unit production
-catalogue; acquisition/creation evidence must remain distinct from unit abilities. Completed
+114-civilization fixtures now have the 115-definition production catalogue above;
+acquisition/creation evidence remains distinct from unit abilities. Completed
 Swiss utility/plunder/healing/calculation paths and Crusader entry/+20/reload
 should not be reopened without relevant changes. Broader civilization coverage
 and historical startup/shutdown reliability still prevent a full-support claim.

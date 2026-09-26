@@ -486,3 +486,14 @@ under that run's `localization-failure-cache/files/`. The independent traced
 attempt reached gameplay but failed its Roman-unit fixture assumption; its later
 corrected traced run `20260926T012117Z` passed. Neither success establishes a
 startup fix. No healthy cache was manually deleted or repaired.
+
+## Unit-production continuation
+
+`20260926T013752Z` reproduced the localization startup failure at 20.4 seconds,
+exit255 before any scenario checks. The runner preserved failure caches before
+stock restoration. `Localization-Merged.db` was 25,509,888 bytes with
+`quick_check=ok`, SHA-256
+`83d88d45501606828911d889de8fca780421491c982c965cf93937ea136672a7`.
+Artifacts are under that run's `localization-failure-cache/`. Later explicitly
+traced launches completed their gameplay rounds and exited normally; that timing
+difference does not establish a fix. This failure remains unresolved.
