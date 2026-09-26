@@ -11,8 +11,10 @@ database through its own menu database interface: legacy metadata was read as a
 symlink, readlink returned EINVAL, and attachment failed. The experimental
 correction is limited to the verified host and SQLite call path; offline ABI and
 unrelated-process controls pass. The corrected native comparison passed on the same unchanged database/inode.
-The test-only `--host-stat-compat` option is now available; a comprehensive
-gameplay/reload regression is next. This is not permanent launcher integration.
+The test-only `--host-stat-compat` option passed the comprehensive regression in
+`20260926T222217Z`:81 checks/16 exact replays,32 verified save-copy pairs and full
+restoration. The user requests WSDLC integration so normal Steam Play works.
+That installer integration and its native launch verification are next.
 No host executable, permanent Steam setting or launcher has been changed.
 
 Keep Steam/Civ V in the background by default. Foreground permission remains

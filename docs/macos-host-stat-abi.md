@@ -53,8 +53,7 @@ The diagnostic controller is
 prototype). It checks the full host/package/database hashes, refuses locked or
 already-running sessions, records source hashes, restores UI/settings/stock, and
 verifies the database and executable afterward. It is a menu/database probe,
-not gameplay or physical mouse coverage. A validated deployment path and normal
-functional regression remain separate from the experimental correction.
+not gameplay or physical mouse coverage. A validated deployment path remains separate from the experimental correction.
 
 ## Corrected native comparison and functional validation
 
@@ -71,9 +70,21 @@ verify the full host hash before native work, record source/library hashes, excl
 the passive observer's competing legacy interposition, and require observed
 correction calls before accepting a passing corrected run. The option is off by
 default and cannot be combined with uninjected or activation-only controls.
-Runner33/batch26 regression tests pass. The existing comprehensive single-process
-suite (81 checks/16 replays across independent fixtures, maximum28 aggregate turns)
-is the next native regression; the accepted long campaign remains closed.
+Runner33/batch26 regression tests pass. Comprehensive native run
+`20260926T222217Z` passed all81 functional assertions and16 exact state replays in
+875seconds, observing32 corrected calls. It used23 aggregate turns across
+independent fixtures; the accepted long campaign remains closed. Independent
+verification confirms all32 original/copied checkpoint pairs,639 prior manual
+saves, the original quicksave, settings,32 stock UI files, unchanged executable
+and both stock GameCore backups. The game exited normally with no recorded Lua
+errors, synchronization failures or new crash diagnostics. This is scripted
+functional/native outcome coverage, with no added physical mouse coverage.
+Evidence: `build/macos/host-stat-fix-validation-20260926.json`.
+
+The user selected WSDLC integration for ordinary Steam Play. The installer must
+own the startup correction, verify its supported host, preserve the original
+executable and restore it when returning to stock. This integration and a real
+Steam Play launch remain to be validated.
 
 This establishes a native correction for the reproduced database attachment fault.
 It does not establish production launcher integration, all startup/shutdown causes,
