@@ -144,6 +144,12 @@ static int observedLegacyLstat(const char *path, void *status) {
         memcpy(&interpretedMode, (const char *)status + offsetof(struct stat, st_mode), sizeof(interpretedMode));
         fprintf(stderr, "[LEKMOD_TEST] localization-legacy-stat path=%s prefix16=%s compiled_mode_offset=%zu interpreted_mode=0%o caller=%p\n",
                 path, prefix, offsetof(struct stat, st_mode), (unsigned)interpretedMode, __builtin_return_address(0));
+        static int mergedTraceRecorded = 0;
+        if (strstr(path, "Localization-Merged.db") && __sync_bool_compare_and_swap(&mergedTraceRecorded, 0, 1)) {
+            void *frames[12]; int depth = backtrace(frames, 12);
+            fprintf(stderr, "[LEKMOD_TEST] localization-legacy-callstack frames=%d\n", depth);
+            backtrace_symbols_fd(frames, depth, STDERR_FILENO);
+        }
     }
     errno = error; return result;
 }

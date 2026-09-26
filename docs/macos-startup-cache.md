@@ -598,3 +598,34 @@ control, verify regular-file readlink still returns EINVAL, and preserve bytes.
 All existing exit/buffering/metadata/stream/descriptor controls still pass.
 The next native observation will inspect the game's actual consuming call site;
 no host workaround or startup fix is claimed from the isolated probe alone.
+
+### Native consumer verified; paused before any host fix
+
+The user requested a pause after `process-20260926T185355Z` finished. That control
+returned0 via normal menu/exit callbacks and restored stock/settings/UI/saves.
+No more tests were launched. Host SQLite reports3.25.0 and compile-time USE_URI=0;
+the earlier isolated system-SQLite probe is3.51.0, so do not conflate them.
+
+The actual native legacy-stat stack is observer → host0x1001b9e60 →
+0x1001e1000 → Database::Results::Execute. Read-only disassembly of the pinned host
+SHA-256 `d56d6bfbc0ef517fcb7cbaff46c42d1bdfab809c084684045761bd9d85807ee9`
+shows the consumer passes `rbp-0xf0` as the stat buffer, then at0x1001e1020 reads
+its mode from `rbp-0xec` (offset4). It masks0xf000 and compares0xa000 (symlink).
+The legacy API writes the real mode at offset8. This establishes the host's ABI
+mismatch; the preceding passing native control logged a regular merged database
+whose bytes were instead interpreted as mode063121. The preserved failure-copy
+inode produces0120724 and the isolated SQLite test reproduces CANTOPEN14.
+
+Artifacts include `legacy-wrapper-disassembly.txt`,
+`legacy-consumer-disassembly.txt`, `stat-abi/`, and the native process reports in
+`build/macos/startup-descriptor-20260926/`. Symbolizer labels based on nearby
+exports are not function identities; rely on the actual addresses/instructions.
+The game executable is unchanged. No corrective binding, host patch, launcher
+workaround or permanent Steam setting has been implemented. A scoped native
+correction and same-condition retest remain required before claiming startup fixed.
+Do not globally redirect legacy ABI callers that may require the old layout.
+
+Final independent pause evidence: `build/macos/pause-after-stat-abi-20260926.json`.
+Stock is active, no Civ V or owned runner remains, all saved non-autosave files,
+original quicksave/settings/backups and32 stock UI hashes are preserved. Continue
+only after the user resumes, on local `main`, without pushing.

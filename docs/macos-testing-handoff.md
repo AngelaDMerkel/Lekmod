@@ -1,11 +1,22 @@
 # Lekmod macOS single-player testing handoff
 
-**Resumed September 26 UTC: continue until the user asks to stop.** The user's
-rough progress answer was75–85% (about80%), an estimate of remaining work rather
-than measured test coverage. Foreground permission remains authorized; keep the
-game background by default and never launch while locked. Multiplayer remains
-deferred and the accepted long campaign remains closed. No push, Docker restart,
-Steam channel change, or scheduled testing.
+**Paused at the user's request on September26: "Pause testing when you reach an apt stopping point."**
+The current diagnostic finished normally; stock is restored and Civ V/owned runners
+are closed. Final independent verification:
+`build/macos/pause-after-stat-abi-20260926.json`. Do not launch or resume testing
+until the user explicitly resumes. Work is now on local `main`; the requested
+fast-forward and subsequent focused commits are complete. No push was made.
+
+The last read-only investigation verified a host metadata ABI mismatch: it resolves
+legacy `lstat` but its actual SQLite consumer reads the mode at the current layout's
+offset4 instead of legacy offset8. An isolated read-only SQLite probe reproduces
+CANTOPEN14 on the same preserved database under that mismatch; the correct binding
+opens it unchanged. No native host correction/workaround has been implemented or
+retested, so startup reliability remains unresolved. Read the latest section of
+[the startup report](macos-startup-cache.md) before continuing. Host binary unchanged.
+The next step after resumption is a safely scoped native validation/correction,
+followed by remaining content/effect gaps. The accepted long campaign remains
+closed and all multiplayer remains deferred.
 
 The [Swiss Armory training defect](macos-swiss-armory-validation.md) is fixed in
 `149e6328`. Clean package `build/macos/Lekmod-swiss-armory-20260926.zip`, archive
