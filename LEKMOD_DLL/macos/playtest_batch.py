@@ -2,6 +2,7 @@
 import hashlib
 import json
 import re
+from playtest_native_methods import registered_methods, missing_methods
 import shutil
 import signal
 import subprocess
@@ -114,6 +115,9 @@ def load_plan(path, repo, items):
         if scenario=='civilization-start'and expected is None:raise ValueError('Civilization starts use the standalone runner; batch supports their exact replay only')
         code_path=repo/'LEKMOD_DLL/macos'/('playtest-scenario-'+scenario+'.lua')
         code=code_path.read_text()
+        if '-- Native method surface: GameCore' in code:
+            missing=missing_methods(code,registered_methods())
+            if missing:raise ValueError('Unregistered native methods in '+scenario+': '+', '.join(missing))
         for target,adapter in HOOKS.get(scenario,{}).items():
             if target in hooks and hooks[target]!=adapter: raise ValueError('Conflicting adapters at '+target)
             hooks[target]=adapter

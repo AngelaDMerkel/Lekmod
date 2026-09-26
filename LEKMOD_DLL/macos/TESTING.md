@@ -5,6 +5,22 @@ this user's tests. [Validation status](../../docs/macos-validation.md) records
 what actually passed and what remains untested. These tools are not a full-port
 certification suite or part of the installed mod UI.
 
+## Native method and fixture preflight
+
+New scenarios that call only GameCore objects with colon syntax can declare
+`-- Native method surface: GameCore`. Batch preflight then rejects method names
+absent from the C++ Lua registrations. `check-scenario-native-methods.py` also
+runs this check directly on selected files. This catches C++-only methods such
+as `IsGreatGeneral`; it does not establish receiver types, parameter signatures
+or callback timing. Gameplay assertions still require native execution.
+
+`civilization-startup-matrix.py --roster CIVILIZATION_CZECHIA,CIVILIZATION_ROME`
+creates a normal human-first fixture. Repeat `--roster` for independent starts;
+each remains capped at three turns, with no more than ten groups. Every name
+must belong to the reviewed playable inventory, and duplicate civilizations
+within one roster are rejected. The original `--group` / `--all` matrix remains
+unchanged. All launch/lock, package, save and stock-restoration guards apply.
+
 ## Multi-scenario batches
 
 Use [the batch operator guide](../../docs/macos-batch-testing.md) for longer runs.

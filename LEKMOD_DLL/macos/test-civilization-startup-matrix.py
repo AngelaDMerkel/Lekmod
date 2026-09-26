@@ -28,6 +28,23 @@ class MatrixTests(unittest.TestCase):
         self.assertEqual(r.returncode,0,r.stderr)
         result=json.loads(r.stdout);self.assertEqual(result['civilizations'],114)
         self.assertEqual(result['maximum_functional_turns'],30)
+    def test_custom_rosters_keep_human_first_and_independent_turn_caps(self):
+        r=subprocess.run([sys.executable,str(PORT/'civilization-startup-matrix.py'),
+            '--roster','CIVILIZATION_CZECHIA,CIVILIZATION_ROME',
+            '--roster','CIVILIZATION_MAURYA,CIVILIZATION_ROME','--preflight-only'],capture_output=True,text=True)
+        self.assertEqual(r.returncode,0,r.stderr)
+        result=json.loads(r.stdout);self.assertEqual(result['groups'],[1,2])
+        self.assertEqual(result['civilizations'],4);self.assertEqual(result['maximum_functional_turns'],6)
+    def test_custom_rosters_refuse_unknown_duplicate_and_oversized_inventory(self):
+        cases=[['--roster','CIVILIZATION_MISSING,CIVILIZATION_ROME'],
+               ['--roster','CIVILIZATION_ROME,CIVILIZATION_ROME'],
+               ['--roster','CIVILIZATION_ROME'],
+               ['--roster','CIVILIZATION_CZECHIA,CIVILIZATION_ROME']*11]
+        for args in cases:
+            with self.subTest(args=args):
+                r=subprocess.run([sys.executable,str(PORT/'civilization-startup-matrix.py'),*args,'--preflight-only'],capture_output=True,text=True)
+                self.assertEqual(r.returncode,2,r.stderr)
+                self.assertIn('Custom rosters require',r.stderr)
     def test_wrong_package_data_refuses_before_native_prerequisites(self):
         with tempfile.TemporaryDirectory()as directory:
             package=Path(directory)/'wrong.zip'

@@ -39,6 +39,12 @@ class BatchTests(unittest.TestCase):
         row.update(changes);p.write_text(json.dumps(row))
         self.raw['stages'][0].update(expected_report='expected.json',expected_report_sha256=batch.sha(p),max_turns=0)
         return p
+    def test_declared_gamecore_surface_rejects_cpp_only_method_before_native_work(self):
+        source=self.code/'playtest-scenario-inventory.lua'
+        source.write_text('-- Native method surface: GameCore\nreturn u:IsGreatGeneral()')
+        with self.assertRaisesRegex(ValueError,'Unregistered native methods.*IsGreatGeneral'):self.load()
+        source.write_text('-- Native method surface: GameCore\n-- ignored: u:IsGreatGeneral()\nlocal text="u:Unknown()"\nreturn u:IsHasPromotion(1)')
+        self.assertEqual(self.load()['stages'][0]['scenario'],'inventory')
     def test_replay_only_starts_with_validated_snapshot_and_finishes_once(self):
         self.expected_report();s=self.session()
         self.assertEqual(s.mode,'reload');self.assertEqual(s.pending_expected,'{}')
