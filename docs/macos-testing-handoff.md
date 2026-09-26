@@ -1,9 +1,32 @@
 # Lekmod macOS single-player testing handoff
 
-**Resumed September 25; latest unit-production continuation verified September 26 UTC.**
+**Resumed September 25; latest special-acquisition continuation verified September 26 UTC.**
 The user explicitly resumed the earlier pause. Work stays in this checkout,
 background by default, with no push or new long campaign; multiplayer remains
 deferred. Always inspect current process/install/lock state before launch.
+
+## Special unique-unit acquisition (September 26 UTC)
+
+[Special acquisition](macos-special-unit-acquisition.md) now closes the ten
+non-production definitions alongside the earlier Swiss purchase. Nine new cases
+passed 42 assertions/nine exact replays, plus two new human-fixture baseline
+replays. Combined with ordinary production, all 125 unique definitions have at
+least one own-civilization acquisition/resulting-state replay path. This is not
+full ability, mission, human-owner or every-state coverage.
+
+The tests distinguish supplied GPP/XP/faith/religion inputs from ordinary births,
+actual combat awards, purchase callbacks and immediate movement. Method-binding,
+callback-order, pressure-unit and turn-observation mistakes are retained as
+harness failures. No new product fix was established. The final prophet case
+verifies a full low-faith round; a positive City of God free-prophet test is not
+claimed from its earlier failed commissioning runs.
+
+Latest independent stock checkpoint: 600 prior manual saves, original quicksave,
+settings,32 stock UI files and both backups preserved; Civ V closed. Evidence:
+`build/macos/special-acquisition-validation-20260926.json`. User instruction
+remains to continue until complete or explicitly stopped. Next: unresolved startup
+reliability and the remaining concrete ability/state boundaries. Do not reopen
+the accepted campaign or multiplayer.
 
 ## Unique-unit production continuation (September 26 UTC)
 

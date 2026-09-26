@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "name": "unique-special-acquisition",
+  "stages": [
+    {
+      "id": "czech-baseline",
+      "scenario": "civilization-start",
+      "fixture": "build/macos/playtests/20260926T025552Z/Lekmod-Functional-20260926T025552Z.Civ5Save",
+      "sha256": "d553bdc2ab615315937536600e0d128c2a6458e23b9a3d304ee72bb75f62c91e",
+      "expected_report": "build/macos/playtests/20260926T025552Z/report.json",
+      "expected_report_sha256": "e9d31b5e3c42ec7edd1184142d6db41a067cc11a9412f3ab5cf3ac7248f6ea95",
+      "max_turns": 0
+    },
+    {
+      "id": "czech-special-purchase",
+      "scenario": "unique-special-purchase",
+      "fixture": "build/macos/playtests/20260926T025552Z/Lekmod-Functional-20260926T025552Z.Civ5Save",
+      "sha256": "d553bdc2ab615315937536600e0d128c2a6458e23b9a3d304ee72bb75f62c91e",
+      "max_turns": 0
+    },
+    {
+      "id": "maurya-baseline",
+      "scenario": "civilization-start",
+      "fixture": "build/macos/playtests/20260926T025706Z/Lekmod-Functional-20260926T025706Z.Civ5Save",
+      "sha256": "7b21ec20cce6094752414d0c0ed108c0a348c527eb6f85bab208af4f2a2fc59f",
+      "expected_report": "build/macos/playtests/20260926T025706Z/report.json",
+      "expected_report_sha256": "ed3f019806970ecb492305bd695dc94e8e6e44010fbd940674627adb2462e784",
+      "max_turns": 0
+    },
+    {
+      "id": "maurya-special-purchase",
+      "scenario": "unique-special-purchase",
+      "fixture": "build/macos/playtests/20260926T025706Z/Lekmod-Functional-20260926T025706Z.Civ5Save",
+      "sha256": "7b21ec20cce6094752414d0c0ed108c0a348c527eb6f85bab208af4f2a2fc59f",
+      "max_turns": 0
+    },
+    {
+      "id": "madagascar-purchase",
+      "scenario": "unique-special-purchase",
+      "fixture": "build/macos/playtests/20260922T234235Z/Lekmod-Functional-20260922T234235Z.Civ5Save",
+      "sha256": "48757bae72c53d338859dff9f8fcece99b0548cde01d1448a9b4632835591d66",
+      "max_turns": 0
+    },
+    {
+      "id": "prophet-recovery",
+      "scenario": "unique-prophet-birth",
+      "fixture": "build/macos/playtests/20260922T234627Z/Lekmod-Functional-20260922T234627Z.Civ5Save",
+      "sha256": "81fb0432eeb5737ed7446a89500e097422b565eab4e87273ff6e104d9b6c6d5c",
+      "max_turns": 4
+    }
+  ]
+}

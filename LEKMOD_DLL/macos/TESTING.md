@@ -72,6 +72,17 @@ actual queues remain unforced. See [the evidence and retained fixture failures](
 No uninterrupted all-groups run of the final harness is claimed. The focused
 recovery plans avoid rerunning already accepted groups.
 
+## Special unique-unit acquisition
+
+The `unique-specialist-birth`, `unique-general-birth`, `unique-generals-and-prophet`
+and `unique-special-acquisition` plans cover the nine remaining definition paths
+alongside the already accepted Swiss purchase. All 125 uniques now have one
+own-civilization acquisition/replay path across the production and special cases.
+[The report](../../docs/macos-special-unit-acquisition.md) records exact inputs,
+owner controls, accounting, completed-turn checks and retained commissioning
+failures. Use focused recovery plans for changed cases. No full ability/owner/state
+or startup-reliability claim follows from these acquisition checks.
+
 ## All-civilization initialization
 
 See [the startup matrix](../../docs/macos-civilization-start-matrix.md)

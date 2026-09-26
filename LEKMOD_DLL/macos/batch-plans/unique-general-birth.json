@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "name": "unique-general-birth",
+  "stages": [
+    {
+      "id": "general-group-05",
+      "scenario": "unique-general-birth",
+      "fixture": "build/macos/playtests/20260922T234117Z/Lekmod-Functional-20260922T234117Z.Civ5Save",
+      "sha256": "09c0d316e450943b2eafcd4e754b982dbdcde1ad5973bb9e408b1cdaee38726c",
+      "max_turns": 4
+    },
+    {
+      "id": "general-group-06",
+      "scenario": "unique-general-birth",
+      "fixture": "build/macos/playtests/20260922T234235Z/Lekmod-Functional-20260922T234235Z.Civ5Save",
+      "sha256": "48757bae72c53d338859dff9f8fcece99b0548cde01d1448a9b4632835591d66",
+      "max_turns": 4
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "name": "unique-specialist-birth",
+  "stages": [
+    {
+      "id": "specialist-group-02",
+      "scenario": "unique-specialist-birth",
+      "fixture": "build/macos/playtests/20260922T233722Z/Lekmod-Functional-20260922T233722Z.Civ5Save",
+      "sha256": "af6ed41409495c54f58080dff3446886fe1afb2ce36fd786272b3bab70da5023",
+      "max_turns": 4
+    },
+    {
+      "id": "specialist-group-05",
+      "scenario": "unique-specialist-birth",
+      "fixture": "build/macos/playtests/20260922T234117Z/Lekmod-Functional-20260922T234117Z.Civ5Save",
+      "sha256": "09c0d316e450943b2eafcd4e754b982dbdcde1ad5973bb9e408b1cdaee38726c",
+      "max_turns": 4
+    },
+    {
+      "id": "specialist-group-10",
+      "scenario": "unique-specialist-birth",
+      "fixture": "build/macos/playtests/20260922T234743Z/Lekmod-Functional-20260922T234743Z.Civ5Save",
+      "sha256": "b4ce2abc9c9df5f026d890d5131caa260c12b565ebccbe9536ee96a96efb792e",
+      "max_turns": 4
+    }
+  ]
+}

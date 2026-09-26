@@ -13,6 +13,11 @@ replays. Its ten special-acquisition exclusions remain explicit. This later
 coverage does not change the scope or retained results of the creation/disband
 runs below.
 
+The [special-acquisition follow-up](macos-special-unit-acquisition.md) closes one
+own-civilization acquisition path for the other ten definitions. Acquisition and
+resulting-state replay therefore cover all 125 types across those suites, while
+ability, mission and owner/state boundaries remain separate.
+
 ## Retained commissioning failures
 
 - `20260922T210439Z`: 20 types created before the test's missing hover-domain

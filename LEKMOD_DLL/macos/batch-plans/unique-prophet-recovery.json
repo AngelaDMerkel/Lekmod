@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "name": "unique-prophet-recovery",
+  "stages": [
+    {
+      "id": "prophet-recovery",
+      "scenario": "unique-prophet-birth",
+      "fixture": "build/macos/playtests/20260922T234627Z/Lekmod-Functional-20260922T234627Z.Civ5Save",
+      "sha256": "81fb0432eeb5737ed7446a89500e097422b565eab4e87273ff6e104d9b6c6d5c",
+      "max_turns": 4
+    }
+  ]
+}

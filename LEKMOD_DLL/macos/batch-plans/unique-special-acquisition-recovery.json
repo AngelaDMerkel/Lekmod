@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "name": "unique-special-acquisition-recovery",
+  "stages": [
+    {
+      "id": "maurya-special-purchase",
+      "scenario": "unique-special-purchase",
+      "fixture": "build/macos/playtests/20260926T025706Z/Lekmod-Functional-20260926T025706Z.Civ5Save",
+      "sha256": "7b21ec20cce6094752414d0c0ed108c0a348c527eb6f85bab208af4f2a2fc59f",
+      "max_turns": 0
+    },
+    {
+      "id": "prophet-recovery",
+      "scenario": "unique-prophet-birth",
+      "fixture": "build/macos/playtests/20260922T234627Z/Lekmod-Functional-20260922T234627Z.Civ5Save",
+      "sha256": "81fb0432eeb5737ed7446a89500e097422b565eab4e87273ff6e104d9b6c6d5c",
+      "max_turns": 4
+    }
+  ]
+}

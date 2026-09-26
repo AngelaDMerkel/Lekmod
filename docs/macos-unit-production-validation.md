@@ -131,10 +131,11 @@ Each group starts from its own pinned turn-two save. These caps do not authorize
 a new long campaign. Run through `batch-playtest.py` with the verified package;
 the managed wrapper requires stock initially and restores stock afterward.
 
-Separate acquisition paths are needed for Czech Foreign Legion, Vatican Swiss
+The later [special-acquisition cases](macos-special-unit-acquisition.md) cover the
+separate paths for Czech Foreign Legion, Vatican Swiss
 Guard, Bolivia's Comparsa, Italy's artist, Macedonia's Hetairoi, Mongol Khan,
 Madagascar's Mpiambina, Maurya's missionary, Tibet's Dalai Lama and Venice's
-merchant. Some already have dedicated evidence elsewhere; their creation or
-purchase is not this catalogue's production evidence. This catalogue does not
+merchant. Their native generation or purchase remains separate from this catalogue's
+production evidence. This catalogue does not
 establish every unique ability, combat interaction, upgrade, AI decision or
 human-owner variant, and does not resolve startup/shutdown reliability.
