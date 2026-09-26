@@ -288,6 +288,13 @@ SCENARIO_ITEMS = {'romania-liberation': {'romania-liberation-peace-gate', 'roman
                   "science-launch": {"science-final-part", "science-victory", "victory-panel"}}
 
 
+HOST_STAT_SHA256 = "d56d6bfbc0ef517fcb7cbaff46c42d1bdfab809c084684045761bd9d85807ee9"
+def require_supported_stat_host():
+    binary = APP / "Contents/MacOS/Civilization V"
+    if hashlib.sha256(binary.read_bytes()).hexdigest() != HOST_STAT_SHA256:
+        raise SystemExit("Experimental host-stat correction requires the verified Aspyr executable; nothing changed")
+
+
 def functional_results(text, run, required=FUNCTIONAL_ITEMS):
     rows = [dict(re.findall(r"(\w+)=([^\s]+)", line)) for line in text.splitlines()
             if "[LEKMOD_FUNCTIONAL]" in line]
@@ -444,10 +451,14 @@ def main():
     parser.add_argument("--foreground-ui-test", "--foreground-attachment-test", dest="foreground_attachment_test", action="store_true", help="Explicitly approved foreground UI test; specify --timeout (at most one hour)")
     parser.add_argument("--no-process-adapter", action="store_true", help="Explicit foreground startup control with no injected process library; requires --foreground-ui-test")
     parser.add_argument("--trace-loaded-libraries", action="store_true", help="Record dyld image loading in the test process log for startup diagnosis")
+    parser.add_argument("--host-stat-compat", action="store_true", help="Opt-in verified-host SQLite stat ABI correction; test process only")
     parser.add_argument("--activation-only", action="store_true", help="Startup diagnostic control: retain background activation guard without syscall/stream observers or a log-flush timer")
     parser.add_argument("--expected-state", type=Path, help="Verify the saved-state fingerprint from an earlier --save-and-exit report before any functional mutations")
     parser.add_argument("--batch-plan", type=Path, help="Reviewed multi-fixture single-process test plan")
     args = parser.parse_args()
+    if args.host_stat_compat:
+        if args.no_process_adapter or args.activation_only:parser.error("Host-stat correction cannot be combined with uninjected/activation-only controls")
+        require_supported_stat_host()
     batch_plan = None
     if args.batch_plan:
         try:
@@ -764,6 +775,7 @@ def main():
               "production_completion": args.production_completion,
               "quick_start": args.quick_start, "skip_intro": args.skip_intro,
               "trace_loaded_libraries": args.trace_loaded_libraries,
+              "host_stat_compat": {"enabled": args.host_stat_compat},
               "process_observer": "none" if args.no_process_adapter else "activation-only" if args.activation_only else "full-diagnostics",
               "scenario": args.scenario,
               "scenario_turn_limit": args.scenario_turns,
@@ -796,7 +808,16 @@ def main():
     if not args.no_process_adapter:
         subprocess.run(["clang", "-arch", "x86_64", "-dynamiclib", "-framework", "AppKit",
                         "-framework", "Foundation", str(Path(__file__).with_name("background-playtest.m")),
-                        "-o", str(background_lib)] + (["-DLEKMOD_TEST_ALLOW_FOREGROUND"] if args.foreground_attachment_test else []) + (["-DLEKMOD_TEST_ACTIVATION_ONLY"] if args.activation_only else []), check=True)
+                        "-o", str(background_lib)] + (["-DLEKMOD_TEST_ALLOW_FOREGROUND"] if args.foreground_attachment_test else []) + (["-DLEKMOD_TEST_ACTIVATION_ONLY"] if args.activation_only else []) + (["-DLEKMOD_TEST_EXTERNAL_LEGACY_STAT"] if args.host_stat_compat else []), check=True)
+    stat_library = None
+    if args.host_stat_compat:
+        stat_source = Path(__file__).with_name("host-stat-compat.c")
+        stat_library = output / "host-stat-compat.dylib"
+        subprocess.run(["clang", "-arch", "x86_64", "-dynamiclib", str(stat_source), "-o", str(stat_library)], check=True)
+        shutil.copy2(stat_source, output / stat_source.name)
+        report["host_stat_compat"].update(host_sha256=HOST_STAT_SHA256,
+            source_sha256=hashlib.sha256(stat_source.read_bytes()).hexdigest(),
+            library_sha256=hashlib.sha256(stat_library.read_bytes()).hexdigest())
     current_text = ""
     start = time.monotonic()
     last_progress = start
@@ -890,7 +911,7 @@ def main():
         if args.no_process_adapter:
             environment.pop("DYLD_INSERT_LIBRARIES", None)
         else:
-            environment["DYLD_INSERT_LIBRARIES"] = str(background_lib)
+            environment["DYLD_INSERT_LIBRARIES"] = str(background_lib) + (":" + str(stat_library) if stat_library else "")
         if args.trace_loaded_libraries:
             environment["DYLD_PRINT_LIBRARIES"] = "1"
         environment["SteamAppId"] = "8930"
@@ -1205,6 +1226,12 @@ def main():
             report["batch_complete"] = batch_session.done
             if not batch_session.done and report["status"].startswith("passed"):
                 report["status"] = "failed-incomplete-batch"
+        if args.host_stat_compat:
+            process_text=(output / "process.log").read_text(errors="replace") if (output / "process.log").exists() else ""
+            count=process_text.count("[LEKMOD_HOST_STAT] corrected sqlite lstat")
+            report["host_stat_compat"]["observed_corrections"]=count
+            if report["status"].startswith("passed") and count==0:
+                report["status"]="failed-host-stat-correction-not-observed"
         (output / "report.json").write_text(json.dumps(report, indent=2) + "\n")
         (output / "run-state.json").write_text(json.dumps(report, indent=2) + "\n")
         print(json.dumps(report, indent=2), flush=True)

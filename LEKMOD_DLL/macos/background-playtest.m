@@ -299,7 +299,9 @@ __attribute__((used)) static const struct {
     { (const void *)&observedFopen, (const void *)&fopen },
     { (const void *)&observedStat, (const void *)&stat },
     { (const void *)&observedLstat, (const void *)&lstat },
+#ifndef LEKMOD_TEST_EXTERNAL_LEGACY_STAT
     { (const void *)&observedLegacyLstat, (const void *)&nativeLegacyLstat },
+#endif
     { (const void *)&observedReadlink, (const void *)&readlink },
     { (const void *)&observedAccess, (const void *)&access },
     { (const void *)&observedUnlink, (const void *)&unlink },

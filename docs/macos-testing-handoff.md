@@ -1,22 +1,26 @@
 # Lekmod macOS single-player testing handoff
 
-**Paused at the user's request on September26: "Pause testing when you reach an apt stopping point."**
-The current diagnostic finished normally; stock is restored and Civ V/owned runners
-are closed. Final independent verification:
-`build/macos/pause-after-stat-abi-20260926.json`. Do not launch or resume testing
-until the user explicitly resumes. Work is now on local `main`; the requested
-fast-forward and subsequent focused commits are complete. No push was made.
+**Resumed by the user. Continue on local `main` until asked to stop.**
+The last pause checkpoint was `b4579bf3`; the checkout was clean, stock active and
+Civ V closed when resuming. The current work is the
+[scoped host-stat ABI prototype](macos-host-stat-abi.md). Read the ignored
+`build/macos/continuation-state.json` before launching: a native probe may be active.
 
-The last read-only investigation verified a host metadata ABI mismatch: it resolves
-legacy `lstat` but its actual SQLite consumer reads the mode at the current layout's
-offset4 instead of legacy offset8. An isolated read-only SQLite probe reproduces
-CANTOPEN14 on the same preserved database under that mismatch; the correct binding
-opens it unchanged. No native host correction/workaround has been implemented or
-retested, so startup reliability remains unresolved. Read the latest section of
-[the startup report](macos-startup-cache.md) before continuing. Host binary unchanged.
-The next step after resumption is a safely scoped native validation/correction,
-followed by remaining content/effect gaps. The accepted long campaign remains
-closed and all multiplayer remains deferred.
+The unchanged host now reproduced failure on the exact preserved healthy bad-inode
+database through its own menu database interface: legacy metadata was read as a
+symlink, readlink returned EINVAL, and attachment failed. The experimental
+correction is limited to the verified host and SQLite call path; offline ABI and
+unrelated-process controls pass. The corrected native comparison passed on the same unchanged database/inode.
+The test-only `--host-stat-compat` option is now available; a comprehensive
+gameplay/reload regression is next. This is not permanent launcher integration.
+No host executable, permanent Steam setting or launcher has been changed.
+
+Keep Steam/Civ V in the background by default. Foreground permission remains
+in the conversation. Never launch while locked; preserve saves/backups and restore
+temporary hooks/settings. Do not push, restart Docker, change Steam's channel,
+recreate schedules, reopen the accepted long campaign or test multiplayer.
+No synchronization checks or GameCore wait flags may be bypassed.
+
 
 The [Swiss Armory training defect](macos-swiss-armory-validation.md) is fixed in
 `149e6328`. Clean package `build/macos/Lekmod-swiss-armory-20260926.zip`, archive

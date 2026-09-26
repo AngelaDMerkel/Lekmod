@@ -20,6 +20,7 @@ def main():
     p.add_argument('--minutes',type=int,default=60,help='total wall-clock limit, 2–60 minutes; finishes early when complete')
     p.add_argument('--from-stage',help='start at this independent fixture stage, preserving the original plan order')
     p.add_argument('--trace-loaded-libraries',action='store_true',help='record dyld images for a scoped startup diagnostic')
+    p.add_argument('--host-stat-compat',action='store_true',help='opt-in verified-host SQLite stat ABI correction for this test process')
     p.add_argument('--preflight-only',action='store_true',help='validate hashes, adapters and Lua syntax; do not touch the game')
     p.add_argument('--package',type=Path,help='optional verified native package; requires stock and restores stock afterward')
     p.add_argument('--sha256',help='required package SHA256 when --package is supplied')
@@ -44,6 +45,7 @@ def main():
         print(json.dumps({'plan':plan['name'],'stages':len(plan['stages']),'assertions':sum(len(s['items'])for s in plan['stages']),
               'reload_checks':len(plan['stages']),'maximum_functional_turns':plan['max_turns'],'time_limit_minutes':a.minutes},indent=2),flush=True)
         if a.package and playtest_batch.sha(a.package)!=a.sha256:p.error('Package hash mismatch')
+        if a.host_stat_compat:runner.require_supported_stat_host()
         if a.preflight_only:return 0
         runner.require_unlocked_desktop();runner.require_existing_steam_session()
         if runner.game_pids():p.error('Quit Civ V before starting the batch')
@@ -59,7 +61,8 @@ def main():
             returncode=playtest_batch.run_owned_runner([sys.executable,str(PORT/'automated-playtest.py'),'--mode','single-player-smoke','--turns','3',
                 '--timeout',str(a.minutes*60),'--stall-seconds','240','--scenario','batch','--scenario-turns','30',
                 '--batch-plan',str(actual),'--load-save',plan['stages'][0]['fixture'],'--save-and-exit',
-                *(['--trace-loaded-libraries'] if a.trace_loaded_libraries else [])],cwd=ROOT)
+                *(['--trace-loaded-libraries'] if a.trace_loaded_libraries else []),
+                *(['--host-stat-compat'] if a.host_stat_compat else [])],cwd=ROOT)
             return returncode
         finally:
             if installed:

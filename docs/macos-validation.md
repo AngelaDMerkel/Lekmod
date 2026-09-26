@@ -18,7 +18,7 @@ recurred before an earlier attempt; startup/shutdown reliability is still open.
 The [Yugoslav revolution fix](macos-yugoslav-ideology-validation.md) has21 scoped
 native assertions/two functional replays plus baseline replay. Normal switches
 into all three ideologies grant the promised bonus while preserving anarchy.
-The current tested package is the Yugoslav archive named in the handoff.
+The later Romanian package includes this fix.
 
 The [Romanian capture-reward fix](macos-romania-acquisition-validation.md) has15
 scoped native assertions/three functional replays plus a baseline replay, including
@@ -30,13 +30,13 @@ The [system outcomes](macos-single-player-systems.md) and
 physical mouse actions, scripted commands, gameplay outcomes, and incomplete
 sessions. The user renewed foreground-testing permission for this task.
 
-## Current pause and confirmed open defect
+## Current startup investigation
 
-Testing is paused at the user's request after `20260926T043437Z` confirmed that
-Swiss Armory training grants Mountaineer without refreshing its active terrain
-bonus. [The reproduction and preserved checkpoint](macos-swiss-armory-validation.md)
-are ready; the fix and retest remain next. Stock is restored and Civ V is closed.
-This building-granted unit is outside the 125 replacement-unit inventory.
+Testing has resumed on local `main`. The Swiss, Yugoslav and Romanian fixes above
+are natively verified; the old Swiss pause below is superseded. The current
+[host-stat ABI investigation](macos-host-stat-abi.md) has reproduced the metadata
+failure in the actual host and is testing a scoped, process-only correction.
+It has not yet established a validated deployment or full single-player support.
 
 ## Special unique-unit acquisition (September 26 UTC)
 

@@ -1270,3 +1270,16 @@ Run `python3 LEKMOD_DLL/macos/test-exit-observer.py` after observer changes; the
 x86 subprocess cases include descriptor lifetime/errno/byte preservation. See
 `docs/macos-startup-cache.md` for the unresolved native failure and interpretation
 limits. A passing startup after adding diagnostics is not a root-cause fix.
+
+
+## Experimental host stat ABI correction
+
+`batch-playtest.py --host-stat-compat` (also accepted by the direct runner) opts
+only this test process into the pinned-host SQLite lstat correction described in
+`docs/macos-host-stat-abi.md`. The full executable hash is checked before native
+work; the library also guards image identity/instructions and the actual call path.
+Unknown legacy consumers retain their original ABI. Reports include source/library
+hashes and observed correction counts. A corrected passing run requires an observed
+call. The flag is off by default and rejects uninjected/activation-only combinations.
+It is not yet a production installation/Steam launch solution. Do not bypass normal
+lock/process, save integrity, synchronization or cleanup requirements when using it.
