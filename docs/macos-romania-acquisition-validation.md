@@ -6,8 +6,7 @@ CityCaptureComplete event, including peaceful city trades/gifts. The focused fix
 uses the existing conquest argument to exclude peaceful recipient transfers.
 A liberation disposition follows a real conquest; the conqueror earns its
 capture award first, and the subsequent recipient transfer must not award it
-again. This source-order reasoning still requires a separately scoped native
-liberation check.
+again. The separately scoped native liberation checks below verify that ordering.
 
 ## Authentic gift and capture reproduction
 
@@ -64,6 +63,56 @@ Lua-parser rejection of malformed scenario/adapter/prefix files.
 
 The offline peaceful-transfer case fails before the conquest gate. All32 city/policy
 callback cases pass after it, including four speed scales, unrelated/dead owners,
-and the Yugoslav revolution regressions. Native retest on a new clean package is
-pending. The fix does not retrospectively remove points from old saves; their
+and the Yugoslav revolution regressions. The native gift/capture retest passed on the new clean package below. The fix does not retrospectively remove points from old saves; their
 historical sources cannot be inferred safely from the current meter.
+
+## Fixed-package retest
+
+Fix `6d5788ed` is packaged from clean source
+`ec9fb383fc360cc913ff961055518e8380be96c3` in
+`build/macos/Lekmod-romania-acquisition-20260926.zip`, archive SHA-256
+`bca29c261d01a81799ece151001dbc2eaefced4d33f1852b88dbd6a3ee16e785`.
+Core remains `2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1`;
+payload SHA-256 `636ad673ef9b1662f71a617c2d4be5598695538972cffe314a9da0dee7bb82b4`.
+
+`20260926T174746Z` exited255 before gameplay in20.5 seconds; no reward test ran.
+Its localization cache is preserved and runner restoration passed. Independent
+traced **`20260926T175250Z` passed all five assertions and exact reload**,112.2
+seconds, one ordinary turn, normal exit0. The same real gift now adds zero points;
+the real conquest still adds100, and the former owner remains excluded. All save
+copies matched completed originals, with no Lua/synchronization errors/new diagnostic
+and full runner restoration. Evidence: `build/macos/romania-validation-20260926.json`.
+
+Native liberation is reported separately below.
+
+## Native liberation in both roles
+
+`20260926T181244Z` passed ten checks, two functional exact replays and the new
+human-fixture baseline replay,175.8 seconds, zero ordinary functional turns,
+normal exit0 with full runner restoration. A normal human Romania/Poland/Rome
+fixture (`20260926T175541Z`, matrix `20260926T175536Z`) supplied the Romanian
+liberator; the existing group8 fixture supplied a Polish liberator returning a
+Romanian city. Each test supplies a legal third-party city under Roman occupation,
+contact, uranium and a staged attacker. The actual attack and original Liberate
+choice produce both ownership changes; no damage or reward points are supplied.
+
+Romania as liberator earns100 at conquest and retains it when returning the city
+to Poland. Poland as liberator earns zero; Romania as recipient also gains zero
+when its city is returned. Both original living owners regain their cities.
+Peaceful entry rejection uses an actually visible adjacent target and the API's
+explicit destination flag. Each resulting state replays exactly.
+
+The earlier `20260926T175830Z` attempt failed both stages before combat because
+the harness queried a distant, unseen target without destination semantics; its
+baseline replay passed. This was an invalid movement-preview assumption, not a
+product defect. The source Lua binding takes numeric declare-war/destination
+arguments. `20260926T180158Z` then hit startup255 in49.7 seconds before loading a
+fixture; its healthy localization cache is preserved. The independent traced
+passing run does not resolve that startup cause.
+
+The reward round totals15 scoped native assertions/three functional exact replays
+plus one new baseline replay. Copies of all recorded saves were independently
+compared with completed originals. Final preservation confirms stock/no game,
+original603 manual saves/quicksave/settings/backups and32 stock UI hashes.
+Evidence: `build/macos/romania-validation-20260926.json`. Detailed wounded-combat,
+golden-age culture and other Romanian unique effects remain separately scoped.

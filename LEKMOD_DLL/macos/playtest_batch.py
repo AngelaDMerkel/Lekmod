@@ -12,6 +12,7 @@ from playtest_save import CheckpointCopier, game_save_writer_open
 
 # Only scenarios with reviewed, compatible temporary adapters are admitted.
 HOOKS = {
+    'romania-liberation': {'@UI/InGame/Popups/GenericPopup.lua': 'playtest-scenario-city-capture-popup.lua'},
     'romania-acquisition': {'@DLC/Expansion2/UI/InGame/LeaderHead/LeaderHeadRoot.lua': 'playtest-scenario-diplo-assets-root.lua', 'UI/TradeLogic.lua': 'playtest-scenario-romania-city-gift-popup.lua', '@UI/InGame/LeaderHead/DiploTrade.lua': 'playtest-scenario-trade-context.lua', 'UI/DiscussionDialog.lua': 'playtest-scenario-romania-city-gift-reply.lua'},
     'yugoslav-revolution-cycle': {'UI/SocialPolicyPopup.lua': 'playtest-scenario-revolution-popup.lua'},
     'yugoslavia-ideology': {'@DLC/Expansion2/UI/InGame/Popups/ChooseIdeologyPopup.lua': 'playtest-scenario-ideology-popup.lua', 'UI/SocialPolicyPopup.lua': 'playtest-scenario-revolution-popup.lua'},

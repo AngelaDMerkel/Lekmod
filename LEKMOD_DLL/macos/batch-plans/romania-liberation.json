@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "name": "romania-liberation",
+  "stages": [
+    {
+      "fixture": "build/macos/playtests/20260926T175541Z/Lekmod-Functional-20260926T175541Z.Civ5Save",
+      "sha256": "2df81f4392d837428f6cfa204102b7c1a128a4001c35435f748bdea2596c6f57",
+      "id": "romanian-liberator",
+      "scenario": "romania-liberation",
+      "max_turns": 2
+    },
+    {
+      "fixture": "build/macos/playtests/20260922T234507Z/Lekmod-Functional-20260922T234507Z.Civ5Save",
+      "sha256": "7eeef6df14b51bcc7a21810c416b40695a3c54207c9543e7bce1df79dd48b9e0",
+      "id": "romanian-recipient",
+      "scenario": "romania-liberation",
+      "max_turns": 2
+    },
+    {
+      "id": "romanian-human-baseline",
+      "scenario": "civilization-start",
+      "fixture": "build/macos/playtests/20260926T175541Z/Lekmod-Functional-20260926T175541Z.Civ5Save",
+      "sha256": "2df81f4392d837428f6cfa204102b7c1a128a4001c35435f748bdea2596c6f57",
+      "expected_report": "build/macos/playtests/20260926T175541Z/report.json",
+      "expected_report_sha256": "14572c4cb86f2416819e92d98c4de16bb2e402e5139968f0b0eb3267fda12eca",
+      "max_turns": 0
+    }
+  ]
+}

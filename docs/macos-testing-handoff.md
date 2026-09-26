@@ -32,7 +32,31 @@ nonempty localization cache are preserved. No root-cause fix is claimed; the
 later traced gameplay pass is independent. Further ability/state gaps and
 startup/shutdown reliability remain open.
 
-## Latest Yugoslav continuation on main
+## Latest Romanian continuation on main
+
+[Romanian city-acquisition rewards](macos-romania-acquisition-validation.md) were
+fixed in `6d5788ed`: real peaceful city gifts incorrectly awarded capture points.
+The same-input retest and both native liberation roles pass15 assertions, three
+functional exact replays and the new baseline replay. Native liberating capture
+still grants100 on Quick; a liberated Romanian recipient gets no unearned reward.
+All32 city/policy callback cases pass.
+
+Current tested package: `build/macos/Lekmod-romania-acquisition-20260926.zip`, clean
+source `ec9fb383`, archive SHA-256
+`bca29c261d01a81799ece151001dbc2eaefced4d33f1852b88dbd6a3ee16e785`.
+This supersedes the earlier Swiss/Yugoslav packages for subsequent tests.
+Evidence: `build/macos/romania-validation-20260926.json`. Final preservation confirms
+stock/no game, original603 manual saves/quicksave/settings/backups and32 stock UI
+hashes. The gift-controller commissioning failures and the fog/destination test
+assumption remain failed; no native flags/checks were bypassed.
+
+Startup255 recurred at `20260926T174746Z` and `20260926T180158Z`; caches were healthy
+and preserved. Next work is the persistent startup boundary, using a tested
+read-only descriptor snapshot at the logged failure, then remaining content/effect
+gaps. Continue on `main`, no push, no new long campaign/multiplayer/schedules, and
+never launch locked. Check ignored continuation state for active work.
+
+## Earlier Yugoslav continuation on main
 
 The [Yugoslav revolution reward](macos-yugoslav-ideology-validation.md) was
 confirmed missing under normal anarchy in `20260926T170551Z` (expected11 free

@@ -20,6 +20,11 @@ native assertions/two functional replays plus baseline replay. Normal switches
 into all three ideologies grant the promised bonus while preserving anarchy.
 The current tested package is the Yugoslav archive named in the handoff.
 
+The [Romanian capture-reward fix](macos-romania-acquisition-validation.md) has15
+scoped native assertions/three functional replays plus a baseline replay, including
+actual city gifting and both liberation roles. The latest tested package is the
+Romanian archive in the handoff; startup reliability is still unresolved.
+
 The [system outcomes](macos-single-player-systems.md) and
 [resumed single-player evidence](macos-single-player-20260913.md) separate
 physical mouse actions, scripted commands, gameplay outcomes, and incomplete
