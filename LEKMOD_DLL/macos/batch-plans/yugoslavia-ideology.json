@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "name": "yugoslavia-ideology",
+  "stages": [
+    {
+      "fixture": "build/macos/playtests/20260926T170320Z/Lekmod-Functional-20260926T170320Z.Civ5Save",
+      "sha256": "c5e4d974273b9306c9330398a81757e0ec3b64ffa21cedcbe1aee7dac53b44e5",
+      "id": "yugoslavia-ideology",
+      "scenario": "yugoslavia-ideology",
+      "max_turns": 12
+    },
+    {
+      "id": "yugoslav-human-baseline",
+      "scenario": "civilization-start",
+      "fixture": "build/macos/playtests/20260926T170320Z/Lekmod-Functional-20260926T170320Z.Civ5Save",
+      "sha256": "c5e4d974273b9306c9330398a81757e0ec3b64ffa21cedcbe1aee7dac53b44e5",
+      "expected_report": "build/macos/playtests/20260926T170320Z/report.json",
+      "expected_report_sha256": "4e11776ec610dad9fd602ff345c06265f97331a5600b7f230e1b506dc39a4eba",
+      "max_turns": 0
+    }
+  ]
+}
