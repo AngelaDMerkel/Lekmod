@@ -19,6 +19,7 @@ def main():
     p.add_argument('--plan',default='comprehensive',help='pilot, comprehensive, or a plan JSON path')
     p.add_argument('--minutes',type=int,default=60,help='total wall-clock limit, 2–60 minutes; finishes early when complete')
     p.add_argument('--from-stage',help='start at this independent fixture stage, preserving the original plan order')
+    p.add_argument('--trace-loaded-libraries',action='store_true',help='record dyld images for a scoped startup diagnostic')
     p.add_argument('--preflight-only',action='store_true',help='validate hashes, adapters and Lua syntax; do not touch the game')
     p.add_argument('--package',type=Path,help='optional verified native package; requires stock and restores stock afterward')
     p.add_argument('--sha256',help='required package SHA256 when --package is supplied')
@@ -56,7 +57,8 @@ def main():
                 installed=True
             returncode=playtest_batch.run_owned_runner([sys.executable,str(PORT/'automated-playtest.py'),'--mode','single-player-smoke','--turns','3',
                 '--timeout',str(a.minutes*60),'--stall-seconds','240','--scenario','batch','--scenario-turns','30',
-                '--batch-plan',str(actual),'--load-save',plan['stages'][0]['fixture'],'--save-and-exit'],cwd=ROOT)
+                '--batch-plan',str(actual),'--load-save',plan['stages'][0]['fixture'],'--save-and-exit',
+                *(['--trace-loaded-libraries'] if a.trace_loaded_libraries else [])],cwd=ROOT)
             return returncode
         finally:
             if installed:

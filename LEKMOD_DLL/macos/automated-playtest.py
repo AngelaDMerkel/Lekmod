@@ -1129,6 +1129,14 @@ def main():
         report["localization_startup_failure"] = (
             report.get("process_returncode") == 255 and database_log.exists() and
             localization_startup_failure(database_log.read_text(errors="replace")))
+        if report["localization_startup_failure"]:
+            from playtest_cache import preserve_cache
+            try:
+                report["localization_cache_evidence"] = preserve_cache(
+                    DATA / "cache", output / "localization-failure-cache", game_pids)
+            except Exception as error:
+                # Evidence collection must not prevent UI/settings/stock restoration.
+                report["localization_cache_preservation_error"] = str(error)
         net_log = logs / "net_message_debug.log"
         report["synchronization_checks"] = synchronization_failures(
             net_log.read_text(errors="replace") if net_log.exists() else "")
