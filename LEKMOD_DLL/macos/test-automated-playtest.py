@@ -15,6 +15,21 @@ spec.loader.exec_module(playtest)
 
 
 class PlaytestEvidenceTests(unittest.TestCase):
+    def test_installed_correction_uses_verified_wsdlc_state(self):
+        manager = mock.Mock()
+        manager.status.return_value = {"status": "managed", "product": "lekmod", "host_startup": True}
+        manager._state.return_value = {"host_startup": {"kind": "sqlite-stat-inode64-v1", "host_sha256": "a" * 64}}
+        result = playtest.installed_stat_correction(manager)
+        self.assertEqual(result["deployment"], "wsdlc-installed")
+        self.assertTrue(result["enabled"])
+        self.assertEqual(result["host_sha256"], "a" * 64)
+        for state in ("unsupported-host", "modified-startup", "missing-startup", "steam-restored", "interrupted"):
+            manager.status.return_value = {"status": state}
+            with self.assertRaises(SystemExit):
+                playtest.installed_stat_correction(manager)
+        manager.status.return_value = {"status": "managed", "product": "lekmod", "host_startup": False}
+        self.assertIsNone(playtest.installed_stat_correction(manager))
+
     def test_load_epoch_with_zero_completed_turns_has_safe_progress_record(self):
         record = playtest.turn_progress_record({"completed_turns": [], "turn_discontinuities": []})
         self.assertEqual(record["completed_count"], 0)

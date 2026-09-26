@@ -35,8 +35,11 @@ sessions. The user renewed foreground-testing permission for this task.
 Testing has resumed on local `main`. The Swiss, Yugoslav and Romanian fixes above
 are natively verified; the old Swiss pause below is superseded. The current
 [host-stat ABI investigation](macos-host-stat-abi.md) has reproduced the metadata
-failure in the actual host and is testing a scoped, process-only correction.
-It has not yet established a validated deployment or full single-player support.
+failure in the actual host. The scoped correction passed81 functional checks and
+16 exact replays. Local WSDLC integration also passed its native installed-path
+database test and byte-exact stock restoration. Actual Steam Play validation is
+pending a controllable Library window; complete single-player support is not
+claimed. See the linked report for archive and executable hashes.
 
 ## Special unique-unit acquisition (September 26 UTC)
 

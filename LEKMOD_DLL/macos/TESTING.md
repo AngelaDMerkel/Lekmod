@@ -1283,3 +1283,24 @@ hashes and observed correction counts. A corrected passing run requires an obser
 call. The flag is off by default and rejects uninjected/activation-only combinations.
 It is not yet a production installation/Steam launch solution. Do not bypass normal
 lock/process, save integrity, synchronization or cleanup requirements when using it.
+
+
+### WSDLC-installed startup correction
+
+The local WSDLC integration adds a fixed early-load library to the supported
+executable and restores its original bytes with `--gamecore stock`. The corrected
+archive is `build/macos/Lekmod-steam-startup-20260926.zip`, SHA-256
+`edd00aa4d8eca910ee90777465e6db7eeae92b02aa2bff709f44fdb06b529002`.
+It retains the Romanian package's GameCore/DLC unchanged and adds the signed,
+committed host-stat correction. Build it with `package-host-startup.py` from an
+independently pinned base archive; `package-macos.sh` now invokes that step.
+The WSDLC source checkout must include `civ5_host_startup.py` (`562e490` or later).
+
+The native installed-path database probe passed. Actual Steam Play validation is
+pending because the UI tool could not control/capture the Steam Library. Do not
+count that attempt as a physical launch or a gameplay pass. The ordinary runner
+now verifies the installed WSDLC state, records its executable/library hashes,
+excludes competing passive stat interposition and requires correction markers.
+Use the installed archive without `--host-stat-compat`; that opt-in remains a
+separate process-only diagnostic for the unchanged stock host.
+See [host-stat evidence](../../docs/macos-host-stat-abi.md).

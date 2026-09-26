@@ -14,6 +14,7 @@ from pathlib import Path
 import re
 import shutil
 import subprocess
+import sys
 import time
 import playtest_batch
 
@@ -295,6 +296,26 @@ def require_supported_stat_host():
         raise SystemExit("Experimental host-stat correction requires the verified Aspyr executable; nothing changed")
 
 
+def installed_stat_correction(manager=None):
+    """Use WSDLC's verified installed state; never trust a library filename alone."""
+    if manager is None:
+        installer = REPO.parent / "Civ5ModDlcPacker"
+        sys.path.insert(0, str(installer))
+        try:
+            import civ5_gamecore
+        finally:
+            sys.path.remove(str(installer))
+        manager = civ5_gamecore.ProductManager(APP, DATA)
+    status = manager.status()
+    if status.get("status") not in ("managed", "stock"):
+        raise SystemExit("WSDLC installation requires attention: " + status["status"])
+    if not status.get("host_startup"):
+        return None
+    if status.get("product") != "lekmod":
+        raise SystemExit("Installed startup test requires the verified Lekmod product")
+    return dict(manager._state()["host_startup"], enabled=True, deployment="wsdlc-installed")
+
+
 def functional_results(text, run, required=FUNCTIONAL_ITEMS):
     rows = [dict(re.findall(r"(\w+)=([^\s]+)", line)) for line in text.splitlines()
             if "[LEKMOD_FUNCTIONAL]" in line]
@@ -531,6 +552,7 @@ def main():
         raise SystemExit("Civilization V is already open; refusing to disturb it")
     require_unlocked_desktop()
     require_existing_steam_session()
+    installed_stat = installed_stat_correction()
     config = DATA / "config.ini"
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     save_name = "Lekmod-Functional-" + stamp
@@ -775,7 +797,7 @@ def main():
               "production_completion": args.production_completion,
               "quick_start": args.quick_start, "skip_intro": args.skip_intro,
               "trace_loaded_libraries": args.trace_loaded_libraries,
-              "host_stat_compat": {"enabled": args.host_stat_compat},
+              "host_stat_compat": installed_stat or {"enabled": args.host_stat_compat, "deployment": "process-only" if args.host_stat_compat else "none"},
               "process_observer": "none" if args.no_process_adapter else "activation-only" if args.activation_only else "full-diagnostics",
               "scenario": args.scenario,
               "scenario_turn_limit": args.scenario_turns,
@@ -808,7 +830,7 @@ def main():
     if not args.no_process_adapter:
         subprocess.run(["clang", "-arch", "x86_64", "-dynamiclib", "-framework", "AppKit",
                         "-framework", "Foundation", str(Path(__file__).with_name("background-playtest.m")),
-                        "-o", str(background_lib)] + (["-DLEKMOD_TEST_ALLOW_FOREGROUND"] if args.foreground_attachment_test else []) + (["-DLEKMOD_TEST_ACTIVATION_ONLY"] if args.activation_only else []) + (["-DLEKMOD_TEST_EXTERNAL_LEGACY_STAT"] if args.host_stat_compat else []), check=True)
+                        "-o", str(background_lib)] + (["-DLEKMOD_TEST_ALLOW_FOREGROUND"] if args.foreground_attachment_test else []) + (["-DLEKMOD_TEST_ACTIVATION_ONLY"] if args.activation_only else []) + (["-DLEKMOD_TEST_EXTERNAL_LEGACY_STAT"] if args.host_stat_compat or installed_stat else []), check=True)
     stat_library = None
     if args.host_stat_compat:
         stat_source = Path(__file__).with_name("host-stat-compat.c")
@@ -1226,7 +1248,7 @@ def main():
             report["batch_complete"] = batch_session.done
             if not batch_session.done and report["status"].startswith("passed"):
                 report["status"] = "failed-incomplete-batch"
-        if args.host_stat_compat:
+        if args.host_stat_compat or installed_stat:
             process_text=(output / "process.log").read_text(errors="replace") if (output / "process.log").exists() else ""
             count=process_text.count("[LEKMOD_HOST_STAT] corrected sqlite lstat")
             report["host_stat_compat"]["observed_corrections"]=count

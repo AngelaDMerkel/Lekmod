@@ -90,3 +90,41 @@ This establishes a native correction for the reproduced database attachment faul
 It does not establish production launcher integration, all startup/shutdown causes,
 or complete single-player support. Nothing has been pushed or permanently injected
 into Steam or the game executable.
+
+## WSDLC installation and restore validation
+
+Local WSDLC commit `562e490` installs a fixed dependency on
+`@executable_path/libWirCiv5HostStat.dylib` into verified unused header space,
+ad-hoc signs the prepared executable, and includes both executable and library
+in its existing transaction. All161 WSDLC tests pass, including interrupted
+installation/restoration, updates, Steam restoration, tampering, backup and
+symlink rejection. A real disposable executable copy passed signature verification
+with its entire text/code region unchanged. The original is retained as
+`stock-executable` in WSDLC's application-specific state directory.
+
+Lekmod packaging commit `5b1ed586` produces the local corrected archive
+`build/macos/Lekmod-steam-startup-20260926.zip`, SHA-256
+`edd00aa4d8eca910ee90777465e6db7eeae92b02aa2bff709f44fdb06b529002`.
+Its GameCore/DLC are byte-identical to the earlier Romanian package. The signed
+startup library SHA-256 is
+`26ea4333dc03556123db796217745d129fe4b8a7c2c11f9cedb27db47bb5f080`;
+the installed executable SHA-256 is
+`d1fef99d7de4e896ec1ebf9707d636628d9b82af539b32209bc268c9af708e86`.
+Steam launch settings were not changed, and no separate shortcut is needed by this
+integration.
+
+`build/macos/startup-stat-fix-20260926/installed-20260926T225114Z` used WSDLC to
+install this archive and repeated the preserved bad-inode database probe. The
+correction loaded through the executable dependency; no correction library was
+supplied in DYLD_INSERT_LIBRARIES. The passive background observer was still
+injected and the menu/exit/database callbacks were scripted. The native probe
+attached the unchanged database, returned quick_check=ok, detached, exited0 and
+restored all temporary hooks/settings, prior manual saves and stock. WSDLC restored
+the original executable's exact SHA-256. No new crash diagnostic appeared.
+
+An actual Steam Play test was prepared with no injected observer or UI hooks.
+The UI tool returned a black Steam Helper window and frontmost/capture errors;
+no Play click or game launch was obtained. The user was asked to bring the Library
+into view. That launch path remains pending, distinct from the successful direct
+native installed-path test. Check continuation state before touching the active
+installation. Nothing was pushed or released publicly.
