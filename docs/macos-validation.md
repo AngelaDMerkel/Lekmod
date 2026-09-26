@@ -37,9 +37,10 @@ are natively verified; the old Swiss pause below is superseded. The current
 [host-stat ABI investigation](macos-host-stat-abi.md) has reproduced the metadata
 failure in the actual host. The scoped correction passed81 functional checks and
 16 exact replays. Local WSDLC integration also passed its native installed-path
-database test and byte-exact stock restoration. Actual Steam Play validation is
-pending a controllable Library window; complete single-player support is not
-claimed. See the linked report for archive and executable hashes.
+database test and byte-exact stock restoration. Actual Steam Play, the ordinary
+Aspyr launcher, loading an existing single-player save, and normal exit0 now pass
+on the current Mac with no injected test observer/UI hooks. Complete single-player
+support is not claimed. See the linked report for archive and executable hashes.
 
 ## Special unique-unit acquisition (September 26 UTC)
 

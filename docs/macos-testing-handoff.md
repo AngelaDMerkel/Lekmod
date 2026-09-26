@@ -6,16 +6,29 @@ Civ V closed when resuming. The current work is the
 [scoped host-stat ABI prototype](macos-host-stat-abi.md). Read the ignored
 `build/macos/continuation-state.json` before launching: a native probe may be active.
 
-The unchanged host now reproduced failure on the exact preserved healthy bad-inode
-database through its own menu database interface: legacy metadata was read as a
-symlink, readlink returned EINVAL, and attachment failed. The experimental
-correction is limited to the verified host and SQLite call path; offline ABI and
-unrelated-process controls pass. The corrected native comparison passed on the same unchanged database/inode.
-The test-only `--host-stat-compat` option passed the comprehensive regression in
-`20260926T222217Z`:81 checks/16 exact replays,32 verified save-copy pairs and full
-restoration. The user requests WSDLC integration so normal Steam Play works.
-That installer integration and its native launch verification are next.
-No host executable, permanent Steam setting or launcher has been changed.
+The [host-stat ABI correction](macos-host-stat-abi.md) passed a controlled native
+failure/correction comparison on the same healthy bad-inode database, then81
+functional checks/16 exact replays in `20260926T222217Z`.
+
+The user requested normal Steam Play integration. Local WSDLC commit `562e490`
+now installs/restores the executable dependency and signed correction library
+transactionally. Its161-test suite passes. The installed-path native database
+probe passed, and actual Steam Play → Aspyr Play → existing single-player save →
+normal exit0 passed on this Mac, with no injected observer or test UI callbacks.
+See `build/macos/wsdlc-startup-validation-20260926.json` for evidence.
+
+Use corrected package `build/macos/Lekmod-steam-startup-20260926.zip`, SHA-256
+`edd00aa4d8eca910ee90777465e6db7eeae92b02aa2bff709f44fdb06b529002`.
+Its GameCore/DLC match the Romanian package below; it adds the startup correction.
+The ordinary runner recognizes WSDLC's verified installed state automatically;
+do not add the process-only `--host-stat-compat` option with this archive.
+
+Latest verification: Civ V closed, stock executable/GameCore restored exactly,
+startup library removed,672 non-autosave files/settings/32 stock UI files and
+all canonical/Aspyr backups preserved. No new crash diagnostic. Steam settings
+unchanged, no push. The initial UI-control failures remain distinct from game
+failures. Remaining work is broader ability/state coverage and further scoped
+reliability checks; full single-player support is not claimed.
 
 Keep Steam/Civ V in the background by default. Foreground permission remains
 in the conversation. Never launch while locked; preserve saves/backups and restore

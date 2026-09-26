@@ -1296,9 +1296,12 @@ committed host-stat correction. Build it with `package-host-startup.py` from an
 independently pinned base archive; `package-macos.sh` now invokes that step.
 The WSDLC source checkout must include `civ5_host_startup.py` (`562e490` or later).
 
-The native installed-path database probe passed. Actual Steam Play validation is
-pending because the UI tool could not control/capture the Steam Library. Do not
-count that attempt as a physical launch or a gameplay pass. The ordinary runner
+The native installed-path database probe passed. Actual Steam Play → Aspyr Play →
+existing single-player save → normal exit0 also passed on the current Mac. The
+initial Steam/fullscreen control failures remain recorded separately; native
+mouse fallback was explicitly approved. There were no test UI hooks or injected
+libraries in the successful Steam session. This is launch/load/exit coverage, not
+another functional outcome suite. The ordinary runner
 now verifies the installed WSDLC state, records its executable/library hashes,
 excludes competing passive stat interposition and requires correction markers.
 Use the installed archive without `--host-stat-compat`; that opt-in remains a

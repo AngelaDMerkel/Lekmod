@@ -122,9 +122,40 @@ attached the unchanged database, returned quick_check=ok, detached, exited0 and
 restored all temporary hooks/settings, prior manual saves and stock. WSDLC restored
 the original executable's exact SHA-256. No new crash diagnostic appeared.
 
-An actual Steam Play test was prepared with no injected observer or UI hooks.
-The UI tool returned a black Steam Helper window and frontmost/capture errors;
-no Play click or game launch was obtained. The user was asked to bring the Library
-into view. That launch path remains pending, distinct from the successful direct
-native installed-path test. Check continuation state before touching the active
-installation. Nothing was pushed or released publicly.
+## Actual Steam Play verification
+
+After the user brought the Steam Library forward, actual clicks on Steam Play
+and the ordinary Aspyr launcher Play opened native PID91329. The game reached
+its main menu and loaded the existing
+`Lekmod-Batch-20260926T222217Z-battalion-reload.Civ5Save` through Single Player →
+Load Game → Continue Your Journey. Its SHA-256 is
+`2752c7ac7ba57c9feeea6e0467a571fbe95a4415306e6a4c534ed918b9cbfc6a`.
+The visible world showed turn3/3820BC,500 gold, and a Maori Battalion with70
+strength and2/2 movement. This confirms normal launch, native save loading and
+rendered Lekmod state; it adds no turn/combat or exact-state comparison claim.
+
+No Steam launch options, test UI hooks or injected process libraries were used.
+Read-only vmmap output confirms the installed correction and native GameCore were
+loaded. Actual Menu → Exit to Windows → Yes ended the process normally; a
+read-only kernel process-exit watch recorded wait status0, exit code0 and signal0.
+
+The initial black Steam capture and later fullscreen CUA click errors are retained
+as control failures, not game failures. Following explicit user approval for an
+alternative native input method, a small guarded macOS mouse helper was built in
+the evidence directory. It requires the expected game PID/bundle/executable to
+be frontmost, an unlocked console session and existing event permission. It
+changes no game APIs, synchronization checks or wait flags. Screenshots guided
+every successful mouse action. The earlier recorded native interface was CUA;
+this standalone fallback was newly prepared for the authorized test.
+
+WSDLC restored the original executable and GameCore exactly and removed its owned
+startup library. All672 prior non-autosave files, settings,32 stock UI files and
+both GameCore backups remain unchanged. No new crash report appeared. Civ V is
+closed and stock is active. Steam was not restarted or reconfigured.
+Evidence: `build/macos/steam-play-20260926/report.json` and
+`build/macos/wsdlc-startup-validation-20260926.json`; the loaded-world screenshot
+is `build/macos/steam-play-20260926/loaded-game-menu.png`.
+
+This validates normal Steam launch on the current Mac for this exact local
+package/host. It does not establish other platforms, every startup/shutdown case,
+or complete single-player support. Nothing was pushed or released publicly.
