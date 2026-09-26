@@ -14,4 +14,7 @@ rsync -a --exclude 'CvGameCore_Expansion2.dll' --exclude '*.pdb' \
 python3 "$port_dir/configure-ui.py" --lekmod-dir "$stage/LEKMOD" --mode standard
 python3 "$compat/tools/package.py" --product lekmod --version "$version" \
   --source-repo "$repo_dir" --binary "$repo_dir/build/macos/libCvGameCoreDLL_Expansion2_DLL.dylib" \
-  --payload "LEKMOD=$stage/LEKMOD" --license "$repo_dir/LICENSE" --output "$output"
+  --payload "LEKMOD=$stage/LEKMOD" --license "$repo_dir/LICENSE" --output "$stage/base.zip"
+base_sha="$(shasum -a 256 "$stage/base.zip" | cut -d ' ' -f 1)"
+python3 "$port_dir/package-host-startup.py" --base "$stage/base.zip" \
+  --sha256 "$base_sha" --output "$output"
