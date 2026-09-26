@@ -1,16 +1,32 @@
 # Lekmod macOS single-player testing handoff
 
-**Resumed September 25; latest special-acquisition continuation verified September 26 UTC.**
-The user explicitly resumed the earlier pause. Work stays in this checkout,
-background by default, with no push or new long campaign; multiplayer remains
-deferred. Always inspect current process/install/lock state before launch.
+**Paused September 26 UTC at the user's request: "Stop at the next appropriate break."**
+The current native round finished, Civ V is closed and stock is restored. Do not
+launch another session until the user resumes. Foreground permission remains in
+history; never launch while locked. Multiplayer and the accepted long campaign
+remain deferred/closed as before. No Docker restart, Steam channel change,
+scheduling, push, reset or stash is authorized by this pause.
+
+The next concrete task is the [confirmed Swiss Armory training defect](macos-swiss-armory-validation.md).
+Run `20260926T043437Z` reproduced a Mountaineer-granted Longswordsman beside a
+mountain without its active bonus after real production. The product fix is not
+yet made. The test, logs and save are preserved; the report explains source
+ordering and the related birth-time movement observation. This standalone
+building-granted Reislaufer lies outside the 125 replacement-unit inventory.
+
+Final pause evidence: `build/macos/swiss-armory-pause-20260926.json`. Stock,
+settings, prior manual saves, original quicksave,32 stock UI files and both
+backups are verified. The latest startup observation reached the menu with the
+new metadata observer, but intermittent startup/shutdown reliability remains
+unresolved. The debugger-owned game probe lost its connection and is not exit255
+or successful-exit evidence. See the startup-cache report.
 
 ## Special unique-unit acquisition (September 26 UTC)
 
 [Special acquisition](macos-special-unit-acquisition.md) now closes the ten
 non-production definitions alongside the earlier Swiss purchase. Nine new cases
 passed 42 assertions/nine exact replays, plus two new human-fixture baseline
-replays. Combined with ordinary production, all 125 unique definitions have at
+replays. Combined with ordinary production, all 125 enumerated replacement definitions have at
 least one own-civilization acquisition/resulting-state replay path. This is not
 full ability, mission, human-owner or every-state coverage.
 
@@ -23,8 +39,7 @@ claimed from its earlier failed commissioning runs.
 
 Latest independent stock checkpoint: 600 prior manual saves, original quicksave,
 settings,32 stock UI files and both backups preserved; Civ V closed. Evidence:
-`build/macos/special-acquisition-validation-20260926.json`. User instruction
-remains to continue until complete or explicitly stopped. Next: unresolved startup
+`build/macos/special-acquisition-validation-20260926.json`. The later pause above supersedes the earlier continue instruction. After resumption: unresolved startup
 reliability and the remaining concrete ability/state boundaries. Do not reopen
 the accepted campaign or multiplayer.
 

@@ -3,11 +3,17 @@
 All ten unique definitions excluded from ordinary production now have at least
 one native acquisition path under their own civilization. Together with the
 [115 production definitions](macos-unit-production-validation.md), this establishes
-one acquisition/resulting-state replay path for **all 125 unique unit types**.
+one acquisition/resulting-state replay path for **all 125 enumerated replacement unit types**.
 It does not establish every ability, owner role, mission, belief interaction or
 possible game state. These tests add scripted callbacks and native outcomes,
 not physical mouse coverage. Multiplayer and the accepted long campaign remain
 outside this work.
+
+The 125-type inventory is specifically the non-default
+`Civilization_UnitClassOverrides` catalogue. Standalone classes obtained by other
+means need separate cases. Switzerland's `UNIT_SWISS_REISLAUFER`, granted by its
+unique Armory, is outside that catalogue and is the next active boundary test.
+The acquisition count must not be interpreted as exhaustive unit-content coverage.
 
 The product is unchanged: clean `f33cfd33`, archive
 `build/macos/Lekmod-college-city-iteration-20260924.zip`, SHA-256

@@ -13,12 +13,20 @@ The [system outcomes](macos-single-player-systems.md) and
 physical mouse actions, scripted commands, gameplay outcomes, and incomplete
 sessions. The user renewed foreground-testing permission for this task.
 
+## Current pause and confirmed open defect
+
+Testing is paused at the user's request after `20260926T043437Z` confirmed that
+Swiss Armory training grants Mountaineer without refreshing its active terrain
+bonus. [The reproduction and preserved checkpoint](macos-swiss-armory-validation.md)
+are ready; the fix and retest remain next. Stock is restored and Civ V is closed.
+This building-granted unit is outside the 125 replacement-unit inventory.
+
 ## Special unique-unit acquisition (September 26 UTC)
 
 [Special acquisition](macos-special-unit-acquisition.md) now closes the ten
 non-production definitions alongside the earlier Swiss purchase. Nine new cases
 passed 42 assertions/nine exact replays, plus two new human-fixture baseline
-replays. Combined with ordinary production, all 125 unique definitions have at
+replays. Combined with ordinary production, all 125 enumerated replacement definitions have at
 least one own-civilization acquisition/resulting-state replay path. This is not
 full ability, mission, human-owner or every-state coverage.
 
@@ -31,8 +39,7 @@ claimed from its earlier failed commissioning runs.
 
 Latest independent stock checkpoint: 600 prior manual saves, original quicksave,
 settings,32 stock UI files and both backups preserved; Civ V closed. Evidence:
-`build/macos/special-acquisition-validation-20260926.json`. User instruction
-remains to continue until complete or explicitly stopped. Next: unresolved startup
+`build/macos/special-acquisition-validation-20260926.json`. The later pause above supersedes the earlier continue instruction. After resumption: unresolved startup
 reliability and the remaining concrete ability/state boundaries. Do not reopen
 the accepted campaign or multiplayer.
 
