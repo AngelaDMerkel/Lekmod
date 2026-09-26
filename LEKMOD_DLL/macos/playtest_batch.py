@@ -34,6 +34,19 @@ PREFIXES = {'playtest-nz-owner-observer.lua': 'playtest-nz-owner-before-observer
 
 SUPPORTED = set(HOOKS) | {'swiss-migration-load', 'swiss-human-training', 'swiss-legacy-load', 'swiss-boundaries', 'swiss-armory', 'unique-prophet-birth', 'unique-general-birth', 'unique-specialist-birth', 'unique-unit-production', 'religious-unit-upgrades', 'swiss-enemy-heal', 'swiss-city-plunder-funded', 'swiss-city-plunder-empty', 'swiss-city-plunder-control', 'swiss-mounted-calculation', 'swiss-utility', 'crusader-borders', 'vatican-kill-faith', 'religious-terrain', 'vatican-great-improvements', 'vatican-pressure-votes', 'vatican-courthouse', 'vatican-stpeters', 'jerusalem-outremer', 'unique-building-catalogue', 'unique-building-pilot', 'civilization-start', 'unique-units', 'counterspy', 'nuclear-cities', 'nuclear-production', 'nuclear-cleanup', 'defender-zoc', 'inventory', 'admiral-repair', 'worker', 'unit-actions', 'great-person-builds', 'budget-settlement', 'nuclear', 'air-operations', 'greatworks', 'trade-tooltip', 'trade-countdown', 'nabatea-farms', 'nabatea-tomb', 'newzealand-science-completion'}
 
+def validate_lua_syntax(plan, repo, compiler):
+    """Parse every selected scenario and injected UI adapter before installation."""
+    port = repo / 'LEKMOD_DLL/macos'
+    names = {'playtest-scenario-' + stage['scenario'] + '.lua' for stage in plan['stages']}
+    adapters = set(plan['hooks'].values())
+    adapters.update(PREFIXES[name] for name in list(adapters) if name in PREFIXES)
+    names.update(adapters)
+    result = subprocess.run([str(compiler), '-p', *(str(port / name) for name in sorted(names))],
+                            capture_output=True, text=True)
+    if result.returncode:
+        raise ValueError('Lua syntax preflight failed: ' + result.stderr.strip())
+
+
 def run_owned_runner(command, **kwargs):
     """Let the child restore its UI/settings when this wrapper is interrupted."""
     # A terminal Ctrl-C must reach the child only once, through this owner.

@@ -39,7 +39,8 @@ def main():
         plan=playtest_batch.load_plan(actual,ROOT,runner.SCENARIO_ITEMS)
         luac=ROOT/'build/macos/test-deps/lua-5.1.4/src/luac'
         if not luac.is_file():p.error('Build the committed Lua test dependency before running a batch')
-        subprocess.run([str(luac),'-p',*[str(PORT/('playtest-scenario-'+s['scenario']+'.lua'))for s in plan['stages']]],check=True)
+        try:playtest_batch.validate_lua_syntax(plan,ROOT,luac)
+        except ValueError as error:p.error(str(error))
         print(json.dumps({'plan':plan['name'],'stages':len(plan['stages']),'assertions':sum(len(s['items'])for s in plan['stages']),
               'reload_checks':len(plan['stages']),'maximum_functional_turns':plan['max_turns'],'time_limit_minutes':a.minutes},indent=2),flush=True)
         if a.package and playtest_batch.sha(a.package)!=a.sha256:p.error('Package hash mismatch')

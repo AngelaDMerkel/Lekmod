@@ -39,6 +39,21 @@ class BatchTests(unittest.TestCase):
         row.update(changes);p.write_text(json.dumps(row))
         self.raw['stages'][0].update(expected_report='expected.json',expected_report_sha256=batch.sha(p),max_turns=0)
         return p
+    def test_lua_preflight_rejects_invalid_scenario_adapter_and_prefix(self):
+        compiler=Path(__file__).resolve().parents[2]/'build/macos/test-deps/lua-5.1.4/src/luac'
+        if not compiler.is_file():self.skipTest('build the committed Lua test dependency')
+        plan=self.load()
+        plan['hooks']={'UI/example.lua':'playtest-nz-owner-observer.lua'}
+        paths=[self.code/'playtest-scenario-inventory.lua',self.code/'playtest-nz-owner-observer.lua',self.code/batch.PREFIXES['playtest-nz-owner-observer.lua']]
+        for path in paths:path.write_text('local valid = true\n')
+        batch.validate_lua_syntax(plan,self.root,compiler)
+        for path in paths:
+            with self.subTest(source=path.name):
+                path.write_text('if true return end\n')
+                with self.assertRaisesRegex(ValueError,'Lua syntax preflight failed'):
+                    batch.validate_lua_syntax(plan,self.root,compiler)
+                path.write_text('local valid = true\n')
+        batch.validate_lua_syntax(plan,self.root,compiler)
     def test_declared_gamecore_surface_rejects_cpp_only_method_before_native_work(self):
         source=self.code/'playtest-scenario-inventory.lua'
         source.write_text('-- Native method surface: GameCore\nreturn u:IsGreatGeneral()')
