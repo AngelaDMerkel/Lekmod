@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "name": "romania-acquisition",
+  "stages": [
+    {
+      "fixture": "build/macos/playtests/20260922T234507Z/Lekmod-Functional-20260922T234507Z.Civ5Save",
+      "sha256": "7eeef6df14b51bcc7a21810c416b40695a3c54207c9543e7bce1df79dd48b9e0",
+      "id": "romania-acquisition",
+      "scenario": "romania-acquisition",
+      "max_turns": 4
+    }
+  ]
+}
