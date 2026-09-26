@@ -1,4 +1,5 @@
--- Normal local save callback, acknowledged without exiting the process.
+-- Acknowledge the returned save request, not completion of its asynchronous write.
+-- The host verifies closed writer handles and stable source/copy bytes before load.
 do
  local name,elapsed=nil,0
  LuaEvents.LekmodFunctionalSaveName.Add(function(value)name=value;elapsed=0 end)

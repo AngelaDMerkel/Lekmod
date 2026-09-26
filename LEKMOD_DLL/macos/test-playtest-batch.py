@@ -26,7 +26,7 @@ class BatchTests(unittest.TestCase):
         out=self.root/'evidence';out.mkdir();app=self.root/'app';data=self.root/'data'
         (app/'Contents/Assets/Assets/DLC/LEKMOD/Lua/UI').mkdir(parents=True)
         (data/'Saves/single').mkdir(parents=True)
-        return batch.Session(self.load(),out,app,data,'test')
+        return batch.Session(self.load(),out,app,data,'test',save_writer_open=lambda path:False,save_settle_seconds=0)
     def message(self,mode='run',failed=False):
         return dict(index=1,mode=mode,id='one',failed=failed,turns=0,outcomes={},state='{}',save_name='Lekmod-Batch-test-one-'+mode)
     def event(self,row):return '[LEKMOD_BATCH] run=test event=checkpoint value='+json.dumps(row)+'\n'
@@ -134,6 +134,16 @@ class BatchTests(unittest.TestCase):
         ack=self.save(s,r);self.assertFalse(s.update(text,''))
         self.assertTrue(s.update(text+ack,''));self.assertEqual(s.mode,'reload')
         self.assertFalse(s.done);self.assertEqual(s.results[0]['saved_sha256'],batch.sha(Path(s.results[0]['saved_copy'])))
+    def test_save_ack_does_not_advance_while_writer_is_open(self):
+        from playtest_save import CheckpointCopier
+        s=self.session();r=self.message();text=self.event(r)+self.save(s,r);writing=[True]
+        s.save_copier=CheckpointCopier(lambda path:writing[0],0)
+        self.assertFalse(s.update(text,''));self.assertEqual(s.mode,'run');self.assertEqual(s.results,[])
+        source=s.data/'Saves/single'/(r['save_name']+'.Civ5Save');source.write_bytes(b'complete asynchronous save');writing[0]=False
+        self.assertTrue(s.update(text,''));self.assertEqual(s.mode,'reload')
+        self.assertEqual(Path(s.results[0]['saved_copy']).read_bytes(),source.read_bytes())
+        self.assertTrue(s.results[0]['save_verification']['source_copy_match'])
+
     def test_success_requires_exact_reload_checkpoint(self):
         s=self.session();r=self.message();text=self.event(r)+self.save(s,r);s.update(text,'abc')
         self.assertEqual(json.loads((s.output/'batch-control.json').read_text())['expected'],'{}')

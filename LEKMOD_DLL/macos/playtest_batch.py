@@ -7,6 +7,7 @@ import signal
 import subprocess
 import time
 from pathlib import Path
+from playtest_save import CheckpointCopier, game_save_writer_open
 
 # Only scenarios with reviewed, compatible temporary adapters are admitted.
 HOOKS = {
@@ -130,8 +131,10 @@ def load_plan(path, repo, items):
     return dict(schema=1,name=source['name'],stages=result,hooks=hooks,max_turns=total)
 
 class Session:
-    def __init__(self,plan,output,app,data,stamp):
+    def __init__(self,plan,output,app,data,stamp,save_writer_open=None,save_settle_seconds=2.0):
         self.plan=plan;self.output=output;self.app=app;self.data=data;self.stamp=stamp
+        self.game_pid=None
+        self.save_copier=CheckpointCopier(save_writer_open or (lambda path:game_save_writer_open(self.game_pid,path)),save_settle_seconds)
         self.control=app/'Contents/Assets/Assets/DLC/LEKMOD/Lua/UI/LekmodBatchControl.lua'
         self.index=1;self.mode='run';self.command=0;self.seen=set();self.results=[];self.done=False;self.failed=False
         self.progress_items=set()
@@ -190,13 +193,16 @@ class Session:
                 expected_name='Lekmod-Batch-'+self.stamp+'-'+self.plan['stages'][self.index-1]['id']+'-'+self.mode
                 if value['save_name']!=expected_name:raise ValueError('Unexpected checkpoint filename')
                 save=self.data/'Saves/single'/(value['save_name']+'.Civ5Save')
-                # Advance only after the normal SaveGame callback returned and a file exists.
+                # The callback returns before asynchronous disk writing finishes.
+                # Require the game writer to close, stable metadata, and equal source/copy bytes.
                 ack='event=saved value='+json.dumps(value['save_name'])
                 if ack not in text or not save.is_file() or save.stat().st_size==0:continue
+                target=self.output/'checkpoints'/save.name
+                verification=self.save_copier.copy_if_ready(save,target)
+                if verification is None:continue
                 self.seen.add(key);progress=True
-                target=self.output/'checkpoints'/save.name;target.parent.mkdir(exist_ok=True);shutil.copy2(save,target)
                 begin=self.stage_started.get((self.index,self.mode))
-                row={**value,'saved_copy':str(target),'saved_sha256':sha(target),'elapsed_seconds':round(time.monotonic()-begin,2)if begin is not None else None}
+                row={**value,'save_verification':verification,'saved_copy':str(target),'saved_sha256':verification['sha256'],'elapsed_seconds':round(time.monotonic()-begin,2)if begin is not None else None}
                 self.results.append(row);self.failed |= value['failed']
                 if self.mode=='run':self.turns+=value['turns']
                 if self.turns>30:raise ValueError('Batch exceeded total functional turn limit')

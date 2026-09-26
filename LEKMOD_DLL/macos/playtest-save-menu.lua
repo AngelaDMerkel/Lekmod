@@ -19,7 +19,8 @@ do
             OnSave()
             assert(Controls.DeleteConfirm:IsHidden(), "unexpected overwrite confirmation")
             print("[LEKMOD_FUNCTIONAL] run=__TEST_RUN__ event=save-callback-returned")
-            -- SaveGame is synchronous; the runner independently verifies the file.
+            -- The save request can return before disk writing ends; the standalone
+            -- runner verifies its saved copy after the owned game process exits.
             LuaEvents.LekmodFunctionalExit()
         end)
         name = nil

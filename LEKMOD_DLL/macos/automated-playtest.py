@@ -903,6 +903,7 @@ def main():
                 stdout=process_log, stderr=subprocess.STDOUT)
         pid = game_process.pid
         report["pid"] = pid
+        if batch_session: batch_session.game_pid = pid
         report["background"] = not args.foreground_attachment_test
         (output / "run-state.json").write_text(json.dumps({**report, "status": "running"}, indent=2) + "\n")
         print(json.dumps({"event": "launched-foreground-attachment" if args.foreground_attachment_test else "launched-background",
@@ -916,6 +917,7 @@ def main():
             if pid is None and pids:
                 pid = pids[0]
                 report["pid"] = pid
+                if batch_session: batch_session.game_pid = pid
                 print(json.dumps({"event": "process-started", "pid": pid}), flush=True)
             if pid is None and time.monotonic() - start > args.startup_timeout:
                 report["status"] = "failed-startup"
