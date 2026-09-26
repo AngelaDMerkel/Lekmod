@@ -16,13 +16,17 @@ local function plot(owner,radii)
  return p
 end
 local function unit(id,promotions,p)
- local u={id=id,promotions=promotions or {},plot=p or plot(),near=false,terrainQueries=0,writes=0}
+ local u={id=id,promotions=promotions or {},plot=p or plot(),near=false,terrainQueries=0,writes=0,moves=120}
  function u:IsHasPromotion(id)return self.promotions[id] or false end
  function u:SetHasPromotion(id,value)self.promotions[id]=value;self.writes=self.writes+1 end
  function u:IsNearTerrainType(terrain,distance,sameArea)
   assert(terrain==ids.TERRAIN_MOUNTAIN and distance==1 and sameArea==false)
   self.terrainQueries=self.terrainQueries+1;return self.near
  end
+ function u:GetID()return self.id end
+ function u:MaxMoves()return 120+(self:IsHasPromotion(101) and 60 or 0)end
+ function u:MovesLeft()return self.moves end
+ function u:SetMoves(value)self.moves=value end
  function u:GetPlot()return self.plot end
  function u:GetX()return 12 end;function u:GetY()return 14 end
  return u
@@ -56,7 +60,7 @@ local function fixture(file,active)
    ChangeResearchProgress=function(_,tech,n,owner)table.insert(e.researchAwards,{team=p.team,tech=tech,amount=n,owner=owner})end}end}
  end
  e.Map={PlotDistance=function(x,y,cx,cy)return math.max(math.abs(x-cx),math.abs(y-cy),math.abs(x-cx+y-cy))end}
- e.GameDefines={MAX_MAJOR_CIVS=4}
+ e.GameDefines={MAX_MAJOR_CIVS=4,MAX_CIV_PLAYERS=5}
  e.Game={GetActivePlayer=function()return 0 end}
  e.GameEvents=setmetatable({},{__index=function(_,name)return {Add=function(fn)
   e.events[name]=e.events[name] or {};table.insert(e.events[name],fn)
@@ -92,6 +96,44 @@ end)
 test("Swiss unrelated unit has no terrain query or promotion writes",function()
  local e=fixture("switzerland");local u=unit(8192);e.Players[0].units={u};e:emit("UnitCreated",0,8192,12,14)
  assert(u.writes==0 and u.terrainQueries==0)
+end)
+test("Swiss city promotion arrives after UnitCreated",function()
+ local e=fixture("switzerland");local u=unit(1);u.near=true;e.Players[0].units={u}
+ e:emit("UnitCreated",0,1,12,14);assert(not u:IsHasPromotion(101))
+ u.promotions[100]=true;e:emit("CityTrained",0,7,1,false,false)
+ assert(u:IsHasPromotion(101)and u:MovesLeft()==180)
+ e:emit("CityTrained",0,7,1,false,false);assert(u:MovesLeft()==180)
+end)
+test("Swiss fresh creation preserves full movement after terrain bonus",function()
+ local _,u=swiss("UnitCreated",0,true);assert(u:MovesLeft()==u:MaxMoves())
+end)
+for _,moves in ipairs({0,60})do test("Swiss training preserves restricted movement "..moves,function()
+ local e=fixture("switzerland");local u=unit(1,{[100]=true});u.near=true;u.moves=moves;e.Players[0].units={u}
+ e:emit("CityTrained",0,7,1,true,false);assert(u:IsHasPromotion(101)and u:MovesLeft()==moves)
+end)end
+test("Swiss movement does not refund even an otherwise full allowance",function()
+ local _,u=swiss("UnitSetXY",0,true);assert(u:IsHasPromotion(101)and u:MovesLeft()==120)
+end)
+test("Swiss conversion refreshes recipient after copied promotions without refund",function()
+ local e=fixture("switzerland",false);local old=unit(1,{[100]=true});old.near=false;e.Players[0].units={old}
+ local u=unit(2,{[100]=true});u.near=true;e.Players[4].units={u}
+ e:emit("UnitConverted",0,4,1,2,false)
+ assert(u:IsHasPromotion(101)and u:MovesLeft()==120 and old.writes==0)
+end)
+test("Swiss upgrade clears copied terrain bonus away from mountains",function()
+ local e=fixture("switzerland");local u=unit(2,{[100]=true,[101]=true});u.moves=0;e.Players[0].units={u}
+ e:emit("UnitConverted",0,0,1,2,true);assert(not u:IsHasPromotion(101)and u:MovesLeft()==0)
+end)
+test("Swiss initialization repairs derived state for living civilization owners without refund",function()
+ local e=fixture("switzerland",false)
+ for _,owner in ipairs({0,1,4})do local u=unit(1,{[100]=true,[101]=owner==1});u.near=owner~=1;e.Players[owner].units={u}end
+ e:emit("SequenceGameInitComplete");e:emit("SequenceGameInitComplete")
+ for _,owner in ipairs({0,1,4})do local u=e.Players[owner].units[1];assert(u:IsHasPromotion(101)==(owner~=1)and u:MovesLeft()==120 and u.writes==1)end
+end)
+test("Swiss invalid event IDs and off-map units are ignored",function()
+ local e=fixture("switzerland");e:emit("UnitSetXY",99,1,0,0);e:emit("UnitCreated",0,999,0,0)
+ local u=unit(1,{[100]=true});u.plot=nil;e.Players[0].units={u};e:emit("CityTrained",0,7,1,false,false)
+ assert(u.terrainQueries==0 and u.writes==0)
 end)
 test("Polynesia creation clears ocean restriction on all owned units",function()
  local e=fixture("polynesia");local p=e.Players[0];p.civ=11;p.units={unit(8192,{[103]=true,[999]=true}),unit(16384,{[103]=true})}

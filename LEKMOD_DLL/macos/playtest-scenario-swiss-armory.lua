@@ -1,7 +1,7 @@
 -- Native method surface: GameCore
 -- Research, legal mountain-adjacent cities, Barracks, iron and near-complete
 -- hammers are inputs. Building rewards/trained promotions must be native.
-LekmodScenario={name="swiss-armory",items={"swiss-armory-owner-gate","swiss-armory-production","swiss-armory-free-unit","swiss-armory-trained-promotion","swiss-armory-terrain-at-training"}}
+LekmodScenario={name="swiss-armory",items={"swiss-armory-owner-gate","swiss-armory-production","swiss-armory-free-unit","swiss-armory-trained-promotion","swiss-armory-terrain-at-training","swiss-armory-birth-movement","swiss-armory-trained-movement"}}
 local phase,targets,started="init",{},nil
 local base,active=GameInfoTypes.PROMOTION_SWISS_MOUNTAINEER,GameInfoTypes.PROMOTION_SWISS_MOUNTAINEER_ACTIVE
 local reward=GameInfoTypes.UNIT_SWISS_REISLAUFER
@@ -24,7 +24,7 @@ end)
 GameEvents.UnitCreated.Add(function(owner,id)
  local t=targets[owner];if not t then return end
  local u=Players[owner]:GetUnitByID(id)
- if u and u:GetUnitType()==reward then assert(owner==3 and not t.reward and phase=="building");t.reward=id;LekmodScenarioEvent("native-Reislaufer-reward",{owner=owner,id=id,x=u:GetX(),y=u:GetY(),mountaineer=u:IsHasPromotion(base),active=u:IsHasPromotion(active),max_moves=u:MaxMoves(),moves=u:GetMoves()})end
+ if u and u:GetUnitType()==reward then assert(owner==3 and not t.reward and phase=="building");t.reward=id;t.rewardState={base=u:IsHasPromotion(base),active=u:IsHasPromotion(active),moves=u:GetMoves(),max_moves=u:MaxMoves()};LekmodScenarioEvent("native-Reislaufer-reward",{owner=owner,id=id,x=u:GetX(),y=u:GetY(),mountaineer=u:IsHasPromotion(base),active=u:IsHasPromotion(active),max_moves=u:MaxMoves(),moves=u:GetMoves()})end
 end)
 GameEvents.CityTrained.Add(function(owner,city,id,gold,faith)
  local t=targets[owner];if not t or phase~="training"or t.city~=city then return end
@@ -88,6 +88,9 @@ function LekmodScenario.step(player)
    assert(targets[3].reward and not targets[0].reward);local u=assert(Players[3]:GetUnitByID(targets[3].reward));assert(u:IsHasPromotion(base))
    LekmodScenarioRecord("swiss-armory-production","PASS","both owners completed unforced native building production")
    LekmodScenarioRecord("swiss-armory-free-unit","PASS","Swiss building generated exactly one native Reislaufer; standard Armory control generated none")
+   local birth=targets[3].rewardState
+   assert(birth.base and birth.active and birth.moves==birth.max_moves and birth.max_moves==240,"native free Reislaufer lacks full mountain movement at birth")
+   LekmodScenarioRecord("swiss-armory-birth-movement","PASS","native free reward begins with all four mountain-adjacent moves")
    -- Keep the reward from occupying the controlled training tile. This is
    -- explicit staging, not travel evidence; its own movement is a separate case.
    local city=Players[3]:GetCityByID(targets[3].city);local remote
@@ -105,6 +108,8 @@ function LekmodScenario.step(player)
    assert(own.near,"trained Swiss unit was not in the controlled mountain range")
    assert(own.active,"trained Mountaineer lacks active mountain bonus after native production bookkeeping")
    LekmodScenarioRecord("swiss-armory-terrain-at-training","PASS","native training has active terrain benefit before its first movement")
+   assert(own.moves==180 and own.max_moves==180 and control.moves==120 and control.max_moves==120,"new training movement differs from full derived allowance")
+   LekmodScenarioRecord("swiss-armory-trained-movement","PASS","Swiss training begins with three moves; Spanish control retains two")
    return true
   end
  end
