@@ -26,6 +26,19 @@ class ExitObserverTests(unittest.TestCase):
 #include <CoreFoundation/CoreFoundation.h>
 unsigned int GetLastError(void){return 1234;}
 int main(int argc,char **argv){
+ if(atoi(argv[2])==7){
+  int fd=open(argv[3],O_CREAT|O_EXCL|O_RDWR,0600);if(fd<0)return 50;
+  if(write(fd,"probe",5)!=5)return 51;
+  const char message[]="unable to open database: simulated\n";
+  errno=EDOM;
+  if(fwrite(message,1,sizeof(message)-1,stdout)!=sizeof(message)-1||errno!=EDOM)return 52;
+  if(fcntl(fd,F_GETFD)<0||write(fd,"tail",4)!=4)return 53;
+  if(lseek(fd,0,SEEK_SET)!=0)return 54;
+  char bytes[10]={0};if(read(fd,bytes,9)!=9||strcmp(bytes,"probetail"))return 55;
+  if(close(fd))return 56;
+  if(fwrite(message,1,sizeof(message)-1,stdout)!=sizeof(message)-1)return 57;
+  printf("descriptor-results-preserved=1\n");return 0;
+ }
  if(atoi(argv[2])==6){
   struct stat status;int fd=open(argv[3],O_CREAT|O_EXCL|O_RDWR,0600);if(fd<0)return 30;
   if(write(fd,"probe",5)!=5||close(fd))return 31;
@@ -101,6 +114,15 @@ int main(int argc,char **argv){
             self.assertIn("database-failure-write",result.stderr)
             self.assertIn("descriptor-state stage=database-failure",result.stderr)
             self.assertIn("host-file-error value=1234",result.stderr)
+            result=subprocess.run([str(probe),"0","7",str(root/"Localization-Live.db")],env=environment,text=True,capture_output=True,timeout=10)
+            self.assertEqual(result.returncode,0,result.stderr)
+            self.assertEqual(result.stdout,"unable to open database: simulated\nunable to open database: simulated\ndescriptor-results-preserved=1\n")
+            live=[line for line in result.stderr.splitlines() if "localization-descriptor stage=database-failure" in line and "Localization-Live.db" in line]
+            self.assertEqual(len(live),1,result.stderr)
+            self.assertIn("offset=5",live[0]);self.assertIn("open_flags=",live[0])
+            self.assertRegex(result.stderr,r"localization-descriptor-scan queried=\d+ unavailable=\d+ matches=1")
+            self.assertRegex(result.stderr,r"localization-descriptor-scan queried=\d+ unavailable=\d+ matches=0")
+            self.assertEqual((root/"Localization-Live.db").read_bytes(),b"probetail")
             result=subprocess.run([str(probe),"0","3",str(root/"buffered.db")],env=environment,text=True,capture_output=True,timeout=10)
             self.assertEqual(result.returncode,0,result.stderr)
             self.assertEqual(result.stdout,"buffer-preserved=1\n")

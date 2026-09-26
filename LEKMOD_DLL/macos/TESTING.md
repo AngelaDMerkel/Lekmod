@@ -1261,3 +1261,12 @@ are forwarded unchanged; failed operations are never retried. Run
 `python3 LEKMOD_DLL/macos/test-exit-observer.py` for its real x86 subprocess
 preservation checks. A passing menu-only native control and the unsuccessful
 separate debugger attempt are recorded in the startup-cache report.
+
+
+The startup observer's database-error trace now includes a read-only snapshot of
+this process's localization vnode descriptors (paths, FD IDs, open flags and
+offsets), with incomplete-query counts. It does not retry or change any file call.
+Run `python3 LEKMOD_DLL/macos/test-exit-observer.py` after observer changes; the real
+x86 subprocess cases include descriptor lifetime/errno/byte preservation. See
+`docs/macos-startup-cache.md` for the unresolved native failure and interpretation
+limits. A passing startup after adding diagnostics is not a root-cause fix.

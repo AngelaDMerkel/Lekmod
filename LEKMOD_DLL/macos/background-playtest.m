@@ -152,6 +152,30 @@ static void recordDescriptorState(const char *stage) {
     fprintf(stderr, "[LEKMOD_TEST] descriptor-state stage=%s limit_status=%d soft=%llu hard=%llu open=%d truncated=%d\n",
             stage, limitStatus, (unsigned long long)limit.rlim_cur, (unsigned long long)limit.rlim_max,
             bytes > 0 ? bytes / (int)sizeof(struct proc_fdinfo) : -1, bytes == sizeof(descriptors));
+    if (strcmp(stage, "database-failure") == 0 && bytes > 0) {
+        // Read only this process's current vnode descriptors at the error.
+        // No opens, closes, flushes, access changes or retries are introduced.
+        int count = bytes / (int)sizeof(struct proc_fdinfo);
+        if (count > 4096) count = 4096;
+        int queried = 0, unavailable = 0, matches = 0;
+        for (int i = 0; i < count; ++i) {
+            if (descriptors[i].proc_fdtype != PROX_FDTYPE_VNODE) continue;
+            struct vnode_fdinfowithpath info = {0};
+            ++queried;
+            int size = proc_pidfdinfo(getpid(), descriptors[i].proc_fd,
+                                     PROC_PIDFDVNODEPATHINFO, &info, sizeof(info));
+            if (size != sizeof(info)) { ++unavailable; continue; }
+            info.pvip.vip_path[sizeof(info.pvip.vip_path) - 1] = 0;
+            if (strstr(info.pvip.vip_path, "Localization")) {
+                ++matches;
+                fprintf(stderr, "[LEKMOD_TEST] localization-descriptor stage=%s fd=%d open_flags=0x%x offset=%lld path=%s\n",
+                        stage, descriptors[i].proc_fd, info.pfi.fi_openflags,
+                        (long long)info.pfi.fi_offset, info.pvip.vip_path);
+            }
+        }
+        fprintf(stderr, "[LEKMOD_TEST] localization-descriptor-scan queried=%d unavailable=%d matches=%d\n",
+                queried, unavailable, matches);
+    }
     errno = savedErrno;
 }
 

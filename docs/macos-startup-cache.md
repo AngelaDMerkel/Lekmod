@@ -543,3 +543,29 @@ The preserved mergedDB is25,509,888bytes, SHA-256
 `fcada334195faee16f0d715f30466b0168c577c05238b33a9d76f8af90a5b047`.
 No cache repair was attempted. Managed stock restoration passed. Independent
 traced `20260926T163851Z` passed gameplay/reload; this is not a startup fix.
+
+### Read-only descriptor snapshot (September26 continuation)
+
+After successful Swiss/Yugoslav/Romanian gameplay fixes, startup255 recurred at
+`20260926T170206Z` (20.4s), `20260926T174746Z` (20.5s) and
+`20260926T180158Z` (49.7s). All failed before a fixture loaded and retained the
+same merged-localization ATTACH error. Their preserved merged databases are
+25,509,888bytes and pass SQLite quick_check. Independent traced gameplay runs
+passed, which remains timing-sensitive observation, not a startup fix.
+
+The test-process observer now queries its own vnode descriptors when the error
+is written, reporting only localization paths, descriptor IDs, raw open flags
+and offsets. It also reports unavailable descriptor queries and truncation,
+so an incomplete/racing snapshot cannot establish that no handle exists.
+No opens, closes, flushes, flag changes or retries are introduced by this scan.
+It runs at the reported failure, not on every file operation or normal frame.
+
+Real x86-64 subprocess checks verify a held localization descriptor is reported
+at its current offset, remains usable, preserves errno and file bytes, and is
+absent from the next failure snapshot after its normal close. Existing exit0/42/255,
+metadata/open/stream and buffered-file preservation checks still pass; activation-only
+mode still has no interposition. `test-exit-observer.py`: two test methods, all
+embedded subprocess cases passed. Log:
+`build/macos/localization-descriptor-observer-tests-20260926.log`.
+A guarded background menu-only control will check this observer in the actual host;
+no native descriptor finding or startup repair is claimed yet.
