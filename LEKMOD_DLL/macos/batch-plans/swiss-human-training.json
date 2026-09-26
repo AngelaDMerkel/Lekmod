@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "name": "swiss-human-training",
+  "stages": [
+    {
+      "fixture": "build/macos/playtests/20260926T164719Z/Lekmod-Functional-20260926T164719Z.Civ5Save",
+      "sha256": "ece8c06036ba7099625e7c96057f159db0a74f8ce90a178c20be157816f977a2",
+      "id": "swiss-human-training",
+      "scenario": "swiss-human-training",
+      "max_turns": 5
+    }
+  ]
+}

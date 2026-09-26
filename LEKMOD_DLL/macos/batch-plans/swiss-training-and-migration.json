@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "name": "swiss-training-and-migration",
+  "stages": [
+    {
+      "fixture": "build/macos/playtests/20260926T164719Z/Lekmod-Functional-20260926T164719Z.Civ5Save",
+      "sha256": "ece8c06036ba7099625e7c96057f159db0a74f8ce90a178c20be157816f977a2",
+      "id": "swiss-human-training",
+      "scenario": "swiss-human-training",
+      "max_turns": 5
+    },
+    {
+      "id": "swiss-migration-load",
+      "scenario": "swiss-migration-load",
+      "fixture": "build/macos/playtests/20260926T165522Z/checkpoints/Lekmod-Batch-20260926T165522Z-swiss-human-training-run.Civ5Save",
+      "sha256": "a3d06b887e714071e1ce2e3b64890c56a7b16e76a37ced91b0d0ce04fefc404d",
+      "max_turns": 0
+    }
+  ]
+}

@@ -16,15 +16,16 @@ fix; all66 callback cases now pass. Run `20260926T164435Z` also passed six movem
 and exact reload. Human Swiss purchase locking and old-save compatibility also passed
 nine assertions/two functional replays plus the baseline replay in
 `20260926T164936Z`. No saved promotion required repair in the old checkpoint;
-affected-save repair is still separate. Final independent preservation verifies
+the later `20260926T165800Z` native test closes affected-save repair using an authentic stationary human failure save, with no movement refund, normal movement and exact replay. Eight further assertions/two replays passed. Final independent preservation verifies
 stock, Civ V closed,603 prior manual saves, quicksave/settings,32 stock UI files
 and both backups. Evidence: `build/macos/swiss-armory-fix-validation-20260926.json`.
 
-The user requested merging into local `main` at this checkpoint and continuing
-there. Check the current branch and ignored continuation state before resuming.
+The requested local `main` fast-forward through `84010750` is complete; continue
+on `main`. Check ignored continuation state before resuming.
 No push is authorized. Next work: remaining ability/state boundaries, including
-native affected-save migration, Romania capture/liberation/gift routing and
-Yugoslav ideology reward timing.
+Romania capture/liberation/gift routing and Yugoslav ideology reward timing.
+Swiss follow-up total30 assertions/six functional replays plus baseline replay;
+latest preservation evidence: `build/macos/swiss-migration-validation-20260926.json`.
 
 Startup255 recurred in `20260926T163747Z`, before any gameplay. Metadata trace and
 nonempty localization cache are preserved. No root-cause fix is claimed; the

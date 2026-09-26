@@ -155,7 +155,7 @@ The AI's old Longswordsman has moved outside mountain range by save time, so
 remain120/240 for the trained/reward units, and the Spanish control stays
 unpromoted. This establishes old-package save compatibility and no movement
 refund, not repair of a stale promotion in an affected save. Native affected-save
-repair remains a separate gap. No Lua/synchronization errors or new diagnostic appeared. Source/copy save hashes
+repair was a separate gap at this point; the next section closes it. No Lua/synchronization errors or new diagnostic appeared. Source/copy save hashes
 and each exact replay were independently checked after the process closed.
 Report SHA-256 `cc623e507e4895db442d5b6df6c938422dde6ccd9b10cf4369b17d28e1439f58`.
 
@@ -167,3 +167,31 @@ The complete follow-up totals22 native assertions/four functional exact replays,
 plus the new fixture baseline replay. The25-test batch dispatcher suite passes.
 All interactions here are scripted callbacks/native commands, not physical mouse
 coverage. No startup reliability fix or full single-player completion is claimed.
+
+## Authentic affected-save repair and human training
+
+The work continued on local `main` after the requested fast-forward through
+`84010750`. On the unchanged old package, `20260926T165522Z` reproduced the same
+training defect in a human Swiss city. Ordinary Armory/Longswordsman production
+left unit40963 at(73,9) beside a mountain with base=true, active=false and120/120
+movement. The failed run exited normally and preserved that stationary state:
+`build/macos/playtests/20260926T165522Z/checkpoints/Lekmod-Batch-20260926T165522Z-swiss-human-training-run.Civ5Save`,
+SHA-256 `a3d06b887e714071e1ce2e3b64890c56a7b16e76a37ced91b0d0ce04fefc404d`.
+No stale promotion was manually supplied; it came from real production under the
+old payload. The run remains failed, not a claimed success.
+
+Fixed-package **`20260926T165800Z` passed eight checks and two exact replays**,
+151.2 seconds, two ordinary fixture turns, normal exit0. Fresh human training
+had active Mountaineer and180/180 moves. Loading the exact old failure save
+repaired its missing active promotion and maximum180 while retaining120 current
+moves. The off-mountain Reislaufer control retained180/180 and no active bonus.
+A normal synchronized move spent the repaired unit's saved movement; its resulting
+state replayed exactly. No turns/state/promotions were supplied by the migration
+scenario. This closes the previously separate native affected-save repair gap.
+
+Evidence: `build/macos/swiss-migration-validation-20260926.json`. Both original
+and copied saves were independently compared. Runner restoration, original603
+manual saves/quicksave/settings/backups,32 stock UI hashes and stock/no-live-game
+were verified. The full Swiss follow-up now has30 native assertions and six
+functional exact replays, plus one fixture baseline replay. It remains scoped to
+these abilities and state boundaries, with no new physical-mouse claim.
