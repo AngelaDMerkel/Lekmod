@@ -18,6 +18,7 @@
 #include <dlfcn.h>
 #include <sys/stat.h>
 #include <time.h>
+#include <stddef.h>
 
 typedef unsigned int (*HostLastErrorFunction)(void);
 static HostLastErrorFunction hostLastError = NULL;
@@ -128,6 +129,32 @@ static int observedStat(const char *path, struct stat *status) {
 static int observedLstat(const char *path, struct stat *status) {
     int result = lstat(path, status); int error = errno;
     recordLocalizationOpen("lstat", path, result, error, 0); return result;
+}
+// The host resolves the unversioned lstat symbol dynamically. Keep that ABI
+// distinct from the SDK's lstat$INODE64 alias and preserve its original bytes.
+extern int nativeLegacyLstat(const char *path, void *status) __asm__("_lstat");
+static int observedLegacyLstat(const char *path, void *status) {
+    int result = nativeLegacyLstat(path, status); int error = errno;
+    recordLocalizationOpen("lstat-legacy", path, result, error, 0);
+    if (result == 0 && status && path && strstr(path, "Localization")) {
+        char prefix[33];
+        for (unsigned i = 0; i < 16; ++i)
+            snprintf(prefix + 2 * i, 3, "%02x", ((const unsigned char *)status)[i]);
+        mode_t interpretedMode = 0;
+        memcpy(&interpretedMode, (const char *)status + offsetof(struct stat, st_mode), sizeof(interpretedMode));
+        fprintf(stderr, "[LEKMOD_TEST] localization-legacy-stat path=%s prefix16=%s compiled_mode_offset=%zu interpreted_mode=0%o caller=%p\n",
+                path, prefix, offsetof(struct stat, st_mode), (unsigned)interpretedMode, __builtin_return_address(0));
+    }
+    errno = error; return result;
+}
+static ssize_t observedReadlink(const char *path, char *buffer, size_t length) {
+    ssize_t result = readlink(path, buffer, length); int error = errno;
+    recordLocalizationOpen("readlink", path, (int)result, error, 0);
+    if (result < 0 && path && strstr(path, "Localization")) {
+        fprintf(stderr, "[LEKMOD_TEST] localization-readlink-failure path=%s errno=%d caller=%p\n",
+                path, error, __builtin_return_address(0));
+    }
+    errno = error; return result;
 }
 static int observedAccess(const char *path, int mode) {
     int result = access(path, mode); int error = errno;
@@ -266,6 +293,8 @@ __attribute__((used)) static const struct {
     { (const void *)&observedFopen, (const void *)&fopen },
     { (const void *)&observedStat, (const void *)&stat },
     { (const void *)&observedLstat, (const void *)&lstat },
+    { (const void *)&observedLegacyLstat, (const void *)&nativeLegacyLstat },
+    { (const void *)&observedReadlink, (const void *)&readlink },
     { (const void *)&observedAccess, (const void *)&access },
     { (const void *)&observedUnlink, (const void *)&unlink },
     { (const void *)&observedRename, (const void *)&rename },

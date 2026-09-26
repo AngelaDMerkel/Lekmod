@@ -24,8 +24,20 @@ class ExitObserverTests(unittest.TestCase):
 #include <errno.h>
 #include <string.h>
 #include <CoreFoundation/CoreFoundation.h>
+#include <dlfcn.h>
 unsigned int GetLastError(void){return 1234;}
 int main(int argc,char **argv){
+ if(atoi(argv[2])==8){
+  typedef int (*LegacyLstat)(const char*,void*);
+  LegacyLstat legacy=(LegacyLstat)dlsym(RTLD_NEXT,"lstat");if(!legacy)return 60;
+  unsigned char bytes[512]={0};struct stat correct={0};
+  if(lstat(argv[3],&correct)||!S_ISREG(correct.st_mode)||legacy(argv[3],bytes))return 61;
+  printf("modern-mode=0%o legacy-prefix=",(unsigned)correct.st_mode);
+  for(unsigned i=0;i<16;++i)printf("%02x",bytes[i]);printf("\n");
+  char target[256];errno=0;
+  if(readlink(argv[3],target,sizeof(target))!=-1||errno!=EINVAL)return 62;
+  printf("legacy-and-readlink-results-preserved=1\n");return 0;
+ }
  if(atoi(argv[2])==7){
   int fd=open(argv[3],O_CREAT|O_EXCL|O_RDWR,0600);if(fd<0)return 50;
   if(write(fd,"probe",5)!=5)return 51;
@@ -114,6 +126,16 @@ int main(int argc,char **argv){
             self.assertIn("database-failure-write",result.stderr)
             self.assertIn("descriptor-state stage=database-failure",result.stderr)
             self.assertIn("host-file-error value=1234",result.stderr)
+            legacy_path=root/"Localization-Legacy.db";legacy_path.write_bytes(b"metadata-only")
+            control=subprocess.run([str(probe),"0","8",str(legacy_path)],text=True,capture_output=True,timeout=10)
+            result=subprocess.run([str(probe),"0","8",str(legacy_path)],env=environment,text=True,capture_output=True,timeout=10)
+            self.assertEqual(control.returncode,0,control.stderr);self.assertEqual(result.returncode,0,result.stderr)
+            self.assertEqual(result.stdout,control.stdout)
+            self.assertIn("operation=lstat-legacy result=0",result.stderr)
+            self.assertIn("localization-legacy-stat",result.stderr)
+            self.assertIn("compiled_mode_offset=",result.stderr)
+            self.assertIn("operation=readlink result=-1 errno=22",result.stderr)
+            self.assertEqual(legacy_path.read_bytes(),b"metadata-only")
             result=subprocess.run([str(probe),"0","7",str(root/"Localization-Live.db")],env=environment,text=True,capture_output=True,timeout=10)
             self.assertEqual(result.returncode,0,result.stderr)
             self.assertEqual(result.stdout,"unable to open database: simulated\nunable to open database: simulated\ndescriptor-results-preserved=1\n")

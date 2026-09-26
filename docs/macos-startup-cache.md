@@ -569,3 +569,32 @@ embedded subprocess cases passed. Log:
 `build/macos/localization-descriptor-observer-tests-20260926.log`.
 A guarded background menu-only control will check this observer in the actual host;
 no native descriptor finding or startup repair is claimed yet.
+
+### Candidate inode-ABI boundary (September26, further investigation)
+
+Four guarded normal-QuickStart menu controls passed with the descriptor observer:
+`process-20260926T182047Z`, `182515Z`, `182608Z`, `182701Z` under
+`build/macos/startup-descriptor-20260926`. All used native menu/exit callbacks,
+returned0 and restored stock/settings/UI/manual saves. No failure snapshot was
+obtained. One loader-API trace (`process-20260926T183348Z`) also passed and showed
+the host dynamically resolves `stat$INODE64` but unversioned `lstat`. This is a
+candidate ABI mismatch, not yet a verified native root cause.
+
+An isolated x86 probe finds current `struct stat` size144/mode offset4, while the
+legacy call writes the real mode at offset8. For the preserved failure-cache copy,
+modern mode is0100644 (regular file), inode32743892; interpreting its legacy bytes
+at the compiled offset gives0120724 (symlink). The file is unchanged. A separate
+read-only system SQLite3.51.0 probe overrides only that exact target's lstat call
+with the observed legacy binding: open fails14 (unable to open database file).
+Restoring its original binding opens the exact same bytes and quick_check returns
+ok. No game process, native flags, or database bytes were modified by this probe.
+Artifacts: `build/macos/startup-descriptor-20260926/stat-abi/`.
+
+The observer now records the legacy lstat ABI separately, preserving its original
+return/buffer/errno and reporting the first16 bytes, compiled mode offset and
+caller address. A passive readlink observer records failures and call sites.
+Real x86 subprocess cases compare legacy-call output with an uninstrumented
+control, verify regular-file readlink still returns EINVAL, and preserve bytes.
+All existing exit/buffering/metadata/stream/descriptor controls still pass.
+The next native observation will inspect the game's actual consuming call site;
+no host workaround or startup fix is claimed from the isolated probe alone.
