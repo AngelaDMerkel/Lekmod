@@ -1,5 +1,12 @@
 # Current-Mac release qualification
 
+The results below are historical qualifications of their named artifacts. The
+current startup/Steam candidate and evidence are in the
+[handoff](macos-testing-handoff.md) and [host correction report](macos-host-stat-abi.md).
+Use the [final acceptance plan](macos-final-acceptance-plan.md) for the ordered
+gameplay, candidate-freeze, reliability and acceptance gates. Final acceptance
+has not yet been granted.
+
 ## Latest College reward correction (2026-09-24 UTC)
 
 Clean source `f33cfd33dfcb38ee7ab0d981b437067f07ad15c3` fixes great-person

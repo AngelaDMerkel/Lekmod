@@ -1,6 +1,10 @@
 # Lekmod macOS single-player testing handoff
 
 **Resumed by the user. Continue on local `main` until asked to stop.**
+Follow the [final acceptance plan](macos-final-acceptance-plan.md): reconcile and
+close gameplay cases first, freeze the candidate, then qualify reliability and
+record acceptance. The next deliverable is its G0 case register, not another
+long campaign. The plan is not a new claim of passed coverage.
 The last pause checkpoint was `b4579bf3`; the checkout was clean, stock active and
 Civ V closed when resuming. The current work is the
 [scoped host-stat ABI prototype](macos-host-stat-abi.md). Read the ignored
