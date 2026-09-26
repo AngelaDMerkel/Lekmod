@@ -8,7 +8,12 @@ local is_active = LekmodUtilities:is_civilization_active(this_civ)
 ------------------------------------------------------------------------------------------------------------------------
 -- Romania UA. Award golden age points whenever the player captures or liberates a city
 ------------------------------------------------------------------------------------------------------------------------
-function lekmod_romania_ua_on_capture(player_id, _, _, _, new_player_id)
+function lekmod_romania_ua_on_capture(player_id, _, _, _, new_player_id, _, conquest)
+
+   -- Peaceful trades and gifts also emit CityCaptureComplete. A liberation
+   -- follows the conqueror's capture award; the peaceful recipient transfer
+   -- must not grant another capture reward.
+   if not conquest then return end
 
    local player = Players[new_player_id]
    if not player:IsAlive() or player:GetCivilizationType() ~= this_civ then return end

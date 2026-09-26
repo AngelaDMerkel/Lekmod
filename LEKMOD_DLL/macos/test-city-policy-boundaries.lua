@@ -51,6 +51,11 @@ for _,kind in ipairs({"other civilization","dead owner"})do test("Romania exclud
  local e=fixture("romania");e.Players[1].civ=kind=="dead owner" and 1 or -1;e.Players[1].alive=kind~="dead owner"
  e:emit("CityCaptureComplete",0,false,12,14,1,5,true,0,0);assert(e.Players[1].points==0)
 end)end
+test("Romania peaceful city transfer does not earn a conquest reward",function()
+ local e=fixture("romania");e.Players[1].civ=1;e.Players[1].points=7
+ e:emit("CityCaptureComplete",0,false,12,14,1,5,false,0,0)
+ assert(e.Players[1].points==7 and e.Players[0].points==0 and #e.Players[1].rawPoints==0)
+end)
 test("Vatican captured occupied own-religion city gets courthouse",function()
  local e=fixture("vatican");e.Players[1].civ=2;e:emit("CityCaptureComplete",0,false,12,14,1,5,true,0,0);assert(e.city.buildings[100]==1)
 end)
