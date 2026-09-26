@@ -8,6 +8,13 @@ previous fourteen product/documentation edits had already been committed in
 `0952b9e5`, followed by the shared compatibility extraction. Those commits and
 the installed handoff binary are preserved.
 
+The [Swiss Armory fix](macos-swiss-armory-validation.md) now has seven native
+assertions and exact reload on clean source `149e6328`, plus66 callback cases.
+Stationary city-granted Mountaineer and full fresh birth/training movement are
+verified; further conversion/owner boundaries remain separately scoped. Startup255
+recurred before an earlier attempt; startup/shutdown reliability is still open.
+
+
 The [system outcomes](macos-single-player-systems.md) and
 [resumed single-player evidence](macos-single-player-20260913.md) separate
 physical mouse actions, scripted commands, gameplay outcomes, and incomplete

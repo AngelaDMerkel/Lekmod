@@ -1,25 +1,35 @@
 # Lekmod macOS single-player testing handoff
 
-**Paused September 26 UTC at the user's request: "Stop at the next appropriate break."**
-The current native round finished, Civ V is closed and stock is restored. Do not
-launch another session until the user resumes. Foreground permission remains in
-history; never launch while locked. Multiplayer and the accepted long campaign
-remain deferred/closed as before. No Docker restart, Steam channel change,
-scheduling, push, reset or stash is authorized by this pause.
+**Resumed September 26 UTC: continue until the user asks to stop.** The user's
+rough progress answer was75–85% (about80%), an estimate of remaining work rather
+than measured test coverage. Foreground permission remains authorized; keep the
+game background by default and never launch while locked. Multiplayer remains
+deferred and the accepted long campaign remains closed. No push, Docker restart,
+Steam channel change, or scheduled testing.
 
-The next concrete task is the [confirmed Swiss Armory training defect](macos-swiss-armory-validation.md).
-Run `20260926T043437Z` reproduced a Mountaineer-granted Longswordsman beside a
-mountain without its active bonus after real production. The product fix is not
-yet made. The test, logs and save are preserved; the report explains source
-ordering and the related birth-time movement observation. This standalone
-building-granted Reislaufer lies outside the 125 replacement-unit inventory.
+The [Swiss Armory training defect](macos-swiss-armory-validation.md) is fixed in
+`149e6328`. Clean package `build/macos/Lekmod-swiss-armory-20260926.zip`, archive
+SHA-256 `6786af0ce4f8fac3aa01fbebcd547ef4b88d84792077549a55ecbf028c05dc5e`.
+Run `20260926T163851Z` passed seven native assertions and exact reload with normal
+exit0 and full runner restoration. Eight callback regressions failed before the
+fix; all66 callback cases now pass. Run `20260926T164435Z` also passed six movement/paid-upgrade/gift assertions
+and exact reload. Human Swiss purchase locking and old-save compatibility also passed
+nine assertions/two functional replays plus the baseline replay in
+`20260926T164936Z`. No saved promotion required repair in the old checkpoint;
+affected-save repair is still separate. Final independent preservation verifies
+stock, Civ V closed,603 prior manual saves, quicksave/settings,32 stock UI files
+and both backups. Evidence: `build/macos/swiss-armory-fix-validation-20260926.json`.
 
-Final pause evidence: `build/macos/swiss-armory-pause-20260926.json`. Stock,
-settings, prior manual saves, original quicksave,32 stock UI files and both
-backups are verified. The latest startup observation reached the menu with the
-new metadata observer, but intermittent startup/shutdown reliability remains
-unresolved. The debugger-owned game probe lost its connection and is not exit255
-or successful-exit evidence. See the startup-cache report.
+The user requested merging into local `main` at this checkpoint and continuing
+there. Check the current branch and ignored continuation state before resuming.
+No push is authorized. Next work: remaining ability/state boundaries, including
+native affected-save migration, Romania capture/liberation/gift routing and
+Yugoslav ideology reward timing.
+
+Startup255 recurred in `20260926T163747Z`, before any gameplay. Metadata trace and
+nonempty localization cache are preserved. No root-cause fix is claimed; the
+later traced gameplay pass is independent. Further ability/state gaps and
+startup/shutdown reliability remain open.
 
 ## Special unique-unit acquisition (September 26 UTC)
 
@@ -39,7 +49,7 @@ claimed from its earlier failed commissioning runs.
 
 Latest independent stock checkpoint: 600 prior manual saves, original quicksave,
 settings,32 stock UI files and both backups preserved; Civ V closed. Evidence:
-`build/macos/special-acquisition-validation-20260926.json`. The later pause above supersedes the earlier continue instruction. After resumption: unresolved startup
+`build/macos/special-acquisition-validation-20260926.json`. The latest continuation instruction above supersedes this historical checkpoint. Remaining: unresolved startup
 reliability and the remaining concrete ability/state boundaries. Do not reopen
 the accepted campaign or multiplayer.
 

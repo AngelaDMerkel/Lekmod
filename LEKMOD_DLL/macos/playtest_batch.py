@@ -12,6 +12,7 @@ from playtest_save import CheckpointCopier, game_save_writer_open
 
 # Only scenarios with reviewed, compatible temporary adapters are admitted.
 HOOKS = {
+    'swiss-purchase': {'UI/ProductionPopup.lua': 'playtest-scenario-purchase-popup.lua'},
     'unique-special-purchase': {'UI/ProductionPopup.lua': 'playtest-scenario-purchase-popup.lua'},
     'maccabee-faith': {'UI/ProductionPopup.lua': 'playtest-scenario-purchase-popup.lua'},
     'religious-unique-units': {'UI/ProductionPopup.lua': 'playtest-scenario-purchase-popup.lua'},
@@ -29,7 +30,7 @@ HOOKS = {
 }
 PREFIXES = {'playtest-nz-owner-observer.lua': 'playtest-nz-owner-before-observer.lua'}
 
-SUPPORTED = set(HOOKS) | {'swiss-armory', 'unique-prophet-birth', 'unique-general-birth', 'unique-specialist-birth', 'unique-unit-production', 'religious-unit-upgrades', 'swiss-enemy-heal', 'swiss-city-plunder-funded', 'swiss-city-plunder-empty', 'swiss-city-plunder-control', 'swiss-mounted-calculation', 'swiss-utility', 'crusader-borders', 'vatican-kill-faith', 'religious-terrain', 'vatican-great-improvements', 'vatican-pressure-votes', 'vatican-courthouse', 'vatican-stpeters', 'jerusalem-outremer', 'unique-building-catalogue', 'unique-building-pilot', 'civilization-start', 'unique-units', 'counterspy', 'nuclear-cities', 'nuclear-production', 'nuclear-cleanup', 'defender-zoc', 'inventory', 'admiral-repair', 'worker', 'unit-actions', 'great-person-builds', 'budget-settlement', 'nuclear', 'air-operations', 'greatworks', 'trade-tooltip', 'trade-countdown', 'nabatea-farms', 'nabatea-tomb', 'newzealand-science-completion'}
+SUPPORTED = set(HOOKS) | {'swiss-legacy-load', 'swiss-boundaries', 'swiss-armory', 'unique-prophet-birth', 'unique-general-birth', 'unique-specialist-birth', 'unique-unit-production', 'religious-unit-upgrades', 'swiss-enemy-heal', 'swiss-city-plunder-funded', 'swiss-city-plunder-empty', 'swiss-city-plunder-control', 'swiss-mounted-calculation', 'swiss-utility', 'crusader-borders', 'vatican-kill-faith', 'religious-terrain', 'vatican-great-improvements', 'vatican-pressure-votes', 'vatican-courthouse', 'vatican-stpeters', 'jerusalem-outremer', 'unique-building-catalogue', 'unique-building-pilot', 'civilization-start', 'unique-units', 'counterspy', 'nuclear-cities', 'nuclear-production', 'nuclear-cleanup', 'defender-zoc', 'inventory', 'admiral-repair', 'worker', 'unit-actions', 'great-person-builds', 'budget-settlement', 'nuclear', 'air-operations', 'greatworks', 'trade-tooltip', 'trade-countdown', 'nabatea-farms', 'nabatea-tomb', 'newzealand-science-completion'}
 
 def run_owned_runner(command, **kwargs):
     """Let the child restore its UI/settings when this wrapper is interrupted."""

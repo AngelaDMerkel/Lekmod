@@ -529,3 +529,17 @@ subsequent reads, journal creation/removal and expected absent sidecars. Its
 No crash diagnostic appeared. This is a passing control, not a root-cause fix;
 added logging changes timing. The enhanced observer remains available for the
 next naturally occurring failure during functional tests.
+
+### September26 resumed Swiss retest
+
+`20260926T163747Z` exited255 after22.5 seconds before gameplay on the clean
+Swiss Lua fix package (`149e6328`; unchanged core). The new passive metadata
+trace records initial missing mergedDB, successful read/write-create open122,
+successful journal open123, journal unlink and successful later stat calls.
+The subsequent `ATTACH ? AS Localization` still failed; no failing native open
+for that final attach is visible in the intercepted calls. This narrows the
+observation but does not prove which host layer rejected the attach.
+The preserved mergedDB is25,509,888bytes, SHA-256
+`fcada334195faee16f0d715f30466b0168c577c05238b33a9d76f8af90a5b047`.
+No cache repair was attempted. Managed stock restoration passed. Independent
+traced `20260926T163851Z` passed gameplay/reload; this is not a startup fix.

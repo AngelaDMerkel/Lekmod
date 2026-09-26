@@ -128,7 +128,7 @@ persistence checks do not close the rows' individual effect or trait gaps; Akkad
 | `CIVILIZATION_SPAIN` | `TRAIT_SEVEN_CITIES` | UNIT_SPANISH_TERCIO, BUILDING_PLAZA_DE_TOROS | — | Unique mechanics pending. |
 | `CIVILIZATION_SUMERIA` | `TRAIT_CRADLE_OF_CIVILIZATION` | UNIT_PHALANXX, BUILDING_ZIGGURAT | — | Unique mechanics pending. |
 | `CIVILIZATION_SWEDEN` | `TRAIT_DIPLOMACY_GREAT_PEOPLE` | UNIT_CAROL, BUILDING_FALU_GRUVA | — | Unique mechanics pending. |
-| `CIVILIZATION_SWISS` | `TRAIT_SWISS_BANKS` | BUILDING_SWISS_REISLAUFER, BUILDING_SWISS_SKI_RESORT | Lekmod_switzerland.lua | Six isolated actual-handler cases cover creation/movement, mountain-bonus removal, owner-local IDs, foreign/minor owners and unrelated-unit exclusion. Native terrain/upgrade/gift timing and other unique mechanics pending. |
+| `CIVILIZATION_SWISS` | `TRAIT_SWISS_BANKS` | BUILDING_SWISS_REISLAUFER, BUILDING_SWISS_SKI_RESORT | Lekmod_switzerland.lua | [Swiss Armory validation](macos-swiss-armory-validation.md) reproduces and fixes late-trained Mountaineer activation and fresh movement. Seven native building/training assertions and six foreign-owner terrain/movement/paid-upgrade/gift assertions pass with exact reloads. Fifteen Swiss callback cases cover additional missing-unit, purchase-lock and load boundaries. Six human production/purchase assertions confirm exact debit and zero-movement locking; three read-only old-save assertions plus exact replays also pass. No old saved flag required repair, so affected-save repair, other owners and Ski Resort/trait effects remain separately scoped. |
 | `CIVILIZATION_TIBET` | `TRAIT_TIBET` | UNIT_DALAILAMA | — | Unique mechanics pending. |
 | `CIVILIZATION_TIMURIDS` | `TRAIT_ULUG` | UNIT_MARATHI, BUILDING_SERAI | — | Unique mechanics pending. |
 | `CIVILIZATION_TONGA` | `TRAIT_ISLANDS` | UNIT_MC_RAPA_NUI_MATATOA, BUILDING_MC_TONGAN_MALAE | Lekmod_tonga.lua | [Starting exploration](macos-tonga-validation.md): six hidden singleton islands reproduced natively, fixed on the exact generated map for human/AI, Roman controls unchanged, exact visibility reload passed. Thirteen offline iterator cases cover radius/coast/lake exclusions. Other uniques/resting influence pending. |
@@ -169,7 +169,7 @@ The event table was refreshed from current uncommented registrations on 2026-09-
 | `Lekmod_phoenicia.lua` | CIVILIZATION_PHOENICIAN | PlayerCityFounded |
 | `Lekmod_polynesia.lua` | CIVILIZATION_POLYNESIA | SequenceGameInitComplete, UnitConverted, UnitCreated |
 | `Lekmod_romania.lua` | CIVILIZATION_ROMANIA | CityCaptureComplete |
-| `Lekmod_switzerland.lua` | CIVILIZATION_SWISS | UnitCreated, UnitSetXY |
+| `Lekmod_switzerland.lua` | CIVILIZATION_SWISS | UnitCreated, UnitSetXY, CityTrained, UnitConverted, SequenceGameInitComplete |
 | `Lekmod_tonga.lua` | CIVILIZATION_TONGA | SequenceGameInitComplete |
 | `Lekmod_uae.lua` | CIVILIZATION_UAE | CityConstructed, PlayerDoTurn, UnitPillaged, UnitPlundered |
 | `Lekmod_vatican.lua` | CIVILIZATION_VATICAN | CityCaptureComplete, CityConvertsReligion |

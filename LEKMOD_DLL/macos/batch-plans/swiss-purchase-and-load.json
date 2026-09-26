@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "name": "swiss-purchase-and-load",
+  "stages": [
+    {
+      "fixture": "build/macos/playtests/20260926T164719Z/Lekmod-Functional-20260926T164719Z.Civ5Save",
+      "sha256": "ece8c06036ba7099625e7c96057f159db0a74f8ce90a178c20be157816f977a2",
+      "id": "swiss-purchase",
+      "scenario": "swiss-purchase",
+      "max_turns": 4
+    },
+    {
+      "id": "swiss-legacy-load",
+      "scenario": "swiss-legacy-load",
+      "max_turns": 0,
+      "fixture": "build/macos/playtests/20260926T043437Z/checkpoints/Lekmod-Batch-20260926T043437Z-swiss-armory-run.Civ5Save",
+      "sha256": "1cc54bc04a358eb18bf4512a54ca0f514da24dde65ef17482d5ac4d6e6cfcfc2"
+    },
+    {
+      "id": "swiss-human-baseline",
+      "scenario": "civilization-start",
+      "fixture": "build/macos/playtests/20260926T164719Z/Lekmod-Functional-20260926T164719Z.Civ5Save",
+      "sha256": "ece8c06036ba7099625e7c96057f159db0a74f8ce90a178c20be157816f977a2",
+      "expected_report": "build/macos/playtests/20260926T164719Z/report.json",
+      "expected_report_sha256": "6ade9438934292819acb688bc54c5c7bddabf070d86453633a515bbdb9ad4f65",
+      "max_turns": 0
+    }
+  ]
+}
