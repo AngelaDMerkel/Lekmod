@@ -478,3 +478,11 @@ passed their Swiss checks/reloads and exited normally. They retain the same
 product bytes; instrumentation/timing differed. Startup's original trigger is
 still unisolated. No access flag, return value, synchronization check or GameCore
 wait flag was changed to create a pass.
+
+`20260926T011427Z` subsequently exited255 after20.5 seconds before the Maccabee
+faith scenario. Failure preservation retained the 25,509,888-byte merged cache,
+SHA-256 `de461b57ff212f26211c157a2d31692aa115e5cfaa4129d0ecc26a28ec8f87f5`,
+under that run's `localization-failure-cache/files/`. The independent traced
+attempt reached gameplay but failed its Roman-unit fixture assumption; its later
+corrected traced run `20260926T012117Z` passed. Neither success establishes a
+startup fix. No healthy cache was manually deleted or repaired.

@@ -39,8 +39,18 @@ process remained at that verification. Evidence:
 `build/macos/swiss-completion-validation-20260926.json`.
 Check `build/macos/continuation-state.json` for work started after this checkpoint.
 
-Next functional work concerns remaining upgrade/purchase/owner boundaries using
-the actually acquired units in the pinned `20260924T230221Z` checkpoint. Completed
+The next upgrade/faith continuation also completed: `20260926T010909Z` passed
+seven actual upgrade/reward checks and reload (95.8s, two turns), while
+`20260926T012117Z` passed five Maccabee faith-purchase gates/outcomes and reload
+(79.7s, zero turns). The prior faith startup255 and wrong-Roman-default fixture
+remain failed. See `docs/macos-vatican-validation.md` and
+`build/macos/upgrade-faith-validation-20260926.json`. Latest stock verification
+preserved546 prior manual saves, original quicksave,32 stock UI files, settings
+and both backups; no game process remained.
+
+Remaining work concerns broader civilization/owner/state boundaries. The saved
+114-civilization fixtures can support a future actual unique-unit production
+catalogue; acquisition/creation evidence must remain distinct from unit abilities. Completed
 Swiss utility/plunder/healing/calculation paths and Crusader entry/+20/reload
 should not be reopened without relevant changes. Broader civilization coverage
 and historical startup/shutdown reliability still prevent a full-support claim.

@@ -102,6 +102,16 @@ in `playtest_save.py`; run `test-playtest-save.py` and `test-playtest-cache.py` 
 read-only writer/copy and startup-evidence preservation regressions. Startup-255
 remains under investigation. See the reports for exact scope and artifacts.
 
+## Acquired unique-unit upgrades and faith purchase
+
+`religious-unit-upgrades.json` passed seven assertions and exact reload using
+normal human/AI-owner upgrade commands, exact gold gates, XP/level/damage,
+promotion retention/loss and later native kill-yield changes. `maccabee-faith.json`
+passed five religion/belief/owner/faith-budget/purchase checks and exact reload;
+the owner control resolves Rome's actual Legion replacement. See
+[the continuation report](../../docs/macos-vatican-validation.md) for supplied
+inputs, retained startup/fixture failures and exact artifact evidence.
+
 ## Bounded startup/shutdown cycles
 
 `lifecycle-playtest.py` installs a verified package once, then performs 1–5

@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "name": "maccabee-faith-purchase-boundaries",
+  "stages": [
+    {
+      "id": "maccabee-faith",
+      "scenario": "maccabee-faith",
+      "fixture": "build/macos/playtests/20260924T214605Z/Lekmod-Functional-20260924T214605Z.Civ5Save",
+      "sha256": "cee385a99258c682176b8396600f3a27eafc0b98d81bb49e3e36ea95451bcd1a",
+      "max_turns": 0
+    }
+  ]
+}

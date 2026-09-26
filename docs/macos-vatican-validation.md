@@ -149,3 +149,43 @@ Crusader border entry/native +20 calculation with exact reload. Swiss free
 pillage/healing and mounted-melee calculation have partial positive evidence,
 but range-removal/matched mounted-ranged comparison and persistence remain open.
 Testing is paused after the user's requested stop at the end of that round.
+
+## Upgrade and faith-purchase continuation (September 26)
+
+`20260926T010909Z` passed seven upgrade/reward assertions and exact reload in
+95.8 seconds, two ordinary turns. The actually purchased Swiss Guard upgraded
+to Rifleman, the produced Maccabee to Longswordsman, and the produced Crusader to
+Musketman. Research, resources, friendly placement and exact budgets are inputs.
+All three owners rejected cost-minus-one and accepted exact cost; normal human
+command/AI active-owner commands emitted UnitUpgraded and debited exact gold.
+XP, level, damage and retained promotions matched. Swiss anti-mounted was removed
+as specified by LostWithUpgrade; its remaining promotions and Crusader's retained
+promotions survived. After ordinary attacks killed supplied full-health Roman
+archers, the former Swiss unit earned seven Vatican trait faith but zero gold;
+the former Maccabee/Crusader earned no old intrinsic faith. No upgrade, kill or
+reward outcome was assigned.
+
+`20260926T012117Z` passed all five Maccabee faith-purchase checks and exact reload
+in 79.7 seconds, zero turns. With production research/resources supplied, no
+religion and a majority lacking Holy Warriors both reject faith purchase. With
+Holy Warriors, Israel's Maccabee is eligible; the Roman control's data-defined
+Legion is eligible while its Maccabee is rejected. Faith79 is rejected, faith80
+accepted and spent exactly through the actual ProductionPopup callback and
+UnitCreated event. Gold and the Roman control are unchanged; purchased movement
+is zero. Religions, majority conversions, empty cities, iron and faith are inputs,
+not earned religious progression.
+
+The prior faith attempt `20260926T011427Z` exited255 during localization before
+any scenario action; its nonempty failure cache is preserved. Traced attempt
+`20260926T011846Z` remains a failed fixture: it incorrectly used the default
+Swordsman for a Roman owner. The corrected test resolves the civilization's
+actual override. No product code changed. Reproduction plans:
+`religious-unit-upgrades.json` and `maccabee-faith.json`.
+
+Both passing runs exited normally and restored all test settings/hooks, with
+no Lua/synchronization errors or new diagnostics. Exact saved snapshots and
+source/copy hash equality were independently checked. Final stock/backups,
+546 prior manual saves, quicksave,32 stock UI files and settings were verified;
+no game process remained. Full paths/hashes:
+`build/macos/upgrade-faith-validation-20260926.json`.
+This does not cover every upgrade/purchase/owner variant or resolve startup255.

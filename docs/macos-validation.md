@@ -59,6 +59,14 @@ failure-cache preservation is now in place. No product code was changed for thes
 Swiss tests. Stock, backups, 541 prior manual saves, quicksave, settings and 32
 stock UI files were verified at the resulting checkpoint.
 
+The upgrade/faith follow-up adds twelve passing functional assertions and two
+exact reloads on the same product: actual upgrades preserve/drop the specified
+promotions, remove intrinsic old-unit rewards and retain Vatican trait faith;
+Maccabee faith purchase respects religion, belief, owner replacement and exact
+80-faith gates. Native commands/callbacks are distinguished from supplied input
+state in [the report](macos-vatican-validation.md). The latest stock/preservation
+checkpoint covers546 prior manual saves, quicksave,32 UI files and both backups.
+
 ## Scope and acceptance
 
 The user accepted the accumulated turn-testing evidence as sufficient on
