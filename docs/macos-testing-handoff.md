@@ -1,27 +1,49 @@
 # Lekmod macOS single-player testing handoff
 
-**Paused at the user's request after the current round (2026-09-24 UTC).**
-The user superseded the earlier continuous-work instruction with “Stop whenever
-you finish the current round of tests.” That round is complete; do not start
-another test until an explicit resumption. No game/test process remains and
-stock is restored.
+**Resumed September 25; latest Swiss continuation verified September 26 UTC.**
+The user explicitly resumed the earlier pause. Work stays in this checkout,
+background by default, with no push or new long campaign; multiplayer remains
+deferred. Always inspect current process/install/lock state before launch.
 
-[Latest utility evidence](macos-swiss-crusader-validation.md): Crusader +20 native
-combat calculation, peaceful rival-territory entry/control and exact reload passed
-in `20260924T231805Z`. In `20260924T232415Z`, Swiss free pillage and ordinary healing
-(20 HP adjacent, 10 control, 15 self) passed as partial outcomes. Range-removal
-could not find a legal exit tile. Mounted melee calculation passed; mounted ranged
-had the expected +50 plus an independent +20 flanking term that the test did not
-account for. Both Swiss workflows retain FAIL and lack exact reload coverage.
-No new product defect was confirmed. First work after resumption is to correct
-those fixture/comparison conditions and retest them, without reopening Crusader.
+The [Swiss report](macos-swiss-crusader-validation.md) now closes the earlier
+healing-exit and mounted-comparison gaps: `20260926T000754Z` passed six checks/two
+exact reloads, 115.8 seconds and two ordinary turns. Additional city-attack gold
+cases passed all nine checks/three reloads in `20260926T002908Z` (149.5 seconds,
+zero turns). Hostile healing passed two checks/reload in `20260926T005339Z`
+(83.7 seconds, one turn): Swiss15 HP/control10, a +5 bonus. Seventeen assertions
+and six exact reloads across these three runs are verified, not a claim about
+every remaining unit/owner/state variant. No new physical mouse coverage.
 
-Independent stop verification preserved 526 prior manual saves, quicksave,
-32 stock UI files, settings and canonical/Aspyr backups. Lekmod/private EUI are
-inactive. Evidence: `build/macos/swiss-crusader-stop-verification-20260924.json`.
-All work stays local, no push. Foreground permission persists for an authorized
-resumption; background remains default and a locked desktop still blocks launch.
-No multiplayer, schedules, Docker restart, channel change or new long campaign.
+A confirmed **harness** bug copied a save before asynchronous writing finished:
+532,480-byte copy versus 728,776-byte untouched original, exact prefix. Loading
+that partial copy aborted in `20260926T001629Z`. Both files and the delayed crash
+report remain preserved. `d7dd1237` now requires closed game write handles,
+stable metadata and equal source/candidate bytes before loading. Seven save
+regressions and 24 dispatcher cases pass. A 214-checkpoint audit found only the
+known mismatch. The successful plunder retest verifies all full source/copy pairs.
+
+Startup255 recurred in `20260926T000157Z` and `20260926T003550Z`; neither ran a
+scenario. `9bb2b621` now preserves failure caches before stock invalidation.
+The latter retained20 files and a healthy 25,509,888-byte merged cache; root cause
+remains unisolated. A one-off debugger attachment `20260926T004934Z` stopped at a
+Rosetta/dyld trace and confused ordinary process supervision; it was not a game
+success. Owned PID18352 required scoped termination, then managed stock restore.
+Do not repeat LLDB attachment under this runner; see the startup report.
+
+Current tested product is unchanged: clean `f33cfd33`, archive
+`build/macos/Lekmod-college-city-iteration-20260924.zip`, SHA-256
+`9005a104f665ea4c5336c9ed8a85f31abdad782e33b277864a923ece3de09b01`.
+Latest independent stock checkpoint preserved541 prior manual saves, original
+quicksave,32 stock UI files, settings and both canonical/Aspyr backups. No native
+process remained at that verification. Evidence:
+`build/macos/swiss-completion-validation-20260926.json`.
+Check `build/macos/continuation-state.json` for work started after this checkpoint.
+
+Next functional work concerns remaining upgrade/purchase/owner boundaries using
+the actually acquired units in the pinned `20260924T230221Z` checkpoint. Completed
+Swiss utility/plunder/healing/calculation paths and Crusader entry/+20/reload
+should not be reopened without relevant changes. Broader civilization coverage
+and historical startup/shutdown reliability still prevent a full-support claim.
 
 ## Previous religious-civilization milestone
 

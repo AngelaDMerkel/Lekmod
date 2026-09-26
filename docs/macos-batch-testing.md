@@ -244,3 +244,22 @@ no Lua/synchronization errors or new diagnostics. This commissions the
 completed-check progress path beyond the 240-second stall interval. See
 [the catalogue report](macos-unit-catalogue.md) for the actual missing-texture
 fix, retained failures, exact hashes and limits.
+
+## Asynchronous save handoff correction (September 26)
+
+The normal Save callback can return before the file finishes writing. A copied
+532,480-byte checkpoint was an exact prefix of the completed 728,776-byte original
+and caused an abort when loaded (`20260926T001629Z`). Both remain preserved;
+`checkpoint-race-evidence.json` and `delayed-diagnostics/` record the evidence.
+The original manual save was never overwritten. A 214-checkpoint audit found no
+other mismatch against retained originals.
+
+`playtest_save.py` now checks the owned game's writable handles with read-only
+`lsof`, waits for two seconds of stable metadata, and verifies identical source
+and candidate bytes with unchanged metadata and no reopened writer. Only then
+is the candidate published and the next load allowed. Rejected candidate bytes
+are retained as `.partial` evidence. Probe errors fail closed. No game waiting
+or synchronization flag is altered. Each stage records `save_verification`.
+Seven save-handling tests and 24 dispatcher tests pass; the three-stage native
+plunder retest passed all nine checks/three reloads with verified full copies.
+Standalone runner copies occur after its owned game process exits.

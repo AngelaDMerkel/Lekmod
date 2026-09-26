@@ -50,11 +50,14 @@ The latest three-stage batch passed intact; earlier failed commissioning batches
 are retained with their specific fixture corrections. No new product fix was
 required. Remaining unit utilities and owner/state boundaries remain open.
 
-The subsequent [Swiss/Crusader utility round](macos-swiss-crusader-validation.md)
-completed with Crusader/reload passed and two Swiss fixture/comparison checks
-still open. At the user's request testing stopped after that round. Stock,
-backups, 526 prior manual saves, quicksave, settings and 32 stock UI files were
-verified, with no game/test process left running.
+After explicit resumption, the [Swiss utility continuation](macos-swiss-crusader-validation.md)
+closed both earlier fixtures and added city-plunder and hostile-healing boundaries:
+17 checks/six exact reloads passed across three runs. A real test-harness defect
+that copied an asynchronous save too early was fixed in `d7dd1237`; original saves
+and failed evidence were preserved. Startup-255 recurred and remains unresolved;
+failure-cache preservation is now in place. No product code was changed for these
+Swiss tests. Stock, backups, 541 prior manual saves, quicksave, settings and 32
+stock UI files were verified at the resulting checkpoint.
 
 ## Scope and acceptance
 

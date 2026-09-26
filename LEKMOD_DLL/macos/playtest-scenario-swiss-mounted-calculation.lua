@@ -22,6 +22,10 @@ function LekmodScenario.step(player)
   for i=0,Map.GetNumPlots()-1 do local p=Map.GetPlotByIndex(i)
    if not used[i]and p:GetOwner()==-1 and not p:IsCity()and not p:IsWater()and not p:IsMountain()and not p:IsHills()and p:GetFeatureType()==-1 and p:GetNumUnits()==0 then
     local near=false;for owner=0,3 do for c in Players[owner]:Cities()do if Map.PlotDistance(p:GetX(),p:GetY(),c:GetX(),c:GetY())<5 then near=true end end end
+    -- Isolate the comparison from every existing/provided unit's flanking geometry.
+    for owner=0,3 do for u in Players[owner]:Units()do
+     if not u:IsDead()and not u:IsDelayedDeath()and Map.PlotDistance(p:GetX(),p:GetY(),u:GetX(),u:GetY())<=2 then near=true end
+    end end
     if not near then q=p;break end
    end
   end
@@ -29,7 +33,7 @@ function LekmodScenario.step(player)
   local defender=assert(Players[3]:InitUnit(GameInfoTypes[kind],q:GetX(),q:GetY()));assert(defender:GetDamage()==0)
   local rows=swiss:GetAttackModifierList(q,defender,nil,nil,false,false,false,0,q)
   results[kind]={modifiers=rows,sum=sum(rows),strength=swiss:GetMaxAttackStrength(q,defender,nil,nil,false,false,false,q)}
-  LekmodScenarioEvent("fixture-setup",{operation="provided-defender-for-calculation-only",type=kind,unit=defender:GetID(),x=q:GetX(),y=q:GetY()})
+  LekmodScenarioEvent("fixture-setup",{operation="provided-isolated-defender-for-calculation-only",clear_unit_radius=2,type=kind,unit=defender:GetID(),x=q:GetX(),y=q:GetY()})
  end
  LekmodScenarioEvent("Swiss-mounted-native-calculations",results)
  local base=results.UNIT_WARRIOR

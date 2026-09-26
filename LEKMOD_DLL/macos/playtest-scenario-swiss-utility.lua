@@ -42,10 +42,17 @@ function LekmodScenario.step(player)
   end
   for _,q in ipairs(candidates)do
    if areas[q:GetArea()]>=4 then
-    for d=0,5 do local a=Map.PlotDirection(q:GetX(),q:GetY(),d)
-     if a and lookup[a:GetPlotIndex()]and a:GetArea()==q:GetArea()then
-      for _,other in ipairs(candidates)do
-       if other:GetArea()==q:GetArea()and Map.PlotDistance(other:GetX(),other:GetY(),q:GetX(),q:GetY())>=4 then center,near,control=q,a,other;break end
+    for d=0,5 do local adjacent=Map.PlotDirection(q:GetX(),q:GetY(),d)
+     if adjacent and lookup[adjacent:GetPlotIndex()]and adjacent:GetArea()==q:GetArea()then
+      for e=0,5 do local exit=Map.PlotDirection(q:GetX(),q:GetY(),e)
+       if exit and lookup[exit:GetPlotIndex()]and exit:GetArea()==q:GetArea()and Map.PlotDistance(exit:GetX(),exit:GetY(),adjacent:GetX(),adjacent:GetY())>1 then
+        for _,other in ipairs(candidates)do
+         if other:GetArea()==q:GetArea()and Map.PlotDistance(other:GetX(),other:GetY(),q:GetX(),q:GetY())>=4 and Map.PlotDistance(other:GetX(),other:GetY(),exit:GetX(),exit:GetY())>1 then
+          center,near,control,moveTo=q,adjacent,other,exit;break
+         end
+        end
+       end
+       if control then break end
       end
      end
      if control then break end
@@ -53,7 +60,8 @@ function LekmodScenario.step(player)
    end
    if control then break end
   end
-  assert(center and near and control,"no complete neutral healing/control group")
+  assert(center and near and control and moveTo,"no complete neutral healing/control/exit group")
+  LekmodScenarioEvent("healing-site-layout",{center=center:GetPlotIndex(),adjacent=near:GetPlotIndex(),control=control:GetPlotIndex(),exit=moveTo:GetPlotIndex()})
   u:SetXY(center:GetX(),center:GetY(),false,true,false,false)
   local a=assert(player:InitUnit(GameInfoTypes.UNIT_WARRIOR,near:GetX(),near:GetY()));nearID=a:GetID()
   local b=assert(player:InitUnit(GameInfoTypes.UNIT_WARRIOR,control:GetX(),control:GetY()));controlID=b:GetID()
@@ -71,10 +79,7 @@ function LekmodScenario.step(player)
  elseif phase=="wake-move"then
   if u:GetMoves()<=0 then return "turn"end
   local a=assert(player:GetUnitByID(nearID));local b=assert(player:GetUnitByID(controlID))
-  for i=0,Map.GetNumPlots()-1 do local q=Map.GetPlotByIndex(i);local distance=Map.PlotDistance(q:GetX(),q:GetY(),u:GetX(),u:GetY())
-   if safe(q)and q:GetArea()==center:GetArea()and distance==1 and Map.PlotDistance(q:GetX(),q:GetY(),a:GetX(),a:GetY())>1 and Map.PlotDistance(q:GetX(),q:GetY(),b:GetX(),b:GetY())>1 and u:CanMoveOrAttackInto(q)then moveTo=q;break end
-  end
-  assert(moveTo,"no legal move out of medic range");UI.SelectUnit(u);Game.SelectionListGameNetMessage(GameMessageTypes.GAMEMESSAGE_PUSH_MISSION,MissionTypes.MISSION_MOVE_TO,moveTo:GetX(),moveTo:GetY(),0,false,false);phase="moved"
+  assert(safe(moveTo)and Map.PlotDistance(moveTo:GetX(),moveTo:GetY(),a:GetX(),a:GetY())>1 and Map.PlotDistance(moveTo:GetX(),moveTo:GetY(),b:GetX(),b:GetY())>1 and u:CanMoveOrAttackInto(moveTo),"reserved medic exit became unavailable");UI.SelectUnit(u);Game.SelectionListGameNetMessage(GameMessageTypes.GAMEMESSAGE_PUSH_MISSION,MissionTypes.MISSION_MOVE_TO,moveTo:GetX(),moveTo:GetY(),0,false,false);phase="moved"
  elseif phase=="moved"then
   if not LekmodScenarioAwait("Swiss-left-medic-range",u:GetX()==moveTo:GetX()and u:GetY()==moveTo:GetY())then return false end
   local a=player:GetUnitByID(nearID);local b=player:GetUnitByID(controlID);healing={a=a:GetDamage(),b=b:GetDamage()};turn=Game.GetGameTurn();phase="no-aura";return "turn"

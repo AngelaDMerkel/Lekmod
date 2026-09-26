@@ -91,14 +91,16 @@ three replays in one 197.1-second native process. Earlier plans retain the exact
 fixture hashes for focused reproduction. Only scripted actions/native outcomes
 are covered here; there is no new physical mouse coverage.
 
-## Swiss Guard / Crusader follow-up and current pause
+## Swiss Guard / Crusader follow-up
 
 `swiss-crusader-utility.json` and `swiss-healing-mounted.json` retain the current
 utility/calculation fixtures. [The report](../../docs/macos-swiss-crusader-validation.md)
-distinguishes the passed Crusader/reload from partial Swiss assertions and the
-two pending fixture/comparison corrections. Both containing batches remain
-failed. The user requested a stop after the current round; no more tests should
-start until the user explicitly resumes. Stock and preservation were verified.
+records the original failed Swiss fixtures and their later six-check/two-reload
+completion. City-plunder funded/empty/promotion-disabled cases and hostile healing
+also passed. The user has resumed. The asynchronous save-copy race was corrected
+in `playtest_save.py`; run `test-playtest-save.py` and `test-playtest-cache.py` for
+read-only writer/copy and startup-evidence preservation regressions. Startup-255
+remains under investigation. See the reports for exact scope and artifacts.
 
 ## Bounded startup/shutdown cycles
 

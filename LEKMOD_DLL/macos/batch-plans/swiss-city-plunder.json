@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "name": "swiss-city-plunder-boundaries",
+  "stages": [
+    {
+      "id": "swiss-plunder-funded",
+      "scenario": "swiss-city-plunder-funded",
+      "fixture": "build/macos/playtests/20260924T230221Z/checkpoints/Lekmod-Batch-20260924T230221Z-religious-unique-units-run.Civ5Save",
+      "sha256": "cd2445e36ecab1163b3695a810c03198363b3cb9a875651391817b14faab0117",
+      "max_turns": 0
+    },
+    {
+      "id": "swiss-plunder-empty",
+      "scenario": "swiss-city-plunder-empty",
+      "fixture": "build/macos/playtests/20260924T230221Z/checkpoints/Lekmod-Batch-20260924T230221Z-religious-unique-units-run.Civ5Save",
+      "sha256": "cd2445e36ecab1163b3695a810c03198363b3cb9a875651391817b14faab0117",
+      "max_turns": 0
+    },
+    {
+      "id": "swiss-plunder-control",
+      "scenario": "swiss-city-plunder-control",
+      "fixture": "build/macos/playtests/20260924T230221Z/checkpoints/Lekmod-Batch-20260924T230221Z-religious-unique-units-run.Civ5Save",
+      "sha256": "cd2445e36ecab1163b3695a810c03198363b3cb9a875651391817b14faab0117",
+      "max_turns": 0
+    }
+  ]
+}

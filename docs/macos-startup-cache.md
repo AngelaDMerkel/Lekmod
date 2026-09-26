@@ -437,3 +437,44 @@ This separates product-switch cache invalidation from retained-cache launches in
 a controlled passing sequence. Earlier startup-255 and shutdown failures remain
 unresolved evidence. Five successful cycles do not justify a claim that their
 trigger has been fixed.
+
+## September 26 recurrence and improved evidence preservation
+
+`20260926T000157Z` exited 255 after 22.5 seconds before any Swiss scenario action.
+Database.log reported inability to open the emulated-path merged database during
+`ATTACH ? AS Localization`. Cleanup restored settings/hooks/saves, and the central
+stock switch invalidated generated caches before an extra snapshot was taken.
+Those failed-cache bytes are unavailable; the post-restore absence does not prove
+that the failed cache had been empty. The original failed report is retained.
+
+`9bb2b621` adds failure-only read-only cache preservation inside the runner,
+before the managed wrapper switches back to stock. It refuses a running game,
+skips symlinks/nonregular entries, keeps all copied bytes under `files/` separately
+from its manifest, and never repairs/removes a cache or retries a game. Six
+preservation/wiring tests cover real copies, empty files/sidecars, refusal paths,
+manifest-name collision and preservation across simulated later invalidation.
+The batch CLI also forwards optional `--trace-loaded-libraries` explicitly.
+
+`20260926T003550Z` reproduced exit 255 after 20.5 seconds. This time all 20 cache
+files were preserved under its `localization-failure-cache/files/` directory.
+The 25,509,888-byte merged file has SHA-256
+`f3cff3c4a01e11252651e511ff17dab66884d28c6bd1ae91725a27ca3080af1d`;
+read-only SQLite quick_check is OK and localization tables are present. This
+again excludes a simply empty/corrupt merged file for that occurrence.
+
+A one-off LLDB attach probe (`20260926T004934Z`) stopped at a Rosetta/dyld trace
+before any file-open observation. Attaching also confused the ordinary child
+process supervisor: its reported returncode 0 was not a normal game exit. The
+installer correctly refused restoration while the game remained alive/stopped.
+The owned PID 18352 was identified by its exact executable path, sent SIGTERM and
+SIGCONT, then scoped SIGKILL after a bounded wait. Managed stock restoration then
+succeeded. `build/macos/startup-file-trace-20260926/` retains scripts/logs/cleanup.
+This is an unsuccessful diagnostic attempt, not a product startup verdict.
+Do not repeat that attachment under the existing runner; a future debugger
+control needs debugger-aware process ownership/lifecycle handling.
+
+Traced independent runs `20260926T000754Z` and `20260926T005339Z` reached gameplay,
+passed their Swiss checks/reloads and exited normally. They retain the same
+product bytes; instrumentation/timing differed. Startup's original trigger is
+still unisolated. No access flag, return value, synchronization check or GameCore
+wait flag was changed to create a pass.
