@@ -497,3 +497,35 @@ stock restoration. `Localization-Merged.db` was 25,509,888 bytes with
 Artifacts are under that run's `localization-failure-cache/`. Later explicitly
 traced launches completed their gameplay rounds and exited normally; that timing
 difference does not establish a fix. This failure remains unresolved.
+
+## Guarded diagnostic comparison (September 26, later continuation)
+
+The debugger-owned prototype first validated native exit42, nested wide/narrow
+file-call results, last-error values and both output streams on an isolated x86
+probe. The actual game attempt
+`build/macos/startup-owned-debugger-20260926/game-20260926T035836Z/`
+then lost its debugger connection before any localization-path observations.
+LLDB's `-1 / lost connection` is not a native exit255 observation or a successful
+exit. The wrapper found no live game and restored UI/settings/stock; manual saves
+were unchanged. This unsuccessful diagnostic is retained. Its earlier probe
+iterations also retain their return-breakpoint and stream-capture failures.
+
+The established direct process supervisor was then used for a menu-only control:
+`build/macos/startup-owned-debugger-20260926/process-20260926T041344Z/`.
+A process-local observer records the game's own stat/lstat/access/unlink/rename
+calls, plus open/openat/access flags, thread IDs and monotonic timestamps.
+It preserves all results, errno and requested operations; it makes no repair,
+retry or additional deletion. Real x86 subprocess tests verify successful and
+failing metadata calls, rename/removal behavior, existing stream/buffering tests,
+exit status and the activation-only control.
+
+The control reached the menu and used the actual exit-confirmation callback;
+native exit0 and complete UI/settings/manual-save/stock restoration passed.
+This is scripted menu evidence, with no gameplay or physical mouse claim.
+The trace records an initially missing merged file, its normal read/write creation,
+subsequent reads, journal creation/removal and expected absent sidecars. Its
+27,500,544-byte cache passed SQLite quick_check, SHA-256
+`cbff712c42623dccc3fa3b01ca3ba720cf6f6479fab91f55fb1587ef6dca858b`.
+No crash diagnostic appeared. This is a passing control, not a root-cause fix;
+added logging changes timing. The enhanced observer remains available for the
+next naturally occurring failure during functional tests.

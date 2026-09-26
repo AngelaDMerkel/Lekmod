@@ -26,6 +26,21 @@ class ExitObserverTests(unittest.TestCase):
 #include <CoreFoundation/CoreFoundation.h>
 unsigned int GetLastError(void){return 1234;}
 int main(int argc,char **argv){
+ if(atoi(argv[2])==6){
+  struct stat status;int fd=open(argv[3],O_CREAT|O_EXCL|O_RDWR,0600);if(fd<0)return 30;
+  if(write(fd,"probe",5)!=5||close(fd))return 31;
+  if(stat(argv[3],&status)||status.st_size!=5)return 32;
+  if(lstat(argv[3],&status)||status.st_size!=5)return 33;
+  if(access(argv[3],R_OK|W_OK))return 34;
+  errno=0;if(stat(argv[4],&status)!=-1||errno!=ENOENT)return 35;
+  errno=0;if(lstat(argv[4],&status)!=-1||errno!=ENOENT)return 36;
+  errno=0;if(access(argv[4],F_OK)!=-1||errno!=ENOENT)return 37;
+  if(rename(argv[3],argv[4]))return 38;
+  errno=0;if(access(argv[3],F_OK)!=-1||errno!=ENOENT)return 39;
+  if(unlink(argv[4]))return 40;
+  errno=0;if(unlink(argv[4])!=-1||errno!=ENOENT)return 41;
+  printf("metadata-results-preserved=1\n");return 0;
+ }
  if(atoi(argv[2])==5){
   CFURLRef url=CFURLCreateFromFileSystemRepresentation(NULL,(const UInt8*)argv[3],strlen(argv[3]),false);
   CFWriteStreamRef writer=CFWriteStreamCreateWithFile(NULL,url);
@@ -97,6 +112,15 @@ int main(int argc,char **argv){
             for operation in ("open","openat","fopen"):
                 self.assertIn("localization-open operation="+operation,result.stderr)
                 self.assertIn("operation="+operation+" result=-1 errno=2",result.stderr)
+            result=subprocess.run([str(probe),"0","6",str(root/"Localization-Metadata.db"),
+                str(root/"Localization-Renamed.db")],env=environment,text=True,capture_output=True,timeout=10)
+            self.assertEqual(result.returncode,0,result.stderr)
+            self.assertEqual(result.stdout,"metadata-results-preserved=1\n")
+            for operation in ("stat","lstat","access","unlink","rename-from","rename-to"):
+                self.assertIn("localization-open operation="+operation,result.stderr)
+            for operation in ("stat","lstat","access","unlink"):
+                self.assertIn("operation="+operation+" result=-1 errno=2",result.stderr)
+            self.assertIn("flags=0x",result.stderr);self.assertIn("thread=",result.stderr);self.assertIn("monotonic=",result.stderr)
             result=subprocess.run([str(probe),"0","5",str(root/"Localization-Stream.db"),
                 str(root/"missing/Localization-Stream.db")],env=environment,text=True,capture_output=True,timeout=10)
             self.assertEqual(result.returncode,0,result.stderr)

@@ -1252,3 +1252,12 @@ emits a test-only before-owner-turn signal ahead of the product registrations;
 the suffix emits the after signal. This preserves ordering when a batch stage
 subscribes after world initialization. The runner restores the original product
 file bytes. Gameplay handlers are still dispatched only by the native engine.
+
+## Startup file-metadata observations
+
+The process-local background observer also logs localization stat/lstat/access,
+unlink and rename results, thread/time and relevant open/access flags. All calls
+are forwarded unchanged; failed operations are never retried. Run
+`python3 LEKMOD_DLL/macos/test-exit-observer.py` for its real x86 subprocess
+preservation checks. A passing menu-only native control and the unsuccessful
+separate debugger attempt are recorded in the startup-cache report.

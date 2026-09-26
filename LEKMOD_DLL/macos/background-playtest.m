@@ -16,6 +16,8 @@
 #include <stdarg.h>
 #include <pthread.h>
 #include <dlfcn.h>
+#include <sys/stat.h>
+#include <time.h>
 
 typedef unsigned int (*HostLastErrorFunction)(void);
 static HostLastErrorFunction hostLastError = NULL;
@@ -78,12 +80,15 @@ static void observedWriteStreamClose(CFWriteStreamRef stream) {
     localizationStreamKnown(stream, true); errno = savedErrno;
 }
 
-static void recordLocalizationOpen(const char *operation, const char *path, int result, int error) {
+static void recordLocalizationOpen(const char *operation, const char *path, int result, int error, int flags) {
     // Observe only localization paths, including an untranslated emulated path.
     // Preserve the syscall result/errno and never retry or change access flags.
     if (path && strstr(path, "Localization")) {
-        fprintf(stderr, "[LEKMOD_TEST] localization-open operation=%s result=%d errno=%d path=%s\n",
-                operation, result, result < 0 ? error : 0, path);
+        struct timespec when = {0, 0}; uint64_t thread = 0;
+        clock_gettime(CLOCK_MONOTONIC, &when); pthread_threadid_np(NULL, &thread);
+        fprintf(stderr, "[LEKMOD_TEST] localization-open operation=%s result=%d errno=%d path=%s flags=0x%x thread=%llu monotonic=%lld.%09ld\n",
+                operation, result, result < 0 ? error : 0, path, flags,
+                (unsigned long long)thread, (long long)when.tv_sec, when.tv_nsec);
     }
     errno = error;
 }
@@ -94,7 +99,7 @@ static int observedOpen(const char *path, int flags, ...) {
         result = open(path, flags, mode);
     } else result = open(path, flags);
     int error = errno;
-    recordLocalizationOpen("open", path, result, error);
+    recordLocalizationOpen("open", path, result, error, flags);
     return result;
 }
 static int observedOpenat(int directory, const char *path, int flags, ...) {
@@ -104,14 +109,38 @@ static int observedOpenat(int directory, const char *path, int flags, ...) {
         result = openat(directory, path, flags, mode);
     } else result = openat(directory, path, flags);
     int error = errno;
-    recordLocalizationOpen("openat", path, result, error);
+    recordLocalizationOpen("openat", path, result, error, flags);
     return result;
 }
 static FILE *observedFopen(const char *path, const char *mode) {
     FILE *result = fopen(path, mode);
     int error = errno;
-    recordLocalizationOpen("fopen", path, result ? fileno(result) : -1, error);
+    recordLocalizationOpen("fopen", path, result ? fileno(result) : -1, error, 0);
     return result;
+}
+
+// Observe the game's own metadata/removal calls; never issue an extra operation,
+// retry a failure, alter access flags, or change the result/errno seen by callers.
+static int observedStat(const char *path, struct stat *status) {
+    int result = stat(path, status); int error = errno;
+    recordLocalizationOpen("stat", path, result, error, 0); return result;
+}
+static int observedLstat(const char *path, struct stat *status) {
+    int result = lstat(path, status); int error = errno;
+    recordLocalizationOpen("lstat", path, result, error, 0); return result;
+}
+static int observedAccess(const char *path, int mode) {
+    int result = access(path, mode); int error = errno;
+    recordLocalizationOpen("access", path, result, error, mode); return result;
+}
+static int observedUnlink(const char *path) {
+    int result = unlink(path); int error = errno;
+    recordLocalizationOpen("unlink", path, result, error, 0); return result;
+}
+static int observedRename(const char *oldPath, const char *newPath) {
+    int result = rename(oldPath, newPath); int error = errno;
+    recordLocalizationOpen("rename-from", oldPath, result, error, 0);
+    recordLocalizationOpen("rename-to", newPath, result, error, 0); return result;
 }
 
 static void recordDescriptorState(const char *stage) {
@@ -211,6 +240,11 @@ __attribute__((used)) static const struct {
     { (const void *)&observedOpen, (const void *)&open },
     { (const void *)&observedOpenat, (const void *)&openat },
     { (const void *)&observedFopen, (const void *)&fopen },
+    { (const void *)&observedStat, (const void *)&stat },
+    { (const void *)&observedLstat, (const void *)&lstat },
+    { (const void *)&observedAccess, (const void *)&access },
+    { (const void *)&observedUnlink, (const void *)&unlink },
+    { (const void *)&observedRename, (const void *)&rename },
     { (const void *)&observedReadStreamCreate, (const void *)&CFReadStreamCreateWithFile },
     { (const void *)&observedWriteStreamCreate, (const void *)&CFWriteStreamCreateWithFile },
     { (const void *)&observedReadStreamOpen, (const void *)&CFReadStreamOpen },
