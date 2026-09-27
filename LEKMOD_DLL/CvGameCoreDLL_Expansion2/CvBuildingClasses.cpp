@@ -536,7 +536,8 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 	m_iExtraLeagueVotes = kResults.GetInt("ExtraLeagueVotes");
 #if defined(LEKMOD_GARRISON_YIELD_EFFECTS)
 	m_iGarrisonStrengthBonus = kResults.GetInt("GarrisonStrengthBonus");
-	m_bGarrisonMaintenanceFree = kResults.GetBool("GarrisonMaintenanceFree");
+	// The shipped Buildings schema retains this legacy spelling.
+	m_bGarrisonMaintenanceFree = kResults.GetBool("GarrisonMaintenceFree");
 #endif
 #if defined(LEKMOD_GREAT_WORK_YIELD_EFFECTS)
 	m_iGreatWorkHappiness = kResults.GetInt("GreatWorkHappiness");
@@ -3312,6 +3313,21 @@ void CvCityBuildings::Read(FDataStream& kStream)
 	BuildingArrayHelpers::Read(kStream, m_paiBuildingOriginalTime);
 	BuildingArrayHelpers::Read(kStream, m_paiNumRealBuilding);
 	BuildingArrayHelpers::Read(kStream, m_paiNumFreeBuilding);
+
+#if defined(LEKMOD_GARRISON_YIELD_EFFECTS)
+	// Rebuild the derived garrison-maintenance count from effective building
+	// counts. Older saves may cache zero from the misspelled loader lookup;
+	// keep the serialized field/layout but do not retain that stale value.
+	m_iGarrisonMaintenanceFreeCount = 0;
+	for (int i = 0; i < m_pBuildings->GetNumBuildings(); ++i)
+	{
+		CvBuildingEntry* pEntry = m_pBuildings->GetEntry(i);
+		if (pEntry && pEntry->IsGarrisonMaintenanceFree())
+		{
+			m_iGarrisonMaintenanceFreeCount += GetNumBuilding((BuildingTypes)i);
+		}
+	}
+#endif
 
 	kStream >> m_aBuildingYieldChange;
 	kStream >> m_aBuildingGreatWork;
