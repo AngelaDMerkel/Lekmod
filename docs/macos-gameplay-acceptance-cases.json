@@ -1524,7 +1524,7 @@
       ],
       "batch": "comprehensive",
       "stage": "defender",
-      "implementation_state": "existing-verified-scenario",
+      "implementation_state": "Reverified on current config/edge candidate in20260927T223201Z; historical contracts retained.",
       "evidence": [
         {
           "path": "build/macos/playtests/20260926T222217Z/report.json",
@@ -1533,14 +1533,26 @@
         {
           "path": "build/macos/playtests/20260926T222217Z/batch-report.json",
           "sha256": "d0d5caaf87231040fb5e88e1953dae975a8fb9a264fd81e7bd8f3b19f6b74881"
+        },
+        {
+          "path": "build/macos/playtests/20260927T223201Z/report.json",
+          "sha256": "fbfbceba150ed9166b97744ec2b6a82ecda3f3b7339583b00a12d571aad9802c"
+        },
+        {
+          "path": "build/macos/playtests/20260927T223201Z/batch-report.json",
+          "sha256": "217fe341f70dbb2179aa38dfc25998d0f79d6c7755a5032206daced0fe1d2454"
+        },
+        {
+          "path": "build/macos/comprehensive-config-edge-preservation-20260927.json",
+          "sha256": "44100423a07cd3ba0142f3fe7d0c51f6f4dd4fcc45cacd094b740918beaed583"
         }
       ],
       "applicability": "GameCore and DLC hashes equal the starting Steam package. Process-only correction instrumentation in this older run is not installation/Steam evidence; candidate-freeze regression remains required.",
       "surface_ids": [],
       "evidence_contract": {
         "kind": "native-batch-stage",
-        "report": "build/macos/playtests/20260926T222217Z/report.json",
-        "batch_report": "build/macos/playtests/20260926T222217Z/batch-report.json",
+        "report": "build/macos/playtests/20260927T223201Z/report.json",
+        "batch_report": "build/macos/playtests/20260927T223201Z/batch-report.json",
         "stage": "defender",
         "required_assertions": [
           "Defender-far-and-normal-controls",
@@ -1549,8 +1561,24 @@
           "Defender-own-three-rejected",
           "Defender-own-two"
         ],
-        "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
-      }
+        "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f"
+      },
+      "historical_evidence_contracts": [
+        {
+          "kind": "native-batch-stage",
+          "report": "build/macos/playtests/20260926T222217Z/report.json",
+          "batch_report": "build/macos/playtests/20260926T222217Z/batch-report.json",
+          "stage": "defender",
+          "required_assertions": [
+            "Defender-far-and-normal-controls",
+            "Defender-friend-three-rejected",
+            "Defender-friend-two",
+            "Defender-own-three-rejected",
+            "Defender-own-two"
+          ],
+          "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+        }
+      ]
     },
     {
       "id": "BASE-ADMIRAL",
@@ -1598,7 +1626,7 @@
       ],
       "batch": "comprehensive",
       "stage": "admiral",
-      "implementation_state": "existing-verified-scenario",
+      "implementation_state": "Reverified on current config/edge candidate in20260927T223201Z; historical contracts retained.",
       "evidence": [
         {
           "path": "build/macos/playtests/20260926T222217Z/report.json",
@@ -1607,14 +1635,26 @@
         {
           "path": "build/macos/playtests/20260926T222217Z/batch-report.json",
           "sha256": "d0d5caaf87231040fb5e88e1953dae975a8fb9a264fd81e7bd8f3b19f6b74881"
+        },
+        {
+          "path": "build/macos/playtests/20260927T223201Z/report.json",
+          "sha256": "fbfbceba150ed9166b97744ec2b6a82ecda3f3b7339583b00a12d571aad9802c"
+        },
+        {
+          "path": "build/macos/playtests/20260927T223201Z/batch-report.json",
+          "sha256": "217fe341f70dbb2179aa38dfc25998d0f79d6c7755a5032206daced0fe1d2454"
+        },
+        {
+          "path": "build/macos/comprehensive-config-edge-preservation-20260927.json",
+          "sha256": "44100423a07cd3ba0142f3fe7d0c51f6f4dd4fcc45cacd094b740918beaed583"
         }
       ],
       "applicability": "GameCore and DLC hashes equal the starting Steam package. Process-only correction instrumentation in this older run is not installation/Steam evidence; candidate-freeze regression remains required.",
       "surface_ids": [],
       "evidence_contract": {
         "kind": "native-batch-stage",
-        "report": "build/macos/playtests/20260926T222217Z/report.json",
-        "batch_report": "build/macos/playtests/20260926T222217Z/batch-report.json",
+        "report": "build/macos/playtests/20260927T223201Z/report.json",
+        "batch_report": "build/macos/playtests/20260927T223201Z/batch-report.json",
         "stage": "admiral",
         "required_assertions": [
           "admiral-consumption",
@@ -1622,8 +1662,23 @@
           "admiral-fleet-heal",
           "admiral-owner-domain-radius-controls"
         ],
-        "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
-      }
+        "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f"
+      },
+      "historical_evidence_contracts": [
+        {
+          "kind": "native-batch-stage",
+          "report": "build/macos/playtests/20260926T222217Z/report.json",
+          "batch_report": "build/macos/playtests/20260926T222217Z/batch-report.json",
+          "stage": "admiral",
+          "required_assertions": [
+            "admiral-consumption",
+            "admiral-embarked-heal",
+            "admiral-fleet-heal",
+            "admiral-owner-domain-radius-controls"
+          ],
+          "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+        }
+      ]
     },
     {
       "id": "BASE-WORKER",
@@ -1671,7 +1726,7 @@
       ],
       "batch": "comprehensive",
       "stage": "worker",
-      "implementation_state": "existing-verified-scenario",
+      "implementation_state": "Reverified on current config/edge candidate in20260927T223201Z; historical contracts retained.",
       "evidence": [
         {
           "path": "build/macos/playtests/20260926T222217Z/report.json",
@@ -1680,14 +1735,26 @@
         {
           "path": "build/macos/playtests/20260926T222217Z/batch-report.json",
           "sha256": "d0d5caaf87231040fb5e88e1953dae975a8fb9a264fd81e7bd8f3b19f6b74881"
+        },
+        {
+          "path": "build/macos/playtests/20260927T223201Z/report.json",
+          "sha256": "fbfbceba150ed9166b97744ec2b6a82ecda3f3b7339583b00a12d571aad9802c"
+        },
+        {
+          "path": "build/macos/playtests/20260927T223201Z/batch-report.json",
+          "sha256": "217fe341f70dbb2179aa38dfc25998d0f79d6c7755a5032206daced0fe1d2454"
+        },
+        {
+          "path": "build/macos/comprehensive-config-edge-preservation-20260927.json",
+          "sha256": "44100423a07cd3ba0142f3fe7d0c51f6f4dd4fcc45cacd094b740918beaed583"
         }
       ],
       "applicability": "GameCore and DLC hashes equal the starting Steam package. Process-only correction instrumentation in this older run is not installation/Steam evidence; candidate-freeze regression remains required.",
       "surface_ids": [],
       "evidence_contract": {
         "kind": "native-batch-stage",
-        "report": "build/macos/playtests/20260926T222217Z/report.json",
-        "batch_report": "build/macos/playtests/20260926T222217Z/batch-report.json",
+        "report": "build/macos/playtests/20260927T223201Z/report.json",
+        "batch_report": "build/macos/playtests/20260927T223201Z/batch-report.json",
         "stage": "worker",
         "required_assertions": [
           "worker-farm",
@@ -1695,8 +1762,23 @@
           "worker-restrictions",
           "worker-road"
         ],
-        "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
-      }
+        "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f"
+      },
+      "historical_evidence_contracts": [
+        {
+          "kind": "native-batch-stage",
+          "report": "build/macos/playtests/20260926T222217Z/report.json",
+          "batch_report": "build/macos/playtests/20260926T222217Z/batch-report.json",
+          "stage": "worker",
+          "required_assertions": [
+            "worker-farm",
+            "worker-repair",
+            "worker-restrictions",
+            "worker-road"
+          ],
+          "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+        }
+      ]
     },
     {
       "id": "BASE-UNIT-ACTIONS",
@@ -1746,7 +1828,7 @@
       ],
       "batch": "comprehensive",
       "stage": "unit-actions",
-      "implementation_state": "existing-verified-scenario",
+      "implementation_state": "Reverified on current config/edge candidate in20260927T223201Z; historical contracts retained.",
       "evidence": [
         {
           "path": "build/macos/playtests/20260926T222217Z/report.json",
@@ -1755,14 +1837,26 @@
         {
           "path": "build/macos/playtests/20260926T222217Z/batch-report.json",
           "sha256": "d0d5caaf87231040fb5e88e1953dae975a8fb9a264fd81e7bd8f3b19f6b74881"
+        },
+        {
+          "path": "build/macos/playtests/20260927T223201Z/report.json",
+          "sha256": "fbfbceba150ed9166b97744ec2b6a82ecda3f3b7339583b00a12d571aad9802c"
+        },
+        {
+          "path": "build/macos/playtests/20260927T223201Z/batch-report.json",
+          "sha256": "217fe341f70dbb2179aa38dfc25998d0f79d6c7755a5032206daced0fe1d2454"
+        },
+        {
+          "path": "build/macos/comprehensive-config-edge-preservation-20260927.json",
+          "sha256": "44100423a07cd3ba0142f3fe7d0c51f6f4dd4fcc45cacd094b740918beaed583"
         }
       ],
       "applicability": "GameCore and DLC hashes equal the starting Steam package. Process-only correction instrumentation in this older run is not installation/Steam evidence; candidate-freeze regression remains required.",
       "surface_ids": [],
       "evidence_contract": {
         "kind": "native-batch-stage",
-        "report": "build/macos/playtests/20260926T222217Z/report.json",
-        "batch_report": "build/macos/playtests/20260926T222217Z/batch-report.json",
+        "report": "build/macos/playtests/20260927T223201Z/report.json",
+        "batch_report": "build/macos/playtests/20260927T223201Z/batch-report.json",
         "stage": "unit-actions",
         "required_assertions": [
           "unit-disembark",
@@ -1772,8 +1866,25 @@
           "unit-restrictions",
           "unit-upgrade"
         ],
-        "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
-      }
+        "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f"
+      },
+      "historical_evidence_contracts": [
+        {
+          "kind": "native-batch-stage",
+          "report": "build/macos/playtests/20260926T222217Z/report.json",
+          "batch_report": "build/macos/playtests/20260926T222217Z/batch-report.json",
+          "stage": "unit-actions",
+          "required_assertions": [
+            "unit-disembark",
+            "unit-embark",
+            "unit-healing",
+            "unit-promotion",
+            "unit-restrictions",
+            "unit-upgrade"
+          ],
+          "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+        }
+      ]
     },
     {
       "id": "BASE-GREAT-PERSON-BUILDS",
@@ -1824,7 +1935,7 @@
       ],
       "batch": "comprehensive",
       "stage": "great-person-builds",
-      "implementation_state": "existing-verified-scenario",
+      "implementation_state": "Reverified on current config/edge candidate in20260927T223201Z; historical contracts retained.",
       "evidence": [
         {
           "path": "build/macos/playtests/20260926T222217Z/report.json",
@@ -1833,14 +1944,26 @@
         {
           "path": "build/macos/playtests/20260926T222217Z/batch-report.json",
           "sha256": "d0d5caaf87231040fb5e88e1953dae975a8fb9a264fd81e7bd8f3b19f6b74881"
+        },
+        {
+          "path": "build/macos/playtests/20260927T223201Z/report.json",
+          "sha256": "fbfbceba150ed9166b97744ec2b6a82ecda3f3b7339583b00a12d571aad9802c"
+        },
+        {
+          "path": "build/macos/playtests/20260927T223201Z/batch-report.json",
+          "sha256": "217fe341f70dbb2179aa38dfc25998d0f79d6c7755a5032206daced0fe1d2454"
+        },
+        {
+          "path": "build/macos/comprehensive-config-edge-preservation-20260927.json",
+          "sha256": "44100423a07cd3ba0142f3fe7d0c51f6f4dd4fcc45cacd094b740918beaed583"
         }
       ],
       "applicability": "GameCore and DLC hashes equal the starting Steam package. Process-only correction instrumentation in this older run is not installation/Steam evidence; candidate-freeze regression remains required.",
       "surface_ids": [],
       "evidence_contract": {
         "kind": "native-batch-stage",
-        "report": "build/macos/playtests/20260926T222217Z/report.json",
-        "batch_report": "build/macos/playtests/20260926T222217Z/batch-report.json",
+        "report": "build/macos/playtests/20260927T223201Z/report.json",
+        "batch_report": "build/macos/playtests/20260927T223201Z/batch-report.json",
         "stage": "great-person-builds",
         "required_assertions": [
           "academy",
@@ -1851,8 +1974,26 @@
           "manufactory",
           "spent-prophet-build-rejection"
         ],
-        "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
-      }
+        "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f"
+      },
+      "historical_evidence_contracts": [
+        {
+          "kind": "native-batch-stage",
+          "report": "build/macos/playtests/20260926T222217Z/report.json",
+          "batch_report": "build/macos/playtests/20260926T222217Z/batch-report.json",
+          "stage": "great-person-builds",
+          "required_assertions": [
+            "academy",
+            "citadel",
+            "customs-house",
+            "great-person-build-restrictions",
+            "holy-site",
+            "manufactory",
+            "spent-prophet-build-rejection"
+          ],
+          "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+        }
+      ]
     },
     {
       "id": "BASE-UNIT-UTILITY",
@@ -1903,7 +2044,7 @@
       ],
       "batch": "comprehensive",
       "stage": "unit-utility",
-      "implementation_state": "existing-verified-scenario",
+      "implementation_state": "Reverified on current config/edge candidate in20260927T223201Z; historical contracts retained.",
       "evidence": [
         {
           "path": "build/macos/playtests/20260926T222217Z/report.json",
@@ -1912,14 +2053,26 @@
         {
           "path": "build/macos/playtests/20260926T222217Z/batch-report.json",
           "sha256": "d0d5caaf87231040fb5e88e1953dae975a8fb9a264fd81e7bd8f3b19f6b74881"
+        },
+        {
+          "path": "build/macos/playtests/20260927T223201Z/report.json",
+          "sha256": "fbfbceba150ed9166b97744ec2b6a82ecda3f3b7339583b00a12d571aad9802c"
+        },
+        {
+          "path": "build/macos/playtests/20260927T223201Z/batch-report.json",
+          "sha256": "217fe341f70dbb2179aa38dfc25998d0f79d6c7755a5032206daced0fe1d2454"
+        },
+        {
+          "path": "build/macos/comprehensive-config-edge-preservation-20260927.json",
+          "sha256": "44100423a07cd3ba0142f3fe7d0c51f6f4dd4fcc45cacd094b740918beaed583"
         }
       ],
       "applicability": "GameCore and DLC hashes equal the starting Steam package. Process-only correction instrumentation in this older run is not installation/Steam evidence; candidate-freeze regression remains required.",
       "surface_ids": [],
       "evidence_contract": {
         "kind": "native-batch-stage",
-        "report": "build/macos/playtests/20260926T222217Z/report.json",
-        "batch_report": "build/macos/playtests/20260926T222217Z/batch-report.json",
+        "report": "build/macos/playtests/20260927T223201Z/report.json",
+        "batch_report": "build/macos/playtests/20260927T223201Z/batch-report.json",
         "stage": "unit-utility",
         "required_assertions": [
           "engineer-hurry",
@@ -1930,8 +2083,26 @@
           "unit-disband-cancel",
           "unit-gift"
         ],
-        "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
-      }
+        "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f"
+      },
+      "historical_evidence_contracts": [
+        {
+          "kind": "native-batch-stage",
+          "report": "build/macos/playtests/20260926T222217Z/report.json",
+          "batch_report": "build/macos/playtests/20260926T222217Z/batch-report.json",
+          "stage": "unit-utility",
+          "required_assertions": [
+            "engineer-hurry",
+            "gift-restrictions",
+            "merchant-mission",
+            "scientist-discovery",
+            "unit-disband",
+            "unit-disband-cancel",
+            "unit-gift"
+          ],
+          "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+        }
+      ]
     },
     {
       "id": "BASE-CITY-LIFECYCLE",
@@ -1981,7 +2152,7 @@
       ],
       "batch": "comprehensive",
       "stage": "city-lifecycle",
-      "implementation_state": "existing-verified-scenario",
+      "implementation_state": "Reverified on current config/edge candidate in20260927T223201Z; historical contracts retained.",
       "evidence": [
         {
           "path": "build/macos/playtests/20260926T222217Z/report.json",
@@ -1990,14 +2161,26 @@
         {
           "path": "build/macos/playtests/20260926T222217Z/batch-report.json",
           "sha256": "d0d5caaf87231040fb5e88e1953dae975a8fb9a264fd81e7bd8f3b19f6b74881"
+        },
+        {
+          "path": "build/macos/playtests/20260927T223201Z/report.json",
+          "sha256": "fbfbceba150ed9166b97744ec2b6a82ecda3f3b7339583b00a12d571aad9802c"
+        },
+        {
+          "path": "build/macos/playtests/20260927T223201Z/batch-report.json",
+          "sha256": "217fe341f70dbb2179aa38dfc25998d0f79d6c7755a5032206daced0fe1d2454"
+        },
+        {
+          "path": "build/macos/comprehensive-config-edge-preservation-20260927.json",
+          "sha256": "44100423a07cd3ba0142f3fe7d0c51f6f4dd4fcc45cacd094b740918beaed583"
         }
       ],
       "applicability": "GameCore and DLC hashes equal the starting Steam package. Process-only correction instrumentation in this older run is not installation/Steam evidence; candidate-freeze regression remains required.",
       "surface_ids": [],
       "evidence_contract": {
         "kind": "native-batch-stage",
-        "report": "build/macos/playtests/20260926T222217Z/report.json",
-        "batch_report": "build/macos/playtests/20260926T222217Z/batch-report.json",
+        "report": "build/macos/playtests/20260927T223201Z/report.json",
+        "batch_report": "build/macos/playtests/20260927T223201Z/batch-report.json",
         "stage": "city-lifecycle",
         "required_assertions": [
           "additional-city",
@@ -2007,8 +2190,25 @@
           "city-growth",
           "city-starvation"
         ],
-        "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
-      }
+        "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f"
+      },
+      "historical_evidence_contracts": [
+        {
+          "kind": "native-batch-stage",
+          "report": "build/macos/playtests/20260926T222217Z/report.json",
+          "batch_report": "build/macos/playtests/20260926T222217Z/batch-report.json",
+          "stage": "city-lifecycle",
+          "required_assertions": [
+            "additional-city",
+            "building-purchase",
+            "building-sale",
+            "building-sale-cancel",
+            "city-growth",
+            "city-starvation"
+          ],
+          "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+        }
+      ]
     },
     {
       "id": "BASE-BUDGET",
@@ -2055,7 +2255,7 @@
       ],
       "batch": "comprehensive",
       "stage": "budget",
-      "implementation_state": "existing-verified-scenario",
+      "implementation_state": "Reverified on current config/edge candidate in20260927T223201Z; historical contracts retained.",
       "evidence": [
         {
           "path": "build/macos/playtests/20260926T222217Z/report.json",
@@ -2064,22 +2264,48 @@
         {
           "path": "build/macos/playtests/20260926T222217Z/batch-report.json",
           "sha256": "d0d5caaf87231040fb5e88e1953dae975a8fb9a264fd81e7bd8f3b19f6b74881"
+        },
+        {
+          "path": "build/macos/playtests/20260927T223201Z/report.json",
+          "sha256": "fbfbceba150ed9166b97744ec2b6a82ecda3f3b7339583b00a12d571aad9802c"
+        },
+        {
+          "path": "build/macos/playtests/20260927T223201Z/batch-report.json",
+          "sha256": "217fe341f70dbb2179aa38dfc25998d0f79d6c7755a5032206daced0fe1d2454"
+        },
+        {
+          "path": "build/macos/comprehensive-config-edge-preservation-20260927.json",
+          "sha256": "44100423a07cd3ba0142f3fe7d0c51f6f4dd4fcc45cacd094b740918beaed583"
         }
       ],
       "applicability": "GameCore and DLC hashes equal the starting Steam package. Process-only correction instrumentation in this older run is not installation/Steam evidence; candidate-freeze regression remains required.",
       "surface_ids": [],
       "evidence_contract": {
         "kind": "native-batch-stage",
-        "report": "build/macos/playtests/20260926T222217Z/report.json",
-        "batch_report": "build/macos/playtests/20260926T222217Z/batch-report.json",
+        "report": "build/macos/playtests/20260927T223201Z/report.json",
+        "batch_report": "build/macos/playtests/20260927T223201Z/batch-report.json",
         "stage": "budget",
         "required_assertions": [
           "budget-recovery-settlement",
           "deficit-gold-floor",
           "deficit-research-floor"
         ],
-        "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
-      }
+        "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f"
+      },
+      "historical_evidence_contracts": [
+        {
+          "kind": "native-batch-stage",
+          "report": "build/macos/playtests/20260926T222217Z/report.json",
+          "batch_report": "build/macos/playtests/20260926T222217Z/batch-report.json",
+          "stage": "budget",
+          "required_assertions": [
+            "budget-recovery-settlement",
+            "deficit-gold-floor",
+            "deficit-research-floor"
+          ],
+          "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+        }
+      ]
     },
     {
       "id": "BASE-INTERNAL-TRADE",
@@ -2128,7 +2354,7 @@
       ],
       "batch": "comprehensive",
       "stage": "internal-trade",
-      "implementation_state": "existing-verified-scenario",
+      "implementation_state": "Reverified on current config/edge candidate in20260927T223201Z; historical contracts retained.",
       "evidence": [
         {
           "path": "build/macos/playtests/20260926T222217Z/report.json",
@@ -2137,14 +2363,26 @@
         {
           "path": "build/macos/playtests/20260926T222217Z/batch-report.json",
           "sha256": "d0d5caaf87231040fb5e88e1953dae975a8fb9a264fd81e7bd8f3b19f6b74881"
+        },
+        {
+          "path": "build/macos/playtests/20260927T223201Z/report.json",
+          "sha256": "fbfbceba150ed9166b97744ec2b6a82ecda3f3b7339583b00a12d571aad9802c"
+        },
+        {
+          "path": "build/macos/playtests/20260927T223201Z/batch-report.json",
+          "sha256": "217fe341f70dbb2179aa38dfc25998d0f79d6c7755a5032206daced0fe1d2454"
+        },
+        {
+          "path": "build/macos/comprehensive-config-edge-preservation-20260927.json",
+          "sha256": "44100423a07cd3ba0142f3fe7d0c51f6f4dd4fcc45cacd094b740918beaed583"
         }
       ],
       "applicability": "GameCore and DLC hashes equal the starting Steam package. Process-only correction instrumentation in this older run is not installation/Steam evidence; candidate-freeze regression remains required.",
       "surface_ids": [],
       "evidence_contract": {
         "kind": "native-batch-stage",
-        "report": "build/macos/playtests/20260926T222217Z/report.json",
-        "batch_report": "build/macos/playtests/20260926T222217Z/batch-report.json",
+        "report": "build/macos/playtests/20260927T223201Z/report.json",
+        "batch_report": "build/macos/playtests/20260927T223201Z/batch-report.json",
         "stage": "internal-trade",
         "required_assertions": [
           "internal-land-food",
@@ -2153,8 +2391,24 @@
           "trade-rebase",
           "trade-rebase-cancel"
         ],
-        "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
-      }
+        "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f"
+      },
+      "historical_evidence_contracts": [
+        {
+          "kind": "native-batch-stage",
+          "report": "build/macos/playtests/20260926T222217Z/report.json",
+          "batch_report": "build/macos/playtests/20260926T222217Z/batch-report.json",
+          "stage": "internal-trade",
+          "required_assertions": [
+            "internal-land-food",
+            "internal-route-restrictions",
+            "internal-sea-production",
+            "trade-rebase",
+            "trade-rebase-cancel"
+          ],
+          "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+        }
+      ]
     },
     {
       "id": "BASE-GREATWORKS",
@@ -2204,7 +2458,7 @@
       ],
       "batch": "comprehensive",
       "stage": "greatworks",
-      "implementation_state": "existing-verified-scenario",
+      "implementation_state": "Reverified on current config/edge candidate in20260927T223201Z; historical contracts retained.",
       "evidence": [
         {
           "path": "build/macos/playtests/20260926T222217Z/report.json",
@@ -2213,14 +2467,26 @@
         {
           "path": "build/macos/playtests/20260926T222217Z/batch-report.json",
           "sha256": "d0d5caaf87231040fb5e88e1953dae975a8fb9a264fd81e7bd8f3b19f6b74881"
+        },
+        {
+          "path": "build/macos/playtests/20260927T223201Z/report.json",
+          "sha256": "fbfbceba150ed9166b97744ec2b6a82ecda3f3b7339583b00a12d571aad9802c"
+        },
+        {
+          "path": "build/macos/playtests/20260927T223201Z/batch-report.json",
+          "sha256": "217fe341f70dbb2179aa38dfc25998d0f79d6c7755a5032206daced0fe1d2454"
+        },
+        {
+          "path": "build/macos/comprehensive-config-edge-preservation-20260927.json",
+          "sha256": "44100423a07cd3ba0142f3fe7d0c51f6f4dd4fcc45cacd094b740918beaed583"
         }
       ],
       "applicability": "GameCore and DLC hashes equal the starting Steam package. Process-only correction instrumentation in this older run is not installation/Steam evidence; candidate-freeze regression remains required.",
       "surface_ids": [],
       "evidence_contract": {
         "kind": "native-batch-stage",
-        "report": "build/macos/playtests/20260926T222217Z/report.json",
-        "batch_report": "build/macos/playtests/20260926T222217Z/batch-report.json",
+        "report": "build/macos/playtests/20260927T223201Z/report.json",
+        "batch_report": "build/macos/playtests/20260927T223201Z/batch-report.json",
         "stage": "greatworks",
         "required_assertions": [
           "art-created",
@@ -2230,8 +2496,25 @@
           "theming-removed",
           "theming-restored"
         ],
-        "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
-      }
+        "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f"
+      },
+      "historical_evidence_contracts": [
+        {
+          "kind": "native-batch-stage",
+          "report": "build/macos/playtests/20260926T222217Z/report.json",
+          "batch_report": "build/macos/playtests/20260926T222217Z/batch-report.json",
+          "stage": "greatworks",
+          "required_assertions": [
+            "art-created",
+            "great-work-cross-city",
+            "great-work-swap",
+            "museum-themed",
+            "theming-removed",
+            "theming-restored"
+          ],
+          "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+        }
+      ]
     },
     {
       "id": "BASE-AIR",
@@ -2280,7 +2563,7 @@
       ],
       "batch": "comprehensive",
       "stage": "air",
-      "implementation_state": "existing-verified-scenario",
+      "implementation_state": "Reverified on current config/edge candidate in20260927T223201Z; historical contracts retained.",
       "evidence": [
         {
           "path": "build/macos/playtests/20260926T222217Z/report.json",
@@ -2289,14 +2572,26 @@
         {
           "path": "build/macos/playtests/20260926T222217Z/batch-report.json",
           "sha256": "d0d5caaf87231040fb5e88e1953dae975a8fb9a264fd81e7bd8f3b19f6b74881"
+        },
+        {
+          "path": "build/macos/playtests/20260927T223201Z/report.json",
+          "sha256": "fbfbceba150ed9166b97744ec2b6a82ecda3f3b7339583b00a12d571aad9802c"
+        },
+        {
+          "path": "build/macos/playtests/20260927T223201Z/batch-report.json",
+          "sha256": "217fe341f70dbb2179aa38dfc25998d0f79d6c7755a5032206daced0fe1d2454"
+        },
+        {
+          "path": "build/macos/comprehensive-config-edge-preservation-20260927.json",
+          "sha256": "44100423a07cd3ba0142f3fe7d0c51f6f4dd4fcc45cacd094b740918beaed583"
         }
       ],
       "applicability": "GameCore and DLC hashes equal the starting Steam package. Process-only correction instrumentation in this older run is not installation/Steam evidence; candidate-freeze regression remains required.",
       "surface_ids": [],
       "evidence_contract": {
         "kind": "native-batch-stage",
-        "report": "build/macos/playtests/20260926T222217Z/report.json",
-        "batch_report": "build/macos/playtests/20260926T222217Z/batch-report.json",
+        "report": "build/macos/playtests/20260927T223201Z/report.json",
+        "batch_report": "build/macos/playtests/20260927T223201Z/batch-report.json",
         "stage": "air",
         "required_assertions": [
           "air-interception",
@@ -2305,8 +2600,24 @@
           "carrier-movement",
           "carrier-rebase"
         ],
-        "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
-      }
+        "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f"
+      },
+      "historical_evidence_contracts": [
+        {
+          "kind": "native-batch-stage",
+          "report": "build/macos/playtests/20260926T222217Z/report.json",
+          "batch_report": "build/macos/playtests/20260926T222217Z/batch-report.json",
+          "stage": "air",
+          "required_assertions": [
+            "air-interception",
+            "air-sweep",
+            "carrier-capacity",
+            "carrier-movement",
+            "carrier-rebase"
+          ],
+          "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+        }
+      ]
     },
     {
       "id": "BASE-NUCLEAR",
@@ -2355,7 +2666,7 @@
       ],
       "batch": "comprehensive",
       "stage": "nuclear",
-      "implementation_state": "existing-verified-scenario",
+      "implementation_state": "Reverified on current config/edge candidate in20260927T223201Z; historical contracts retained.",
       "evidence": [
         {
           "path": "build/macos/playtests/20260926T222217Z/report.json",
@@ -2364,14 +2675,26 @@
         {
           "path": "build/macos/playtests/20260926T222217Z/batch-report.json",
           "sha256": "d0d5caaf87231040fb5e88e1953dae975a8fb9a264fd81e7bd8f3b19f6b74881"
+        },
+        {
+          "path": "build/macos/playtests/20260927T223201Z/report.json",
+          "sha256": "fbfbceba150ed9166b97744ec2b6a82ecda3f3b7339583b00a12d571aad9802c"
+        },
+        {
+          "path": "build/macos/playtests/20260927T223201Z/batch-report.json",
+          "sha256": "217fe341f70dbb2179aa38dfc25998d0f79d6c7755a5032206daced0fe1d2454"
+        },
+        {
+          "path": "build/macos/comprehensive-config-edge-preservation-20260927.json",
+          "sha256": "44100423a07cd3ba0142f3fe7d0c51f6f4dd4fcc45cacd094b740918beaed583"
         }
       ],
       "applicability": "GameCore and DLC hashes equal the starting Steam package. Process-only correction instrumentation in this older run is not installation/Steam evidence; candidate-freeze regression remains required.",
       "surface_ids": [],
       "evidence_contract": {
         "kind": "native-batch-stage",
-        "report": "build/macos/playtests/20260926T222217Z/report.json",
-        "batch_report": "build/macos/playtests/20260926T222217Z/batch-report.json",
+        "report": "build/macos/playtests/20260927T223201Z/report.json",
+        "batch_report": "build/macos/playtests/20260927T223201Z/batch-report.json",
         "stage": "nuclear",
         "required_assertions": [
           "nuclear-fallout-pillage",
@@ -2380,8 +2703,24 @@
           "nuclear-range-restrictions",
           "nuclear-unit-blast-radius"
         ],
-        "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
-      }
+        "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f"
+      },
+      "historical_evidence_contracts": [
+        {
+          "kind": "native-batch-stage",
+          "report": "build/macos/playtests/20260926T222217Z/report.json",
+          "batch_report": "build/macos/playtests/20260926T222217Z/batch-report.json",
+          "stage": "nuclear",
+          "required_assertions": [
+            "nuclear-fallout-pillage",
+            "nuclear-immunity",
+            "nuclear-missile-consumption",
+            "nuclear-range-restrictions",
+            "nuclear-unit-blast-radius"
+          ],
+          "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+        }
+      ]
     },
     {
       "id": "BASE-RELIGION",
@@ -2430,7 +2769,7 @@
       ],
       "batch": "comprehensive",
       "stage": "religion",
-      "implementation_state": "existing-verified-scenario",
+      "implementation_state": "Reverified on current config/edge candidate in20260927T223201Z; historical contracts retained.",
       "evidence": [
         {
           "path": "build/macos/playtests/20260926T222217Z/report.json",
@@ -2439,14 +2778,26 @@
         {
           "path": "build/macos/playtests/20260926T222217Z/batch-report.json",
           "sha256": "d0d5caaf87231040fb5e88e1953dae975a8fb9a264fd81e7bd8f3b19f6b74881"
+        },
+        {
+          "path": "build/macos/playtests/20260927T223201Z/report.json",
+          "sha256": "fbfbceba150ed9166b97744ec2b6a82ecda3f3b7339583b00a12d571aad9802c"
+        },
+        {
+          "path": "build/macos/playtests/20260927T223201Z/batch-report.json",
+          "sha256": "217fe341f70dbb2179aa38dfc25998d0f79d6c7755a5032206daced0fe1d2454"
+        },
+        {
+          "path": "build/macos/comprehensive-config-edge-preservation-20260927.json",
+          "sha256": "44100423a07cd3ba0142f3fe7d0c51f6f4dd4fcc45cacd094b740918beaed583"
         }
       ],
       "applicability": "GameCore and DLC hashes equal the starting Steam package. Process-only correction instrumentation in this older run is not installation/Steam evidence; candidate-freeze regression remains required.",
       "surface_ids": [],
       "evidence_contract": {
         "kind": "native-batch-stage",
-        "report": "build/macos/playtests/20260926T222217Z/report.json",
-        "batch_report": "build/macos/playtests/20260926T222217Z/batch-report.json",
+        "report": "build/macos/playtests/20260927T223201Z/report.json",
+        "batch_report": "build/macos/playtests/20260927T223201Z/batch-report.json",
         "stage": "religion",
         "required_assertions": [
           "faith-building-purchase",
@@ -2455,8 +2806,24 @@
           "mandir-luxury-yields",
           "religion-purchase-restrictions"
         ],
-        "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
-      }
+        "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f"
+      },
+      "historical_evidence_contracts": [
+        {
+          "kind": "native-batch-stage",
+          "report": "build/macos/playtests/20260926T222217Z/report.json",
+          "batch_report": "build/macos/playtests/20260926T222217Z/batch-report.json",
+          "stage": "religion",
+          "required_assertions": [
+            "faith-building-purchase",
+            "first-conversion-gold",
+            "holy-warriors-purchase",
+            "mandir-luxury-yields",
+            "religion-purchase-restrictions"
+          ],
+          "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+        }
+      ]
     },
     {
       "id": "BASE-NABATEA-FARMS",
@@ -2504,7 +2871,7 @@
       ],
       "batch": "comprehensive",
       "stage": "nabatea-farms",
-      "implementation_state": "existing-verified-scenario",
+      "implementation_state": "Reverified on current config/edge candidate in20260927T223201Z; historical contracts retained.",
       "evidence": [
         {
           "path": "build/macos/playtests/20260926T222217Z/report.json",
@@ -2513,14 +2880,26 @@
         {
           "path": "build/macos/playtests/20260926T222217Z/batch-report.json",
           "sha256": "d0d5caaf87231040fb5e88e1953dae975a8fb9a264fd81e7bd8f3b19f6b74881"
+        },
+        {
+          "path": "build/macos/playtests/20260927T223201Z/report.json",
+          "sha256": "fbfbceba150ed9166b97744ec2b6a82ecda3f3b7339583b00a12d571aad9802c"
+        },
+        {
+          "path": "build/macos/playtests/20260927T223201Z/batch-report.json",
+          "sha256": "217fe341f70dbb2179aa38dfc25998d0f79d6c7755a5032206daced0fe1d2454"
+        },
+        {
+          "path": "build/macos/comprehensive-config-edge-preservation-20260927.json",
+          "sha256": "44100423a07cd3ba0142f3fe7d0c51f6f4dd4fcc45cacd094b740918beaed583"
         }
       ],
       "applicability": "GameCore and DLC hashes equal the starting Steam package. Process-only correction instrumentation in this older run is not installation/Steam evidence; candidate-freeze regression remains required.",
       "surface_ids": [],
       "evidence_contract": {
         "kind": "native-batch-stage",
-        "report": "build/macos/playtests/20260926T222217Z/report.json",
-        "batch_report": "build/macos/playtests/20260926T222217Z/batch-report.json",
+        "report": "build/macos/playtests/20260927T223201Z/report.json",
+        "batch_report": "build/macos/playtests/20260927T223201Z/batch-report.json",
         "stage": "nabatea-farms",
         "required_assertions": [
           "nabatea-civil-service-transition",
@@ -2528,8 +2907,23 @@
           "nabatea-roman-civil-service",
           "nabatea-roman-mathematics-control"
         ],
-        "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
-      }
+        "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f"
+      },
+      "historical_evidence_contracts": [
+        {
+          "kind": "native-batch-stage",
+          "report": "build/macos/playtests/20260926T222217Z/report.json",
+          "batch_report": "build/macos/playtests/20260926T222217Z/batch-report.json",
+          "stage": "nabatea-farms",
+          "required_assertions": [
+            "nabatea-civil-service-transition",
+            "nabatea-farm-mathematics",
+            "nabatea-roman-civil-service",
+            "nabatea-roman-mathematics-control"
+          ],
+          "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+        }
+      ]
     },
     {
       "id": "BASE-NABATEA-TOMB",
@@ -2578,7 +2972,7 @@
       ],
       "batch": "comprehensive",
       "stage": "nabatea-tomb",
-      "implementation_state": "existing-verified-scenario",
+      "implementation_state": "Reverified on current config/edge candidate in20260927T223201Z; historical contracts retained.",
       "evidence": [
         {
           "path": "build/macos/playtests/20260926T222217Z/report.json",
@@ -2587,14 +2981,26 @@
         {
           "path": "build/macos/playtests/20260926T222217Z/batch-report.json",
           "sha256": "d0d5caaf87231040fb5e88e1953dae975a8fb9a264fd81e7bd8f3b19f6b74881"
+        },
+        {
+          "path": "build/macos/playtests/20260927T223201Z/report.json",
+          "sha256": "fbfbceba150ed9166b97744ec2b6a82ecda3f3b7339583b00a12d571aad9802c"
+        },
+        {
+          "path": "build/macos/playtests/20260927T223201Z/batch-report.json",
+          "sha256": "217fe341f70dbb2179aa38dfc25998d0f79d6c7755a5032206daced0fe1d2454"
+        },
+        {
+          "path": "build/macos/comprehensive-config-edge-preservation-20260927.json",
+          "sha256": "44100423a07cd3ba0142f3fe7d0c51f6f4dd4fcc45cacd094b740918beaed583"
         }
       ],
       "applicability": "GameCore and DLC hashes equal the starting Steam package. Process-only correction instrumentation in this older run is not installation/Steam evidence; candidate-freeze regression remains required.",
       "surface_ids": [],
       "evidence_contract": {
         "kind": "native-batch-stage",
-        "report": "build/macos/playtests/20260926T222217Z/report.json",
-        "batch_report": "build/macos/playtests/20260926T222217Z/batch-report.json",
+        "report": "build/macos/playtests/20260927T223201Z/report.json",
+        "batch_report": "build/macos/playtests/20260927T223201Z/batch-report.json",
         "stage": "nabatea-tomb",
         "required_assertions": [
           "tomb-land-route-bonuses",
@@ -2603,8 +3009,24 @@
           "tomb-six-route-quotes",
           "tomb-yields-horses"
         ],
-        "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
-      }
+        "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f"
+      },
+      "historical_evidence_contracts": [
+        {
+          "kind": "native-batch-stage",
+          "report": "build/macos/playtests/20260926T222217Z/report.json",
+          "batch_report": "build/macos/playtests/20260926T222217Z/batch-report.json",
+          "stage": "nabatea-tomb",
+          "required_assertions": [
+            "tomb-land-route-bonuses",
+            "tomb-normal-construction",
+            "tomb-prerequisites-controls",
+            "tomb-six-route-quotes",
+            "tomb-yields-horses"
+          ],
+          "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+        }
+      ]
     },
     {
       "id": "BASE-BATTALION",
@@ -2652,7 +3074,7 @@
       ],
       "batch": "comprehensive",
       "stage": "battalion",
-      "implementation_state": "existing-verified-scenario",
+      "implementation_state": "Reverified on current config/edge candidate in20260927T223201Z; historical contracts retained.",
       "evidence": [
         {
           "path": "build/macos/playtests/20260926T222217Z/report.json",
@@ -2661,14 +3083,26 @@
         {
           "path": "build/macos/playtests/20260926T222217Z/batch-report.json",
           "sha256": "d0d5caaf87231040fb5e88e1953dae975a8fb9a264fd81e7bd8f3b19f6b74881"
+        },
+        {
+          "path": "build/macos/playtests/20260927T223201Z/report.json",
+          "sha256": "fbfbceba150ed9166b97744ec2b6a82ecda3f3b7339583b00a12d571aad9802c"
+        },
+        {
+          "path": "build/macos/playtests/20260927T223201Z/batch-report.json",
+          "sha256": "217fe341f70dbb2179aa38dfc25998d0f79d6c7755a5032206daced0fe1d2454"
+        },
+        {
+          "path": "build/macos/comprehensive-config-edge-preservation-20260927.json",
+          "sha256": "44100423a07cd3ba0142f3fe7d0c51f6f4dd4fcc45cacd094b740918beaed583"
         }
       ],
       "applicability": "GameCore and DLC hashes equal the starting Steam package. Process-only correction instrumentation in this older run is not installation/Steam evidence; candidate-freeze regression remains required.",
       "surface_ids": [],
       "evidence_contract": {
         "kind": "native-batch-stage",
-        "report": "build/macos/playtests/20260926T222217Z/report.json",
-        "batch_report": "build/macos/playtests/20260926T222217Z/batch-report.json",
+        "report": "build/macos/playtests/20260927T223201Z/report.json",
+        "batch_report": "build/macos/playtests/20260927T223201Z/batch-report.json",
         "stage": "battalion",
         "required_assertions": [
           "Battalion-AI-friendly",
@@ -2676,8 +3110,23 @@
           "Battalion-human-friendly",
           "Battalion-negative-controls"
         ],
-        "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
-      }
+        "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f"
+      },
+      "historical_evidence_contracts": [
+        {
+          "kind": "native-batch-stage",
+          "report": "build/macos/playtests/20260926T222217Z/report.json",
+          "batch_report": "build/macos/playtests/20260926T222217Z/batch-report.json",
+          "stage": "battalion",
+          "required_assertions": [
+            "Battalion-AI-friendly",
+            "Battalion-foreign-owners",
+            "Battalion-human-friendly",
+            "Battalion-negative-controls"
+          ],
+          "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+        }
+      ]
     },
     {
       "group": "G3",

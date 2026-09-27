@@ -79,6 +79,16 @@ case denominator is not frozen. Continue until the user's full acceptance scope
 is met; do not stop merely at a batch boundary. Parallel-subagent approval is
 pending via the async question; do not delegate before an affirmative reply.
 
+Interim comprehensive regression `20260927T223201Z` passed all81 assertions and16
+exact replays on the current `0726506a…` candidate:23 aggregate fixture turns,
+normal exit0, no Lua/synchronization/crash errors and full restoration. Independent
+audit verifies792 pre-existing single-player files, original recovered/newer
+files/settings,35 stock UI files and backups. The16 retained system cases now
+reference this current-candidate evidence while retaining their historical links.
+This is not GateF completion: G0 effect/consumer reconciliation remains open.
+No native process is active after this checkpoint; the unbudgeted validation goal
+remains active. Continue the audit; no additional launch is needed for that work.
+
 The September27 refinement permits fully specified isolated cases to run while
 unrelated G0 review continues. Global G0 remains open and is required before
 candidate freeze. Next: G2 ownership/lifetime case design and remaining mappings.

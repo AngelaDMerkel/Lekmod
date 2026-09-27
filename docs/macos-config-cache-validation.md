@@ -38,3 +38,9 @@ relative tolerance1e-6. Native logs, compiler maps and the verifier report are i
 The combined run exited normally0 with no Lua/synchronization/crash errors and
 full restoration. Its tutorial/exotic stages and independent preservation checks
 are recorded in the linked mission report. Full acceptance is still pending.
+
+The subsequent interim comprehensive run `20260927T223201Z` passed81 gameplay
+assertions/16 exact replays on these same candidate bytes without enabling the
+cache-audit environment flag. It exited0, restored all temporary state and had no
+Lua/synchronization/crash errors. This is a current-candidate regression, not a
+substitute for the still-open G0 consumer review or final F/R acceptance gates.
