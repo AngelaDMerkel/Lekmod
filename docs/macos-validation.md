@@ -39,6 +39,11 @@ claimed. Deleted single-player saves were recovered with hash verification, newe
 saves/current settings preserved, and stock restored after testing. G0 and final
 single-player acceptance remain open.
 
+[Palmyra elimination](macos-palmyra-elimination-validation.md) additionally passes
+12 assertions/two exact replays for foreign-owner loss/gain and distinct subsequent
+owner turns. The missing advisor-confirmation harness path was corrected while
+preserving recovered user preferences. Duplicate-Palmyra elimination remains open.
+
 ## Current startup investigation
 
 Testing has resumed on local `main`. The Swiss, Yugoslav and Romanian fixes above

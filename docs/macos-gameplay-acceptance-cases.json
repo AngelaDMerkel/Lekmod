@@ -750,7 +750,10 @@
         "lua:Lua/Civilizations/Lekmod_palmyra.lua:GameEvents.CityCaptureComplete:lekmod_ua_palmyra_add_fresh_water_city_capture"
       ],
       "missing_design": [
-        "Finalize native action sequencing, allowed owner role and branch-specific oracle before declaring this design ready."
+        "Complete duplicate-Palmyra recipient elimination design; foreign-owner branches are separately executable in LIFE-PALMYRA-ELIMINATED-FOREIGN-OWNERSHIP"
+      ],
+      "partial_case_ids": [
+        "LIFE-PALMYRA-ELIMINATED-FOREIGN-OWNERSHIP"
       ]
     },
     {
@@ -2260,6 +2263,192 @@
         }
       ],
       "stage": "mission-exotic-goods"
+    },
+    {
+      "id": "LIFE-PALMYRA-ELIMINATED-FOREIGN-OWNERSHIP",
+      "group": "G2",
+      "title": "Palmyra versus foreign owners at actual last-city elimination",
+      "status": "passed",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_palmyra.lua",
+          "sha256": "258869fa0e2dd8e0810ffe61fd6c593119ffebf0d0ddc5d290134a20ae31d77c"
+        },
+        {
+          "path": "LEKMOD/Override/CIV5Units.xml",
+          "sha256": "5d8d7e62f408d3c4e8520a3922a607bd3e14f19effd752f3d00144a9c0d58877"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-palmyra.lua",
+          "sha256": "3b586cbc8132d914f427460f34209a243ce14af1e451aad3de020bd1102671db"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPlayer.cpp",
+          "sha256": "31dd845837800229e4c4e2708e471996f03858f722b8cbf14bdfa2a8ed67c788"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPlot.cpp",
+          "sha256": "782c58aa69bcdfb2f978d33209398e026befe81e421ef595a1a7ec0e2dad9d0c"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnitMission.cpp",
+          "sha256": "2a6fadc2dcb9006351fa40dd8c4e278aff51290bdfe8e208bb433f1365d553bc"
+        }
+      ],
+      "owners": [
+        "Nabataean human captures the last Palmyran AI city",
+        "Palmyran AI captures the last foreign AI city on its active turn"
+      ],
+      "expected_result": {
+        "old_owner": "not alive and zero cities at native CityCaptureComplete",
+        "Palmyra_current_owner": "all adjacent nonwater plots fresh, including naturally dry plots",
+        "foreign_current_owner": "trait override removed; natural river/lake/feature freshness preserved",
+        "controls": "all other cities beyond overlap range retain original freshwater",
+        "persistence": "one ordinary post-capture round and exact save/reload",
+        "advisor": "Human city-attack warning receives one original Confirm callback; DontShowAgain remains unchecked. AI negative control receives none."
+      },
+      "units": [
+        "freshwater boolean",
+        "owner/city identity"
+      ],
+      "supplied_inputs": "Contact, legal war, one Giant Death Robot adjacent to the target, +1 uranium and +1000 upkeep gold; no city damage, ownership, freshwater, alive flags or processing flags assigned.",
+      "actual_trigger": "Normal human selection/network attack and scripted original Puppet closure, or normal AI PushMission only on actual owner turn; war/contact/attacker/upkeep are supplied inputs.",
+      "negative_controls": [
+        "naturally dry versus naturally fresh target plots",
+        "foreign current owner",
+        "all unrelated cities beyond overlapping adjacency"
+      ],
+      "transitions": [
+        "actual last-capital conquest",
+        "old owner already eliminated at callback",
+        "current-owner trait addition/removal",
+        "ordinary next round",
+        "exact replay"
+      ],
+      "persistence_requirement": "Exact relevant-state replay plus verified source/copy bytes; no double reward on load.",
+      "required_evidence_level": [
+        "native-gameplay-outcome",
+        "exact-state-replay"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260922T234351Z/Lekmod-Functional-20260922T234351Z.Civ5Save",
+          "sha256": "97d0604bff2fe5082d99ef48af07e2550d21a91dd4bc554918583fa1390164ce",
+          "original_plan": "LEKMOD_DLL/macos/batch-plans/unique-building-catalogue.json",
+          "original_stage": "building-group-07"
+        }
+      ],
+      "batch": "LEKMOD_DLL/macos/batch-plans/palmyra-elimination.json",
+      "stage": "palmyra-loss and palmyra-gain",
+      "implementation_state": "12 assertions/two exact replays passed in 20260927T181349Z; three total normal turns and exit0.",
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20260927T181349Z/report.json",
+          "sha256": "6319306aa51353d25662f3cb6cd75214c1c508a857d4c61f758d8822315f6e35"
+        },
+        {
+          "path": "build/macos/playtests/20260927T181349Z/batch-report.json",
+          "sha256": "644bd97c0d05f0fd685b3c762a63fab3deb9657a7e710e4f7fa782e60820829a"
+        },
+        {
+          "path": "build/macos/palmyra-preservation-20260927.json",
+          "sha256": "c8fe505adc2123723f806b5ec8136c2f1755e06d030c904c86d339c032c68ce6"
+        },
+        {
+          "path": "build/macos/playtests/20260927T181349Z/ui-original/Contents/Assets/Assets/UI/InGame/Popups/AdvisorModal.lua",
+          "sha256": "40ce0e9fc99c4864074c1b27bf844cd21668a8eb08bc2419933170b7be61b12b"
+        }
+      ],
+      "surface_ids": [
+        "lua:Lua/Civilizations/Lekmod_palmyra.lua:GameEvents.CityCaptureComplete:lekmod_ua_palmyra_add_fresh_water_city_capture"
+      ],
+      "implementation_limits": [
+        "Duplicate Palmyra recipient at elimination remains under the parent case; prior duplicate-owner native capture with surviving old owner is separate evidence.",
+        "No physical mouse coverage; the AI command is explicitly scheduled, not an autonomous strategic-choice assertion."
+      ],
+      "reason_for_added_case": "Split independently executable foreign-owner elimination branches from the still-open duplicate-Palmyra elimination branch; no requirement removed.",
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-palmyra-elimination.lua",
+          "sha256": "14667eaa32c32b3c0432d0ec9240ccd2d8d3999c52190ee8e031861a509a67a9"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/batch-plans/palmyra-elimination.json",
+          "sha256": "979cb556ffcf6e42638f6f0cf5a9cc106756142f29e0186fad5c6e92746af745"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-city-capture-popup.lua",
+          "sha256": "f90c676ff41b28450179b0b208be167dd461d9799440c9e2c23343471e2464c6"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-advisor-attack-popup.lua",
+          "sha256": "451a44c6d46ac582af5e91239b09442d00f7379b1e27e9780d82bfdc3eea7f9c"
+        }
+      ],
+      "retained_failed_runs": [
+        {
+          "run": "20260927T180033Z",
+          "classification": "harness-control-and-observation-error",
+          "reason": "Human command loop did not await selection or observable attack completion; it exhausted its command bound. AI capture/replay passed, but the post-capture turn oracle also needed a distinct owner-turn counter. Whole batch remains failed; normal exit and restoration passed.",
+          "final_classification": "harness-missing-advisor-confirmation; earlier controller/turn-oracle weaknesses also corrected",
+          "root_cause_resolution": "Same birth/staging inputs as181030Z pass after adding the original advisor Confirm callback. User preference remains enabled; no product code or native processing flags changed directly."
+        },
+        {
+          "run": "20260927T180409Z",
+          "classification": "unresolved-human-command-result",
+          "reason": "Human selection and target visibility passed, but the one sent command produced no observed attack. AI gain, distinct next-owner turn and exact replay passed; whole batch remains failed. Next controlled change uses prior successful human birth-at-capital/staging sequence, with read-only native mission observations.",
+          "final_classification": "harness-missing-advisor-confirmation; earlier controller/turn-oracle weaknesses also corrected",
+          "root_cause_resolution": "Same birth/staging inputs as181030Z pass after adding the original advisor Confirm callback. User preference remains enabled; no product code or native processing flags changed directly."
+        },
+        {
+          "run": "20260927T181030Z",
+          "classification": "harness-missing-advisor-confirmation",
+          "reason": "Known-working staging sequence did not change result. Read-only observations show active human, legal mission and native queued destination, no spent moves/damage. Recovered current preferences enable AdvisorCityAttackInterrupt; CvUnitMission.cpp:467-490 pauses at its modal. Add original Confirm callback without disabling warnings or setting combat/sync flags directly.",
+          "final_classification": "harness-missing-advisor-confirmation; earlier controller/turn-oracle weaknesses also corrected",
+          "root_cause_resolution": "Same birth/staging inputs as181030Z pass after adding the original advisor Confirm callback. User preference remains enabled; no product code or native processing flags changed directly."
+        }
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20260927T181349Z/report.json",
+            "batch_report": "build/macos/playtests/20260927T181349Z/batch-report.json",
+            "stage": "palmyra-loss",
+            "required_assertions": [
+              "palmyra-elimination-advisor-path",
+              "palmyra-elimination-callback-owner",
+              "palmyra-elimination-capture",
+              "palmyra-elimination-next-turn",
+              "palmyra-elimination-prerequisites",
+              "palmyra-elimination-water"
+            ],
+            "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20260927T181349Z/report.json",
+            "batch_report": "build/macos/playtests/20260927T181349Z/batch-report.json",
+            "stage": "palmyra-gain",
+            "required_assertions": [
+              "palmyra-elimination-advisor-path",
+              "palmyra-elimination-callback-owner",
+              "palmyra-elimination-capture",
+              "palmyra-elimination-next-turn",
+              "palmyra-elimination-prerequisites",
+              "palmyra-elimination-water"
+            ],
+            "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+          }
+        ]
+      },
+      "preconditions": {
+        "ui": "standard",
+        "user_preference": "AdvisorCityAttackInterrupt=1; DontShowAgain unchecked; current preferences preserved",
+        "game_option": "GAMEOPTION_COMPLETE_KILLS=false, GAMEOPTION_NO_TUTORIAL=false"
+      },
+      "validation_document": "docs/macos-palmyra-elimination-validation.md"
     }
   ],
   "surface_review": [
@@ -17904,15 +18093,15 @@
     }
   ],
   "summary": {
-    "designed_cases": 26,
+    "designed_cases": 27,
     "case_statuses": {
-      "passed": 1,
+      "passed": 2,
       "untriaged": 6,
       "covered-by-evidence": 16,
       "ready": 3
     },
     "review_surfaces": 1338,
-    "pending_document_rows": 124,
+    "pending_document_rows": 122,
     "final_case_denominator_frozen": false,
     "surface_statuses": {
       "untriaged": 1321,

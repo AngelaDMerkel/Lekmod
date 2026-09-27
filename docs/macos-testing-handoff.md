@@ -16,6 +16,15 @@ define for an active gate; no product fix was needed. Independent preservation
 checks verify all672 recovered saves,95 newer saves/three current settings,
 32 stock UI files and canonical/Aspyr backups. Stock is active; Civ V is closed.
 
+[Palmyra foreign-owner elimination](macos-palmyra-elimination-validation.md) also
+passes12 assertions/two exact replays in `20260927T181349Z`. Human loss and AI gain
+both observe the old owner already eliminated at capture, correct freshwater and
+a distinct next owner turn. The recovered current preferences enable the city
+attack advisor; the harness now uses its original Confirm callback. Three failed
+commissioning runs remain recorded. No product code changed. Final audit verifies
+all699 prior single-player files, recovered/newer saves/settings,34 stock UI files
+and stock/backups; the game is closed. Duplicate-Palmyra elimination remains open.
+
 The September27 refinement permits fully specified isolated cases to run while
 unrelated G0 review continues. Global G0 remains open and is required before
 candidate freeze. Next: G2 ownership/lifetime case design and remaining mappings.

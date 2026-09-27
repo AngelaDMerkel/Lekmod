@@ -1334,3 +1334,12 @@ in a fresh process, tests repeated-command rejection and native one-shot reentry
 Both plans passed; see [scoped evidence](../../docs/macos-city-god-validation.md).
 Use actual preprocessor output when choosing an oracle: commented optional AUI
 defines caused the retained first harness failure.
+
+## Palmyra elimination and attack advisor
+
+`batch-plans/palmyra-elimination.json` covers foreign-human loss and Palmyran-AI
+gain at real last-city conquest. It requires the enabled city-attack advisor
+(`AdvisorCityAttackInterrupt=1`, tutorials not disabled) and standard UI. The
+scoped adapter uses the original Confirm callback with Don't Show Again unchecked.
+Do not disable warnings or set combat/wait flags to get past the modal. See
+[results, inputs and retained failures](../../docs/macos-palmyra-elimination-validation.md).

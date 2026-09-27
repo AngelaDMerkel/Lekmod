@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "name": "palmyra-eliminated-owner",
+  "stages": [
+    {
+      "id": "palmyra-loss",
+      "scenario": "palmyra-elimination",
+      "parameters": {
+        "mode": "loss"
+      },
+      "fixture": "build/macos/playtests/20260922T234351Z/Lekmod-Functional-20260922T234351Z.Civ5Save",
+      "sha256": "97d0604bff2fe5082d99ef48af07e2550d21a91dd4bc554918583fa1390164ce",
+      "max_turns": 5
+    },
+    {
+      "id": "palmyra-gain",
+      "scenario": "palmyra-elimination",
+      "parameters": {
+        "mode": "gain"
+      },
+      "fixture": "build/macos/playtests/20260922T234351Z/Lekmod-Functional-20260922T234351Z.Civ5Save",
+      "sha256": "97d0604bff2fe5082d99ef48af07e2550d21a91dd4bc554918583fa1390164ce",
+      "max_turns": 5
+    }
+  ]
+}

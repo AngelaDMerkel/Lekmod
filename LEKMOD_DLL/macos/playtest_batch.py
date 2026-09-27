@@ -12,6 +12,7 @@ from playtest_save import CheckpointCopier, game_save_writer_open
 
 # Only scenarios with reviewed, compatible temporary adapters are admitted.
 HOOKS = {
+    'palmyra-elimination': {'@UI/InGame/Popups/GenericPopup.lua': 'playtest-scenario-city-capture-popup.lua', '@UI/InGame/Popups/AdvisorModal.lua': 'playtest-scenario-advisor-attack-popup.lua'},
     'romania-liberation': {'@UI/InGame/Popups/GenericPopup.lua': 'playtest-scenario-city-capture-popup.lua'},
     'romania-acquisition': {'@DLC/Expansion2/UI/InGame/LeaderHead/LeaderHeadRoot.lua': 'playtest-scenario-diplo-assets-root.lua', 'UI/TradeLogic.lua': 'playtest-scenario-romania-city-gift-popup.lua', '@UI/InGame/LeaderHead/DiploTrade.lua': 'playtest-scenario-trade-context.lua', 'UI/DiscussionDialog.lua': 'playtest-scenario-romania-city-gift-reply.lua'},
     'yugoslav-revolution-cycle': {'UI/SocialPolicyPopup.lua': 'playtest-scenario-revolution-popup.lua'},
@@ -33,7 +34,7 @@ HOOKS = {
     'religion-benefits': {'UI/ProductionPopup.lua': 'playtest-scenario-purchase-popup.lua'},
 }
 # Parameters are data-only and enumerated for each reviewed scenario.
-PARAMETERS = {'city-god': {'mode': ('human', 'tibet', 'control')},
+PARAMETERS = {'palmyra-elimination': {'mode': ('loss','gain')}, 'city-god': {'mode': ('human', 'tibet', 'control')},
               'city-god-repeat': {'mode': ('human', 'tibet', 'control'), 'expected_state': 'snapshot-json'},
               'city-god-reentry': {'mode': ('human', 'control'), 'expected_state': 'snapshot-json'}}
 
