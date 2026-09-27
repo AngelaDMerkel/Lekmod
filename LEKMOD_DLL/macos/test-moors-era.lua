@@ -2,8 +2,10 @@
 function include()end
 GameInfoTypes={CIVILIZATION_MOORS=4,BUILDING_MOORS_TRAIT2=9,ERA_MEDIEVAL=2,ERA_RENAISSANCE=3}
 LekmodUtilities={is_civilization_active=function()return true end}
-local eraHandler,turnHandler,foundHandler
-GameEvents={PlayerCityFounded={Add=function(f)foundHandler=f end},TeamSetEra={Add=function(f)eraHandler=f end},PlayerDoTurn={Add=function(f)turnHandler=f end}}
+local eraHandler,turnHandler,foundHandler,captureHandler,loadHandler
+GameDefines={MAX_MAJOR_CIVS=5}
+Events={SequenceGameInitComplete={Add=function(f)loadHandler=f end}}
+GameEvents={CityCaptureComplete={Add=function(f)captureHandler=f end},PlayerCityFounded={Add=function(f)foundHandler=f end},TeamSetEra={Add=function(f)eraHandler=f end},PlayerDoTurn={Add=function(f)turnHandler=f end}}
 local function city()return {count=0,SetNumRealBuilding=function(self,id,n)assert(id==9);self.count=n end}end
 local function player(civ,team,alive,era)
  local p={civ=civ,team=team,alive=alive,era=era,cities={city(),city()}}
@@ -34,4 +36,24 @@ check("Renaissance AI founding gets reduced bonus immediately",function()
 end)
 check("non-Moor founding is excluded",function()assert(foundHandler);foundHandler(2,12,14);counts(2,0)end)
 check("dead-owner founding callback is excluded",function()assert(foundHandler);foundHandler(4,12,14);counts(4,0)end)
-print((passed+failed).." Moors era/founding cases; "..failed.." failures");os.exit(failed==0 and 0 or 1)
+check("capture applies Medieval bonus immediately",function()
+ assert(captureHandler,"missing capture subscription");Players[0].cities[4]=city();captureHandler(2,false,12,14,0,1,true);counts(0,2)
+end)
+check("gift applies Renaissance bonus immediately",function()
+ assert(captureHandler);Players[3].cities[5]=city();captureHandler(0,false,12,14,3,1,false);counts(3,1)
+end)
+check("foreign recipient gets no Moorish bonus",function()
+ assert(captureHandler);Players[2].cities[3]=city();captureHandler(0,false,12,14,2,1,true);counts(2,0)
+end)
+check("dead recipient excluded",function()assert(captureHandler);captureHandler(0,false,12,14,4,1,true);counts(4,0)end)
+check("duplicate Moor recipient gets own era bonus",function()assert(captureHandler);Players[1].cities[3]=city();captureHandler(0,false,12,14,1,1,false);counts(1,2)end)
+check("load repairs current-era and expired markers",function()
+ assert(loadHandler,"missing native load subscription")
+ Players[1].era=4
+ for _,id in ipairs({0,1,3})do for _,c in ipairs(Players[id].cities)do c.count=id==1 and 2 or 0;c.production=19 end end
+ loadHandler();counts(0,2);counts(1,0);counts(2,0);counts(3,1);counts(4,0)
+ for _,id in ipairs({0,1,3})do for _,c in ipairs(Players[id].cities)do assert(c.production==19)end end
+end)
+check("load repair is idempotent",function()assert(loadHandler);loadHandler();counts(0,2);counts(1,0);counts(3,1)end)
+check("missing player safely ignored",function()turnHandler(9)end)
+print((passed+failed).." Moors era/founding/acquisition/load cases; "..failed.." failures");os.exit(failed==0 and 0 or 1)

@@ -35,7 +35,7 @@ end
 function lekmod_moors_on_turn_ua(player_id)
 
    local player = Players[player_id]
-   if player:GetCivilizationType() ~= this_civ or not player:IsAlive() then return end
+   if not player or player:GetCivilizationType() ~= this_civ or not player:IsAlive() then return end
    for city in player:Cities() do
       local amount_buildings = 0
       if player:GetCurrentEra() == GameInfoTypes["ERA_MEDIEVAL"] then
@@ -48,8 +48,24 @@ function lekmod_moors_on_turn_ua(player_id)
 
 end
 ------------------------------------------------------------------------------------------------------------------------
+-- Founding, conquest and peaceful transfer all need the bonus before the next
+-- production turn. The engine removes NeverCapture markers from the old city.
+function lekmod_moors_on_city_capture(old_player_id, was_capital, x, y, new_player_id)
+   lekmod_moors_on_turn_ua(new_player_id)
+end
+
+-- Old saves can contain newly acquired cities with a stale zero marker. Rebuild
+-- the era-dependent count without granting production or replaying acquisition.
+function lekmod_moors_on_load()
+   for player_id = 0, GameDefines.MAX_MAJOR_CIVS - 1 do
+      lekmod_moors_on_turn_ua(player_id)
+   end
+end
+
 if is_active then
    GameEvents.TeamSetEra.Add(lekmod_moors_on_era_ua)
    GameEvents.PlayerDoTurn.Add(lekmod_moors_on_turn_ua)
    GameEvents.PlayerCityFounded.Add(lekmod_moors_on_turn_ua)
+   GameEvents.CityCaptureComplete.Add(lekmod_moors_on_city_capture)
+   Events.SequenceGameInitComplete.Add(lekmod_moors_on_load)
 end
