@@ -51,13 +51,33 @@ no recorded Lua/synchronization/crash failures and successful restoration.
 Their exact bounded scope is carried into16 register cases. This does not close
 whole traits or every parameter in a shared table.
 
-Seven new case designs are recorded. City of God has a reviewed oracle and pinned
-Spain/Tibet fixture. The remaining six ownership/healing/upkeep designs have
+Ten new case designs are recorded. City of God, airlift, paradrop and exotic-goods
+sales have source-derived oracles and pinned starting fixtures. Native action
+sequencing still requires implementation/commissioning. The remaining six
+ownership/healing/upkeep designs have
 pinned starting fixtures but still need action-sequence/branch review. The124
 initial pending document rows are indexed; the startup and final-artifact rows
 are assigned to later F/R gates, leaving122 gameplay/document reviews unfinished.
 One effect surface is mapped to the City of God design. Other surface mappings
 remain explicitly untriaged, with no invented acceptance percentage.
+
+## Unit-mission review
+
+The native database contains59 mission definitions. A source-mention index is
+retained in `mission-review.json`; absence from a test source is not automatically
+a gap (some names are internal animation/queue events or aliases). Direct source
+review produced three additional G3 designs:
+
+- Airlift: all four configured airlift buildings, source/destination/team/domain
+  gates, adjacent-enemy rejection, real relocation and movement exhaustion.
+- Paradrop: the9- and40-tile promotion ranges, exact range/visibility/movement
+  gates,30 native movement-point cost, attack-state and replay checks.
+- Exotic goods: all three one-charge unit variants, peaceful foreign adjacency,
+  independent distance-based gold/XP calculations, stock consumption and repeat
+  rejection. The native action's boolean return alone is not an outcome oracle.
+
+Their fixture placement checks and scenarios are not yet implemented or executed.
+The corresponding data surfaces are mapped to these cases; G0 is still open.
 
 ## Prepared first gameplay batch
 

@@ -56,6 +56,10 @@
     "generator": {
       "path": "LEKMOD_DLL/macos/gameplay_acceptance.py",
       "sha256": "42638ea6eee52ef12e2dc04f08254d817438669a199da58c179401ca0fe0d8b3"
+    },
+    "mission_review": {
+      "path": "build/macos/acceptance-g0-20260926/mission-review.json",
+      "sha256": "26a730ab5bba9692b00bcf0fa371cf549b3afba5362af8cfe75e43ad312c7d16"
     }
   },
   "status_rules": {
@@ -1823,6 +1827,250 @@
         ],
         "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
       }
+    },
+    {
+      "group": "G3",
+      "status": "ready",
+      "source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnit.cpp",
+          "sha256": "16914a686126292c64ed110df3fda674c136858392053cccee3940a3fbac5e73"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnitMission.cpp",
+          "sha256": "2a6fadc2dcb9006351fa40dd8c4e278aff51290bdfe8e208bb433f1365d553bc"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/Lua/CvLuaUnit.cpp",
+          "sha256": "3abef7c6f580b0cea78c7901aa8ce147e50ac690c9ae7c13e6e269ef2685769d"
+        },
+        {
+          "path": "LEKMOD/Override/CIV5Units.xml",
+          "sha256": "5d8d7e62f408d3c4e8520a3922a607bd3e14f19effd752f3d00144a9c0d58877"
+        }
+      ],
+      "owners": [
+        "human/ordinary mission command; AI role separately where dispatch differs"
+      ],
+      "supplied_inputs": "Relevant units, legal cities, prerequisite buildings/technologies and revealed candidate plots are labeled setup inputs; no final movement/reward/charge result is set.",
+      "persistence_requirement": "Exact unit/owner/resource snapshot after native outcome, with source/copy hashes; retain mission availability and consumed resources on replay.",
+      "required_evidence_level": [
+        "native-gameplay-outcome",
+        "exact-state-replay"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260914T030822Z/Lekmod-Functional-20260914T030822Z.Civ5Save",
+          "sha256": "c2ca4e6c8c3a16ae7b6e7ed3294df1d2f733d8f815d43c820090302328ad95ea"
+        }
+      ],
+      "batch": "g3-remaining-unit-missions",
+      "implementation_state": "source-designed; scenario and fixture-eligibility checks not yet implemented",
+      "evidence": [],
+      "id": "MISSION-AIRLIFT",
+      "title": "Airlift eligibility, native relocation and movement consumption",
+      "expected_result": {
+        "positive": "An unmoved non-trade land unit at/on a city-adjacent land plot airlifts to an eligible land plot at/adjacent to another friendly-team airlift city; final coordinates match the requested plot and movement becomes zero.",
+        "configured_buildings": [
+          "BUILDING_AIRPORT",
+          "BUILDING_HORDE_YAM_ROUTE",
+          "BUILDING_MC_OMANI_MINAA",
+          "BUILDING_SERAI"
+        ],
+        "rejection": "Wrong domain, already moved, trade unit, missing source/destination airlift capability, same source city, foreign team, water/blocked destination or adjacent enemy defender rejects without moving/spending."
+      },
+      "units": [
+        "plot coordinates",
+        "movement points in sixtieths",
+        "boolean mission eligibility"
+      ],
+      "actual_trigger": "Normal MISSION_AIRLIFT through the active selection mission command; native CanAirlift/CanAirliftAt predicates checked with correct Lua receiver/argument types.",
+      "negative_controls": [
+        "unmoved versus moved",
+        "capability absent on either city",
+        "same city",
+        "foreign destination",
+        "trade/sea unit",
+        "enemy adjacent to destination"
+      ],
+      "transitions": [
+        "eligible to ineligible",
+        "successful relocation and zero remaining moves",
+        "reload"
+      ],
+      "surface_ids": [
+        "data:Buildings.Airlift"
+      ],
+      "source_trace": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnit.cpp",
+          "line": 6666,
+          "purpose": "Eligibility chain through6791; finishMoves followed by setXY"
+        }
+      ],
+      "stage": "mission-airlift"
+    },
+    {
+      "group": "G3",
+      "status": "ready",
+      "source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnit.cpp",
+          "sha256": "16914a686126292c64ed110df3fda674c136858392053cccee3940a3fbac5e73"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnitMission.cpp",
+          "sha256": "2a6fadc2dcb9006351fa40dd8c4e278aff51290bdfe8e208bb433f1365d553bc"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/Lua/CvLuaUnit.cpp",
+          "sha256": "3abef7c6f580b0cea78c7901aa8ce147e50ac690c9ae7c13e6e269ef2685769d"
+        },
+        {
+          "path": "LEKMOD/Override/CIV5Units.xml",
+          "sha256": "5d8d7e62f408d3c4e8520a3922a607bd3e14f19effd752f3d00144a9c0d58877"
+        }
+      ],
+      "owners": [
+        "human/ordinary mission command; AI role separately where dispatch differs"
+      ],
+      "supplied_inputs": "Relevant units, legal cities, prerequisite buildings/technologies and revealed candidate plots are labeled setup inputs; no final movement/reward/charge result is set.",
+      "persistence_requirement": "Exact unit/owner/resource snapshot after native outcome, with source/copy hashes; retain mission availability and consumed resources on replay.",
+      "required_evidence_level": [
+        "native-gameplay-outcome",
+        "exact-state-replay"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260914T030822Z/Lekmod-Functional-20260914T030822Z.Civ5Save",
+          "sha256": "c2ca4e6c8c3a16ae7b6e7ed3294df1d2f733d8f815d43c820090302328ad95ea"
+        }
+      ],
+      "batch": "g3-remaining-unit-missions",
+      "implementation_state": "source-designed; scenario and fixture-eligibility checks not yet implemented",
+      "evidence": [],
+      "id": "MISSION-PARADROP",
+      "title": "Normal and extended paradrop limits and post-drop action state",
+      "expected_result": {
+        "ranges": {
+          "PROMOTION_PARADROP": 9,
+          "PROMOTION_EXTENDED_PARADROP": 40
+        },
+        "positive": "Eligible unmoved unit drops to a visible legal different plot at the configured distance limit, spends MOVE_DENOMINATOR/2 (30 native movement points), and sets made-attack true. Check the enabled no-instaheal-after-paradrop rule separately.",
+        "rejection": "No drop promotion, moved unit, non-friendly launch without an actual permitted handler, forbidden embarked launch, unseen/blocked/same target, and distance limit+1 reject."
+      },
+      "units": [
+        "hex distance",
+        "native movement points",
+        "attack/promotion availability"
+      ],
+      "actual_trigger": "Normal MISSION_PARADROP with independently checked promotion-defined range and target coordinates.",
+      "negative_controls": [
+        "range limit+1",
+        "same/unseen target",
+        "moved unit",
+        "no-drop-promotion unit",
+        "embarked without an allowed trait mission"
+      ],
+      "transitions": [
+        "full movement to post-drop state",
+        "attack/instaheal restrictions",
+        "reload"
+      ],
+      "surface_ids": [
+        "data:UnitPromotions.DropRange"
+      ],
+      "source_trace": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnit.cpp",
+          "line": 6956,
+          "purpose": "Start/target predicates; relocation consumes30 movement and sets attack state at7105"
+        }
+      ],
+      "stage": "mission-paradrop"
+    },
+    {
+      "group": "G3",
+      "status": "ready",
+      "source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnit.cpp",
+          "sha256": "16914a686126292c64ed110df3fda674c136858392053cccee3940a3fbac5e73"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnitMission.cpp",
+          "sha256": "2a6fadc2dcb9006351fa40dd8c4e278aff51290bdfe8e208bb433f1365d553bc"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/Lua/CvLuaUnit.cpp",
+          "sha256": "3abef7c6f580b0cea78c7901aa8ce147e50ac690c9ae7c13e6e269ef2685769d"
+        },
+        {
+          "path": "LEKMOD/Override/CIV5Units.xml",
+          "sha256": "5d8d7e62f408d3c4e8520a3922a607bd3e14f19effd752f3d00144a9c0d58877"
+        }
+      ],
+      "owners": [
+        "human/ordinary mission command; AI role separately where dispatch differs"
+      ],
+      "supplied_inputs": "Relevant units, legal cities, prerequisite buildings/technologies and revealed candidate plots are labeled setup inputs; no final movement/reward/charge result is set.",
+      "persistence_requirement": "Exact unit/owner/resource snapshot after native outcome, with source/copy hashes; retain mission availability and consumed resources on replay.",
+      "required_evidence_level": [
+        "native-gameplay-outcome",
+        "exact-state-replay"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260914T030822Z/Lekmod-Functional-20260914T030822Z.Civ5Save",
+          "sha256": "c2ca4e6c8c3a16ae7b6e7ed3294df1d2f733d8f815d43c820090302328ad95ea"
+        }
+      ],
+      "batch": "g3-remaining-unit-missions",
+      "implementation_state": "source-designed; scenario and fixture-eligibility checks not yet implemented",
+      "evidence": [],
+      "id": "MISSION-EXOTIC-GOODS",
+      "title": "Exotic goods sale eligibility, reward amounts and one-use stock",
+      "expected_result": {
+        "unit_variants": [
+          "UNIT_IMPRENDITORO",
+          "UNIT_IMPRENDITORE",
+          "UNIT_PORTUGUESE_NAU"
+        ],
+        "stock_per_fresh_unit": 1,
+        "reward_formula": "D=floor((map_width+map_height)/2), f=hex_distance_to_capital/D. Gold=min(GOLD_MIN+int((GOLD_MAX-GOLD_MIN)*f),GOLD_MAX); XP uses the corresponding XP constants. Choose non-ambiguous distance values and test the clamped branch where the fixture geometry permits it.",
+        "positive": "One native sale next to at least one foreign-owned peaceful plot credits the calculated gold/XP and exhausts the configured one-use stock. Same-position repeat cannot credit again.",
+        "rejection": "No stock or no adjacent foreign peaceful owner rejects. An at-war-only neighbor does not qualify; a separate peaceful foreign neighbor does."
+      },
+      "units": [
+        "gold",
+        "experience points",
+        "goods charges",
+        "hex distance"
+      ],
+      "actual_trigger": "Normal MISSION_SELL_EXOTIC_GOODS; verify state changes and repeat rejection, not the C++ action method boolean return alone.",
+      "negative_controls": [
+        "home/unowned neighbors only",
+        "all foreign neighbors at war",
+        "exhausted stock",
+        "second invocation at unchanged valid position"
+      ],
+      "transitions": [
+        "fresh stock to consumed stock",
+        "distance scaling and cap",
+        "save/reload",
+        "repeat rejection"
+      ],
+      "surface_ids": [
+        "data:Units.NumExoticGoods"
+      ],
+      "source_trace": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnit.cpp",
+          "line": 7784,
+          "purpose": "Distance factor, eligibility and gold/XP calculations through7869"
+        }
+      ],
+      "stage": "mission-exotic-goods"
     }
   ],
   "surface_review": [
@@ -2714,8 +2962,11 @@
     {
       "id": "data:Buildings.Airlift",
       "suggested_group": "G4",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "MISSION-AIRLIFT"
+      ],
+      "reason": "Every configured parameter of this surface is enumerated in the source-designed native mission case. A mapping is not a native pass."
     },
     {
       "id": "data:Buildings.AirModifier",
@@ -8338,8 +8589,11 @@
     {
       "id": "data:UnitPromotions.DropRange",
       "suggested_group": "G3",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "MISSION-PARADROP"
+      ],
+      "reason": "Every configured parameter of this surface is enumerated in the source-designed native mission case. A mapping is not a native pass."
     },
     {
       "id": "data:UnitPromotions.GreatGeneral",
@@ -9041,8 +9295,11 @@
     {
       "id": "data:Units.NumExoticGoods",
       "suggested_group": "G3",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "MISSION-EXOTIC-GOODS"
+      ],
+      "reason": "Every configured parameter of this surface is enumerated in the source-designed native mission case. A mapping is not a native pass."
     },
     {
       "id": "data:Units.Submerge",
@@ -17457,9 +17714,9 @@
     }
   ],
   "summary": {
-    "designed_cases": 23,
+    "designed_cases": 26,
     "case_statuses": {
-      "ready": 1,
+      "ready": 4,
       "untriaged": 6,
       "covered-by-evidence": 16
     },
@@ -17467,8 +17724,8 @@
     "pending_document_rows": 124,
     "final_case_denominator_frozen": false,
     "surface_statuses": {
-      "untriaged": 1324,
-      "mapped": 1,
+      "untriaged": 1321,
+      "mapped": 4,
       "presentation-only": 13
     },
     "indexed_civilizations": 114
