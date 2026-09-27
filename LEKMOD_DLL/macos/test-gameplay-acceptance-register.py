@@ -120,6 +120,62 @@ class RegisterTests(unittest.TestCase):
         self.case['evidence_contract']={'kind':'native-batch-stages','stages':[stage]}
         with self.assertRaisesRegex(ValueError,'unpinned'):check.validate(self.reg,self.root)
 
+    def isolated_evidence(self):
+        report,batch=self.evidence()
+        report.update(status='failed-functional-checks',functional_checks={'failed':True,'outcomes':{'stage::bonus':'PASS','stage::save-reload':'PASS','other::driver':'FAIL','batch-complete':'FAIL'}})
+        batch['failed']=True
+        for row in batch['results']:
+            row['save_verification']={'writer_closed':True,'source_copy_match':True,'sha256':row['saved_sha256']}
+        batch['results'].append({'id':'other','mode':'run','failed':True})
+        self.case['evidence_contract'].update(kind='native-isolated-stage',unrelated_failures=[{'stage':'other','classification':'harness-oracle-error','reason':'Reviewed incorrect unrelated expectation; raw failure retained.'}])
+        self.put('report.json',report);self.put('batch.json',batch);self.repin()
+        return report,batch
+
+    def test_verified_isolated_stage_retains_whole_batch_failure(self):
+        report,batch=self.isolated_evidence()
+        self.assertTrue(check.validate(self.reg,self.root)['gate_G0_passed'])
+        self.assertEqual(report['status'],'failed-functional-checks');self.assertTrue(batch['failed'])
+
+    def test_isolated_stage_refuses_incomplete_or_abnormal_sessions(self):
+        for field,value in [('status','failed-early-exit'),('normal_exit_verified',False),('lua_runtime_errors',['error']),('new_diagnostics',['crash']),('manual_saves_preserved',False),('synchronization_checks',{'forced_resync':True})]:
+            with self.subTest(field=field):
+                report,batch=self.isolated_evidence();report[field]=value;self.put('report.json',report);self.repin()
+                with self.assertRaisesRegex(ValueError,'pass/exit'):check.validate(self.reg,self.root)
+        report,batch=self.isolated_evidence();batch['complete']=False;self.put('batch.json',batch);self.repin()
+        with self.assertRaisesRegex(ValueError,'pass/exit'):check.validate(self.reg,self.root)
+
+    def test_isolated_stage_refuses_unknown_or_selected_failure(self):
+        report,batch=self.isolated_evidence();batch['results'].append({'id':'unreviewed','failed':True});self.put('batch.json',batch);self.repin()
+        with self.assertRaisesRegex(ValueError,'unreviewed/selected'):check.validate(self.reg,self.root)
+        report,batch=self.isolated_evidence();batch['results'][0]['failed']=True;self.put('batch.json',batch);self.repin()
+        with self.assertRaisesRegex(ValueError,'unreviewed/selected'):check.validate(self.reg,self.root)
+
+    def test_isolated_stage_refuses_unaccounted_global_failure(self):
+        report,batch=self.isolated_evidence();report['functional_checks']['outcomes']['unscoped-error']='FAIL';self.put('report.json',report);self.repin()
+        with self.assertRaisesRegex(ValueError,'unaccounted global'):check.validate(self.reg,self.root)
+
+    def test_isolated_stage_requires_assertions_in_both_reports(self):
+        report,batch=self.isolated_evidence();del report['functional_checks']['outcomes']['stage::bonus'];self.put('report.json',report);self.repin()
+        with self.assertRaisesRegex(ValueError,'matching native'):check.validate(self.reg,self.root)
+
+    def test_isolated_stage_requires_closed_verified_save(self):
+        report,batch=self.isolated_evidence();batch['results'][0]['save_verification']['writer_closed']=False;self.put('batch.json',batch);self.repin()
+        with self.assertRaisesRegex(ValueError,'checkpoint not fully'):check.validate(self.reg,self.root)
+
+    def test_isolated_stage_requires_explicit_harness_review(self):
+        self.isolated_evidence();self.case['evidence_contract']['unrelated_failures'][0]['classification']='unknown'
+        with self.assertRaisesRegex(ValueError,'unreviewed/selected'):check.validate(self.reg,self.root)
+
+    def test_redundant_dependency_requires_pinned_native_context_proof(self):
+        row={'include':'redundant.lua','status':'resolved-redundant-reference','reason':'Earlier include defines it.'}
+        self.reg['dependency_review']=[row]
+        with self.assertRaisesRegex(ValueError,'source and runtime'):check.validate(self.reg,self.root)
+        self.put('context.log','native context PASS')
+        row.update(source_references=[self.ref('source.lua')],evidence=[self.ref('context.log')],evidence_contract={'log':'context.log','required_literal':'native context PASS'})
+        self.assertTrue(check.validate(self.reg,self.root)['gate_G0_passed'])
+        row['evidence_contract']['required_literal']='different proof'
+        with self.assertRaisesRegex(ValueError,'proof missing'):check.validate(self.reg,self.root)
+
     def test_reference_cannot_escape_checkout(self):
         self.case['source_references']=[{'path':'../outside','sha256':'a'*64}]
         with self.assertRaisesRegex(ValueError,'inside the checkout'):check.validate(self.reg,self.root)

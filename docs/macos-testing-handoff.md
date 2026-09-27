@@ -48,6 +48,14 @@ candidate `build/macos/Lekmod-mughal-garrison-20260927.zip`, SHA-256
 `4756df05c8e9d7bbed7c1e36fd2a8ea1c5dd5209da57a304bc37d22fe69d8659`.
 Stock/restoration verified; next Maori/Moors lifetime and G0, then F/R gates.
 
+[Maori lifetime](macos-maori-lifetime-validation.md) now closes25 assertions/five
+functional replays across precisely identified stages. The failed commissioning
+runs remain failed; a strict isolated-stage contract reuses only normally exited,
+fully preserved passing pairs. No Maori product change. The remaining Lua include
+dependency is also resolved by a read-only native-context proof. G0 still has
+unmapped surfaces/doc rows. Moorish acquisition/production is the active next run;
+inspect continuation state before launching anything else.
+
 The September27 refinement permits fully specified isolated cases to run while
 unrelated G0 review continues. Global G0 remains open and is required before
 candidate freeze. Next: G2 ownership/lifetime case design and remaining mappings.

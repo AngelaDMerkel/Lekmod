@@ -26,7 +26,7 @@ def native_batch_contract(case, root):
     contract=case.get('evidence_contract',{})
     if contract.get('kind')=='native-batch-stages':
         stages=contract.get('stages',[])
-        if not stages or any(c.get('kind')!='native-batch-stage' for c in stages):
+        if not stages or any(c.get('kind')not in {'native-batch-stage','native-isolated-stage'} for c in stages):
             raise ValueError('composite evidence needs nonempty native stage contracts')
         identities=[(c['report'],c['batch_report'],c['stage']) for c in stages]
         if len(set(identities))!=len(identities):
@@ -34,20 +34,37 @@ def native_batch_contract(case, root):
         for stage in stages:
             native_batch_contract(dict(case,evidence_contract=stage),root)
         return
-    if contract.get('kind')!='native-batch-stage':
+    isolated=contract.get('kind')=='native-isolated-stage'
+    if contract.get('kind')not in {'native-batch-stage','native-isolated-stage'}:
         raise ValueError('passing case needs a supported evidence contract: '+case['id'])
     evidence_paths={r['path'] for r in case['evidence']}
     if not {contract['report'],contract['batch_report']}<=evidence_paths:
         raise ValueError('evidence contract references unpinned reports')
     report=json.loads(resolve(root,contract['report']).read_text())
     batch=json.loads(resolve(root,contract['batch_report']).read_text())
-    if not (report.get('status','').startswith('passed') and report.get('normal_exit_verified') is True
+    status_ok=(report.get('status')=='failed-functional-checks' and report.get('functional_checks',{}).get('failed')is True) if isolated else report.get('status','').startswith('passed')
+    if not (status_ok and report.get('normal_exit_verified') is True
             and report.get('process_returncode')==0 and report.get('binary_sha256')==contract['gamecore_sha256']
             and report.get('settings_restored')is True and report.get('temporary_ui_hooks_restored')is True
             and report.get('manual_saves_preserved')is True and not report.get('lua_runtime_errors')
             and report.get('synchronization_checks') and not any(report['synchronization_checks'].values())
-            and not report.get('new_diagnostics') and batch.get('complete')is True and batch.get('failed')is False):
+            and not report.get('new_diagnostics') and batch.get('complete')is True and (batch.get('failed')is True if isolated else batch.get('failed')is False)):
         raise ValueError('native report does not satisfy pass/exit/preservation contract: '+case['id'])
+    if isolated:
+        reviewed=contract.get('unrelated_failures',[])
+        allowed={r['stage'] for r in reviewed}
+        failed={r['id'] for r in batch['results'] if r['failed']}
+        if (not reviewed or len(allowed)!=len(reviewed) or allowed!=failed or contract['stage']in allowed
+                or any(r.get('classification')!='harness-oracle-error' or not r.get('reason') for r in reviewed)
+                or not contract.get('required_assertions')):
+            raise ValueError('isolated stage has unreviewed/selected failures')
+        outcomes=report.get('functional_checks',{}).get('outcomes',{})
+        for item,value in outcomes.items():
+            if value!='PASS' and not (value=='FAIL' and (item=='batch-complete' or item.split('::')[0]in allowed)):
+                raise ValueError('isolated stage has an unaccounted global failure')
+        for item in contract['required_assertions']+['save-reload']:
+            if outcomes.get(contract['stage']+'::'+item)!='PASS':
+                raise ValueError('isolated stage lacks matching native report assertions')
     selected=[r for r in batch['results']if r['id']==contract['stage']]
     if len(selected)!=2 or {r['mode']for r in selected}!={'run','reload'}:
         raise ValueError('missing or duplicate stage/replay')
@@ -57,6 +74,11 @@ def native_batch_contract(case, root):
             any(v!='PASS'for v in run['outcomes'].values()) or replay['outcomes'].get('save-reload')!='PASS'):
         raise ValueError('native stage assertion/replay failed: '+case['id'])
     for row in selected:
+        if isolated:
+            verification=row.get('save_verification',{})
+            if not (verification.get('writer_closed')is True and verification.get('source_copy_match')is True
+                    and verification.get('sha256')==row['saved_sha256']):
+                raise ValueError('isolated stage checkpoint not fully verified')
         path=Path(row['saved_copy'])
         if not path.is_file() or sha(path)!=row['saved_sha256']:
             raise ValueError('native checkpoint bytes differ: '+case['id'])
@@ -121,6 +143,16 @@ def validate(register, root=ROOT):
             path=Path(row['path'])
             if not path.is_file() or sha(path)!=row['sha256']:
                 raise ValueError('changed stock dependency: '+row['include'])
+        if row['status']=='resolved-redundant-reference':
+            refs=row.get('source_references',[])+row.get('evidence',[])
+            contract=row.get('evidence_contract',{})
+            if not row.get('reason') or not row.get('source_references') or not row.get('evidence'):
+                raise ValueError('resolved dependency needs source and runtime evidence')
+            for ref in refs:reference(ref)
+            if contract.get('log')not in {ref['path']for ref in row['evidence']} or not contract.get('required_literal'):
+                raise ValueError('resolved dependency needs a pinned native context proof')
+            if contract['required_literal']not in resolve(root,contract['log']).read_text():
+                raise ValueError('resolved dependency native context proof missing')
     pending_surfaces=sum(r['status']=='untriaged'for r in reviewed)
     pending_cases=sum(r['status']=='untriaged'for r in cases)
     pending_docs=sum(r['status']=='untriaged'for r in register['pending_doc_entries'])

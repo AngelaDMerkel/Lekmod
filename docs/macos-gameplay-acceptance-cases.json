@@ -595,7 +595,7 @@
       "id": "LIFE-MAORI-UPGRADE-CAPTURE-NAVAL",
       "group": "G2",
       "title": "Māori temporary movement across upgrade/capture/naval owners",
-      "status": "untriaged",
+      "status": "passed",
       "source_references": [
         {
           "path": "LEKMOD/Lua/Civilizations/Lekmod_maori.lua",
@@ -604,32 +604,52 @@
         {
           "path": "LEKMOD/Override/CIV5Units.xml",
           "sha256": "5d8d7e62f408d3c4e8520a3922a607bd3e14f19effd752f3d00144a9c0d58877"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnit.cpp",
+          "sha256": "16914a686126292c64ed110df3fda674c136858392053cccee3940a3fbac5e73"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPlayerAI.cpp",
+          "sha256": "395499beaf9f975826ac02a4ce806c16efe28b190fb0b9b9adae5974a2d5bce2"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/Lua/CvLuaUnit.cpp",
+          "sha256": "3abef7c6f580b0cea78c7901aa8ce147e50ac690c9ae7c13e6e269ef2685769d"
         }
       ],
       "owners": [
-        "human",
-        "AI when the handler/command path differs"
+        "human Maori",
+        "Roman AI captures on actual owner turn and supplies foreign naval control",
+        "other Maori AI keeps normal duplicate-civilization fixture context"
       ],
-      "expected_result": "At elapsed turns >=5, an inherited temporary Māori promotion on a unit born before the current game turn is removed on its owner turn. Movement is only clamped downward to stack-aware allowance; spent movement is not refunded. Determine ordinary upgrade/capture birth timestamps from source for each selected path.",
+      "expected_result": {
+        "upgrade": "Fresh paid upgrade retains birth turn/promotion but no movement refund; next owner turn removes +2 moves/+1 sight. A second upgrade after expiry preserves original older birth turn and must not renew the bonus.",
+        "capture": "Native capture recreates recipient Worker at capture turn and zero moves. Human Maori gets its own birth bonus; Roman AI gets no inherited Maori bonus. Actual subsequent recipient turns have ordinary worker allowance.",
+        "naval": "Trireme birth max=6 moves/sight3, one clear coast step costs60 native points; next Maori owner turn max=4 moves/sight2, subsequent turn stable; Roman control max4/no bonus.",
+        "embark": "Land birth max4; actual embark uses base1+Optics1=2 movement and consumes remaining movement. Sight is max(1,base0)+active embark-sight promotions/known tech:2 with Maori,1 after expiry in this fixture. Actual disembark returns to ordinary land move/sight2; no promotion/movement assignment."
+      },
       "units": [
         "movement points, native sixtieths",
         "creation turn",
         "promotion flags"
       ],
-      "supplied_inputs": "Only prerequisites/budgets/positions specified by the scenario; final reward and processing flags must not be assigned.",
-      "actual_trigger": "Normal upgrade/capture/embark or naval movement followed by the actual owner turn.",
+      "supplied_inputs": "Units, exact upgrade budgets/resource/tech prerequisites, upkeep funding, legal empty coastal/capture staging and ordinary war declaration. Existing older Roman Worker is repositioned as input; no promotion/movement/birth-time/capture-result or processing flags assigned.",
+      "actual_trigger": "Normal human upgrade/network mission; Roman capture only through PushMission on its active owner turn; actual later owner callbacks.",
       "negative_controls": [
-        "born-current-turn unit",
-        "unpromoted unit",
-        "foreign owner and donors",
-        "spent/zero movement"
+        "cost-minus-one upgrade rejected",
+        "expired older unit upgrade does not revive birth bonus",
+        "Roman naval and captured-worker controls",
+        "zero remaining movement after paid upgrade/capture/embark",
+        "birth-current-turn promotion persists until later owner turn"
       ],
       "transitions": [
-        "upgrade",
-        "capture",
+        "fresh and older paid upgrades",
+        "Worker capture both directions",
+        "naval coast move",
         "embark/disembark",
-        "next owner turn",
-        "reload"
+        "distinct subsequent owner turns",
+        "exact replay"
       ],
       "persistence_requirement": "Exact relevant-state replay plus verified source/copy bytes; no double reward on load.",
       "required_evidence_level": [
@@ -638,28 +658,190 @@
       ],
       "fixtures": [
         {
-          "path": "build/macos/playtests/20260922T234235Z/Lekmod-Functional-20260922T234235Z.Civ5Save",
-          "sha256": "48757bae72c53d338859dff9f8fcece99b0548cde01d1448a9b4632835591d66",
-          "original_plan": "LEKMOD_DLL/macos/batch-plans/unique-building-catalogue.json",
-          "original_stage": "building-group-06"
+          "path": "build/macos/playtests/20260919T024720Z/Lekmod-Functional-20260919T024720Z.Civ5Save",
+          "sha256": "f5a0999b7528ceb9a5c1ea49d539153d4e699771d4f45ce58e11af9afefbb444"
         }
       ],
-      "batch": "g2-first-gaps",
-      "stage": "LIFE-MAORI-UPGRADE-CAPTURE-NAVAL",
-      "implementation_state": "scenario-not-yet-implemented",
-      "evidence": [],
+      "batch": "LEKMOD_DLL/macos/batch-plans/maori-lifetime.json",
+      "stage": "maori-upgrade / naval / embark / capture-in / capture-out",
+      "implementation_state": "25 assertions/five functional exact replays across four isolated passing stage pairs in193159Z and focused embark recovery195115Z; no intact all-stage batch pass claimed.",
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20260927T193159Z/report.json",
+          "sha256": "ad762f9b408fdd279fbdc5dfadd1dccc735ad62cf3a997e5e0c30c4e7441b5e1"
+        },
+        {
+          "path": "build/macos/playtests/20260927T193159Z/batch-report.json",
+          "sha256": "64e34e791564eaf207db601c7da26b4cd3169f8d3dd5096c2db2bf4225d02c4b"
+        },
+        {
+          "path": "build/macos/playtests/20260927T195115Z/report.json",
+          "sha256": "ed53736b6be7dec2f7fd1b1253d44f99863f6cf3371e4e5cf966d4d2fef4c7f3"
+        },
+        {
+          "path": "build/macos/playtests/20260927T195115Z/batch-report.json",
+          "sha256": "a96fe4bcd8d4a7b3ee3a1a1daae008b8d9c3204efe63b78001ef9029be482e81"
+        },
+        {
+          "path": "build/macos/maori-lifetime-20260927/oracle-review.json",
+          "sha256": "a1c9c4da415417b1f84e757b3135298f02937a676f236cd60dba58386c2e2496"
+        },
+        {
+          "path": "build/macos/maori-lifetime-preservation-20260927.json",
+          "sha256": "fdbfdfdc3e039ade15acec395c6782e0c34cf9f7ef384ed6c576a1d51a44ea69"
+        }
+      ],
       "surface_ids": [
         "lua:Lua/Civilizations/Lekmod_maori.lua:GameEvents.PlayerDoTurn:lekmod_maori_ua"
       ],
-      "missing_design": [
-        "Finalize native action sequencing, allowed owner role and branch-specific oracle before declaring this design ready."
-      ]
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-maori-lifetime.lua",
+          "sha256": "e51489eeec6104f8ab8ce4269f78e187f01c3a4a710fe5ffad5a3cb5e50b9f1f"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/batch-plans/maori-lifetime.json",
+          "sha256": "25dfba34439f506b4258c1420f67b680111796e0c4e704aeb388633ca2beaa64"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-plot-iterator-dependency.lua",
+          "sha256": "fb39ea01981aff0ea26427f7167ab4c17174609e3b14c38c0c8e61c89976371d"
+        }
+      ],
+      "implementation_limits": [
+        "Commands/callbacks are scripted; no new mouse interaction or autonomous AI-choice claim.",
+        "Earlier same-tile escort/donor and gift cases remain separately scoped retained evidence.",
+        "Capture does not use convert(): old promotion inheritance is not the oracle; recipient native initialization is."
+      ],
+      "retained_failed_runs": [
+        {
+          "run": "20260927T191558Z",
+          "classification": "harness-predicate-and-callback-signature",
+          "passed_scope": "baseline replay, paid-upgrade stage/replay, naval stage/replay",
+          "failed_or_unresolved_scope": "embark precondition, capture-in observer, capture-out not completed",
+          "reason": "Use native CanEmbarkOnto instead of general unembarked movement predicate. UnitCreated supplies owner,id,x,y, not unit type. Observer now queries native unit type and checks capture coordinates. A first operator exit request used an unsupported key and caused an additional harness setup failure; corrected failed-finish requested original exit. Process0 and restoration passed, but normal_exit_verified is absent and whole run remains failed-early-exit."
+        },
+        {
+          "run": "20260927T193159Z",
+          "classification": "harness-oracle-error",
+          "reason": "Four stage/replay pairs and baseline passed. Embark really succeeded with120 movement limit,0 remaining moves and sight2; oracle used base movement define1 without Optics +1, and incorrectly assumed land sight after expiry. Correct oracle sums known-tech and actual promotion data with enabled minimum embark sight. Whole batch remains failed-functional-checks, with normal exit0 and restoration."
+        },
+        {
+          "run": "20260927T194438Z",
+          "classification": "harness-binding-signature",
+          "reason": "Embark, computed domain accounting and normal expiry passed. CanDisembarkOnto takes target plot plus optional destination boolean, unlike the two-plot CanEmbarkOnto binding. The precondition passed the origin/destination pair incorrectly. Corrected to the actual Lua binding; no game code or outcomes changed."
+        }
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-isolated-stage",
+            "report": "build/macos/playtests/20260927T193159Z/report.json",
+            "batch_report": "build/macos/playtests/20260927T193159Z/batch-report.json",
+            "stage": "maori-upgrade",
+            "required_assertions": [
+              "maori-lifetime-birth-accounting",
+              "maori-lifetime-inputs",
+              "maori-lifetime-native-action",
+              "maori-lifetime-owner-expiry",
+              "maori-lifetime-repeat-control"
+            ],
+            "gamecore_sha256": "c8afcadc49da838b3243edd401b6f37ada3bf63b600df6af2e666788c6bf7452",
+            "unrelated_failures": [
+              {
+                "stage": "maori-embark",
+                "classification": "harness-oracle-error",
+                "reason": "Verified independent source/data review: the failed embark assertion omitted Optics movement and the embarked sight calculation. The run stays failed; this contract covers only the named completed stage/replay. See pinned oracle-review.json and failure history."
+              }
+            ]
+          },
+          {
+            "kind": "native-isolated-stage",
+            "report": "build/macos/playtests/20260927T193159Z/report.json",
+            "batch_report": "build/macos/playtests/20260927T193159Z/batch-report.json",
+            "stage": "maori-naval",
+            "required_assertions": [
+              "maori-lifetime-birth-accounting",
+              "maori-lifetime-inputs",
+              "maori-lifetime-native-action",
+              "maori-lifetime-owner-expiry",
+              "maori-lifetime-repeat-control"
+            ],
+            "gamecore_sha256": "c8afcadc49da838b3243edd401b6f37ada3bf63b600df6af2e666788c6bf7452",
+            "unrelated_failures": [
+              {
+                "stage": "maori-embark",
+                "classification": "harness-oracle-error",
+                "reason": "Verified independent source/data review: the failed embark assertion omitted Optics movement and the embarked sight calculation. The run stays failed; this contract covers only the named completed stage/replay. See pinned oracle-review.json and failure history."
+              }
+            ]
+          },
+          {
+            "kind": "native-isolated-stage",
+            "report": "build/macos/playtests/20260927T193159Z/report.json",
+            "batch_report": "build/macos/playtests/20260927T193159Z/batch-report.json",
+            "stage": "maori-capture-in",
+            "required_assertions": [
+              "maori-lifetime-birth-accounting",
+              "maori-lifetime-inputs",
+              "maori-lifetime-native-action",
+              "maori-lifetime-owner-expiry",
+              "maori-lifetime-repeat-control"
+            ],
+            "gamecore_sha256": "c8afcadc49da838b3243edd401b6f37ada3bf63b600df6af2e666788c6bf7452",
+            "unrelated_failures": [
+              {
+                "stage": "maori-embark",
+                "classification": "harness-oracle-error",
+                "reason": "Verified independent source/data review: the failed embark assertion omitted Optics movement and the embarked sight calculation. The run stays failed; this contract covers only the named completed stage/replay. See pinned oracle-review.json and failure history."
+              }
+            ]
+          },
+          {
+            "kind": "native-isolated-stage",
+            "report": "build/macos/playtests/20260927T193159Z/report.json",
+            "batch_report": "build/macos/playtests/20260927T193159Z/batch-report.json",
+            "stage": "maori-capture-out",
+            "required_assertions": [
+              "maori-lifetime-birth-accounting",
+              "maori-lifetime-inputs",
+              "maori-lifetime-native-action",
+              "maori-lifetime-owner-expiry",
+              "maori-lifetime-repeat-control"
+            ],
+            "gamecore_sha256": "c8afcadc49da838b3243edd401b6f37ada3bf63b600df6af2e666788c6bf7452",
+            "unrelated_failures": [
+              {
+                "stage": "maori-embark",
+                "classification": "harness-oracle-error",
+                "reason": "Verified independent source/data review: the failed embark assertion omitted Optics movement and the embarked sight calculation. The run stays failed; this contract covers only the named completed stage/replay. See pinned oracle-review.json and failure history."
+              }
+            ]
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20260927T195115Z/report.json",
+            "batch_report": "build/macos/playtests/20260927T195115Z/batch-report.json",
+            "stage": "maori-embark",
+            "required_assertions": [
+              "maori-lifetime-birth-accounting",
+              "maori-lifetime-inputs",
+              "maori-lifetime-native-action",
+              "maori-lifetime-owner-expiry",
+              "maori-lifetime-repeat-control"
+            ],
+            "gamecore_sha256": "c8afcadc49da838b3243edd401b6f37ada3bf63b600df6af2e666788c6bf7452"
+          }
+        ]
+      },
+      "validation_document": "docs/macos-maori-lifetime-validation.md"
     },
     {
       "id": "LIFE-MOORS-CAPTURE-PRODUCTION",
       "group": "G2",
       "title": "Moorish production after ownership change and actual completion",
-      "status": "untriaged",
+      "status": "product-failed",
       "source_references": [
         {
           "path": "LEKMOD/Lua/Civilizations/Lekmod_moors.lua",
@@ -672,31 +854,43 @@
         {
           "path": "LEKMOD_DLL/macos/playtest-scenario-moors-eras.lua",
           "sha256": "0f7af56b55af850ad42fbdc89a584c2c40f7e8633bc30140d35b985e1022c2c3"
+        },
+        {
+          "path": "LEKMOD/Override/CIV5Units_Mongol.xml",
+          "sha256": "5d1fd2eb11435696985a2c73dfdb7007ca11848c50720e05ab990e2837a51ed1"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPlayer.cpp",
+          "sha256": "31dd845837800229e4c4e2708e471996f03858f722b8cbf14bdfa2a8ed67c788"
         }
       ],
       "owners": [
-        "human",
-        "AI when the handler/command path differs"
+        "human Moors gives a city through original trade controls",
+        "AI Moors receives by gift or actual owner-turn capture",
+        "Roman AI is the foreign recipient and donor control"
       ],
-      "expected_result": "Moorish owned cities receive two trait markers in Medieval, one in Renaissance, zero outside those eras on the normal owner update. Verify 30%/15% ordinary-building modifiers, no wonder bonus, actual production settlement and no leaked benefit to a foreign recipient.",
+      "expected_result": "All owned Moorish cities immediately have30% ordinary-building production in Medieval and15% in Renaissance, no wonder bonus. Actual acquisition must not leave a one-turn missing bonus; foreign recipients get0. Verify next recipient turn, native Market completion and exact replay.",
       "units": [
         "marker count",
         "production percent",
         "hammers"
       ],
-      "supplied_inputs": "Only prerequisites/budgets/positions specified by the scenario; final reward and processing flags must not be assigned.",
-      "actual_trigger": "Real city capture/gift, normal owner update and an eligible building-production queue.",
+      "supplied_inputs": "Legal secondary city through native Found, Acoustics for Renaissance variants, war/contact, GDR/uranium/upkeep and near-complete Market hammers; no trait marker, final production reward or ownership outcome assigned.",
+      "actual_trigger": "Actual diplomacy city gift or active-AI-turn combat capture, followed by native production after ordinary resistance expiry and annex task if needed.",
       "negative_controls": [
-        "non-Moor owner",
-        "wonder queue",
-        "era without bonus"
+        "non-Moor recipient receives no marker/modifier",
+        "Roman home capital remains unmarked",
+        "Moor home capital retains its own era benefit",
+        "wonder production modifier stays0",
+        "completed Market rejects duplicate construction"
       ],
       "transitions": [
-        "capture",
-        "gift",
-        "era change",
-        "owner turn",
-        "reload"
+        "capture into/out of Moorish ownership",
+        "peaceful gift into/out of Moorish ownership",
+        "immediate acquisition callback",
+        "distinct recipient turn",
+        "actual production completion",
+        "exact replay"
       ],
       "persistence_requirement": "Exact relevant-state replay plus verified source/copy bytes; no double reward on load.",
       "required_evidence_level": [
@@ -705,21 +899,50 @@
       ],
       "fixtures": [
         {
-          "path": "build/macos/playtests/20260922T234235Z/Lekmod-Functional-20260922T234235Z.Civ5Save",
-          "sha256": "48757bae72c53d338859dff9f8fcece99b0548cde01d1448a9b4632835591d66",
-          "original_plan": "LEKMOD_DLL/macos/batch-plans/unique-building-catalogue.json",
-          "original_stage": "building-group-06"
+          "path": "build/macos/playtests/20260919T034123Z/Lekmod-Functional-20260919T034123Z.Civ5Save",
+          "sha256": "d23a7c57adb47fa32e284a61d31370f508f5eb15b6f6dfd60d63890b26b519f0"
         }
       ],
-      "batch": "g2-first-gaps",
-      "stage": "LIFE-MOORS-CAPTURE-PRODUCTION",
-      "implementation_state": "scenario-not-yet-implemented",
+      "batch": "LEKMOD_DLL/macos/batch-plans/moors-acquisition.json",
+      "stage": "moors-capture-in / gift-in / capture-out / gift-out",
+      "implementation_state": "Native capture and gift both omit the immediate current-owner bonus; foreign controls and production passed. Product repair pending.",
       "evidence": [],
       "surface_ids": [
         "lua:Lua/Civilizations/Lekmod_moors.lua:GameEvents.PlayerDoTurn:lekmod_moors_on_turn_ua"
       ],
-      "missing_design": [
-        "Finalize native action sequencing, allowed owner role and branch-specific oracle before declaring this design ready."
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-moors-acquisition.lua",
+          "sha256": "218fa9d769c92f8cb2d57d80d1c36ff313c889e1dc5f738b88edd3d9ca2b09be"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/batch-plans/moors-acquisition.json",
+          "sha256": "8830e8c51d4e4c549b7186b53ab11bbdd4bd50b79435b0556ec92a2b800d31fb"
+        }
+      ],
+      "implementation_limits": [
+        "Near-complete hammers are supplied; native modifier30/15/0 and unforced completion are checked, not earned city-development pacing.",
+        "Trade/attack commands and popup callbacks are scripted, not physical mouse or autonomous war-choice evidence."
+      ],
+      "oracle_review": "Shipped TXT_KEY_TRAIT_MOOR explicitly says All Cities have30%/15%, excluding Wonders. Immediate acquisition requirement is clarified before execution, consistent with the already-fixed immediate-founding case.",
+      "retained_failed_runs": [
+        {
+          "run": "20260927T195635Z",
+          "classification": "confirmed-product-defect",
+          "capture_in": "expected marker2/modifier30; actual0/0",
+          "gift_in": "expected marker1/modifier15; actual0/0",
+          "foreign_control_scope": "capture-out and gift-out passed all six assertions and exact replays; overall batch remains failed."
+        }
+      ],
+      "native_failure_evidence": [
+        {
+          "path": "build/macos/playtests/20260927T195635Z/report.json",
+          "sha256": "1fdf8d855f0c2dc3fe42b261349892db1b396f5372f813bd61435ae784aae072"
+        },
+        {
+          "path": "build/macos/playtests/20260927T195635Z/batch-report.json",
+          "sha256": "36cb2bcf7ca8db101f75d148c1c860d3fc09048308db617ade1290e94be0fbb6"
+        }
       ]
     },
     {
@@ -18300,7 +18523,7 @@
     },
     {
       "include": "PlotAreaSweepIterator.lua",
-      "status": "untriaged",
+      "status": "resolved-redundant-reference",
       "finding": "Standalone include not found in installed assets. The preceding PlotIterators include defines the called function at line150; assess redundant include behavior. No gameplay defect inferred.",
       "source_references": [
         {
@@ -18311,7 +18534,23 @@
           "path": "LEKMOD/Lua/tmp/ui/prophetreplace.lua.ignore",
           "sha256": "727d9e5e71bc88813548021a47238f8abcada6d80cf77aefa77e9c6f4d6224e7"
         }
-      ]
+      ],
+      "reason": "Earlier PlotIterators include defines the function. Native prophetreplace context continued beyond the absent standalone include and its iterator matched the six direct native neighbors without mutating gameplay.",
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20260927T195115Z/logs-after/Lua.log",
+          "sha256": "d8d63675be961da57cb3e30ac39973c4e636a1e27b71b428329c5bdf88d3f284"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-plot-iterator-dependency.lua",
+          "sha256": "fb39ea01981aff0ea26427f7167ab4c17174609e3b14c38c0c8e61c89976371d"
+        }
+      ],
+      "evidence_contract": {
+        "log": "build/macos/playtests/20260927T195115Z/logs-after/Lua.log",
+        "required_literal": "[LEKMOD_DEPENDENCY] run=20260927T195115Z context=prophetreplace status=PASS function=PlotAreaSweepIterator later_context=PlaceExtraJuice neighbors=6"
+      },
+      "claim": "Runtime dependency resolution/function presence and one native neighbor comparison only; no broader dormant-function gameplay claim."
     }
   ],
   "ordered_batches": [
@@ -18364,8 +18603,9 @@
   "summary": {
     "designed_cases": 27,
     "case_statuses": {
-      "passed": 5,
-      "untriaged": 3,
+      "passed": 6,
+      "product-failed": 1,
+      "untriaged": 1,
       "covered-by-evidence": 16,
       "ready": 3
     },

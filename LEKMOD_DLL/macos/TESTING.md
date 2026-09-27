@@ -1348,3 +1348,12 @@ Do not disable warnings or set combat/wait flags to get past the modal. See
 `batch-plans/capital-lifetime.json` combines duplicate-Palmyra elimination and
 three Cuban capital transitions with a pinned normal-start baseline replay. See
 [results and supplied inputs](../../docs/macos-capital-lifetime-validation.md).
+
+## Maori lifetime and isolated evidence
+
+`maori-lifetime.json` covers two paid upgrades, civilian captures both ways, naval
+movement and embark/disembark. `maori-embark-recovery.json` isolates the corrected
+last branch. [The report](../../docs/macos-maori-lifetime-validation.md) identifies
+all passing stage pairs and retained failures; no intact full-plan pass is claimed.
+Preflight now also rejects oversized anonymous UnitCreated callback signatures
+against the actual four-argument native hook. It is not a general type checker.

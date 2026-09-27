@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "name": "maori-unit-lifetime",
+  "stages": [
+    {
+      "id": "maori-baseline",
+      "scenario": "maori-movement",
+      "fixture": "build/macos/playtests/20260919T024720Z/Lekmod-Functional-20260919T024720Z.Civ5Save",
+      "sha256": "f5a0999b7528ceb9a5c1ea49d539153d4e699771d4f45ce58e11af9afefbb444",
+      "max_turns": 0,
+      "expected_report": "build/macos/playtests/20260919T024720Z/report.json",
+      "expected_report_sha256": "50fab4778e83537652cec9f41c7fb728eaa58c33851c5930942567ae2242562a"
+    },
+    {
+      "id": "maori-upgrade",
+      "scenario": "maori-lifetime",
+      "fixture": "build/macos/playtests/20260919T024720Z/Lekmod-Functional-20260919T024720Z.Civ5Save",
+      "sha256": "f5a0999b7528ceb9a5c1ea49d539153d4e699771d4f45ce58e11af9afefbb444",
+      "max_turns": 3,
+      "parameters": {
+        "mode": "upgrade"
+      }
+    },
+    {
+      "id": "maori-naval",
+      "scenario": "maori-lifetime",
+      "fixture": "build/macos/playtests/20260919T024720Z/Lekmod-Functional-20260919T024720Z.Civ5Save",
+      "sha256": "f5a0999b7528ceb9a5c1ea49d539153d4e699771d4f45ce58e11af9afefbb444",
+      "max_turns": 3,
+      "parameters": {
+        "mode": "naval"
+      }
+    },
+    {
+      "id": "maori-embark",
+      "scenario": "maori-lifetime",
+      "fixture": "build/macos/playtests/20260919T024720Z/Lekmod-Functional-20260919T024720Z.Civ5Save",
+      "sha256": "f5a0999b7528ceb9a5c1ea49d539153d4e699771d4f45ce58e11af9afefbb444",
+      "max_turns": 3,
+      "parameters": {
+        "mode": "embark"
+      }
+    },
+    {
+      "id": "maori-capture-in",
+      "scenario": "maori-lifetime",
+      "fixture": "build/macos/playtests/20260919T024720Z/Lekmod-Functional-20260919T024720Z.Civ5Save",
+      "sha256": "f5a0999b7528ceb9a5c1ea49d539153d4e699771d4f45ce58e11af9afefbb444",
+      "max_turns": 4,
+      "parameters": {
+        "mode": "capture-in"
+      }
+    },
+    {
+      "id": "maori-capture-out",
+      "scenario": "maori-lifetime",
+      "fixture": "build/macos/playtests/20260919T024720Z/Lekmod-Functional-20260919T024720Z.Civ5Save",
+      "sha256": "f5a0999b7528ceb9a5c1ea49d539153d4e699771d4f45ce58e11af9afefbb444",
+      "max_turns": 4,
+      "parameters": {
+        "mode": "capture-out"
+      }
+    }
+  ]
+}

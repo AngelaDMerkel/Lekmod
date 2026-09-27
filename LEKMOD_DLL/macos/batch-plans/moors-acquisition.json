@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "name": "moors-acquisition-production",
+  "stages": [
+    {
+      "id": "moors-capture-in",
+      "scenario": "moors-acquisition",
+      "fixture": "build/macos/playtests/20260919T034123Z/Lekmod-Functional-20260919T034123Z.Civ5Save",
+      "sha256": "d23a7c57adb47fa32e284a61d31370f508f5eb15b6f6dfd60d63890b26b519f0",
+      "max_turns": 6,
+      "parameters": {
+        "mode": "capture-in",
+        "era": "medieval"
+      }
+    },
+    {
+      "id": "moors-gift-in",
+      "scenario": "moors-acquisition",
+      "fixture": "build/macos/playtests/20260919T034123Z/Lekmod-Functional-20260919T034123Z.Civ5Save",
+      "sha256": "d23a7c57adb47fa32e284a61d31370f508f5eb15b6f6dfd60d63890b26b519f0",
+      "max_turns": 6,
+      "parameters": {
+        "mode": "gift-in",
+        "era": "renaissance"
+      }
+    },
+    {
+      "id": "moors-capture-out",
+      "scenario": "moors-acquisition",
+      "fixture": "build/macos/playtests/20260919T034123Z/Lekmod-Functional-20260919T034123Z.Civ5Save",
+      "sha256": "d23a7c57adb47fa32e284a61d31370f508f5eb15b6f6dfd60d63890b26b519f0",
+      "max_turns": 6,
+      "parameters": {
+        "mode": "capture-out",
+        "era": "medieval"
+      }
+    },
+    {
+      "id": "moors-gift-out",
+      "scenario": "moors-acquisition",
+      "fixture": "build/macos/playtests/20260919T034123Z/Lekmod-Functional-20260919T034123Z.Civ5Save",
+      "sha256": "d23a7c57adb47fa32e284a61d31370f508f5eb15b6f6dfd60d63890b26b519f0",
+      "max_turns": 6,
+      "parameters": {
+        "mode": "gift-out",
+        "era": "renaissance"
+      }
+    }
+  ]
+}

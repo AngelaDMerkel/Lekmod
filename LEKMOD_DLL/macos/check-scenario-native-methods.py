@@ -9,7 +9,7 @@ import argparse
 from pathlib import Path
 import re
 
-from playtest_native_methods import registered_methods, missing_methods
+from playtest_native_methods import registered_methods, missing_methods, event_arity_errors
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
@@ -20,7 +20,7 @@ def main():
     assert missing_methods('u:IsGreatGeneral()',registered)==['IsGreatGeneral']
     assert not missing_methods('u:IsHasPromotion(id)',registered)
     for path in args.scenarios:
-        missing=missing_methods(path.read_text(),registered)
+        missing=missing_methods(path.read_text(),registered)+event_arity_errors(path.read_text())
         print(path.name+(': UNKNOWN '+', '.join(missing) if missing else ': native method names registered'))
         failed |= bool(missing)
     return int(failed)

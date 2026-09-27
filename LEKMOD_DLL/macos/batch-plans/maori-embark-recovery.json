@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "name": "maori-embark-recovery",
+  "stages": [
+    {
+      "id": "maori-embark",
+      "scenario": "maori-lifetime",
+      "fixture": "build/macos/playtests/20260919T024720Z/Lekmod-Functional-20260919T024720Z.Civ5Save",
+      "sha256": "f5a0999b7528ceb9a5c1ea49d539153d4e699771d4f45ce58e11af9afefbb444",
+      "max_turns": 3,
+      "parameters": {
+        "mode": "embark"
+      }
+    }
+  ]
+}
