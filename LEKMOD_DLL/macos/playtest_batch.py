@@ -2,7 +2,7 @@
 import hashlib
 import json
 import re
-from playtest_native_methods import registered_methods, missing_methods, event_arity_errors
+from playtest_native_methods import registered_methods, missing_methods, event_arity_errors, receiver_method_errors
 import shutil
 import signal
 import subprocess
@@ -45,7 +45,7 @@ PARAMETERS = {'airlift': {'building': ('BUILDING_AIRPORT','BUILDING_HORDE_YAM_RO
 
 PREFIXES = {'playtest-aksum-heal-observer.lua': 'playtest-aksum-heal-before.lua', 'playtest-nz-owner-observer.lua': 'playtest-nz-owner-before-observer.lua'}
 
-SUPPORTED = set(HOOKS) | {'merchant-rewards', 'info-cache', 'airlift','paradrop','exotic-goods', 'moors-acquisition-load', 'maori-movement', 'mughal-garrison-load', 'cuba-capital-transfer', 'city-god-reentry', 'city-god-repeat', 'city-god', 'swiss-migration-load', 'swiss-human-training', 'swiss-legacy-load', 'swiss-boundaries', 'swiss-armory', 'unique-prophet-birth', 'unique-general-birth', 'unique-specialist-birth', 'unique-unit-production', 'religious-unit-upgrades', 'swiss-enemy-heal', 'swiss-city-plunder-funded', 'swiss-city-plunder-empty', 'swiss-city-plunder-control', 'swiss-mounted-calculation', 'swiss-utility', 'crusader-borders', 'vatican-kill-faith', 'religious-terrain', 'vatican-great-improvements', 'vatican-pressure-votes', 'vatican-courthouse', 'vatican-stpeters', 'jerusalem-outremer', 'unique-building-catalogue', 'unique-building-pilot', 'civilization-start', 'unique-units', 'counterspy', 'nuclear-cities', 'nuclear-production', 'nuclear-cleanup', 'defender-zoc', 'inventory', 'admiral-repair', 'worker', 'unit-actions', 'great-person-builds', 'budget-settlement', 'nuclear', 'air-operations', 'greatworks', 'trade-tooltip', 'trade-countdown', 'nabatea-farms', 'nabatea-tomb', 'newzealand-science-completion'}
+SUPPORTED = set(HOOKS) | {'engineer-rewards', 'merchant-rewards', 'info-cache', 'airlift','paradrop','exotic-goods', 'moors-acquisition-load', 'maori-movement', 'mughal-garrison-load', 'cuba-capital-transfer', 'city-god-reentry', 'city-god-repeat', 'city-god', 'swiss-migration-load', 'swiss-human-training', 'swiss-legacy-load', 'swiss-boundaries', 'swiss-armory', 'unique-prophet-birth', 'unique-general-birth', 'unique-specialist-birth', 'unique-unit-production', 'religious-unit-upgrades', 'swiss-enemy-heal', 'swiss-city-plunder-funded', 'swiss-city-plunder-empty', 'swiss-city-plunder-control', 'swiss-mounted-calculation', 'swiss-utility', 'crusader-borders', 'vatican-kill-faith', 'religious-terrain', 'vatican-great-improvements', 'vatican-pressure-votes', 'vatican-courthouse', 'vatican-stpeters', 'jerusalem-outremer', 'unique-building-catalogue', 'unique-building-pilot', 'civilization-start', 'unique-units', 'counterspy', 'nuclear-cities', 'nuclear-production', 'nuclear-cleanup', 'defender-zoc', 'inventory', 'admiral-repair', 'worker', 'unit-actions', 'great-person-builds', 'budget-settlement', 'nuclear', 'air-operations', 'greatworks', 'trade-tooltip', 'trade-countdown', 'nabatea-farms', 'nabatea-tomb', 'newzealand-science-completion'}
 
 def validate_lua_syntax(plan, repo, compiler):
     """Parse every selected scenario and injected UI adapter before installation."""
@@ -166,6 +166,8 @@ def load_plan(path, repo, items):
             if missing:raise ValueError('Unregistered native methods in '+scenario+': '+', '.join(missing))
             arity=event_arity_errors(code)
             if arity:raise ValueError('Native callback signature in '+scenario+': '+', '.join(arity))
+        receiver_errors=receiver_method_errors(code)
+        if receiver_errors:raise ValueError('Native receiver in '+scenario+': '+', '.join(receiver_errors))
         for target,adapter in HOOKS.get(scenario,{}).items():
             if target in hooks and hooks[target]!=adapter: raise ValueError('Conflicting adapters at '+target)
             hooks[target]=adapter

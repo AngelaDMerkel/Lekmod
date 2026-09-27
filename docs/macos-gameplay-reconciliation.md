@@ -258,3 +258,30 @@ classification does not establish that every asset rendered successfully.
 The register contains33 specified cases:32 retained/passed and one ready merchant
 case awaiting an unlocked desktop. There remain1,299 untriaged review surfaces
 and121 document rows; the final case count is still not frozen.
+
+## Batched Engineer arithmetic and receiver-aware preflight
+
+The pending `great-person-rewards.json` plan combines the merchant checks with
+an independent Engineer case:12 declared assertions and two exact replays in one
+process, with zero ordinary turns. Four real hurry actions will cover supplied
+populations1/5/12 and a production cap; no-city and one-turn targets are rejection
+controls. The oracle follows the native truncation order for75+36×population
+and the current speed percentage. Spaceship-part doubling/completion and other
+speeds remain separate branches. This plan is prepared, not natively passed.
+
+Direct binding review caught an Engineer harness error offline: `CanHurry` is
+registered on City, not Unit. The corrected scenario uses Unit `CanStartMission`
+with the native Hurry mission and integer visibility argument. Optional explicit
+receiver annotations now check method registration on the actual declared class,
+preventing the global-name union from accepting that mismatch. Both new scenarios
+also enable the existing native-name/callback checks. Six receiver tests, four
+callback-arity tests and29 batch tests pass. These checks are not general Lua
+type inference or complete argument-signature validation.
+
+The Mac remains locked for the requested native round. An independent audit at
+23:17UTC confirms stock, original host/core/backups,35 original UI files,792 prior
+single-player saves,672 recovered originals and98 newer save/settings files
+unchanged; no game/launcher process. Evidence is in
+`build/macos/locked-merchant-preservation-20260927.json`. The register now has34
+specified cases (32passed/retained, two ready),1,297 untriaged review surfaces
+and121 pending document rows. Final acceptance is still open.

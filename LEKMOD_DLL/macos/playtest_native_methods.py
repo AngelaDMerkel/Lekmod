@@ -36,3 +36,24 @@ def event_arity_errors(code):
         fixed=[p.strip()for p in match.group(1).split(',')if p.strip()and p.strip()!='...']
         if len(fixed)>count:errors.append('UnitCreated supplies 4 arguments (owner,id,x,y), callback declares '+str(len(fixed)))
     return errors
+
+
+def receiver_method_errors(code):
+    """Check explicitly declared simple receivers; this is not Lua type inference."""
+    declarations = re.findall(r'^-- @native-receiver (\w+) (\w+)\s*$', code, re.M)
+    receivers = {}
+    errors = []
+    for receiver, kind in declarations:
+        if receiver in receivers and receivers[receiver] != kind:
+            errors.append('conflicting native receiver declaration: ' + receiver)
+        receivers[receiver] = kind
+    tokens = re.sub(r'--\[\[.*?\]\]|--[^\n]*|"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'', '', code, flags=re.S)
+    for receiver, kind in receivers.items():
+        source = LUA / ('CvLua' + kind + '.cpp')
+        if not source.is_file():
+            errors.append('unknown native receiver class: ' + kind)
+            continue
+        registered = set(re.findall(r'\bMethod\s*\(\s*(\w+)\s*\)', source.read_text(errors='replace')))
+        called = set(re.findall(r'\b' + re.escape(receiver) + r'\s*:\s*(\w+)\s*\(', tokens))
+        errors.extend(receiver + ':' + name + ' is not registered on ' + kind for name in sorted(called - registered))
+    return errors

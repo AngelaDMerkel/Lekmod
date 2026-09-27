@@ -1,3 +1,6 @@
+-- Native method surface: GameCore
+-- @native-receiver u Unit
+-- @native-receiver player Player
 -- Units, contact, one policy and later-era prerequisites are supplied inputs.
 -- Rewards use independent arithmetic from resolved data, never native quotes.
 LekmodScenario={name="merchant-rewards",items={"merchant-input-parameters","merchant-location-controls","merchant-base-era-rewards","merchant-later-era-rewards","merchant-additive-modifiers","merchant-consumption"}}

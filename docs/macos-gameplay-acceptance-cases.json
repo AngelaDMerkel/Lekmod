@@ -5375,6 +5375,18 @@
         {
           "path": "LEKMOD/Override/CIV5Units.xml",
           "sha256": "5d8d7e62f408d3c4e8520a3922a607bd3e14f19effd752f3d00144a9c0d58877"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/Lua/CvLuaUnit.cpp",
+          "sha256": "3abef7c6f580b0cea78c7901aa8ce147e50ac690c9ae7c13e6e269ef2685769d"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/Lua/CvLuaCity.cpp",
+          "sha256": "d5af403a2ce7e273cfbf0c0a3a3ba20b74b91b5e7a97ca39f903ac6bd81860d0"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnitMission.cpp",
+          "sha256": "2a6fadc2dcb9006351fa40dd8c4e278aff51290bdfe8e208bb433f1365d553bc"
         }
       ],
       "owners": [
@@ -5426,7 +5438,7 @@
       "implementation_references": [
         {
           "path": "LEKMOD_DLL/macos/playtest-scenario-merchant-rewards.lua",
-          "sha256": "850519530df5a0079cf061b9c56a631765b079bcfb9f0cc791fd36f3014d035e"
+          "sha256": "76ebea442528625d094cb762adedd134058f728ad4fc488ca72c0bbc465ae047"
         },
         {
           "path": "LEKMOD_DLL/macos/batch-plans/merchant-rewards.json",
@@ -5603,6 +5615,90 @@
         "No physical mouse or autonomous exploration-choice claim.",
         "Native minor-contact reward settlement is not newly claimed. The Lua reward path is shared for any non-New-Zealand other owner; distinct minor first-contact gifts are outside this handler case.",
         "Multi-player teams are outside the deferred multiplayer scope; single-player multi-member-team UA semantics are not established by this case."
+      ]
+    },
+    {
+      "id": "MISSION-ENGINEER-INDEPENDENT-HURRY",
+      "group": "G3",
+      "title": "Engineer hurry population, rounding and production cap",
+      "status": "ready",
+      "source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnit.cpp",
+          "sha256": "16914a686126292c64ed110df3fda674c136858392053cccee3940a3fbac5e73"
+        },
+        {
+          "path": "LEKMOD/Override/CIV5Units.xml",
+          "sha256": "5d8d7e62f408d3c4e8520a3922a607bd3e14f19effd752f3d00144a9c0d58877"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/Lua/CvLuaUnit.cpp",
+          "sha256": "3abef7c6f580b0cea78c7901aa8ce147e50ac690c9ae7c13e6e269ef2685769d"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/Lua/CvLuaCity.cpp",
+          "sha256": "d5af403a2ce7e273cfbf0c0a3a3ba20b74b91b5e7a97ca39f903ac6bd81860d0"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnitMission.cpp",
+          "sha256": "2a6fadc2dcb9006351fa40dd8c4e278aff51290bdfe8e208bb433f1365d553bc"
+        }
+      ],
+      "owners": [
+        "human Rome"
+      ],
+      "expected_result": "Hurry maximum=floor((75+36*population)*UnitHurryPercent/100), actual=min(remaining production,maximum). Real actions at population1/5/12 and a capped target must add the exact amount and consume the Engineer. One-turn target and non-city queries reject without consuming their unit.",
+      "units": "integer production hammers",
+      "supplied_inputs": [
+        "retained Industrial fixture",
+        "population1/5/12",
+        "legal building order and explicit starting progress",
+        "four actual-action Engineers and one rejection control"
+      ],
+      "actual_trigger": "Normal MISSION_HURRY through Game.HandleAction; exact production delta and consumption observed.",
+      "negative_controls": [
+        "one-turn construction eligibility and action unavailable",
+        "non-city query0/ineligible",
+        "cap prevents overflow"
+      ],
+      "transitions": [
+        "population variants",
+        "production cap",
+        "exact replay"
+      ],
+      "persistence_requirement": "Production, population, target, unit identities and treasury exactly replay.",
+      "required_evidence_level": [
+        "scripted-command",
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260914T030822Z/Lekmod-Functional-20260914T030822Z.Civ5Save",
+          "sha256": "c2ca4e6c8c3a16ae7b6e7ed3294df1d2f733d8f815d43c820090302328ad95ea"
+        }
+      ],
+      "batch": "LEKMOD_DLL/macos/batch-plans/great-person-rewards.json",
+      "stage": "engineer-rewards",
+      "evidence": [],
+      "surface_ids": [
+        "data:Units.BaseHurry",
+        "data:Units.HurryMultiplier"
+      ],
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-engineer-rewards.lua",
+          "sha256": "417c8659ff9933c6de88bda8e1eea6ab5388c9a546846d3d9a95d6a6ea37a37e"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/batch-plans/great-person-rewards.json",
+          "sha256": "c10f6e4efe28a009c59833e8bd4dcad780864417dd2066a9d0ff9ad640098ec1"
+        }
+      ],
+      "implementation_limits": [
+        "No spaceship-part doubling or actual building completion claim; these are distinct branches.",
+        "Current fixture speed only; all configured speed values have cache parity and require independent consumer review.",
+        "Eligibility controls are queries, not physical input or rejected native commands."
       ]
     }
   ],
@@ -15754,22 +15850,50 @@
     {
       "id": "data:Units.BaseHurry",
       "suggested_group": "G3",
-      "status": "untriaged",
-      "case_ids": [],
+      "status": "mapped",
+      "case_ids": [
+        "MISSION-ENGINEER-INDEPENDENT-HURRY",
+        "CFG-COMPILED-SCALAR-CACHES"
+      ],
       "supporting_case_ids": [
         "CFG-COMPILED-SCALAR-CACHES"
       ],
-      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent."
+      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnit.cpp",
+          "sha256": "16914a686126292c64ed110df3fda674c136858392053cccee3940a3fbac5e73"
+        },
+        {
+          "path": "LEKMOD/Override/CIV5Units.xml",
+          "sha256": "5d8d7e62f408d3c4e8520a3922a607bd3e14f19effd752f3d00144a9c0d58877"
+        }
+      ],
+      "reason": "Only configured unit is Engineer with75base/36population multiplier; ready native case uses independent formula at three populations and the remaining-production cap. No pass before execution; spaceship branch remains independent."
     },
     {
       "id": "data:Units.HurryMultiplier",
       "suggested_group": "G3",
-      "status": "untriaged",
-      "case_ids": [],
+      "status": "mapped",
+      "case_ids": [
+        "MISSION-ENGINEER-INDEPENDENT-HURRY",
+        "CFG-COMPILED-SCALAR-CACHES"
+      ],
       "supporting_case_ids": [
         "CFG-COMPILED-SCALAR-CACHES"
       ],
-      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent."
+      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnit.cpp",
+          "sha256": "16914a686126292c64ed110df3fda674c136858392053cccee3940a3fbac5e73"
+        },
+        {
+          "path": "LEKMOD/Override/CIV5Units.xml",
+          "sha256": "5d8d7e62f408d3c4e8520a3922a607bd3e14f19effd752f3d00144a9c0d58877"
+        }
+      ],
+      "reason": "Only configured unit is Engineer with75base/36population multiplier; ready native case uses independent formula at three populations and the remaining-production cap. No pass before execution; spaceship branch remains independent."
     },
     {
       "id": "data:Units.BaseGold",
@@ -24511,18 +24635,18 @@
     }
   ],
   "summary": {
-    "designed_cases": 33,
+    "designed_cases": 34,
     "case_statuses": {
       "passed": 12,
       "covered-by-evidence": 20,
-      "ready": 1
+      "ready": 2
     },
     "review_surfaces": 1340,
     "pending_document_rows": 121,
     "final_case_denominator_frozen": false,
     "surface_statuses": {
-      "untriaged": 1299,
-      "mapped": 22,
+      "untriaged": 1297,
+      "mapped": 24,
       "presentation-only": 19
     },
     "indexed_civilizations": 114,
