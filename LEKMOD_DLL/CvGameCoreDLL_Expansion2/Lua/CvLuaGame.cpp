@@ -27,6 +27,10 @@
 #include "../CvGameTextMgr.h"
 #include "../CvReplayMessage.h"
 
+#if defined(__APPLE__)
+extern int LekmodMacReadInfoCache(lua_State* L);
+#endif
+
 #define Method(func) RegisterMethod(L, l##func, #func);
 
 //------------------------------------------------------------------------------
@@ -46,6 +50,9 @@ CvGame* CvLuaGame::GetInstance(lua_State* L, int idx)
 //------------------------------------------------------------------------------
 void CvLuaGame::RegisterMembers(lua_State* L)
 {
+#if defined(__APPLE__)
+	RegisterMethod(L, LekmodMacReadInfoCache, "ReadInfoCacheForTest");
+#endif
 	Method(CanHandleAction);
 	Method(HandleAction);
 	Method(UpdateScore);

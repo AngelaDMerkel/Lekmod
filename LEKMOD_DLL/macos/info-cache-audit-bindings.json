@@ -1,0 +1,4759 @@
+{
+  "schema": 1,
+  "scope": "Read-only compiled-cache comparison, not gameplay-outcome coverage.",
+  "generation_input": "Clang AST under exact build-report flags",
+  "tables": [
+    {
+      "table": "Buildings",
+      "class": "CvBuildingEntry",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvBuildingClasses.cpp",
+      "source_sha256": "1077d98f716f91d0640aed54f8da01b3963ad01f6da2958aecdcd4638cec7e22",
+      "bindings": {
+        "GoldMaintenance": {
+          "member": "m_iGoldMaintenance",
+          "reader": "GetInt",
+          "getter": "GetGoldMaintenance",
+          "return_type": "int () const"
+        },
+        "Sellable": {
+          "member": "m_bNoSell",
+          "reader": "GetBool",
+          "getter": "IsSellable",
+          "return_type": "bool () const"
+        },
+        "MutuallyExclusiveGroup": {
+          "member": "m_iMutuallyExclusiveGroup",
+          "reader": "GetInt",
+          "getter": "GetMutuallyExclusiveGroup",
+          "return_type": "int () const"
+        },
+        "Water": {
+          "member": "m_bWater",
+          "reader": "GetBool",
+          "getter": "IsWater",
+          "return_type": "bool () const"
+        },
+        "River": {
+          "member": "m_bRiver",
+          "reader": "GetBool",
+          "getter": "IsRiver",
+          "return_type": "bool () const"
+        },
+        "FreshWater": {
+          "member": "m_bFreshWater",
+          "reader": "GetBool",
+          "getter": "IsFreshWater",
+          "return_type": "bool () const"
+        },
+        "Lake": {
+          "member": "m_bLake",
+          "reader": "GetBool",
+          "getter": "IsLake",
+          "return_type": "bool () const"
+        },
+        "IsReligious": {
+          "member": "m_bIsReligious",
+          "reader": "GetBool",
+          "getter": "IsReligious",
+          "return_type": "bool () const"
+        },
+        "BorderObstacle": {
+          "member": "m_bBorderObstacle",
+          "reader": "GetBool",
+          "getter": "IsBorderObstacle",
+          "return_type": "bool () const"
+        },
+        "Capital": {
+          "member": "m_bCapital",
+          "reader": "GetBool",
+          "getter": "IsCapital",
+          "return_type": "bool () const"
+        },
+        "GoldenAge": {
+          "member": "m_bGoldenAge",
+          "reader": "GetBool",
+          "getter": "IsGoldenAge",
+          "return_type": "bool () const"
+        },
+        "NeverCapture": {
+          "member": "m_bNeverCapture",
+          "reader": "GetBool",
+          "getter": "IsNeverCapture",
+          "return_type": "bool () const"
+        },
+        "NukeImmune": {
+          "member": "m_bNukeImmune",
+          "reader": "GetBool",
+          "getter": "IsNukeImmune",
+          "return_type": "bool () const"
+        },
+        "CityWall": {
+          "member": "m_bCityWall",
+          "reader": "GetBool",
+          "getter": "IsCityWall",
+          "return_type": "bool () const"
+        },
+        "AllowsWaterRoutes": {
+          "member": "m_bAllowsWaterRoutes",
+          "reader": "GetBool",
+          "getter": "AllowsWaterRoutes",
+          "return_type": "bool () const"
+        },
+        "Cost": {
+          "member": "m_iProductionCost",
+          "reader": "GetInt",
+          "getter": "GetProductionCost",
+          "return_type": "int () const"
+        },
+        "GoldCost": {
+          "member": "m_iGoldCost",
+          "reader": "GetInt",
+          "getter": "GetGoldCost",
+          "return_type": "int () const"
+        },
+        "FaithCost": {
+          "member": "m_iFaithCost",
+          "reader": "GetInt",
+          "getter": "GetFaithCost",
+          "return_type": "int () const"
+        },
+        "UnlockedByBelief": {
+          "member": "m_bUnlockedByBelief",
+          "reader": "GetBool",
+          "getter": "IsUnlockedByBelief",
+          "return_type": "bool () const"
+        },
+        "UnlockedByLeague": {
+          "member": "m_bUnlockedByLeague",
+          "reader": "GetBool",
+          "getter": "IsUnlockedByLeague",
+          "return_type": "bool () const"
+        },
+        "HolyCity": {
+          "member": "m_bRequiresHolyCity",
+          "reader": "GetBool",
+          "getter": "IsRequiresHolyCity",
+          "return_type": "bool () const"
+        },
+        "AffectSpiesNow": {
+          "member": "m_bAffectSpiesNow",
+          "reader": "GetBool",
+          "getter": "AffectSpiesNow",
+          "return_type": "bool () const"
+        },
+        "Espionage": {
+          "member": "m_bEspionage",
+          "reader": "GetBool",
+          "getter": "IsEspionage",
+          "return_type": "bool () const"
+        },
+        "MaliTreasury": {
+          "member": "m_bMalianTreasury",
+          "reader": "GetBool",
+          "getter": "IsMalianTreasury",
+          "return_type": "bool () const"
+        },
+        "AllowsFoodTradeRoutes": {
+          "member": "m_bAllowsFoodTradeRoutes",
+          "reader": "GetBool",
+          "getter": "AllowsFoodTradeRoutes",
+          "return_type": "bool () const"
+        },
+        "AllowsProductionTradeRoutes": {
+          "member": "m_bAllowsProductionTradeRoutes",
+          "reader": "GetBool",
+          "getter": "AllowsProductionTradeRoutes",
+          "return_type": "bool () const"
+        },
+        "NullifyInfluenceModifier": {
+          "member": "m_bNullifyInfluenceModifier",
+          "reader": "GetBool",
+          "getter": "NullifyInfluenceModifier",
+          "return_type": "bool () const"
+        },
+        "FirstPurchaseDiscount": {
+          "member": "m_iFirstPurchaseDiscount",
+          "reader": "GetInt",
+          "getter": "GetFirstPurchaseDiscount",
+          "return_type": "int () const"
+        },
+        "NumCityCostMod": {
+          "member": "m_iNumCityCostMod",
+          "reader": "GetInt",
+          "getter": "GetNumCityCostMod",
+          "return_type": "int () const"
+        },
+        "HurryCostModifier": {
+          "member": "m_iHurryCostModifier",
+          "reader": "GetInt",
+          "getter": "GetHurryCostModifier",
+          "return_type": "int () const"
+        },
+        "MinAreaSize": {
+          "member": "m_iMinAreaSize",
+          "reader": "GetInt",
+          "getter": "GetMinAreaSize",
+          "return_type": "int () const"
+        },
+        "ConquestProb": {
+          "member": "m_iConquestProbability",
+          "reader": "GetInt",
+          "getter": "GetConquestProbability",
+          "return_type": "int () const"
+        },
+        "GreatPeopleRateModifier": {
+          "member": "m_iGreatPeopleRateModifier",
+          "reader": "GetInt",
+          "getter": "GetGreatPeopleRateModifier",
+          "return_type": "int () const"
+        },
+        "GlobalGreatPeopleRateModifier": {
+          "member": "m_iGlobalGreatPeopleRateModifier",
+          "reader": "GetInt",
+          "getter": "GetGlobalGreatPeopleRateModifier",
+          "return_type": "int () const"
+        },
+        "UnitUpgradeCostMod": {
+          "member": "m_iUnitUpgradeCostMod",
+          "reader": "GetInt",
+          "getter": "GetUnitUpgradeCostMod",
+          "return_type": "int () const"
+        },
+        "GoldenAgeModifier": {
+          "member": "m_iGoldenAgeModifier",
+          "reader": "GetInt",
+          "getter": "GetGoldenAgeModifier",
+          "return_type": "int () const"
+        },
+        "FoodKept": {
+          "member": "m_iFoodKept",
+          "reader": "GetInt",
+          "getter": "GetFoodKept",
+          "return_type": "int () const"
+        },
+        "ExcessGrowth": {
+          "member": "m_iExcessGrowth",
+          "reader": "GetInt",
+          "getter": "GetExcessGrowth",
+          "return_type": "int () const"
+        },
+        "Airlift": {
+          "member": "m_bAirlift",
+          "reader": "GetBool",
+          "getter": "IsAirlift",
+          "return_type": "bool () const"
+        },
+        "AirModifier": {
+          "member": "m_iAirModifier",
+          "reader": "GetInt",
+          "getter": "GetAirModifier",
+          "return_type": "int () const"
+        },
+        "NukeModifier": {
+          "member": "m_iNukeModifier",
+          "reader": "GetInt",
+          "getter": "GetNukeModifier",
+          "return_type": "int () const"
+        },
+        "Happiness": {
+          "member": "m_iHappiness",
+          "reader": "GetInt",
+          "getter": "GetHappiness",
+          "return_type": "int () const"
+        },
+        "UnmoddedHappiness": {
+          "member": "m_iUnmoddedHappiness",
+          "reader": "GetInt",
+          "getter": "GetUnmoddedHappiness",
+          "return_type": "int () const"
+        },
+        "UnhappinessModifier": {
+          "member": "m_iUnhappinessModifier",
+          "reader": "GetInt",
+          "getter": "GetUnhappinessModifier",
+          "return_type": "int () const"
+        },
+        "HappinessPerCity": {
+          "member": "m_iHappinessPerCity",
+          "reader": "GetInt",
+          "getter": "GetHappinessPerCity",
+          "return_type": "int () const"
+        },
+        "HappinessPerXPolicies": {
+          "member": "m_iHappinessPerXPolicies",
+          "reader": "GetInt",
+          "getter": "GetHappinessPerXPolicies",
+          "return_type": "int () const"
+        },
+        "NoOccupiedUnhappiness": {
+          "member": "m_bNoOccupiedUnhappiness",
+          "reader": "GetBool",
+          "getter": "IsNoOccupiedUnhappiness",
+          "return_type": "bool () const"
+        },
+        "WorkerSpeedModifier": {
+          "member": "m_iWorkerSpeedModifier",
+          "reader": "GetInt",
+          "getter": "GetWorkerSpeedModifier",
+          "return_type": "int () const"
+        },
+        "MilitaryProductionModifier": {
+          "member": "m_iMilitaryProductionModifier",
+          "reader": "GetInt",
+          "getter": "GetMilitaryProductionModifier",
+          "return_type": "int () const"
+        },
+        "MilitaryProductionMod": {
+          "member": "m_iMilitaryProductionMod",
+          "reader": "GetInt",
+          "getter": "GetMilitaryProductionMod",
+          "return_type": "int () const"
+        },
+        "SpaceProductionModifier": {
+          "member": "m_iSpaceProductionModifier",
+          "reader": "GetInt",
+          "getter": "GetSpaceProductionModifier",
+          "return_type": "int () const"
+        },
+        "GlobalSpaceProductionModifier": {
+          "member": "m_iGlobalSpaceProductionModifier",
+          "reader": "GetInt",
+          "getter": "GetGlobalSpaceProductionModifier",
+          "return_type": "int () const"
+        },
+        "BuildingProductionModifier": {
+          "member": "m_iBuildingProductionModifier",
+          "reader": "GetInt",
+          "getter": "GetBuildingProductionModifier",
+          "return_type": "int () const"
+        },
+        "CityConnectionTradeRouteModifier": {
+          "member": "m_iCityConnectionTradeRouteModifier",
+          "reader": "GetInt",
+          "getter": "GetCityConnectionTradeRouteModifier",
+          "return_type": "int () const"
+        },
+        "CapturePlunderModifier": {
+          "member": "m_iCapturePlunderModifier",
+          "reader": "GetInt",
+          "getter": "GetCapturePlunderModifier",
+          "return_type": "int () const"
+        },
+        "PolicyCostModifier": {
+          "member": "m_iPolicyCostModifier",
+          "reader": "GetInt",
+          "getter": "GetPolicyCostModifier",
+          "return_type": "int () const"
+        },
+        "PlotCultureCostModifier": {
+          "member": "m_iPlotCultureCostModifier",
+          "reader": "GetInt",
+          "getter": "GetPlotCultureCostModifier",
+          "return_type": "int () const"
+        },
+        "GlobalPlotCultureCostModifier": {
+          "member": "m_iGlobalPlotCultureCostModifier",
+          "reader": "GetInt",
+          "getter": "GetGlobalPlotCultureCostModifier",
+          "return_type": "int () const"
+        },
+        "PlotBuyCostModifier": {
+          "member": "m_iPlotBuyCostModifier",
+          "reader": "GetInt",
+          "getter": "GetPlotBuyCostModifier",
+          "return_type": "int () const"
+        },
+        "GlobalPlotBuyCostModifier": {
+          "member": "m_iGlobalPlotBuyCostModifier",
+          "reader": "GetInt",
+          "getter": "GetGlobalPlotBuyCostModifier",
+          "return_type": "int () const"
+        },
+        "GlobalPopulationChange": {
+          "member": "m_iGlobalPopulationChange",
+          "reader": "GetInt",
+          "getter": "GetGlobalPopulationChange",
+          "return_type": "int () const"
+        },
+        "LocalPopulationChange": {
+          "member": "m_iLocalPopulationChange",
+          "reader": "GetInt",
+          "getter": "GetLocalPopulationChange",
+          "return_type": "int () const"
+        },
+        "FreeTechs": {
+          "member": "m_iFreeTechs",
+          "reader": "GetInt",
+          "getter": "GetFreeTechs",
+          "return_type": "int () const"
+        },
+        "FreePolicies": {
+          "member": "m_iFreePolicies",
+          "reader": "GetInt",
+          "getter": "GetFreePolicies",
+          "return_type": "int () const"
+        },
+        "Gold": {
+          "member": "m_iGold",
+          "reader": "GetInt",
+          "getter": "GetGold",
+          "return_type": "int () const"
+        },
+        "NearbyMountainRequired": {
+          "member": "m_bNearbyMountainRequired",
+          "reader": "GetInt",
+          "getter": "IsNearbyMountainRequired",
+          "return_type": "bool () const"
+        },
+        "AllowsRangeStrike": {
+          "member": "m_bAllowsRangeStrike",
+          "reader": "GetInt",
+          "getter": "IsAllowsRangeStrike",
+          "return_type": "bool () const"
+        },
+        "Defense": {
+          "member": "m_iDefenseModifier",
+          "reader": "GetInt",
+          "getter": "GetDefenseModifier",
+          "return_type": "int () const"
+        },
+        "GlobalDefenseMod": {
+          "member": "m_iGlobalDefenseModifier",
+          "reader": "GetInt",
+          "getter": "GetGlobalDefenseModifier",
+          "return_type": "int () const"
+        },
+        "ExtraCityHitPoints": {
+          "member": "m_iExtraCityHitPoints",
+          "reader": "GetInt",
+          "getter": "GetExtraCityHitPoints",
+          "return_type": "int () const"
+        },
+        "ExtraMissionarySpreads": {
+          "member": "m_iExtraMissionarySpreads",
+          "reader": "GetInt",
+          "getter": "GetExtraMissionarySpreads",
+          "return_type": "int () const"
+        },
+        "ReligiousPressureModifier": {
+          "member": "m_iReligiousPressureModifier",
+          "reader": "GetInt",
+          "getter": "GetReligiousPressureModifier",
+          "return_type": "int () const"
+        },
+        "EspionageModifier": {
+          "member": "m_iEspionageModifier",
+          "reader": "GetInt",
+          "getter": "GetEspionageModifier",
+          "return_type": "int () const"
+        },
+        "GlobalEspionageModifier": {
+          "member": "m_iGlobalEspionageModifier",
+          "reader": "GetInt",
+          "getter": "GetGlobalEspionageModifier",
+          "return_type": "int () const"
+        },
+        "ExtraSpies": {
+          "member": "m_iExtraSpies",
+          "reader": "GetInt",
+          "getter": "GetExtraSpies",
+          "return_type": "int () const"
+        },
+        "SpyRankChange": {
+          "member": "m_iSpyRankChange",
+          "reader": "GetInt",
+          "getter": "GetSpyRankChange",
+          "return_type": "int () const"
+        },
+        "NumTradeRouteBonus": {
+          "member": "m_iNumTradeRouteBonus",
+          "reader": "GetInt",
+          "getter": "GetNumTradeRouteBonus",
+          "return_type": "int () const"
+        },
+        "TradeRouteSeaDistanceModifier": {
+          "member": "m_iTradeRouteSeaDistanceModifier",
+          "reader": "GetInt",
+          "getter": "GetTradeRouteSeaDistanceModifier",
+          "return_type": "int () const"
+        },
+        "TradeRouteLandDistanceModifier": {
+          "member": "m_iTradeRouteLandDistanceModifier",
+          "reader": "GetInt",
+          "getter": "GetTradeRouteLandDistanceModifier",
+          "return_type": "int () const"
+        },
+        "CityStateTradeRouteProductionModifier": {
+          "member": "m_iCityStateTradeRouteProductionModifier",
+          "reader": "GetInt",
+          "getter": "GetCityStateTradeRouteProductionModifier",
+          "return_type": "int () const"
+        },
+        "CityStateTradeRouteGoldModifier": {
+          "member": "m_iCityStateTradeRouteGoldModifier",
+          "reader": "GetInt",
+          "getter": "GetCityStateTradeRouteGoldModifier",
+          "return_type": "int () const"
+        },
+        "InstantSpyRankChange": {
+          "member": "m_iInstantSpyRankChange",
+          "reader": "GetInt",
+          "getter": "GetInstantSpyRankChange",
+          "return_type": "int () const"
+        },
+        "LandmarksTourismPercent": {
+          "member": "m_iLandmarksTourismPercent",
+          "reader": "GetInt",
+          "getter": "GetLandmarksTourismPercent",
+          "return_type": "int () const"
+        },
+        "InstantMilitaryIncrease": {
+          "member": "m_iInstantMilitaryIncrease",
+          "reader": "GetInt",
+          "getter": "GetInstantMilitaryIncrease",
+          "return_type": "int () const"
+        },
+        "GreatWorksTourismModifier": {
+          "member": "m_iGreatWorksTourismModifier",
+          "reader": "GetInt",
+          "getter": "GetGreatWorksTourismModifier",
+          "return_type": "int () const"
+        },
+        "XBuiltTriggersIdeologyChoice": {
+          "member": "m_iXBuiltTriggersIdeologyChoice",
+          "reader": "GetInt",
+          "getter": "GetXBuiltTriggersIdeologyChoice",
+          "return_type": "int () const"
+        },
+        "GreatScientistBeakerModifier": {
+          "member": "m_iGreatScientistBeakerModifier",
+          "reader": "GetInt",
+          "getter": "GetGreatScientistBeakerModifier",
+          "return_type": "int () const"
+        },
+        "ExtraLeagueVotes": {
+          "member": "m_iExtraLeagueVotes",
+          "reader": "GetInt",
+          "getter": "GetExtraLeagueVotes",
+          "return_type": "int () const"
+        },
+        "GarrisonStrengthBonus": {
+          "member": "m_iGarrisonStrengthBonus",
+          "reader": "GetInt",
+          "getter": "GetGarrisonStrengthBonus",
+          "return_type": "int () const"
+        },
+        "GarrisonMaintenceFree": {
+          "member": "m_bGarrisonMaintenanceFree",
+          "reader": "GetBool",
+          "getter": "IsGarrisonMaintenanceFree",
+          "return_type": "int () const"
+        },
+        "GreatWorkHappiness": {
+          "member": "m_iGreatWorkHappiness",
+          "reader": "GetInt",
+          "getter": "GetGreatWorkHappiness",
+          "return_type": "int () const"
+        },
+        "SpecialistCount": {
+          "member": "m_iSpecialistCount",
+          "reader": "GetInt",
+          "getter": "GetSpecialistCount",
+          "return_type": "int () const"
+        },
+        "GreatPeopleRateChange": {
+          "member": "m_iGreatPeopleRateChange",
+          "reader": "GetInt",
+          "getter": "GetGreatPeopleRateChange",
+          "return_type": "int () const"
+        },
+        "GreatWorkCount": {
+          "member": "m_iGreatWorkCount",
+          "reader": "GetInt",
+          "getter": "GetGreatWorkCount",
+          "return_type": "int () const"
+        },
+        "FreeGreatWorkCount": {
+          "member": "m_iFreeGreatWorkCount",
+          "reader": "GetInt",
+          "getter": "GetFreeGreatWorkCount",
+          "return_type": "int () const"
+        },
+        "GreatWorkMilitaryProductionModifier": {
+          "member": "m_iGreatWorkMilitaryProductionModifier",
+          "reader": "GetInt",
+          "getter": "GetGreatWorkMilitaryProductionModifier",
+          "return_type": "int () const"
+        }
+      },
+      "unmapped": [
+        "BuildingClass",
+        "EnhancedYieldTech",
+        "FreeBuilding",
+        "FreeBuildingThisCity",
+        "FreeGreatWork",
+        "FreePromotion",
+        "FreeStartEra",
+        "GreatWorkSlotType",
+        "MaxStartEra",
+        "NearbyTerrainRequired",
+        "PolicyBranchType",
+        "PrereqTech",
+        "SpecialistType",
+        "TrainedFreePromotion"
+      ],
+      "configured_fields": 110,
+      "getter": "getBuildingInfo",
+      "count": "getNumBuildingInfos",
+      "index_type": "BuildingTypes"
+    },
+    {
+      "table": "Units",
+      "class": "CvUnitEntry",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnitClasses.cpp",
+      "source_sha256": "214e7e48a66bb84291e5f6923bb94eee6b651f3abd0282ad83e6acdca5490573",
+      "bindings": {
+        "Cost": {
+          "member": "m_iProductionCost",
+          "reader": "GetInt",
+          "getter": "GetProductionCost",
+          "return_type": "int () const"
+        },
+        "FaithCost": {
+          "member": "m_iFaithCost",
+          "reader": "GetInt",
+          "getter": "GetFaithCost",
+          "return_type": "int () const"
+        },
+        "RequiresFaithPurchaseEnabled": {
+          "member": "m_bRequiresFaithPurchaseEnabled",
+          "reader": "GetBool",
+          "getter": "IsRequiresFaithPurchaseEnabled",
+          "return_type": "bool () const"
+        },
+        "PurchaseOnly": {
+          "member": "m_bPurchaseOnly",
+          "reader": "GetBool",
+          "getter": "IsPurchaseOnly",
+          "return_type": "bool () const"
+        },
+        "MoveAfterPurchase": {
+          "member": "m_bMoveAfterPurchase",
+          "reader": "GetBool",
+          "getter": "CanMoveAfterPurchase",
+          "return_type": "bool () const"
+        },
+        "HurryCostModifier": {
+          "member": "m_iHurryCostModifier",
+          "reader": "GetInt",
+          "getter": "GetHurryCostModifier",
+          "return_type": "int () const"
+        },
+        "AdvancedStartCost": {
+          "member": "m_iAdvancedStartCost",
+          "reader": "GetInt",
+          "getter": "GetAdvancedStartCost",
+          "return_type": "int () const"
+        },
+        "MinAreaSize": {
+          "member": "m_iMinAreaSize",
+          "reader": "GetInt",
+          "getter": "GetMinAreaSize",
+          "return_type": "int () const"
+        },
+        "Moves": {
+          "member": "m_iMoves",
+          "reader": "GetInt",
+          "getter": "GetMoves",
+          "return_type": "int () const"
+        },
+        "Immobile": {
+          "member": "m_bMoves",
+          "reader": "GetInt",
+          "getter": "IsImmobile",
+          "return_type": "bool () const"
+        },
+        "BaseSightRange": {
+          "member": "m_iBaseSightRange",
+          "reader": "GetInt",
+          "getter": "GetBaseSightRange",
+          "return_type": "int () const"
+        },
+        "Range": {
+          "member": "m_iRange",
+          "reader": "GetInt",
+          "getter": "GetRange",
+          "return_type": "int () const"
+        },
+        "AirInterceptRange": {
+          "member": "m_iAirInterceptRange",
+          "reader": "GetInt",
+          "getter": "GetAirInterceptRange",
+          "return_type": "int () const"
+        },
+        "AirUnitCap": {
+          "member": "m_iAirUnitCap",
+          "reader": "GetInt",
+          "getter": "GetAirUnitCap",
+          "return_type": "int () const"
+        },
+        "NukeDamageLevel": {
+          "member": "m_iNukeDamageLevel",
+          "reader": "GetInt",
+          "getter": "GetNukeDamageLevel",
+          "return_type": "int () const"
+        },
+        "WorkRate": {
+          "member": "m_iWorkRate",
+          "reader": "GetInt",
+          "getter": "GetWorkRate",
+          "return_type": "int () const"
+        },
+        "BaseBeakersTurnsToCount": {
+          "member": "m_iBaseBeakersTurnsToCount",
+          "reader": "GetInt",
+          "getter": "GetBaseBeakersTurnsToCount",
+          "return_type": "int () const"
+        },
+        "BaseCultureTurnsToCount": {
+          "member": "m_iBaseCultureTurnsToCount",
+          "reader": "GetInt",
+          "getter": "GetBaseCultureTurnsToCount",
+          "return_type": "int () const"
+        },
+        "BaseHurry": {
+          "member": "m_iBaseHurry",
+          "reader": "GetInt",
+          "getter": "GetBaseHurry",
+          "return_type": "int () const"
+        },
+        "HurryMultiplier": {
+          "member": "m_iHurryMultiplier",
+          "reader": "GetInt",
+          "getter": "GetHurryMultiplier",
+          "return_type": "int () const"
+        },
+        "BaseGold": {
+          "member": "m_iBaseGold",
+          "reader": "GetInt",
+          "getter": "GetBaseGold",
+          "return_type": "int () const"
+        },
+        "NumGoldPerEra": {
+          "member": "m_iNumGoldPerEra",
+          "reader": "GetInt",
+          "getter": "GetNumGoldPerEra",
+          "return_type": "int () const"
+        },
+        "SpreadReligion": {
+          "member": "m_bSpreadReligion",
+          "reader": "GetBool",
+          "getter": "IsSpreadReligion",
+          "return_type": "bool () const"
+        },
+        "RemoveHeresy": {
+          "member": "m_bRemoveHeresy",
+          "reader": "GetBool",
+          "getter": "IsRemoveHeresy",
+          "return_type": "bool () const"
+        },
+        "ReligionSpreads": {
+          "member": "m_iReligionSpreads",
+          "reader": "GetInt",
+          "getter": "GetReligionSpreads",
+          "return_type": "int () const"
+        },
+        "ReligiousStrength": {
+          "member": "m_iReligiousStrength",
+          "reader": "GetInt",
+          "getter": "GetReligiousStrength",
+          "return_type": "int () const"
+        },
+        "FoundReligion": {
+          "member": "m_bFoundReligion",
+          "reader": "GetBool",
+          "getter": "IsFoundReligion",
+          "return_type": "bool () const"
+        },
+        "RequiresEnhancedReligion": {
+          "member": "m_bRequiresEnhancedReligion",
+          "reader": "GetBool",
+          "getter": "IsRequiresEnhancedReligion",
+          "return_type": "bool () const"
+        },
+        "ProhibitsSpread": {
+          "member": "m_bProhibitsSpread",
+          "reader": "GetBool",
+          "getter": "IsProhibitsSpread",
+          "return_type": "bool () const"
+        },
+        "CanBuyCityState": {
+          "member": "m_bCanBuyCityState",
+          "reader": "GetBool",
+          "getter": "IsCanBuyCityState",
+          "return_type": "bool () const"
+        },
+        "Combat": {
+          "member": "m_iCombat",
+          "reader": "GetInt",
+          "getter": "GetCombat",
+          "return_type": "int () const"
+        },
+        "CombatLimit": {
+          "member": "m_iCombatLimit",
+          "reader": "GetInt",
+          "getter": "GetCombatLimit",
+          "return_type": "int () const"
+        },
+        "RangedCombat": {
+          "member": "m_iRangedCombat",
+          "reader": "GetInt",
+          "getter": "GetRangedCombat",
+          "return_type": "int () const"
+        },
+        "RangedCombatLimit": {
+          "member": "m_iRangedCombatLimit",
+          "reader": "GetInt",
+          "getter": "GetRangedCombatLimit",
+          "return_type": "int () const"
+        },
+        "XPValueAttack": {
+          "member": "m_iXPValueAttack",
+          "reader": "GetInt",
+          "getter": "GetXPValueAttack",
+          "return_type": "int () const"
+        },
+        "XPValueDefense": {
+          "member": "m_iXPValueDefense",
+          "reader": "GetInt",
+          "getter": "GetXPValueDefense",
+          "return_type": "int () const"
+        },
+        "Conscription": {
+          "member": "m_iConscriptionValue",
+          "reader": "GetInt",
+          "getter": "GetConscriptionValue",
+          "return_type": "int () const"
+        },
+        "NoMaintenance": {
+          "member": "m_bNoMaintenance",
+          "reader": "GetBool",
+          "getter": "IsNoMaintenance",
+          "return_type": "bool () const"
+        },
+        "Food": {
+          "member": "m_bFoodProduction",
+          "reader": "GetBool",
+          "getter": "IsFoodProduction",
+          "return_type": "bool () const"
+        },
+        "NoBadGoodies": {
+          "member": "m_bNoBadGoodies",
+          "reader": "GetBool",
+          "getter": "IsNoBadGoodies",
+          "return_type": "bool () const"
+        },
+        "MilitarySupport": {
+          "member": "m_bMilitarySupport",
+          "reader": "GetBool",
+          "getter": "IsMilitarySupport",
+          "return_type": "bool () const"
+        },
+        "MilitaryProduction": {
+          "member": "m_bMilitaryProduction",
+          "reader": "GetBool",
+          "getter": "IsMilitaryProduction",
+          "return_type": "bool () const"
+        },
+        "Pillage": {
+          "member": "m_bPillage",
+          "reader": "GetBool",
+          "getter": "IsPillage",
+          "return_type": "bool () const"
+        },
+        "Found": {
+          "member": "m_bFound",
+          "reader": "GetBool",
+          "getter": "IsFound",
+          "return_type": "bool () const"
+        },
+        "FoundAbroad": {
+          "member": "m_bFoundAbroad",
+          "reader": "GetBool",
+          "getter": "IsFoundAbroad",
+          "return_type": "bool () const"
+        },
+        "PopulationReq": {
+          "member": "m_iPopulationReq",
+          "reader": "GetInt",
+          "getter": "GetPopulationReq",
+          "return_type": "int () const"
+        },
+        "SettlerCostModifier": {
+          "member": "m_iSettlerCostModifier",
+          "reader": "GetInt",
+          "getter": "GetSettlerCostModifier",
+          "return_type": "int () const"
+        },
+        "LocalPopChange": {
+          "member": "m_iLocalPopChange",
+          "reader": "GetInt",
+          "getter": "GetLocalPopChange",
+          "return_type": "int () const"
+        },
+        "GoldenAgeTurns": {
+          "member": "m_iGoldenAgeTurns",
+          "reader": "GetInt",
+          "getter": "GetGoldenAgeTurns",
+          "return_type": "int () const"
+        },
+        "OneShotTourism": {
+          "member": "m_iOneShotTourism",
+          "reader": "GetInt",
+          "getter": "GetOneShotTourism",
+          "return_type": "int () const"
+        },
+        "OneShotTourismPercentOthers": {
+          "member": "m_iOneShotTourismPercentOthers",
+          "reader": "GetInt",
+          "getter": "GetOneShotTourismPercentOthers",
+          "return_type": "int () const"
+        },
+        "PrereqResources": {
+          "member": "m_bPrereqResources",
+          "reader": "GetBool",
+          "getter": "IsPrereqResources",
+          "return_type": "bool () const"
+        },
+        "Mechanized": {
+          "member": "m_bMechanized",
+          "reader": "GetBool",
+          "getter": "IsMechUnit",
+          "return_type": "bool () const"
+        },
+        "Suicide": {
+          "member": "m_bSuicide",
+          "reader": "GetBool",
+          "getter": "IsSuicide",
+          "return_type": "bool () const"
+        },
+        "RangeAttackOnlyInDomain": {
+          "member": "m_bRangeAttackOnlyInDomain",
+          "reader": "GetBool",
+          "getter": "IsRangeAttackOnlyInDomain",
+          "return_type": "bool () const"
+        },
+        "Trade": {
+          "member": "m_bTrade",
+          "reader": "GetBool",
+          "getter": "IsTrade",
+          "return_type": "bool () const"
+        },
+        "NumExoticGoods": {
+          "member": "m_iNumExoticGoods",
+          "reader": "GetInt",
+          "getter": "GetNumExoticGoods",
+          "return_type": "int () const"
+        },
+        "AnyIdeologyUnlock": {
+          "member": "m_bAnyIdeologyUnlock",
+          "reader": "GetBool",
+          "getter": "IsAnyIdeologyUnlock",
+          "return_type": "bool () const"
+        }
+      },
+      "unmapped": [
+        "Capture",
+        "CivilianAttackPriority",
+        "Class",
+        "CombatClass",
+        "DefaultUnitAI",
+        "Domain",
+        "DomainCargo",
+        "GoodyHutUpgradeUnitClass",
+        "ObsoleteTech",
+        "PolicyType",
+        "PrereqTech",
+        "ProjectPrereq",
+        "Requirements",
+        "SpaceshipProject",
+        "Special",
+        "SpecialCargo",
+        "Submerge"
+      ],
+      "configured_fields": 75,
+      "getter": "getUnitInfo",
+      "count": "getNumUnitInfos",
+      "index_type": "UnitTypes"
+    },
+    {
+      "table": "UnitPromotions",
+      "class": "CvPromotionEntry",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPromotionClasses.cpp",
+      "source_sha256": "3b85c0a4837f8d2606398d567410ab3fc3f06347449874b9c830eedede72244f",
+      "bindings": {
+        "CannotBeChosen": {
+          "member": "m_bCannotBeChosen",
+          "reader": "GetBool",
+          "getter": "IsCannotBeChosen",
+          "return_type": "bool () const"
+        },
+        "LostWithUpgrade": {
+          "member": "m_bLostWithUpgrade",
+          "reader": "GetBool",
+          "getter": "IsLostWithUpgrade",
+          "return_type": "bool () const"
+        },
+        "InstaHeal": {
+          "member": "m_bInstaHeal",
+          "reader": "GetBool",
+          "getter": "IsInstaHeal",
+          "return_type": "bool () const"
+        },
+        "Amphib": {
+          "member": "m_bAmphib",
+          "reader": "GetBool",
+          "getter": "IsAmphib",
+          "return_type": "bool () const"
+        },
+        "River": {
+          "member": "m_bRiver",
+          "reader": "GetBool",
+          "getter": "IsRiver",
+          "return_type": "bool () const"
+        },
+        "RivalTerritory": {
+          "member": "m_bRivalTerritory",
+          "reader": "GetBool",
+          "getter": "IsRivalTerritory",
+          "return_type": "bool () const"
+        },
+        "MustSetUpToRangedAttack": {
+          "member": "m_bMustSetUpToRangedAttack",
+          "reader": "GetBool",
+          "getter": "IsMustSetUpToRangedAttack",
+          "return_type": "bool () const"
+        },
+        "RangedSupportFire": {
+          "member": "m_bRangedSupportFire",
+          "reader": "GetBool",
+          "getter": "IsRangedSupportFire",
+          "return_type": "bool () const"
+        },
+        "AlwaysHeal": {
+          "member": "m_bAlwaysHeal",
+          "reader": "GetBool",
+          "getter": "IsAlwaysHeal",
+          "return_type": "bool () const"
+        },
+        "HealOutsideFriendly": {
+          "member": "m_bHealOutsideFriendly",
+          "reader": "GetBool",
+          "getter": "IsHealOutsideFriendly",
+          "return_type": "bool () const"
+        },
+        "HillsDoubleMove": {
+          "member": "m_bHillsDoubleMove",
+          "reader": "GetBool",
+          "getter": "IsHillsDoubleMove",
+          "return_type": "bool () const"
+        },
+        "IgnoreTerrainCost": {
+          "member": "m_bIgnoreTerrainCost",
+          "reader": "GetBool",
+          "getter": "IsIgnoreTerrainCost",
+          "return_type": "bool () const"
+        },
+        "RoughTerrainEndsTurn": {
+          "member": "m_bRoughTerrainEndsTurn",
+          "reader": "GetBool",
+          "getter": "IsRoughTerrainEndsTurn",
+          "return_type": "bool () const"
+        },
+        "HoveringUnit": {
+          "member": "m_bHoveringUnit",
+          "reader": "GetBool",
+          "getter": "IsHoveringUnit",
+          "return_type": "bool () const"
+        },
+        "FlatMovementCost": {
+          "member": "m_bFlatMovementCost",
+          "reader": "GetBool",
+          "getter": "IsFlatMovementCost",
+          "return_type": "bool () const"
+        },
+        "CanMoveImpassable": {
+          "member": "m_bCanMoveImpassable",
+          "reader": "GetBool",
+          "getter": "IsCanMoveImpassable",
+          "return_type": "bool () const"
+        },
+        "NoCapture": {
+          "member": "m_bNoCapture",
+          "reader": "GetBool",
+          "getter": "IsNoCapture",
+          "return_type": "bool () const"
+        },
+        "OnlyDefensive": {
+          "member": "m_bOnlyDefensive",
+          "reader": "GetBool",
+          "getter": "IsOnlyDefensive",
+          "return_type": "bool () const"
+        },
+        "NoDefensiveBonus": {
+          "member": "m_bNoDefensiveBonus",
+          "reader": "GetBool",
+          "getter": "IsNoDefensiveBonus",
+          "return_type": "bool () const"
+        },
+        "NukeImmune": {
+          "member": "m_bNukeImmune",
+          "reader": "GetBool",
+          "getter": "IsNukeImmune",
+          "return_type": "bool () const"
+        },
+        "Recon": {
+          "member": "m_bRecon",
+          "reader": "GetBool",
+          "getter": "IsRecon",
+          "return_type": "bool () const"
+        },
+        "CanMoveAllTerrain": {
+          "member": "m_bCanMoveAllTerrain",
+          "reader": "GetBool",
+          "getter": "CanMoveAllTerrain",
+          "return_type": "bool () const"
+        },
+        "CanMoveAfterAttacking": {
+          "member": "m_bCanMoveAfterAttacking",
+          "reader": "GetBool",
+          "getter": "IsCanMoveAfterAttacking",
+          "return_type": "bool () const"
+        },
+        "AirSweepCapable": {
+          "member": "m_bAirSweepCapable",
+          "reader": "GetBool",
+          "getter": "IsAirSweepCapable",
+          "return_type": "bool () const"
+        },
+        "AllowsEmbarkation": {
+          "member": "m_bAllowsEmbarkation",
+          "reader": "GetBool",
+          "getter": "IsAllowsEmbarkation",
+          "return_type": "bool () const"
+        },
+        "RangeAttackIgnoreLOS": {
+          "member": "m_bRangeAttackIgnoreLOS",
+          "reader": "GetBool",
+          "getter": "IsRangeAttackIgnoreLOS",
+          "return_type": "bool () const"
+        },
+        "FreePillageMoves": {
+          "member": "m_bFreePillageMoves",
+          "reader": "GetBool",
+          "getter": "IsFreePillageMoves",
+          "return_type": "bool () const"
+        },
+        "HealOnPillage": {
+          "member": "m_bHealOnPillage",
+          "reader": "GetBool",
+          "getter": "IsHealOnPillage",
+          "return_type": "bool () const"
+        },
+        "HealIfDestroyExcludesBarbarians": {
+          "member": "m_bHealIfDefeatExcludesBarbarians",
+          "reader": "GetBool",
+          "getter": "IsHealIfDefeatExcludeBarbarians",
+          "return_type": "bool () const"
+        },
+        "EmbarkedAllWater": {
+          "member": "m_bEmbarkedAllWater",
+          "reader": "GetBool",
+          "getter": "IsEmbarkedAllWater",
+          "return_type": "bool () const"
+        },
+        "CityAttackOnly": {
+          "member": "m_bCityAttackOnly",
+          "reader": "GetBool",
+          "getter": "IsCityAttackOnly",
+          "return_type": "bool () const"
+        },
+        "CaptureDefeatedEnemy": {
+          "member": "m_bCaptureDefeatedEnemy",
+          "reader": "GetBool",
+          "getter": "IsCaptureDefeatedEnemy",
+          "return_type": "bool () const"
+        },
+        "IgnoreZOC": {
+          "member": "m_bIgnoreZOC",
+          "reader": "GetBool",
+          "getter": "IsIgnoreZOC",
+          "return_type": "bool () const"
+        },
+        "HasPostCombatPromotions": {
+          "member": "m_bHasPostCombatPromotions",
+          "reader": "GetBool",
+          "getter": "HasPostCombatPromotions",
+          "return_type": "bool () const"
+        },
+        "Sapper": {
+          "member": "m_bSapper",
+          "reader": "GetBool",
+          "getter": "IsSapper",
+          "return_type": "bool () const"
+        },
+        "HeavyCharge": {
+          "member": "m_bCanHeavyCharge",
+          "reader": "GetBool",
+          "getter": "IsCanHeavyCharge",
+          "return_type": "bool () const"
+        },
+        "HeavyChargeDownhill": {
+          "member": "m_iHeavyChargeDownhill",
+          "reader": "GetInt",
+          "getter": "GetHeavyChargeDownhill",
+          "return_type": "int () const"
+        },
+        "CombatDifferentIdeology": {
+          "member": "m_iCombatDifferentIdeology",
+          "reader": "GetInt",
+          "getter": "GetCombatDifferentIdeology",
+          "return_type": "int () const"
+        },
+        "VisibilityChange": {
+          "member": "m_iVisibilityChange",
+          "reader": "GetInt",
+          "getter": "GetVisibilityChange",
+          "return_type": "int () const"
+        },
+        "MovesChange": {
+          "member": "m_iMovesChange",
+          "reader": "GetInt",
+          "getter": "GetMovesChange",
+          "return_type": "int () const"
+        },
+        "RangeChange": {
+          "member": "m_iRangeChange",
+          "reader": "GetInt",
+          "getter": "GetRangeChange",
+          "return_type": "int () const"
+        },
+        "RangedAttackModifier": {
+          "member": "m_iRangedAttackModifier",
+          "reader": "GetInt",
+          "getter": "GetRangedAttackModifier",
+          "return_type": "int () const"
+        },
+        "InterceptionCombatModifier": {
+          "member": "m_iInterceptionCombatModifier",
+          "reader": "GetInt",
+          "getter": "GetInterceptionCombatModifier",
+          "return_type": "int () const"
+        },
+        "InterceptionDefenseDamageModifier": {
+          "member": "m_iInterceptionDefenseDamageModifier",
+          "reader": "GetInt",
+          "getter": "GetInterceptionDefenseDamageModifier",
+          "return_type": "int () const"
+        },
+        "AirSweepCombatModifier": {
+          "member": "m_iAirSweepCombatModifier",
+          "reader": "GetInt",
+          "getter": "GetAirSweepCombatModifier",
+          "return_type": "int () const"
+        },
+        "InterceptChanceChange": {
+          "member": "m_iInterceptChanceChange",
+          "reader": "GetInt",
+          "getter": "GetInterceptChanceChange",
+          "return_type": "int () const"
+        },
+        "NumInterceptionChange": {
+          "member": "m_iNumInterceptionChange",
+          "reader": "GetInt",
+          "getter": "GetNumInterceptionChange",
+          "return_type": "int () const"
+        },
+        "EvasionChange": {
+          "member": "m_iEvasionChange",
+          "reader": "GetInt",
+          "getter": "GetEvasionChange",
+          "return_type": "int () const"
+        },
+        "CargoChange": {
+          "member": "m_iCargoChange",
+          "reader": "GetInt",
+          "getter": "GetCargoChange",
+          "return_type": "int () const"
+        },
+        "EnemyHealChange": {
+          "member": "m_iEnemyHealChange",
+          "reader": "GetInt",
+          "getter": "GetEnemyHealChange",
+          "return_type": "int () const"
+        },
+        "NeutralHealChange": {
+          "member": "m_iNeutralHealChange",
+          "reader": "GetInt",
+          "getter": "GetNeutralHealChange",
+          "return_type": "int () const"
+        },
+        "FriendlyHealChange": {
+          "member": "m_iFriendlyHealChange",
+          "reader": "GetInt",
+          "getter": "GetFriendlyHealChange",
+          "return_type": "int () const"
+        },
+        "AdjacentTileHealChange": {
+          "member": "m_iAdjacentTileHealChange",
+          "reader": "GetInt",
+          "getter": "GetAdjacentTileHealChange",
+          "return_type": "int () const"
+        },
+        "EnemyDamageChance": {
+          "member": "m_iEnemyDamageChance",
+          "reader": "GetInt",
+          "getter": "GetEnemyDamageChance",
+          "return_type": "int () const"
+        },
+        "EnemyDamage": {
+          "member": "m_iEnemyDamage",
+          "reader": "GetInt",
+          "getter": "GetEnemyDamage",
+          "return_type": "int () const"
+        },
+        "CombatPercent": {
+          "member": "m_iCombatPercent",
+          "reader": "GetInt",
+          "getter": "GetCombatPercent",
+          "return_type": "int () const"
+        },
+        "CityAttack": {
+          "member": "m_iCityAttackPercent",
+          "reader": "GetInt",
+          "getter": "GetCityAttackPercent",
+          "return_type": "int () const"
+        },
+        "RangedDefenseMod": {
+          "member": "m_iRangedDefenseMod",
+          "reader": "GetInt",
+          "getter": "GetRangedDefenseMod",
+          "return_type": "int () const"
+        },
+        "HillsAttack": {
+          "member": "m_iHillsAttackPercent",
+          "reader": "GetInt",
+          "getter": "GetHillsAttackPercent",
+          "return_type": "int () const"
+        },
+        "HillsDefense": {
+          "member": "m_iHillsDefensePercent",
+          "reader": "GetInt",
+          "getter": "GetHillsDefensePercent",
+          "return_type": "int () const"
+        },
+        "OpenAttack": {
+          "member": "m_iOpenAttackPercent",
+          "reader": "GetInt",
+          "getter": "GetOpenAttackPercent",
+          "return_type": "int () const"
+        },
+        "OpenRangedAttackMod": {
+          "member": "m_iOpenRangedAttackMod",
+          "reader": "GetInt",
+          "getter": "GetOpenRangedAttackMod",
+          "return_type": "int () const"
+        },
+        "RoughAttack": {
+          "member": "m_iRoughAttackPercent",
+          "reader": "GetInt",
+          "getter": "GetRoughAttackPercent",
+          "return_type": "int () const"
+        },
+        "RoughRangedAttackMod": {
+          "member": "m_iRoughRangedAttackMod",
+          "reader": "GetInt",
+          "getter": "GetRoughRangedAttackMod",
+          "return_type": "int () const"
+        },
+        "AttackFortifiedMod": {
+          "member": "m_iAttackFortifiedMod",
+          "reader": "GetInt",
+          "getter": "GetAttackFortifiedMod",
+          "return_type": "int () const"
+        },
+        "AttackWoundedMod": {
+          "member": "m_iAttackWoundedMod",
+          "reader": "GetInt",
+          "getter": "GetAttackWoundedMod",
+          "return_type": "int () const"
+        },
+        "FlankAttackModifier": {
+          "member": "m_iFlankAttackModifier",
+          "reader": "GetInt",
+          "getter": "GetFlankAttackModifier",
+          "return_type": "int () const"
+        },
+        "NearbyEnemyCombatMod": {
+          "member": "m_iNearbyEnemyCombatMod",
+          "reader": "GetInt",
+          "getter": "GetNearbyEnemyCombatMod",
+          "return_type": "int () const"
+        },
+        "NearbyEnemyCombatRange": {
+          "member": "m_iNearbyEnemyCombatRange",
+          "reader": "GetInt",
+          "getter": "GetNearbyEnemyCombatRange",
+          "return_type": "int () const"
+        },
+        "OpenDefense": {
+          "member": "m_iOpenDefensePercent",
+          "reader": "GetInt",
+          "getter": "GetOpenDefensePercent",
+          "return_type": "int () const"
+        },
+        "RoughDefense": {
+          "member": "m_iRoughDefensePercent",
+          "reader": "GetInt",
+          "getter": "GetRoughDefensePercent",
+          "return_type": "int () const"
+        },
+        "ExtraAttacks": {
+          "member": "m_iExtraAttacks",
+          "reader": "GetInt",
+          "getter": "GetExtraAttacks",
+          "return_type": "int () const"
+        },
+        "GreatGeneral": {
+          "member": "m_bGreatGeneral",
+          "reader": "GetBool",
+          "getter": "IsGreatGeneral",
+          "return_type": "bool () const"
+        },
+        "GreatAdmiral": {
+          "member": "m_bGreatAdmiral",
+          "reader": "GetBool",
+          "getter": "IsGreatAdmiral",
+          "return_type": "bool () const"
+        },
+        "GreatGeneralModifier": {
+          "member": "m_iGreatGeneralModifier",
+          "reader": "GetInt",
+          "getter": "GetGreatGeneralModifier",
+          "return_type": "int () const"
+        },
+        "GreatGeneralReceivesMovement": {
+          "member": "m_bGreatGeneralReceivesMovement",
+          "reader": "GetBool",
+          "getter": "IsGreatGeneralReceivesMovement",
+          "return_type": "bool () const"
+        },
+        "EmbarkedUnitReceivesMovement": {
+          "member": "m_bEmbarkedUnitReceivesMovement",
+          "reader": "GetBool",
+          "getter": "IsEmbarkedUnitReceivesMovement",
+          "return_type": "bool () const"
+        },
+        "LandUnitReceivesMovement": {
+          "member": "m_bLandUnitReceivesMovement",
+          "reader": "GetBool",
+          "getter": "IsLandUnitReceivesMovement",
+          "return_type": "bool () const"
+        },
+        "GreatGeneralCombatModifier": {
+          "member": "m_iGreatGeneralCombatModifier",
+          "reader": "GetInt",
+          "getter": "GetGreatGeneralCombatModifier",
+          "return_type": "int () const"
+        },
+        "FriendlyLandsModifier": {
+          "member": "m_iFriendlyLandsModifier",
+          "reader": "GetInt",
+          "getter": "GetFriendlyLandsModifier",
+          "return_type": "int () const"
+        },
+        "OutsideFriendlyLandsModifier": {
+          "member": "m_iOutsideFriendlyLandsModifier",
+          "reader": "GetInt",
+          "getter": "GetOutsideFriendlyLandsModifier",
+          "return_type": "int () const"
+        },
+        "PillageChange": {
+          "member": "m_iPillageChange",
+          "reader": "GetInt",
+          "getter": "GetPillageChange",
+          "return_type": "int () const"
+        },
+        "PillageXPChange": {
+          "member": "m_iPillageXPChange",
+          "reader": "GetInt",
+          "getter": "GetPillageXPChange",
+          "return_type": "int () const"
+        },
+        "PillageHealChange": {
+          "member": "m_iPillageHealChange",
+          "reader": "GetInt",
+          "getter": "GetPillageHealChange",
+          "return_type": "int () const"
+        },
+        "UpgradeDiscount": {
+          "member": "m_iUpgradeDiscount",
+          "reader": "GetInt",
+          "getter": "GetUpgradeDiscount",
+          "return_type": "int () const"
+        },
+        "ExperiencePercent": {
+          "member": "m_iExperiencePercent",
+          "reader": "GetInt",
+          "getter": "GetExperiencePercent",
+          "return_type": "int () const"
+        },
+        "AttackMod": {
+          "member": "m_iAttackMod",
+          "reader": "GetInt",
+          "getter": "GetAttackMod",
+          "return_type": "int () const"
+        },
+        "DefenseMod": {
+          "member": "m_iDefenseMod",
+          "reader": "GetInt",
+          "getter": "GetDefenseMod",
+          "return_type": "int () const"
+        },
+        "DropRange": {
+          "member": "m_iDropRange",
+          "reader": "GetInt",
+          "getter": "GetDropRange",
+          "return_type": "int () const"
+        },
+        "ExtraNavalMovement": {
+          "member": "m_iExtraNavalMoves",
+          "reader": "GetInt",
+          "getter": "GetExtraNavalMoves",
+          "return_type": "int () const"
+        },
+        "HPHealedIfDestroyEnemy": {
+          "member": "m_iHPHealedIfDefeatEnemy",
+          "reader": "GetInt",
+          "getter": "GetHPHealedIfDefeatEnemy",
+          "return_type": "int () const"
+        },
+        "GoldenAgeValueFromKills": {
+          "member": "m_iGoldenAgeValueFromKills",
+          "reader": "GetInt",
+          "getter": "GetGoldenAgeValueFromKills",
+          "return_type": "int () const"
+        },
+        "ExtraWithdrawal": {
+          "member": "m_iExtraWithdrawal",
+          "reader": "GetInt",
+          "getter": "GetExtraWithdrawal",
+          "return_type": "int () const"
+        },
+        "EmbarkExtraVisibility": {
+          "member": "m_iEmbarkExtraVisibility",
+          "reader": "GetInt",
+          "getter": "GetEmbarkExtraVisibility",
+          "return_type": "int () const"
+        },
+        "EmbarkDefenseModifier": {
+          "member": "m_iEmbarkDefenseModifier",
+          "reader": "GetInt",
+          "getter": "GetEmbarkDefenseModifier",
+          "return_type": "int () const"
+        },
+        "CapitalDefenseModifier": {
+          "member": "m_iCapitalDefenseModifier",
+          "reader": "GetInt",
+          "getter": "GetCapitalDefenseModifier",
+          "return_type": "int () const"
+        },
+        "CapitalDefenseFalloff": {
+          "member": "m_iCapitalDefenseFalloff",
+          "reader": "GetInt",
+          "getter": "GetCapitalDefenseFalloff",
+          "return_type": "int () const"
+        },
+        "CityAttackPlunderModifier": {
+          "member": "m_iCityAttackPlunderModifier",
+          "reader": "GetInt",
+          "getter": "GetCityAttackPlunderModifier",
+          "return_type": "int () const"
+        },
+        "CityMovementPenalty": {
+          "member": "m_iCityAttackMovePenalty",
+          "reader": "GetInt",
+          "getter": "GetCityAttackMovePenalty",
+          "return_type": "int () const"
+        },
+        "ReligiousStrengthLossRivalTerritory": {
+          "member": "m_iReligiousStrengthLossRivalTerritory",
+          "reader": "GetInt",
+          "getter": "GetReligiousStrengthLossRivalTerritory",
+          "return_type": "int () const"
+        },
+        "TradeMissionInfluenceModifier": {
+          "member": "m_iTradeMissionInfluenceModifier",
+          "reader": "GetInt",
+          "getter": "GetTradeMissionInfluenceModifier",
+          "return_type": "int () const"
+        },
+        "TradeMissionGoldModifier": {
+          "member": "m_iTradeMissionGoldModifier",
+          "reader": "GetInt",
+          "getter": "GetTradeMissionGoldModifier",
+          "return_type": "int () const"
+        },
+        "NearbyWaterCombatModifier": {
+          "member": "m_iNearbyWaterCombatModifier",
+          "reader": "GetInt",
+          "getter": "GetNearbyWaterCombatModifier",
+          "return_type": "int () const"
+        },
+        "AttackExtraMoves": {
+          "member": "m_iAttackExtraMoves",
+          "reader": "GetInt",
+          "getter": "GetAttackExtraMoves",
+          "return_type": "int () const"
+        },
+        "KillRefreshMove": {
+          "member": "m_bKillRefreshMove",
+          "reader": "GetBool",
+          "getter": "IsKillRefreshMove",
+          "return_type": "bool () const"
+        }
+      },
+      "unmapped": [
+        "GiveDomain",
+        "Invisible",
+        "OrderPriority",
+        "SeeInvisible",
+        "TechPrereq"
+      ],
+      "configured_fields": 110,
+      "getter": "getPromotionInfo",
+      "count": "getNumPromotionInfos",
+      "index_type": "PromotionTypes"
+    },
+    {
+      "table": "Traits",
+      "class": "CvTraitEntry",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTraitClasses.cpp",
+      "source_sha256": "d6dd5261df9ef25ac73f82ac747d40d732b0b04397572d1b8b1c51c2b9763611",
+      "bindings": {
+        "LevelExperienceModifier": {
+          "member": "m_iLevelExperienceModifier",
+          "reader": "GetInt",
+          "getter": "GetLevelExperienceModifier",
+          "return_type": "int () const"
+        },
+        "GreatPeopleRateModifier": {
+          "member": "m_iGreatPeopleRateModifier",
+          "reader": "GetInt",
+          "getter": "GetGreatPeopleRateModifier",
+          "return_type": "int () const"
+        },
+        "GreatScientistRateModifier": {
+          "member": "m_iGreatScientistRateModifier",
+          "reader": "GetInt",
+          "getter": "GetGreatScientistRateModifier",
+          "return_type": "int () const"
+        },
+        "GreatGeneralRateModifier": {
+          "member": "m_iGreatGeneralRateModifier",
+          "reader": "GetInt",
+          "getter": "GetGreatGeneralRateModifier",
+          "return_type": "int () const"
+        },
+        "GreatGeneralExtraBonus": {
+          "member": "m_iGreatGeneralExtraBonus",
+          "reader": "GetInt",
+          "getter": "GetGreatGeneralExtraBonus",
+          "return_type": "int () const"
+        },
+        "GreatPersonGiftInfluence": {
+          "member": "m_iGreatPersonGiftInfluence",
+          "reader": "GetInt",
+          "getter": "GetGreatPersonGiftInfluence",
+          "return_type": "int () const"
+        },
+        "CityUnhappinessModifier": {
+          "member": "m_iCityUnhappinessModifier",
+          "reader": "GetInt",
+          "getter": "GetCityUnhappinessModifier",
+          "return_type": "int () const"
+        },
+        "PopulationUnhappinessModifier": {
+          "member": "m_iPopulationUnhappinessModifier",
+          "reader": "GetInt",
+          "getter": "GetPopulationUnhappinessModifier",
+          "return_type": "int () const"
+        },
+        "CityStateBonusModifier": {
+          "member": "m_iCityStateBonusModifier",
+          "reader": "GetInt",
+          "getter": "GetCityStateBonusModifier",
+          "return_type": "int () const"
+        },
+        "CityStateFriendshipModifier": {
+          "member": "m_iCityStateFriendshipModifier",
+          "reader": "GetInt",
+          "getter": "GetCityStateFriendshipModifier",
+          "return_type": "int () const"
+        },
+        "FirstProphetCostMod": {
+          "member": "m_iFirstProphetCostMod",
+          "reader": "GetInt",
+          "getter": "GetFirstProphetCostMod",
+          "return_type": "int () const"
+        },
+        "CityStateCombatModifier": {
+          "member": "m_iCityStateCombatModifier",
+          "reader": "GetInt",
+          "getter": "GetCityStateCombatModifier",
+          "return_type": "int () const"
+        },
+        "CapitalBuildingModifier": {
+          "member": "m_iCapitalBuildingModifier",
+          "reader": "GetInt",
+          "getter": "GetCapitalBuildingModifier",
+          "return_type": "int () const"
+        },
+        "PlotBuyCostModifier": {
+          "member": "m_iPlotBuyCostModifier",
+          "reader": "GetInt",
+          "getter": "GetPlotBuyCostModifier",
+          "return_type": "int () const"
+        },
+        "PlotCultureCostModifier": {
+          "member": "m_iPlotCultureCostModifier",
+          "reader": "GetInt",
+          "getter": "GetPlotCultureCostModifier",
+          "return_type": "int () const"
+        },
+        "CultureFromKills": {
+          "member": "m_iCultureFromKills",
+          "reader": "GetInt",
+          "getter": "GetCultureFromKills",
+          "return_type": "int () const"
+        },
+        "CapitalThemingBonusModifier": {
+          "member": "m_iCapitalThemingBonusModifier",
+          "reader": "GetInt",
+          "getter": "GetCapitalThemingBonusModifier",
+          "return_type": "int () const"
+        },
+        "PolicyCostModifier": {
+          "member": "m_iPolicyCostModifier",
+          "reader": "GetInt",
+          "getter": "GetPolicyCostModifier",
+          "return_type": "int () const"
+        },
+        "CityConnectionTradeRouteChange": {
+          "member": "m_iCityConnectionTradeRouteChange",
+          "reader": "GetInt",
+          "getter": "GetCityConnectionTradeRouteChange",
+          "return_type": "int () const"
+        },
+        "WonderProductionModifier": {
+          "member": "m_iWonderProductionModifier",
+          "reader": "GetInt",
+          "getter": "GetWonderProductionModifier",
+          "return_type": "int () const"
+        },
+        "PlunderModifier": {
+          "member": "m_iPlunderModifier",
+          "reader": "GetInt",
+          "getter": "GetPlunderModifier",
+          "return_type": "int () const"
+        },
+        "ImprovementMaintenanceModifier": {
+          "member": "m_iImprovementMaintenanceModifier",
+          "reader": "GetInt",
+          "getter": "GetImprovementMaintenanceModifier",
+          "return_type": "int () const"
+        },
+        "GoldenAgeDurationModifier": {
+          "member": "m_iGoldenAgeDurationModifier",
+          "reader": "GetInt",
+          "getter": "GetGoldenAgeDurationModifier",
+          "return_type": "int () const"
+        },
+        "GoldenAgeMoveChange": {
+          "member": "m_iGoldenAgeMoveChange",
+          "reader": "GetInt",
+          "getter": "GetGoldenAgeMoveChange",
+          "return_type": "int () const"
+        },
+        "GoldenAgeGreatArtistRateModifier": {
+          "member": "m_iGoldenAgeGreatArtistRateModifier",
+          "reader": "GetInt",
+          "getter": "GetGoldenAgeGreatArtistRateModifier",
+          "return_type": "int () const"
+        },
+        "GoldenAgeGreatMusicianRateModifier": {
+          "member": "m_iGoldenAgeGreatMusicianRateModifier",
+          "reader": "GetInt",
+          "getter": "GetGoldenAgeGreatMusicianRateModifier",
+          "return_type": "int () const"
+        },
+        "GoldenAgeGreatWriterRateModifier": {
+          "member": "m_iGoldenAgeGreatWriterRateModifier",
+          "reader": "GetInt",
+          "getter": "GetGoldenAgeGreatWriterRateModifier",
+          "return_type": "int () const"
+        },
+        "ExtraEmbarkMoves": {
+          "member": "m_iExtraEmbarkMoves",
+          "reader": "GetInt",
+          "getter": "GetExtraEmbarkMoves",
+          "return_type": "int () const"
+        },
+        "NaturalWonderFirstFinderGold": {
+          "member": "m_iNaturalWonderFirstFinderGold",
+          "reader": "GetInt",
+          "getter": "GetNaturalWonderFirstFinderGold",
+          "return_type": "int () const"
+        },
+        "NaturalWonderSubsequentFinderGold": {
+          "member": "m_iNaturalWonderSubsequentFinderGold",
+          "reader": "GetInt",
+          "getter": "GetNaturalWonderSubsequentFinderGold",
+          "return_type": "int () const"
+        },
+        "HalfMoreSpecialistUnhappiness": {
+          "member": "m_bHalfMoreSpecialistUnhappiness",
+          "reader": "GetBool",
+          "getter": "IsHalfMoreSpecialistUnhappiness",
+          "return_type": "bool () const"
+        },
+        "MinorFriendshipMinimum": {
+          "member": "m_iMinorFriendshipMinimum",
+          "reader": "GetInt",
+          "getter": "GetMinorFriendshipMinimum",
+          "return_type": "int () const"
+        },
+        "GreatEngineerRateModifier": {
+          "member": "m_iGreatEngineerRateModifier",
+          "reader": "GetInt",
+          "getter": "GetGreatEngineerRateModifier",
+          "return_type": "int () const"
+        },
+        "MinorBullyModifier": {
+          "member": "m_iMinorBullyModifier",
+          "reader": "GetInt",
+          "getter": "GetMinorBullyModifier",
+          "return_type": "int () const"
+        },
+        "GlobalHappinessPerCity": {
+          "member": "m_iGlobalHappinessPerCity",
+          "reader": "GetInt",
+          "getter": "GetGlobalHappinessPerCity",
+          "return_type": "int () const"
+        },
+        "UnhappinessModifierForPuppetedCities": {
+          "member": "m_iUnhappinessModifierForPuppetedCities",
+          "reader": "GetInt",
+          "getter": "GetUnhappinessModifierForPuppetedCities",
+          "return_type": "int () const"
+        },
+        "FaithCostModifier": {
+          "member": "m_iFaithCostModifier",
+          "reader": "GetInt",
+          "getter": "GetFaithCostModifier",
+          "return_type": "int () const"
+        },
+        "IdeologyPressureUnhappinessModifier": {
+          "member": "m_iIdeologyPressureUnhappinessModifier",
+          "reader": "GetInt",
+          "getter": "GetIdeologyPressureUnhappinessModifier",
+          "return_type": "int () const"
+        },
+        "ForeignRelgionPressureModifier": {
+          "member": "m_iForeignRelgionPressureModifier",
+          "reader": "GetInt",
+          "getter": "GetForeignRelgionPressureModifier",
+          "return_type": "int () const"
+        },
+        "FriendlyLandsCitizenMoveChange": {
+          "member": "m_iFriendlyLandsCitizenMoveChange",
+          "reader": "GetInt",
+          "getter": "GetFriendlyLandsCitizenMoveChange",
+          "return_type": "int () const"
+        },
+        "EmbarkedUnitsFullStrength": {
+          "member": "m_bEmbarkedUnitsFullStrength",
+          "reader": "GetBool",
+          "getter": "IsEmbarkedUnitsFullStrength",
+          "return_type": "bool () const"
+        },
+        "CityStateUnitGiftExtraExperience": {
+          "member": "m_iCityStateUnitGiftExtraExperience",
+          "reader": "GetInt",
+          "getter": "GetCityStateUnitGiftExtraExperience",
+          "return_type": "int () const"
+        },
+        "GreatGeneralSiegeBonus": {
+          "member": "m_iGreatGeneralSiegeBonus",
+          "reader": "GetInt",
+          "getter": "GetGreatGeneralSiegeBonus",
+          "return_type": "int () const"
+        },
+        "ReligionEnhanceReformation": {
+          "member": "m_bReligionEnhanceReformation",
+          "reader": "GetBool",
+          "getter": "IsReligionEnhanceReformation",
+          "return_type": "bool () const"
+        },
+        "SelfReligiousPressureModifier": {
+          "member": "m_iSelfReligiousPressureModifier",
+          "reader": "GetInt",
+          "getter": "GetSelfReligiousPressureModifier",
+          "return_type": "int () const"
+        },
+        "NaturalWonderFirstFinderFaith": {
+          "member": "m_iNaturalWonderFirstFinderFaith",
+          "reader": "GetInt",
+          "getter": "GetNaturalWonderFirstFinderFaith",
+          "return_type": "int () const"
+        },
+        "NaturalWonderSubsequentFinderFaith": {
+          "member": "m_iNaturalWonderSubsequentFinderFaith",
+          "reader": "GetInt",
+          "getter": "GetNaturalWonderSubsequentFinderFaith",
+          "return_type": "int () const"
+        },
+        "NaturalWonderYieldModifier": {
+          "member": "m_iNaturalWonderYieldModifier",
+          "reader": "GetInt",
+          "getter": "GetNaturalWonderYieldModifier",
+          "return_type": "int () const"
+        },
+        "NaturalWonderHappinessModifier": {
+          "member": "m_iNaturalWonderHappinessModifier",
+          "reader": "GetInt",
+          "getter": "GetNaturalWonderHappinessModifier",
+          "return_type": "int () const"
+        },
+        "NearbyImprovementCombatBonus": {
+          "member": "m_iNearbyImprovementCombatBonus",
+          "reader": "GetInt",
+          "getter": "GetNearbyImprovementCombatBonus",
+          "return_type": "int () const"
+        },
+        "NearbyImprovementBonusRange": {
+          "member": "m_iNearbyImprovementBonusRange",
+          "reader": "GetInt",
+          "getter": "GetNearbyImprovementBonusRange",
+          "return_type": "int () const"
+        },
+        "CombatBonusVsLargerCiv": {
+          "member": "m_iCombatBonusVsLargerCiv",
+          "reader": "GetInt",
+          "getter": "GetCombatBonusVsLargerCiv",
+          "return_type": "int () const"
+        },
+        "NavalUnitMaintenanceModifier": {
+          "member": "m_iNavalUnitMaintenanceModifier",
+          "reader": "GetInt",
+          "getter": "GetNavalUnitMaintenanceModifier",
+          "return_type": "int () const"
+        },
+        "RazeSpeedModifier": {
+          "member": "m_iRazeSpeedModifier",
+          "reader": "GetInt",
+          "getter": "GetRazeSpeedModifier",
+          "return_type": "int () const"
+        },
+        "ExtraHappinessPerLuxury": {
+          "member": "m_iExtraHappinessPerLuxury",
+          "reader": "GetInt",
+          "getter": "GetExtraHappinessPerLuxury",
+          "return_type": "int () const"
+        },
+        "ExtraSpies": {
+          "member": "m_iExtraSpies",
+          "reader": "GetInt",
+          "getter": "GetExtraSpies",
+          "return_type": "int () const"
+        },
+        "HappinessPerReligion": {
+          "member": "m_iHappinessPerReligion",
+          "reader": "GetInt",
+          "getter": "GetHappinessPerReligion",
+          "return_type": "int () const"
+        },
+        "ExtraFoundedCityTerritoryClaimRange": {
+          "member": "m_iExtraFoundedCityTerritoryClaimRange",
+          "reader": "GetInt",
+          "getter": "GetExtraFoundedCityTerritoryClaimRange",
+          "return_type": "int () const"
+        },
+        "NumTradeRoutesModifier": {
+          "member": "m_iNumTradeRoutesModifier",
+          "reader": "GetInt",
+          "getter": "GetNumTradeRoutesModifier",
+          "return_type": "int () const"
+        },
+        "TradeRouteResourceModifier": {
+          "member": "m_iTradeRouteResourceModifier",
+          "reader": "GetInt",
+          "getter": "GetTradeRouteResourceModifier",
+          "return_type": "int () const"
+        },
+        "WorkerSpeedModifier": {
+          "member": "m_iWorkerSpeedModifier",
+          "reader": "GetInt",
+          "getter": "GetWorkerSpeedModifier",
+          "return_type": "int () const"
+        },
+        "AfraidMinorPerTurnInfluence": {
+          "member": "m_iAfraidMinorPerTurnInfluence",
+          "reader": "GetInt",
+          "getter": "GetAfraidMinorPerTurnInfluence",
+          "return_type": "int () const"
+        },
+        "FightWellDamaged": {
+          "member": "m_bFightWellDamaged",
+          "reader": "GetBool",
+          "getter": "IsFightWellDamaged",
+          "return_type": "bool () const"
+        },
+        "MoveFriendlyWoodsAsRoad": {
+          "member": "m_bMoveFriendlyWoodsAsRoad",
+          "reader": "GetBool",
+          "getter": "IsMoveFriendlyWoodsAsRoad",
+          "return_type": "bool () const"
+        },
+        "FasterAlongRiver": {
+          "member": "m_bFasterAlongRiver",
+          "reader": "GetBool",
+          "getter": "IsFasterAlongRiver",
+          "return_type": "bool () const"
+        },
+        "FasterInHills": {
+          "member": "m_bFasterInHills",
+          "reader": "GetBool",
+          "getter": "IsFasterInHills",
+          "return_type": "bool () const"
+        },
+        "EmbarkedAllWater": {
+          "member": "m_bEmbarkedAllWater",
+          "reader": "GetBool",
+          "getter": "IsEmbarkedAllWater",
+          "return_type": "bool () const"
+        },
+        "EmbarkedToLandFlatCost": {
+          "member": "m_bEmbarkedToLandFlatCost",
+          "reader": "GetBool",
+          "getter": "IsEmbarkedToLandFlatCost",
+          "return_type": "bool () const"
+        },
+        "CiviliansEmbarkOneMove": {
+          "member": "m_bCiviliansEmbarkOneMove",
+          "reader": "GetBool",
+          "getter": "IsCiviliansEmbarkOneMove",
+          "return_type": "bool () const"
+        },
+        "NoHillsImprovementMaintenance": {
+          "member": "m_bNoHillsImprovementMaintenance",
+          "reader": "GetBool",
+          "getter": "IsNoHillsImprovementMaintenance",
+          "return_type": "bool () const"
+        },
+        "FaithFromUnimprovedForest": {
+          "member": "m_bFaithFromUnimprovedForest",
+          "reader": "GetBool",
+          "getter": "IsFaithFromUnimprovedForest",
+          "return_type": "bool () const"
+        },
+        "SeaTradeRoutesArePlunderImmune": {
+          "member": "m_bSeaTradeRoutesArePlunderImmune",
+          "reader": "GetBool",
+          "getter": "IsSeaTradeRoutesArePlunderImmune",
+          "return_type": "bool () const"
+        },
+        "BonusReligiousBelief": {
+          "member": "m_bBonusReligiousBelief",
+          "reader": "GetBool",
+          "getter": "IsBonusReligiousBelief",
+          "return_type": "bool () const"
+        },
+        "AbleToAnnexCityStates": {
+          "member": "m_bAbleToAnnexCityStates",
+          "reader": "GetBool",
+          "getter": "IsAbleToAnnexCityStates",
+          "return_type": "bool () const"
+        },
+        "CrossesMountainsAfterGreatGeneral": {
+          "member": "m_bCrossesMountainsAfterGreatGeneral",
+          "reader": "GetBool",
+          "getter": "IsCrossesMountainsAfterGreatGeneral",
+          "return_type": "bool () const"
+        },
+        "MayaCalendarBonuses": {
+          "member": "m_bMayaCalendarBonuses",
+          "reader": "GetBool",
+          "getter": "IsMayaCalendarBonuses",
+          "return_type": "bool () const"
+        },
+        "NoAnnexing": {
+          "member": "m_bNoAnnexing",
+          "reader": "GetBool",
+          "getter": "IsNoAnnexing",
+          "return_type": "bool () const"
+        }
+      },
+      "unmapped": [
+        "CapitalFreeBuildingPrereqTech",
+        "CombatBonusImprovement",
+        "FreeBuilding",
+        "FreeBuildingOnConquest",
+        "FreeCapitalBuilding",
+        "FreeUnit",
+        "FreeUnitPrereqTech",
+        "ObsoleteTech",
+        "PrereqTech",
+        "YieldSettleUnit"
+      ],
+      "configured_fields": 87,
+      "getter": "getTraitInfo",
+      "count": "getNumTraitInfos",
+      "index_type": "TraitTypes"
+    },
+    {
+      "table": "Policies",
+      "class": "CvPolicyEntry",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPolicyClasses.cpp",
+      "source_sha256": "7a409a449b69feab94f617d423985048f8414ee4761f5dba36d743c9c343dfe8",
+      "bindings": {
+        "CultureCost": {
+          "member": "m_iCultureCost",
+          "reader": "GetInt",
+          "getter": "GetCultureCost",
+          "return_type": "int () const"
+        },
+        "Level": {
+          "member": "m_iLevel",
+          "reader": "GetInt",
+          "getter": "GetLevel",
+          "return_type": "int () const"
+        },
+        "CulturePerCity": {
+          "member": "m_iCulturePerCity",
+          "reader": "GetInt",
+          "getter": "GetCulturePerCity",
+          "return_type": "int () const"
+        },
+        "CultureFromKills": {
+          "member": "m_iCultureFromKills",
+          "reader": "GetInt",
+          "getter": "GetCultureFromKills",
+          "return_type": "int () const"
+        },
+        "GoldFromKills": {
+          "member": "m_iGoldFromKills",
+          "reader": "GetInt",
+          "getter": "GetGoldFromKills",
+          "return_type": "int () const"
+        },
+        "ScienceFromKills": {
+          "member": "m_iScienceFromKills",
+          "reader": "GetInt",
+          "getter": "GetScienceFromKills",
+          "return_type": "int () const"
+        },
+        "AttackBonusTurns": {
+          "member": "m_iAttackBonusTurns",
+          "reader": "GetInt",
+          "getter": "GetAttackBonusTurns",
+          "return_type": "int () const"
+        },
+        "GoldenAgeTurns": {
+          "member": "m_iGoldenAgeTurns",
+          "reader": "GetInt",
+          "getter": "GetGoldenAgeTurns",
+          "return_type": "int () const"
+        },
+        "GoldenAgeDurationMod": {
+          "member": "m_iGoldenAgeDurationMod",
+          "reader": "GetInt",
+          "getter": "GetGoldenAgeDurationMod",
+          "return_type": "int () const"
+        },
+        "NumFreePolicies": {
+          "member": "m_iNumFreePolicies",
+          "reader": "GetInt",
+          "getter": "GetNumFreePolicies",
+          "return_type": "int () const"
+        },
+        "NumFreeGreatPeople": {
+          "member": "m_iNumFreeGreatPeople",
+          "reader": "GetInt",
+          "getter": "GetNumFreeGreatPeople",
+          "return_type": "int () const"
+        },
+        "NumExtraSpies": {
+          "member": "m_iNumExtraSpies",
+          "reader": "GetInt",
+          "getter": "GetNumExtraSpies",
+          "return_type": "int () const"
+        },
+        "NumExtraLeagueVotes": {
+          "member": "m_iNumExtraLeagueVotes",
+          "reader": "GetInt",
+          "getter": "GetNumExtraLeagueVotes",
+          "return_type": "int () const"
+        },
+        "NumTradeRouteBonus": {
+          "member": "m_iNumTradeRouteBonus",
+          "reader": "GetInt",
+          "getter": "GetNumTradeRouteBonus",
+          "return_type": "int () const"
+        },
+        "StrategicResourceMod": {
+          "member": "m_iStrategicResourceMod",
+          "reader": "GetInt",
+          "getter": "GetStrategicResourceMod",
+          "return_type": "int () const"
+        },
+        "WonderProductionModifier": {
+          "member": "m_iWonderProductionModifier",
+          "reader": "GetInt",
+          "getter": "GetWonderProductionModifier",
+          "return_type": "int () const"
+        },
+        "BuildingProductionModifier": {
+          "member": "m_iBuildingProductionModifier",
+          "reader": "GetInt",
+          "getter": "GetBuildingProductionModifier",
+          "return_type": "int () const"
+        },
+        "GreatPeopleRateModifier": {
+          "member": "m_iGreatPeopleRateModifier",
+          "reader": "GetInt",
+          "getter": "GetGreatPeopleRateModifier",
+          "return_type": "int () const"
+        },
+        "GreatAdmiralRateModifier": {
+          "member": "m_iGreatAdmiralRateModifier",
+          "reader": "GetInt",
+          "getter": "GetGreatAdmiralRateModifier",
+          "return_type": "int () const"
+        },
+        "GreatWriterRateModifier": {
+          "member": "m_iGreatWriterRateModifier",
+          "reader": "GetInt",
+          "getter": "GetGreatWriterRateModifier",
+          "return_type": "int () const"
+        },
+        "GreatArtistRateModifier": {
+          "member": "m_iGreatArtistRateModifier",
+          "reader": "GetInt",
+          "getter": "GetGreatArtistRateModifier",
+          "return_type": "int () const"
+        },
+        "GreatMusicianRateModifier": {
+          "member": "m_iGreatMusicianRateModifier",
+          "reader": "GetInt",
+          "getter": "GetGreatMusicianRateModifier",
+          "return_type": "int () const"
+        },
+        "GreatMerchantRateModifier": {
+          "member": "m_iGreatMerchantRateModifier",
+          "reader": "GetInt",
+          "getter": "GetGreatMerchantRateModifier",
+          "return_type": "int () const"
+        },
+        "GreatScientistRateModifier": {
+          "member": "m_iGreatScientistRateModifier",
+          "reader": "GetInt",
+          "getter": "GetGreatScientistRateModifier",
+          "return_type": "int () const"
+        },
+        "ExtraHappiness": {
+          "member": "m_iExtraHappiness",
+          "reader": "GetInt",
+          "getter": "GetExtraHappiness",
+          "return_type": "int () const"
+        },
+        "UnhappinessMod": {
+          "member": "m_iUnhappinessMod",
+          "reader": "GetInt",
+          "getter": "GetUnhappinessMod",
+          "return_type": "int () const"
+        },
+        "CapitalUnhappinessMod": {
+          "member": "m_iCapitalUnhappinessMod",
+          "reader": "GetInt",
+          "getter": "GetCapitalUnhappinessMod",
+          "return_type": "int () const"
+        },
+        "FreeExperience": {
+          "member": "m_iFreeExperience",
+          "reader": "GetInt",
+          "getter": "GetFreeExperience",
+          "return_type": "int () const"
+        },
+        "WorkerSpeedModifier": {
+          "member": "m_iWorkerSpeedModifier",
+          "reader": "GetInt",
+          "getter": "GetWorkerSpeedModifier",
+          "return_type": "int () const"
+        },
+        "MilitaryProductionModifier": {
+          "member": "m_iMilitaryProductionModifier",
+          "reader": "GetInt",
+          "getter": "GetMilitaryProductionModifier",
+          "return_type": "int () const"
+        },
+        "BaseFreeUnits": {
+          "member": "m_iBaseFreeUnits",
+          "reader": "GetInt",
+          "getter": "GetBaseFreeUnits",
+          "return_type": "int () const"
+        },
+        "HappinessPerGarrisonedUnit": {
+          "member": "m_iHappinessPerGarrisonedUnit",
+          "reader": "GetInt",
+          "getter": "GetHappinessPerGarrisonedUnit",
+          "return_type": "int () const"
+        },
+        "CulturePerGarrisonedUnit": {
+          "member": "m_iCulturePerGarrisonedUnit",
+          "reader": "GetInt",
+          "getter": "GetCulturePerGarrisonedUnit",
+          "return_type": "int () const"
+        },
+        "HappinessPerTradeRoute": {
+          "member": "m_iHappinessPerTradeRoute",
+          "reader": "GetInt",
+          "getter": "GetHappinessPerTradeRoute",
+          "return_type": "int () const"
+        },
+        "HappinessPerXPopulation": {
+          "member": "m_iHappinessPerXPopulation",
+          "reader": "GetInt",
+          "getter": "GetHappinessPerXPopulation",
+          "return_type": "int () const"
+        },
+        "ExtraHappinessPerLuxury": {
+          "member": "m_iExtraHappinessPerLuxury",
+          "reader": "GetInt",
+          "getter": "GetExtraHappinessPerLuxury",
+          "return_type": "int () const"
+        },
+        "PlotCultureExponentModifier": {
+          "member": "m_iPlotCultureExponentModifier",
+          "reader": "GetInt",
+          "getter": "GetPlotCultureExponentModifier",
+          "return_type": "int () const"
+        },
+        "NumCitiesPolicyCostDiscount": {
+          "member": "m_iNumCitiesPolicyCostDiscount",
+          "reader": "GetInt",
+          "getter": "GetNumCitiesPolicyCostDiscount",
+          "return_type": "int () const"
+        },
+        "GarrisonedCityRangeStrikeModifier": {
+          "member": "m_iGarrisonedCityRangeStrikeModifier",
+          "reader": "GetInt",
+          "getter": "GetGarrisonedCityRangeStrikeModifier",
+          "return_type": "int () const"
+        },
+        "UnitPurchaseCostModifier": {
+          "member": "m_iUnitPurchaseCostModifier",
+          "reader": "GetInt",
+          "getter": "GetUnitPurchaseCostModifier",
+          "return_type": "int () const"
+        },
+        "BuildingPurchaseCostModifier": {
+          "member": "m_iBuildingPurchaseCostModifier",
+          "reader": "GetInt",
+          "getter": "GetBuildingPurchaseCostModifier",
+          "return_type": "int () const"
+        },
+        "CityConnectionTradeRouteGoldModifier": {
+          "member": "m_iCityConnectionTradeRouteGoldModifier",
+          "reader": "GetInt",
+          "getter": "GetCityConnectionTradeRouteGoldModifier",
+          "return_type": "int () const"
+        },
+        "TradeMissionGoldModifier": {
+          "member": "m_iTradeMissionGoldModifier",
+          "reader": "GetInt",
+          "getter": "GetTradeMissionGoldModifier",
+          "return_type": "int () const"
+        },
+        "FaithCostModifier": {
+          "member": "m_iFaithCostModifier",
+          "reader": "GetInt",
+          "getter": "GetFaithCostModifier",
+          "return_type": "int () const"
+        },
+        "StealTechFasterModifier": {
+          "member": "m_iStealTechFasterModifier",
+          "reader": "GetInt",
+          "getter": "GetStealTechFasterModifier",
+          "return_type": "int () const"
+        },
+        "CatchSpiesModifier": {
+          "member": "m_iCatchSpiesModifier",
+          "reader": "GetInt",
+          "getter": "GetCatchSpiesModifier",
+          "return_type": "int () const"
+        },
+        "CityStrengthMod": {
+          "member": "m_iCityStrengthMod",
+          "reader": "GetInt",
+          "getter": "GetCityStrengthMod",
+          "return_type": "int () const"
+        },
+        "CityGrowthMod": {
+          "member": "m_iCityGrowthMod",
+          "reader": "GetInt",
+          "getter": "GetCityGrowthMod",
+          "return_type": "int () const"
+        },
+        "CapitalGrowthMod": {
+          "member": "m_iCapitalGrowthMod",
+          "reader": "GetInt",
+          "getter": "GetCapitalGrowthMod",
+          "return_type": "int () const"
+        },
+        "CapitalSettlerProductionModifier": {
+          "member": "m_iCapitalSettlerProductionModifier",
+          "reader": "GetInt",
+          "getter": "GetCapitalSettlerProductionModifier",
+          "return_type": "int () const"
+        },
+        "NewCityExtraPopulation": {
+          "member": "m_iNewCityExtraPopulation",
+          "reader": "GetInt",
+          "getter": "GetNewCityExtraPopulation",
+          "return_type": "int () const"
+        },
+        "RouteGoldMaintenanceMod": {
+          "member": "m_iRouteGoldMaintenanceMod",
+          "reader": "GetInt",
+          "getter": "GetRouteGoldMaintenanceMod",
+          "return_type": "int () const"
+        },
+        "BuildingGoldMaintenanceMod": {
+          "member": "m_iBuildingGoldMaintenanceMod",
+          "reader": "GetInt",
+          "getter": "GetBuildingGoldMaintenanceMod",
+          "return_type": "int () const"
+        },
+        "UnitGoldMaintenanceMod": {
+          "member": "m_iUnitGoldMaintenanceMod",
+          "reader": "GetInt",
+          "getter": "GetUnitGoldMaintenanceMod",
+          "return_type": "int () const"
+        },
+        "HappinessToScience": {
+          "member": "m_iHappinessToScience",
+          "reader": "GetInt",
+          "getter": "GetHappinessToScience",
+          "return_type": "int () const"
+        },
+        "NumCitiesFreeAestheticsSchools": {
+          "member": "m_iNumCitiesFreeAestheticsSchools",
+          "reader": "GetInt",
+          "getter": "GetNumCitiesFreeAestheticsSchools",
+          "return_type": "int () const"
+        },
+        "NumCitiesFreePietyGardens": {
+          "member": "m_iNumCitiesFreePietyGardens",
+          "reader": "GetInt",
+          "getter": "GetNumCitiesFreePietyGardens",
+          "return_type": "int () const"
+        },
+        "NumCitiesFreeCultureBuilding": {
+          "member": "m_iNumCitiesFreeCultureBuilding",
+          "reader": "GetInt",
+          "getter": "GetNumCitiesFreeCultureBuilding",
+          "return_type": "int () const"
+        },
+        "NumCitiesFreeFoodBuilding": {
+          "member": "m_iNumCitiesFreeFoodBuilding",
+          "reader": "GetInt",
+          "getter": "GetNumCitiesFreeFoodBuilding",
+          "return_type": "int () const"
+        },
+        "HalfSpecialistUnhappiness": {
+          "member": "m_bHalfSpecialistUnhappiness",
+          "reader": "GetBool",
+          "getter": "IsHalfSpecialistUnhappiness",
+          "return_type": "bool () const"
+        },
+        "HalfSpecialistFood": {
+          "member": "m_bHalfSpecialistFood",
+          "reader": "GetBool",
+          "getter": "IsHalfSpecialistFood",
+          "return_type": "bool () const"
+        },
+        "BarbarianCombatBonus": {
+          "member": "m_iBarbarianCombatBonus",
+          "reader": "GetInt",
+          "getter": "GetBarbarianCombatBonus",
+          "return_type": "int () const"
+        },
+        "AlwaysSeeBarbCamps": {
+          "member": "m_bAlwaysSeeBarbCamps",
+          "reader": "GetBool",
+          "getter": "IsAlwaysSeeBarbCamps",
+          "return_type": "bool () const"
+        },
+        "GarrisonFreeMaintenance": {
+          "member": "m_bGarrisonFreeMaintenance",
+          "reader": "GetBool",
+          "getter": "IsGarrisonFreeMaintenance",
+          "return_type": "bool () const"
+        },
+        "ExpModifier": {
+          "member": "m_iExpModifier",
+          "reader": "GetInt",
+          "getter": "GetExpModifier",
+          "return_type": "int () const"
+        },
+        "ExpInBorderModifier": {
+          "member": "m_iExpInBorderModifier",
+          "reader": "GetInt",
+          "getter": "GetExpInBorderModifier",
+          "return_type": "int () const"
+        },
+        "MinorGoldFriendshipMod": {
+          "member": "m_iMinorGoldFriendshipMod",
+          "reader": "GetInt",
+          "getter": "GetMinorGoldFriendshipMod",
+          "return_type": "int () const"
+        },
+        "MinorFriendshipMinimum": {
+          "member": "m_iMinorFriendshipMinimum",
+          "reader": "GetInt",
+          "getter": "GetMinorFriendshipMinimum",
+          "return_type": "int () const"
+        },
+        "MinorFriendshipDecayMod": {
+          "member": "m_iMinorFriendshipDecayMod",
+          "reader": "GetInt",
+          "getter": "GetMinorFriendshipDecayMod",
+          "return_type": "int () const"
+        },
+        "CityStateUnitFrequencyModifier": {
+          "member": "m_iCityStateUnitFrequencyModifier",
+          "reader": "GetInt",
+          "getter": "GetCityStateUnitFrequencyModifier",
+          "return_type": "int () const"
+        },
+        "CommonFoeTourismModifier": {
+          "member": "m_iCommonFoeTourismModifier",
+          "reader": "GetInt",
+          "getter": "GetCommonFoeTourismModifier",
+          "return_type": "int () const"
+        },
+        "LessHappyTourismModifier": {
+          "member": "m_iLessHappyTourismModifier",
+          "reader": "GetInt",
+          "getter": "GetLessHappyTourismModifier",
+          "return_type": "int () const"
+        },
+        "InternalTradeRouteGoldChange": {
+          "member": "m_iInternalTradeRouteGoldChange",
+          "reader": "GetInt",
+          "getter": "GetInternalTradeRouteGoldChange",
+          "return_type": "int () const"
+        },
+        "GlobalMoveChangeFriendly": {
+          "member": "m_iGlobalMoveChangeFriendly",
+          "reader": "GetInt",
+          "getter": "GetGlobalMoveChangeFriendly",
+          "return_type": "int () const"
+        },
+        "RiggingElectionModifier": {
+          "member": "m_iRiggingElectionModifier",
+          "reader": "GetInt",
+          "getter": "GetRiggingElectionModifier",
+          "return_type": "int () const"
+        },
+        "ProtectedMinorPerTurnInfluence": {
+          "member": "m_iProtectedMinorPerTurnInfluence",
+          "reader": "GetInt",
+          "getter": "GetProtectedMinorPerTurnInfluence",
+          "return_type": "int () const"
+        },
+        "MinorBullyScoreModifier": {
+          "member": "m_iMinorBullyScoreModifier",
+          "reader": "GetInt",
+          "getter": "GetMinorBullyScoreModifier",
+          "return_type": "int () const"
+        },
+        "MinorBullyInfluenceReward": {
+          "member": "m_iMinorBullyInfluenceReward",
+          "reader": "GetInt",
+          "getter": "GetMinorBullyInfluenceReward",
+          "return_type": "int () const"
+        },
+        "ThemingBonusMultiplier": {
+          "member": "m_iThemingBonusMultiplier",
+          "reader": "GetInt",
+          "getter": "GetThemingBonusMultiplier",
+          "return_type": "int () const"
+        },
+        "InternalTradeRouteYieldModifier": {
+          "member": "m_iInternalTradeRouteYieldModifier",
+          "reader": "GetInt",
+          "getter": "GetInternalTradeRouteYieldModifier",
+          "return_type": "int () const"
+        },
+        "MinorGreatPeopleAllies": {
+          "member": "m_bMinorGreatPeopleAllies",
+          "reader": "GetBool",
+          "getter": "IsMinorGreatPeopleAllies",
+          "return_type": "bool () const"
+        },
+        "MinorScienceAllies": {
+          "member": "m_bMinorScienceAllies",
+          "reader": "GetBool",
+          "getter": "IsMinorScienceAllies",
+          "return_type": "bool () const"
+        },
+        "MinorResourceBonus": {
+          "member": "m_bMinorResourceBonus",
+          "reader": "GetBool",
+          "getter": "IsMinorResourceBonus",
+          "return_type": "bool () const"
+        },
+        "MinorMilitaryNumExtraUnitsToGift": {
+          "member": "m_iMinorMilitaryNumExtraUnitsToGift",
+          "reader": "GetInt",
+          "getter": "GetMinorMilitaryNumExtraUnitsToGift",
+          "return_type": "int () const"
+        },
+        "CityStateBonusModifier": {
+          "member": "m_iCityStateBonusModifier",
+          "reader": "GetInt",
+          "getter": "GetCityStateBonusModifier",
+          "return_type": "int () const"
+        },
+        "ExtraTerritoryClaim": {
+          "member": "m_iExtraTerritoryClaim",
+          "reader": "GetInt",
+          "getter": "GetExtraTerritoryClaim",
+          "return_type": "int () const"
+        },
+        "IdeologyPressureUnhappinessModifier": {
+          "member": "m_iIdeologyPressureUnhappinessModifier",
+          "reader": "GetInt",
+          "getter": "GetIdeologyPressureUnhappinessModifier",
+          "return_type": "int () const"
+        },
+        "SecondReligionPantheon": {
+          "member": "m_bSecondReligionPantheon",
+          "reader": "GetBool",
+          "getter": "IsSecondReligionPantheon",
+          "return_type": "bool () const"
+        },
+        "AddReformationBelief": {
+          "member": "m_bAddReformationBelief",
+          "reader": "GetBool",
+          "getter": "IsAddReformationBelief",
+          "return_type": "bool () const"
+        },
+        "EnablesSSPartHurry": {
+          "member": "m_bEnablesSSPartHurry",
+          "reader": "GetBool",
+          "getter": "IsEnablesSSPartHurry",
+          "return_type": "bool () const"
+        },
+        "EnablesSSPartPurchase": {
+          "member": "m_bEnablesSSPartPurchase",
+          "reader": "GetBool",
+          "getter": "IsEnablesSSPartPurchase",
+          "return_type": "bool () const"
+        },
+        "OneShot": {
+          "member": "m_bOneShot",
+          "reader": "GetBool",
+          "getter": "IsOneShot",
+          "return_type": "bool () const"
+        },
+        "IncludesOneShotFreeUnits": {
+          "member": "m_bIncludesOneShotFreeUnits",
+          "reader": "GetBool",
+          "getter": "IncludesOneShotFreeUnits",
+          "return_type": "bool () const"
+        }
+      },
+      "unmapped": [
+        "MinorBullyNoPenalty",
+        "PolicyBranchType"
+      ],
+      "configured_fields": 95,
+      "getter": "getPolicyInfo",
+      "count": "getNumPolicyInfos",
+      "index_type": "PolicyTypes"
+    },
+    {
+      "table": "Beliefs",
+      "class": "CvBeliefEntry",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvBeliefClasses.cpp",
+      "source_sha256": "cac6cfd7bce7ec20e87edb14ff0263cbbe1c373db1b5f61f445e3aefb1121cb4",
+      "bindings": {
+        "MinPopulation": {
+          "member": "m_iMinPopulation",
+          "reader": "GetInt",
+          "getter": "GetMinPopulation",
+          "return_type": "int () const"
+        },
+        "CityGrowthModifier": {
+          "member": "m_iCityGrowthModifier",
+          "reader": "GetInt",
+          "getter": "GetCityGrowthModifier",
+          "return_type": "int () const"
+        },
+        "RiverHappiness": {
+          "member": "m_iRiverHappiness",
+          "reader": "GetInt",
+          "getter": "GetRiverHappiness",
+          "return_type": "int () const"
+        },
+        "HappinessPerCity": {
+          "member": "m_iHappinessPerCity",
+          "reader": "GetInt",
+          "getter": "GetHappinessPerCity",
+          "return_type": "int () const"
+        },
+        "PlotCultureCostModifier": {
+          "member": "m_iPlotCultureCostModifier",
+          "reader": "GetInt",
+          "getter": "GetPlotCultureCostModifier",
+          "return_type": "int () const"
+        },
+        "CityRangeStrikeModifier": {
+          "member": "m_iCityRangeStrikeModifier",
+          "reader": "GetInt",
+          "getter": "GetCityRangeStrikeModifier",
+          "return_type": "int () const"
+        },
+        "CombatModifierEnemyCities": {
+          "member": "m_iCombatModifierEnemyCities",
+          "reader": "GetInt",
+          "getter": "GetCombatModifierEnemyCities",
+          "return_type": "int () const"
+        },
+        "CombatModifierFriendlyCities": {
+          "member": "m_iCombatModifierFriendlyCities",
+          "reader": "GetInt",
+          "getter": "GetCombatModifierFriendlyCities",
+          "return_type": "int () const"
+        },
+        "WonderProductionModifier": {
+          "member": "m_iWonderProductionModifier",
+          "reader": "GetInt",
+          "getter": "GetWonderProductionModifier",
+          "return_type": "int () const"
+        },
+        "HappinessPerFollowingCity": {
+          "member": "m_fHappinessPerFollowingCity",
+          "reader": "GetFloat",
+          "getter": "GetHappinessPerFollowingCity",
+          "return_type": "float () const"
+        },
+        "GoldPerFirstCityConversion": {
+          "member": "m_iGoldWhenCityAdopts",
+          "reader": "GetInt",
+          "getter": "GetGoldWhenCityAdopts",
+          "return_type": "int () const"
+        },
+        "ProphetStrengthModifier": {
+          "member": "m_iProphetStrengthModifier",
+          "reader": "GetInt",
+          "getter": "GetProphetStrengthModifier",
+          "return_type": "int () const"
+        },
+        "ProphetCostModifier": {
+          "member": "m_iProphetCostModifier",
+          "reader": "GetInt",
+          "getter": "GetProphetCostModifier",
+          "return_type": "int () const"
+        },
+        "MissionaryExtraSpreads": {
+          "member": "m_iMissionaryExtraSpreads",
+          "reader": "GetInt",
+          "getter": "GetMissionaryExtraSpreads",
+          "return_type": "int () const"
+        },
+        "SpreadModifierOwnedCities": {
+          "member": "m_iSpreadModifierOwnedCities",
+          "reader": "GetInt",
+          "getter": "GetSpreadModifierOwnedCities",
+          "return_type": "int () const"
+        },
+        "ExtraTradeRoutes": {
+          "member": "m_iExtraTradeRoutes",
+          "reader": "GetInt",
+          "getter": "GetExtraTradeRoutes",
+          "return_type": "int () const"
+        },
+        "MissionaryCostModifier": {
+          "member": "m_iMissionaryCostModifier",
+          "reader": "GetInt",
+          "getter": "GetMissionaryCostModifier",
+          "return_type": "int () const"
+        },
+        "FriendlyCityStateSpreadModifier": {
+          "member": "m_iFriendlyCityStateSpreadModifier",
+          "reader": "GetInt",
+          "getter": "GetFriendlyCityStateSpreadModifier",
+          "return_type": "int () const"
+        },
+        "GreatPersonExpendedFaith": {
+          "member": "m_iGreatPersonExpendedFaith",
+          "reader": "GetInt",
+          "getter": "GetGreatPersonExpendedFaith",
+          "return_type": "int () const"
+        },
+        "CityStateMinimumInfluence": {
+          "member": "m_iCityStateMinimumInfluence",
+          "reader": "GetInt",
+          "getter": "GetCityStateMinimumInfluence",
+          "return_type": "int () const"
+        },
+        "CityStateFollowingReligionDecayMod": {
+          "member": "m_iCityStateFollowingReligionDecayMod",
+          "reader": "GetInt",
+          "getter": "GetCityStateFollowingReligionDecayMod",
+          "return_type": "int () const"
+        },
+        "CityStateFollowingReligionRecoveryMod": {
+          "member": "m_iCityStateFollowingReligionRecoveryMod",
+          "reader": "GetInt",
+          "getter": "GetCityStateFollowingReligionRecoveryMod",
+          "return_type": "int () const"
+        },
+        "InquisitorPressureRetention": {
+          "member": "m_iInquisitorPressureRetention",
+          "reader": "GetInt",
+          "getter": "GetInquisitorPressureRetention",
+          "return_type": "int () const"
+        },
+        "NumFreeSettlers": {
+          "member": "m_iNumFreeSettlers",
+          "reader": "GetInt",
+          "getter": "GetNumFreeSettlers",
+          "return_type": "int () const"
+        },
+        "Pantheon": {
+          "member": "m_bPantheon",
+          "reader": "GetBool",
+          "getter": "IsPantheonBelief",
+          "return_type": "bool () const"
+        },
+        "Founder": {
+          "member": "m_bFounder",
+          "reader": "GetBool",
+          "getter": "IsFounderBelief",
+          "return_type": "bool () const"
+        },
+        "Follower": {
+          "member": "m_bFollower",
+          "reader": "GetBool",
+          "getter": "IsFollowerBelief",
+          "return_type": "bool () const"
+        },
+        "Enhancer": {
+          "member": "m_bEnhancer",
+          "reader": "GetBool",
+          "getter": "IsEnhancerBelief",
+          "return_type": "bool () const"
+        },
+        "Reformation": {
+          "member": "m_bReformer",
+          "reader": "GetBool",
+          "getter": "IsReformationBelief",
+          "return_type": "bool () const"
+        }
+      },
+      "unmapped": [
+        "GoldPerXFollowers",
+        "ObsoleteEra"
+      ],
+      "configured_fields": 31,
+      "getter": "getBeliefInfo",
+      "count": "getNumBeliefInfos",
+      "index_type": "BeliefTypes"
+    },
+    {
+      "table": "Improvements",
+      "class": "CvImprovementEntry",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvImprovementClasses.cpp",
+      "source_sha256": "26c2b5812bc08962a46cee2246954f58a83b7a0117ce116470e63fd62eafed8d",
+      "bindings": {
+        "CultureBombRadius": {
+          "member": "m_iCultureBombRadius",
+          "reader": "GetInt",
+          "getter": "GetCultureBombRadius",
+          "return_type": "int () const"
+        },
+        "RequiresXAdjacentLand": {
+          "member": "m_iRequiresXAdjacentLand",
+          "reader": "GetInt",
+          "getter": "GetRequiresXAdjacentLand",
+          "return_type": "int () const"
+        },
+        "CultureAdjacentSameType": {
+          "member": "m_iCultureAdjacentSameType",
+          "reader": "GetInt",
+          "getter": "GetCultureAdjacentSameType",
+          "return_type": "int () const"
+        },
+        "HillsMakesValid": {
+          "member": "m_bHillsMakesValid",
+          "reader": "GetBool",
+          "getter": "IsHillsMakesValid",
+          "return_type": "bool () const"
+        },
+        "WaterAdjacencyMakesValid": {
+          "member": "m_bWaterAdjacencyMakesValid",
+          "reader": "GetBool",
+          "getter": "IsWaterAdjacencyMakesValid",
+          "return_type": "bool () const"
+        },
+        "FreshWaterMakesValid": {
+          "member": "m_bFreshWaterMakesValid",
+          "reader": "GetBool",
+          "getter": "IsFreshWaterMakesValid",
+          "return_type": "bool () const"
+        },
+        "AdjacentCityMakesValid": {
+          "member": "m_bAdjacentCityMakesValid",
+          "reader": "GetBool",
+          "getter": "IsAdjacentCityMakesValid",
+          "return_type": "bool () const"
+        },
+        "FreshWaterSource": {
+          "member": "m_bFreshWaterSource",
+          "reader": "GetBool",
+          "getter": "IsFreshWaterSource",
+          "return_type": "bool () const"
+        },
+        "RequiresFlatlands": {
+          "member": "m_bRequiresFlatlands",
+          "reader": "GetBool",
+          "getter": "IsRequiresFlatlands",
+          "return_type": "bool () const"
+        },
+        "RequiresFlatlandsOrFreshWater": {
+          "member": "m_bRequiresFlatlandsOrFreshWater",
+          "reader": "GetBool",
+          "getter": "IsRequiresFlatlandsOrFreshWater",
+          "return_type": "bool () const"
+        },
+        "RequiresFeature": {
+          "member": "m_bRequiresFeature",
+          "reader": "GetBool",
+          "getter": "IsRequiresFeature",
+          "return_type": "bool () const"
+        },
+        "RequiresImprovement": {
+          "member": "m_bRequiresImprovement",
+          "reader": "GetBool",
+          "getter": "IsRequiresImprovement",
+          "return_type": "bool () const"
+        },
+        "RemovesResource": {
+          "member": "m_bRemovesResource",
+          "reader": "GetBool",
+          "getter": "IsRemovesResource",
+          "return_type": "bool () const"
+        },
+        "PromptWhenComplete": {
+          "member": "m_bPromptWhenComplete",
+          "reader": "GetBool",
+          "getter": "IsPromptWhenComplete",
+          "return_type": "bool () const"
+        },
+        "Water": {
+          "member": "m_bWater",
+          "reader": "GetBool",
+          "getter": "IsWater",
+          "return_type": "bool () const"
+        },
+        "Coastal": {
+          "member": "m_bCoastal",
+          "reader": "GetBool",
+          "getter": "IsCoastal",
+          "return_type": "bool () const"
+        },
+        "DestroyedWhenPillaged": {
+          "member": "m_bDestroyedWhenPillaged",
+          "reader": "GetBool",
+          "getter": "IsDestroyedWhenPillaged",
+          "return_type": "bool () const"
+        },
+        "DisplacePillager": {
+          "member": "m_bDisplacePillager",
+          "reader": "GetBool",
+          "getter": "IsDisplacePillager",
+          "return_type": "bool () const"
+        },
+        "BuildableOnResources": {
+          "member": "m_bBuildableOnResources",
+          "reader": "GetBool",
+          "getter": "IsBuildableOnResources",
+          "return_type": "bool () const"
+        },
+        "BarbarianCamp": {
+          "member": "m_bBarbarianCamp",
+          "reader": "GetBool",
+          "getter": "IsBarbarianCamp",
+          "return_type": "bool () const"
+        },
+        "Goody": {
+          "member": "m_bGoody",
+          "reader": "GetBool",
+          "getter": "IsGoody",
+          "return_type": "bool () const"
+        },
+        "Permanent": {
+          "member": "m_bPermanent",
+          "reader": "GetBool",
+          "getter": "IsPermanent",
+          "return_type": "bool () const"
+        },
+        "TilesPerGoody": {
+          "member": "m_iTilesPerGoody",
+          "reader": "GetInt",
+          "getter": "GetTilesPerGoody",
+          "return_type": "int () const"
+        },
+        "GoodyRange": {
+          "member": "m_iGoodyUniqueRange",
+          "reader": "GetInt",
+          "getter": "GetGoodyUniqueRange",
+          "return_type": "int () const"
+        },
+        "DefenseModifier": {
+          "member": "m_iDefenseModifier",
+          "reader": "GetInt",
+          "getter": "GetDefenseModifier",
+          "return_type": "int () const"
+        },
+        "DefenseModifierGlobal": {
+          "member": "m_iDefenseModifierGlobal",
+          "reader": "GetInt",
+          "getter": "GetDefenseModifierGlobal",
+          "return_type": "int () const"
+        },
+        "NearbyEnemyDamage": {
+          "member": "m_iNearbyEnemyDamage",
+          "reader": "GetInt",
+          "getter": "GetNearbyEnemyDamage",
+          "return_type": "int () const"
+        },
+        "PillageGold": {
+          "member": "m_iPillageGold",
+          "reader": "GetInt",
+          "getter": "GetPillageGold",
+          "return_type": "int () const"
+        },
+        "OutsideBorders": {
+          "member": "m_bOutsideBorders",
+          "reader": "GetBool",
+          "getter": "IsOutsideBorders",
+          "return_type": "bool () const"
+        },
+        "InAdjacentFriendly": {
+          "member": "m_bInAdjacentFriendly",
+          "reader": "GetBool",
+          "getter": "IsInAdjacentFriendly",
+          "return_type": "bool () const"
+        },
+        "IgnoreOwnership": {
+          "member": "m_bIgnoreOwnership",
+          "reader": "GetBool",
+          "getter": "IsIgnoreOwnership",
+          "return_type": "bool () const"
+        },
+        "NoTwoAdjacent": {
+          "member": "m_bNoTwoAdjacent",
+          "reader": "GetBool",
+          "getter": "IsNoTwoAdjacent",
+          "return_type": "bool () const"
+        },
+        "AdjacentLuxury": {
+          "member": "m_bAdjacentLuxury",
+          "reader": "GetBool",
+          "getter": "IsAdjacentLuxury",
+          "return_type": "bool () const"
+        },
+        "AllowsWalkWater": {
+          "member": "m_bAllowsWalkWater",
+          "reader": "GetBool",
+          "getter": "IsAllowsWalkWater",
+          "return_type": "bool () const"
+        },
+        "AllowsSailLand": {
+          "member": "m_bAllowsSailLand",
+          "reader": "GetBool",
+          "getter": "IsAllowsSailLand",
+          "return_type": "bool () const"
+        },
+        "CreatedByGreatPerson": {
+          "member": "m_bCreatedByGreatPerson",
+          "reader": "GetBool",
+          "getter": "IsCreatedByGreatPerson",
+          "return_type": "bool () const"
+        },
+        "SpecificCivRequired": {
+          "member": "m_bSpecificCivRequired",
+          "reader": "GetBool",
+          "getter": "IsSpecificCivRequired",
+          "return_type": "bool () const"
+        },
+        "ActsAsRoute": {
+          "member": "m_bActsAsRoute",
+          "reader": "GetBool",
+          "getter": "IsActsAsRoute",
+          "return_type": "bool () const"
+        },
+        "StackedDomainDefensePenalty": {
+          "member": "m_iStackedDomainDefensePenalty",
+          "reader": "GetInt",
+          "getter": "GetStackedDomainDefensePenalty",
+          "return_type": "int () const"
+        }
+      },
+      "unmapped": [
+        "ActsAsRailroadTech",
+        "ActsAsRouteTech",
+        "CivilizationType"
+      ],
+      "configured_fields": 42,
+      "getter": "getImprovementInfo",
+      "count": "getNumImprovementInfos",
+      "index_type": "ImprovementTypes"
+    },
+    {
+      "table": "Technologies",
+      "class": "CvTechEntry",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTechClasses.cpp",
+      "source_sha256": "501083b7377a0a6191152cb99164a04b4ab1459324545a532c7324a670a57306",
+      "bindings": {
+        "Cost": {
+          "member": "m_iResearchCost",
+          "reader": "GetInt",
+          "getter": "GetResearchCost",
+          "return_type": "int () const"
+        },
+        "AdvancedStartCost": {
+          "member": "m_iAdvancedStartCost",
+          "reader": "GetInt",
+          "getter": "GetAdvancedStartCost",
+          "return_type": "int () const"
+        },
+        "EmbarkedMoveChange": {
+          "member": "m_iEmbarkedMoveChange",
+          "reader": "GetInt",
+          "getter": "GetEmbarkedMoveChange",
+          "return_type": "int () const"
+        },
+        "EmbarkedSightChange": {
+          "member": "m_iEmbarkedSightChange",
+          "reader": "GetInt",
+          "getter": "GetEmbarkedSightChange",
+          "return_type": "int () const"
+        },
+        "InternationalTradeRoutesChange": {
+          "member": "m_iInternationalTradeRoutesChange",
+          "reader": "GetInt",
+          "getter": "GetNumInternationalTradeRoutesChange",
+          "return_type": "int () const"
+        },
+        "InfluenceSpreadModifier": {
+          "member": "m_iInfluenceSpreadModifier",
+          "reader": "GetInt",
+          "getter": "GetInfluenceSpreadModifier",
+          "return_type": "int () const"
+        },
+        "ExtraVotesPerDiplomat": {
+          "member": "m_iExtraVotesPerDiplomat",
+          "reader": "GetInt",
+          "getter": "GetExtraVotesPerDiplomat",
+          "return_type": "int () const"
+        },
+        "AllowsEmbarking": {
+          "member": "m_bAllowsEmbarking",
+          "reader": "GetBool",
+          "getter": "IsAllowsEmbarking",
+          "return_type": "bool () const"
+        },
+        "AdditionalDelegates": {
+          "member": "m_iExtraLeagueVotes",
+          "reader": "GetInt",
+          "getter": "GetExtraLeagueVotes",
+          "return_type": "int () const"
+        },
+        "EmbarkedAllWaterPassage": {
+          "member": "m_bEmbarkedAllWaterPassage",
+          "reader": "GetBool",
+          "getter": "IsEmbarkedAllWaterPassage",
+          "return_type": "bool () const"
+        },
+        "Repeat": {
+          "member": "m_bRepeat",
+          "reader": "GetBool",
+          "getter": "IsRepeat",
+          "return_type": "bool () const"
+        },
+        "Trade": {
+          "member": "m_bTrade",
+          "reader": "GetBool",
+          "getter": "IsTrade",
+          "return_type": "bool () const"
+        },
+        "GoodyTech": {
+          "member": "m_bGoodyTech",
+          "reader": "GetBool",
+          "getter": "IsGoodyTech",
+          "return_type": "bool () const"
+        },
+        "TriggersArchaeologicalSites": {
+          "member": "m_bTriggersArchaeologicalSites",
+          "reader": "GetBool",
+          "getter": "IsTriggersArchaeologicalSites",
+          "return_type": "bool () const"
+        },
+        "AllowsWorldCongress": {
+          "member": "m_bAllowsWorldCongress",
+          "reader": "GetBool",
+          "getter": "IsAllowsWorldCongress",
+          "return_type": "bool () const"
+        },
+        "MapVisible": {
+          "member": "m_bMapVisible",
+          "reader": "GetBool",
+          "getter": "IsMapVisible",
+          "return_type": "bool () const"
+        },
+        "AllowEmbassyTradingAllowed": {
+          "member": "m_bAllowEmbassyTradingAllowed",
+          "reader": "GetBool",
+          "getter": "IsAllowEmbassyTradingAllowed",
+          "return_type": "bool () const"
+        },
+        "OpenBordersTradingAllowed": {
+          "member": "m_bOpenBordersTradingAllowed",
+          "reader": "GetBool",
+          "getter": "IsOpenBordersTradingAllowed",
+          "return_type": "bool () const"
+        },
+        "DefensivePactTradingAllowed": {
+          "member": "m_bDefensivePactTradingAllowed",
+          "reader": "GetBool",
+          "getter": "IsDefensivePactTradingAllowed",
+          "return_type": "bool () const"
+        },
+        "BridgeBuilding": {
+          "member": "m_bBridgeBuilding",
+          "reader": "GetBool",
+          "getter": "IsBridgeBuilding",
+          "return_type": "bool () const"
+        }
+      },
+      "unmapped": [
+        "DisableTechSteal",
+        "Era",
+        "PolicyDiscountPercent",
+        "ScenarioTechButton"
+      ],
+      "configured_fields": 24,
+      "getter": "getTechInfo",
+      "count": "getNumTechInfos",
+      "index_type": "TechTypes"
+    },
+    {
+      "table": "Projects",
+      "class": "CvProjectEntry",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvProjectClasses.cpp",
+      "source_sha256": "d5f2b81da5e542b9bf1b776e19fcba4b7247b7ea5d406577025438f287a2fd89",
+      "bindings": {
+        "MaxGlobalInstances": {
+          "member": "m_iMaxGlobalInstances",
+          "reader": "GetInt",
+          "getter": "GetMaxGlobalInstances",
+          "return_type": "int () const"
+        },
+        "MaxTeamInstances": {
+          "member": "m_iMaxTeamInstances",
+          "reader": "GetInt",
+          "getter": "GetMaxTeamInstances",
+          "return_type": "int () const"
+        },
+        "Cost": {
+          "member": "m_iProductionCost",
+          "reader": "GetInt",
+          "getter": "GetProductionCost",
+          "return_type": "int () const"
+        },
+        "Spaceship": {
+          "member": "m_bSpaceship",
+          "reader": "GetBool",
+          "getter": "IsSpaceship",
+          "return_type": "bool () const"
+        },
+        "AllowsNukes": {
+          "member": "m_bAllowsNukes",
+          "reader": "GetBool",
+          "getter": "IsAllowsNukes",
+          "return_type": "bool () const"
+        }
+      },
+      "unmapped": [
+        "TechPrereq",
+        "VictoryPrereq"
+      ],
+      "configured_fields": 7,
+      "getter": "getProjectInfo",
+      "count": "getNumProjectInfos",
+      "index_type": "ProjectTypes"
+    },
+    {
+      "table": "Specialists",
+      "class": "CvSpecialistInfo",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvInfos.cpp",
+      "source_sha256": "83e4176806f5e4e1e3c7bd2791bf61fb53291b1eed6467c11680500cde059cfd",
+      "bindings": {
+        "Visible": {
+          "member": "m_bVisible",
+          "reader": "GetBool",
+          "getter": "isVisible",
+          "return_type": "bool () const"
+        },
+        "GreatPeopleRateChange": {
+          "member": "m_iGreatPeopleRateChange",
+          "reader": "GetInt",
+          "getter": "getGreatPeopleRateChange",
+          "return_type": "int () const"
+        }
+      },
+      "unmapped": [
+        "GreatPeopleTitle",
+        "GreatPeopleUnitClass",
+        "GreatPersonIconString"
+      ],
+      "configured_fields": 5,
+      "getter": "getSpecialistInfo",
+      "count": "getNumSpecialistInfos",
+      "index_type": "SpecialistTypes"
+    },
+    {
+      "table": "HandicapInfos",
+      "class": "CvHandicapInfo",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvInfos.cpp",
+      "source_sha256": "83e4176806f5e4e1e3c7bd2791bf61fb53291b1eed6467c11680500cde059cfd",
+      "bindings": {
+        "StartingLocPercent": {
+          "member": "m_iStartingLocationPercent",
+          "reader": "GetInt",
+          "getter": "getStartingLocationPercent",
+          "return_type": "int () const"
+        },
+        "AdvancedStartPointsMod": {
+          "member": "m_iAdvancedStartPointsMod",
+          "reader": "GetInt",
+          "getter": "getAdvancedStartPointsMod",
+          "return_type": "int () const"
+        },
+        "HappinessDefault": {
+          "member": "m_iHappinessDefault",
+          "reader": "GetInt",
+          "getter": "getHappinessDefault",
+          "return_type": "int () const"
+        },
+        "ExtraHappinessPerLuxury": {
+          "member": "m_iExtraHappinessPerLuxury",
+          "reader": "GetInt",
+          "getter": "getExtraHappinessPerLuxury",
+          "return_type": "int () const"
+        },
+        "NumCitiesUnhappinessMod": {
+          "member": "m_iNumCitiesUnhappinessMod",
+          "reader": "GetInt",
+          "getter": "getNumCitiesUnhappinessMod",
+          "return_type": "int () const"
+        },
+        "PopulationUnhappinessMod": {
+          "member": "m_iPopulationUnhappinessMod",
+          "reader": "GetInt",
+          "getter": "getPopulationUnhappinessMod",
+          "return_type": "int () const"
+        },
+        "ProductionFreeUnits": {
+          "member": "m_iProductionFreeUnits",
+          "reader": "GetInt",
+          "getter": "getProductionFreeUnits",
+          "return_type": "int () const"
+        },
+        "ProductionFreeUnitsPerCity": {
+          "member": "m_iProductionFreeUnitsPerCity",
+          "reader": "GetInt",
+          "getter": "getProductionFreeUnitsPerCity",
+          "return_type": "int () const"
+        },
+        "ProductionFreeUnitsPopulationPercent": {
+          "member": "m_iProductionFreeUnitsPopulationPercent",
+          "reader": "GetInt",
+          "getter": "getProductionFreeUnitsPopulationPercent",
+          "return_type": "int () const"
+        },
+        "RouteCostPercent": {
+          "member": "m_iRouteCostPercent",
+          "reader": "GetInt",
+          "getter": "getRouteCostPercent",
+          "return_type": "int () const"
+        },
+        "UnitCostPercent": {
+          "member": "m_iUnitCostPercent",
+          "reader": "GetInt",
+          "getter": "getUnitCostPercent",
+          "return_type": "int () const"
+        },
+        "BuildingCostPercent": {
+          "member": "m_iBuildingCostPercent",
+          "reader": "GetInt",
+          "getter": "getBuildingCostPercent",
+          "return_type": "int () const"
+        },
+        "ResearchPercent": {
+          "member": "m_iResearchPercent",
+          "reader": "GetInt",
+          "getter": "getResearchPercent",
+          "return_type": "int () const"
+        },
+        "PolicyPercent": {
+          "member": "m_iPolicyPercent",
+          "reader": "GetInt",
+          "getter": "getPolicyPercent",
+          "return_type": "int () const"
+        },
+        "ImprovementCostPercent": {
+          "member": "m_iImprovementCostPercent",
+          "reader": "GetInt",
+          "getter": "getImprovementCostPercent",
+          "return_type": "int () const"
+        },
+        "CityProductionNumOptionsConsidered": {
+          "member": "m_iCityProductionNumOptions",
+          "reader": "GetInt",
+          "getter": "GetCityProductionNumOptions",
+          "return_type": "int () const"
+        },
+        "TechNumOptionsConsidered": {
+          "member": "m_iTechNumOptions",
+          "reader": "GetInt",
+          "getter": "GetTechNumOptions",
+          "return_type": "int () const"
+        },
+        "PolicyNumOptionsConsidered": {
+          "member": "m_iPolicyNumOptions",
+          "reader": "GetInt",
+          "getter": "GetPolicyNumOptions",
+          "return_type": "int () const"
+        },
+        "AttitudeChange": {
+          "member": "m_iAttitudeChange",
+          "reader": "GetInt",
+          "getter": "getAttitudeChange",
+          "return_type": "int () const"
+        },
+        "NoTechTradeModifier": {
+          "member": "m_iNoTechTradeModifier",
+          "reader": "GetInt",
+          "getter": "getNoTechTradeModifier",
+          "return_type": "int () const"
+        },
+        "TechTradeKnownModifier": {
+          "member": "m_iTechTradeKnownModifier",
+          "reader": "GetInt",
+          "getter": "getTechTradeKnownModifier",
+          "return_type": "int () const"
+        },
+        "BarbCampGold": {
+          "member": "m_iBarbCampGold",
+          "reader": "GetInt",
+          "getter": "getBarbCampGold",
+          "return_type": "int () const"
+        },
+        "BarbSpawnMod": {
+          "member": "m_iBarbSpawnMod",
+          "reader": "GetInt",
+          "getter": "getBarbSpawnMod",
+          "return_type": "int () const"
+        },
+        "BarbarianBonus": {
+          "member": "m_iBarbarianCombatModifier",
+          "reader": "GetInt",
+          "getter": "getBarbarianCombatModifier",
+          "return_type": "int () const"
+        },
+        "AIBarbarianBonus": {
+          "member": "m_iAIBarbarianCombatModifier",
+          "reader": "GetInt",
+          "getter": "getAIBarbarianCombatModifier",
+          "return_type": "int () const"
+        },
+        "EarliestBarbarianReleaseTurn": {
+          "member": "m_iEarliestBarbarianReleaseTurn",
+          "reader": "GetInt",
+          "getter": "getEarliestBarbarianReleaseTurn",
+          "return_type": "int () const"
+        },
+        "BarbarianLandTargetRange": {
+          "member": "m_iBarbarianLandTargetRange",
+          "reader": "GetInt",
+          "getter": "getBarbarianLandTargetRange",
+          "return_type": "int () const"
+        },
+        "BarbarianSeaTargetRange": {
+          "member": "m_iBarbarianSeaTargetRange",
+          "reader": "GetInt",
+          "getter": "getBarbarianSeaTargetRange",
+          "return_type": "int () const"
+        },
+        "AIStartingUnitMultiplier": {
+          "member": "m_iAIStartingUnitMultiplier",
+          "reader": "GetInt",
+          "getter": "getAIStartingUnitMultiplier",
+          "return_type": "int () const"
+        },
+        "AIStartingDefenseUnits": {
+          "member": "m_iAIStartingDefenseUnits",
+          "reader": "GetInt",
+          "getter": "getAIStartingDefenseUnits",
+          "return_type": "int () const"
+        },
+        "AIStartingWorkerUnits": {
+          "member": "m_iAIStartingWorkerUnits",
+          "reader": "GetInt",
+          "getter": "getAIStartingWorkerUnits",
+          "return_type": "int () const"
+        },
+        "AIStartingExploreUnits": {
+          "member": "m_iAIStartingExploreUnits",
+          "reader": "GetInt",
+          "getter": "getAIStartingExploreUnits",
+          "return_type": "int () const"
+        },
+        "AIDeclareWarProb": {
+          "member": "m_iAIDeclareWarProb",
+          "reader": "GetInt",
+          "getter": "getAIDeclareWarProb",
+          "return_type": "int () const"
+        },
+        "AIWorkRateModifier": {
+          "member": "m_iAIWorkRateModifier",
+          "reader": "GetInt",
+          "getter": "getAIWorkRateModifier",
+          "return_type": "int () const"
+        },
+        "AIUnhappinessPercent": {
+          "member": "m_iAIUnhappinessPercent",
+          "reader": "GetInt",
+          "getter": "getAIUnhappinessPercent",
+          "return_type": "int () const"
+        },
+        "AIGrowthPercent": {
+          "member": "m_iAIGrowthPercent",
+          "reader": "GetInt",
+          "getter": "getAIGrowthPercent",
+          "return_type": "int () const"
+        },
+        "AITrainPercent": {
+          "member": "m_iAITrainPercent",
+          "reader": "GetInt",
+          "getter": "getAITrainPercent",
+          "return_type": "int () const"
+        },
+        "AIWorldTrainPercent": {
+          "member": "m_iAIWorldTrainPercent",
+          "reader": "GetInt",
+          "getter": "getAIWorldTrainPercent",
+          "return_type": "int () const"
+        },
+        "AIConstructPercent": {
+          "member": "m_iAIConstructPercent",
+          "reader": "GetInt",
+          "getter": "getAIConstructPercent",
+          "return_type": "int () const"
+        },
+        "AIWorldConstructPercent": {
+          "member": "m_iAIWorldConstructPercent",
+          "reader": "GetInt",
+          "getter": "getAIWorldConstructPercent",
+          "return_type": "int () const"
+        },
+        "AICreatePercent": {
+          "member": "m_iAICreatePercent",
+          "reader": "GetInt",
+          "getter": "getAICreatePercent",
+          "return_type": "int () const"
+        },
+        "AIWorldCreatePercent": {
+          "member": "m_iAIWorldCreatePercent",
+          "reader": "GetInt",
+          "getter": "getAIWorldCreatePercent",
+          "return_type": "int () const"
+        },
+        "AIBuildingCostPercent": {
+          "member": "m_iAIBuildingCostPercent",
+          "reader": "GetInt",
+          "getter": "getAIBuildingCostPercent",
+          "return_type": "int () const"
+        },
+        "AIUnitCostPercent": {
+          "member": "m_iAIUnitCostPercent",
+          "reader": "GetInt",
+          "getter": "getAIUnitCostPercent",
+          "return_type": "int () const"
+        },
+        "AIUnitSupplyPercent": {
+          "member": "m_iAIUnitSupplyPercent",
+          "reader": "GetInt",
+          "getter": "getAIUnitSupplyPercent",
+          "return_type": "int () const"
+        },
+        "AIUnitUpgradePercent": {
+          "member": "m_iAIUnitUpgradePercent",
+          "reader": "GetInt",
+          "getter": "getAIUnitUpgradePercent",
+          "return_type": "int () const"
+        },
+        "AIPerEraModifier": {
+          "member": "m_iAIPerEraModifier",
+          "reader": "GetInt",
+          "getter": "getAIPerEraModifier",
+          "return_type": "int () const"
+        },
+        "AIAdvancedStartPercent": {
+          "member": "m_iAIAdvancedStartPercent",
+          "reader": "GetInt",
+          "getter": "getAIAdvancedStartPercent",
+          "return_type": "int () const"
+        },
+        "AIFreeXP": {
+          "member": "m_iAIFreeXP",
+          "reader": "GetInt",
+          "getter": "getAIFreeXP",
+          "return_type": "int () const"
+        },
+        "AIFreeXPPercent": {
+          "member": "m_iAIFreeXPPercent",
+          "reader": "GetInt",
+          "getter": "getAIFreeXPPercent",
+          "return_type": "int () const"
+        }
+      },
+      "unmapped": [],
+      "configured_fields": 50,
+      "getter": "getHandicapInfo",
+      "count": "getNumHandicapInfos",
+      "index_type": "HandicapTypes"
+    },
+    {
+      "table": "GameSpeeds",
+      "class": "CvGameSpeedInfo",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvInfos.cpp",
+      "source_sha256": "83e4176806f5e4e1e3c7bd2791bf61fb53291b1eed6467c11680500cde059cfd",
+      "bindings": {
+        "DealDuration": {
+          "member": "m_iDealDuration",
+          "reader": "GetInt",
+          "getter": "GetDealDuration",
+          "return_type": "int () const"
+        },
+        "GrowthPercent": {
+          "member": "m_iGrowthPercent",
+          "reader": "GetInt",
+          "getter": "getGrowthPercent",
+          "return_type": "int () const"
+        },
+        "TrainPercent": {
+          "member": "m_iTrainPercent",
+          "reader": "GetInt",
+          "getter": "getTrainPercent",
+          "return_type": "int () const"
+        },
+        "ConstructPercent": {
+          "member": "m_iConstructPercent",
+          "reader": "GetInt",
+          "getter": "getConstructPercent",
+          "return_type": "int () const"
+        },
+        "CreatePercent": {
+          "member": "m_iCreatePercent",
+          "reader": "GetInt",
+          "getter": "getCreatePercent",
+          "return_type": "int () const"
+        },
+        "ResearchPercent": {
+          "member": "m_iResearchPercent",
+          "reader": "GetInt",
+          "getter": "getResearchPercent",
+          "return_type": "int () const"
+        },
+        "GoldPercent": {
+          "member": "m_iGoldPercent",
+          "reader": "GetInt",
+          "getter": "getGoldPercent",
+          "return_type": "int () const"
+        },
+        "GoldGiftMod": {
+          "member": "m_iGoldGiftMod",
+          "reader": "GetInt",
+          "getter": "getGoldGiftMod",
+          "return_type": "int () const"
+        },
+        "BuildPercent": {
+          "member": "m_iBuildPercent",
+          "reader": "GetInt",
+          "getter": "getBuildPercent",
+          "return_type": "int () const"
+        },
+        "ImprovementPercent": {
+          "member": "m_iImprovementPercent",
+          "reader": "GetInt",
+          "getter": "getImprovementPercent",
+          "return_type": "int () const"
+        },
+        "GreatPeoplePercent": {
+          "member": "m_iGreatPeoplePercent",
+          "reader": "GetInt",
+          "getter": "getGreatPeoplePercent",
+          "return_type": "int () const"
+        },
+        "CulturePercent": {
+          "member": "m_iCulturePercent",
+          "reader": "GetInt",
+          "getter": "getCulturePercent",
+          "return_type": "int () const"
+        },
+        "FaithPercent": {
+          "member": "m_iFaithPercent",
+          "reader": "GetInt",
+          "getter": "getFaithPercent",
+          "return_type": "int () const"
+        },
+        "BarbPercent": {
+          "member": "m_iBarbPercent",
+          "reader": "GetInt",
+          "getter": "getBarbPercent",
+          "return_type": "int () const"
+        },
+        "FeatureProductionPercent": {
+          "member": "m_iFeatureProductionPercent",
+          "reader": "GetInt",
+          "getter": "getFeatureProductionPercent",
+          "return_type": "int () const"
+        },
+        "UnitDiscoverPercent": {
+          "member": "m_iUnitDiscoverPercent",
+          "reader": "GetInt",
+          "getter": "getUnitDiscoverPercent",
+          "return_type": "int () const"
+        },
+        "UnitHurryPercent": {
+          "member": "m_iUnitHurryPercent",
+          "reader": "GetInt",
+          "getter": "getUnitHurryPercent",
+          "return_type": "int () const"
+        },
+        "UnitTradePercent": {
+          "member": "m_iUnitTradePercent",
+          "reader": "GetInt",
+          "getter": "getUnitTradePercent",
+          "return_type": "int () const"
+        },
+        "GoldenAgePercent": {
+          "member": "m_iGoldenAgePercent",
+          "reader": "GetInt",
+          "getter": "getGoldenAgePercent",
+          "return_type": "int () const"
+        },
+        "HurryPercent": {
+          "member": "m_iHurryPercent",
+          "reader": "GetInt",
+          "getter": "getHurryPercent",
+          "return_type": "int () const"
+        },
+        "InflationOffset": {
+          "member": "m_iInflationOffset",
+          "reader": "GetInt",
+          "getter": "getInflationOffset",
+          "return_type": "int () const"
+        },
+        "InflationPercent": {
+          "member": "m_iInflationPercent",
+          "reader": "GetInt",
+          "getter": "getInflationPercent",
+          "return_type": "int () const"
+        },
+        "ReligiousPressureAdjacentCity": {
+          "member": "m_iReligiousPressureAdjacentCity",
+          "reader": "GetInt",
+          "getter": "getReligiousPressureAdjacentCity",
+          "return_type": "int () const"
+        },
+        "VictoryDelayPercent": {
+          "member": "m_iVictoryDelayPercent",
+          "reader": "GetInt",
+          "getter": "getVictoryDelayPercent",
+          "return_type": "int () const"
+        },
+        "MinorCivElectionFreqMod": {
+          "member": "m_iMinorCivElectionFreqMod",
+          "reader": "GetInt",
+          "getter": "getMinorCivElectionFreqMod",
+          "return_type": "int () const"
+        },
+        "OpinionDurationPercent": {
+          "member": "m_iOpinionDurationPercent",
+          "reader": "GetInt",
+          "getter": "getOpinionDurationPercent",
+          "return_type": "int () const"
+        },
+        "SpyRatePercent": {
+          "member": "m_iSpyRatePercent",
+          "reader": "GetInt",
+          "getter": "getSpyRatePercent",
+          "return_type": "int () const"
+        },
+        "PeaceDealDuration": {
+          "member": "m_iPeaceDealDuration",
+          "reader": "GetInt",
+          "getter": "getPeaceDealDuration",
+          "return_type": "int () const"
+        },
+        "RelationshipDuration": {
+          "member": "m_iRelationshipDuration",
+          "reader": "GetInt",
+          "getter": "getRelationshipDuration",
+          "return_type": "int () const"
+        },
+        "LeaguePercent": {
+          "member": "m_iLeaguePercent",
+          "reader": "GetInt",
+          "getter": "getLeaguePercent",
+          "return_type": "int () const"
+        }
+      },
+      "unmapped": [],
+      "configured_fields": 30,
+      "getter": "getGameSpeedInfo",
+      "count": "getNumGameSpeedInfos",
+      "index_type": "GameSpeedTypes"
+    },
+    {
+      "table": "Eras",
+      "class": "CvEraInfo",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvInfos.cpp",
+      "source_sha256": "83e4176806f5e4e1e3c7bd2791bf61fb53291b1eed6467c11680500cde059cfd",
+      "bindings": {
+        "NoGoodies": {
+          "member": "m_bNoGoodies",
+          "reader": "GetBool",
+          "getter": "isNoGoodies",
+          "return_type": "bool () const"
+        },
+        "NoBarbUnits": {
+          "member": "m_bNoBarbUnits",
+          "reader": "GetBool",
+          "getter": "isNoBarbUnits",
+          "return_type": "bool () const"
+        },
+        "NoReligion": {
+          "member": "m_bNoReligion",
+          "reader": "GetBool",
+          "getter": "isNoReligion",
+          "return_type": "bool () const"
+        },
+        "StartingUnitMultiplier": {
+          "member": "m_iStartingUnitMultiplier",
+          "reader": "GetInt",
+          "getter": "getStartingUnitMultiplier",
+          "return_type": "int () const"
+        },
+        "StartingDefenseUnits": {
+          "member": "m_iStartingDefenseUnits",
+          "reader": "GetInt",
+          "getter": "getStartingDefenseUnits",
+          "return_type": "int () const"
+        },
+        "StartingWorkerUnits": {
+          "member": "m_iStartingWorkerUnits",
+          "reader": "GetInt",
+          "getter": "getStartingWorkerUnits",
+          "return_type": "int () const"
+        },
+        "StartingExploreUnits": {
+          "member": "m_iStartingExploreUnits",
+          "reader": "GetInt",
+          "getter": "getStartingExploreUnits",
+          "return_type": "int () const"
+        },
+        "ResearchAgreementCost": {
+          "member": "m_iResearchAgreementCost",
+          "reader": "GetInt",
+          "getter": "getResearchAgreementCost",
+          "return_type": "int () const"
+        },
+        "EmbarkedUnitDefense": {
+          "member": "m_iEmbarkedUnitDefense",
+          "reader": "GetInt",
+          "getter": "getEmbarkedUnitDefense",
+          "return_type": "int () const"
+        },
+        "StartingGold": {
+          "member": "m_iStartingGold",
+          "reader": "GetInt",
+          "getter": "getStartingGold",
+          "return_type": "int () const"
+        },
+        "StartingCulture": {
+          "member": "m_iStartingCulture",
+          "reader": "GetInt",
+          "getter": "getStartingCulture",
+          "return_type": "int () const"
+        },
+        "FreePopulation": {
+          "member": "m_iFreePopulation",
+          "reader": "GetInt",
+          "getter": "getFreePopulation",
+          "return_type": "int () const"
+        },
+        "StartPercent": {
+          "member": "m_iStartPercent",
+          "reader": "GetInt",
+          "getter": "getStartPercent",
+          "return_type": "int () const"
+        },
+        "BuildingMaintenancePercent": {
+          "member": "m_iBuildingMaintenancePercent",
+          "reader": "GetInt",
+          "getter": "getBuildingMaintenancePercent",
+          "return_type": "int () const"
+        },
+        "GrowthPercent": {
+          "member": "m_iGrowthPercent",
+          "reader": "GetInt",
+          "getter": "getGrowthPercent",
+          "return_type": "int () const"
+        },
+        "TrainPercent": {
+          "member": "m_iTrainPercent",
+          "reader": "GetInt",
+          "getter": "getTrainPercent",
+          "return_type": "int () const"
+        },
+        "ConstructPercent": {
+          "member": "m_iConstructPercent",
+          "reader": "GetInt",
+          "getter": "getConstructPercent",
+          "return_type": "int () const"
+        },
+        "CreatePercent": {
+          "member": "m_iCreatePercent",
+          "reader": "GetInt",
+          "getter": "getCreatePercent",
+          "return_type": "int () const"
+        },
+        "ResearchPercent": {
+          "member": "m_iResearchPercent",
+          "reader": "GetInt",
+          "getter": "getResearchPercent",
+          "return_type": "int () const"
+        },
+        "BuildPercent": {
+          "member": "m_iBuildPercent",
+          "reader": "GetInt",
+          "getter": "getBuildPercent",
+          "return_type": "int () const"
+        },
+        "ImprovementPercent": {
+          "member": "m_iImprovementPercent",
+          "reader": "GetInt",
+          "getter": "getImprovementPercent",
+          "return_type": "int () const"
+        },
+        "GreatPeoplePercent": {
+          "member": "m_iGreatPeoplePercent",
+          "reader": "GetInt",
+          "getter": "getGreatPeoplePercent",
+          "return_type": "int () const"
+        },
+        "EventChancePerTurn": {
+          "member": "m_iEventChancePerTurn",
+          "reader": "GetInt",
+          "getter": "getEventChancePerTurn",
+          "return_type": "int () const"
+        },
+        "SpiesGrantedForPlayer": {
+          "member": "m_iSpiesGrantedForPlayer",
+          "reader": "GetInt",
+          "getter": "getSpiesGrantedForPlayer",
+          "return_type": "int () const"
+        },
+        "SpiesGrantedForEveryone": {
+          "member": "m_iSpiesGrantedForEveryone",
+          "reader": "GetInt",
+          "getter": "getSpiesGrantedForEveryone",
+          "return_type": "int () const"
+        },
+        "FaithCostMultiplier": {
+          "member": "m_iFaithCostMultiplier",
+          "reader": "GetInt",
+          "getter": "getFaithCostMultiplier",
+          "return_type": "int () const"
+        },
+        "DiploEmphasisReligion": {
+          "member": "m_iDiploEmphasisReligion",
+          "reader": "GetInt",
+          "getter": "getDiploEmphasisReligion",
+          "return_type": "int () const"
+        },
+        "DiploEmphasisLatePolicies": {
+          "member": "m_iDiplpEmphasisLatePolicies",
+          "reader": "GetInt",
+          "getter": "getDiplpEmphasisLatePolicies",
+          "return_type": "int () const"
+        },
+        "TradeRouteFoodBonusTimes100": {
+          "member": "m_iTradeRouteFoodBonusTimes100",
+          "reader": "GetInt",
+          "getter": "getTradeRouteFoodBonusTimes100",
+          "return_type": "int () const"
+        },
+        "TradeRouteProductionBonusTimes100": {
+          "member": "m_iTradeRouteProductionBonusTimes100",
+          "reader": "GetInt",
+          "getter": "getTradeRouteProductionBonusTimes100",
+          "return_type": "int () const"
+        },
+        "LeaguePercent": {
+          "member": "m_iLeaguePercent",
+          "reader": "GetInt",
+          "getter": "getLeaguePercent",
+          "return_type": "int () const"
+        },
+        "WarmongerPercent": {
+          "member": "m_iWarmongerPercent",
+          "reader": "GetInt",
+          "getter": "getWarmongerPercent",
+          "return_type": "int () const"
+        }
+      },
+      "unmapped": [
+        "Abbreviation",
+        "ArtPrefix",
+        "AudioUnitDefeatScript",
+        "AudioUnitVictoryScript",
+        "CityBombardEffectTag",
+        "CulturePercent",
+        "SoundtrackSpace"
+      ],
+      "configured_fields": 39,
+      "getter": "getEraInfo",
+      "count": "getNumEraInfos",
+      "index_type": "EraTypes"
+    },
+    {
+      "table": "Leaders",
+      "class": "CvLeaderHeadInfo",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvInfos.cpp",
+      "source_sha256": "83e4176806f5e4e1e3c7bd2791bf61fb53291b1eed6467c11680500cde059cfd",
+      "bindings": {
+        "VictoryCompetitiveness": {
+          "member": "m_iVictoryCompetitiveness",
+          "reader": "GetInt",
+          "getter": "GetVictoryCompetitiveness",
+          "return_type": "int () const"
+        },
+        "WonderCompetitiveness": {
+          "member": "m_iWonderCompetitiveness",
+          "reader": "GetInt",
+          "getter": "GetWonderCompetitiveness",
+          "return_type": "int () const"
+        },
+        "MinorCivCompetitiveness": {
+          "member": "m_iMinorCivCompetitiveness",
+          "reader": "GetInt",
+          "getter": "GetMinorCivCompetitiveness",
+          "return_type": "int () const"
+        },
+        "Boldness": {
+          "member": "m_iBoldness",
+          "reader": "GetInt",
+          "getter": "GetBoldness",
+          "return_type": "int () const"
+        },
+        "DiploBalance": {
+          "member": "m_iDiploBalance",
+          "reader": "GetInt",
+          "getter": "GetDiploBalance",
+          "return_type": "int () const"
+        },
+        "WarmongerHate": {
+          "member": "m_iWarmongerHate",
+          "reader": "GetInt",
+          "getter": "GetWarmongerHate",
+          "return_type": "int () const"
+        },
+        "DenounceWillingness": {
+          "member": "m_iDenounceWillingness",
+          "reader": "GetInt",
+          "getter": "GetDenounceWillingness",
+          "return_type": "int () const"
+        },
+        "DoFWillingness": {
+          "member": "m_iDoFWillingness",
+          "reader": "GetInt",
+          "getter": "GetDoFWillingness",
+          "return_type": "int () const"
+        },
+        "Loyalty": {
+          "member": "m_iLoyalty",
+          "reader": "GetInt",
+          "getter": "GetLoyalty",
+          "return_type": "int () const"
+        },
+        "Neediness": {
+          "member": "m_iNeediness",
+          "reader": "GetInt",
+          "getter": "GetNeediness",
+          "return_type": "int () const"
+        },
+        "Forgiveness": {
+          "member": "m_iForgiveness",
+          "reader": "GetInt",
+          "getter": "GetForgiveness",
+          "return_type": "int () const"
+        },
+        "Chattiness": {
+          "member": "m_iChattiness",
+          "reader": "GetInt",
+          "getter": "GetChattiness",
+          "return_type": "int () const"
+        },
+        "Meanness": {
+          "member": "m_iMeanness",
+          "reader": "GetInt",
+          "getter": "GetMeanness",
+          "return_type": "int () const"
+        }
+      },
+      "unmapped": [
+        "WorkAgainstWillingness",
+        "WorkWithWillingness"
+      ],
+      "configured_fields": 15,
+      "getter": "getLeaderHeadInfo",
+      "count": "getNumLeaderHeadInfos",
+      "index_type": "LeaderHeadTypes"
+    },
+    {
+      "table": "Terrains",
+      "class": "CvTerrainInfo",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvInfos.cpp",
+      "source_sha256": "83e4176806f5e4e1e3c7bd2791bf61fb53291b1eed6467c11680500cde059cfd",
+      "bindings": {
+        "Water": {
+          "member": "m_bWater",
+          "reader": "GetBool",
+          "getter": "isWater",
+          "return_type": "bool () const"
+        },
+        "Found": {
+          "member": "m_bFound",
+          "reader": "GetBool",
+          "getter": "isFound",
+          "return_type": "bool () const"
+        },
+        "SeeFrom": {
+          "member": "m_iSeeFromLevel",
+          "reader": "GetInt",
+          "getter": "getSeeFromLevel",
+          "return_type": "int () const"
+        },
+        "SeeThrough": {
+          "member": "m_iSeeThroughLevel",
+          "reader": "GetInt",
+          "getter": "getSeeThroughLevel",
+          "return_type": "int () const"
+        },
+        "InfluenceCost": {
+          "member": "m_iInfluenceCost",
+          "reader": "GetInt",
+          "getter": "getInfluenceCost",
+          "return_type": "int () const"
+        }
+      },
+      "unmapped": [
+        "Button",
+        "EffectTypeTag",
+        "GraphicalOnly"
+      ],
+      "configured_fields": 8,
+      "getter": "getTerrainInfo",
+      "count": "getNumTerrainInfos",
+      "index_type": "TerrainTypes"
+    },
+    {
+      "table": "Features",
+      "class": "CvFeatureInfo",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvInfos.cpp",
+      "source_sha256": "83e4176806f5e4e1e3c7bd2791bf61fb53291b1eed6467c11680500cde059cfd",
+      "bindings": {
+        "StartingLocationWeight": {
+          "member": "m_iStartingLocationWeight",
+          "reader": "GetInt",
+          "getter": "getStartingLocationWeight",
+          "return_type": "int () const"
+        },
+        "Movement": {
+          "member": "m_iMovementCost",
+          "reader": "GetInt",
+          "getter": "getMovementCost",
+          "return_type": "int () const"
+        },
+        "SeeThrough": {
+          "member": "m_iSeeThroughChange",
+          "reader": "GetInt",
+          "getter": "getSeeThroughChange",
+          "return_type": "int () const"
+        },
+        "Defense": {
+          "member": "m_iDefenseModifier",
+          "reader": "GetInt",
+          "getter": "getDefenseModifier",
+          "return_type": "int () const"
+        },
+        "InfluenceCost": {
+          "member": "m_iInfluenceCost",
+          "reader": "GetInt",
+          "getter": "getInfluenceCost",
+          "return_type": "int () const"
+        },
+        "AppearanceProbability": {
+          "member": "m_iAppearanceProbability",
+          "reader": "GetInt",
+          "getter": "getAppearanceProbability",
+          "return_type": "int () const"
+        },
+        "DisappearanceProbability": {
+          "member": "m_iDisappearanceProbability",
+          "reader": "GetInt",
+          "getter": "getDisappearanceProbability",
+          "return_type": "int () const"
+        },
+        "Growth": {
+          "member": "m_iGrowthProbability",
+          "reader": "GetInt",
+          "getter": "getGrowthProbability",
+          "return_type": "int () const"
+        },
+        "FirstFinderGold": {
+          "member": "m_iFirstFinderGold",
+          "reader": "GetInt",
+          "getter": "getFirstFinderGold",
+          "return_type": "int () const"
+        },
+        "InBorderHappiness": {
+          "member": "m_iInBorderHappiness",
+          "reader": "GetInt",
+          "getter": "getInBorderHappiness",
+          "return_type": "int () const"
+        },
+        "OccurrenceFrequency": {
+          "member": "m_iOccurrenceFrequency",
+          "reader": "GetInt",
+          "getter": "getOccurrenceFrequency",
+          "return_type": "int () const"
+        },
+        "EffectProbability": {
+          "member": "m_iEffectProbability",
+          "reader": "GetInt",
+          "getter": "getEffectProbability",
+          "return_type": "int () const"
+        },
+        "YieldNotAdditive": {
+          "member": "m_bYieldNotAdditive",
+          "reader": "GetBool",
+          "getter": "isYieldNotAdditive",
+          "return_type": "bool () const"
+        },
+        "NoCoast": {
+          "member": "m_bNoCoast",
+          "reader": "GetBool",
+          "getter": "isNoCoast",
+          "return_type": "bool () const"
+        },
+        "NoRiver": {
+          "member": "m_bNoRiver",
+          "reader": "GetBool",
+          "getter": "isNoRiver",
+          "return_type": "bool () const"
+        },
+        "NoAdjacent": {
+          "member": "m_bNoAdjacent",
+          "reader": "GetBool",
+          "getter": "isNoAdjacent",
+          "return_type": "bool () const"
+        },
+        "RequiresFlatlands": {
+          "member": "m_bRequiresFlatlands",
+          "reader": "GetBool",
+          "getter": "isRequiresFlatlands",
+          "return_type": "bool () const"
+        },
+        "RequiresRiver": {
+          "member": "m_bRequiresRiver",
+          "reader": "GetBool",
+          "getter": "isRequiresRiver",
+          "return_type": "bool () const"
+        },
+        "AddsFreshWater": {
+          "member": "m_bAddsFreshWater",
+          "reader": "GetBool",
+          "getter": "isAddsFreshWater",
+          "return_type": "bool () const"
+        },
+        "Impassable": {
+          "member": "m_bImpassable",
+          "reader": "GetBool",
+          "getter": "isImpassable",
+          "return_type": "bool () const"
+        },
+        "NoCity": {
+          "member": "m_bNoCity",
+          "reader": "GetBool",
+          "getter": "isNoCity",
+          "return_type": "bool () const"
+        },
+        "NoImprovement": {
+          "member": "m_bNoImprovement",
+          "reader": "GetBool",
+          "getter": "isNoImprovement",
+          "return_type": "bool () const"
+        },
+        "NukeImmune": {
+          "member": "m_bNukeImmune",
+          "reader": "GetBool",
+          "getter": "isNukeImmune",
+          "return_type": "bool () const"
+        },
+        "Rough": {
+          "member": "m_bRough",
+          "reader": "GetBool",
+          "getter": "IsRough",
+          "return_type": "bool () const"
+        },
+        "NaturalWonder": {
+          "member": "m_bNaturalWonder",
+          "reader": "GetBool",
+          "getter": "IsNaturalWonder",
+          "return_type": "bool () const"
+        }
+      },
+      "unmapped": [
+        "AdjacentUnitFreePromotion",
+        "EffectType",
+        "EffectTypeTag",
+        "GrowthTerrainType"
+      ],
+      "configured_fields": 29,
+      "getter": "getFeatureInfo",
+      "count": "getNumFeatureInfos",
+      "index_type": "FeatureTypes"
+    },
+    {
+      "table": "Resources",
+      "class": "CvResourceInfo",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvInfos.cpp",
+      "source_sha256": "83e4176806f5e4e1e3c7bd2791bf61fb53291b1eed6467c11680500cde059cfd",
+      "bindings": {
+        "AITradeModifier": {
+          "member": "m_iAITradeModifier",
+          "reader": "GetInt",
+          "getter": "getAITradeModifier",
+          "return_type": "int () const"
+        },
+        "AIObjective": {
+          "member": "m_iAIObjective",
+          "reader": "GetInt",
+          "getter": "getAIObjective",
+          "return_type": "int () const"
+        },
+        "Happiness": {
+          "member": "m_iHappiness",
+          "reader": "GetInt",
+          "getter": "getHappiness",
+          "return_type": "int () const"
+        },
+        "WonderProductionMod": {
+          "member": "m_iWonderProductionMod",
+          "reader": "GetInt",
+          "getter": "getWonderProductionMod",
+          "return_type": "int () const"
+        },
+        "MinAreaSize": {
+          "member": "m_iMinAreaSize",
+          "reader": "GetInt",
+          "getter": "getMinAreaSize",
+          "return_type": "int () const"
+        },
+        "MaxLatitude": {
+          "member": "m_iMaxLatitude",
+          "reader": "GetInt",
+          "getter": "getMaxLatitude",
+          "return_type": "int () const"
+        },
+        "PlacementOrder": {
+          "member": "m_iPlacementOrder",
+          "reader": "GetInt",
+          "getter": "getPlacementOrder",
+          "return_type": "int () const"
+        },
+        "ConstAppearance": {
+          "member": "m_iConstAppearance",
+          "reader": "GetInt",
+          "getter": "getConstAppearance",
+          "return_type": "int () const"
+        },
+        "Player": {
+          "member": "m_iPercentPerPlayer",
+          "reader": "GetInt",
+          "getter": "getPercentPerPlayer",
+          "return_type": "int () const"
+        },
+        "TilesPer": {
+          "member": "m_iTilesPer",
+          "reader": "GetInt",
+          "getter": "getTilesPer",
+          "return_type": "int () const"
+        },
+        "MinLandPercent": {
+          "member": "m_iMinLandPercent",
+          "reader": "GetInt",
+          "getter": "getMinLandPercent",
+          "return_type": "int () const"
+        },
+        "Unique": {
+          "member": "m_iUniqueRange",
+          "reader": "GetInt",
+          "getter": "getUniqueRange",
+          "return_type": "int () const"
+        },
+        "GroupRange": {
+          "member": "m_iGroupRange",
+          "reader": "GetInt",
+          "getter": "getGroupRange",
+          "return_type": "int () const"
+        },
+        "GroupRand": {
+          "member": "m_iGroupRand",
+          "reader": "GetInt",
+          "getter": "getGroupRand",
+          "return_type": "int () const"
+        },
+        "Hills": {
+          "member": "m_bHills",
+          "reader": "GetBool",
+          "getter": "isHills",
+          "return_type": "bool () const"
+        },
+        "Flatlands": {
+          "member": "m_bFlatlands",
+          "reader": "GetBool",
+          "getter": "isFlatlands",
+          "return_type": "bool () const"
+        },
+        "NoRiverSide": {
+          "member": "m_bNoRiverSide",
+          "reader": "GetBool",
+          "getter": "isNoRiverSide",
+          "return_type": "bool () const"
+        },
+        "Normalize": {
+          "member": "m_bNormalize",
+          "reader": "GetBool",
+          "getter": "isNormalize",
+          "return_type": "bool () const"
+        },
+        "OnlyMinorCivs": {
+          "member": "m_bOnlyMinorCivs",
+          "reader": "GetBool",
+          "getter": "isOnlyMinorCivs",
+          "return_type": "bool () const"
+        },
+        "RandApp1": {
+          "member": "m_iRandAppearance1",
+          "reader": "GetInt",
+          "getter": "getRandAppearance1",
+          "return_type": "int () const"
+        },
+        "RandApp2": {
+          "member": "m_iRandAppearance2",
+          "reader": "GetInt",
+          "getter": "getRandAppearance2",
+          "return_type": "int () const"
+        },
+        "ResourceUsage": {
+          "member": "m_eResourceUsage",
+          "reader": "GetInt",
+          "getter": "getResourceUsage",
+          "return_type": "ResourceUsageTypes () const"
+        }
+      },
+      "unmapped": [
+        "AIStopTradingEra",
+        "AltArtDefineTag",
+        "AltArtDefineTagHeavy",
+        "AmountMajor",
+        "AmountMinor",
+        "ArtDefineTagHeavy",
+        "CivilizationType",
+        "NoRegional",
+        "PolicyReveal",
+        "ResourceClassType",
+        "Special",
+        "TechCityTrade",
+        "TechReveal",
+        "WonderProductionModObsoleteEra"
+      ],
+      "configured_fields": 36,
+      "getter": "getResourceInfo",
+      "count": "getNumResourceInfos",
+      "index_type": "ResourceTypes"
+    },
+    {
+      "table": "Builds",
+      "class": "CvBuildInfo",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvInfos.cpp",
+      "source_sha256": "83e4176806f5e4e1e3c7bd2791bf61fb53291b1eed6467c11680500cde059cfd",
+      "bindings": {
+        "Time": {
+          "member": "m_iTime",
+          "reader": "GetInt",
+          "getter": "getTime",
+          "return_type": "int () const"
+        },
+        "Kill": {
+          "member": "m_bKill",
+          "reader": "GetBool",
+          "getter": "isKill",
+          "return_type": "bool () const"
+        },
+        "Repair": {
+          "member": "m_bRepair",
+          "reader": "GetBool",
+          "getter": "isRepair",
+          "return_type": "bool () const"
+        },
+        "RemoveRoute": {
+          "member": "m_bRemoveRoute",
+          "reader": "GetBool",
+          "getter": "IsRemoveRoute",
+          "return_type": "bool () const"
+        },
+        "RemoveWaterCrossing": {
+          "member": "m_bRemoveWaterCrossing",
+          "reader": "GetBool",
+          "getter": "IsRemoveWaterCrossing",
+          "return_type": "bool () const"
+        },
+        "Water": {
+          "member": "m_bWater",
+          "reader": "GetBool",
+          "getter": "IsWater",
+          "return_type": "bool () const"
+        },
+        "CanBeEmbarked": {
+          "member": "m_bCanBeEmbarked",
+          "reader": "GetBool",
+          "getter": "IsCanBeEmbarked",
+          "return_type": "bool () const"
+        },
+        "SpecificCivRequired": {
+          "member": "m_bSpecificCivRequired",
+          "reader": "GetBool",
+          "getter": "IsSpecificCivRequired",
+          "return_type": "bool () const"
+        }
+      },
+      "unmapped": [
+        "AltDown",
+        "CivilizationType",
+        "CtrlDown",
+        "CtrlDownAlt",
+        "EntityEvent",
+        "HotKeyPriority",
+        "IconIndex",
+        "ImprovementType",
+        "OrderPriority",
+        "PrereqTech",
+        "Recommendation",
+        "RouteType",
+        "ShowInTechTree"
+      ],
+      "configured_fields": 21,
+      "getter": "getBuildInfo",
+      "count": "getNumBuildInfos",
+      "index_type": "BuildTypes"
+    },
+    {
+      "table": "Routes",
+      "class": "CvRouteInfo",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvInfos.cpp",
+      "source_sha256": "83e4176806f5e4e1e3c7bd2791bf61fb53291b1eed6467c11680500cde059cfd",
+      "bindings": {
+        "GoldMaintenance": {
+          "member": "m_iGoldMaintenance",
+          "reader": "GetInt",
+          "getter": "GetGoldMaintenance",
+          "return_type": "int () const"
+        },
+        "AdvancedStartCost": {
+          "member": "m_iAdvancedStartCost",
+          "reader": "GetInt",
+          "getter": "getAdvancedStartCost",
+          "return_type": "int () const"
+        },
+        "Value": {
+          "member": "m_iValue",
+          "reader": "GetInt",
+          "getter": "getValue",
+          "return_type": "int () const"
+        },
+        "Movement": {
+          "member": "m_iMovementCost",
+          "reader": "GetInt",
+          "getter": "getMovementCost",
+          "return_type": "int () const"
+        },
+        "FlatMovement": {
+          "member": "m_iFlatMovementCost",
+          "reader": "GetInt",
+          "getter": "getFlatMovementCost",
+          "return_type": "int () const"
+        },
+        "Industrial": {
+          "member": "m_bIndustrial",
+          "reader": "GetBool",
+          "getter": "IsIndustrial",
+          "return_type": "bool () const"
+        }
+      },
+      "unmapped": [],
+      "configured_fields": 6,
+      "getter": "getRouteInfo",
+      "count": "getNumRouteInfos",
+      "index_type": "RouteTypes"
+    },
+    {
+      "table": "GameOptions",
+      "class": "CvGameOptionInfo",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvInfos.cpp",
+      "source_sha256": "83e4176806f5e4e1e3c7bd2791bf61fb53291b1eed6467c11680500cde059cfd",
+      "bindings": {
+        "Default": {
+          "member": "m_bDefault",
+          "reader": "GetBool",
+          "getter": "getDefault",
+          "return_type": "bool () const"
+        },
+        "Visible": {
+          "member": "m_bVisible",
+          "reader": "GetBool",
+          "getter": "getVisible",
+          "return_type": "bool () const"
+        }
+      },
+      "unmapped": [
+        "SupportsMultiplayer",
+        "SupportsSinglePlayer"
+      ],
+      "configured_fields": 4,
+      "getter": "getGameOptionInfo",
+      "count": "getNumGameOptionInfos",
+      "index_type": "GameOptionTypes"
+    },
+    {
+      "table": "PolicyBranchTypes",
+      "class": "CvPolicyBranchEntry",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPolicyClasses.cpp",
+      "source_sha256": "7a409a449b69feab94f617d423985048f8414ee4761f5dba36d743c9c343dfe8",
+      "bindings": {
+        "FirstAdopterFreePolicies": {
+          "member": "m_iFirstAdopterFreePolicies",
+          "reader": "GetInt",
+          "getter": "GetFirstAdopterFreePolicies",
+          "return_type": "int () const"
+        },
+        "SecondAdopterFreePolicies": {
+          "member": "m_iSecondAdopterFreePolicies",
+          "reader": "GetInt",
+          "getter": "GetSecondAdopterFreePolicies",
+          "return_type": "int () const"
+        },
+        "PurchaseByLevel": {
+          "member": "m_bPurchaseByLevel",
+          "reader": "GetBool",
+          "getter": "IsPurchaseByLevel",
+          "return_type": "bool () const"
+        },
+        "LockedWithoutReligion": {
+          "member": "m_bLockedWithoutReligion",
+          "reader": "GetBool",
+          "getter": "IsLockedWithoutReligion",
+          "return_type": "bool () const"
+        },
+        "AIDelayNoReligion": {
+          "member": "m_bDelayWhenNoReligion",
+          "reader": "GetBool",
+          "getter": "IsDelayWhenNoReligion",
+          "return_type": "bool () const"
+        },
+        "AIDelayNoCityStates": {
+          "member": "m_bDelayWhenNoCityStates",
+          "reader": "GetBool",
+          "getter": "IsDelayWhenNoCityStates",
+          "return_type": "bool () const"
+        },
+        "AIDelayNoScience": {
+          "member": "m_bDelayWhenNoScience",
+          "reader": "GetBool",
+          "getter": "IsDelayWhenNoScience",
+          "return_type": "bool () const"
+        }
+      },
+      "unmapped": [
+        "EraPrereq",
+        "FreeFinishingPolicy",
+        "FreePolicy",
+        "Title"
+      ],
+      "configured_fields": 11,
+      "getter": "getPolicyBranchInfo",
+      "count": "getNumPolicyBranchInfos",
+      "index_type": "PolicyBranchTypes"
+    }
+  ],
+  "skipped_tables": [
+    {
+      "table": "Worlds",
+      "reason": "No global cached-info accessor; do not synthesize one from the expected database."
+    }
+  ]
+}

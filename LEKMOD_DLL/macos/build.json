@@ -4,7 +4,8 @@
   "sdk_dir": "../CvGameCoreDLL_Expansion2",
   "output_dir": "../../build/macos",
   "extra_sources": [
-    "lekmod_diagnostics.cpp"
+    "lekmod_diagnostics.cpp",
+    "info-cache-audit.cpp"
   ],
   "extra_flags": []
 }
