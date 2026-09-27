@@ -32,9 +32,12 @@ HOOKS = {
     'trade-internal': {'UI/ChooseInternationalTradeRoutePopup.lua': 'playtest-scenario-trade-popup.lua', '@DLC/Expansion2/UI/InGame/Popups/ChooseTradeUnitNewHome.lua': 'playtest-scenario-trade-home-popup.lua'},
     'religion-benefits': {'UI/ProductionPopup.lua': 'playtest-scenario-purchase-popup.lua'},
 }
+# Parameters are data-only and enumerated for each reviewed scenario.
+PARAMETERS = {'city-god': {'mode': ('human', 'tibet', 'control')}}
+
 PREFIXES = {'playtest-nz-owner-observer.lua': 'playtest-nz-owner-before-observer.lua'}
 
-SUPPORTED = set(HOOKS) | {'swiss-migration-load', 'swiss-human-training', 'swiss-legacy-load', 'swiss-boundaries', 'swiss-armory', 'unique-prophet-birth', 'unique-general-birth', 'unique-specialist-birth', 'unique-unit-production', 'religious-unit-upgrades', 'swiss-enemy-heal', 'swiss-city-plunder-funded', 'swiss-city-plunder-empty', 'swiss-city-plunder-control', 'swiss-mounted-calculation', 'swiss-utility', 'crusader-borders', 'vatican-kill-faith', 'religious-terrain', 'vatican-great-improvements', 'vatican-pressure-votes', 'vatican-courthouse', 'vatican-stpeters', 'jerusalem-outremer', 'unique-building-catalogue', 'unique-building-pilot', 'civilization-start', 'unique-units', 'counterspy', 'nuclear-cities', 'nuclear-production', 'nuclear-cleanup', 'defender-zoc', 'inventory', 'admiral-repair', 'worker', 'unit-actions', 'great-person-builds', 'budget-settlement', 'nuclear', 'air-operations', 'greatworks', 'trade-tooltip', 'trade-countdown', 'nabatea-farms', 'nabatea-tomb', 'newzealand-science-completion'}
+SUPPORTED = set(HOOKS) | {'city-god', 'swiss-migration-load', 'swiss-human-training', 'swiss-legacy-load', 'swiss-boundaries', 'swiss-armory', 'unique-prophet-birth', 'unique-general-birth', 'unique-specialist-birth', 'unique-unit-production', 'religious-unit-upgrades', 'swiss-enemy-heal', 'swiss-city-plunder-funded', 'swiss-city-plunder-empty', 'swiss-city-plunder-control', 'swiss-mounted-calculation', 'swiss-utility', 'crusader-borders', 'vatican-kill-faith', 'religious-terrain', 'vatican-great-improvements', 'vatican-pressure-votes', 'vatican-courthouse', 'vatican-stpeters', 'jerusalem-outremer', 'unique-building-catalogue', 'unique-building-pilot', 'civilization-start', 'unique-units', 'counterspy', 'nuclear-cities', 'nuclear-production', 'nuclear-cleanup', 'defender-zoc', 'inventory', 'admiral-repair', 'worker', 'unit-actions', 'great-person-builds', 'budget-settlement', 'nuclear', 'air-operations', 'greatworks', 'trade-tooltip', 'trade-countdown', 'nabatea-farms', 'nabatea-tomb', 'newzealand-science-completion'}
 
 def validate_lua_syntax(plan, repo, compiler):
     """Parse every selected scenario and injected UI adapter before installation."""
@@ -108,6 +111,12 @@ def load_plan(path, repo, items):
         if not re.fullmatch(r'[a-z0-9-]{1,24}',ident) or ident in seen: raise ValueError('Invalid/duplicate stage id')
         seen.add(ident)
         if scenario not in SUPPORTED or scenario not in items: raise ValueError('Unsupported batch scenario: '+str(scenario))
+        parameters = row.get('parameters', {})
+        permitted = PARAMETERS.get(scenario, {})
+        if not isinstance(parameters, dict) or set(parameters) != set(permitted):
+            raise ValueError('Invalid/missing reviewed scenario parameters: ' + ident)
+        if any(not isinstance(parameters[key], str) or parameters[key] not in values for key, values in permitted.items()):
+            raise ValueError('Invalid reviewed scenario parameter value: ' + ident)
         turns=row.get('max_turns',0)
         if isinstance(turns,bool) or not isinstance(turns,int) or not 0 <= turns <= 19: raise ValueError('Invalid stage turn limit')
         total+=turns
@@ -140,7 +149,7 @@ def load_plan(path, repo, items):
         for target,adapter in HOOKS.get(scenario,{}).items():
             if target in hooks and hooks[target]!=adapter: raise ValueError('Conflicting adapters at '+target)
             hooks[target]=adapter
-        result.append(dict(id=ident,scenario=scenario,fixture=str(fixture),sha256=row['sha256'],max_turns=turns,
+        result.append(dict(id=ident,scenario=scenario,parameters=dict(parameters),fixture=str(fixture),sha256=row['sha256'],max_turns=turns,
                            items=[]if expected is not None else sorted(items[scenario]),code=code,source_sha256=sha(code_path),
                            replay_only=expected is not None,expected=expected,expected_report=str(report_path.resolve())if report_path else None,
                            expected_report_sha256=row.get('expected_report_sha256')))

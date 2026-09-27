@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "name": "city-god-grant",
+  "stages": [
+    {
+      "id": "city-god-human",
+      "scenario": "city-god",
+      "fixture": "build/macos/playtests/20260922T234627Z/Lekmod-Functional-20260922T234627Z.Civ5Save",
+      "sha256": "81fb0432eeb5737ed7446a89500e097422b565eab4e87273ff6e104d9b6c6d5c",
+      "max_turns": 1,
+      "parameters": {
+        "mode": "human"
+      }
+    },
+    {
+      "id": "city-god-tibet",
+      "scenario": "city-god",
+      "fixture": "build/macos/playtests/20260922T234627Z/Lekmod-Functional-20260922T234627Z.Civ5Save",
+      "sha256": "81fb0432eeb5737ed7446a89500e097422b565eab4e87273ff6e104d9b6c6d5c",
+      "max_turns": 1,
+      "parameters": {
+        "mode": "tibet"
+      }
+    },
+    {
+      "id": "city-god-control",
+      "scenario": "city-god",
+      "fixture": "build/macos/playtests/20260922T234627Z/Lekmod-Functional-20260922T234627Z.Civ5Save",
+      "sha256": "81fb0432eeb5737ed7446a89500e097422b565eab4e87273ff6e104d9b6c6d5c",
+      "max_turns": 1,
+      "parameters": {
+        "mode": "control"
+      }
+    }
+  ]
+}

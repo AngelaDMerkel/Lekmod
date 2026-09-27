@@ -1,6 +1,6 @@
 -- Execute the real dispatcher with event, game, save and load stand-ins.
 local root=assert(arg[1]);local function source(name)local f=assert(io.open(root..'/'..name));local t=f:read('*a');f:close();return t end
-local function fixture(code,maxTurns,mode,expected)
+local function fixture(code,maxTurns,mode,expected,parameters)
  local e=setmetatable({},{__index=_G});e._G=e;e.logs={};e.saved={};e.loads={};e.turn=0;e.callbacks={};e.control={run='test',command=0,index=1,mode=mode or'run',expected=expected}
  e.print=function(t)e.logs[#e.logs+1]=t end
  e.setfenv=false;e.loadstring=function(text,name)local chunk,err=loadstring(text,name);if chunk then setfenv(chunk,e)end;return chunk,err end
@@ -16,7 +16,7 @@ local function fixture(code,maxTurns,mode,expected)
  e.LuaEvents.LekmodFunctionalExit.Add(function()e.exited=true end)
  e.UIManager={SetUICursor=function()end}
  e.include=function(name)
-  if name=='LekmodBatchPlan.lua'then e.LekmodBatchPlan={stages={{id='case',scenario='mock',items={'ok'},max_turns=maxTurns or 0,code=code}}}
+  if name=='LekmodBatchPlan.lua'then e.LekmodBatchPlan={stages={{id='case',scenario='mock',parameters=parameters,items={'ok'},max_turns=maxTurns or 0,code=code}}}
   elseif name=='LekmodBatchControl.lua'then e.LekmodBatchControl=e.control
   else error(name)end
  end
@@ -74,5 +74,13 @@ test('late stage observes before and after the actual owner handler',function()
  e:step();e.GameEvents.PlayerDoTurn(0);e:step()
  assert(e:has('case::ok status=PASS')and not e:has('status=FAIL'))
  assert(#e.callbacks.LekmodNZBeforeOwnerTurn==0 and #e.callbacks.LekmodNZAfterOwnerTurn==0)
+end)
+test('reviewed parameters are lexical and cannot mutate the plan',function()
+ local parameters={mode='human'}
+ local code='assert(LekmodScenarioParameters.mode=="human");LekmodScenarioParameters.mode="changed";LekmodScenario={snapshot=function()return{mode=LekmodScenarioParameters.mode}end,step=function()LekmodScenarioRecord("ok","PASS");return true end}'
+ local e=fixture(code,0,'run',nil,parameters);e:step()
+ assert(e:has('case::ok status=PASS')and not e:has('status=FAIL'))
+ assert(parameters.mode=='human'and e.LekmodBatchPlan.stages[1].parameters.mode=='human')
+ assert(e.LekmodScenarioParameters==nil)
 end)
 print(passed..' batch dispatcher cases passed')

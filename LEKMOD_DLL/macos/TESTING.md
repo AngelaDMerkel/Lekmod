@@ -1307,3 +1307,18 @@ excludes competing passive stat interposition and requires correction markers.
 Use the installed archive without `--host-stat-compat`; that opt-in remains a
 separate process-only diagnostic for the unchanged stock host.
 See [host-stat evidence](../../docs/macos-host-stat-abi.md).
+
+## Final-acceptance G0 preparation
+
+`gameplay_acceptance.py` discovers conservative effect/handler review surfaces
+from an independently hashed native database and product archive, using read-only
+SQLite access. It does not establish native outcomes or a final test denominator.
+`check-gameplay-acceptance.py` verifies the versioned case register and evidence;
+`--require-g0` deliberately fails while mandatory mappings/designs remain open.
+See [reconciliation status](../../docs/macos-gameplay-reconciliation.md).
+
+`batch-plans/city-god-grant.json` is prepared for21 assertions/three replays and
+at most three aggregate turns, with strictly enumerated human/Tibet/control
+parameters. Preflight passes; native execution has not occurred and awaits G0.
+The exact replay does not itself perform a post-load repeat request. Tests of
+that extra action must be commissioned from the resulting checkpoints.

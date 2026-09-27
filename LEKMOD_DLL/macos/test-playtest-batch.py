@@ -39,6 +39,23 @@ class BatchTests(unittest.TestCase):
         row.update(changes);p.write_text(json.dumps(row))
         self.raw['stages'][0].update(expected_report='expected.json',expected_report_sha256=batch.sha(p),max_turns=0)
         return p
+    def test_reviewed_parameters_are_required_validated_and_preserved(self):
+        (self.code/'playtest-scenario-city-god.lua').write_text('LekmodScenario={step=function()end,snapshot=function()end}')
+        self.items['city-god']={'grant'}
+        stage=self.raw['stages'][0];stage['scenario']='city-god'
+        for params in (None, {}, {'mode':'unknown'}, {'mode':True}, {'mode':'human','extra':'ignored'}):
+            stage['parameters']=params
+            with self.assertRaisesRegex(ValueError,'scenario parameter'):self.load()
+        stage['parameters']={'mode':'tibet'}
+        plan=self.load()
+        self.assertEqual(plan['stages'][0]['parameters'],{'mode':'tibet'})
+        stage['parameters']['mode']='human'
+        self.assertEqual(plan['stages'][0]['parameters'],{'mode':'tibet'})
+
+    def test_unreviewed_scenario_cannot_accept_parameters(self):
+        self.raw['stages'][0]['parameters']={'mode':'human'}
+        with self.assertRaisesRegex(ValueError,'scenario parameters'):self.load()
+
     def test_lua_preflight_rejects_invalid_scenario_adapter_and_prefix(self):
         compiler=Path(__file__).resolve().parents[2]/'build/macos/test-deps/lua-5.1.4/src/luac'
         if not compiler.is_file():self.skipTest('build the committed Lua test dependency')

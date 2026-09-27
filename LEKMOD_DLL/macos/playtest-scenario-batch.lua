@@ -48,6 +48,8 @@ local function start(control)
  local spec=assert(LekmodBatchPlan.stages[control.index],"unknown batch stage")
  current={index=control.index,mode=control.mode,spec=spec,callbacks={},active=true,outcomes={},failed=false,startTurn=Game.GetGameTurn(),reads=0}
  local env=setmetatable({},{__index=_G});env._G=env;current.env=env
+ env.parameters={}
+ for key,value in pairs(spec.parameters or {})do env.parameters[key]=value end
  env.GameEvents=eventsProxy(GameEvents);env.LuaEvents=eventsProxy(LuaEvents);env.Events=eventsProxy(Events)
  local waits={}
  env.LekmodScenarioAwait=function(key,ready)
@@ -65,7 +67,7 @@ local function start(control)
  end
  -- Only reviewed standalone modules are admitted by the host plan validator.
  env.include=function(name)error("undeclared batch helper: "..tostring(name))end
- local prefix="return function(api)\nlocal GameEvents,LuaEvents,Events=api.GameEvents,api.LuaEvents,api.Events\nlocal LekmodScenarioRecord,LekmodScenarioEvent,LekmodScenarioAwait=api.LekmodScenarioRecord,api.LekmodScenarioEvent,api.LekmodScenarioAwait\nlocal include=api.include\nlocal LekmodScenario,LekmodScenarioBeforeEndTurn\n"
+ local prefix="return function(api)\nlocal GameEvents,LuaEvents,Events=api.GameEvents,api.LuaEvents,api.Events\nlocal LekmodScenarioRecord,LekmodScenarioEvent,LekmodScenarioAwait=api.LekmodScenarioRecord,api.LekmodScenarioEvent,api.LekmodScenarioAwait\nlocal include=api.include\nlocal LekmodScenarioParameters=api.parameters\nlocal LekmodScenario,LekmodScenarioBeforeEndTurn\n"
  local factory=assert(loadstring(prefix..spec.code.."\nreturn LekmodScenario,LekmodScenarioBeforeEndTurn\nend","batch/"..spec.id))()
  current.scenario,current.beforeTurn=factory(env)
  assert(current.scenario,"stage did not define scenario")
