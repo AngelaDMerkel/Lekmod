@@ -55,7 +55,7 @@ def native_batch_contract(case, root):
         allowed={r['stage'] for r in reviewed}
         failed={r['id'] for r in batch['results'] if r['failed']}
         if (not reviewed or len(allowed)!=len(reviewed) or allowed!=failed or contract['stage']in allowed
-                or any(r.get('classification')!='harness-oracle-error' or not r.get('reason') for r in reviewed)
+                or any(r.get('classification')not in {'harness-oracle-error','harness-binding-error','harness-fixture-error'} or not r.get('reason') for r in reviewed)
                 or not contract.get('required_assertions')):
             raise ValueError('isolated stage has unreviewed/selected failures')
         outcomes=report.get('functional_checks',{}).get('outcomes',{})

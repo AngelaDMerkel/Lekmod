@@ -64,6 +64,21 @@ core remains `4756df05…d8659`. Only Moorish Lua changed from the Mughal payloa
 Next: Aksum ordinary healing, remaining missions, G0 reconciliation, then F/R.
 The inventory adds two mapped Moorish subscriptions; raw review surfaces are1340.
 
+[Mission checks](macos-unit-missions-validation.md) now close four airlift variants,
+both paradrop ranges and all three exotic-goods variants. A stock tutorial edge
+error was reproduced and fixed by the minimal packaged overlay `b4d0cd58`.
+[Native configuration parity](macos-config-cache-validation.md) validates103221
+values/1657 rows, with no gameplay-consumer claim. Combined run `220858Z` passes41
+assertions/five replays, exit0 and full preservation. Current clean candidate:
+`build/macos/Lekmod-config-edge-20260927.zip`, SHA-256
+`0726506aaaffde2f2ef9cc32b86f036a4bc6d611bf420910a946174e3c549339`, core
+`8a101700206a9ef1febe0cff910e9a88098b6edcb84c68c356193b75f54ea9cd`.
+All28 currently defined cases have scoped passes, but G0 is NOT complete:1321 raw
+surfaces/122 document rows still need effect/consumer reconciliation. The final
+case denominator is not frozen. Continue until the user's full acceptance scope
+is met; do not stop merely at a batch boundary. Parallel-subagent approval is
+pending via the async question; do not delegate before an affirmative reply.
+
 The September27 refinement permits fully specified isolated cases to run while
 unrelated G0 review continues. Global G0 remains open and is required before
 candidate freeze. Next: G2 ownership/lifetime case design and remaining mappings.
