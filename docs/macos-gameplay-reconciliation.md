@@ -1,0 +1,131 @@
+# Gameplay acceptance reconciliation (G0 in progress)
+
+The [final acceptance plan](macos-final-acceptance-plan.md) is being executed.
+The [case register](macos-gameplay-acceptance-cases.json) exists, but **G0 has not
+passed** and the final gameplay case denominator is not frozen. No new native
+gameplay or reliability pass is claimed from this inventory/preflight work.
+
+## Verified discovery inputs
+
+The starting Steam-enabled package remains
+`build/macos/Lekmod-steam-startup-20260926.zip`, SHA-256
+`edd00aa4d8eca910ee90777465e6db7eeae92b02aa2bff709f44fdb06b529002`.
+Its signed GameCore and payload match the earlier comprehensive run's gameplay
+components. That older run used process-only startup correction; it is not new
+installer/Steam evidence.
+
+The preserved native resolved database is
+`build/macos/startup-stat-fix-20260926/installed-20260926T225114Z/cache-after/files/Civ5DebugDatabase.db`,
+SHA-256 `8c0f687004e87d239e2bfae9c84c7cb485c48d892a97e66a983230927428427c`.
+It was opened read-only/immutable, passed quick_check and retained its byte hash.
+Archive members and the authoritative gameplay XML were checked against hashes.
+
+Discovery found460 tables and114 playable civilizations. Conservative review
+surfaces comprise938 non-default scalar fields,303 populated relation/system
+tables, and97 Lua event-handler identities in the literal InGame context/include
+closure. These **1,338 surfaces are not 1,338 required new tests or bugs**. Many
+are parameters of shared mechanics, reference data, already-tested behavior or
+presentation data. Every parameter row is retained for proper grouping rather
+than assumed equivalent. Conditional Lua/native branches still need review.
+
+Seventy-five empty tables,48 presentation/metadata tables and3 multiplayer tables
+have explicit inventory dispositions. Thirteen additional scalar presentation
+references have been separated while retaining their G7 UI obligations. The
+static closure resolves37 packaged Lua files; it is not an exhaustive analysis
+of dynamic UI add-ins. A conservative entity/reference index links all114
+civilizations to their trait, replacement, improvement, promotion and handler
+surfaces. It does not itself prove reachability or behavior.
+
+Retained raw discovery and review outputs are under
+`build/macos/acceptance-g0-20260926/`; their paths/hashes are in the case register.
+Sources are in `LEKMOD_DLL/macos/gameplay_acceptance.py` and the gate checker
+`check-gameplay-acceptance.py`. Seven discovery tests and13 register/evidence
+checks pass. The gate checker verifies actual native assertion/replay/exit and
+preservation records for retained batch evidence; filenames alone cannot pass.
+
+## Case reconciliation so far
+
+The16 comprehensive scenario/replay pairs from `20260926T222217Z` were reverified:
+all81 declared assertions, exact snapshots, checkpoint hashes, native exit0,
+no recorded Lua/synchronization/crash failures and successful restoration.
+Their exact bounded scope is carried into16 register cases. This does not close
+whole traits or every parameter in a shared table.
+
+Seven new case designs are recorded. City of God has a reviewed oracle and pinned
+Spain/Tibet fixture. The remaining six ownership/healing/upkeep designs have
+pinned starting fixtures but still need action-sequence/branch review. The124
+initial pending document rows are indexed; the startup and final-artifact rows
+are assigned to later F/R gates, leaving122 gameplay/document reviews unfinished.
+One effect surface is mapped to the City of God design. Other surface mappings
+remain explicitly untriaged, with no invented acceptance percentage.
+
+## Prepared first gameplay batch
+
+`batch-plans/city-god-grant.json` has three independent reloads of the untouched
+Spain/Tibet fixture: human/default Prophet, explicitly targeted Tibetan AI/Dalai
+Lama, and a no-free-prophet reformation control. It declares21 assertions, three
+exact checkpoint reload comparisons and a three-turn aggregate cap. The role
+parameters are enumerated data, checked before installation and copied into each
+stage's lexical environment; scenarios cannot rewrite the plan's parameters.
+
+Expected results follow the enabled native paths:
+
+- `ResponseFoundPantheon` routes reformation beliefs through eligibility checks.
+- `DoReligionOneShots` grants one civilization-specific prophet, without charging
+  faith or incrementing the paid-prophet counter.
+- The active `addFreeUnit` path initializes the unit at its capital before legal
+  relocation, so its religion and four/default or five/Tibetan spreads derive
+  from that city and the unit definition.
+- A repeated request is rejected; one genuinely advanced owner round must not
+  produce another grant. No elapsed-turn or synchronization state is assigned.
+
+Syntax/native-method/fixture preflight passes. The28 Python batch tests,19 actual
+Lua dispatcher tests and34 runner tests pass. These are harness checks, not
+native City of God coverage. The built-in exact replay is read-only; an additional
+post-load repeat-request action still needs commissioning from generated saves.
+G0 must close before launching the prepared gameplay round.
+
+## Source-contract concern awaiting a gameplay reproducer
+
+`BUILDING_MUGHALS_CARAVANSARY` configures `GarrisonMaintenceFree`, while enabled
+native code reads `GarrisonMaintenanceFree`. The latter column is absent from
+the preserved resolved schema. The correctly spelled loader string is present
+in the actual pinned GameCore; the misspelled data string is not. A lexical
+review of eight primary native loaders found this one close-name configured
+mismatch; other missing legacy columns are not thereby classified as defects.
+
+This is a source-contract mismatch, **not yet a demonstrated native upkeep
+failure**. The planned reproducer uses registered `GetNumMaintenanceFreeUnits`
+for an exact +1/-1 garrison check, `CalculateUnitCost`, ordinary treasury
+settlement, move-out/removal controls and replay. It will distinguish this flag
+from the separate500-hundredth city-strength bonus. No product fix has been made.
+
+## Current installation discrepancy
+
+At `2026-09-27T02:58:24Z`, the stock executable and core retained their known hashes,
+and the Aspyr `.lekmod-original` backup retained the stock core hash. Civ V was
+closed. However, WSDLC's canonical state/core/host backups and all672 previously
+recorded non-autosave paths were absent from the recorded user-data directory.
+The directory itself remains accessible. None of those files was deleted or
+moved during this offline round; no native installation was performed.
+
+Evidence: `build/macos/acceptance-g0-20260926/current-installation.json`.
+Exact matching repository copies of all672 prior saves, including the original
+quicksave, were located and hashed; `recoverable-saves.json` records each mapping.
+No copy was restored to the live user-data folder.
+
+The user has been asked whether the data was intentionally moved/reset. Read-only
+checks of known neighboring Civ V/Aspyr locations found no matching relocated
+folder; macOS denied filesystem access to Trash. Do not infer data loss or restore
+old test files over a deliberate cleanup. Preserve the repository's verified
+fixture/evidence copies and resolve the live-data baseline before another game
+installation. Offline G0 work may continue independently.
+
+## Next work
+
+Continue mapping active effects to case families and source-derived outcomes,
+reconcile the122 remaining document rows, and resolve the external/redundant Lua
+include references. Complete the first ownership/upkeep designs. Keep G0 false
+until the checker verifies all required mappings/designs. Then execute the
+prepared City of God batch, close its post-load repeat case, and proceed to G2.
+Reliability remains after gameplay closure and candidate freeze.

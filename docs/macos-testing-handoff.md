@@ -3,8 +3,12 @@
 **Resumed by the user. Continue on local `main` until asked to stop.**
 Follow the [final acceptance plan](macos-final-acceptance-plan.md): reconcile and
 close gameplay cases first, freeze the candidate, then qualify reliability and
-record acceptance. The next deliverable is its G0 case register, not another
-long campaign. The plan is not a new claim of passed coverage.
+record acceptance. The [G0 register/reconciliation](macos-gameplay-reconciliation.md)
+is now in progress:16 prior scenario/replay cases verified, seven new designs,
+and a preflighted City of God batch. G0 has not passed. Read its installation
+discrepancy before native work: prior live saves and WSDLC state/backups are absent;
+the user was asked about a possible move/reset. This offline round changed no
+installed game files.
 The last pause checkpoint was `b4579bf3`; the checkout was clean, stock active and
 Civ V closed when resuming. The current work is the
 [scoped host-stat ABI prototype](macos-host-stat-abi.md). Read the ignored
