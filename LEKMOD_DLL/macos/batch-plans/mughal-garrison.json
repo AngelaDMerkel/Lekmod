@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "name": "mughal-garrison-upkeep",
+  "stages": [
+    {
+      "id": "mughal-garrison",
+      "scenario": "mughal-garrison",
+      "fixture": "build/macos/playtests/20260915T234025Z/Lekmod-Functional-20260915T234025Z.Civ5Save",
+      "sha256": "f213d9b48b0c0cb759d3ea85fe9ffcbc7ff6ed6372772e58b2865fd202812054",
+      "max_turns": 4
+    }
+  ]
+}

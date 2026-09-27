@@ -32,6 +32,14 @@ replay in `20260927T183038Z`,11 ordinary turns, normal exit0 and full preservati
 No product change. The prior duplicate-Palmyra gap above is superseded.
 Next: Mughal garrison upkeep reproducer, Maori/Moors lifetime and remaining G0 work.
 
+[Mughal garrison upkeep](macos-mughal-garrison-validation.md) is now a confirmed
+native defect (`20260927T184447Z`: expected one free unit, actual zero; defense
+bonus works). Focused loader/old-save cache repair `3ea165d6` passes218 source-block
+checks. Native rebuild/retest remains pending; keep this case product-failed.
+The two-stage `mughal-garrison-regression.json` pins normal acquisition and the
+authentic affected checkpoint. Source review also corrected the planned sale to
+native rejection because this building has zero maintenance.
+
 The September27 refinement permits fully specified isolated cases to run while
 unrelated G0 review continues. Global G0 remains open and is required before
 candidate freeze. Next: G2 ownership/lifetime case design and remaining mappings.

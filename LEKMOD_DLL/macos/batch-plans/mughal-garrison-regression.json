@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "name": "mughal-garrison-fix-and-old-save",
+  "stages": [
+    {
+      "id": "mughal-garrison",
+      "scenario": "mughal-garrison",
+      "fixture": "build/macos/playtests/20260915T234025Z/Lekmod-Functional-20260915T234025Z.Civ5Save",
+      "sha256": "f213d9b48b0c0cb759d3ea85fe9ffcbc7ff6ed6372772e58b2865fd202812054",
+      "max_turns": 4
+    },
+    {
+      "id": "mughal-garrison-oldsave",
+      "scenario": "mughal-garrison-load",
+      "fixture": "build/macos/playtests/20260927T184447Z/checkpoints/Lekmod-Batch-20260927T184447Z-mughal-garrison-run.Civ5Save",
+      "sha256": "3d8de2804282b85eb52b52922fcb2f55f822c5184f72c2b3dcf6a7a01ab010d7",
+      "max_turns": 2,
+      "parameters": {
+        "expected_state": "{\"owners\":{\"0\":{\"cities\":{\"8192\":{\"building\":1,\"ordinary\":0,\"strength\":6396,\"x\":4,\"y\":8}},\"gold\":5000,\"units\":{\"106507\":{\"garrison\":false,\"moves\":120,\"type\":83,\"x\":2,\"y\":7},\"114700\":{\"garrison\":false,\"moves\":120,\"type\":83,\"x\":3,\"y\":7},\"122893\":{\"garrison\":false,\"moves\":120,\"type\":83,\"x\":4,\"y\":7},\"16385\":{\"garrison\":false,\"moves\":120,\"type\":83,\"x\":4,\"y\":9},\"24576\":{\"garrison\":true,\"moves\":300,\"type\":23,\"x\":4,\"y\":8},\"32770\":{\"garrison\":false,\"moves\":120,\"type\":83,\"x\":2,\"y\":4},\"40963\":{\"garrison\":false,\"moves\":120,\"type\":83,\"x\":3,\"y\":4},\"49156\":{\"garrison\":false,\"moves\":120,\"type\":83,\"x\":2,\"y\":5},\"57349\":{\"garrison\":false,\"moves\":120,\"type\":83,\"x\":3,\"y\":5},\"65542\":{\"garrison\":false,\"moves\":120,\"type\":83,\"x\":4,\"y\":5},\"73735\":{\"garrison\":false,\"moves\":120,\"type\":83,\"x\":2,\"y\":6},\"81928\":{\"garrison\":false,\"moves\":120,\"type\":83,\"x\":3,\"y\":6},\"90121\":{\"garrison\":false,\"moves\":120,\"type\":83,\"x\":4,\"y\":6},\"98314\":{\"garrison\":false,\"moves\":120,\"type\":83,\"x\":5,\"y\":6}}}},\"turn\":2}"
+      }
+    }
+  ]
+}

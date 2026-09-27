@@ -401,7 +401,7 @@
       "id": "BLD-MUGHAL-GARRISON-UPKEEP",
       "group": "G4",
       "title": "Mughal Caravansary free-garrison upkeep contract",
-      "status": "untriaged",
+      "status": "product-failed",
       "source_references": [
         {
           "path": "LEKMOD/Override/CIV5Units.xml",
@@ -409,7 +409,7 @@
         },
         {
           "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvBuildingClasses.cpp",
-          "sha256": "cb72d82d2aafe01172853d8dda8f3ac4c775278f4159008818e686a05fc0f678"
+          "sha256": "1077d98f716f91d0640aed54f8da01b3963ad01f6da2958aecdcd4638cec7e22"
         },
         {
           "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPlayer.cpp",
@@ -425,32 +425,35 @@
         }
       ],
       "owners": [
-        "human",
-        "AI when the handler/command path differs"
+        "human Mughals; native count path has no AI-specific branch"
       ],
       "expected_result": {
         "maintenance_free_count": "GetNumMaintenanceFreeUnits increases by exactly1 when one ordinarily chargeable combat unit garrisons the city with the target building, and decreases by1 on leaving/removal.",
-        "gold": "CalculateUnitCost follows the original CvPlayer cost formula with one fewer chargeable unit; use a positive-upkeep fixture and observe ordinary settlement.",
+        "gold": "Positive unit upkeep; building cannot increase quoted cost (integer rounding may leave it unchanged); subsequent ordinary treasury equals the pre-turn gold/rate quote.",
         "controls": "No count increase for the ordinary Caravansary, no garrison or a unit already intrinsically maintenance free.",
-        "defense": "The separately configured GarrisonStrengthBonus=500 is checked independently in hundredths, so a working defense bonus cannot conceal a broken maintenance flag."
+        "defense": "The separately configured GarrisonStrengthBonus=500 is checked independently in hundredths, so a working defense bonus cannot conceal a broken maintenance flag.",
+        "affected_save": "Actual failed checkpoint: count0/cost7 becomes count1/cost6 without changing saved gold, units, movement, city buildings or strength; no retrospective refund; next ordinary settlement and exact replay required."
       },
       "units": [
         "gold per turn",
         "chargeable units",
         "city strength in hundredths"
       ],
-      "supplied_inputs": "Only prerequisites/budgets/positions specified by the scenario; final reward and processing flags must not be assigned.",
-      "actual_trigger": "Ordinary owner building acquisition and legal garrison movement; query CalculateUnitCost and observe a normal treasury settlement.",
+      "supplied_inputs": "Currency prerequisites, 5000 gold, one uranium/GDR capital garrison and12 legal outside Warriors for positive upkeep; ordinary-building and matched removal/restoration are labeled API controls; near-complete production hammers supplied.",
+      "actual_trigger": "Normal human construction queue and CityConstructed, legal out/back movement, ordinary treasury settlement and native sale rejection for zero-maintenance buildings.",
       "negative_controls": [
-        "same owner without the building",
+        "no target building",
         "ordinary Caravansary",
-        "unit outside city",
-        "no-garrison city"
+        "garrison leaves the city",
+        "Zero-maintenance target correctly rejects sale; matched building-removal/restoration uses labeled API controls."
       ],
       "transitions": [
-        "enter/leave garrison",
-        "building sale or ownership transfer",
-        "save/reload"
+        "normal production",
+        "matched building removal/restoration control",
+        "legal garrison exit/reentry",
+        "ordinary treasury settlement",
+        "native sale rejection",
+        "exact save/reload"
       ],
       "persistence_requirement": "Exact relevant-state replay plus verified source/copy bytes; no double reward on load.",
       "required_evidence_level": [
@@ -459,21 +462,20 @@
       ],
       "fixtures": [
         {
-          "path": "build/macos/playtests/20260922T234235Z/Lekmod-Functional-20260922T234235Z.Civ5Save",
-          "sha256": "48757bae72c53d338859dff9f8fcece99b0548cde01d1448a9b4632835591d66",
-          "original_plan": "LEKMOD_DLL/macos/batch-plans/unique-building-catalogue.json",
-          "original_stage": "building-group-06"
+          "path": "build/macos/playtests/20260915T234025Z/Lekmod-Functional-20260915T234025Z.Civ5Save",
+          "sha256": "f213d9b48b0c0cb759d3ea85fe9ffcbc7ff6ed6372772e58b2865fd202812054"
+        },
+        {
+          "path": "build/macos/playtests/20260927T184447Z/checkpoints/Lekmod-Batch-20260927T184447Z-mughal-garrison-run.Civ5Save",
+          "sha256": "3d8de2804282b85eb52b52922fcb2f55f822c5184f72c2b3dcf6a7a01ab010d7"
         }
       ],
-      "batch": "g4-first-gaps",
-      "stage": "BLD-MUGHAL-GARRISON-UPKEEP",
-      "implementation_state": "scenario-not-yet-implemented",
+      "batch": "LEKMOD_DLL/macos/batch-plans/mughal-garrison-regression.json",
+      "stage": "mughal-garrison",
+      "implementation_state": "Confirmed native free-count failure; loader and old-save derived-count fix applied, pending rebuilt candidate/retest.",
       "evidence": [],
       "surface_ids": [
         "data:Buildings.GarrisonMaintenceFree"
-      ],
-      "missing_design": [
-        "Finalize native action sequencing, allowed owner role and branch-specific oracle before declaring this design ready."
       ],
       "source_trace": [
         {
@@ -490,6 +492,53 @@
           "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/Lua/CvLuaPlayer.cpp",
           "line": 144,
           "purpose": "GetNumMaintenanceFreeUnits is registered; use native count rather than guess from rounded treasury alone"
+        }
+      ],
+      "implementation_limits": [
+        "Matched removal/restoration and ordinary-building comparison are supplied API controls; construction/movement/settlement are actual native outcomes.",
+        "No intrinsic NoMaintenance combat unit exists in this resolved data; that impossible combined garrison branch is not claimed.",
+        "Integer gold-cost rounding is preserved; exact free-unit count and actual quoted treasury settlement are asserted.",
+        "Source IsBuildingSellable rejects GoldMaintenance<=0; the initial planned sale was an incorrect harness oracle and has been corrected before reaching that step."
+      ],
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-mughal-garrison.lua",
+          "sha256": "041a2c88a12f4b9fcf141422d91a74f45145e7b74b2d6b1fc904528d54427dfb"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/batch-plans/mughal-garrison.json",
+          "sha256": "ba48a0f1d8ca438282ef43a86e6aaf061ce5f495cadcba85dad53b347b1753ed"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-mughal-garrison-load.lua",
+          "sha256": "68a9f8df6f2db1ab2302d41dc6815781b5c4c9fdca8c38706b1bd5ec6b07f4fa"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/batch-plans/mughal-garrison-regression.json",
+          "sha256": "fd32e9447a806810c549a9c186c7628b9ad2fa449a09aaeed694761f524a3377"
+        }
+      ],
+      "retained_failed_runs": [
+        {
+          "run": "20260927T184447Z",
+          "classification": "confirmed-product-defect",
+          "expected_free_count": 1,
+          "actual_free_count": 0,
+          "cost_with_and_without": 7,
+          "strength_with": 6396,
+          "strength_without": 5896,
+          "checkpoint_sha256": "3d8de2804282b85eb52b52922fcb2f55f822c5184f72c2b3dcf6a7a01ab010d7"
+        }
+      ],
+      "fix_commit": "3ea165d6",
+      "native_failure_evidence": [
+        {
+          "path": "build/macos/playtests/20260927T184447Z/batch-report.json",
+          "sha256": "59e02485da6fd461c0e0ab50c42d132a165fffc819bbad7e4b84fdbdaa9bc883"
+        },
+        {
+          "path": "build/macos/playtests/20260927T184447Z/report.json",
+          "sha256": "545a6818b8c4ccdb79721246806d7b4152ea3fca55b7ea6943a6ff13e191dda9"
         }
       ]
     },
@@ -18154,7 +18203,7 @@
     {
       "id": "SC-GARRISON-COLUMN",
       "case_id": "BLD-MUGHAL-GARRISON-UPKEEP",
-      "classification": "source-contract-mismatch-native-impact-unverified",
+      "classification": "confirmed-native-product-defect",
       "data_column": "GarrisonMaintenceFree",
       "loader_column": "GarrisonMaintenanceFree",
       "configured_building": "BUILDING_MUGHALS_CARAVANSARY",
@@ -18175,11 +18224,12 @@
           "sha256": "5d8d7e62f408d3c4e8520a3922a607bd3e14f19effd752f3d00144a9c0d58877"
         },
         {
-          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvBuildingClasses.cpp",
+          "path": "build/macos/mughal-garrison-20260927/CvBuildingClasses.before.cpp",
           "sha256": "cb72d82d2aafe01172853d8dda8f3ac4c775278f4159008818e686a05fc0f678"
         }
       ],
-      "next_action": "Derive upkeep oracle and commission same-fixture positive/control case before any product fix; not yet a native failure."
+      "next_action": "Build/retest loader fix and affected old-save cache rebuild.",
+      "native_failure": "20260927T184447Z"
     }
   ],
   "dependency_review": [
@@ -18264,7 +18314,8 @@
     "designed_cases": 27,
     "case_statuses": {
       "passed": 4,
-      "untriaged": 4,
+      "product-failed": 1,
+      "untriaged": 3,
       "covered-by-evidence": 16,
       "ready": 3
     },
