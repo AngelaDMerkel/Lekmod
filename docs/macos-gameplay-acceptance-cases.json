@@ -401,7 +401,7 @@
       "id": "BLD-MUGHAL-GARRISON-UPKEEP",
       "group": "G4",
       "title": "Mughal Caravansary free-garrison upkeep contract",
-      "status": "product-failed",
+      "status": "passed",
       "source_references": [
         {
           "path": "LEKMOD/Override/CIV5Units.xml",
@@ -472,8 +472,21 @@
       ],
       "batch": "LEKMOD_DLL/macos/batch-plans/mughal-garrison-regression.json",
       "stage": "mughal-garrison",
-      "implementation_state": "Confirmed native free-count failure; loader and old-save derived-count fix applied, pending rebuilt candidate/retest.",
-      "evidence": [],
+      "implementation_state": "12 native assertions/two exact replays on clean0445cde5 candidate; actual acquisition/movement/settlement and authentic affected-save repair passed.",
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20260927T185946Z/report.json",
+          "sha256": "f3f3ad4f30c26195738825aa848b8c71cf7ae6b5b613bd83f84f65a306927051"
+        },
+        {
+          "path": "build/macos/playtests/20260927T185946Z/batch-report.json",
+          "sha256": "b7ef5df26fd421c799248f33448f6dc99200302e57eafa93e541a4bb5cee13c9"
+        },
+        {
+          "path": "build/macos/mughal-preservation-20260927.json",
+          "sha256": "d250838122099b0c79006ea7f2dc45fbace0f325caa125810359b4ebeb7714d1"
+        }
+      ],
       "surface_ids": [
         "data:Buildings.GarrisonMaintenceFree"
       ],
@@ -540,7 +553,43 @@
           "path": "build/macos/playtests/20260927T184447Z/report.json",
           "sha256": "545a6818b8c4ccdb79721246806d7b4152ea3fca55b7ea6943a6ff13e191dda9"
         }
-      ]
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20260927T185946Z/report.json",
+            "batch_report": "build/macos/playtests/20260927T185946Z/batch-report.json",
+            "stage": "mughal-garrison",
+            "required_assertions": [
+              "garrison-default-control",
+              "garrison-defense-and-cost",
+              "garrison-free-count",
+              "garrison-leave",
+              "garrison-native-production",
+              "garrison-return",
+              "garrison-sale-rejection",
+              "garrison-treasury-settlement"
+            ],
+            "gamecore_sha256": "c8afcadc49da838b3243edd401b6f37ada3bf63b600df6af2e666788c6bf7452"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20260927T185946Z/report.json",
+            "batch_report": "build/macos/playtests/20260927T185946Z/batch-report.json",
+            "stage": "mughal-garrison-oldsave",
+            "required_assertions": [
+              "garrison-loaded-cache-control",
+              "garrison-loaded-cache-repair",
+              "garrison-loaded-next-turn",
+              "garrison-loaded-unrelated-state"
+            ],
+            "gamecore_sha256": "c8afcadc49da838b3243edd401b6f37ada3bf63b600df6af2e666788c6bf7452"
+          }
+        ]
+      },
+      "validation_document": "docs/macos-mughal-garrison-validation.md"
     },
     {
       "id": "LIFE-MAORI-UPGRADE-CAPTURE-NAVAL",
@@ -18203,7 +18252,7 @@
     {
       "id": "SC-GARRISON-COLUMN",
       "case_id": "BLD-MUGHAL-GARRISON-UPKEEP",
-      "classification": "confirmed-native-product-defect",
+      "classification": "fixed-and-natively-verified",
       "data_column": "GarrisonMaintenceFree",
       "loader_column": "GarrisonMaintenanceFree",
       "configured_building": "BUILDING_MUGHALS_CARAVANSARY",
@@ -18228,8 +18277,10 @@
           "sha256": "cb72d82d2aafe01172853d8dda8f3ac4c775278f4159008818e686a05fc0f678"
         }
       ],
-      "next_action": "Build/retest loader fix and affected old-save cache rebuild.",
-      "native_failure": "20260927T184447Z"
+      "next_action": "Retain affected-save regression for final candidate.",
+      "native_failure": "20260927T184447Z",
+      "verified_run": "20260927T185946Z",
+      "fix_commit": "3ea165d6"
     }
   ],
   "dependency_review": [
@@ -18313,8 +18364,7 @@
   "summary": {
     "designed_cases": 27,
     "case_statuses": {
-      "passed": 4,
-      "product-failed": 1,
+      "passed": 5,
       "untriaged": 3,
       "covered-by-evidence": 16,
       "ready": 3
@@ -18335,5 +18385,14 @@
     "reason": "User authorized necessary recovery and continuation; independent reviewed cases can progress while the broad discovery register is reconciled. Global G0 and final acceptance requirements are retained.",
     "final_candidate_freeze_requires_G0": true,
     "reliability_requires_gameplay_closure": true
-  }
+  },
+  "candidate_updates": [
+    {
+      "package": "build/macos/Lekmod-mughal-garrison-20260927.zip",
+      "sha256": "79239c0ece59f1687f76e49663f9ff914fc561874a151c730cb8a266945e53ec",
+      "gamecore_sha256": "c8afcadc49da838b3243edd401b6f37ada3bf63b600df6af2e666788c6bf7452",
+      "source_commit": "0445cde5058d5023f94b8af868bc4b6df4405699",
+      "change": "Mughal free-garrison loader and saved derived count; discovery data/payload unchanged. Historical contracts retain their tested core identities; F still requires applicability review and affected regressions."
+    }
+  ]
 }

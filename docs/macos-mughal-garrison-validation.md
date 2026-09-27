@@ -19,8 +19,9 @@ The source-block regression executes the actual loader assignment and rebuild
 block.195 of218 checks failed before the fix; all218 pass after it under address
 and undefined-behavior sanitizers. They cover shipped/default data, stale counts,
 real/free-building overlap, both effective-count modes, missing entries,
-idempotence and removal. This is offline evidence; **native fix acceptance is
-pending rebuild and retest**.
+idempotence and removal. Native run `20260927T185946Z` subsequently passed all12 assertions and two exact
+replays on the clean rebuilt candidate; the offline checks remain a distinct level
+of evidence.
 
 ## Native regression design
 
@@ -51,5 +52,29 @@ garrison is not claimed as a reachable configured case.
 
 Raw failure evidence and source-test logs are under
 `build/macos/playtests/20260927T184447Z/` and
-`build/macos/mughal-garrison-20260927/`. The case remains product-failed until the
-rebuilt native candidate completes these tests. No push is authorized.
+`build/macos/mughal-garrison-20260927/`. The case is now passed on the rebuilt candidate; full single-player acceptance
+remains open. Nothing was pushed.
+
+## Rebuilt native result
+
+Clean source `0445cde5058d5023f94b8af868bc4b6df4405699` produced archive
+`build/macos/Lekmod-mughal-garrison-20260927.zip`, SHA-256
+`79239c0ece59f1687f76e49663f9ff914fc561874a151c730cb8a266945e53ec`.
+Signed/ABI-validated core:
+`4756df05c8e9d7bbed7c1e36fd2a8ea1c5dd5209da57a304bc37d22fe69d8659`.
+The payload and startup correction are unchanged. This is the candidate for
+subsequent tests; historical results retain their own original core identities.
+
+`20260927T185946Z` completed12 native assertions/two exact replays in three
+ordinary turns, with normal exit0 and complete settings/UI/manual-save restoration.
+The original acquisition fixture now yields free count1/cost6/strength6396 versus
+no building count0/cost7/strength5896. Normal exit/reentry of the garrison changes
+the exemption once; the quoted ordinary treasury settlement and native sale
+rejection pass. The authentic failed save loads with repaired count/cost while
+all unrelated recorded fields remain exact, and its next settlement/replay pass.
+No Lua/synchronization error or new crash diagnostic was reported.
+
+`build/macos/mughal-preservation-20260927.json` independently verifies recovered
+and newer saves/settings, all prior single-player files, stock UI and original
+host/GameCore/backups. Stock is restored and Civ V is closed. Final F/R regression
+and reliability requirements are still outstanding.

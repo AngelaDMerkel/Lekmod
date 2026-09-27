@@ -40,6 +40,14 @@ The two-stage `mughal-garrison-regression.json` pins normal acquisition and the
 authentic affected checkpoint. Source review also corrected the planned sale to
 native rejection because this building has zero maintenance.
 
+The Mughal repair is now **natively verified**:12 assertions/two exact replays
+in `20260927T185946Z`, including the authentic failed save without refunds or
+movement changes. The pending wording above is historical. Use the new clean
+candidate `build/macos/Lekmod-mughal-garrison-20260927.zip`, SHA-256
+`79239c0ece59f1687f76e49663f9ff914fc561874a151c730cb8a266945e53ec`, core
+`4756df05c8e9d7bbed7c1e36fd2a8ea1c5dd5209da57a304bc37d22fe69d8659`.
+Stock/restoration verified; next Maori/Moors lifetime and G0, then F/R gates.
+
 The September27 refinement permits fully specified isolated cases to run while
 unrelated G0 review continues. Global G0 remains open and is required before
 candidate freeze. Next: G2 ownership/lifetime case design and remaining mappings.
