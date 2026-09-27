@@ -21,6 +21,7 @@ def main():
     choice=p.add_mutually_exclusive_group();choice.add_argument('--group',type=int);choice.add_argument('--all',action='store_true');choice.add_argument('--roster',action='append',help='explicit comma-separated single-player roster, human first; repeat for independent fixtures')
     p.add_argument('--from-group',type=int,default=1,help='with --all, start at the first unfinished one-based group')
     p.add_argument('--allow-duplicate-civilizations',action='store_true',help='explicit custom ownership fixture only; catalogue uniqueness remains required')
+    p.add_argument('--map-script',choices=('Continents.lua','Pangaea.lua','Archipelago.lua','Fractal.lua','SmallContinents.lua','Lakes.lua','InlandSea.lua'),help='normal map selection for a custom fixture roster')
     p.add_argument('--minutes',type=int,default=45)
     p.add_argument('--preflight-only',action='store_true')
     p.add_argument('--trace-loaded-libraries',action='store_true')
@@ -32,6 +33,8 @@ def main():
     if hashlib.sha256((ROOT/'LEKMOD/Override/CIV5Units.xml').read_bytes()).hexdigest()!=plan['source_xml_sha256']:p.error('Gameplay XML changed; review and regenerate groups')
     flat=[c for g in plan['groups']for c in g]
     if len(flat)!=114 or len(set(flat))!=114 or any(not 2<=len(g)<=12 for g in plan['groups']):p.error('Invalid civilization group inventory')
+    if a.map_script and not a.roster:p.error('--map-script requires an explicit --roster; catalogue map stays fixed')
+    if a.map_script:plan={**plan,'map':a.map_script}
     if a.allow_duplicate_civilizations and not a.roster:p.error('--allow-duplicate-civilizations requires an explicit --roster')
     if a.roster:
         known=set(flat);rosters=[row.split(',')for row in a.roster]

@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "name": "configuration-cache-and-edge-regression",
+  "stages": [
+    {
+      "id": "compiled-info-cache",
+      "scenario": "info-cache",
+      "fixture": "build/macos/playtests/20260922T233312Z/Lekmod-Functional-20260922T233312Z.Civ5Save",
+      "sha256": "903a1a869d99c11a2e7079995bbf0293b321035d2d1803a2912da05face90f1d",
+      "max_turns": 0
+    },
+    {
+      "id": "inland-baseline",
+      "scenario": "civilization-start",
+      "fixture": "build/macos/playtests/20260927T214903Z/Lekmod-Functional-20260927T214903Z.Civ5Save",
+      "sha256": "f48fc0acb9e1799cfb8086573bc803dc6309d3cac42019b1d4ac30ed02a306fa",
+      "expected_report": "build/macos/playtests/20260927T214903Z/report.json",
+      "expected_report_sha256": "685a8466b5077b1edd15e04705d456df07eb911b74b5a60288dea8161772f0bc",
+      "max_turns": 0
+    },
+    {
+      "id": "exotic-1",
+      "scenario": "exotic-goods",
+      "parameters": {
+        "unit": "UNIT_IMPRENDITORO"
+      },
+      "fixture": "build/macos/playtests/20260927T214903Z/Lekmod-Functional-20260927T214903Z.Civ5Save",
+      "sha256": "f48fc0acb9e1799cfb8086573bc803dc6309d3cac42019b1d4ac30ed02a306fa",
+      "max_turns": 0
+    },
+    {
+      "id": "exotic-2",
+      "scenario": "exotic-goods",
+      "parameters": {
+        "unit": "UNIT_IMPRENDITORE"
+      },
+      "fixture": "build/macos/playtests/20260927T214903Z/Lekmod-Functional-20260927T214903Z.Civ5Save",
+      "sha256": "f48fc0acb9e1799cfb8086573bc803dc6309d3cac42019b1d4ac30ed02a306fa",
+      "max_turns": 0
+    },
+    {
+      "id": "exotic-3",
+      "scenario": "exotic-goods",
+      "parameters": {
+        "unit": "UNIT_PORTUGUESE_NAU"
+      },
+      "fixture": "build/macos/playtests/20260927T214903Z/Lekmod-Functional-20260927T214903Z.Civ5Save",
+      "sha256": "f48fc0acb9e1799cfb8086573bc803dc6309d3cac42019b1d4ac30ed02a306fa",
+      "max_turns": 0
+    }
+  ]
+}

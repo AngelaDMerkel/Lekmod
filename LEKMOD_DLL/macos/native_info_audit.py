@@ -46,4 +46,3 @@ def mapping(path,table):
    if arg['kind']!='StringLiteral':continue
    column=json.loads(arg['value']);loads[column]={'member':left['name'],'reader':call['name'],**getters.get(left['name'],{})}
  return loads
-

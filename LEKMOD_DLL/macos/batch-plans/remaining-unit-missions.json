@@ -1,0 +1,96 @@
+{
+  "schema": 1,
+  "name": "remaining-unit-missions",
+  "stages": [
+    {
+      "id": "airlift-1",
+      "scenario": "airlift",
+      "parameters": {
+        "building": "BUILDING_AIRPORT"
+      },
+      "fixture": "build/macos/playtests/20260922T233312Z/Lekmod-Functional-20260922T233312Z.Civ5Save",
+      "sha256": "903a1a869d99c11a2e7079995bbf0293b321035d2d1803a2912da05face90f1d",
+      "max_turns": 0
+    },
+    {
+      "id": "airlift-2",
+      "scenario": "airlift",
+      "parameters": {
+        "building": "BUILDING_HORDE_YAM_ROUTE"
+      },
+      "fixture": "build/macos/playtests/20260922T233959Z/Lekmod-Functional-20260922T233959Z.Civ5Save",
+      "sha256": "7133ed700aedd71903a654af60706d271926479de59b219be7773256be797da7",
+      "max_turns": 2
+    },
+    {
+      "id": "airlift-3",
+      "scenario": "airlift",
+      "parameters": {
+        "building": "BUILDING_MC_OMANI_MINAA"
+      },
+      "fixture": "build/macos/playtests/20260922T234351Z/Lekmod-Functional-20260922T234351Z.Civ5Save",
+      "sha256": "97d0604bff2fe5082d99ef48af07e2550d21a91dd4bc554918583fa1390164ce",
+      "max_turns": 2
+    },
+    {
+      "id": "airlift-4",
+      "scenario": "airlift",
+      "parameters": {
+        "building": "BUILDING_SERAI"
+      },
+      "fixture": "build/macos/playtests/20260922T234627Z/Lekmod-Functional-20260922T234627Z.Civ5Save",
+      "sha256": "81fb0432eeb5737ed7446a89500e097422b565eab4e87273ff6e104d9b6c6d5c",
+      "max_turns": 2
+    },
+    {
+      "id": "drop-9",
+      "scenario": "paradrop",
+      "parameters": {
+        "unit": "UNIT_PARATROOPER"
+      },
+      "fixture": "build/macos/playtests/20260922T233312Z/Lekmod-Functional-20260922T233312Z.Civ5Save",
+      "sha256": "903a1a869d99c11a2e7079995bbf0293b321035d2d1803a2912da05face90f1d",
+      "max_turns": 2
+    },
+    {
+      "id": "drop-40",
+      "scenario": "paradrop",
+      "parameters": {
+        "unit": "UNIT_XCOM_SQUAD"
+      },
+      "fixture": "build/macos/playtests/20260922T233312Z/Lekmod-Functional-20260922T233312Z.Civ5Save",
+      "sha256": "903a1a869d99c11a2e7079995bbf0293b321035d2d1803a2912da05face90f1d",
+      "max_turns": 2
+    },
+    {
+      "id": "exotic-1",
+      "scenario": "exotic-goods",
+      "parameters": {
+        "unit": "UNIT_IMPRENDITORO"
+      },
+      "fixture": "build/macos/playtests/20260922T233312Z/Lekmod-Functional-20260922T233312Z.Civ5Save",
+      "sha256": "903a1a869d99c11a2e7079995bbf0293b321035d2d1803a2912da05face90f1d",
+      "max_turns": 0
+    },
+    {
+      "id": "exotic-2",
+      "scenario": "exotic-goods",
+      "parameters": {
+        "unit": "UNIT_IMPRENDITORE"
+      },
+      "fixture": "build/macos/playtests/20260922T233312Z/Lekmod-Functional-20260922T233312Z.Civ5Save",
+      "sha256": "903a1a869d99c11a2e7079995bbf0293b321035d2d1803a2912da05face90f1d",
+      "max_turns": 0
+    },
+    {
+      "id": "exotic-3",
+      "scenario": "exotic-goods",
+      "parameters": {
+        "unit": "UNIT_PORTUGUESE_NAU"
+      },
+      "fixture": "build/macos/playtests/20260922T233312Z/Lekmod-Functional-20260922T233312Z.Civ5Save",
+      "sha256": "903a1a869d99c11a2e7079995bbf0293b321035d2d1803a2912da05face90f1d",
+      "max_turns": 0
+    }
+  ]
+}
