@@ -33,11 +33,13 @@ HOOKS = {
     'religion-benefits': {'UI/ProductionPopup.lua': 'playtest-scenario-purchase-popup.lua'},
 }
 # Parameters are data-only and enumerated for each reviewed scenario.
-PARAMETERS = {'city-god': {'mode': ('human', 'tibet', 'control')}}
+PARAMETERS = {'city-god': {'mode': ('human', 'tibet', 'control')},
+              'city-god-repeat': {'mode': ('human', 'tibet', 'control'), 'expected_state': 'snapshot-json'},
+              'city-god-reentry': {'mode': ('human', 'control'), 'expected_state': 'snapshot-json'}}
 
 PREFIXES = {'playtest-nz-owner-observer.lua': 'playtest-nz-owner-before-observer.lua'}
 
-SUPPORTED = set(HOOKS) | {'city-god', 'swiss-migration-load', 'swiss-human-training', 'swiss-legacy-load', 'swiss-boundaries', 'swiss-armory', 'unique-prophet-birth', 'unique-general-birth', 'unique-specialist-birth', 'unique-unit-production', 'religious-unit-upgrades', 'swiss-enemy-heal', 'swiss-city-plunder-funded', 'swiss-city-plunder-empty', 'swiss-city-plunder-control', 'swiss-mounted-calculation', 'swiss-utility', 'crusader-borders', 'vatican-kill-faith', 'religious-terrain', 'vatican-great-improvements', 'vatican-pressure-votes', 'vatican-courthouse', 'vatican-stpeters', 'jerusalem-outremer', 'unique-building-catalogue', 'unique-building-pilot', 'civilization-start', 'unique-units', 'counterspy', 'nuclear-cities', 'nuclear-production', 'nuclear-cleanup', 'defender-zoc', 'inventory', 'admiral-repair', 'worker', 'unit-actions', 'great-person-builds', 'budget-settlement', 'nuclear', 'air-operations', 'greatworks', 'trade-tooltip', 'trade-countdown', 'nabatea-farms', 'nabatea-tomb', 'newzealand-science-completion'}
+SUPPORTED = set(HOOKS) | {'city-god-reentry', 'city-god-repeat', 'city-god', 'swiss-migration-load', 'swiss-human-training', 'swiss-legacy-load', 'swiss-boundaries', 'swiss-armory', 'unique-prophet-birth', 'unique-general-birth', 'unique-specialist-birth', 'unique-unit-production', 'religious-unit-upgrades', 'swiss-enemy-heal', 'swiss-city-plunder-funded', 'swiss-city-plunder-empty', 'swiss-city-plunder-control', 'swiss-mounted-calculation', 'swiss-utility', 'crusader-borders', 'vatican-kill-faith', 'religious-terrain', 'vatican-great-improvements', 'vatican-pressure-votes', 'vatican-courthouse', 'vatican-stpeters', 'jerusalem-outremer', 'unique-building-catalogue', 'unique-building-pilot', 'civilization-start', 'unique-units', 'counterspy', 'nuclear-cities', 'nuclear-production', 'nuclear-cleanup', 'defender-zoc', 'inventory', 'admiral-repair', 'worker', 'unit-actions', 'great-person-builds', 'budget-settlement', 'nuclear', 'air-operations', 'greatworks', 'trade-tooltip', 'trade-countdown', 'nabatea-farms', 'nabatea-tomb', 'newzealand-science-completion'}
 
 def validate_lua_syntax(plan, repo, compiler):
     """Parse every selected scenario and injected UI adapter before installation."""
@@ -115,8 +117,18 @@ def load_plan(path, repo, items):
         permitted = PARAMETERS.get(scenario, {})
         if not isinstance(parameters, dict) or set(parameters) != set(permitted):
             raise ValueError('Invalid/missing reviewed scenario parameters: ' + ident)
-        if any(not isinstance(parameters[key], str) or parameters[key] not in values for key, values in permitted.items()):
-            raise ValueError('Invalid reviewed scenario parameter value: ' + ident)
+        for key, values in permitted.items():
+            value=parameters[key]
+            if values=='snapshot-json':
+                if not isinstance(value,str) or len(value)>131072:
+                    raise ValueError('Invalid snapshot parameter: '+ident)
+                try: snapshot=json.loads(value)
+                except (ValueError,TypeError) as error:
+                    raise ValueError('Invalid snapshot parameter: '+ident) from error
+                if not isinstance(snapshot,dict) or set(snapshot)!={'turn','owners'} or not isinstance(snapshot['owners'],dict):
+                    raise ValueError('Invalid snapshot parameter shape: '+ident)
+            elif not isinstance(value,str) or value not in values:
+                raise ValueError('Invalid reviewed scenario parameter value: '+ident)
         turns=row.get('max_turns',0)
         if isinstance(turns,bool) or not isinstance(turns,int) or not 0 <= turns <= 19: raise ValueError('Invalid stage turn limit')
         total+=turns

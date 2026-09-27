@@ -24,6 +24,16 @@ def resolve(root, value):
 
 def native_batch_contract(case, root):
     contract=case.get('evidence_contract',{})
+    if contract.get('kind')=='native-batch-stages':
+        stages=contract.get('stages',[])
+        if not stages or any(c.get('kind')!='native-batch-stage' for c in stages):
+            raise ValueError('composite evidence needs nonempty native stage contracts')
+        identities=[(c['report'],c['batch_report'],c['stage']) for c in stages]
+        if len(set(identities))!=len(identities):
+            raise ValueError('duplicate composite evidence stage')
+        for stage in stages:
+            native_batch_contract(dict(case,evidence_contract=stage),root)
+        return
     if contract.get('kind')!='native-batch-stage':
         raise ValueError('passing case needs a supported evidence contract: '+case['id'])
     evidence_paths={r['path'] for r in case['evidence']}

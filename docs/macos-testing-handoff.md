@@ -9,13 +9,19 @@ unintended and authorized recovery. All672 prior single-player saves were restor
 95 newer saves/current preferences were preserved. Recovery evidence is under
 `build/macos/data-recovery-20260927/`.
 
-The September27 plan refinement permits a fully specified isolated case to run
-while unrelated G0 review continues. Global G0 remains open and is still required
-before candidate freeze. Use `check-gameplay-acceptance.py --require-ready-case
-REL-CITY-OF-GOD-GRANT` and normal preflight before the prepared City of God batch.
+The [City of God case](macos-city-god-validation.md) now passes36 native
+assertions/eight exact replays in `20260927T172330Z` and `20260927T173606Z`.
+The retained first attempt failed because the harness mistook a commented AUI
+define for an active gate; no product fix was needed. Independent preservation
+checks verify all672 recovered saves,95 newer saves/three current settings,
+32 stock UI files and canonical/Aspyr backups. Stock is active; Civ V is closed.
+
+The September27 refinement permits fully specified isolated cases to run while
+unrelated G0 review continues. Global G0 remains open and is required before
+candidate freeze. Next: G2 ownership/lifetime case design and remaining mappings.
 Use the isolated `build/macos/test-deps/wsdlc-runtime/bin/python` so WSDLC v1.0.10
 has its pinned certifi dependency; its168-test suite passed there. Check ignored
-continuation state for any active native run before launching.
+continuation state for active native work before launching.
 The last pause checkpoint was `b4579bf3`; the checkout was clean, stock active and
 Civ V closed when resuming. The current work is the
 [scoped host-stat ABI prototype](macos-host-stat-abi.md). Read the ignored

@@ -95,6 +95,31 @@ class RegisterTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'assertion/replay'):check.validate(self.reg,self.root)
     def test_passing_evidence_contract_is_verified(self):
         self.evidence();self.assertTrue(check.validate(self.reg,self.root)['gate_G0_passed'])
+    def test_composite_contract_verifies_every_stage(self):
+        report,batch=self.evidence()
+        first=copy.deepcopy(self.case['evidence_contract'])
+        second=dict(first,stage='second')
+        batch['results'] += [dict(row,id='second') for row in batch['results']]
+        self.put('batch.json',batch);self.repin()
+        self.case['evidence_contract']={'kind':'native-batch-stages','stages':[first,second]}
+        self.assertTrue(check.validate(self.reg,self.root)['gate_G0_passed'])
+        batch['results'][-1]['failed']=True
+        self.put('batch.json',batch);self.repin()
+        with self.assertRaisesRegex(ValueError,'assertion/replay'):check.validate(self.reg,self.root)
+
+    def test_empty_or_duplicate_composite_cannot_pass(self):
+        self.evidence();stage=copy.deepcopy(self.case['evidence_contract'])
+        self.case['evidence_contract']={'kind':'native-batch-stages','stages':[]}
+        with self.assertRaisesRegex(ValueError,'nonempty'):check.validate(self.reg,self.root)
+        self.case['evidence_contract']['stages']=[stage,stage]
+        with self.assertRaisesRegex(ValueError,'duplicate'):check.validate(self.reg,self.root)
+
+    def test_composite_cannot_use_unpinned_report(self):
+        self.evidence();stage=copy.deepcopy(self.case['evidence_contract'])
+        stage['report']='unreviewed.json'
+        self.case['evidence_contract']={'kind':'native-batch-stages','stages':[stage]}
+        with self.assertRaisesRegex(ValueError,'unpinned'):check.validate(self.reg,self.root)
+
     def test_reference_cannot_escape_checkout(self):
         self.case['source_references']=[{'path':'../outside','sha256':'a'*64}]
         with self.assertRaisesRegex(ValueError,'inside the checkout'):check.validate(self.reg,self.root)

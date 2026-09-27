@@ -30,6 +30,15 @@ The [system outcomes](macos-single-player-systems.md) and
 physical mouse actions, scripted commands, gameplay outcomes, and incomplete
 sessions. The user renewed foreground-testing permission for this task.
 
+## Latest gameplay closure
+
+[City of God](macos-city-god-validation.md) passes36 native assertions/eight exact
+replays, including fresh-process one-shot persistence. The failed initial oracle
+is retained and corrected; no product fix or physical religion-popup coverage is
+claimed. Deleted single-player saves were recovered with hash verification, newer
+saves/current settings preserved, and stock restored after testing. G0 and final
+single-player acceptance remain open.
+
 ## Current startup investigation
 
 Testing has resumed on local `main`. The Swiss, Yugoslav and Romanian fixes above

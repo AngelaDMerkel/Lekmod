@@ -1325,3 +1325,12 @@ REL-CITY-OF-GOD-GRANT` succeeds; the global G0 gate remains required before
 candidate freeze.
 The exact replay does not itself perform a post-load repeat request. Tests of
 that extra action must be commissioned from the resulting checkpoints.
+
+## City of God grant and persistence
+
+`batch-plans/city-god-grant.json` tests the default and Tibetan free prophets plus
+a no-grant control. `city-god-persistence.json` loads the pinned passing checkpoints
+in a fresh process, tests repeated-command rejection and native one-shot reentry.
+Both plans passed; see [scoped evidence](../../docs/macos-city-god-validation.md).
+Use actual preprocessor output when choosing an oracle: commented optional AUI
+defines caused the retained first harness failure.

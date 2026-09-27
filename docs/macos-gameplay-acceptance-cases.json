@@ -73,7 +73,7 @@
       "id": "REL-CITY-OF-GOD-GRANT",
       "group": "G1",
       "title": "City of God free prophet, accounting and non-repeat",
-      "status": "ready",
+      "status": "passed",
       "source_references": [
         {
           "path": "LEKMOD/Override/CIV5Units.xml",
@@ -121,8 +121,8 @@
           "spreads": 5
         },
         "unit_religion": "Capital majority religion supplied through normal religion-founding setup; initUnit applies it before adjacent relocation.",
-        "repeat_request": "CanAddReformationBelief rejects a second reform, with zero new units and zero faith change.",
-        "one_shot_persistence": "Exact state reload is required. Add a follow-up native repeat request after loading the generated checkpoint; the initial batch does not execute this extra action."
+        "repeat_request": "Active non-AUI ResponseFoundPantheon rejects already-reformed religion; no new units or faith change.",
+        "one_shot_persistence": "Fresh-process exact load, repeated native reformation request and supplied legal native enhancement re-entering DoReligionOneShots produce no second grant."
       },
       "units": [
         "unit count",
@@ -131,9 +131,9 @@
         "religious spreads"
       ],
       "supplied_inputs": "Only prerequisites/budgets/positions specified by the scenario; final reward and processing flags must not be assigned.",
-      "actual_trigger": "Network.SendFoundPantheon(explicit_owner, BELIEF_CITY_OF_GOD), which routes reformation beliefs through the checked CvDllNetMessageHandler::ResponseFoundPantheon path; observe settled state after ReformationAdded/UnitCreated.",
+      "actual_trigger": "Network.SendFoundPantheon(explicit_owner, belief). Active non-AUI code requires a founded religion and rejects repeat reformations; it does not enforce the commented-out AUI policy gate. Positive cases still supply the intended reformation policy.",
       "negative_controls": [
-        "Before POLICY_REFORMATION: request rejected, no new prophet and no faith debit",
+        "Before founding a religion: native request grants no belief/unit and makes no faith debit",
         "A separate fixture chooses a reformation with NumFreeSettlers=0",
         "After successful grant: repeat request rejected without another unit",
         "Faith remains below the quoted paid-spawn threshold throughout"
@@ -143,7 +143,8 @@
         "normal reformation message and free-unit creation",
         "normal owner turn",
         "exact replay",
-        "repeat-request rejection after replay"
+        "repeat-request rejection after replay",
+        "native religion-one-shot reentry after a fresh-process load"
       ],
       "persistence_requirement": "Exact relevant-state replay plus verified source/copy bytes; no double reward on load.",
       "required_evidence_level": [
@@ -158,29 +159,59 @@
           "original_stage": "prophet-recovery"
         }
       ],
-      "batch": "LEKMOD_DLL/macos/batch-plans/city-god-grant.json",
+      "batch": "LEKMOD_DLL/macos/batch-plans/city-god-grant.json + LEKMOD_DLL/macos/batch-plans/city-god-persistence.json",
       "stage": "REL-CITY-OF-GOD-GRANT",
-      "implementation_state": "initial-grant, same-session repeat and actual-owner-round scenarios prepared; preflight only",
-      "evidence": [],
+      "implementation_state": "36 native assertions and eight exact replays passed across initial grant and fresh-process persistence batches.",
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20260927T172330Z/report.json",
+          "sha256": "76ef5ede855c4416662cfef708e77050c4151f7c1ef8ecea8090e03f9afc9e17"
+        },
+        {
+          "path": "build/macos/playtests/20260927T172330Z/batch-report.json",
+          "sha256": "5811bff33cd21d9c678001659e79c3177e76fbb67ab409be8084e82210ddb973"
+        },
+        {
+          "path": "build/macos/playtests/20260927T173606Z/report.json",
+          "sha256": "8d470e893abf7450810b38a7d4f1448f59c84b54c0dd9cb64867628a01f0103a"
+        },
+        {
+          "path": "build/macos/playtests/20260927T173606Z/batch-report.json",
+          "sha256": "06ad477936fc38b4de3b22cbd2922a5646269a24c1f62edee0e04fbf3b9e598f"
+        },
+        {
+          "path": "build/macos/city-god-preservation-20260927.json",
+          "sha256": "7c458282e0d55c6c237bcbeeaac49721af10ed910d174fa4121a3c6b3f85e47c"
+        },
+        {
+          "path": "build/macos/data-recovery-20260927/enabled-religion-defines.json",
+          "sha256": "e8b83061fcd4c025e2e42bbc3d649f4202f2c459502c97d00c916cd5fce76d67"
+        }
+      ],
       "surface_ids": [
         "data:Beliefs.NumFreeSettlers"
       ],
       "planned_substages": [
-        "city-god-default",
+        "city-god-human",
         "city-god-tibet",
-        "city-god-no-grant-control"
+        "city-god-control",
+        "repeat-human",
+        "reentry-human",
+        "repeat-tibet",
+        "repeat-control",
+        "reentry-control"
       ],
       "max_turns_per_substage": 2,
       "source_trace": [
         {
           "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvDllNetMessageHandler.cpp",
           "line": 340,
-          "purpose": "Explicit owner and reformation eligibility/repeat rejection"
+          "purpose": "Active non-AUI founded-religion and repeat predicates; stronger optional gate is inside a block comment in _Defines.h"
         },
         {
           "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvReligionClasses.cpp",
           "line": 1436,
-          "purpose": "Policy/religion/unused belief/repeat predicates"
+          "purpose": "Optional AUI predicate is compiled out in this candidate; do not use it as the active native oracle"
         },
         {
           "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPlayer.cpp",
@@ -204,19 +235,167 @@
         }
       ],
       "implementation_limits": [
-        "Native execution has not occurred.",
-        "The built-in replay is an exact snapshot comparison; a separate post-load repeat-request action remains to be commissioned from the generated checkpoints."
+        "Supplied religion/policy prerequisites and explicit-player network commands; no physical religion-popup action or autonomous AI reformation-choice coverage.",
+        "Fresh-process enhancement is a supplied legal Game.EnhanceReligion API call; it does not establish an earned-prophet enhancement mission.",
+        "Tibetan AI consumed its free Dalai Lama through normal enhancement during the tested owner turn; saved state correctly records that outcome."
       ],
       "implementation_references": [
         {
           "path": "LEKMOD_DLL/macos/playtest-scenario-city-god.lua",
-          "sha256": "5836b1fc6ce38b62bfe0279600ce0c5455aac8c742fc5ffec69b1d8523ab0f53"
+          "sha256": "da2e2124e0b77e2f685b05a53c98051ec0bd566ea4cb5ac2217a79b1f4c65a31"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-city-god-repeat.lua",
+          "sha256": "1018c68f7a8cc1edd0d156ccc39871bf4cb1c932bed70731c8040e8277ccd596"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-city-god-reentry.lua",
+          "sha256": "d5c1b68673985bcf4b2cbd26f921558dafa91e6ff9089146108044f05b8ea222"
         },
         {
           "path": "LEKMOD_DLL/macos/batch-plans/city-god-grant.json",
           "sha256": "2b9c79ccba76ecfe1c0ad5726f3b3abe0e11ddc0de652f95f5d1475f5f43f080"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/batch-plans/city-god-persistence.json",
+          "sha256": "5d630df2dc608a111d86c2276c56bc6a6d54d6aa1a63d9e68868fcaa517aae61"
         }
-      ]
+      ],
+      "retained_failed_runs": [
+        {
+          "run": "20260927T165715Z",
+          "classification": "harness-oracle-error",
+          "reason": "Expected inactive/commented AUI policy rejection; the actual native command accepted a founded player without the policy. All stages remain failed; native exit0 and restoration passed."
+        }
+      ],
+      "preprocessed_defines_evidence": {
+        "path": "build/macos/data-recovery-20260927/enabled-religion-defines.json",
+        "sha256": "e8b83061fcd4c025e2e42bbc3d649f4202f2c459502c97d00c916cd5fce76d67"
+      },
+      "initial_native_evidence": [
+        {
+          "path": "build/macos/playtests/20260927T172330Z/report.json",
+          "sha256": "76ef5ede855c4416662cfef708e77050c4151f7c1ef8ecea8090e03f9afc9e17"
+        },
+        {
+          "path": "build/macos/playtests/20260927T172330Z/batch-report.json",
+          "sha256": "5811bff33cd21d9c678001659e79c3177e76fbb67ab409be8084e82210ddb973"
+        }
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20260927T172330Z/report.json",
+            "batch_report": "build/macos/playtests/20260927T172330Z/batch-report.json",
+            "stage": "city-god-human",
+            "required_assertions": [
+              "city-god-eligibility-rejection",
+              "city-god-free-accounting",
+              "city-god-grant-count",
+              "city-god-native-selection",
+              "city-god-owner-turn-no-repeat",
+              "city-god-properties",
+              "city-god-repeat-rejection"
+            ],
+            "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20260927T172330Z/report.json",
+            "batch_report": "build/macos/playtests/20260927T172330Z/batch-report.json",
+            "stage": "city-god-tibet",
+            "required_assertions": [
+              "city-god-eligibility-rejection",
+              "city-god-free-accounting",
+              "city-god-grant-count",
+              "city-god-native-selection",
+              "city-god-owner-turn-no-repeat",
+              "city-god-properties",
+              "city-god-repeat-rejection"
+            ],
+            "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20260927T172330Z/report.json",
+            "batch_report": "build/macos/playtests/20260927T172330Z/batch-report.json",
+            "stage": "city-god-control",
+            "required_assertions": [
+              "city-god-eligibility-rejection",
+              "city-god-free-accounting",
+              "city-god-grant-count",
+              "city-god-native-selection",
+              "city-god-owner-turn-no-repeat",
+              "city-god-properties",
+              "city-god-repeat-rejection"
+            ],
+            "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20260927T173606Z/report.json",
+            "batch_report": "build/macos/playtests/20260927T173606Z/batch-report.json",
+            "stage": "repeat-human",
+            "required_assertions": [
+              "city-god-loaded-belief",
+              "city-god-loaded-repeat-rejection",
+              "city-god-loaded-state-preserved"
+            ],
+            "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20260927T173606Z/report.json",
+            "batch_report": "build/macos/playtests/20260927T173606Z/batch-report.json",
+            "stage": "reentry-human",
+            "required_assertions": [
+              "city-god-reentry-enhanced",
+              "city-god-reentry-load",
+              "city-god-reentry-no-second-grant"
+            ],
+            "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20260927T173606Z/report.json",
+            "batch_report": "build/macos/playtests/20260927T173606Z/batch-report.json",
+            "stage": "repeat-tibet",
+            "required_assertions": [
+              "city-god-loaded-belief",
+              "city-god-loaded-repeat-rejection",
+              "city-god-loaded-state-preserved"
+            ],
+            "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20260927T173606Z/report.json",
+            "batch_report": "build/macos/playtests/20260927T173606Z/batch-report.json",
+            "stage": "repeat-control",
+            "required_assertions": [
+              "city-god-loaded-belief",
+              "city-god-loaded-repeat-rejection",
+              "city-god-loaded-state-preserved"
+            ],
+            "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20260927T173606Z/report.json",
+            "batch_report": "build/macos/playtests/20260927T173606Z/batch-report.json",
+            "stage": "reentry-control",
+            "required_assertions": [
+              "city-god-reentry-enhanced",
+              "city-god-reentry-load",
+              "city-god-reentry-no-second-grant"
+            ],
+            "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+          }
+        ]
+      },
+      "validation_document": "docs/macos-city-god-validation.md"
     },
     {
       "id": "BLD-MUGHAL-GARRISON-UPKEEP",
@@ -17690,11 +17869,12 @@
     },
     {
       "id": "G1-missing-outcomes",
-      "requires": "G0 passed",
+      "requires": "selected case passes reviewed readiness gate; global G0 still required before F",
       "cases": [
         "REL-CITY-OF-GOD-GRANT"
       ],
-      "launch_game": true
+      "launch_game": true,
+      "result": "REL-CITY-OF-GOD-GRANT passed; other G1 cases may emerge during unfinished reconciliation."
     },
     {
       "id": "G2-ownership-lifetime",
@@ -17726,9 +17906,10 @@
   "summary": {
     "designed_cases": 26,
     "case_statuses": {
-      "ready": 4,
+      "passed": 1,
       "untriaged": 6,
-      "covered-by-evidence": 16
+      "covered-by-evidence": 16,
+      "ready": 3
     },
     "review_surfaces": 1338,
     "pending_document_rows": 124,

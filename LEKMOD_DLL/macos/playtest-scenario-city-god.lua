@@ -66,22 +66,26 @@ function LekmodScenario.step(player)
   p:ChangeFaith(-p:GetFaith());p:SetFaithPurchaseType(FaithPurchaseTypes.FAITH_PURCHASE_SAVE_PROPHET)
   local used={};for id=0,GameDefines.MAX_MAJOR_CIVS-1 do local q=Players[id];if q and q:IsAlive()and q:HasCreatedReligion()then used[q:GetReligionCreatedByPlayer()]=true end end
   for row in GameInfo.Religions()do if row.ID>0 and not used[row.ID]then religion=row.ID;break end end
-  assert(religion);local founder=assert(Game.GetAvailableFounderBeliefs()[1]);local follower=assert(Game.GetAvailableFollowerBeliefs()[1])
-  Game.FoundReligion(owner,religion,nil,founder,follower,-1,-1,p:GetCapitalCity())
-  assert(p:GetReligionCreatedByPlayer()==religion and p:GetCapitalCity():GetReligiousMajority()==religion)
+  assert(religion)
+  -- The optional AUI policy/availability gate is commented out in _Defines.h.
+  -- The active native message rejects a player with no founded religion.
   belief=GameInfoTypes.BELIEF_CITY_OF_GOD
   if mode=="control"then
    belief=nil;for _,id in ipairs(Game.GetAvailableReformationBeliefs())do if (GameInfo.Beliefs[id].NumFreeSettlers or 0)==0 then belief=id;break end end
    assert(belief,"no no-grant reformation control")
   end
-  assert(not containsBelief(belief));before=state(p)
-  LekmodScenarioEvent("fixture-setup",{operation="provided-founded-religion-zero-faith",owner=owner,religion=religion,founder=founder,follower=follower,kind=kind,mode=mode})
+  before=state(p)
+  LekmodScenarioEvent("fixture-setup",{operation="provided-zero-faith-before-founding",owner=owner,religion=religion,kind=kind,mode=mode})
   phase="rejecting";Network.SendFoundPantheon(owner,belief);return false
  elseif phase=="rejecting"then
   if not tickWait("city-god-rejected-message-wait")then return false end
-  local p=Players[owner];assert(selected==0 and countCreated()==0 and not containsBelief(belief))
+  local p=Players[owner];assert(selected==0 and countCreated()==0 and not p:HasCreatedReligion())
   assert(p:GetFaith()==before.faith and p:GetMinimumFaithNextGreatProphet()==before.next_prophet)
-  LekmodScenarioRecord("city-god-eligibility-rejection","PASS","no reformation policy: checked native message grants nothing")
+  LekmodScenarioRecord("city-god-eligibility-rejection","PASS","no founded religion: native message grants nothing")
+  local founder=assert(Game.GetAvailableFounderBeliefs()[1]);local follower=assert(Game.GetAvailableFollowerBeliefs()[1])
+  Game.FoundReligion(owner,religion,nil,founder,follower,-1,-1,p:GetCapitalCity())
+  assert(p:GetReligionCreatedByPlayer()==religion and p:GetCapitalCity():GetReligiousMajority()==religion and not containsBelief(belief))
+  LekmodScenarioEvent("fixture-setup",{operation="provided-founded-religion",owner=owner,religion=religion,founder=founder,follower=follower})
   p:SetHasPolicy(GameInfoTypes.POLICY_REFORMATION,true)
   LekmodScenarioEvent("fixture-setup",{operation="provided-reformation-policy",owner=owner,policy="POLICY_REFORMATION"})
   before=state(p);phase="selecting";waits=0;Network.SendFoundPantheon(owner,belief);return false

@@ -52,6 +52,17 @@ class BatchTests(unittest.TestCase):
         stage['parameters']['mode']='human'
         self.assertEqual(plan['stages'][0]['parameters'],{'mode':'tibet'})
 
+    def test_persistence_snapshot_parameters_are_objects_and_retained(self):
+        (self.code/'playtest-scenario-city-god-repeat.lua').write_text('LekmodScenario={step=function()end,snapshot=function()end}')
+        self.items['city-god-repeat']={'loaded'}
+        stage=self.raw['stages'][0];stage['scenario']='city-god-repeat'
+        for state in ('not-json','[]','{}','{"turn":3,"owners":[]}', 'x'*131073):
+            stage['parameters']={'mode':'human','expected_state':state}
+            with self.assertRaisesRegex(ValueError,'snapshot parameter'):self.load()
+        snapshot='{"turn":3,"owners":{"0":{"faith":0}}}'
+        stage['parameters']={'mode':'human','expected_state':snapshot}
+        self.assertEqual(self.load()['stages'][0]['parameters']['expected_state'],snapshot)
+
     def test_unreviewed_scenario_cannot_accept_parameters(self):
         self.raw['stages'][0]['parameters']={'mode':'human'}
         with self.assertRaisesRegex(ValueError,'scenario parameters'):self.load()
