@@ -628,7 +628,7 @@
       "id": "LIFE-CUBA-CAPITAL-TRANSFER",
       "group": "G2",
       "title": "Cuban culture when capitals move or are lost",
-      "status": "untriaged",
+      "status": "passed",
       "source_references": [
         {
           "path": "LEKMOD/Lua/Civilizations/Lekmod_cuba.lua",
@@ -644,26 +644,27 @@
         }
       ],
       "owners": [
-        "human",
-        "AI when the handler/command path differs"
+        "human Cuba; AI Palmyra attacker; Roman AI source and Palmyran AI controls"
       ],
       "expected_result": "The current Cuban capital receives the sum of floor(0.20 * each met foreign major capital base culture). A change of either capital must recompute that amount without retaining a duplicate bonus in a former Cuban capital.",
       "units": [
         "culture per turn",
         "dummy building count"
       ],
-      "supplied_inputs": "Only prerequisites/budgets/positions specified by the scenario; final reward and processing flags must not be assigned.",
-      "actual_trigger": "Actual capital loss/transfer and normal owner turn after contact and culture inputs.",
+      "supplied_inputs": "Culture buildings in met foreign capitals, legal survival city for the owner that must survive, contact/war, adjacent AI GDR +1 uranium/+1000 gold. No culture reward marker, capital, owner or damage assignment.",
+      "actual_trigger": "Actual AI-owner-turn attack followed by actual Cuban owner callback; a further Cuban owner callback verifies stability.",
       "negative_controls": [
-        "unmet foreign major",
-        "Cuban own capital contribution",
-        "eliminated/capital-less owner"
+        "No Cuban marker on noncapital or foreign cities",
+        "Foreign replacement capital has a lower per-source contribution",
+        "Eliminated Roman owner is excluded; own capital is excluded from the exact quote",
+        "Previously verified unmet/contact control is retained separately in docs/macos-cuba-capital-validation.md, not rerun or newly claimed by this transition plan"
       ],
       "transitions": [
-        "foreign capital changes",
-        "Cuban capital changes",
-        "elimination",
-        "reload"
+        "Cuban capital loss and native relocation",
+        "foreign capital loss and native relocation",
+        "foreign owner elimination",
+        "actual subsequent Cuban callback",
+        "exact resulting-state replay"
       ],
       "persistence_requirement": "Exact relevant-state replay plus verified source/copy bytes; no double reward on load.",
       "required_evidence_level": [
@@ -672,28 +673,101 @@
       ],
       "fixtures": [
         {
-          "path": "build/macos/playtests/20260922T233840Z/Lekmod-Functional-20260922T233840Z.Civ5Save",
-          "sha256": "1b239ce4280b2e4d6fc11997a830f7bd2861075e7074a39dd7e7d06b9d8d41e9",
-          "original_plan": "LEKMOD_DLL/macos/batch-plans/unique-building-catalogue.json",
-          "original_stage": "building-group-03"
+          "path": "build/macos/playtests/20260927T182422Z/Lekmod-Functional-20260927T182422Z.Civ5Save",
+          "sha256": "4156736307140be31b859a6db9febd9bc814143088abf7b62500a31f49c06d6e"
         }
       ],
-      "batch": "g2-first-gaps",
-      "stage": "LIFE-CUBA-CAPITAL-TRANSFER",
-      "implementation_state": "scenario-not-yet-implemented",
-      "evidence": [],
+      "batch": "LEKMOD_DLL/macos/batch-plans/capital-lifetime.json",
+      "stage": "cuba-own-capital / cuba-foreign-capital / cuba-eliminate-capital",
+      "implementation_state": "Verified native capture/owner callbacks and exact replays in 20260927T183038Z",
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20260927T183038Z/report.json",
+          "sha256": "fac8617d907451720caf37a28e03ef900d7133b43dc9c8d3cff19ab697383395"
+        },
+        {
+          "path": "build/macos/playtests/20260927T183038Z/batch-report.json",
+          "sha256": "82841d811f88ef804e39b042da58b1c9b7d0d56fef5d6227b7a119d43d4c5a47"
+        },
+        {
+          "path": "build/macos/capital-lifetime-preservation-20260927.json",
+          "sha256": "eb998c2057a3c57ebb4d252a496e6f17c4c08f091f053060dc9d49544458ca9f"
+        }
+      ],
       "surface_ids": [
         "lua:Lua/Civilizations/Lekmod_cuba.lua:GameEvents.PlayerDoTurn:lekmod_cuba_ua_culture"
       ],
-      "missing_design": [
-        "Finalize native action sequencing, allowed owner role and branch-specific oracle before declaring this design ready."
-      ]
+      "implementation_limits": [
+        "Supplied source culture and scripted AI attack; no earned-building or autonomous-war-choice claim.",
+        "The earlier unmet/contact case remains separate evidence, not a new result from these all-met fixtures."
+      ],
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-cuba-capital-transfer.lua",
+          "sha256": "679e391bdbb1c84643cb4175a2e2fc3dd920fff81cbf6397e8179eaf317209f4"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/batch-plans/capital-lifetime.json",
+          "sha256": "27330997c45e1109c533b4eba9ac67990d228ed2ab017d6d367ede01a57df1bf"
+        }
+      ],
+      "validation_document": "docs/macos-capital-lifetime-validation.md",
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20260927T183038Z/report.json",
+            "batch_report": "build/macos/playtests/20260927T183038Z/batch-report.json",
+            "stage": "cuba-own-capital",
+            "required_assertions": [
+              "cuba-transfer-capital-transition",
+              "cuba-transfer-initial-quote",
+              "cuba-transfer-next-turn",
+              "cuba-transfer-no-stale-marker",
+              "cuba-transfer-real-capture",
+              "cuba-transfer-recomputed-quote"
+            ],
+            "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20260927T183038Z/report.json",
+            "batch_report": "build/macos/playtests/20260927T183038Z/batch-report.json",
+            "stage": "cuba-foreign-capital",
+            "required_assertions": [
+              "cuba-transfer-capital-transition",
+              "cuba-transfer-initial-quote",
+              "cuba-transfer-next-turn",
+              "cuba-transfer-no-stale-marker",
+              "cuba-transfer-real-capture",
+              "cuba-transfer-recomputed-quote"
+            ],
+            "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20260927T183038Z/report.json",
+            "batch_report": "build/macos/playtests/20260927T183038Z/batch-report.json",
+            "stage": "cuba-eliminate-capital",
+            "required_assertions": [
+              "cuba-transfer-capital-transition",
+              "cuba-transfer-initial-quote",
+              "cuba-transfer-next-turn",
+              "cuba-transfer-no-stale-marker",
+              "cuba-transfer-real-capture",
+              "cuba-transfer-recomputed-quote"
+            ],
+            "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+          }
+        ]
+      }
     },
     {
       "id": "LIFE-PALMYRA-ELIMINATED-OWNER",
       "group": "G2",
       "title": "Palmyran freshwater after last-city capture",
-      "status": "untriaged",
+      "status": "passed",
       "source_references": [
         {
           "path": "LEKMOD/Lua/Civilizations/Lekmod_palmyra.lua",
@@ -709,16 +783,16 @@
         }
       ],
       "owners": [
-        "human",
-        "AI when the handler/command path differs"
+        "AI Palmyra slot2 captures the last capital of AI Palmyra slot1; human Cuba/Rome keep game active",
+        "foreign-owner loss/gain retained in separately passed child case"
       ],
       "expected_result": "Capture must evaluate the current owner even when the old owner has already been eliminated. Adjacent non-water plots receive the trait only for the living Palmyran city owner; foreign ownership removes the trait-specific setting. Natural river/lake freshwater must be distinguished from the custom override.",
       "units": [
         "freshwater boolean",
         "owner/city identity"
       ],
-      "supplied_inputs": "Only prerequisites/budgets/positions specified by the scenario; final reward and processing flags must not be assigned.",
-      "actual_trigger": "Legal last-city capture/transfer, including another Palmyran recipient where fixture rules allow it.",
+      "supplied_inputs": "Normal duplicate-civilization single-player roster; one supplied GDR, uranium/upkeep and adjacent staging on its actual owner turn. No outcome or processing flags assigned.",
+      "actual_trigger": "Native AI PushMission only on its actual owner turn; old owner elimination observed at CityCaptureComplete; current Palmyran owner must retain trait freshwater.",
       "negative_controls": [
         "foreign recipient",
         "water plots",
@@ -740,21 +814,115 @@
           "sha256": "97d0604bff2fe5082d99ef48af07e2550d21a91dd4bc554918583fa1390164ce",
           "original_plan": "LEKMOD_DLL/macos/batch-plans/unique-building-catalogue.json",
           "original_stage": "building-group-07"
+        },
+        {
+          "path": "build/macos/playtests/20260927T182422Z/Lekmod-Functional-20260927T182422Z.Civ5Save",
+          "sha256": "4156736307140be31b859a6db9febd9bc814143088abf7b62500a31f49c06d6e"
         }
       ],
-      "batch": "g2-first-gaps",
-      "stage": "LIFE-PALMYRA-ELIMINATED-OWNER",
-      "implementation_state": "scenario-not-yet-implemented",
-      "evidence": [],
+      "batch": "LEKMOD_DLL/macos/batch-plans/capital-lifetime.json",
+      "stage": "palmyra-duplicate",
+      "implementation_state": "Verified native capture/owner callbacks and exact replays in 20260927T183038Z",
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20260927T183038Z/report.json",
+          "sha256": "fac8617d907451720caf37a28e03ef900d7133b43dc9c8d3cff19ab697383395"
+        },
+        {
+          "path": "build/macos/playtests/20260927T183038Z/batch-report.json",
+          "sha256": "82841d811f88ef804e39b042da58b1c9b7d0d56fef5d6227b7a119d43d4c5a47"
+        },
+        {
+          "path": "build/macos/capital-lifetime-preservation-20260927.json",
+          "sha256": "eb998c2057a3c57ebb4d252a496e6f17c4c08f091f053060dc9d49544458ca9f"
+        },
+        {
+          "path": "build/macos/playtests/20260927T181349Z/report.json",
+          "sha256": "6319306aa51353d25662f3cb6cd75214c1c508a857d4c61f758d8822315f6e35"
+        },
+        {
+          "path": "build/macos/playtests/20260927T181349Z/batch-report.json",
+          "sha256": "644bd97c0d05f0fd685b3c762a63fab3deb9657a7e710e4f7fa782e60820829a"
+        },
+        {
+          "path": "build/macos/palmyra-preservation-20260927.json",
+          "sha256": "c8fe505adc2123723f806b5ec8136c2f1755e06d030c904c86d339c032c68ce6"
+        },
+        {
+          "path": "build/macos/playtests/20260927T181349Z/ui-original/Contents/Assets/Assets/UI/InGame/Popups/AdvisorModal.lua",
+          "sha256": "40ce0e9fc99c4864074c1b27bf844cd21668a8eb08bc2419933170b7be61b12b"
+        }
+      ],
       "surface_ids": [
         "lua:Lua/Civilizations/Lekmod_palmyra.lua:GameEvents.CityCaptureComplete:lekmod_ua_palmyra_add_fresh_water_city_capture"
       ],
-      "missing_design": [
-        "Complete duplicate-Palmyra recipient elimination design; foreign-owner branches are separately executable in LIFE-PALMYRA-ELIMINATED-FOREIGN-OWNERSHIP"
-      ],
       "partial_case_ids": [
         "LIFE-PALMYRA-ELIMINATED-FOREIGN-OWNERSHIP"
-      ]
+      ],
+      "implementation_limits": [
+        "AI command is scripted; no autonomous choice or physical mouse coverage."
+      ],
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-palmyra-elimination.lua",
+          "sha256": "0bc7e321fa49a5c986cc4c773c1e0970870d278f0e386baf6948c38e05c3d12b"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/batch-plans/capital-lifetime.json",
+          "sha256": "27330997c45e1109c533b4eba9ac67990d228ed2ab017d6d367ede01a57df1bf"
+        }
+      ],
+      "validation_document": "docs/macos-capital-lifetime-validation.md",
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20260927T183038Z/report.json",
+            "batch_report": "build/macos/playtests/20260927T183038Z/batch-report.json",
+            "stage": "palmyra-duplicate",
+            "required_assertions": [
+              "palmyra-elimination-advisor-path",
+              "palmyra-elimination-callback-owner",
+              "palmyra-elimination-capture",
+              "palmyra-elimination-next-turn",
+              "palmyra-elimination-prerequisites",
+              "palmyra-elimination-water"
+            ],
+            "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20260927T181349Z/report.json",
+            "batch_report": "build/macos/playtests/20260927T181349Z/batch-report.json",
+            "stage": "palmyra-loss",
+            "required_assertions": [
+              "palmyra-elimination-advisor-path",
+              "palmyra-elimination-callback-owner",
+              "palmyra-elimination-capture",
+              "palmyra-elimination-next-turn",
+              "palmyra-elimination-prerequisites",
+              "palmyra-elimination-water"
+            ],
+            "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20260927T181349Z/report.json",
+            "batch_report": "build/macos/playtests/20260927T181349Z/batch-report.json",
+            "stage": "palmyra-gain",
+            "required_assertions": [
+              "palmyra-elimination-advisor-path",
+              "palmyra-elimination-callback-owner",
+              "palmyra-elimination-capture",
+              "palmyra-elimination-next-turn",
+              "palmyra-elimination-prerequisites",
+              "palmyra-elimination-water"
+            ],
+            "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+          }
+        ]
+      }
     },
     {
       "id": "HEAL-AKSUM-ORDINARY",
@@ -18095,8 +18263,8 @@
   "summary": {
     "designed_cases": 27,
     "case_statuses": {
-      "passed": 2,
-      "untriaged": 6,
+      "passed": 4,
+      "untriaged": 4,
       "covered-by-evidence": 16,
       "ready": 3
     },

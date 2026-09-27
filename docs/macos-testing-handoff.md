@@ -25,6 +25,13 @@ commissioning runs remain recorded. No product code changed. Final audit verifie
 all699 prior single-player files, recovered/newer saves/settings,34 stock UI files
 and stock/backups; the game is closed. Duplicate-Palmyra elimination remains open.
 
+The [capital-lifetime batch](macos-capital-lifetime-validation.md) now closes the
+specified duplicate-Palmyra elimination and Cuban own/foreign capital relocation
+and foreign-elimination cases:24 assertions/four functional replays plus baseline
+replay in `20260927T183038Z`,11 ordinary turns, normal exit0 and full preservation.
+No product change. The prior duplicate-Palmyra gap above is superseded.
+Next: Mughal garrison upkeep reproducer, Maori/Moors lifetime and remaining G0 work.
+
 The September27 refinement permits fully specified isolated cases to run while
 unrelated G0 review continues. Global G0 remains open and is required before
 candidate freeze. Next: G2 ownership/lifetime case design and remaining mappings.

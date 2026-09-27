@@ -18,7 +18,8 @@ or callback timing. Gameplay assertions still require native execution.
 creates a normal human-first fixture. Repeat `--roster` for independent starts;
 each remains capped at three turns, with no more than ten groups. Every name
 must belong to the reviewed playable inventory, and duplicate civilizations
-within one roster are rejected. The original `--group` / `--all` matrix remains
+within one roster require the explicit `--allow-duplicate-civilizations` fixture
+option. That option requires `--roster`; it cannot change the unique catalogue. The original `--group` / `--all` matrix remains
 unchanged. All launch/lock, package, save and stock-restoration guards apply.
 
 ## Multi-scenario batches
@@ -1343,3 +1344,7 @@ gain at real last-city conquest. It requires the enabled city-attack advisor
 scoped adapter uses the original Confirm callback with Don't Show Again unchecked.
 Do not disable warnings or set combat/wait flags to get past the modal. See
 [results, inputs and retained failures](../../docs/macos-palmyra-elimination-validation.md).
+
+`batch-plans/capital-lifetime.json` combines duplicate-Palmyra elimination and
+three Cuban capital transitions with a pinned normal-start baseline replay. See
+[results and supplied inputs](../../docs/macos-capital-lifetime-validation.md).

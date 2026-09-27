@@ -45,6 +45,17 @@ class MatrixTests(unittest.TestCase):
                 r=subprocess.run([sys.executable,str(PORT/'civilization-startup-matrix.py'),*args,'--preflight-only'],capture_output=True,text=True)
                 self.assertEqual(r.returncode,2,r.stderr)
                 self.assertIn('Custom rosters require',r.stderr)
+    def test_duplicate_fixture_requires_explicit_custom_roster(self):
+        tool=[sys.executable,str(PORT/'civilization-startup-matrix.py')]
+        r=subprocess.run(tool+['--roster','CIVILIZATION_CUBA,CIVILIZATION_PALMYRA,CIVILIZATION_PALMYRA,CIVILIZATION_ROME','--allow-duplicate-civilizations','--preflight-only'],capture_output=True,text=True)
+        self.assertEqual(r.returncode,0,r.stderr)
+        self.assertEqual(json.loads(r.stdout)['maximum_functional_turns'],3)
+        r=subprocess.run(tool+['--all','--allow-duplicate-civilizations','--preflight-only'],capture_output=True,text=True)
+        self.assertEqual(r.returncode,2,r.stderr)
+        self.assertIn('requires an explicit --roster',r.stderr)
+        r=subprocess.run(tool+['--roster','CIVILIZATION_MISSING,CIVILIZATION_ROME','--allow-duplicate-civilizations','--preflight-only'],capture_output=True,text=True)
+        self.assertEqual(r.returncode,2,r.stderr)
+
     def test_wrong_package_data_refuses_before_native_prerequisites(self):
         with tempfile.TemporaryDirectory()as directory:
             package=Path(directory)/'wrong.zip'

@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "name": "capital-ownership-lifetime",
+  "stages": [
+    {
+      "id": "lifetime-baseline",
+      "scenario": "civilization-start",
+      "fixture": "build/macos/playtests/20260927T182422Z/Lekmod-Functional-20260927T182422Z.Civ5Save",
+      "sha256": "4156736307140be31b859a6db9febd9bc814143088abf7b62500a31f49c06d6e",
+      "expected_report": "build/macos/playtests/20260927T182422Z/report.json",
+      "expected_report_sha256": "58844f0609a05ad8bf7407ad48e9a0fed75debf3ff4f0c9c9953136005f447d0",
+      "max_turns": 0
+    },
+    {
+      "id": "palmyra-duplicate",
+      "scenario": "palmyra-elimination",
+      "parameters": {
+        "mode": "duplicate"
+      },
+      "fixture": "build/macos/playtests/20260927T182422Z/Lekmod-Functional-20260927T182422Z.Civ5Save",
+      "sha256": "4156736307140be31b859a6db9febd9bc814143088abf7b62500a31f49c06d6e",
+      "max_turns": 5
+    },
+    {
+      "id": "cuba-own-capital",
+      "scenario": "cuba-capital-transfer",
+      "parameters": {
+        "mode": "own"
+      },
+      "fixture": "build/macos/playtests/20260927T182422Z/Lekmod-Functional-20260927T182422Z.Civ5Save",
+      "sha256": "4156736307140be31b859a6db9febd9bc814143088abf7b62500a31f49c06d6e",
+      "max_turns": 6
+    },
+    {
+      "id": "cuba-foreign-capital",
+      "scenario": "cuba-capital-transfer",
+      "parameters": {
+        "mode": "foreign"
+      },
+      "fixture": "build/macos/playtests/20260927T182422Z/Lekmod-Functional-20260927T182422Z.Civ5Save",
+      "sha256": "4156736307140be31b859a6db9febd9bc814143088abf7b62500a31f49c06d6e",
+      "max_turns": 6
+    },
+    {
+      "id": "cuba-eliminate-capital",
+      "scenario": "cuba-capital-transfer",
+      "parameters": {
+        "mode": "eliminate"
+      },
+      "fixture": "build/macos/playtests/20260927T182422Z/Lekmod-Functional-20260927T182422Z.Civ5Save",
+      "sha256": "4156736307140be31b859a6db9febd9bc814143088abf7b62500a31f49c06d6e",
+      "max_turns": 6
+    }
+  ]
+}

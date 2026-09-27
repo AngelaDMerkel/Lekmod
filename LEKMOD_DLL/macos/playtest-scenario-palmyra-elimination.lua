@@ -3,7 +3,7 @@
 -- Actual combat/capture eliminates the old owner. No city damage, ownership,
 -- freshwater, alive state or processing flags are assigned by this scenario.
 local mode=assert(LekmodScenarioParameters.mode)
-assert(mode=="loss"or mode=="gain")
+assert(mode=="loss"or mode=="gain"or mode=="duplicate")
 LekmodScenario={name="palmyra-elimination",items={"palmyra-elimination-prerequisites","palmyra-elimination-capture","palmyra-elimination-callback-owner","palmyra-elimination-water","palmyra-elimination-next-turn","palmyra-elimination-advisor-path"}}
 local phase,oldOwner,newOwner,x,y,attacker,reply,captured,captureTurn="init"
 local expected,controls={},{}
@@ -114,17 +114,19 @@ end)
 local function verifyWater()
  for _,row in ipairs(expected)do
   local q=Map.GetPlotByIndex(row.index)
-  local want=mode=="gain"and not row.water or row.natural
+  local want=mode~="loss"and not row.water or row.natural
   assert(q:IsFreshWater()==want,"freshwater differs at plot "..row.index.." expected="..tostring(want).." actual="..tostring(q:IsFreshWater()))
  end
  for index,want in pairs(controls)do assert(Map.GetPlotByIndex(index):IsFreshWater()==want,"unrelated freshwater changed")end
 end
 function LekmodScenario.step(player)
  if phase=="init"then
-  assert(player:GetID()==0 and Players[8]:GetCivilizationType()==palmyra)
+  assert(player:GetID()==0)
+  if mode=="duplicate"then assert(Players[1]:GetCivilizationType()==palmyra and Players[2]:GetCivilizationType()==palmyra)
+  else assert(Players[8]:GetCivilizationType()==palmyra)end
   assert(not Game.IsOption(GameOptionTypes.GAMEOPTION_COMPLETE_KILLS))
-  newOwner=mode=="loss"and 0 or 8
-  oldOwner=8
+  newOwner=mode=="duplicate"and 2 or(mode=="loss"and 0 or 8)
+  oldOwner=mode=="duplicate"and 1 or 8
   if mode=="gain"then
    oldOwner=nil
    for id=1,GameDefines.MAX_MAJOR_CIVS-1 do local p=Players[id]
@@ -142,7 +144,7 @@ function LekmodScenario.step(player)
   for _,q in ipairs(expected)do
    if q.water then water=water+1 elseif not q.natural then dry=dry+1 end
    if q.natural then natural=natural+1 end
-   assert(q.fresh==(mode=="loss"and not q.water or q.natural),"starting freshwater mismatches fixture owner")
+   assert(q.fresh==(mode~="gain"and not q.water or q.natural),"starting freshwater mismatches fixture owner")
   end
   assert(dry>0,"no naturally dry target neighbors")
   for id=0,GameDefines.MAX_MAJOR_CIVS-1 do local p=Players[id]

@@ -34,13 +34,13 @@ HOOKS = {
     'religion-benefits': {'UI/ProductionPopup.lua': 'playtest-scenario-purchase-popup.lua'},
 }
 # Parameters are data-only and enumerated for each reviewed scenario.
-PARAMETERS = {'palmyra-elimination': {'mode': ('loss','gain')}, 'city-god': {'mode': ('human', 'tibet', 'control')},
+PARAMETERS = {'cuba-capital-transfer': {'mode': ('own','foreign','eliminate')}, 'palmyra-elimination': {'mode': ('loss','gain','duplicate')}, 'city-god': {'mode': ('human', 'tibet', 'control')},
               'city-god-repeat': {'mode': ('human', 'tibet', 'control'), 'expected_state': 'snapshot-json'},
               'city-god-reentry': {'mode': ('human', 'control'), 'expected_state': 'snapshot-json'}}
 
 PREFIXES = {'playtest-nz-owner-observer.lua': 'playtest-nz-owner-before-observer.lua'}
 
-SUPPORTED = set(HOOKS) | {'city-god-reentry', 'city-god-repeat', 'city-god', 'swiss-migration-load', 'swiss-human-training', 'swiss-legacy-load', 'swiss-boundaries', 'swiss-armory', 'unique-prophet-birth', 'unique-general-birth', 'unique-specialist-birth', 'unique-unit-production', 'religious-unit-upgrades', 'swiss-enemy-heal', 'swiss-city-plunder-funded', 'swiss-city-plunder-empty', 'swiss-city-plunder-control', 'swiss-mounted-calculation', 'swiss-utility', 'crusader-borders', 'vatican-kill-faith', 'religious-terrain', 'vatican-great-improvements', 'vatican-pressure-votes', 'vatican-courthouse', 'vatican-stpeters', 'jerusalem-outremer', 'unique-building-catalogue', 'unique-building-pilot', 'civilization-start', 'unique-units', 'counterspy', 'nuclear-cities', 'nuclear-production', 'nuclear-cleanup', 'defender-zoc', 'inventory', 'admiral-repair', 'worker', 'unit-actions', 'great-person-builds', 'budget-settlement', 'nuclear', 'air-operations', 'greatworks', 'trade-tooltip', 'trade-countdown', 'nabatea-farms', 'nabatea-tomb', 'newzealand-science-completion'}
+SUPPORTED = set(HOOKS) | {'cuba-capital-transfer', 'city-god-reentry', 'city-god-repeat', 'city-god', 'swiss-migration-load', 'swiss-human-training', 'swiss-legacy-load', 'swiss-boundaries', 'swiss-armory', 'unique-prophet-birth', 'unique-general-birth', 'unique-specialist-birth', 'unique-unit-production', 'religious-unit-upgrades', 'swiss-enemy-heal', 'swiss-city-plunder-funded', 'swiss-city-plunder-empty', 'swiss-city-plunder-control', 'swiss-mounted-calculation', 'swiss-utility', 'crusader-borders', 'vatican-kill-faith', 'religious-terrain', 'vatican-great-improvements', 'vatican-pressure-votes', 'vatican-courthouse', 'vatican-stpeters', 'jerusalem-outremer', 'unique-building-catalogue', 'unique-building-pilot', 'civilization-start', 'unique-units', 'counterspy', 'nuclear-cities', 'nuclear-production', 'nuclear-cleanup', 'defender-zoc', 'inventory', 'admiral-repair', 'worker', 'unit-actions', 'great-person-builds', 'budget-settlement', 'nuclear', 'air-operations', 'greatworks', 'trade-tooltip', 'trade-countdown', 'nabatea-farms', 'nabatea-tomb', 'newzealand-science-completion'}
 
 def validate_lua_syntax(plan, repo, compiler):
     """Parse every selected scenario and injected UI adapter before installation."""

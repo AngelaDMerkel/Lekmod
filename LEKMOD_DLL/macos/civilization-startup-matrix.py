@@ -20,6 +20,7 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     choice=p.add_mutually_exclusive_group();choice.add_argument('--group',type=int);choice.add_argument('--all',action='store_true');choice.add_argument('--roster',action='append',help='explicit comma-separated single-player roster, human first; repeat for independent fixtures')
     p.add_argument('--from-group',type=int,default=1,help='with --all, start at the first unfinished one-based group')
+    p.add_argument('--allow-duplicate-civilizations',action='store_true',help='explicit custom ownership fixture only; catalogue uniqueness remains required')
     p.add_argument('--minutes',type=int,default=45)
     p.add_argument('--preflight-only',action='store_true')
     p.add_argument('--trace-loaded-libraries',action='store_true')
@@ -31,10 +32,11 @@ def main():
     if hashlib.sha256((ROOT/'LEKMOD/Override/CIV5Units.xml').read_bytes()).hexdigest()!=plan['source_xml_sha256']:p.error('Gameplay XML changed; review and regenerate groups')
     flat=[c for g in plan['groups']for c in g]
     if len(flat)!=114 or len(set(flat))!=114 or any(not 2<=len(g)<=12 for g in plan['groups']):p.error('Invalid civilization group inventory')
+    if a.allow_duplicate_civilizations and not a.roster:p.error('--allow-duplicate-civilizations requires an explicit --roster')
     if a.roster:
         known=set(flat);rosters=[row.split(',')for row in a.roster]
-        if len(rosters)>10 or any(not 2<=len(g)<=12 or len(set(g))!=len(g)or any(c not in known for c in g)for g in rosters):
-            p.error('Custom rosters require 1–10 independent groups of 2–12 distinct reviewed playable civilizations')
+        if len(rosters)>10 or any(not 2<=len(g)<=12 or (not a.allow_duplicate_civilizations and len(set(g))!=len(g))or any(c not in known for c in g)for g in rosters):
+            p.error('Custom rosters require 1–10 independent groups of 2–12 reviewed playable civilizations; duplicates need --allow-duplicate-civilizations')
         plan={**plan,'groups':rosters}
     if not 1<=a.from_group<=len(plan['groups']):p.error('Invalid starting group')
     if a.group is not None and not 1<=a.group<=len(plan['groups']):p.error('Invalid group')
@@ -52,7 +54,7 @@ def main():
     sys.path.insert(0,str(a.installer.parent));import civ5_gamecore
     if civ5_gamecore.ProductManager(runner.APP,runner.DATA).status().get('product')!='stock':p.error('Matrix requires stock initially')
     stamp=datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ');out=ROOT/'build/macos/civilization-matrices'/stamp;out.mkdir(parents=True)
-    result={'started_utc':stamp,'package_sha256':a.sha256,'selected_groups':selected,'requested_rosters':plan['groups'],'custom_rosters':bool(a.roster),'groups':[],'passed':False}
+    result={'started_utc':stamp,'package_sha256':a.sha256,'selected_groups':selected,'requested_rosters':plan['groups'],'custom_rosters':bool(a.roster),'duplicate_civilizations_allowed':a.allow_duplicate_civilizations,'groups':[],'passed':False}
     replays={'schema':1,'name':'civilization-start-state-replays','stages':[]}
     installed=False;deadline=time.monotonic()+60*a.minutes
     try:
