@@ -35,7 +35,7 @@ final acceptance. Do not assume the old161-test result covers later revisions.
 
 ## 1. Turn the remaining gameplay work into a finite case register
 
-Before launching another gameplay round:
+For the G0 reconciliation (independent reviewed cases may run under the readiness rule below):
 
 1. Reconcile the [civilization inventory](macos-civilization-coverage.md),
    [system ledger](macos-expanded-coverage.md), feature reports and actual native
@@ -68,6 +68,17 @@ not a reliable denominator.
 **Gate G0:** every active in-scope effect and every existing “remaining” entry is
 mapped; there are no untriaged entries. Produce the exact case count and batch
 schedule at this gate. This avoids inventing an overall completion percentage now.
+
+Scheduling refinement (2026-09-27): complete discovery/provenance verification
+before native work, then allow individually reviewed, fully specified cases to
+run while unrelated G0 mappings remain unfinished. Each selected case must pass
+`check-gameplay-acceptance.py --require-ready-case CASE_ID`, pin its fixtures and
+scenario/plan bytes, and pass normal native preflight. This changes scheduling,
+not acceptance: G0 remains explicitly open and must close before Gate F; every
+required gameplay case must close before reliability qualification. Raw data
+fields/reference tables are review surfaces, not one required new test each.
+The refinement follows the completed conservative inventory and the user's
+authorization to do what is necessary to resume testing after data recovery.
 
 ## 2. Close gameplay cases in batches
 

@@ -103,7 +103,9 @@ Syntax/native-method/fixture preflight passes. The28 Python batch tests,19 actua
 Lua dispatcher tests and34 runner tests pass. These are harness checks, not
 native City of God coverage. The built-in exact replay is read-only; an additional
 post-load repeat-request action still needs commissioning from generated saves.
-G0 must close before launching the prepared gameplay round.
+Under the September27 scheduling refinement, the selected case can run after
+its individual readiness/source/fixture checks, while global G0 remains open.
+Global G0 still must close before candidate freeze and reliability qualification.
 
 ## Source-contract concern awaiting a gameplay reproducer
 
@@ -149,3 +151,28 @@ include references. Complete the first ownership/upkeep designs. Keep G0 false
 until the checker verifies all required mappings/designs. Then execute the
 prepared City of God batch, close its post-load repeat case, and proceed to G2.
 Reliability remains after gameplay closure and candidate freeze.
+
+## September27 authorized data recovery and continuation
+
+The user confirmed deletion of Application Support was unintended and authorized
+necessary recovery to continue testing. All672 prior single-player saves were
+restored byte for byte to their original paths, including the original quicksave.
+Ninety-five newer saves and three current settings files were snapshotted and
+preserved unchanged. The three verified pre-deletion settings files were retained
+separately; surviving current preferences were kept active. No game was launched
+for recovery. Evidence: `build/macos/data-recovery-20260927/report.json`.
+
+Current WSDLC is `950a329`/v1.0.10. Its168-test suite passes in the isolated
+`build/macos/test-deps/wsdlc-runtime` environment with its committed hash-pinned
+certifi2026.7.22 dependency. An earlier system-Python attempt had one dependency
+version error (installed certifi2026.6.17); that result is retained separately.
+No global Python package or WSDLC product source was changed.
+
+The [plan](macos-final-acceptance-plan.md) now permits independently reviewed
+cases to run while unrelated discovery mappings remain open. The global G0 gate
+has not passed, no coverage requirement was waived, and reliability still follows
+complete gameplay closure. `check-gameplay-acceptance.py --require-ready-case`
+checks selected-case design and pinned implementation/plan identities in addition
+to the whole register's evidence identities. Sixteen gate-checker tests pass.
+The next managed City of God batch will recreate canonical backups before launch
+and restore stock afterward through WSDLC; verify those actual results separately.

@@ -123,11 +123,30 @@ def validate(register, root=ROOT):
             'note':'Surface count is a discovery review count, not the final gameplay-test denominator.'}
 
 
+def require_ready_case(register, case_id, root=ROOT):
+    matches=[row for row in register['cases'] if row['id']==case_id]
+    if len(matches)!=1:raise ValueError('unknown/duplicate requested case: '+case_id)
+    row=matches[0]
+    if row['status']!='ready' or row.get('missing_design'):
+        raise ValueError('requested case is not fully designed and ready: '+case_id)
+    implementation=row.get('implementation_references',[])
+    if not implementation:raise ValueError('ready case lacks pinned implementation/plan: '+case_id)
+    for ref in implementation:
+        path=resolve(root,ref['path'])
+        if not path.is_file() or sha(path)!=ref['sha256']:
+            raise ValueError('changed/missing ready-case implementation: '+ref['path'])
+    return {'id':case_id,'status':'ready-for-scoped-native-execution','batch':row['batch'],
+            'remaining_scope':row.get('implementation_limits',[]),'does_not_establish_global_G0':True}
+
+
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--register',type=Path,default=ROOT/'docs/macos-gameplay-acceptance-cases.json')
     p.add_argument('--require-g0',action='store_true',help='Fail if any mandatory G0 review remains')
-    a=p.parse_args();report=validate(json.loads(a.register.read_text()));print(json.dumps(report,indent=2))
+    p.add_argument('--require-ready-case',action='append',default=[],help='Verify one independently specified case without claiming G0 complete')
+    a=p.parse_args();register=json.loads(a.register.read_text());report=validate(register)
+    report['selected_ready_cases']=[require_ready_case(register,case_id)for case_id in a.require_ready_case]
+    print(json.dumps(report,indent=2))
     return 0 if not a.require_g0 or report['gate_G0_passed'] else 1
 
 

@@ -1319,6 +1319,9 @@ See [reconciliation status](../../docs/macos-gameplay-reconciliation.md).
 
 `batch-plans/city-god-grant.json` is prepared for21 assertions/three replays and
 at most three aggregate turns, with strictly enumerated human/Tibet/control
-parameters. Preflight passes; native execution has not occurred and awaits G0.
+parameters. Preflight passes; native execution is pending. The September27 scheduling
+refinement permits this independently reviewed case after `--require-ready-case
+REL-CITY-OF-GOD-GRANT` succeeds; the global G0 gate remains required before
+candidate freeze.
 The exact replay does not itself perform a post-load repeat request. Tests of
 that extra action must be commissioned from the resulting checkpoints.

@@ -41,6 +41,23 @@ class RegisterTests(unittest.TestCase):
           evidence_contract={'kind':'native-batch-stage','report':'report.json','batch_report':'batch.json','stage':'stage','required_assertions':['bonus'],'gamecore_sha256':'a'*64})
         return report,batch
     def repin(self):self.case['evidence']=[self.ref('report.json'),self.ref('batch.json')]
+    def test_selected_ready_case_keeps_global_gate_open(self):
+        self.case['implementation_references']=[self.ref('source.lua')]
+        self.reg['surface_review'][0]['status']='untriaged'
+        self.assertFalse(check.validate(self.reg,self.root)['gate_G0_passed'])
+        result=check.require_ready_case(self.reg,'CASE',self.root)
+        self.assertTrue(result['does_not_establish_global_G0'])
+
+    def test_selected_case_requires_pinned_implementation(self):
+        with self.assertRaisesRegex(ValueError,'lacks pinned'):check.require_ready_case(self.reg,'CASE',self.root)
+        self.case['implementation_references']=[self.ref('source.lua')]
+        self.put('source.lua','changed')
+        with self.assertRaisesRegex(ValueError,'changed/missing'):check.require_ready_case(self.reg,'CASE',self.root)
+
+    def test_unreviewed_selected_case_cannot_run(self):
+        self.case['status']='untriaged'
+        with self.assertRaisesRegex(ValueError,'not fully designed'):check.require_ready_case(self.reg,'CASE',self.root)
+
     def test_zero_is_a_valid_explicit_oracle(self):
         self.case['expected_result']=0
         self.assertTrue(check.validate(self.reg,self.root)['gate_G0_passed'])

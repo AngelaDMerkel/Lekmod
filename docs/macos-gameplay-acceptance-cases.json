@@ -206,6 +206,16 @@
       "implementation_limits": [
         "Native execution has not occurred.",
         "The built-in replay is an exact snapshot comparison; a separate post-load repeat-request action remains to be commissioned from the generated checkpoints."
+      ],
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-city-god.lua",
+          "sha256": "5836b1fc6ce38b62bfe0279600ce0c5455aac8c742fc5ffec69b1d8523ab0f53"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/batch-plans/city-god-grant.json",
+          "sha256": "2b9c79ccba76ecfe1c0ad5726f3b3abe0e11ddc0de652f95f5d1475f5f43f080"
+        }
       ]
     },
     {
@@ -17729,5 +17739,12 @@
       "presentation-only": 13
     },
     "indexed_civilizations": 114
+  },
+  "execution_policy": {
+    "revision": 2,
+    "individual_ready_cases_may_run_before_G0_closes": true,
+    "reason": "User authorized necessary recovery and continuation; independent reviewed cases can progress while the broad discovery register is reconciled. Global G0 and final acceptance requirements are retained.",
+    "final_candidate_freeze_requires_G0": true,
+    "reliability_requires_gameplay_closure": true
   }
 }

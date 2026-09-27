@@ -4,11 +4,18 @@
 Follow the [final acceptance plan](macos-final-acceptance-plan.md): reconcile and
 close gameplay cases first, freeze the candidate, then qualify reliability and
 record acceptance. The [G0 register/reconciliation](macos-gameplay-reconciliation.md)
-is now in progress:16 prior scenario/replay cases verified, seven new designs,
-and a preflighted City of God batch. G0 has not passed. Read its installation
-discrepancy before native work: prior live saves and WSDLC state/backups are absent;
-the user was asked about a possible move/reset. This offline round changed no
-installed game files.
+is in progress. The user confirmed the deleted Application Support data was
+unintended and authorized recovery. All672 prior single-player saves were restored;
+95 newer saves/current preferences were preserved. Recovery evidence is under
+`build/macos/data-recovery-20260927/`.
+
+The September27 plan refinement permits a fully specified isolated case to run
+while unrelated G0 review continues. Global G0 remains open and is still required
+before candidate freeze. Use `check-gameplay-acceptance.py --require-ready-case
+REL-CITY-OF-GOD-GRANT` and normal preflight before the prepared City of God batch.
+Use the isolated `build/macos/test-deps/wsdlc-runtime/bin/python` so WSDLC v1.0.10
+has its pinned certifi dependency; its168-test suite passed there. Check ignored
+continuation state for any active native run before launching.
 The last pause checkpoint was `b4579bf3`; the checkout was clean, stock active and
 Civ V closed when resuming. The current work is the
 [scoped host-stat ABI prototype](macos-host-stat-abi.md). Read the ignored
