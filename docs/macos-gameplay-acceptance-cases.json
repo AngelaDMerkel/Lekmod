@@ -5438,6 +5438,172 @@
         "Human mission command does not establish autonomous AI merchant choice or city-state purchase.",
         "Negative location controls are eligibility queries, not physical input."
       ]
+    },
+    {
+      "id": "LIFE-NEWZEALAND-CONTACT-REWARDS",
+      "group": "G6",
+      "title": "New Zealand first-contact rewards and research completion",
+      "status": "covered-by-evidence",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_newzealand.lua",
+          "sha256": "960dd336801e11dc9c843e14941c84335151071df5e4298504690ed953a3433d"
+        },
+        {
+          "path": "LEKMOD/Lua/Utilities/Lekmod_utilities.lua",
+          "sha256": "ac16892e49d2df889104552fd30f05ce83bc44e681caa65c31f8b0340fb00b6a"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTeam.cpp",
+          "sha256": "49d6fdd96e4e9e602b2426ac629d16a9a7fa8d453ba7989bc3e49fab1a9d17d0"
+        }
+      ],
+      "owners": [
+        "human and AI New Zealand",
+        "ten Roman controls"
+      ],
+      "expected_result": "One valid reward per New Zealand meeting owner:40 gold,10 faith,6 culture or12 science. Science enters overflow with no selected research, exact selected-tech progress otherwise; Astronomy with6 remaining completes and carries6 overflow. Known contacts and unrelated/Roman owners get no repeat/reward.",
+      "units": "integer gold/faith/culture/science; research completion and contact state",
+      "supplied_inputs": [
+        "normal twelve-player duplicate-civilization opening",
+        "isolated scout/warrior sight boundary",
+        "twenty native engine contact inputs after first movement",
+        "research prerequisites; completion variant supplies cost-minus6"
+      ],
+      "actual_trigger": "First contact uses normal synchronized movement. Further contacts explicitly call native Teams:Meet; original TeamMeet handler and unchanged RNG choose rewards. No Lua event/reward/RNG outcome is assigned.",
+      "negative_controls": [
+        "known contact repeat",
+        "Roman/Roman first contact",
+        "unrelated New Zealand and Roman owners",
+        "AI no-selected-research versus human selected research",
+        "completion grants exactly one reward"
+      ],
+      "transitions": [
+        "native first contact",
+        "all four naturally drawn rewards",
+        "selected research",
+        "technology completion/overflow",
+        "exact reload"
+      ],
+      "persistence_requirement": "All recorded owners, contacts, rewards, research and overflow exactly replay in distinct native processes.",
+      "required_evidence_level": [
+        "scripted-command",
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260919T120139Z/autosaves-after/AutoSave_Initial_0000 BC-4000.Civ5Save",
+          "sha256": "65e0a54a66de72375d2ca0619ded784254e548868e189b850274ccf255adcaad"
+        },
+        {
+          "path": "build/macos/playtests/20260919T120139Z/autosaves-after/AutoSave_Initial_0000 BC-4000.Civ5Save",
+          "sha256": "65e0a54a66de72375d2ca0619ded784254e548868e189b850274ccf255adcaad"
+        },
+        {
+          "path": "build/macos/playtests/20260919T120139Z/autosaves-after/AutoSave_Initial_0000 BC-4000.Civ5Save",
+          "sha256": "65e0a54a66de72375d2ca0619ded784254e548868e189b850274ccf255adcaad"
+        }
+      ],
+      "batch": "historical-separate-process-pairs",
+      "stage": [
+        "newzealand-meeting",
+        "newzealand-research",
+        "newzealand-science-completion"
+      ],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20260919T120139Z/report.json",
+          "sha256": "4d53e30a22552d39b1be286f1ebba8d49864aeb06553fba6a1f59700ae6a3385"
+        },
+        {
+          "path": "build/macos/playtests/20260919T120411Z/report.json",
+          "sha256": "e1bb23e1f418b06ef229fdd4ca15c1427b2eaf038ef3cb2ea84539c7171ca32f"
+        },
+        {
+          "path": "build/macos/playtests/20260919T121257Z/report.json",
+          "sha256": "4d876e2d6bc0bece2e26d5cae7d3a25165bec7eeb0e5ad326cf0e15468b89322"
+        },
+        {
+          "path": "build/macos/playtests/20260919T121530Z/report.json",
+          "sha256": "d96a1fa174474d82832e0cb1002484d1ac0cbb55a736a9dc42ebad839bceb77b"
+        },
+        {
+          "path": "build/macos/playtests/20260919T121827Z/report.json",
+          "sha256": "f2012283a15a0c8fa96745f1d1d1f2c1a30719eb264a159d0eb6ebd05cf5b761"
+        },
+        {
+          "path": "build/macos/playtests/20260919T122051Z/report.json",
+          "sha256": "8a77d707f42e1d97c1915ac3d34f6d1d90195469419ec8cd977e096d28c4eb5f"
+        }
+      ],
+      "surface_ids": [
+        "lua:Lua/Civilizations/Lekmod_newzealand.lua:GameEvents.TeamMeet:lekmod_new_zealand_ua_on_meet"
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260919T120139Z/report.json",
+            "replay_report": "build/macos/playtests/20260919T120411Z/report.json",
+            "scenario": "newzealand-meeting",
+            "required_assertions": [
+              "valid-distinct-player-colors",
+              "NZ-movement-first-contact",
+              "NZ-both-owner-rewards",
+              "NZ-native-reward-branches",
+              "NZ-meeting-no-repeat",
+              "NZ-Roman-no-reward"
+            ],
+            "gamecore_sha256": "4e1a94b9ea8c61c16e18e2bc32a6f46a54941c056bb804b14cfd4c8066bc764b"
+          },
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260919T121257Z/report.json",
+            "replay_report": "build/macos/playtests/20260919T121530Z/report.json",
+            "scenario": "newzealand-research",
+            "required_assertions": [
+              "valid-distinct-player-colors",
+              "NZ-movement-first-contact",
+              "NZ-both-owner-rewards",
+              "NZ-native-reward-branches",
+              "NZ-selected-research-science",
+              "NZ-meeting-no-repeat",
+              "NZ-Roman-no-reward"
+            ],
+            "gamecore_sha256": "4e1a94b9ea8c61c16e18e2bc32a6f46a54941c056bb804b14cfd4c8066bc764b"
+          },
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260919T121827Z/report.json",
+            "replay_report": "build/macos/playtests/20260919T122051Z/report.json",
+            "scenario": "newzealand-science-completion",
+            "required_assertions": [
+              "NZ-science-completion",
+              "NZ-completion-overflow",
+              "NZ-completed-contact-no-repeat"
+            ],
+            "gamecore_sha256": "4e1a94b9ea8c61c16e18e2bc32a6f46a54941c056bb804b14cfd4c8066bc764b"
+          }
+        ]
+      },
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-newzealand-meeting.lua",
+          "sha256": "19d937eaa487666f2cc76135ec0136e7925ec4a17b02a037d400109d20df7893"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-newzealand-science-completion.lua",
+          "sha256": "30963bb620f3ef4035accdd7bfd4c06527a4e9b18a40a49b71c80c1d881257ae"
+        }
+      ],
+      "remaining_scope": [
+        "Original tested core and source chronology retained; final-candidate applicability remains required at F.",
+        "No physical mouse or autonomous exploration-choice claim.",
+        "Native minor-contact reward settlement is not newly claimed. The Lua reward path is shared for any non-New-Zealand other owner; distinct minor first-contact gifts are outside this handler case.",
+        "Multi-player teams are outside the deferred multiplayer scope; single-player multi-member-team UA semantics are not established by this case."
+      ]
     }
   ],
   "surface_review": [
@@ -7671,14 +7837,52 @@
     {
       "id": "data:Eras.Abbreviation",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "presentation-only",
+      "case_ids": [],
+      "reason": "Text loader and const-char abbreviation getter provide an era label. Numeric era progression/effects are separate fields. Classification separates it from gameplay-effect arithmetic; G7 standard/EUI presentation and final artifact/asset integrity obligations remain open.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvInfos.cpp",
+          "sha256": "83e4176806f5e4e1e3c7bd2791bf61fb53291b1eed6467c11680500cde059cfd"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvDllEraInfo.cpp",
+          "sha256": "aac6bf54f1fdf7aae39af284781dfe2a0ebcba69e7b7bc5292dd253e9f6b9848"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvCultureClasses.cpp",
+          "sha256": "5f3c28409b3305efb6e242d9c01d73d5f66f91d428e78b7467fa697ffbc153d8"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvCity.cpp",
+          "sha256": "bc6c14e34329d88978ded1969875b4eed39be171e819bf200fa313d0a0b24030"
+        }
+      ]
     },
     {
       "id": "data:Eras.ArtPrefix",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "presentation-only",
+      "case_ids": [],
+      "reason": "Text loader -> CvEraInfo::getArtPrefix -> CvDllEraInfo::GetArtPrefix, an asset-name prefix exported to the renderer. Classification separates it from gameplay-effect arithmetic; G7 standard/EUI presentation and final artifact/asset integrity obligations remain open.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvInfos.cpp",
+          "sha256": "83e4176806f5e4e1e3c7bd2791bf61fb53291b1eed6467c11680500cde059cfd"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvDllEraInfo.cpp",
+          "sha256": "aac6bf54f1fdf7aae39af284781dfe2a0ebcba69e7b7bc5292dd253e9f6b9848"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvCultureClasses.cpp",
+          "sha256": "5f3c28409b3305efb6e242d9c01d73d5f66f91d428e78b7467fa697ffbc153d8"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvCity.cpp",
+          "sha256": "bc6c14e34329d88978ded1969875b4eed39be171e819bf200fa313d0a0b24030"
+        }
+      ]
     },
     {
       "id": "data:Eras.NoGoodies",
@@ -8016,20 +8220,77 @@
     {
       "id": "data:Eras.CityBombardEffectTag",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "presentation-only",
+      "case_ids": [],
+      "reason": "Text loader and FString asset-tag hash returned by CvCity::GetCityBombardEffectTagHash. This selects the bombard visual effect; attack eligibility/damage use independent state. Classification separates it from gameplay-effect arithmetic; G7 standard/EUI presentation and final artifact/asset integrity obligations remain open.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvInfos.cpp",
+          "sha256": "83e4176806f5e4e1e3c7bd2791bf61fb53291b1eed6467c11680500cde059cfd"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvDllEraInfo.cpp",
+          "sha256": "aac6bf54f1fdf7aae39af284781dfe2a0ebcba69e7b7bc5292dd253e9f6b9848"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvCultureClasses.cpp",
+          "sha256": "5f3c28409b3305efb6e242d9c01d73d5f66f91d428e78b7467fa697ffbc153d8"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvCity.cpp",
+          "sha256": "bc6c14e34329d88978ded1969875b4eed39be171e819bf200fa313d0a0b24030"
+        }
+      ]
     },
     {
       "id": "data:Eras.AudioUnitVictoryScript",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "presentation-only",
+      "case_ids": [],
+      "reason": "Text loader/getter for sound script; combat message call sites use it as audio presentation metadata (many legacy references are commented). No gameplay reward value is derived from this string. Classification separates it from gameplay-effect arithmetic; G7 standard/EUI presentation and final artifact/asset integrity obligations remain open.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvInfos.cpp",
+          "sha256": "83e4176806f5e4e1e3c7bd2791bf61fb53291b1eed6467c11680500cde059cfd"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvDllEraInfo.cpp",
+          "sha256": "aac6bf54f1fdf7aae39af284781dfe2a0ebcba69e7b7bc5292dd253e9f6b9848"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvCultureClasses.cpp",
+          "sha256": "5f3c28409b3305efb6e242d9c01d73d5f66f91d428e78b7467fa697ffbc153d8"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvCity.cpp",
+          "sha256": "bc6c14e34329d88978ded1969875b4eed39be171e819bf200fa313d0a0b24030"
+        }
+      ]
     },
     {
       "id": "data:Eras.AudioUnitDefeatScript",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "presentation-only",
+      "case_ids": [],
+      "reason": "Text loader/getter used as the audio argument of DLLUI::AddUnitMessage. Message sound selection is independent of combat damage/reward arithmetic. Classification separates it from gameplay-effect arithmetic; G7 standard/EUI presentation and final artifact/asset integrity obligations remain open.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvInfos.cpp",
+          "sha256": "83e4176806f5e4e1e3c7bd2791bf61fb53291b1eed6467c11680500cde059cfd"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvDllEraInfo.cpp",
+          "sha256": "aac6bf54f1fdf7aae39af284781dfe2a0ebcba69e7b7bc5292dd253e9f6b9848"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvCultureClasses.cpp",
+          "sha256": "5f3c28409b3305efb6e242d9c01d73d5f66f91d428e78b7467fa697ffbc153d8"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvCity.cpp",
+          "sha256": "bc6c14e34329d88978ded1969875b4eed39be171e819bf200fa313d0a0b24030"
+        }
+      ]
     },
     {
       "id": "data:FakeFeatures",
@@ -12336,8 +12597,27 @@
     {
       "id": "data:Specialists.GreatPersonIconString",
       "suggested_group": "G6",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "presentation-only",
+      "case_ids": [],
+      "reason": "CvCultureClasses.cpp formats this string into the great-work GPP tooltip after computing the numerical bonus. The icon string does not supply the GPP amount. Classification separates it from gameplay-effect arithmetic; G7 standard/EUI presentation and final artifact/asset integrity obligations remain open.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvInfos.cpp",
+          "sha256": "83e4176806f5e4e1e3c7bd2791bf61fb53291b1eed6467c11680500cde059cfd"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvDllEraInfo.cpp",
+          "sha256": "aac6bf54f1fdf7aae39af284781dfe2a0ebcba69e7b7bc5292dd253e9f6b9848"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvCultureClasses.cpp",
+          "sha256": "5f3c28409b3305efb6e242d9c01d73d5f66f91d428e78b7467fa697ffbc153d8"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvCity.cpp",
+          "sha256": "bc6c14e34329d88978ded1969875b4eed39be171e819bf200fa313d0a0b24030"
+        }
+      ]
     },
     {
       "id": "data:TacticalMoves",
@@ -16333,8 +16613,25 @@
     {
       "id": "lua:Lua/Civilizations/Lekmod_newzealand.lua:GameEvents.TeamMeet:lekmod_new_zealand_ua_on_meet",
       "suggested_group": "G2",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "LIFE-NEWZEALAND-CONTACT-REWARDS"
+      ],
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_newzealand.lua",
+          "sha256": "960dd336801e11dc9c843e14941c84335151071df5e4298504690ed953a3433d"
+        },
+        {
+          "path": "LEKMOD/Lua/Utilities/Lekmod_utilities.lua",
+          "sha256": "ac16892e49d2df889104552fd30f05ce83bc44e681caa65c31f8b0340fb00b6a"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTeam.cpp",
+          "sha256": "49d6fdd96e4e9e602b2426ac629d16a9a7fa8d453ba7989bc3e49fab1a9d17d0"
+        }
+      ],
+      "reason": "Direct review: CvTeam::meet emits the same two team IDs once after mutual makeHasMet, without a minor/major event-dispatch branch; getLeaderID scans all player slots. The reward Lua has only alive/civilization, four reward, selected-research and human-alert branches. Actual movement and supplied engine contacts cover both reward owners, all natural draws, no-repeat, research completion and exact replay. Minor ancillary first-contact gifts and multi-member-team ownership semantics are separate from these proven handler calculations."
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_newzealand.lua:GameEvents.PlayerDoTurn:lekmod_new_zealand_uu_batallion",
@@ -24214,19 +24511,19 @@
     }
   ],
   "summary": {
-    "designed_cases": 32,
+    "designed_cases": 33,
     "case_statuses": {
       "passed": 12,
-      "covered-by-evidence": 19,
+      "covered-by-evidence": 20,
       "ready": 1
     },
     "review_surfaces": 1340,
     "pending_document_rows": 121,
     "final_case_denominator_frozen": false,
     "surface_statuses": {
-      "untriaged": 1306,
-      "mapped": 21,
-      "presentation-only": 13
+      "untriaged": 1299,
+      "mapped": 22,
+      "presentation-only": 19
     },
     "indexed_civilizations": 114,
     "native_parameter_fields_verified": 724

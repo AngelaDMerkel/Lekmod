@@ -237,3 +237,24 @@ first launch attempt was refused by the locked-desktop guard before installation
 or settings changes. The case stays ready, with no native pass claimed. Evidence:
 `build/macos/merchant-rewards-native-20260927.log`. Gameplay-source/data mappings
 cover five scalar fields; other speed/AI/purchase branches remain independent.
+
+## Further source and historical evidence review
+
+Three retained New Zealand process pairs pass the strict checker:16 declared
+assertions (including two player-color checks) and three exact replays. They
+cover native movement first contact, explicitly supplied subsequent engine
+contacts, both owners, all four unforced reward draws, repeat/foreign controls,
+selected research and technology-completion overflow. The TeamMeet dispatcher
+and leader lookup are pinned with the Lua source; no new minor-contact settlement
+or multi-member-team gameplay claim is made. The complete civilization remains
+open in the wider inventory.
+
+Six additional string/asset fields were classified as presentation metadata
+after reviewing their loaders and consumers: era art prefix, victory/defeat
+audio, bombard visual tag, abbreviation and the specialist great-person icon.
+Their G7 presentation and final asset-integrity obligations remain open. This
+classification does not establish that every asset rendered successfully.
+
+The register contains33 specified cases:32 retained/passed and one ready merchant
+case awaiting an unlocked desktop. There remain1,299 untriaged review surfaces
+and121 document rows; the final case count is still not frozen.
