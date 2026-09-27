@@ -1,0 +1,49 @@
+include("TutorialChecks");
+
+-- The stock siege tutorial assumes every square neighbor exists. Regional
+-- nonwrapping maps can have legal edge cities, so skip nonexistent plots.
+local function LekmodBesiegedCityPlot()
+ local player=GetPlayer()
+ if not player then return nil end
+ for city in player:Cities() do
+  local plot=city:Plot()
+  if plot then
+   for dx=-1,1 do for dy=-1,1 do
+    local target=Map.GetPlotXY(plot:GetX(),plot:GetY(),dx,dy)
+    if target and not target:IsWater() and target:IsVisibleEnemyUnit(player:GetID()) then return plot end
+   end end
+  end
+ end
+ return nil
+end
+GetBesiegedCityPlot=LekmodBesiegedCityPlot
+BesiegedCityCheck=function() return LekmodBesiegedCityPlot() and ACTIVE or INACTIVE end
+-- TutorialChecks captured the original functions when it registered this task.
+local siege=GlobalTutorialInfo and GlobalTutorialInfo.CITY_UNDER_ATTACK
+if siege then siege.CheckFunction=BesiegedCityCheck;siege.PlotFunction=GetBesiegedCityPlot end
+
+
+------------------------------------------------------------
+------------------------------------------------------------
+
+-- An extremely hacky way to determine which tutorial is to be run
+if (GameDefines.TUTORIAL == 0) then
+	Game.SetStaticTutorialActive(true);
+	include("Tutorial_MainGame");
+elseif (GameDefines.TUTORIAL == 1) then
+	include("Tutorial_1_MovementAndExploration");
+elseif (GameDefines.TUTORIAL == 2) then
+	include("Tutorial_2_FoundCities");
+elseif (GameDefines.TUTORIAL == 3) then
+	include("Tutorial_3_ImprovingCities");
+elseif (GameDefines.TUTORIAL == 4) then
+	include("Tutorial_4_CombatAndConquest");
+elseif (GameDefines.TUTORIAL == 5) then
+	include("Tutorial_5_Diplomacy");
+else
+	include("Tutorial_MainGame");
+end
+------------------------------------------------------------
+------------------------------------------------------------
+
+include("TutorialEngine");
