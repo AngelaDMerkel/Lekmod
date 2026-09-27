@@ -121,6 +121,7 @@ def validate(register, root=ROOT):
         if row['status']not in SURFACE_STATUSES:raise ValueError('invalid surface status')
         if not set(row['case_ids'])<=case_ids:raise ValueError('surface references unknown case')
         if row['status']=='mapped'and not row['case_ids']:raise ValueError('mapped surface without a case')
+        for ref in row.get('review_source_references',[]):reference(ref)
         if row['status']in {'presentation-only','out-of-scope'}and not row.get('reason'):raise ValueError('unexplained surface exclusion')
     for row in register['pending_doc_entries']:
         if row['status'] not in {'untriaged','mapped','mapped-to-later-gate','out-of-scope'}:

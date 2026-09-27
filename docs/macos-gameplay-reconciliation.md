@@ -176,3 +176,22 @@ checks selected-case design and pinned implementation/plan identities in additio
 to the whole register's evidence identities. Sixteen gate-checker tests pass.
 The next managed City of God batch will recreate canonical backups before launch
 and restore stock afterward through WSDLC; verify those actual results separately.
+
+## September27 native evidence reconciliation
+
+The current candidate passed the81-assertion/16-replay comprehensive batch
+`20260927T223201Z`, with normal exit and independently verified preservation.
+The28 currently specified cases pass; this does not close the discovery review.
+
+Three building fields now have narrowly justified gameplay mappings. The sole
+configured `GarrisonMaintenceFree` and `GarrisonStrengthBonus` values are covered
+by the Mughal production, movement, treasury, removal and affected-save tests.
+The six `BuildingProductionModifier` values share one additive native contribution
+path, covered by the Moorish30/15/0 modifier, production and transfer checks plus
+the compiled-cache audit of every10/15/25 parameter. Other effects and acquisition
+conditions of these buildings remain separate review obligations. Source hashes
+are pinned in each mapping and checked by the acceptance validator.
+
+The ledger column header was excluded as a non-requirement. There remain1,318
+untriaged review surfaces and121 document rows; G0 is still open. The retained
+review record is `build/macos/acceptance-g0-20260926/building-scalar-review-20260927.json`.

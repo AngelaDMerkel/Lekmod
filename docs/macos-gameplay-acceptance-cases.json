@@ -488,7 +488,8 @@
         }
       ],
       "surface_ids": [
-        "data:Buildings.GarrisonMaintenceFree"
+        "data:Buildings.GarrisonMaintenceFree",
+        "data:Buildings.GarrisonStrengthBonus"
       ],
       "source_trace": [
         {
@@ -931,7 +932,8 @@
       "surface_ids": [
         "lua:Lua/Civilizations/Lekmod_moors.lua:GameEvents.PlayerDoTurn:lekmod_moors_on_turn_ua",
         "lua:Lua/Civilizations/Lekmod_moors.lua:GameEvents.CityCaptureComplete:lekmod_moors_on_city_capture",
-        "lua:Lua/Civilizations/Lekmod_moors.lua:Events.SequenceGameInitComplete:lekmod_moors_on_load"
+        "lua:Lua/Civilizations/Lekmod_moors.lua:Events.SequenceGameInitComplete:lekmod_moors_on_load",
+        "data:Buildings.BuildingProductionModifier"
       ],
       "implementation_references": [
         {
@@ -6146,12 +6148,30 @@
     {
       "id": "data:Buildings.BuildingProductionModifier",
       "suggested_group": "G4",
-      "status": "untriaged",
-      "case_ids": [],
+      "status": "mapped",
+      "case_ids": [
+        "LIFE-MOORS-CAPTURE-PRODUCTION",
+        "CFG-COMPILED-SCALAR-CACHES"
+      ],
       "supporting_case_ids": [
         "CFG-COMPILED-SCALAR-CACHES"
       ],
-      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent."
+      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent.",
+      "reason": "All six configured values use CvCity::processBuilding -> ChangeBuildingProductionModifier(value*iChange) -> the same non-wonder branch in getBuildingProductionModifier. No building-type or civilization branch exists on this contribution path. Native Moorish marker counts2/1/0 exercise30/15/0, foreign transfer exclusion, normal production and load repair. The read-only native cache audit verifies each configured10/15/25 value. This maps only this common contribution; each building acquisition, other effects and any independent policy/trait/wonder contributions remain separate surfaces.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvBuildingClasses.cpp",
+          "sha256": "1077d98f716f91d0640aed54f8da01b3963ad01f6da2958aecdcd4638cec7e22"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvCity.cpp",
+          "sha256": "bc6c14e34329d88978ded1969875b4eed39be171e819bf200fa313d0a0b24030"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPlayer.cpp",
+          "sha256": "31dd845837800229e4c4e2708e471996f03858f722b8cbf14bdfa2a8ed67c788"
+        }
+      ]
     },
     {
       "id": "data:Buildings.CityConnectionTradeRouteModifier",
@@ -6660,24 +6680,58 @@
     {
       "id": "data:Buildings.GarrisonStrengthBonus",
       "suggested_group": "G4",
-      "status": "untriaged",
-      "case_ids": [],
+      "status": "mapped",
+      "case_ids": [
+        "BLD-MUGHAL-GARRISON-UPKEEP",
+        "CFG-COMPILED-SCALAR-CACHES"
+      ],
       "supporting_case_ids": [
         "CFG-COMPILED-SCALAR-CACHES"
       ],
-      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent."
+      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent.",
+      "reason": "The only configured bonus is Mughal Caravansary=500. The matched native removal/restore comparison holds the same city/unit state and measures exactly500 hundredths of strength; ordinary acquisition and saved-strength preservation are also verified.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvBuildingClasses.cpp",
+          "sha256": "1077d98f716f91d0640aed54f8da01b3963ad01f6da2958aecdcd4638cec7e22"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvCity.cpp",
+          "sha256": "bc6c14e34329d88978ded1969875b4eed39be171e819bf200fa313d0a0b24030"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPlayer.cpp",
+          "sha256": "31dd845837800229e4c4e2708e471996f03858f722b8cbf14bdfa2a8ed67c788"
+        }
+      ]
     },
     {
       "id": "data:Buildings.GarrisonMaintenceFree",
       "suggested_group": "G4",
-      "status": "untriaged",
+      "status": "mapped",
       "case_ids": [
-        "BLD-MUGHAL-GARRISON-UPKEEP"
+        "BLD-MUGHAL-GARRISON-UPKEEP",
+        "CFG-COMPILED-SCALAR-CACHES"
       ],
       "supporting_case_ids": [
         "CFG-COMPILED-SCALAR-CACHES"
       ],
-      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent."
+      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent.",
+      "reason": "The only nondefault configured row is Mughal Caravansary=1. Its owning-human normal production, exact maintenance-free count, default-building/removal controls, legal garrison exit/reentry, treasury settlement, native sale rejection and actual affected-save repair/replay pass. This does not close unrelated Caravansary yields.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvBuildingClasses.cpp",
+          "sha256": "1077d98f716f91d0640aed54f8da01b3963ad01f6da2958aecdcd4638cec7e22"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvCity.cpp",
+          "sha256": "bc6c14e34329d88978ded1969875b4eed39be171e819bf200fa313d0a0b24030"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPlayer.cpp",
+          "sha256": "31dd845837800229e4c4e2708e471996f03858f722b8cbf14bdfa2a8ed67c788"
+        }
+      ]
     },
     {
       "id": "data:Buildings.FreeGreatWorkCount",
@@ -23204,9 +23258,10 @@
       "document": "docs/macos-expanded-coverage.md",
       "line": 18,
       "text_sha256": "42d28cc8056ed3eafd4a22be39dac66db1ce340b5676cf535d638f122ae5dcd2",
-      "status": "untriaged",
+      "status": "out-of-scope",
       "case_ids": [],
-      "required_action": "Split into specific effects, map retained scoped evidence, and remove superseded pending claims only after review."
+      "required_action": "Split into specific effects, map retained scoped evidence, and remove superseded pending claims only after review.",
+      "reason": "This is the ledger column-header row, not a remaining gameplay requirement. All substantive rows remain individually reviewed."
     },
     {
       "id": "doc:docs/macos-expanded-coverage.md:Domination victory",
@@ -23459,11 +23514,11 @@
       "covered-by-evidence": 16
     },
     "review_surfaces": 1340,
-    "pending_document_rows": 122,
+    "pending_document_rows": 121,
     "final_case_denominator_frozen": false,
     "surface_statuses": {
-      "untriaged": 1321,
-      "mapped": 6,
+      "untriaged": 1318,
+      "mapped": 9,
       "presentation-only": 13
     },
     "indexed_civilizations": 114,
