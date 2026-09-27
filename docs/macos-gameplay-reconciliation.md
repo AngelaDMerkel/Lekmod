@@ -221,3 +221,19 @@ including the ordinary Church-healing and Battalion influence cases. The review
 record and archive/member comparisons are pinned in the register. Totals are
 31 scoped cases (12passed,19covered by retained evidence),1,311 untriaged review
 surfaces and121 pending document rows. G0 and final acceptance remain open.
+
+## Independent merchant mission oracle prepared
+
+`MISSION-MERCHANT-INDEPENDENT-REWARDS` closes a specific oracle gap: older utility
+tests compared actual rewards against native quotes. The prepared case calculates
+gold and friendship independently from the shipped values and native arithmetic,
+then performs eight ordinary missions across both merchant types, Commerce
+finisher off/on and two eras. It verifies additive modifiers, exact settlement,
+consumption, location eligibility and one resulting-state replay without advancing
+a turn. Supplied units/policy/research are separate from observed rewards.
+
+Six assertions and one replay preflight successfully;29 batch tests pass. The
+first launch attempt was refused by the locked-desktop guard before installation
+or settings changes. The case stays ready, with no native pass claimed. Evidence:
+`build/macos/merchant-rewards-native-20260927.log`. Gameplay-source/data mappings
+cover five scalar fields; other speed/AI/purchase branches remain independent.

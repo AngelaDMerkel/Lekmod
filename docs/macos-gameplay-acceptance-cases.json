@@ -5353,6 +5353,91 @@
       "remaining_scope": [
         "Original scoped results retain original tested core identities. Final-candidate applicability and affected regressions remain mandatory at Gate F."
       ]
+    },
+    {
+      "id": "MISSION-MERCHANT-INDEPENDENT-REWARDS",
+      "group": "G3",
+      "title": "Merchant missions: independent gold and influence arithmetic",
+      "status": "ready",
+      "source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnit.cpp",
+          "sha256": "16914a686126292c64ed110df3fda674c136858392053cccee3940a3fbac5e73"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPolicyClasses.cpp",
+          "sha256": "7a409a449b69feab94f617d423985048f8414ee4761f5dba36d743c9c343dfe8"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnitClasses.cpp",
+          "sha256": "214e7e48a66bb84291e5f6923bb94eee6b651f3abd0282ad83e6acdca5490573"
+        },
+        {
+          "path": "LEKMOD/Override/CIV5Units.xml",
+          "sha256": "5d8d7e62f408d3c4e8520a3922a607bd3e14f19effd752f3d00144a9c0d58877"
+        }
+      ],
+      "owners": [
+        "human Rome",
+        "peaceful minor recipient"
+      ],
+      "expected_result": "For ordinary and Venetian merchant, gold=floor(floor((300+100*era)*speed.UnitTradePercent/100)*(100+promotionGold+policyGold)/100); influence=floor(30*(100+promotionInfluence)/100). Merchant bonus and Commerce finisher are additive100% modifiers. Eight native missions cover two types, policy off/on and Industrial/Atomic eras; each is consumed.",
+      "units": "integer treasury gold and minor friendship points",
+      "supplied_inputs": [
+        "two merchant variants at legal minor plot",
+        "contact if absent",
+        "Commerce finisher off/on",
+        "Atomic Theory prerequisites for second era"
+      ],
+      "actual_trigger": "Normal MISSION_TRADE action dispatched through Game.HandleAction; actual treasury/friendship deltas and unit consumption.",
+      "negative_controls": [
+        "own-major city and unowned tile CanTrade queries reject",
+        "no policy versus policy",
+        "ordinary versus naturally promoted Venetian merchant",
+        "no reward/movement assignment"
+      ],
+      "transitions": [
+        "eight same-turn mission actions",
+        "real research-induced era transition",
+        "exact saved-state replay"
+      ],
+      "persistence_requirement": "Native resulting gold, friendship, era, policy and units exactly replay.",
+      "required_evidence_level": [
+        "scripted-command",
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260914T030822Z/Lekmod-Functional-20260914T030822Z.Civ5Save",
+          "sha256": "c2ca4e6c8c3a16ae7b6e7ed3294df1d2f733d8f815d43c820090302328ad95ea"
+        }
+      ],
+      "batch": "LEKMOD_DLL/macos/batch-plans/merchant-rewards.json",
+      "stage": "merchant-rewards",
+      "evidence": [],
+      "surface_ids": [
+        "data:Units.BaseGold",
+        "data:Units.NumGoldPerEra",
+        "data:Policies.TradeMissionGoldModifier",
+        "data:UnitPromotions.TradeMissionGoldModifier",
+        "data:UnitPromotions.TradeMissionInfluenceModifier"
+      ],
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-merchant-rewards.lua",
+          "sha256": "850519530df5a0079cf061b9c56a631765b079bcfb9f0cc791fd36f3014d035e"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/batch-plans/merchant-rewards.json",
+          "sha256": "aa56e82f00b8216030dd8c2c46db459b7c139c39b6ea10235803f5b331e178cb"
+        }
+      ],
+      "implementation_limits": [
+        "One retained fixture speed; all configured speed percentages have independent native cache parity, but other speed gameplay remains a separate review.",
+        "Human mission command does not establish autonomous AI merchant choice or city-state purchase.",
+        "Negative location controls are eligibility queries, not physical input."
+      ]
     }
   ],
   "surface_review": [
@@ -10655,12 +10740,30 @@
     {
       "id": "data:Policies.TradeMissionGoldModifier",
       "suggested_group": "G5",
-      "status": "untriaged",
-      "case_ids": [],
+      "status": "mapped",
+      "case_ids": [
+        "MISSION-MERCHANT-INDEPENDENT-REWARDS",
+        "CFG-COMPILED-SCALAR-CACHES"
+      ],
       "supporting_case_ids": [
         "CFG-COMPILED-SCALAR-CACHES"
       ],
-      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent."
+      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent.",
+      "reason": "All configured unit/promotion/policy values feed reviewed CvUnit::getTradeGold/getTradeInfluence and actual trade settlement. The new ready case covers both unit rows, baseline and additive policy/promotion modifiers, two eras and consumption; no pass is claimed until native evidence.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnit.cpp",
+          "sha256": "16914a686126292c64ed110df3fda674c136858392053cccee3940a3fbac5e73"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPolicyClasses.cpp",
+          "sha256": "7a409a449b69feab94f617d423985048f8414ee4761f5dba36d743c9c343dfe8"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnitClasses.cpp",
+          "sha256": "214e7e48a66bb84291e5f6923bb94eee6b651f3abd0282ad83e6acdca5490573"
+        }
+      ]
     },
     {
       "id": "data:Policies.FaithCostModifier",
@@ -14626,22 +14729,58 @@
     {
       "id": "data:UnitPromotions.TradeMissionInfluenceModifier",
       "suggested_group": "G5",
-      "status": "untriaged",
-      "case_ids": [],
+      "status": "mapped",
+      "case_ids": [
+        "MISSION-MERCHANT-INDEPENDENT-REWARDS",
+        "CFG-COMPILED-SCALAR-CACHES"
+      ],
       "supporting_case_ids": [
         "CFG-COMPILED-SCALAR-CACHES"
       ],
-      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent."
+      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent.",
+      "reason": "All configured unit/promotion/policy values feed reviewed CvUnit::getTradeGold/getTradeInfluence and actual trade settlement. The new ready case covers both unit rows, baseline and additive policy/promotion modifiers, two eras and consumption; no pass is claimed until native evidence.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnit.cpp",
+          "sha256": "16914a686126292c64ed110df3fda674c136858392053cccee3940a3fbac5e73"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPolicyClasses.cpp",
+          "sha256": "7a409a449b69feab94f617d423985048f8414ee4761f5dba36d743c9c343dfe8"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnitClasses.cpp",
+          "sha256": "214e7e48a66bb84291e5f6923bb94eee6b651f3abd0282ad83e6acdca5490573"
+        }
+      ]
     },
     {
       "id": "data:UnitPromotions.TradeMissionGoldModifier",
       "suggested_group": "G5",
-      "status": "untriaged",
-      "case_ids": [],
+      "status": "mapped",
+      "case_ids": [
+        "MISSION-MERCHANT-INDEPENDENT-REWARDS",
+        "CFG-COMPILED-SCALAR-CACHES"
+      ],
       "supporting_case_ids": [
         "CFG-COMPILED-SCALAR-CACHES"
       ],
-      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent."
+      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent.",
+      "reason": "All configured unit/promotion/policy values feed reviewed CvUnit::getTradeGold/getTradeInfluence and actual trade settlement. The new ready case covers both unit rows, baseline and additive policy/promotion modifiers, two eras and consumption; no pass is claimed until native evidence.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnit.cpp",
+          "sha256": "16914a686126292c64ed110df3fda674c136858392053cccee3940a3fbac5e73"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPolicyClasses.cpp",
+          "sha256": "7a409a449b69feab94f617d423985048f8414ee4761f5dba36d743c9c343dfe8"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnitClasses.cpp",
+          "sha256": "214e7e48a66bb84291e5f6923bb94eee6b651f3abd0282ad83e6acdca5490573"
+        }
+      ]
     },
     {
       "id": "data:UnitPromotions.GoldenAgeValueFromKills",
@@ -15355,22 +15494,58 @@
     {
       "id": "data:Units.BaseGold",
       "suggested_group": "G3",
-      "status": "untriaged",
-      "case_ids": [],
+      "status": "mapped",
+      "case_ids": [
+        "MISSION-MERCHANT-INDEPENDENT-REWARDS",
+        "CFG-COMPILED-SCALAR-CACHES"
+      ],
       "supporting_case_ids": [
         "CFG-COMPILED-SCALAR-CACHES"
       ],
-      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent."
+      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent.",
+      "reason": "All configured unit/promotion/policy values feed reviewed CvUnit::getTradeGold/getTradeInfluence and actual trade settlement. The new ready case covers both unit rows, baseline and additive policy/promotion modifiers, two eras and consumption; no pass is claimed until native evidence.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnit.cpp",
+          "sha256": "16914a686126292c64ed110df3fda674c136858392053cccee3940a3fbac5e73"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPolicyClasses.cpp",
+          "sha256": "7a409a449b69feab94f617d423985048f8414ee4761f5dba36d743c9c343dfe8"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnitClasses.cpp",
+          "sha256": "214e7e48a66bb84291e5f6923bb94eee6b651f3abd0282ad83e6acdca5490573"
+        }
+      ]
     },
     {
       "id": "data:Units.NumGoldPerEra",
       "suggested_group": "G3",
-      "status": "untriaged",
-      "case_ids": [],
+      "status": "mapped",
+      "case_ids": [
+        "MISSION-MERCHANT-INDEPENDENT-REWARDS",
+        "CFG-COMPILED-SCALAR-CACHES"
+      ],
       "supporting_case_ids": [
         "CFG-COMPILED-SCALAR-CACHES"
       ],
-      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent."
+      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent.",
+      "reason": "All configured unit/promotion/policy values feed reviewed CvUnit::getTradeGold/getTradeInfluence and actual trade settlement. The new ready case covers both unit rows, baseline and additive policy/promotion modifiers, two eras and consumption; no pass is claimed until native evidence.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnit.cpp",
+          "sha256": "16914a686126292c64ed110df3fda674c136858392053cccee3940a3fbac5e73"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPolicyClasses.cpp",
+          "sha256": "7a409a449b69feab94f617d423985048f8414ee4761f5dba36d743c9c343dfe8"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnitClasses.cpp",
+          "sha256": "214e7e48a66bb84291e5f6923bb94eee6b651f3abd0282ad83e6acdca5490573"
+        }
+      ]
     },
     {
       "id": "data:Units.SpreadReligion",
@@ -24039,17 +24214,18 @@
     }
   ],
   "summary": {
-    "designed_cases": 31,
+    "designed_cases": 32,
     "case_statuses": {
       "passed": 12,
-      "covered-by-evidence": 19
+      "covered-by-evidence": 19,
+      "ready": 1
     },
     "review_surfaces": 1340,
     "pending_document_rows": 121,
     "final_case_denominator_frozen": false,
     "surface_statuses": {
-      "untriaged": 1311,
-      "mapped": 16,
+      "untriaged": 1306,
+      "mapped": 21,
       "presentation-only": 13
     },
     "indexed_civilizations": 114,
