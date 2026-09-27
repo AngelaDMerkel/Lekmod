@@ -22,13 +22,57 @@ def resolve(root, value):
     return root / path
 
 
+def native_run_replay_contract(case, root):
+    """Verify historical separate-process outcomes without turning them into batch results."""
+    contract = case['evidence_contract']
+    paths = [contract['report'], contract['replay_report']]
+    if len(set(paths)) != 2 or not set(paths) <= {r['path'] for r in case['evidence']}:
+        raise ValueError('run/replay needs distinct pinned reports')
+    run, replay = [json.loads(resolve(root, path).read_text()) for path in paths]
+    for report, status in [(run, 'passed-scenario-checks-only'), (replay, 'passed-scenario-reload-only')]:
+        checks = report.get('functional_checks', {})
+        if not (report.get('status') == status and report.get('normal_exit_verified') is True
+                and report.get('process_returncode') == 0 and report.get('binary_sha256') == contract['gamecore_sha256']
+                and report.get('scenario') == contract['scenario'] and report.get('save_file_verified') is True
+                and report.get('settings_restored') is True and report.get('temporary_ui_hooks_restored') is True
+                and report.get('manual_saves_preserved') is True and not report.get('lua_runtime_errors')
+                and report.get('synchronization_checks') and not any(report['synchronization_checks'].values())
+                and not report.get('new_diagnostics') and not report.get('localization_startup_failure')
+                and not report.get('unclassified_stall_requires_review')
+                and checks.get('verified') is True and checks.get('complete') is True
+                and checks.get('failed') is False and not checks.get('skipped')
+                and checks.get('outcomes') and all(v == 'PASS' for v in checks['outcomes'].values())):
+            raise ValueError('run/replay pass/exit/preservation contract failed: ' + case['id'])
+        # The runner copied the save only after the process exited. Recheck both
+        # retained bytes and the original live path; recovery must preserve these.
+        for key in ['saved_copy', 'generated_save']:
+            path = Path(report[key])
+            if not path.is_file() or sha(path) != report['saved_sha256']:
+                raise ValueError('run/replay checkpoint bytes differ: ' + case['id'])
+    required = contract.get('required_assertions', [])
+    if not required or not set(required) <= set(run['functional_checks']['outcomes']):
+        raise ValueError('run/replay missing required assertions')
+    if not (run.get('saved_state') and run['saved_state'] == replay.get('saved_state')
+            and replay.get('reload_state_verified') is True
+            and replay['functional_checks']['outcomes'].get('save-reload') == 'PASS'
+            and replay.get('save_sha256') == run['saved_sha256']
+            and Path(replay.get('loaded_from', '')).resolve() == Path(run['saved_copy']).resolve()
+            and run.get('started_utc') and run['started_utc'] != replay.get('started_utc')):
+        raise ValueError('run/replay input or exact state differs')
+    loaded = Path(replay['loaded_from'])
+    if not loaded.is_file() or sha(loaded) != replay['save_sha256']:
+        raise ValueError('run/replay loaded checkpoint bytes differ')
+
+
 def native_batch_contract(case, root):
     contract=case.get('evidence_contract',{})
+    if contract.get('kind') == 'native-run-replay':
+        return native_run_replay_contract(case, root)
     if contract.get('kind')=='native-batch-stages':
         stages=contract.get('stages',[])
-        if not stages or any(c.get('kind')not in {'native-batch-stage','native-isolated-stage'} for c in stages):
+        if not stages or any(c.get('kind')not in {'native-batch-stage','native-isolated-stage','native-run-replay'} for c in stages):
             raise ValueError('composite evidence needs nonempty native stage contracts')
-        identities=[(c['report'],c['batch_report'],c['stage']) for c in stages]
+        identities=[(c['kind'],c['report'],c.get('replay_report',c.get('batch_report')),c.get('stage')) for c in stages]
         if len(set(identities))!=len(identities):
             raise ValueError('duplicate composite evidence stage')
         for stage in stages:

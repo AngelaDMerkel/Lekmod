@@ -195,3 +195,29 @@ are pinned in each mapping and checked by the acceptance validator.
 The ledger column header was excluded as a non-requirement. There remain1,318
 untriaged review surfaces and121 document rows; G0 is still open. The retained
 review record is `build/macos/acceptance-g0-20260926/building-scalar-review-20260927.json`.
+
+## Historical process-pair evidence and handler review
+
+The register now verifies historical separate-process runs with a distinct
+`native-run-replay` contract. Both reports must be pinned, passed, complete and
+free of recorded errors, with normal exit0 and full restoration. It verifies
+all required assertions, the exact replay state, the original load identity,
+and hashes of both retained and live source save files after the writer exited.
+Missing/skipped assertions, failed sessions, mismatched states, corrupt saves
+and missing restoration are rejected. All34 gate-checker tests pass.
+
+Nine existing run/replay pairs account for26 native assertions in three added
+cases: Moorish founding/era transitions, Cuban contact/source-culture changes,
+and Māori opening/production/gifts/escort budgets. These remain historical passes
+on their originally recorded binaries. Current Cuba and Māori Lua match the
+reviewed later historical packages byte for byte. The Moorish era calculation
+is unchanged; its newer acquisition/load hooks remain covered separately.
+Earlier Māori stack/production cases predate later guards and keep that provenance;
+final-candidate applicability/regression remains required at F. No new game was
+launched or old failure reclassified for this reconciliation.
+
+Seven specific event-handler surfaces are mapped to the combined native evidence,
+including the ordinary Church-healing and Battalion influence cases. The review
+record and archive/member comparisons are pinned in the register. Totals are
+31 scoped cases (12passed,19covered by retained evidence),1,311 untriaged review
+surfaces and121 pending document rows. G0 and final acceptance remain open.

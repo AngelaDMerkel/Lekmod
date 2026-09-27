@@ -595,7 +595,7 @@
     {
       "id": "LIFE-MAORI-UPGRADE-CAPTURE-NAVAL",
       "group": "G2",
-      "title": "Māori temporary movement across upgrade/capture/naval owners",
+      "title": "M\u0101ori temporary movement across upgrade/capture/naval owners",
       "status": "passed",
       "source_references": [
         {
@@ -3100,7 +3100,9 @@
         }
       ],
       "applicability": "GameCore and DLC hashes equal the starting Steam package. Process-only correction instrumentation in this older run is not installation/Steam evidence; candidate-freeze regression remains required.",
-      "surface_ids": [],
+      "surface_ids": [
+        "lua:Lua/Civilizations/Lekmod_newzealand.lua:GameEvents.PlayerDoTurn:lekmod_new_zealand_uu_batallion"
+      ],
       "evidence_contract": {
         "kind": "native-batch-stage",
         "report": "build/macos/playtests/20260927T223201Z/report.json",
@@ -4880,6 +4882,477 @@
         ]
       },
       "validation_document": "docs/macos-config-cache-validation.md"
+    },
+    {
+      "id": "LIFE-MOORS-FOUNDING-ERAS",
+      "group": "G2",
+      "title": "Moorish first-city founding and era-specific production markers",
+      "status": "covered-by-evidence",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_moors.lua",
+          "sha256": "62dab2e42bf0d7eb927d255e16ebfefe765d1b5146b9eb0363000f62b82165cc"
+        },
+        {
+          "path": "LEKMOD/Lua/Utilities/Lekmod_utilities.lua",
+          "sha256": "ac16892e49d2df889104552fd30f05ce83bc44e681caa65c31f8b0340fb00b6a"
+        }
+      ],
+      "owners": [
+        "human Moors",
+        "AI Moors on separate team",
+        "Roman AI control"
+      ],
+      "expected_result": "Immediate starting Medieval city has2 markers and30% Market/Library production, no wonder modifier. Renaissance research reduces only the matching team to1/15%; newly founded city gets1/15% immediately. Industrial research clears matching-team markers. Independent Medieval Moors remain2/30%, Rome0.",
+      "units": "movement points (60/move), sight tiles, marker counts or production/culture rates as explicitly specified",
+      "supplied_inputs": [
+        "normal Medieval opening",
+        "legal extra Settler and location",
+        "prerequisite technologies"
+      ],
+      "actual_trigger": "Registered handlers driven by native actions/actual owner turns; no physical mouse interaction claimed.",
+      "negative_controls": [
+        "other team unchanged",
+        "Roman control",
+        "wonder modifier0"
+      ],
+      "transitions": [
+        "legal Found actions",
+        "Renaissance and Industrial research events",
+        "owner turn",
+        "exact replay"
+      ],
+      "persistence_requirement": "Separate exact-state replay per listed run; source and retained save bytes verified after normal exit.",
+      "required_evidence_level": [
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260919T033626Z/autosaves-after/AutoSave_Initial_0082 AD-0260.Civ5Save",
+          "sha256": "a0aa64e144132515a6b8a37e927eb8dbe2e071ff77e47e6084589fa3f45f858c"
+        },
+        {
+          "path": "build/macos/playtests/20260919T034123Z/Lekmod-Functional-20260919T034123Z.Civ5Save",
+          "sha256": "d23a7c57adb47fa32e284a61d31370f508f5eb15b6f6dfd60d63890b26b519f0"
+        }
+      ],
+      "batch": "historical-separate-process-pairs",
+      "stage": [
+        "moors-founding",
+        "moors-eras"
+      ],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20260919T034123Z/report.json",
+          "sha256": "517f46fc4a3c270b2e767eea34f938217d8b84c473e74320601d1c10643d490d"
+        },
+        {
+          "path": "build/macos/playtests/20260919T034729Z/report.json",
+          "sha256": "4339b6561f744ccdb61db94a089461b72ae98a6b5727695006fe7879d5779fac"
+        },
+        {
+          "path": "build/macos/playtests/20260919T034302Z/report.json",
+          "sha256": "283420663fcad67d68ff73128facc3db1d875b8dc42ab253bf4f999e2aecdf7f"
+        },
+        {
+          "path": "build/macos/playtests/20260919T034455Z/report.json",
+          "sha256": "62860e1dc8b8b3e1e288823b1c12c1d08e8aeaab6fe54eea41973f6bb10aaec0"
+        },
+        {
+          "path": "build/macos/acceptance-g0-20260926/lua-lifetime-review-20260927.json",
+          "sha256": "21a405ddaab5f75f3c2b5a3443b25eeabcdeb167ef36fd42d1e33b091e7e79e4"
+        }
+      ],
+      "surface_ids": [
+        "lua:Lua/Civilizations/Lekmod_moors.lua:GameEvents.TeamSetEra:lekmod_moors_on_era_ua",
+        "lua:Lua/Civilizations/Lekmod_moors.lua:GameEvents.PlayerCityFounded:lekmod_moors_on_turn_ua",
+        "lua:Lua/Civilizations/Lekmod_moors.lua:GameEvents.PlayerDoTurn:lekmod_moors_on_turn_ua"
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260919T034123Z/report.json",
+            "replay_report": "build/macos/playtests/20260919T034729Z/report.json",
+            "scenario": "moors-founding",
+            "required_assertions": [
+              "moors-immediate-founded-city-bonus"
+            ],
+            "gamecore_sha256": "80a9ec3f54b96485606228c067f3656e727c2bf6b16c2c977cbf6c19bb85b8c1"
+          },
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260919T034302Z/report.json",
+            "replay_report": "build/macos/playtests/20260919T034455Z/report.json",
+            "scenario": "moors-eras",
+            "required_assertions": [
+              "moors-Medieval-human-AI",
+              "moors-Renaissance-team-isolation",
+              "moors-Renaissance-founding",
+              "moors-Industrial-expiry",
+              "moors-Roman-control"
+            ],
+            "gamecore_sha256": "80a9ec3f54b96485606228c067f3656e727c2bf6b16c2c977cbf6c19bb85b8c1"
+          }
+        ]
+      },
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-moors-founding.lua",
+          "sha256": "627bba9283716ca6bfca4daf8f97b07300447b76b6d55580fdee45638e6258aa"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-moors-eras.lua",
+          "sha256": "0f7af56b55af850ad42fbdc89a584c2c40f7e8633bc30140d35b985e1022c2c3"
+        }
+      ],
+      "remaining_scope": [
+        "Original scoped results retain original tested core identities. Final-candidate applicability and affected regressions remain mandatory at Gate F."
+      ]
+    },
+    {
+      "id": "LIFE-CUBA-CAPITAL-CONTACT",
+      "group": "G2",
+      "title": "Cuban human and AI culture quotes across contact and source reduction",
+      "status": "covered-by-evidence",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_cuba.lua",
+          "sha256": "5b7e218855b0a584bd61e2db03f9f668c9d94bd7af8d26dda048ce1e92a20a04"
+        },
+        {
+          "path": "LEKMOD/Lua/Utilities/Lekmod_utilities.lua",
+          "sha256": "ac16892e49d2df889104552fd30f05ce83bc44e681caa65c31f8b0340fb00b6a"
+        }
+      ],
+      "owners": [
+        "human Cuba",
+        "AI Cuba",
+        "Roman AI source/control"
+      ],
+      "expected_result": "Each Cuban owner receives sum(floor(base culture/5)) over met foreign major capitals. Contact adds previously unmet Rome; removing supplied source culture reduces the marker and capital base culture by1. Rome stays unmarked. No culture-bank settlement claim.",
+      "units": "movement points (60/move), sight tiles, marker counts or production/culture rates as explicitly specified",
+      "supplied_inputs": [
+        "Monument/Amphitheater source inputs",
+        "explicit team contact"
+      ],
+      "actual_trigger": "Registered handlers driven by native actions/actual owner turns; no physical mouse interaction claimed.",
+      "negative_controls": [
+        "unmet source",
+        "Roman recipient",
+        "removed source culture"
+      ],
+      "transitions": [
+        "contact",
+        "source reduction",
+        "normal owner turns",
+        "exact replay"
+      ],
+      "persistence_requirement": "Separate exact-state replay per listed run; source and retained save bytes verified after normal exit.",
+      "required_evidence_level": [
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260919T032904Z/autosaves-after/AutoSave_Initial_0000 BC-4000.Civ5Save",
+          "sha256": "4c2237e62587cc64460c1c6b7af7c7a45036c30a32388758cdbbfab6da4d1d1a"
+        }
+      ],
+      "batch": "historical-separate-process-pairs",
+      "stage": [
+        "cuba-capital"
+      ],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20260919T032904Z/report.json",
+          "sha256": "3dfec09536583a6649bef8ab350b8de1bfcb5b0c5f5ce9e30dc44fe94476c45c"
+        },
+        {
+          "path": "build/macos/playtests/20260919T033057Z/report.json",
+          "sha256": "6b9789e033d1047a1e6d8d392dc307ae023952d46262737ce9dd180b361911bc"
+        },
+        {
+          "path": "build/macos/acceptance-g0-20260926/lua-lifetime-review-20260927.json",
+          "sha256": "21a405ddaab5f75f3c2b5a3443b25eeabcdeb167ef36fd42d1e33b091e7e79e4"
+        }
+      ],
+      "surface_ids": [
+        "lua:Lua/Civilizations/Lekmod_cuba.lua:GameEvents.PlayerDoTurn:lekmod_cuba_ua_culture"
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260919T032904Z/report.json",
+            "replay_report": "build/macos/playtests/20260919T033057Z/report.json",
+            "scenario": "cuba-capital",
+            "required_assertions": [
+              "cuba-unmet-capital",
+              "cuba-met-capital-counts",
+              "cuba-capital-bonus-decrease",
+              "cuba-capital-owner-control"
+            ],
+            "gamecore_sha256": "80a9ec3f54b96485606228c067f3656e727c2bf6b16c2c977cbf6c19bb85b8c1"
+          }
+        ]
+      },
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-cuba-capital.lua",
+          "sha256": "3fb41182ef12f86f03b8121622d7e2291941d177a961e41bbd87c37a305bd404"
+        }
+      ],
+      "remaining_scope": [
+        "Original scoped results retain original tested core identities. Final-candidate applicability and affected regressions remain mandatory at Gate F."
+      ]
+    },
+    {
+      "id": "LIFE-MAORI-OPENING-TRAINING-GIFT",
+      "group": "G2",
+      "title": "M\u0101ori opening expiry, production, escort budgets and gifted-owner repair",
+      "status": "covered-by-evidence",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_maori.lua",
+          "sha256": "62b58add9f6283bc947455fdb943818a764f373f0808dd5494d97c2c74043e21"
+        },
+        {
+          "path": "LEKMOD/Lua/Utilities/Lekmod_utilities.lua",
+          "sha256": "ac16892e49d2df889104552fd30f05ce83bc44e681caa65c31f8b0340fb00b6a"
+        }
+      ],
+      "owners": [
+        "human and AI M\u0101ori",
+        "Roman AI recipient/control"
+      ],
+      "expected_result": "Eligible opening units retain+2 moves/+1 sight through elapsed0\u20134 including Classical calendar33 starts, then expire older bonuses and excess budgets at elapsed5. Normal production retains first playable turn then expires. Human/AI and foreign gifted owners expire inherited bonuses; affected foreign-owner save repairs next turn. Worker/General legitimate escort allowance survives.",
+      "units": "movement points (60/move), sight tiles, marker counts or production/culture rates as explicitly specified",
+      "supplied_inputs": [
+        "normal Ancient/Classical fixtures",
+        "supplied units/upkeep",
+        "production one hammer below completion",
+        "legal gifts/contact",
+        "actual affected save"
+      ],
+      "actual_trigger": "Registered handlers driven by native actions/actual owner turns; no physical mouse interaction claimed.",
+      "negative_controls": [
+        "recon/air/Roman exclusions",
+        "elapsed versus calendar turn",
+        "current birth turn preserved",
+        "escort allowance retained"
+      ],
+      "transitions": [
+        "elapsed5",
+        "normal production",
+        "gift to M\u0101ori and Rome",
+        "affected-save repair",
+        "exact replay"
+      ],
+      "persistence_requirement": "Separate exact-state replay per listed run; source and retained save bytes verified after normal exit.",
+      "required_evidence_level": [
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260918T235446Z/autosaves-after/AutoSave_Initial_0000 BC-4000.Civ5Save",
+          "sha256": "747c1c6197ec5e7661a0912634f9bb98acc459d91806f31231051dabbbd7ea3b"
+        },
+        {
+          "path": "build/macos/playtests/20260919T023914Z/autosaves-after/AutoSave_Initial_0033 BC-2020.Civ5Save",
+          "sha256": "520457368476e22601ee137927a1ea55dfcaf9d79f597d1790eeac367d99b48f"
+        },
+        {
+          "path": "build/macos/playtests/20260919T001506Z/Lekmod-Functional-20260919T001506Z.Civ5Save",
+          "sha256": "c20663993e68ec98d3757853c594b9f94ac913544ba06b02e5abe074556736c3"
+        },
+        {
+          "path": "build/macos/playtests/20260919T024720Z/Lekmod-Functional-20260919T024720Z.Civ5Save",
+          "sha256": "f5a0999b7528ceb9a5c1ea49d539153d4e699771d4f45ce58e11af9afefbb444"
+        },
+        {
+          "path": "build/macos/playtests/20260919T030214Z/Lekmod-Functional-20260919T030214Z.Civ5Save",
+          "sha256": "0a24143b5068993fd0c2127204c9f8f09597edc4d439e4609fc5fdfe196a6f79"
+        },
+        {
+          "path": "build/macos/playtests/20260919T001506Z/Lekmod-Functional-20260919T001506Z.Civ5Save",
+          "sha256": "c20663993e68ec98d3757853c594b9f94ac913544ba06b02e5abe074556736c3"
+        }
+      ],
+      "batch": "historical-separate-process-pairs",
+      "stage": [
+        "maori-movement",
+        "maori-era",
+        "maori-trained",
+        "maori-gift",
+        "maori-gift-repair",
+        "maori-stack"
+      ],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20260919T024720Z/report.json",
+          "sha256": "50fab4778e83537652cec9f41c7fb728eaa58c33851c5930942567ae2242562a"
+        },
+        {
+          "path": "build/macos/playtests/20260919T025044Z/report.json",
+          "sha256": "fccbd7717d9825b95eed20d945489038022a0f75bd063a50255b9a6e9d4ecaaf"
+        },
+        {
+          "path": "build/macos/playtests/20260919T024338Z/report.json",
+          "sha256": "3b887e05d4eb81ad896d52feb02d3ceaffd126ccf40d13dbe71cabafe6744519"
+        },
+        {
+          "path": "build/macos/playtests/20260919T024539Z/report.json",
+          "sha256": "c32c143e473d19cbdeddab2a4e7dc855abcdcefc3cc38cf994e422966277b923"
+        },
+        {
+          "path": "build/macos/playtests/20260919T003228Z/report.json",
+          "sha256": "41e526f164108a9f62e11fc43bcadc7c55d6362650381ffd165877a8b911fa3e"
+        },
+        {
+          "path": "build/macos/playtests/20260919T023734Z/report.json",
+          "sha256": "6d93d918d08b8eb2a5c3106c2883743023f773c94513309500d9840aac85e813"
+        },
+        {
+          "path": "build/macos/playtests/20260919T031132Z/report.json",
+          "sha256": "6aa37f6201048079d5c55294ff9bdcdfc3ab39f147157b25944fd99357f58ea2"
+        },
+        {
+          "path": "build/macos/playtests/20260919T031848Z/report.json",
+          "sha256": "37b8c217779035d6d9e31541e00a50a0cb61a727ffbba3f3e67a730878b97968"
+        },
+        {
+          "path": "build/macos/playtests/20260919T032022Z/report.json",
+          "sha256": "5b3ba63f56264d7b8962025394e388a4643dcf57fcd1ad76514847b00b6af3e6"
+        },
+        {
+          "path": "build/macos/playtests/20260919T032226Z/report.json",
+          "sha256": "f957d55c2fa09711018a1785f5e0eea41969d8924122e56deedd875cd848d945"
+        },
+        {
+          "path": "build/macos/playtests/20260919T002229Z/report.json",
+          "sha256": "4e8b14aa5376734a60603a55f426b49a2cc6e209ff0eb9020079fba4bcfa932e"
+        },
+        {
+          "path": "build/macos/playtests/20260919T002505Z/report.json",
+          "sha256": "b4b3152c74791ed3d1e5a52d9ae7ae3a5694ea6ee0c8f337a56f7aeaab3ab4a6"
+        },
+        {
+          "path": "build/macos/acceptance-g0-20260926/lua-lifetime-review-20260927.json",
+          "sha256": "21a405ddaab5f75f3c2b5a3443b25eeabcdeb167ef36fd42d1e33b091e7e79e4"
+        }
+      ],
+      "surface_ids": [
+        "lua:Lua/Civilizations/Lekmod_maori.lua:GameEvents.PlayerDoTurn:lekmod_maori_ua"
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260919T024720Z/report.json",
+            "replay_report": "build/macos/playtests/20260919T025044Z/report.json",
+            "scenario": "maori-movement",
+            "required_assertions": [
+              "maori-initial-moves-sight",
+              "maori-recon-air-controls",
+              "maori-first-five-expiry",
+              "maori-late-created-bonus",
+              "maori-late-next-turn-expiry",
+              "maori-AI-owner-expiry"
+            ],
+            "gamecore_sha256": "80a9ec3f54b96485606228c067f3656e727c2bf6b16c2c977cbf6c19bb85b8c1"
+          },
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260919T024338Z/report.json",
+            "replay_report": "build/macos/playtests/20260919T024539Z/report.json",
+            "scenario": "maori-era",
+            "required_assertions": [
+              "maori-later-era-opening-window",
+              "maori-later-era-expiry"
+            ],
+            "gamecore_sha256": "80a9ec3f54b96485606228c067f3656e727c2bf6b16c2c977cbf6c19bb85b8c1"
+          },
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260919T003228Z/report.json",
+            "replay_report": "build/macos/playtests/20260919T023734Z/report.json",
+            "scenario": "maori-trained",
+            "required_assertions": [
+              "maori-trained-first-turn",
+              "maori-trained-next-turn"
+            ],
+            "gamecore_sha256": "80a9ec3f54b96485606228c067f3656e727c2bf6b16c2c977cbf6c19bb85b8c1"
+          },
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260919T031132Z/report.json",
+            "replay_report": "build/macos/playtests/20260919T031848Z/report.json",
+            "scenario": "maori-gift",
+            "required_assertions": [
+              "maori-gift-owner-transfer",
+              "maori-gift-maori-expiry",
+              "maori-gift-foreign-expiry"
+            ],
+            "gamecore_sha256": "80a9ec3f54b96485606228c067f3656e727c2bf6b16c2c977cbf6c19bb85b8c1"
+          },
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260919T032022Z/report.json",
+            "replay_report": "build/macos/playtests/20260919T032226Z/report.json",
+            "scenario": "maori-gift-repair",
+            "required_assertions": [
+              "maori-inherited-save-expiry"
+            ],
+            "gamecore_sha256": "80a9ec3f54b96485606228c067f3656e727c2bf6b16c2c977cbf6c19bb85b8c1"
+          },
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260919T002229Z/report.json",
+            "replay_report": "build/macos/playtests/20260919T002505Z/report.json",
+            "scenario": "maori-stack",
+            "required_assertions": [
+              "maori-worker-stack-preserved",
+              "maori-general-stack-preserved"
+            ],
+            "gamecore_sha256": "80a9ec3f54b96485606228c067f3656e727c2bf6b16c2c977cbf6c19bb85b8c1"
+          }
+        ]
+      },
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-maori-movement.lua",
+          "sha256": "29426270f8a62511c63c74a371fe561075f9491834abfab43bd931cc5d0a3c2e"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-maori-era.lua",
+          "sha256": "a4fe02004a0612c47a48b3ef17a2cdbb3f8b22042364ee31426a414be862f2bf"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-maori-trained.lua",
+          "sha256": "42d14851ccd363ec36dc71bfdb83aeeb440a0f5f6c6ce1711367912f9a23f18b"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-maori-gift.lua",
+          "sha256": "c4304891fbe6c32bf0e4bbbef97d8dd925c6ee71be7789809020ad66654382a9"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-maori-gift-repair.lua",
+          "sha256": "9f6824c90ae33d5547a7c6f63a627f2fb087e23be8e744e773ebdad59cab6adb"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-maori-stack.lua",
+          "sha256": "42af98034258ccdefda2425b0e73c2e35039b027387e09c8189ba38c58c78373"
+        }
+      ],
+      "remaining_scope": [
+        "Original scoped results retain original tested core identities. Final-candidate applicability and affected regressions remain mandatory at Gate F."
+      ]
     }
   ],
   "surface_review": [
@@ -15535,22 +16008,48 @@
     {
       "id": "lua:Lua/Civilizations/Lekmod_moors.lua:GameEvents.TeamSetEra:lekmod_moors_on_era_ua",
       "suggested_group": "G2",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "LIFE-MOORS-FOUNDING-ERAS"
+      ],
+      "reason": "Native team-era events verify30/15/0, team isolation, foreign-civilization and wonder controls.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_moors.lua",
+          "sha256": "62dab2e42bf0d7eb927d255e16ebfefe765d1b5146b9eb0363000f62b82165cc"
+        }
+      ]
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_moors.lua:GameEvents.PlayerDoTurn:lekmod_moors_on_turn_ua",
       "suggested_group": "G2",
-      "status": "untriaged",
+      "status": "mapped",
       "case_ids": [
+        "LIFE-MOORS-FOUNDING-ERAS",
         "LIFE-MOORS-CAPTURE-PRODUCTION"
+      ],
+      "reason": "Era/founding plus actual post-acquisition recipient turns and affected-save repair cover owner/era/count paths.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_moors.lua",
+          "sha256": "62dab2e42bf0d7eb927d255e16ebfefe765d1b5146b9eb0363000f62b82165cc"
+        }
       ]
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_moors.lua:GameEvents.PlayerCityFounded:lekmod_moors_on_turn_ua",
       "suggested_group": "G2",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "LIFE-MOORS-FOUNDING-ERAS"
+      ],
+      "reason": "Starting and subsequent legal Found verify immediate Medieval/Renaissance markers; no assigned marker.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_moors.lua",
+          "sha256": "62dab2e42bf0d7eb927d255e16ebfefe765d1b5146b9eb0363000f62b82165cc"
+        }
+      ]
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_uae.lua:GameEvents.CityConstructed:lekmod_uae_wonder_ua",
@@ -15585,9 +16084,17 @@
     {
       "id": "lua:Lua/Civilizations/Lekmod_cuba.lua:GameEvents.PlayerDoTurn:lekmod_cuba_ua_culture",
       "suggested_group": "G2",
-      "status": "untriaged",
+      "status": "mapped",
       "case_ids": [
+        "LIFE-CUBA-CAPITAL-CONTACT",
         "LIFE-CUBA-CAPITAL-TRANSFER"
+      ],
+      "reason": "Human/AI exact per-source rounding, contact inclusion, source reduction, capital changes and elimination. Maps marker calculation; downstream settlement and ideology remain independent.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_cuba.lua",
+          "sha256": "5b7e218855b0a584bd61e2db03f9f668c9d94bd7af8d26dda048ce1e92a20a04"
+        }
       ]
     },
     {
@@ -15635,9 +16142,17 @@
     {
       "id": "lua:Lua/Civilizations/Lekmod_maori.lua:GameEvents.PlayerDoTurn:lekmod_maori_ua",
       "suggested_group": "G2",
-      "status": "untriaged",
+      "status": "mapped",
       "case_ids": [
+        "LIFE-MAORI-OPENING-TRAINING-GIFT",
         "LIFE-MAORI-UPGRADE-CAPTURE-NAVAL"
+      ],
+      "reason": "Ancient/Classical opening, birth-turn production, human/AI/foreign gifts, upgrade/capture, naval/embarked and stack allowances. Non-major and optional-old-DLL fallback retain isolated-test limitations; current candidate exposes stack query.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_maori.lua",
+          "sha256": "62b58add9f6283bc947455fdb943818a764f373f0808dd5494d97c2c74043e21"
+        }
       ]
     },
     {
@@ -15649,8 +16164,17 @@
     {
       "id": "lua:Lua/Civilizations/Lekmod_newzealand.lua:GameEvents.PlayerDoTurn:lekmod_new_zealand_uu_batallion",
       "suggested_group": "G2",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "BASE-BATTALION"
+      ],
+      "reason": "Actual owner-turn1 influence per qualifying unit; two-unit human and one-unit AI Roman owners with New Zealand absent. Normal Warrior, unfriendly minor and unowned-tile controls. Non-major receiver guards protect major-only friendship array.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_newzealand.lua",
+          "sha256": "960dd336801e11dc9c843e14941c84335151071df5e4298504690ed953a3433d"
+        }
+      ]
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_newzealand.lua:GameEvents.PlayerDoTurn:lekmod_new_zealand_uu_defender",
@@ -15667,9 +16191,16 @@
     {
       "id": "lua:Lua/Civilizations/Lekmod_aksum.lua:GameEvents.UnitHealed:lekmod_aksum_ui_faith_on_heal",
       "suggested_group": "G2",
-      "status": "untriaged",
+      "status": "mapped",
       "case_ids": [
         "HEAL-AKSUM-ORDINARY"
+      ],
+      "reason": "Ordinary land healing on/adjacent to Church gives2 faith; foreign improvement accepted; distance2, sea, healthy and range-exit controls. Popup presentation is independent.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_aksum.lua",
+          "sha256": "7d3a8275c46c95ed9a3adf8b6533d2d8460e34109051da88cb497efde6e542e4"
+        }
       ]
     },
     {
@@ -23508,17 +24039,17 @@
     }
   ],
   "summary": {
-    "designed_cases": 28,
+    "designed_cases": 31,
     "case_statuses": {
       "passed": 12,
-      "covered-by-evidence": 16
+      "covered-by-evidence": 19
     },
     "review_surfaces": 1340,
     "pending_document_rows": 121,
     "final_case_denominator_frozen": false,
     "surface_statuses": {
-      "untriaged": 1318,
-      "mapped": 9,
+      "untriaged": 1311,
+      "mapped": 16,
       "presentation-only": 13
     },
     "indexed_civilizations": 114,

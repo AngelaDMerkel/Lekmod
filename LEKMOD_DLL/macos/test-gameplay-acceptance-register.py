@@ -176,6 +176,86 @@ class RegisterTests(unittest.TestCase):
         row['evidence_contract']['required_literal']='different proof'
         with self.assertRaisesRegex(ValueError,'proof missing'):check.validate(self.reg,self.root)
 
+    def separate_evidence(self):
+        self.put('checkpoint.Civ5Save', 'saved')
+        checkpoint = str(self.root / 'checkpoint.Civ5Save')
+        common = dict(status='passed-scenario-checks-only', normal_exit_verified=True,
+            process_returncode=0, binary_sha256='a'*64, scenario='bonus', save_file_verified=True,
+            settings_restored=True, temporary_ui_hooks_restored=True, manual_saves_preserved=True,
+            lua_runtime_errors=[], synchronization_checks={'rng_sync_failure':False}, new_diagnostics=[],
+            generated_save=checkpoint, saved_copy=checkpoint, saved_sha256=check.sha(Path(checkpoint)),
+            saved_state='{"value":2}', started_utc='first',
+            functional_checks=dict(verified=True, complete=True, failed=False, skipped=[], outcomes={'bonus':'PASS'}))
+        run = copy.deepcopy(common)
+        replay = copy.deepcopy(common)
+        replay.update(status='passed-scenario-reload-only', started_utc='second', loaded_from=checkpoint,
+                      save_sha256=common['saved_sha256'], reload_state_verified=True)
+        replay['functional_checks']['outcomes']={'save-reload':'PASS'}
+        self.put('report.json', run); self.put('replay.json', replay)
+        self.case.update(status='covered-by-evidence', evidence=[self.ref('report.json'),self.ref('replay.json')],
+            evidence_contract=dict(kind='native-run-replay',report='report.json',replay_report='replay.json',
+                                   scenario='bonus',required_assertions=['bonus'],gamecore_sha256='a'*64))
+        return run, replay
+
+    def pin_separate(self):
+        self.case['evidence']=[self.ref('report.json'),self.ref('replay.json')]
+
+    def test_separate_process_evidence_is_verified(self):
+        self.separate_evidence()
+        self.assertTrue(check.validate(self.reg,self.root)['gate_G0_passed'])
+
+    def test_separate_process_rejects_failures_and_missing_preservation(self):
+        for target in ['report.json','replay.json']:
+            for field,value in [('status','failed-functional-checks'),('normal_exit_verified',False),
+                                ('process_returncode',-9),('binary_sha256','b'*64),('scenario','other'),
+                                ('save_file_verified',False),('settings_restored',False),
+                                ('temporary_ui_hooks_restored',False),('manual_saves_preserved',False),
+                                ('lua_runtime_errors',['error']),('synchronization_checks',{'rng_sync_failure':True}),
+                                ('new_diagnostics',['crash']),('localization_startup_failure',True),
+                                ('unclassified_stall_requires_review',True)]:
+                with self.subTest(target=target,field=field):
+                    self.separate_evidence();r=json.loads((self.root/target).read_text());r[field]=value
+                    self.put(target,r);self.pin_separate()
+                    with self.assertRaisesRegex(ValueError,'pass/exit'):check.validate(self.reg,self.root)
+
+    def test_separate_process_rejects_state_and_input_mismatch(self):
+        for field,value in [('saved_state','{"value":3}'),('save_sha256','b'*64),('loaded_from','other'),
+                            ('started_utc','first'),('reload_state_verified',False)]:
+            with self.subTest(field=field):
+                run,replay=self.separate_evidence();replay[field]=value
+                self.put('replay.json',replay);self.pin_separate()
+                with self.assertRaisesRegex(ValueError,'input or exact state'):check.validate(self.reg,self.root)
+
+    def test_separate_process_rejects_missing_or_skipped_assertions(self):
+        for field,value in [('verified',False),('complete',False),('failed',True),('skipped',['bonus']),('outcomes',{'bonus':'FAIL'})]:
+            with self.subTest(field=field):
+                run,replay=self.separate_evidence();run['functional_checks'][field]=value
+                self.put('report.json',run);self.pin_separate()
+                with self.assertRaisesRegex(ValueError,'pass/exit'):check.validate(self.reg,self.root)
+        run,replay=self.separate_evidence();self.case['evidence_contract']['required_assertions']=['missing']
+        with self.assertRaisesRegex(ValueError,'missing required'):check.validate(self.reg,self.root)
+
+    def test_separate_process_requires_distinct_pinned_reports(self):
+        self.separate_evidence();self.case['evidence_contract']['replay_report']='report.json'
+        with self.assertRaisesRegex(ValueError,'distinct pinned'):check.validate(self.reg,self.root)
+        self.separate_evidence();self.case['evidence']=self.case['evidence'][:1]
+        with self.assertRaisesRegex(ValueError,'distinct pinned'):check.validate(self.reg,self.root)
+
+    def test_separate_process_rejects_corrupt_or_missing_save_bytes(self):
+        self.separate_evidence();self.put('checkpoint.Civ5Save','corrupt')
+        with self.assertRaisesRegex(ValueError,'checkpoint bytes'):check.validate(self.reg,self.root)
+        run,replay=self.separate_evidence();run['generated_save']=str(self.root/'missing')
+        self.put('report.json',run);self.pin_separate()
+        with self.assertRaisesRegex(ValueError,'checkpoint bytes'):check.validate(self.reg,self.root)
+
+    def test_separate_process_composite_and_source_review(self):
+        self.separate_evidence();single=copy.deepcopy(self.case['evidence_contract'])
+        self.case['evidence_contract']={'kind':'native-batch-stages','stages':[single]}
+        self.assertTrue(check.validate(self.reg,self.root)['gate_G0_passed'])
+        self.reg['surface_review'][0]['review_source_references']=[self.ref('parameters.json')]
+        self.put('parameters.json',{'changed':True})
+        with self.assertRaisesRegex(ValueError,'changed/missing'):check.validate(self.reg,self.root)
+
     def test_reference_cannot_escape_checkout(self):
         self.case['source_references']=[{'path':'../outside','sha256':'a'*64}]
         with self.assertRaisesRegex(ValueError,'inside the checkout'):check.validate(self.reg,self.root)
