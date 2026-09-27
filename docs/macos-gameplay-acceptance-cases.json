@@ -13,11 +13,11 @@
   },
   "discovery": {
     "report": {
-      "path": "build/macos/acceptance-g0-20260926/discovery.json",
-      "sha256": "19c158f425a1638275a153c51b86ab2deeace4bf5a77d535a0e3213130d02433"
+      "path": "build/macos/acceptance-g0-20260926/discovery-moors-fixed.json",
+      "sha256": "d44acb537ae54c91f616e96651c67fff18538327b8c1fbca8ab8fdcbd104ebe4"
     },
     "parameters": {
-      "path": "build/macos/acceptance-g0-20260926/parameters.json",
+      "path": "build/macos/acceptance-g0-20260926/parameters-moors-fixed.json",
       "sha256": "3788cd3b427c0bdc05841d60f5d3902a7debea45cbd781640df63903635e725e"
     },
     "summary": {
@@ -841,7 +841,7 @@
       "id": "LIFE-MOORS-CAPTURE-PRODUCTION",
       "group": "G2",
       "title": "Moorish production after ownership change and actual completion",
-      "status": "product-failed",
+      "status": "passed",
       "source_references": [
         {
           "path": "LEKMOD/Lua/Civilizations/Lekmod_moors.lua",
@@ -913,10 +913,25 @@
       ],
       "batch": "LEKMOD_DLL/macos/batch-plans/moors-acquisition-regression.json",
       "stage": "moors-capture-in / gift-in / capture-out / gift-out",
-      "implementation_state": "Acquisition/load repair applied;22 actual-handler checks pass, rebuilt native regression pending.",
-      "evidence": [],
+      "implementation_state": "30 assertions/six exact replays passed in201419Z: all acquisition/control/production paths plus both authentic affected saves.",
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20260927T201419Z/report.json",
+          "sha256": "cb6c391dc8a3e77812260c526d222414b279cf6a0fc6a8b66993586ee21ad988"
+        },
+        {
+          "path": "build/macos/playtests/20260927T201419Z/batch-report.json",
+          "sha256": "562359b683efe26509cdaba2217a3df7d5ac5a17c1f9afb525302e2c50347a03"
+        },
+        {
+          "path": "build/macos/moors-preservation-20260927.json",
+          "sha256": "63b66ca3be7e32f77fc050ad8faea319d0852efa92b88c553df40f328aff007e"
+        }
+      ],
       "surface_ids": [
-        "lua:Lua/Civilizations/Lekmod_moors.lua:GameEvents.PlayerDoTurn:lekmod_moors_on_turn_ua"
+        "lua:Lua/Civilizations/Lekmod_moors.lua:GameEvents.PlayerDoTurn:lekmod_moors_on_turn_ua",
+        "lua:Lua/Civilizations/Lekmod_moors.lua:GameEvents.CityCaptureComplete:lekmod_moors_on_city_capture",
+        "lua:Lua/Civilizations/Lekmod_moors.lua:Events.SequenceGameInitComplete:lekmod_moors_on_load"
       ],
       "implementation_references": [
         {
@@ -960,7 +975,97 @@
           "sha256": "36cb2bcf7ca8db101f75d148c1c860d3fc09048308db617ade1290e94be0fbb6"
         }
       ],
-      "fix_commit": "e8a3fabd"
+      "fix_commit": "e8a3fabd",
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20260927T201419Z/report.json",
+            "batch_report": "build/macos/playtests/20260927T201419Z/batch-report.json",
+            "stage": "moors-capture-in",
+            "required_assertions": [
+              "moors-acquisition-event",
+              "moors-immediate-era-bonus",
+              "moors-next-owner-update",
+              "moors-previous-owner-control",
+              "moors-production-completion",
+              "moors-production-modifiers"
+            ],
+            "gamecore_sha256": "c8afcadc49da838b3243edd401b6f37ada3bf63b600df6af2e666788c6bf7452"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20260927T201419Z/report.json",
+            "batch_report": "build/macos/playtests/20260927T201419Z/batch-report.json",
+            "stage": "moors-gift-in",
+            "required_assertions": [
+              "moors-acquisition-event",
+              "moors-immediate-era-bonus",
+              "moors-next-owner-update",
+              "moors-previous-owner-control",
+              "moors-production-completion",
+              "moors-production-modifiers"
+            ],
+            "gamecore_sha256": "c8afcadc49da838b3243edd401b6f37ada3bf63b600df6af2e666788c6bf7452"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20260927T201419Z/report.json",
+            "batch_report": "build/macos/playtests/20260927T201419Z/batch-report.json",
+            "stage": "moors-capture-out",
+            "required_assertions": [
+              "moors-acquisition-event",
+              "moors-immediate-era-bonus",
+              "moors-next-owner-update",
+              "moors-previous-owner-control",
+              "moors-production-completion",
+              "moors-production-modifiers"
+            ],
+            "gamecore_sha256": "c8afcadc49da838b3243edd401b6f37ada3bf63b600df6af2e666788c6bf7452"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20260927T201419Z/report.json",
+            "batch_report": "build/macos/playtests/20260927T201419Z/batch-report.json",
+            "stage": "moors-gift-out",
+            "required_assertions": [
+              "moors-acquisition-event",
+              "moors-immediate-era-bonus",
+              "moors-next-owner-update",
+              "moors-previous-owner-control",
+              "moors-production-completion",
+              "moors-production-modifiers"
+            ],
+            "gamecore_sha256": "c8afcadc49da838b3243edd401b6f37ada3bf63b600df6af2e666788c6bf7452"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20260927T201419Z/report.json",
+            "batch_report": "build/macos/playtests/20260927T201419Z/batch-report.json",
+            "stage": "moors-capture-in-load",
+            "required_assertions": [
+              "moors-loaded-era-repair",
+              "moors-loaded-next-owner-turn",
+              "moors-loaded-production-preserved"
+            ],
+            "gamecore_sha256": "c8afcadc49da838b3243edd401b6f37ada3bf63b600df6af2e666788c6bf7452"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20260927T201419Z/report.json",
+            "batch_report": "build/macos/playtests/20260927T201419Z/batch-report.json",
+            "stage": "moors-gift-in-load",
+            "required_assertions": [
+              "moors-loaded-era-repair",
+              "moors-loaded-next-owner-turn",
+              "moors-loaded-production-preserved"
+            ],
+            "gamecore_sha256": "c8afcadc49da838b3243edd401b6f37ada3bf63b600df6af2e666788c6bf7452"
+          }
+        ]
+      },
+      "validation_document": "docs/macos-moors-acquisition-validation.md"
     },
     {
       "id": "LIFE-CUBA-CAPITAL-TRANSFER",
@@ -11022,6 +11127,22 @@
       "suggested_group": "G7",
       "status": "untriaged",
       "case_ids": []
+    },
+    {
+      "id": "lua:Lua/Civilizations/Lekmod_moors.lua:GameEvents.CityCaptureComplete:lekmod_moors_on_city_capture",
+      "status": "mapped",
+      "case_ids": [
+        "LIFE-MOORS-CAPTURE-PRODUCTION"
+      ],
+      "reason": "Added by verified acquisition/load repair e8a3fabd; native normal acquisition and affected-save regressions cover these new subscriptions."
+    },
+    {
+      "id": "lua:Lua/Civilizations/Lekmod_moors.lua:Events.SequenceGameInitComplete:lekmod_moors_on_load",
+      "status": "mapped",
+      "case_ids": [
+        "LIFE-MOORS-CAPTURE-PRODUCTION"
+      ],
+      "reason": "Added by verified acquisition/load repair e8a3fabd; native normal acquisition and affected-save regressions cover these new subscriptions."
     }
   ],
   "pending_doc_entries": [
@@ -18620,18 +18741,17 @@
   "summary": {
     "designed_cases": 27,
     "case_statuses": {
-      "passed": 6,
-      "product-failed": 1,
+      "passed": 7,
       "untriaged": 1,
       "covered-by-evidence": 16,
       "ready": 3
     },
-    "review_surfaces": 1338,
+    "review_surfaces": 1340,
     "pending_document_rows": 122,
     "final_case_denominator_frozen": false,
     "surface_statuses": {
       "untriaged": 1321,
-      "mapped": 4,
+      "mapped": 6,
       "presentation-only": 13
     },
     "indexed_civilizations": 114
@@ -18650,6 +18770,13 @@
       "gamecore_sha256": "c8afcadc49da838b3243edd401b6f37ada3bf63b600df6af2e666788c6bf7452",
       "source_commit": "0445cde5058d5023f94b8af868bc4b6df4405699",
       "change": "Mughal free-garrison loader and saved derived count; discovery data/payload unchanged. Historical contracts retain their tested core identities; F still requires applicability review and affected regressions."
+    },
+    {
+      "package": "build/macos/Lekmod-moors-acquisition-20260927.zip",
+      "sha256": "62d71ca82c8cb21d96198a23df3e3e1e931d2f09976675d3d64117f37421d53e",
+      "gamecore_sha256": "c8afcadc49da838b3243edd401b6f37ada3bf63b600df6af2e666788c6bf7452",
+      "source_commit": "ae85ca7e654369d8e569c703641ee94077ad90cc",
+      "change": "Moorish acquisition and load events rebuild current-era city production marker; GameCore unchanged from Mughal fix. F still requires final applicability/regression review."
     }
   ]
 }

@@ -56,6 +56,14 @@ dependency is also resolved by a read-only native-context proof. G0 still has
 unmapped surfaces/doc rows. Moorish acquisition/production is the active next run;
 inspect continuation state before launching anything else.
 
+[Moorish acquisition/load repair](macos-moors-acquisition-validation.md) is verified:
+30 assertions/six exact replays in `20260927T201419Z`. New current candidate:
+`build/macos/Lekmod-moors-acquisition-20260927.zip`, SHA-256
+`62d71ca82c8cb21d96198a23df3e3e1e931d2f09976675d3d64117f37421d53e`;
+core remains `4756df05…d8659`. Only Moorish Lua changed from the Mughal payload.
+Next: Aksum ordinary healing, remaining missions, G0 reconciliation, then F/R.
+The inventory adds two mapped Moorish subscriptions; raw review surfaces are1340.
+
 The September27 refinement permits fully specified isolated cases to run while
 unrelated G0 review continues. Global G0 remains open and is required before
 candidate freeze. Next: G2 ownership/lifetime case design and remaining mappings.
