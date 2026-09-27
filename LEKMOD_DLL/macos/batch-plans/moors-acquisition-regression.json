@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "name": "moors-acquisition-fixed-and-old-saves",
+  "stages": [
+    {
+      "id": "moors-capture-in",
+      "scenario": "moors-acquisition",
+      "fixture": "build/macos/playtests/20260919T034123Z/Lekmod-Functional-20260919T034123Z.Civ5Save",
+      "sha256": "d23a7c57adb47fa32e284a61d31370f508f5eb15b6f6dfd60d63890b26b519f0",
+      "max_turns": 6,
+      "parameters": {
+        "mode": "capture-in",
+        "era": "medieval"
+      }
+    },
+    {
+      "id": "moors-gift-in",
+      "scenario": "moors-acquisition",
+      "fixture": "build/macos/playtests/20260919T034123Z/Lekmod-Functional-20260919T034123Z.Civ5Save",
+      "sha256": "d23a7c57adb47fa32e284a61d31370f508f5eb15b6f6dfd60d63890b26b519f0",
+      "max_turns": 6,
+      "parameters": {
+        "mode": "gift-in",
+        "era": "renaissance"
+      }
+    },
+    {
+      "id": "moors-capture-out",
+      "scenario": "moors-acquisition",
+      "fixture": "build/macos/playtests/20260919T034123Z/Lekmod-Functional-20260919T034123Z.Civ5Save",
+      "sha256": "d23a7c57adb47fa32e284a61d31370f508f5eb15b6f6dfd60d63890b26b519f0",
+      "max_turns": 6,
+      "parameters": {
+        "mode": "capture-out",
+        "era": "medieval"
+      }
+    },
+    {
+      "id": "moors-gift-out",
+      "scenario": "moors-acquisition",
+      "fixture": "build/macos/playtests/20260919T034123Z/Lekmod-Functional-20260919T034123Z.Civ5Save",
+      "sha256": "d23a7c57adb47fa32e284a61d31370f508f5eb15b6f6dfd60d63890b26b519f0",
+      "max_turns": 6,
+      "parameters": {
+        "mode": "gift-out",
+        "era": "renaissance"
+      }
+    },
+    {
+      "id": "moors-capture-in-load",
+      "scenario": "moors-acquisition-load",
+      "fixture": "build/macos/playtests/20260927T195635Z/checkpoints/Lekmod-Batch-20260927T195635Z-moors-capture-in-run.Civ5Save",
+      "sha256": "7e4ab527fcf88aa967a773fd9867452426ffdaeac0f4bd4195f037a8c4f7931f",
+      "max_turns": 2,
+      "parameters": {
+        "expected_state": "{\"owners\":{\"0\":{\"cities\":{\"8192\":{\"marker\":2,\"market\":0,\"market_modifier\":30,\"production\":0,\"puppet\":false,\"resistance\":0,\"wonder_modifier\":15,\"x\":42,\"y\":13}},\"civilization\":102,\"era\":2},\"1\":{\"cities\":{\"16385\":{\"marker\":2,\"market\":0,\"market_modifier\":30,\"production\":0,\"puppet\":true,\"resistance\":1,\"wonder_modifier\":0,\"x\":33,\"y\":14},\"8192\":{\"marker\":2,\"market\":0,\"market_modifier\":30,\"production\":780,\"puppet\":false,\"resistance\":0,\"wonder_modifier\":0,\"x\":38,\"y\":24}},\"civilization\":102,\"era\":2},\"2\":{\"cities\":{\"8192\":{\"marker\":0,\"market\":0,\"market_modifier\":0,\"production\":900,\"puppet\":false,\"resistance\":0,\"wonder_modifier\":0,\"x\":24,\"y\":19}},\"civilization\":14,\"era\":2}},\"turn\":84}"
+      }
+    },
+    {
+      "id": "moors-gift-in-load",
+      "scenario": "moors-acquisition-load",
+      "fixture": "build/macos/playtests/20260927T195635Z/checkpoints/Lekmod-Batch-20260927T195635Z-moors-gift-in-run.Civ5Save",
+      "sha256": "950c484236a1a9f7eb42281ce85dd43d5ba0fb19393d814a9ee755a25ae8ba8a",
+      "max_turns": 2,
+      "parameters": {
+        "expected_state": "{\"owners\":{\"0\":{\"cities\":{\"8192\":{\"marker\":1,\"market\":0,\"market_modifier\":15,\"production\":0,\"puppet\":false,\"resistance\":0,\"wonder_modifier\":0,\"x\":42,\"y\":13}},\"civilization\":102,\"era\":3},\"1\":{\"cities\":{\"16385\":{\"marker\":1,\"market\":0,\"market_modifier\":15,\"production\":0,\"puppet\":true,\"resistance\":1,\"wonder_modifier\":0,\"x\":33,\"y\":14},\"8192\":{\"marker\":1,\"market\":0,\"market_modifier\":15,\"production\":0,\"puppet\":false,\"resistance\":0,\"wonder_modifier\":0,\"x\":38,\"y\":24}},\"civilization\":102,\"era\":3},\"2\":{\"cities\":{\"8192\":{\"marker\":0,\"market\":0,\"market_modifier\":0,\"production\":0,\"puppet\":false,\"resistance\":0,\"wonder_modifier\":0,\"x\":24,\"y\":19}},\"civilization\":14,\"era\":2}},\"turn\":83}"
+      }
+    }
+  ]
+}

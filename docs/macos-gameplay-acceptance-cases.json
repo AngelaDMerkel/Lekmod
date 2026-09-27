@@ -845,7 +845,7 @@
       "source_references": [
         {
           "path": "LEKMOD/Lua/Civilizations/Lekmod_moors.lua",
-          "sha256": "0b58565d790bd6f92cff8ea0b1bc93ed5c889cc18d70b2192b784320202cdb82"
+          "sha256": "62dab2e42bf0d7eb927d255e16ebfefe765d1b5146b9eb0363000f62b82165cc"
         },
         {
           "path": "LEKMOD/Override/CIV5Units.xml",
@@ -869,7 +869,7 @@
         "AI Moors receives by gift or actual owner-turn capture",
         "Roman AI is the foreign recipient and donor control"
       ],
-      "expected_result": "All owned Moorish cities immediately have30% ordinary-building production in Medieval and15% in Renaissance, no wonder bonus. Actual acquisition must not leave a one-turn missing bonus; foreign recipients get0. Verify next recipient turn, native Market completion and exact replay.",
+      "expected_result": "All owned Moorish cities immediately have30% ordinary-building production in Medieval and15% in Renaissance, no wonder bonus. Actual acquisition must not leave a one-turn missing bonus; foreign recipients get0. Verify next recipient turn, native Market completion and exact replay. Authentic failed capture/gift saves must be repaired before the first test action, preserving recorded production progress and city state; subsequent owner turn and exact replay must remain idempotent.",
       "units": [
         "marker count",
         "production percent",
@@ -901,11 +901,19 @@
         {
           "path": "build/macos/playtests/20260919T034123Z/Lekmod-Functional-20260919T034123Z.Civ5Save",
           "sha256": "d23a7c57adb47fa32e284a61d31370f508f5eb15b6f6dfd60d63890b26b519f0"
+        },
+        {
+          "path": "build/macos/playtests/20260927T195635Z/checkpoints/Lekmod-Batch-20260927T195635Z-moors-capture-in-run.Civ5Save",
+          "sha256": "7e4ab527fcf88aa967a773fd9867452426ffdaeac0f4bd4195f037a8c4f7931f"
+        },
+        {
+          "path": "build/macos/playtests/20260927T195635Z/checkpoints/Lekmod-Batch-20260927T195635Z-moors-gift-in-run.Civ5Save",
+          "sha256": "950c484236a1a9f7eb42281ce85dd43d5ba0fb19393d814a9ee755a25ae8ba8a"
         }
       ],
-      "batch": "LEKMOD_DLL/macos/batch-plans/moors-acquisition.json",
+      "batch": "LEKMOD_DLL/macos/batch-plans/moors-acquisition-regression.json",
       "stage": "moors-capture-in / gift-in / capture-out / gift-out",
-      "implementation_state": "Native capture and gift both omit the immediate current-owner bonus; foreign controls and production passed. Product repair pending.",
+      "implementation_state": "Acquisition/load repair applied;22 actual-handler checks pass, rebuilt native regression pending.",
       "evidence": [],
       "surface_ids": [
         "lua:Lua/Civilizations/Lekmod_moors.lua:GameEvents.PlayerDoTurn:lekmod_moors_on_turn_ua"
@@ -918,6 +926,14 @@
         {
           "path": "LEKMOD_DLL/macos/batch-plans/moors-acquisition.json",
           "sha256": "8830e8c51d4e4c549b7186b53ab11bbdd4bd50b79435b0556ec92a2b800d31fb"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-moors-acquisition-load.lua",
+          "sha256": "42479646bcfc283e72e868302f1de7fad60f84a5a5a533a617bbe465f085d4f4"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/batch-plans/moors-acquisition-regression.json",
+          "sha256": "a74a8a2cdbf3fede0734c6b31bf73f8b07c3f5c06c47755e063334810e507d61"
         }
       ],
       "implementation_limits": [
@@ -943,7 +959,8 @@
           "path": "build/macos/playtests/20260927T195635Z/batch-report.json",
           "sha256": "36cb2bcf7ca8db101f75d148c1c860d3fc09048308db617ade1290e94be0fbb6"
         }
-      ]
+      ],
+      "fix_commit": "e8a3fabd"
     },
     {
       "id": "LIFE-CUBA-CAPITAL-TRANSFER",
