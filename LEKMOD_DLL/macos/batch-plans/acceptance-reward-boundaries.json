@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "name": "acceptance-reward-boundaries",
+  "stages": [
+    {
+      "id": "nuclear-shelter-units",
+      "scenario": "nuclear-shelter-units",
+      "fixture": "build/macos/playtests/20260918T101851Z/Lekmod-Functional-20260918T101851Z.Civ5Save",
+      "sha256": "2a0c33f643d2d13ac839392a4cada955eec4caa17ac4dd255ca8dab8d89a0d6d",
+      "max_turns": 0
+    },
+    {
+      "id": "engineer-space-hurry",
+      "scenario": "engineer-space-hurry",
+      "fixture": "build/macos/playtests/20260918T065530Z/Lekmod-Functional-20260918T065530Z.Civ5Save",
+      "sha256": "574511e03f58fc064d98b15fa57b4acf24072fdbfe434ec62db2230a6e7f0e3d",
+      "max_turns": 4
+    },
+    {
+      "id": "counterspy",
+      "scenario": "counterspy",
+      "fixture": "build/macos/playtests/20260918T101851Z/Lekmod-Functional-20260918T101851Z.Civ5Save",
+      "sha256": "2a0c33f643d2d13ac839392a4cada955eec4caa17ac4dd255ca8dab8d89a0d6d",
+      "max_turns": 19
+    }
+  ]
+}

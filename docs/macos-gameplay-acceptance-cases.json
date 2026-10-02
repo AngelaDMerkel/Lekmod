@@ -6766,6 +6766,224 @@
         "exact_replays": 2,
         "product_change": false
       }
+    },
+    {
+      "id": "NUCLEAR-SHELTER-UNIT-DAMAGE",
+      "group": "G3",
+      "title": "Sheltered combat/civilian nuclear damage and health thresholds",
+      "status": "ready",
+      "source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnitCombat.cpp",
+          "sha256": "6e92a006256f9d47549a90a1faf1577953acab9ece87f44828f847413d8fe7d7"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnit.cpp",
+          "sha256": "16914a686126292c64ed110df3fda674c136858392053cccee3940a3fbac5e73"
+        }
+      ],
+      "owners": [
+        "human actor and AI/foreign target from pinned fixture"
+      ],
+      "expected_result": "Five real level2 missile strikes: sheltered combat unit takes25; unprotected takes100; adjacent strike retains25 city-unit damage. Pre-wounded74 ends at99, pre-wounded75 dies at100. Healthy civilians die because both25 and100 exceed native threshold6. Nuclear-unit count increments/decrements exactly and ordinary Warrior has no nuclear capability.",
+      "units": "native hit points, production, counts, spy rank/state as specified",
+      "supplied_inputs": [
+        "cities/population12",
+        "shelter off/on",
+        "Warrior/Worker/missile and74/75 wounds",
+        "uranium",
+        "legal launch locations and reveal"
+      ],
+      "actual_trigger": "Ordinary synchronized missions, production and real owner turns; no final reward/death/synchronization state assignment.",
+      "negative_controls": [
+        "unprotected target",
+        "direct versus adjacent",
+        "healthy/74/75 wounded combat units",
+        "civilian versus combat",
+        "ordinary nonnuclear unit"
+      ],
+      "transitions": [
+        "native action and outcome",
+        "boundary/rejection controls",
+        "exact checkpoint replay"
+      ],
+      "persistence_requirement": "Exact scenario state and closed-writer/source-copy save verification.",
+      "required_evidence_level": [
+        "scripted-command",
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260918T101851Z/Lekmod-Functional-20260918T101851Z.Civ5Save",
+          "sha256": "2a0c33f643d2d13ac839392a4cada955eec4caa17ac4dd255ca8dab8d89a0d6d"
+        }
+      ],
+      "batch": "LEKMOD_DLL/macos/batch-plans/acceptance-reward-boundaries.json",
+      "stage": "nuclear-shelter-units",
+      "evidence": [],
+      "surface_ids": [
+        "data:Buildings.NukeModifier",
+        "data:Units.NukeDamageLevel"
+      ],
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/batch-plans/acceptance-reward-boundaries.json",
+          "sha256": "d9e5f3d08a6869344cead5f7edafd610ba94fdc0252cd147c8dc523ff17e3152"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-nuclear-shelter-units.lua",
+          "sha256": "abd793b7cb1b9568bd08c57c90277b6a92ba43986d500470152f7a3789c5877a"
+        }
+      ],
+      "implementation_limits": [
+        "No physical mouse input claim. Supplied prerequisites are not earned-gameplay claims.",
+        "Only configured level2 missile is tested; no level1 weapon is present in the resolved shipped unit table."
+      ]
+    },
+    {
+      "id": "MISSION-ENGINEER-SPACE-HURRY",
+      "group": "G3",
+      "title": "Spaceship Engineer policy gate, four component rewards and completion",
+      "status": "ready",
+      "source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnit.cpp",
+          "sha256": "16914a686126292c64ed110df3fda674c136858392053cccee3940a3fbac5e73"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPlayer.cpp",
+          "sha256": "31dd845837800229e4c4e2708e471996f03858f722b8cbf14bdfa2a8ed67c788"
+        },
+        {
+          "path": "build/macos/reward-consumer-macros-20261002.json",
+          "sha256": "3b40427b8abd753e61641c29a9a712b797b5802fe12e4df7f273fa2b67c29b08"
+        }
+      ],
+      "owners": [
+        "human actor and AI/foreign target from pinned fixture"
+      ],
+      "expected_result": "Normal Apollo production unlocks parts. With Spaceflight Pioneers absent, hurry is ineligible. With the policy supplied, all four1500-cost component types receive2*floor((75+36*population)*speed/100) actual production and consume Engineers. An ordinary military unit remains ineligible. A fifth hurry caps at remaining production; the next normal turn produces an unassembled booster with no winner.",
+      "units": "native hit points, production, counts, spy rank/state as specified",
+      "supplied_inputs": [
+        "technologies/aluminum",
+        "Apollo progress one below completion",
+        "population5",
+        "policy off then on",
+        "Engineers and explicit component production progress"
+      ],
+      "actual_trigger": "Ordinary synchronized missions, production and real owner turns; no final reward/death/synchronization state assignment.",
+      "negative_controls": [
+        "no policy",
+        "ordinary unit target",
+        "remaining-production cap",
+        "no spaceship assembly or victory"
+      ],
+      "transitions": [
+        "native action and outcome",
+        "boundary/rejection controls",
+        "exact checkpoint replay"
+      ],
+      "persistence_requirement": "Exact scenario state and closed-writer/source-copy save verification.",
+      "required_evidence_level": [
+        "scripted-command",
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260918T065530Z/Lekmod-Functional-20260918T065530Z.Civ5Save",
+          "sha256": "574511e03f58fc064d98b15fa57b4acf24072fdbfe434ec62db2230a6e7f0e3d"
+        }
+      ],
+      "batch": "LEKMOD_DLL/macos/batch-plans/acceptance-reward-boundaries.json",
+      "stage": "engineer-space-hurry",
+      "evidence": [],
+      "surface_ids": [
+        "data:Policies.EnablesSSPartHurry"
+      ],
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/batch-plans/acceptance-reward-boundaries.json",
+          "sha256": "d9e5f3d08a6869344cead5f7edafd610ba94fdc0252cd147c8dc523ff17e3152"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-engineer-space-hurry.lua",
+          "sha256": "84449e544e8fc4bef17c71cde95391605f939715ff8cee0f48ce6775f78fd5c8"
+        }
+      ],
+      "implementation_limits": [
+        "No physical mouse input claim. Supplied prerequisites are not earned-gameplay claims.",
+        "Current-candidate scoped outcome; full acceptance still requires G0/F/R."
+      ]
+    },
+    {
+      "id": "REG-COUNTERSPY-INTERCEPTION",
+      "group": "G7",
+      "title": "Counterspy interception, science rejection and defender promotion",
+      "status": "ready",
+      "source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvEspionageClasses.cpp",
+          "sha256": "491de52310017eb21e3c829934e1f1067e67894bdcc718062cf330154044564a"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/test-counterspy-outcomes.py",
+          "sha256": "44df2e6fe2ee32ef277f2af0b002a54f55675e811a6dc06944dcdba9e92155a0"
+        }
+      ],
+      "owners": [
+        "human actor and AI/foreign target from pinned fixture"
+      ],
+      "expected_result": "The actual AI defensive assignment and travel precede a normal human spy relocation/surveillance/intelligence cycle. Native resolution kills/extracts the recruit, leaves no claimable science, makes the dead spy coup-ineligible and grants defender one rank capped at2. Exact spy/city state replay.",
+      "units": "native hit points, production, counts, spy rank/state as specified",
+      "supplied_inputs": [
+        "research/population/food",
+        "science/security buildings",
+        "upkeep gold",
+        "normal human spy relocation"
+      ],
+      "actual_trigger": "Ordinary synchronized missions, production and real owner turns; no final reward/death/synchronization state assignment.",
+      "negative_controls": [
+        "no assigned spy progress/rank/death",
+        "dead spy cannot coup",
+        "no technology claim after interception"
+      ],
+      "transitions": [
+        "native action and outcome",
+        "boundary/rejection controls",
+        "exact checkpoint replay"
+      ],
+      "persistence_requirement": "Exact scenario state and closed-writer/source-copy save verification.",
+      "required_evidence_level": [
+        "scripted-command",
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260918T101851Z/Lekmod-Functional-20260918T101851Z.Civ5Save",
+          "sha256": "2a0c33f643d2d13ac839392a4cada955eec4caa17ac4dd255ca8dab8d89a0d6d"
+        }
+      ],
+      "batch": "LEKMOD_DLL/macos/batch-plans/acceptance-reward-boundaries.json",
+      "stage": "counterspy",
+      "evidence": [],
+      "surface_ids": [],
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/batch-plans/acceptance-reward-boundaries.json",
+          "sha256": "d9e5f3d08a6869344cead5f7edafd610ba94fdc0252cd147c8dc523ff17e3152"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-counterspy.lua",
+          "sha256": "60018e01e8741bc53ca941d75540e9c0c09ed8e4f97b9f4cb60bd55d9e7d98f5"
+        }
+      ],
+      "implementation_limits": [
+        "No physical mouse input claim. Supplied prerequisites are not earned-gameplay claims.",
+        "Current-candidate scoped outcome; full acceptance still requires G0/F/R."
+      ]
     }
   ],
   "surface_review": [
@@ -7924,12 +8142,28 @@
     {
       "id": "data:Buildings.NukeModifier",
       "suggested_group": "G4",
-      "status": "untriaged",
-      "case_ids": [],
+      "status": "mapped",
+      "case_ids": [
+        "NUCLEAR-SHELTER-UNIT-DAMAGE",
+        "REG-NUCLEAR-CITIES",
+        "BASE-NUCLEAR",
+        "CFG-COMPILED-SCALAR-CACHES"
+      ],
       "supporting_case_ids": [
         "CFG-COMPILED-SCALAR-CACHES"
       ],
-      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent."
+      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent.",
+      "reason": "This ready case explicitly covers the previously uncovered consumer branch; linked existing cases cover other associated city/range/configuration paths. No new pass before native execution.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnitCombat.cpp",
+          "sha256": "6e92a006256f9d47549a90a1faf1577953acab9ece87f44828f847413d8fe7d7"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnit.cpp",
+          "sha256": "16914a686126292c64ed110df3fda674c136858392053cccee3940a3fbac5e73"
+        }
+      ]
     },
     {
       "id": "data:Buildings.Happiness",
@@ -12604,12 +12838,30 @@
     {
       "id": "data:Policies.EnablesSSPartHurry",
       "suggested_group": "G6",
-      "status": "untriaged",
-      "case_ids": [],
+      "status": "mapped",
+      "case_ids": [
+        "MISSION-ENGINEER-SPACE-HURRY",
+        "CFG-COMPILED-SCALAR-CACHES"
+      ],
       "supporting_case_ids": [
         "CFG-COMPILED-SCALAR-CACHES"
       ],
-      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent."
+      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent.",
+      "reason": "This ready case explicitly covers the previously uncovered consumer branch; linked existing cases cover other associated city/range/configuration paths. No new pass before native execution.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnit.cpp",
+          "sha256": "16914a686126292c64ed110df3fda674c136858392053cccee3940a3fbac5e73"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPlayer.cpp",
+          "sha256": "31dd845837800229e4c4e2708e471996f03858f722b8cbf14bdfa2a8ed67c788"
+        },
+        {
+          "path": "build/macos/reward-consumer-macros-20261002.json",
+          "sha256": "3b40427b8abd753e61641c29a9a712b797b5802fe12e4df7f273fa2b67c29b08"
+        }
+      ]
     },
     {
       "id": "data:Policies.EnablesSSPartPurchase",
@@ -16919,12 +17171,28 @@
     {
       "id": "data:Units.NukeDamageLevel",
       "suggested_group": "G3",
-      "status": "untriaged",
-      "case_ids": [],
+      "status": "mapped",
+      "case_ids": [
+        "NUCLEAR-SHELTER-UNIT-DAMAGE",
+        "REG-NUCLEAR-CITIES",
+        "BASE-NUCLEAR",
+        "CFG-COMPILED-SCALAR-CACHES"
+      ],
       "supporting_case_ids": [
         "CFG-COMPILED-SCALAR-CACHES"
       ],
-      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent."
+      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent.",
+      "reason": "This ready case explicitly covers the previously uncovered consumer branch; linked existing cases cover other associated city/range/configuration paths. No new pass before native execution.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnitCombat.cpp",
+          "sha256": "6e92a006256f9d47549a90a1faf1577953acab9ece87f44828f847413d8fe7d7"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnit.cpp",
+          "sha256": "16914a686126292c64ed110df3fda674c136858392053cccee3940a3fbac5e73"
+        }
+      ]
     },
     {
       "id": "data:Units.WorkRate",
@@ -25708,7 +25976,7 @@
     },
     {
       "id": "SC-NUCLEAR-SHELTER-UNIT-DAMAGE",
-      "classification": "uncovered-consumer-not-confirmed-defect",
+      "classification": "ready-uncovered-consumer",
       "surface_id": "data:Buildings.NukeModifier",
       "source_references": [
         {
@@ -25717,7 +25985,8 @@
         }
       ],
       "finding": "The shelter modifier affects city population loss AND unit damage on a city plot. Current city cases assert population/HP outcomes but do not assert stationed combat/civilian unit damage or civilian death-threshold behavior.",
-      "next_action": "Prepare level1/level2, direct/adjacent target and sheltered/unsheltered combat/civilian controls for the next larger batch. Keep Buildings.NukeModifier untriaged until both consumers are covered."
+      "next_action": "Run source-derived five-strike case in the combined reward-boundaries batch. Read-only data inspection establishes only one shipped nuclear unit at level2, so do not synthesize level1 content.",
+      "case_id": "NUCLEAR-SHELTER-UNIT-DAMAGE"
     }
   ],
   "dependency_review": [
@@ -25815,17 +26084,18 @@
     }
   ],
   "summary": {
-    "designed_cases": 42,
+    "designed_cases": 45,
     "case_statuses": {
       "passed": 22,
-      "covered-by-evidence": 20
+      "covered-by-evidence": 20,
+      "ready": 3
     },
     "review_surfaces": 1340,
     "pending_document_rows": 121,
     "final_case_denominator_frozen": false,
     "surface_statuses": {
-      "untriaged": 1288,
-      "mapped": 32,
+      "untriaged": 1285,
+      "mapped": 35,
       "presentation-only": 19,
       "out-of-scope": 1
     },
