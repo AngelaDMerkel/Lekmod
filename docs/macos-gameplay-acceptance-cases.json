@@ -7203,6 +7203,420 @@
         "Compact-list order is not asserted as gameplay semantics; native repeated raw rows must nevertheless remain identical.",
         "Other nontrivial, conditional and two-dimensional cache paths remain unreviewed."
       ]
+    },
+    {
+      "id": "LIFE-GEORGIA-GOLDEN-PROMOTION",
+      "group": "G2",
+      "title": "Khevsur golden-age creation, expiry, upgrade and outgoing gift",
+      "status": "covered-by-evidence",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_georgia.lua",
+          "sha256": "822898b849d51a7d8a436e52bcfbd13f90c6c66e0b040ed4558da406bd85f64d"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/test-georgia-events.py",
+          "sha256": "c24ba8c84d17244a3b7d3490a64ffdf11a6139b7ee7968b8b36ae94c91aa9cf5"
+        }
+      ],
+      "owners": [
+        "specific native human/AI/foreign roles described in the expected result; no broader owner claim"
+      ],
+      "expected_result": "Existing and newly created Khevsurs gain exactly33 combat percentage from a normal Artist golden age; the ordinary Warrior does not. Six ordinary turns remove the bonus. A40-gold paid upgrade retains the bonus after UnitConverted; a normal outgoing gift preserves unit type and removes the Georgian bonus.",
+      "units": "promotion flags/combat percentage, marker counts, golden-age points/turns, gold/XP/native movement points as specified",
+      "supplied_inputs": [
+        "Khevsurs/Warrior/Artist and legal staging",
+        "Guilds/iron/upgrade budget"
+      ],
+      "actual_trigger": "Original registered handlers following the stated actual engine action/event. Supplied conversions are explicitly distinguished from earned religion gameplay. No physical mouse claim.",
+      "negative_controls": [
+        "ordinary Warrior",
+        "before/after golden age",
+        "outgoing foreign recipient"
+      ],
+      "transitions": [
+        "specified native acquisition/reward/removal transitions",
+        "exact resulting-state replay"
+      ],
+      "persistence_requirement": "Distinct process replay matches the full recorded scenario state; original and copied checkpoint bytes reverified.",
+      "required_evidence_level": [
+        "native-gameplay-outcome",
+        "exact-save-reload",
+        "isolated-handler-controls where labeled"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260916T043809Z/autosaves-after/AutoSave_Initial_0165 AD-1700.Civ5Save",
+          "sha256": "273c3114e1b9e5b899006cfc18b2b6833b05e56030b14e4d12c32cfcbada65b5"
+        },
+        {
+          "path": "build/macos/playtests/20260916T044753Z/autosaves-after/AutoSave_Initial_0082 AD-0260.Civ5Save",
+          "sha256": "8402315ee9e67f6983afc05f189f556821e2cf05c0e3f3484a46b80ffb709dc2"
+        }
+      ],
+      "batch": "historical-separate-process-pairs",
+      "stage": [
+        "georgia",
+        "georgia-upgrade"
+      ],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20260916T043809Z/report.json",
+          "sha256": "5ce99acdb0e9c5d5d2ca9a9b58b2b92a6316fc5e67467c0457cbecf5d0242b41"
+        },
+        {
+          "path": "build/macos/playtests/20260916T044138Z/report.json",
+          "sha256": "841764f7c61425cd89891468bdcd1818ca91f36e476fe7244b5cbcc21b4c048c"
+        },
+        {
+          "path": "build/macos/playtests/20260916T044753Z/report.json",
+          "sha256": "0a74e5843adf0152b732605abbbcc144b9c6a50f129104a5226efc42175eed00"
+        },
+        {
+          "path": "build/macos/playtests/20260916T045001Z/report.json",
+          "sha256": "abe8a75792dbcd8af69bd563ac9b6d772deeb2abb2dda98b5eb4390376717c0f"
+        },
+        {
+          "path": "build/macos/acceptance-g0-20260926/civilization-handler-reconciliation-20261002.json",
+          "sha256": "a18a93d4d086c98345381ca13cb0dc5628edb03ea6080cbf75883ff39629d5a3"
+        }
+      ],
+      "surface_ids": [
+        "lua:Lua/Civilizations/Lekmod_georgia.lua:GameEvents.PlayerDoTurn:lekmod_georgia_uu_golden_age",
+        "lua:Lua/Civilizations/Lekmod_georgia.lua:GameEvents.GreatPersonExpended:lekmod_georgia_uu_golden_age",
+        "lua:Lua/Civilizations/Lekmod_georgia.lua:GameEvents.UnitCreated:lekmod_georgia_uu_golden_age",
+        "lua:Lua/Civilizations/Lekmod_georgia.lua:GameEvents.UnitConverted:anonymous-1"
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260916T043809Z/report.json",
+            "replay_report": "build/macos/playtests/20260916T044138Z/report.json",
+            "scenario": "georgia",
+            "required_assertions": [
+              "georgia-before-golden-age",
+              "georgia-existing-golden-age",
+              "georgia-new-golden-age",
+              "georgia-golden-age-expired"
+            ],
+            "gamecore_sha256": "5ad12f091579d48c244155415db19479189d76b880345b2ba004880ee47e5b68"
+          },
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260916T044753Z/report.json",
+            "replay_report": "build/macos/playtests/20260916T045001Z/report.json",
+            "scenario": "georgia-upgrade",
+            "required_assertions": [
+              "georgia-paid-upgrade",
+              "georgia-upgrade-golden-age",
+              "georgia-gift-away"
+            ],
+            "gamecore_sha256": "398dafe4b9a99ec93d91b24bea4f194b13cbd1ae6243db94e9ec05d9dfa471e1"
+          }
+        ]
+      },
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-georgia.lua",
+          "sha256": "809de8b781d733447423fe63284c369f40f00bcf6459372b3d79cde17ec3a2ed"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-georgia-upgrade.lua",
+          "sha256": "f8453bf5775d58ce22d83f7cf4b352181aaa4b7d883c0e392504346e70bf0272"
+        }
+      ],
+      "remaining_scope": [
+        "Incoming Georgian gifts, AI/duplicate/dead-owner and upgrade-away branches have isolated handler evidence, not a native outcome claim in these runs.",
+        "This verifies promotion/combat-percentage state, not an actual33-percent damage comparison.",
+        "Original binary/process-control identities remain recorded. Final-candidate applicability is still required at Gate F."
+      ]
+    },
+    {
+      "id": "REL-MUGHAL-CONVERSION-MARKERS",
+      "group": "G6",
+      "title": "Mughal foreign-religion and holy-city marker transitions",
+      "status": "covered-by-evidence",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_mughals.lua",
+          "sha256": "09c9d59b5656a7c28070623fea9e40fc69795178d82df8ca199d44629e9acdfc"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/test-civilization-events.py",
+          "sha256": "6813389fc262950702bb7b5132a31aa1ed2c6b0cb98ce832a168040e080db784"
+        }
+      ],
+      "owners": [
+        "specific native human/AI/foreign roles described in the expected result; no broader owner claim"
+      ],
+      "expected_result": "Actual engine conversion events after explicit religion/conversion inputs add one marker to the Mughal city and foreign holy city, clear both on own-religion conversion, and restore both on reconversion. Exact saved city-majority/marker state replays.",
+      "units": "promotion flags/combat percentage, marker counts, golden-age points/turns, gold/XP/native movement points as specified",
+      "supplied_inputs": [
+        "two religions",
+        "scripted100-percent follower conversions"
+      ],
+      "actual_trigger": "Original registered handlers following the stated actual engine action/event. Supplied conversions are explicitly distinguished from earned religion gameplay. No physical mouse claim.",
+      "negative_controls": [
+        "own religion",
+        "removal of former holy-city benefit"
+      ],
+      "transitions": [
+        "specified native acquisition/reward/removal transitions",
+        "exact resulting-state replay"
+      ],
+      "persistence_requirement": "Distinct process replay matches the full recorded scenario state; original and copied checkpoint bytes reverified.",
+      "required_evidence_level": [
+        "native-gameplay-outcome",
+        "exact-save-reload",
+        "isolated-handler-controls where labeled"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260915T234025Z/autosaves-after/AutoSave_Initial_0000 BC-4000.Civ5Save",
+          "sha256": "f56f34d242ad209f338408513e1fd9b1062fffb09239a5770b892e458f793b3b"
+        }
+      ],
+      "batch": "historical-separate-process-pairs",
+      "stage": [
+        "mughals"
+      ],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20260915T234025Z/report.json",
+          "sha256": "3f9f925d989568ea74d1274e99ea6915eef9342ecf954400a6ce0320cf626ce3"
+        },
+        {
+          "path": "build/macos/playtests/20260915T234151Z/report.json",
+          "sha256": "59f3f03672d5546eec396357947a614163d9b96cf1d446f6086675ede0715441"
+        },
+        {
+          "path": "build/macos/acceptance-g0-20260926/civilization-handler-reconciliation-20261002.json",
+          "sha256": "a18a93d4d086c98345381ca13cb0dc5628edb03ea6080cbf75883ff39629d5a3"
+        }
+      ],
+      "surface_ids": [
+        "lua:Lua/Civilizations/Lekmod_mughals.lua:GameEvents.CityConvertsReligion:lekmod_ua_mughals_religion_changed"
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260915T234025Z/report.json",
+            "replay_report": "build/macos/playtests/20260915T234151Z/report.json",
+            "scenario": "mughals",
+            "required_assertions": [
+              "mughal-conversion",
+              "mughal-conversion-cleanup",
+              "mughal-reconversion"
+            ],
+            "gamecore_sha256": "04904d1ff7d8db789816b8fe900d4518ed77bb5a5e1032f727b180a84e60b40c"
+          }
+        ]
+      },
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-mughals.lua",
+          "sha256": "4c61ebdf80650b5d1ed9bb7f2703a7e8fad993214d0ac2d5692086dbaa218a2f"
+        }
+      ],
+      "remaining_scope": [
+        "No earned missionary/prophet conversion or yield-settlement claim.",
+        "Multiple contributors, minor holy-city owner, city loss/capture and founding timing are not natively covered by this case; those surfaces remain open.",
+        "Original binary/process-control identities remain recorded. Final-candidate applicability is still required at Gate F."
+      ]
+    },
+    {
+      "id": "POL-ITALY-BRANCH-REWARDS",
+      "group": "G6",
+      "title": "Italian human/AI policy completion rewards and golden-age extension",
+      "status": "covered-by-evidence",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_italy.lua",
+          "sha256": "c2530d32f9944d748912e7ccc3767febad904491154a1bb5c16fdac3fa6a5569"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/test-italy-events.py",
+          "sha256": "a0d093c6d6b9838e0c7c7e5ebe3dc9a5c4eb28cc03c1969ec4396522a705b1c8"
+        }
+      ],
+      "owners": [
+        "specific native human/AI/foreign roles described in the expected result; no broader owner claim"
+      ],
+      "expected_result": "Legally completing Tradition grants250 golden-age points to each human/AI Italian owner under Quick80-percent scaling. Normal Artist actions start golden ages; legal Honor completion extends each by4turns. AI actions occur on their actual owner turn. Exact policy/free-choice/meter/duration state replays.",
+      "units": "promotion flags/combat percentage, marker counts, golden-age points/turns, gold/XP/native movement points as specified",
+      "supplied_inputs": [
+        "branch prerequisite policies",
+        "one free choice per completion",
+        "Artists"
+      ],
+      "actual_trigger": "Original registered handlers following the stated actual engine action/event. Supplied conversions are explicitly distinguished from earned religion gameplay. No physical mouse claim.",
+      "negative_controls": [
+        "unfinished/unowned/branchless policy and other-civilization exclusions are separately verified by the current actual-handler suite"
+      ],
+      "transitions": [
+        "specified native acquisition/reward/removal transitions",
+        "exact resulting-state replay"
+      ],
+      "persistence_requirement": "Distinct process replay matches the full recorded scenario state; original and copied checkpoint bytes reverified.",
+      "required_evidence_level": [
+        "native-gameplay-outcome",
+        "exact-save-reload",
+        "isolated-handler-controls where labeled"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260918T015729Z/autosaves-after/AutoSave_Initial_0000 BC-4000.Civ5Save",
+          "sha256": "ed57f7a738bd2d8e4dca9435ce5328574c94dd6ff9d2cad68008b144db89fc2c"
+        }
+      ],
+      "batch": "historical-separate-process-pairs",
+      "stage": [
+        "italy"
+      ],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20260918T015729Z/report.json",
+          "sha256": "ec0aef28258f53d4b1e34fbb85a4cedb51c004306b4702da15098f92a7253fbf"
+        },
+        {
+          "path": "build/macos/playtests/20260918T015907Z/report.json",
+          "sha256": "9f7c3f415aa2221fe236a39bd2f976c799d1135bbe672fc6f33ca1dcf5230447"
+        },
+        {
+          "path": "build/macos/acceptance-g0-20260926/civilization-handler-reconciliation-20261002.json",
+          "sha256": "a18a93d4d086c98345381ca13cb0dc5628edb03ea6080cbf75883ff39629d5a3"
+        }
+      ],
+      "surface_ids": [
+        "lua:Lua/Civilizations/Lekmod_italy.lua:GameEvents.PlayerAdoptPolicy:lekmod_italy_ua_on_policy_adopt"
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260918T015729Z/report.json",
+            "replay_report": "build/macos/playtests/20260918T015907Z/report.json",
+            "scenario": "italy",
+            "required_assertions": [
+              "italy-human-points",
+              "italy-AI-points",
+              "italy-human-extension",
+              "italy-AI-extension"
+            ],
+            "gamecore_sha256": "e07f67902ebbc0a88f5c104a92f0eecd5b82f38f2c107291bb22c1c3eb5a75ed"
+          }
+        ]
+      },
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-italy.lua",
+          "sha256": "3fef5aaec9a0b3ebcb14a657d8c0b36cb6093e4a7a909bcd3a60c8b8aacf2974"
+        }
+      ],
+      "remaining_scope": [
+        "Native rewards are verified at Quick speed; other speed rounding has isolated handler evidence.",
+        "Active-human alert presentation and other Italian uniques remain separate.",
+        "Original binary/process-control identities remain recorded. Final-candidate applicability is still required at Gate F."
+      ]
+    },
+    {
+      "id": "UNIT-UAE-SEA-PLUNDER",
+      "group": "G3",
+      "title": "Qasimi Raider native sea-route plunder XP and two-move reward",
+      "status": "covered-by-evidence",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_uae.lua",
+          "sha256": "875c8ae5dccb0a3a30b75afb4a6b9f2f80af73d3b7ece7ed348defe6db05a403"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/test-uae-events.py",
+          "sha256": "1930ad5da17baf3d79799e348fcb473f9fcb4ca4f31b92195f5835948e723502"
+        }
+      ],
+      "owners": [
+        "specific native human/AI/foreign roles described in the expected result; no broader owner claim"
+      ],
+      "expected_result": "A normal sea-route plunder removes the route/visual trade unit, adds100 gold and15 XP, and changes movement480->600 using2*MOVE_DENOMINATOR. Exact route/war/treasury/unit state replays.",
+      "units": "promotion flags/combat percentage, marker counts, golden-age points/turns, gold/XP/native movement points as specified",
+      "supplied_inputs": [
+        "AI coast/buildings/reveal/cargo ship",
+        "legal route creation on actual AI turn",
+        "Raider and staging/war"
+      ],
+      "actual_trigger": "Original registered handlers following the stated actual engine action/event. Supplied conversions are explicitly distinguished from earned religion gameplay. No physical mouse claim.",
+      "negative_controls": [
+        "ordinary/missing unit and overfill boundaries are isolated handler tests"
+      ],
+      "transitions": [
+        "specified native acquisition/reward/removal transitions",
+        "exact resulting-state replay"
+      ],
+      "persistence_requirement": "Distinct process replay matches the full recorded scenario state; original and copied checkpoint bytes reverified.",
+      "required_evidence_level": [
+        "native-gameplay-outcome",
+        "exact-save-reload",
+        "isolated-handler-controls where labeled"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260918T045245Z/autosaves-after/AutoSave_Initial_0165 AD-1700.Civ5Save",
+          "sha256": "ccc1833065b27e4434fcf1134403ee45a91be6b7840cc5a4e9816280f34711e9"
+        }
+      ],
+      "batch": "historical-separate-process-pairs",
+      "stage": [
+        "uae-raider"
+      ],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20260918T045245Z/report.json",
+          "sha256": "cf98b02929c3499134669b675ec15298fa2fc8529bb18ae6c21658735c714e61"
+        },
+        {
+          "path": "build/macos/playtests/20260918T045420Z/report.json",
+          "sha256": "8c4901965a955a8c196c828974c6e93cd994bc6243a5e08536e4546bc48525e9"
+        },
+        {
+          "path": "build/macos/acceptance-g0-20260926/civilization-handler-reconciliation-20261002.json",
+          "sha256": "a18a93d4d086c98345381ca13cb0dc5628edb03ea6080cbf75883ff39629d5a3"
+        }
+      ],
+      "surface_ids": [
+        "lua:Lua/Civilizations/Lekmod_uae.lua:GameEvents.UnitPlundered:lekmod_uae_qasimi_raider_pillage"
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260918T045245Z/report.json",
+            "replay_report": "build/macos/playtests/20260918T045420Z/report.json",
+            "scenario": "uae-raider",
+            "required_assertions": [
+              "uae-sea-plunder",
+              "uae-raider-experience",
+              "uae-raider-movement"
+            ],
+            "gamecore_sha256": "cf5273574eb622c53b700d6a0dbfa1e2ff882f5475d4c9a486aa4cdac740e798"
+          }
+        ]
+      },
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-uae-raider.lua",
+          "sha256": "dd53e886146486d105cf3ed22941db39eac0f6c4b7f6b170c87215d6ca03859b"
+        }
+      ],
+      "remaining_scope": [
+        "Only UnitPlundered is mapped. Improvement pillage via UnitPillaged, foreign-owner Raiders, wonder rewards and stationed-unit trade rewards remain open.",
+        "Original binary/process-control identities remain recorded. Final-candidate applicability is still required at Gate F."
+      ]
     }
   ],
   "surface_review": [
@@ -18260,8 +18674,17 @@
     {
       "id": "lua:Lua/Civilizations/Lekmod_uae.lua:GameEvents.UnitPlundered:lekmod_uae_qasimi_raider_pillage",
       "suggested_group": "G2",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "UNIT-UAE-SEA-PLUNDER"
+      ],
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_uae.lua",
+          "sha256": "875c8ae5dccb0a3a30b75afb4a6b9f2f80af73d3b7ece7ed348defe6db05a403"
+        }
+      ],
+      "reason": "Source and native assertion/replay contracts were reviewed together. Mapping covers only the handler/state contribution described by the linked case; native versus isolated boundaries and remaining whole-civilization effects are explicit. No new native or full-civilization pass is inferred."
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_oman.lua:GameEvents.PlayerDoTurn:lekmod_oman_ub_damage",
@@ -18521,8 +18944,17 @@
     {
       "id": "lua:Lua/Civilizations/Lekmod_italy.lua:GameEvents.PlayerAdoptPolicy:lekmod_italy_ua_on_policy_adopt",
       "suggested_group": "G2",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "POL-ITALY-BRANCH-REWARDS"
+      ],
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_italy.lua",
+          "sha256": "c2530d32f9944d748912e7ccc3767febad904491154a1bb5c16fdac3fa6a5569"
+        }
+      ],
+      "reason": "Source and native assertion/replay contracts were reviewed together. Mapping covers only the handler/state contribution described by the linked case; native versus isolated boundaries and remaining whole-civilization effects are explicit. No new native or full-civilization pass is inferred."
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_phoenicia.lua:GameEvents.PlayerCityFounded:lekmod_phoenicia_ua_new_city_bonus",
@@ -18602,26 +19034,62 @@
     {
       "id": "lua:Lua/Civilizations/Lekmod_georgia.lua:GameEvents.PlayerDoTurn:lekmod_georgia_uu_golden_age",
       "suggested_group": "G2",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "LIFE-GEORGIA-GOLDEN-PROMOTION"
+      ],
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_georgia.lua",
+          "sha256": "822898b849d51a7d8a436e52bcfbd13f90c6c66e0b040ed4558da406bd85f64d"
+        }
+      ],
+      "reason": "Source and native assertion/replay contracts were reviewed together. Mapping covers only the handler/state contribution described by the linked case; native versus isolated boundaries and remaining whole-civilization effects are explicit. No new native or full-civilization pass is inferred."
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_georgia.lua:GameEvents.GreatPersonExpended:lekmod_georgia_uu_golden_age",
       "suggested_group": "G2",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "LIFE-GEORGIA-GOLDEN-PROMOTION"
+      ],
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_georgia.lua",
+          "sha256": "822898b849d51a7d8a436e52bcfbd13f90c6c66e0b040ed4558da406bd85f64d"
+        }
+      ],
+      "reason": "Source and native assertion/replay contracts were reviewed together. Mapping covers only the handler/state contribution described by the linked case; native versus isolated boundaries and remaining whole-civilization effects are explicit. No new native or full-civilization pass is inferred."
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_georgia.lua:GameEvents.UnitCreated:lekmod_georgia_uu_golden_age",
       "suggested_group": "G2",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "LIFE-GEORGIA-GOLDEN-PROMOTION"
+      ],
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_georgia.lua",
+          "sha256": "822898b849d51a7d8a436e52bcfbd13f90c6c66e0b040ed4558da406bd85f64d"
+        }
+      ],
+      "reason": "Source and native assertion/replay contracts were reviewed together. Mapping covers only the handler/state contribution described by the linked case; native versus isolated boundaries and remaining whole-civilization effects are explicit. No new native or full-civilization pass is inferred."
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_georgia.lua:GameEvents.UnitConverted:anonymous-1",
       "suggested_group": "G2",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "LIFE-GEORGIA-GOLDEN-PROMOTION"
+      ],
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_georgia.lua",
+          "sha256": "822898b849d51a7d8a436e52bcfbd13f90c6c66e0b040ed4558da406bd85f64d"
+        }
+      ],
+      "reason": "Source and native assertion/replay contracts were reviewed together. Mapping covers only the handler/state contribution described by the linked case; native versus isolated boundaries and remaining whole-civilization effects are explicit. No new native or full-civilization pass is inferred."
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_mughals.lua:GameEvents.PlayerDoTurn:lekmod_ua_mughals_turn_start",
@@ -18632,8 +19100,17 @@
     {
       "id": "lua:Lua/Civilizations/Lekmod_mughals.lua:GameEvents.CityConvertsReligion:lekmod_ua_mughals_religion_changed",
       "suggested_group": "G2",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "REL-MUGHAL-CONVERSION-MARKERS"
+      ],
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_mughals.lua",
+          "sha256": "09c9d59b5656a7c28070623fea9e40fc69795178d82df8ca199d44629e9acdfc"
+        }
+      ],
+      "reason": "Source and native assertion/replay contracts were reviewed together. Mapping covers only the handler/state contribution described by the linked case; native versus isolated boundaries and remaining whole-civilization effects are explicit. No new native or full-civilization pass is inferred."
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_mughals.lua:GameEvents.CityCaptureComplete:lekmod_ua_mughals_city_acquired",
@@ -26207,6 +26684,24 @@
       "next_action": "Retain final-candidate applicability for the resolved level2 weapon and both city/unit modifier consumers. No level1 weapon exists in shipped data.",
       "case_id": "NUCLEAR-SHELTER-UNIT-DAMAGE",
       "verified_run": "20261002T223137Z"
+    },
+    {
+      "id": "SC-DUPLICATE-AI-FLAVORS",
+      "classification": "confirmed-source-data-ambiguity-native-values-unverified",
+      "source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvDatabaseUtility.cpp",
+          "sha256": "cb97ffc60fab6e28c8248250a84833c505ea84924ad1e014a7b3dcd45d4496a4"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "build/macos/config-array-audit-20261002/duplicate-flavor-reviewed-20261002.json",
+          "sha256": "e809a9d476cf5464b995ae918f19d62cfedd5cfd3181970ce645e00cf1a2c98a"
+        }
+      ],
+      "finding": "Exactly five conflicting owner/flavor cells are present verbatim in the shipped XML. The loader assigns each query row, so last returned value wins; the query has no ORDER BY. Offline reversed unordered queries change all five winners.",
+      "next_action": "Measure actual native cached values and native query ordering on the pinned host, retain original source values, and review applicability/intent before accepting or changing these five arrays. The offline normal winners are not a native pass or an inferred balancing specification."
     }
   ],
   "dependency_review": [
@@ -26304,18 +26799,18 @@
     }
   ],
   "summary": {
-    "designed_cases": 46,
+    "designed_cases": 50,
     "case_statuses": {
       "passed": 25,
-      "covered-by-evidence": 20,
+      "covered-by-evidence": 24,
       "ready": 1
     },
     "review_surfaces": 1340,
     "pending_document_rows": 121,
     "final_case_denominator_frozen": false,
     "surface_statuses": {
-      "untriaged": 1285,
-      "mapped": 35,
+      "untriaged": 1278,
+      "mapped": 42,
       "presentation-only": 19,
       "out-of-scope": 1
     },

@@ -198,6 +198,9 @@ def validate(register, root=ROOT):
                 raise ValueError('resolved dependency needs a pinned native context proof')
             if contract['required_literal']not in resolve(root,contract['log']).read_text():
                 raise ValueError('resolved dependency native context proof missing')
+    for concern in register.get('source_concerns',[]):
+        for ref in concern.get('source_references',[])+concern.get('evidence',[]):reference(ref)
+        if concern.get('define_source'):reference(concern['define_source'])
     pending_surfaces=sum(r['status']=='untriaged'for r in reviewed)
     pending_cases=sum(r['status']=='untriaged'for r in cases)
     pending_docs=sum(r['status']=='untriaged'for r in register['pending_doc_entries'])

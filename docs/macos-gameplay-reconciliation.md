@@ -354,3 +354,32 @@ remains ready. Five conflicting AI-flavor arrays and orphan input rows remain
 explicit review findings. No surface is closed merely from this preparation.
 The register now contains46 cases:45 scoped passes/retained evidence and one ready
 configuration case. G0 still has1,285 untriaged surfaces/121 document rows.
+
+## Further offline handler reconciliation
+
+Five retained process pairs verify17 native assertions and five exact replays
+for Georgian promotion/lifetime behavior, Mughal conversion markers, Italian
+human/AI branch rewards and Qasimi sea-route plunder. Seven event surfaces are
+now mapped to those bounded cases. Georgia's incoming-gift/AI/dead-owner controls
+remain isolated-handler evidence; Mughal capture/founding/aggregation and UAE
+improvement-pillage/other abilities remain open. No new game was launched.
+
+The current Georgia, Italy, UAE and shared civilization callback suites pass
+13/10/4/16 isolated checks respectively. Italy/UAE Lua match their retained
+packages byte for byte. The preserved Georgian creation package predates the
+conversion hook; its handler body matches, while the later upgrade/gift native
+contract remains separately pinned. No whole-file identity is inferred there.
+Final-candidate applicability remains required at F.
+
+The duplicate-flavor review now has a reproducible read-only tool. Exactly five
+conflicting cells are present verbatim in the shipped XML. The source loader
+uses the last returned row without ordering its query; reversing unordered
+selection on the immutable snapshot changes all five winners. This confirms
+source/data ambiguity, not author intent or the native host's selected values.
+Original weights are unchanged and these arrays remain excluded pending native
+query/cache evidence and explicit review. Source-concern evidence hashes are now
+checked by the acceptance validator.
+
+The register contains50 cases (49scoped passes/retained, one ready cache case),
+1,278 untriaged surfaces and121 pending document rows. The Mac is still locked;
+the ready68-check cache/reward batch remains unexecuted and stock is unchanged.

@@ -256,6 +256,13 @@ class RegisterTests(unittest.TestCase):
         self.put('parameters.json',{'changed':True})
         with self.assertRaisesRegex(ValueError,'changed/missing'):check.validate(self.reg,self.root)
 
+    def test_source_concern_evidence_is_pinned(self):
+        self.reg['source_concerns']=[{'id':'REVIEW','source_references':[self.ref('source.lua')],
+                                      'evidence':[self.ref('parameters.json')]}]
+        self.assertTrue(check.validate(self.reg,self.root)['valid'])
+        self.put('parameters.json',{'changed':True})
+        with self.assertRaisesRegex(ValueError,'changed/missing'):check.validate(self.reg,self.root)
+
     def test_reference_cannot_escape_checkout(self):
         self.case['source_references']=[{'path':'../outside','sha256':'a'*64}]
         with self.assertRaisesRegex(ValueError,'inside the checkout'):check.validate(self.reg,self.root)

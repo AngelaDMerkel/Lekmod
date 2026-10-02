@@ -87,3 +87,10 @@ The desktop was locked at both prelaunch checks, so no game/settings change was
 started. Recheck on resume; preserve current data and restore stock after the round.
 Do not mark the configuration case passed until both native run/replay and the
 independent immutable-database verifier succeed.
+
+Offline follow-up: `review-flavor-duplicates.py` reproduces all five conflicting
+XML/database cells and query-order sensitivity with immutable database identity
+checks. Evidence is `build/macos/config-array-audit-20261002/duplicate-flavor-reviewed-20261002.json`.
+The normal SQLite winners are10/20/8/2/5; reversed unordered selection yields
+250/9/25/4/3. Neither sequence is promoted to an inferred author specification
+or a native gameplay pass. No source weights or live settings were changed.
