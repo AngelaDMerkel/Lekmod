@@ -7127,6 +7127,82 @@
         "whole_batch_pass": false,
         "product_change": false
       }
+    },
+    {
+      "id": "CFG-COMPILED-ARRAY-CACHES",
+      "group": "G0",
+      "title": "Read-only compiled relation-cache parity",
+      "status": "ready",
+      "source_references": [
+        {
+          "path": "LEKMOD_DLL/macos/info-array-audit.cpp",
+          "sha256": "914fdc30bca455cb659095122d4bebb4294fb3b2f722ec087f29211231e9e921"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/info-array-audit-bindings.json",
+          "sha256": "7d6ea5d68cdaa4da7d4feffd040be979daf75be18d89af471bbb2b209017f508"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvDatabaseUtility.cpp",
+          "sha256": "cb97ffc60fab6e28c8248250a84833c505ea84924ad1e014a7b3dcd45d4496a4"
+        }
+      ],
+      "owners": [
+        "all resolved entries in the15 mapped globally cached owner tables"
+      ],
+      "expected_result": "116 arrays across15 tables produce969758 exact cached-value comparisons against resolved GameInfo and an independent pinned immutable SQLite verifier. Membership is boolean; indexed values honor defaults; compact ID lists compare as multisets within native getter bounds. Invalid owner IDs/keys reject. World observation and repeated cache fingerprints remain unchanged.",
+      "units": "native cached integers, booleans and reference IDs; not gameplay outcomes",
+      "supplied_inputs": [
+        "explicit process-only LEKMOD_CONFIG_AUDIT=1",
+        "pinned existing gameplay fixture; no game-state setters"
+      ],
+      "actual_trigger": "Bounded read-only Game.ReadInfoArrayForTest calls actual cached C++ getters. SQL is used only by independent expectation/verifier tools, not by the native reader.",
+      "negative_controls": [
+        "disabled opt-in tested against actual reader body under sanitizers",
+        "negative/fractional/nonfinite/oversized/unknown-key native calls",
+        "all indexed defaults, absent memberships and compact-list padding",
+        "no observed turn/treasury/faith/city/unit state changes"
+      ],
+      "transitions": [
+        "read all mapped caches",
+        "exact snapshot replay with every value rechecked"
+      ],
+      "persistence_requirement": "Every replay repeats all parameter comparisons; raw native rows are logged with run identity and must pass independent immutable-DB verification.",
+      "required_evidence_level": [
+        "offline-source-contract",
+        "native-cached-parameter-values",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260922T233312Z/Lekmod-Functional-20260922T233312Z.Civ5Save",
+          "sha256": "903a1a869d99c11a2e7079995bbf0293b321035d2d1803a2912da05face90f1d"
+        }
+      ],
+      "batch": "LEKMOD_DLL/macos/batch-plans/cache-and-reward-regression.json",
+      "stage": "array-cache",
+      "evidence": [],
+      "surface_ids": [],
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/batch-plans/cache-and-reward-regression.json",
+          "sha256": "eeae239575ec004ddae4a5fdbb745270fdc0d2165defaaa3d15f6a3af2ef3332"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-array-cache.lua",
+          "sha256": "ff9d727ea963557c29fa1dc6b0af2aa15b1788d614c2862e8daf0d24ada8df4d"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/verify-array-cache-log.py",
+          "sha256": "905662b3ecfbc036ac44aa76535682a2692259514857bab48548bc7e6a5a36c0"
+        }
+      ],
+      "implementation_limits": [
+        "No consumer/gameplay/AI strategy pass follows from parameter parity.",
+        "Five ambiguous duplicate AI-flavor arrays are excluded pending review; orphan input rows remain explicitly listed.",
+        "Compact-list order is not asserted as gameplay semantics; native repeated raw rows must nevertheless remain identical.",
+        "Other nontrivial, conditional and two-dimensional cache paths remain unreviewed."
+      ]
     }
   ],
   "surface_review": [
@@ -26228,10 +26304,11 @@
     }
   ],
   "summary": {
-    "designed_cases": 45,
+    "designed_cases": 46,
     "case_statuses": {
       "passed": 25,
-      "covered-by-evidence": 20
+      "covered-by-evidence": 20,
+      "ready": 1
     },
     "review_surfaces": 1340,
     "pending_document_rows": 121,

@@ -5,7 +5,8 @@
   "output_dir": "../../build/macos",
   "extra_sources": [
     "lekmod_diagnostics.cpp",
-    "info-cache-audit.cpp"
+    "info-cache-audit.cpp",
+    "info-array-audit.cpp"
   ],
   "extra_flags": []
 }

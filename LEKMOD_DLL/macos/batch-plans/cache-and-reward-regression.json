@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "name": "cache-and-reward-regression",
+  "stages": [
+    {
+      "id": "array-cache",
+      "scenario": "array-cache",
+      "fixture": "build/macos/playtests/20260922T233312Z/Lekmod-Functional-20260922T233312Z.Civ5Save",
+      "sha256": "903a1a869d99c11a2e7079995bbf0293b321035d2d1803a2912da05face90f1d",
+      "max_turns": 0
+    },
+    {
+      "id": "compiled-info-cache",
+      "scenario": "info-cache",
+      "fixture": "build/macos/playtests/20260922T233312Z/Lekmod-Functional-20260922T233312Z.Civ5Save",
+      "sha256": "903a1a869d99c11a2e7079995bbf0293b321035d2d1803a2912da05face90f1d",
+      "max_turns": 0
+    },
+    {
+      "id": "merchant-rewards",
+      "scenario": "merchant-rewards",
+      "fixture": "build/macos/playtests/20260914T030822Z/Lekmod-Functional-20260914T030822Z.Civ5Save",
+      "sha256": "c2ca4e6c8c3a16ae7b6e7ed3294df1d2f733d8f815d43c820090302328ad95ea",
+      "max_turns": 0
+    },
+    {
+      "id": "engineer-rewards",
+      "scenario": "engineer-rewards",
+      "fixture": "build/macos/playtests/20260918T065530Z/Lekmod-Functional-20260918T065530Z.Civ5Save",
+      "sha256": "574511e03f58fc064d98b15fa57b4acf24072fdbfe434ec62db2230a6e7f0e3d",
+      "max_turns": 0
+    },
+    {
+      "id": "nuclear-shelter-units",
+      "scenario": "nuclear-shelter-units",
+      "fixture": "build/macos/playtests/20260918T101851Z/Lekmod-Functional-20260918T101851Z.Civ5Save",
+      "sha256": "2a0c33f643d2d13ac839392a4cada955eec4caa17ac4dd255ca8dab8d89a0d6d",
+      "max_turns": 0
+    },
+    {
+      "id": "engineer-space-hurry",
+      "scenario": "engineer-space-hurry",
+      "fixture": "build/macos/playtests/20260918T065530Z/Lekmod-Functional-20260918T065530Z.Civ5Save",
+      "sha256": "574511e03f58fc064d98b15fa57b4acf24072fdbfe434ec62db2230a6e7f0e3d",
+      "max_turns": 4
+    }
+  ]
+}
