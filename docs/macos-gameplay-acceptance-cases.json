@@ -6771,7 +6771,7 @@
       "id": "NUCLEAR-SHELTER-UNIT-DAMAGE",
       "group": "G3",
       "title": "Sheltered combat/civilian nuclear damage and health thresholds",
-      "status": "ready",
+      "status": "passed",
       "source_references": [
         {
           "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnitCombat.cpp",
@@ -6792,7 +6792,9 @@
         "shelter off/on",
         "Warrior/Worker/missile and74/75 wounds",
         "uranium",
-        "legal launch locations and reveal"
+        "legal launch locations and reveal",
+        "One target city is reused with explicit population/HP reset before each case; only surviving supplied probes are staged outside later blasts, without healing them.",
+        "Adjacent target is preflighted before the first strike using native CanNukeAt; water is allowed by the real targeting code."
       ],
       "actual_trigger": "Ordinary synchronized missions, production and real owner turns; no final reward/death/synchronization state assignment.",
       "negative_controls": [
@@ -6819,33 +6821,88 @@
           "sha256": "2a0c33f643d2d13ac839392a4cada955eec4caa17ac4dd255ca8dab8d89a0d6d"
         }
       ],
-      "batch": "LEKMOD_DLL/macos/batch-plans/acceptance-reward-boundaries.json",
+      "batch": "LEKMOD_DLL/macos/batch-plans/nuclear-shelter-recovery.json",
       "stage": "nuclear-shelter-units",
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20261002T223137Z/report.json",
+          "sha256": "8b73caee4a8418d6e249bd0a8de1d3617ddcee194c9af9b864d16e7f4e984004"
+        },
+        {
+          "path": "build/macos/playtests/20261002T223137Z/batch-report.json",
+          "sha256": "7c71ebbbfabae8e3aac7955a7085bff39b3ee5a832feed2db03f66d3d1bc3261"
+        },
+        {
+          "path": "build/macos/nuclear-shelter-preservation-20261002.json",
+          "sha256": "fb7b0ae080aaa4519d7e3534ba6ba470e779d6ee6efd7ff4bcd472e3086f544d"
+        }
+      ],
       "surface_ids": [
         "data:Buildings.NukeModifier",
         "data:Units.NukeDamageLevel"
       ],
       "implementation_references": [
         {
-          "path": "LEKMOD_DLL/macos/batch-plans/acceptance-reward-boundaries.json",
-          "sha256": "d9e5f3d08a6869344cead5f7edafd610ba94fdc0252cd147c8dc523ff17e3152"
+          "path": "LEKMOD_DLL/macos/batch-plans/nuclear-shelter-recovery.json",
+          "sha256": "c253095b2a0a0074b2d1d58d2642022734300e59c345120aadbae3b666a969ca"
         },
         {
           "path": "LEKMOD_DLL/macos/playtest-scenario-nuclear-shelter-units.lua",
-          "sha256": "abd793b7cb1b9568bd08c57c90277b6a92ba43986d500470152f7a3789c5877a"
+          "sha256": "21a7cb53745cc2dc534f9b98269a242060d31bd205c10c7f59cd05d1992f20b8"
         }
       ],
       "implementation_limits": [
         "No physical mouse input claim. Supplied prerequisites are not earned-gameplay claims.",
         "Only configured level2 missile is tested; no level1 weapon is present in the resolved shipped unit table."
-      ]
+      ],
+      "retained_failures": [
+        {
+          "report": {
+            "path": "build/macos/playtests/20261002T221359Z/report.json",
+            "sha256": "1e31cb56b4f05dd02a9cda304f488466545d8f059742598911aabfc3eb336c4b"
+          },
+          "classification": "harness-fixture-error",
+          "reason": "Insufficient legal map space for the fourth isolated city. Three completed strike outcomes matched; remaining two health-boundary checks were not executed."
+        },
+        {
+          "report": {
+            "path": "build/macos/playtests/20261002T222712Z/report.json",
+            "sha256": "c394db7d2eb4bec3c89e6085f937eb72ecc0a565a3c3fa16e4cc74421054a4fe"
+          },
+          "classification": "harness-fixture-error",
+          "reason": "The reused coastal city lacked an adjacent empty land/non-mountain plot. Nuclear targeting does not require land. The corrected fixture preflights a real CanNukeAt-approved adjacent plot before the first strike, while retaining all damage oracles."
+        }
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stage",
+        "report": "build/macos/playtests/20261002T223137Z/report.json",
+        "batch_report": "build/macos/playtests/20261002T223137Z/batch-report.json",
+        "stage": "nuclear-shelter-units",
+        "required_assertions": [
+          "shelter-civilian-threshold",
+          "shelter-strike-accounting",
+          "shelter-unit-adjacent",
+          "shelter-unit-config",
+          "shelter-unit-direct",
+          "shelter-unit-health99",
+          "shelter-unit-lethal100",
+          "shelter-unit-unprotected"
+        ],
+        "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f"
+      },
+      "execution_result": {
+        "run": "20261002T223137Z",
+        "native_assertions": 8,
+        "exact_replays": 1,
+        "ordinary_turns": 0,
+        "product_change": false
+      }
     },
     {
       "id": "MISSION-ENGINEER-SPACE-HURRY",
       "group": "G3",
       "title": "Spaceship Engineer policy gate, four component rewards and completion",
-      "status": "ready",
+      "status": "passed",
       "source_references": [
         {
           "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnit.cpp",
@@ -6898,7 +6955,20 @@
       ],
       "batch": "LEKMOD_DLL/macos/batch-plans/acceptance-reward-boundaries.json",
       "stage": "engineer-space-hurry",
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20261002T221359Z/report.json",
+          "sha256": "1e31cb56b4f05dd02a9cda304f488466545d8f059742598911aabfc3eb336c4b"
+        },
+        {
+          "path": "build/macos/playtests/20261002T221359Z/batch-report.json",
+          "sha256": "30054f1b0668f6b4c7a3d03135173fa21ffa00797c6a352197f8e2902070458d"
+        },
+        {
+          "path": "build/macos/reward-boundaries-preservation-20261002.json",
+          "sha256": "a58e432fe8b316a368574d012b716dc762509e0035f347516e42a2d839d480a0"
+        }
+      ],
       "surface_ids": [
         "data:Policies.EnablesSSPartHurry"
       ],
@@ -6915,13 +6985,44 @@
       "implementation_limits": [
         "No physical mouse input claim. Supplied prerequisites are not earned-gameplay claims.",
         "Current-candidate scoped outcome; full acceptance still requires G0/F/R."
-      ]
+      ],
+      "evidence_contract": {
+        "kind": "native-isolated-stage",
+        "report": "build/macos/playtests/20261002T221359Z/report.json",
+        "batch_report": "build/macos/playtests/20261002T221359Z/batch-report.json",
+        "stage": "engineer-space-hurry",
+        "required_assertions": [
+          "space-hurry-apollo-gate",
+          "space-hurry-cap",
+          "space-hurry-consumption",
+          "space-hurry-double-all-parts",
+          "space-hurry-normal-unit-rejection",
+          "space-hurry-policy-rejection",
+          "space-hurry-production"
+        ],
+        "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f",
+        "unrelated_failures": [
+          {
+            "stage": "nuclear-shelter-units",
+            "classification": "harness-fixture-error",
+            "reason": "The nuclear fixture could not find a fourth isolated legal city after three expected strike outcomes. Its run remains failed and is not selected by this contract; no product exception, synchronization error or abnormal exit occurred."
+          }
+        ]
+      },
+      "execution_result": {
+        "run": "20261002T221359Z",
+        "native_assertions": 7,
+        "exact_replays": 1,
+        "ordinary_turns": 2,
+        "whole_batch_pass": false,
+        "product_change": false
+      }
     },
     {
       "id": "REG-COUNTERSPY-INTERCEPTION",
       "group": "G7",
       "title": "Counterspy interception, science rejection and defender promotion",
-      "status": "ready",
+      "status": "passed",
       "source_references": [
         {
           "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvEspionageClasses.cpp",
@@ -6968,7 +7069,20 @@
       ],
       "batch": "LEKMOD_DLL/macos/batch-plans/acceptance-reward-boundaries.json",
       "stage": "counterspy",
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20261002T221359Z/report.json",
+          "sha256": "1e31cb56b4f05dd02a9cda304f488466545d8f059742598911aabfc3eb336c4b"
+        },
+        {
+          "path": "build/macos/playtests/20261002T221359Z/batch-report.json",
+          "sha256": "30054f1b0668f6b4c7a3d03135173fa21ffa00797c6a352197f8e2902070458d"
+        },
+        {
+          "path": "build/macos/reward-boundaries-preservation-20261002.json",
+          "sha256": "a58e432fe8b316a368574d012b716dc762509e0035f347516e42a2d839d480a0"
+        }
+      ],
       "surface_ids": [],
       "implementation_references": [
         {
@@ -6983,7 +7097,36 @@
       "implementation_limits": [
         "No physical mouse input claim. Supplied prerequisites are not earned-gameplay claims.",
         "Current-candidate scoped outcome; full acceptance still requires G0/F/R."
-      ]
+      ],
+      "evidence_contract": {
+        "kind": "native-isolated-stage",
+        "report": "build/macos/playtests/20261002T221359Z/report.json",
+        "batch_report": "build/macos/playtests/20261002T221359Z/batch-report.json",
+        "stage": "counterspy",
+        "required_assertions": [
+          "counterspy-defender-arrival",
+          "counterspy-defender-promotion",
+          "counterspy-interception",
+          "counterspy-intruder-surveillance",
+          "counterspy-no-science-award"
+        ],
+        "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f",
+        "unrelated_failures": [
+          {
+            "stage": "nuclear-shelter-units",
+            "classification": "harness-fixture-error",
+            "reason": "The nuclear fixture could not find a fourth isolated legal city after three expected strike outcomes. Its run remains failed and is not selected by this contract; no product exception, synchronization error or abnormal exit occurred."
+          }
+        ]
+      },
+      "execution_result": {
+        "run": "20261002T221359Z",
+        "native_assertions": 5,
+        "exact_replays": 1,
+        "ordinary_turns": 16,
+        "whole_batch_pass": false,
+        "product_change": false
+      }
     }
   ],
   "surface_review": [
@@ -8153,7 +8296,7 @@
         "CFG-COMPILED-SCALAR-CACHES"
       ],
       "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent.",
-      "reason": "This ready case explicitly covers the previously uncovered consumer branch; linked existing cases cover other associated city/range/configuration paths. No new pass before native execution.",
+      "reason": "This passed case explicitly covers the previously uncovered consumer branch; linked existing cases cover other associated city/range/configuration paths. Scoped native outcomes and exact replays are verified in the linked case contracts; the original failed batch verdict is retained.",
       "review_source_references": [
         {
           "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnitCombat.cpp",
@@ -12847,7 +12990,7 @@
         "CFG-COMPILED-SCALAR-CACHES"
       ],
       "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent.",
-      "reason": "This ready case explicitly covers the previously uncovered consumer branch; linked existing cases cover other associated city/range/configuration paths. No new pass before native execution.",
+      "reason": "This passed case explicitly covers the previously uncovered consumer branch; linked existing cases cover other associated city/range/configuration paths. Scoped native outcomes and exact replays are verified in the linked case contracts; the original failed batch verdict is retained.",
       "review_source_references": [
         {
           "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnit.cpp",
@@ -17182,7 +17325,7 @@
         "CFG-COMPILED-SCALAR-CACHES"
       ],
       "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent.",
-      "reason": "This ready case explicitly covers the previously uncovered consumer branch; linked existing cases cover other associated city/range/configuration paths. No new pass before native execution.",
+      "reason": "This passed case explicitly covers the previously uncovered consumer branch; linked existing cases cover other associated city/range/configuration paths. Scoped native outcomes and exact replays are verified in the linked case contracts; the original failed batch verdict is retained.",
       "review_source_references": [
         {
           "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnitCombat.cpp",
@@ -25976,7 +26119,7 @@
     },
     {
       "id": "SC-NUCLEAR-SHELTER-UNIT-DAMAGE",
-      "classification": "ready-uncovered-consumer",
+      "classification": "covered-by-native-outcomes",
       "surface_id": "data:Buildings.NukeModifier",
       "source_references": [
         {
@@ -25985,8 +26128,9 @@
         }
       ],
       "finding": "The shelter modifier affects city population loss AND unit damage on a city plot. Current city cases assert population/HP outcomes but do not assert stationed combat/civilian unit damage or civilian death-threshold behavior.",
-      "next_action": "Run source-derived five-strike case in the combined reward-boundaries batch. Read-only data inspection establishes only one shipped nuclear unit at level2, so do not synthesize level1 content.",
-      "case_id": "NUCLEAR-SHELTER-UNIT-DAMAGE"
+      "next_action": "Retain final-candidate applicability for the resolved level2 weapon and both city/unit modifier consumers. No level1 weapon exists in shipped data.",
+      "case_id": "NUCLEAR-SHELTER-UNIT-DAMAGE",
+      "verified_run": "20261002T223137Z"
     }
   ],
   "dependency_review": [
@@ -26086,9 +26230,8 @@
   "summary": {
     "designed_cases": 45,
     "case_statuses": {
-      "passed": 22,
-      "covered-by-evidence": 20,
-      "ready": 3
+      "passed": 25,
+      "covered-by-evidence": 20
     },
     "review_surfaces": 1340,
     "pending_document_rows": 121,

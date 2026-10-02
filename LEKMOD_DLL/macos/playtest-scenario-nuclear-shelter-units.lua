@@ -5,14 +5,14 @@
 -- uranium and launch visibility are inputs; strikes alone produce outcomes.
 LekmodScenario={name="nuclear-shelter-units",items={"shelter-unit-config","shelter-unit-direct","shelter-unit-unprotected","shelter-unit-adjacent","shelter-unit-health99","shelter-unit-lethal100","shelter-civilian-threshold","shelter-strike-accounting"}}
 local phase,index,probe,ended="init",1,nil,false
-local used={}
+local targetCityID,adjacentTarget
+local previousWarriors={}
 local cases={{item="shelter-unit-direct",shelter=true,wound=0},{item="shelter-unit-unprotected",wound=0},{item="shelter-unit-adjacent",shelter=true,wound=0,adjacent=true},{item="shelter-unit-health99",shelter=true,wound=74},{item="shelter-unit-lethal100",shelter=true,wound=75}}
 local function distance(a,b)return Map.PlotDistance(a:GetX(),a:GetY(),b:GetX(),b:GetY())end
 local function alive(u)return u and not u:IsDead()and not u:IsDelayedDeath()end
 local function found(owner,near)
- for i=0,Map.GetNumPlots()-1 do local p=Map.GetPlotByIndex(i);local isolated=true
-  if not near then for _,old in ipairs(used)do if distance(p,old)<7 then isolated=false end end end
-  if isolated and p:GetOwner()==-1 and p:GetNumUnits()==0 and p:GetFeatureType()~=GameInfoTypes.FEATURE_FALLOUT and(not near or(distance(p,near)>=4 and distance(p,near)<=10))and Players[owner]:CanFound(p:GetX(),p:GetY())then
+ for i=0,Map.GetNumPlots()-1 do local p=Map.GetPlotByIndex(i)
+  if p:GetOwner()==-1 and p:GetNumUnits()==0 and p:GetFeatureType()~=GameInfoTypes.FEATURE_FALLOUT and(not near or(distance(p,near)>=4 and distance(p,near)<=10))and Players[owner]:CanFound(p:GetX(),p:GetY())then
    Players[owner]:Found(p:GetX(),p:GetY());local c=assert(p:GetPlotCity())
    LekmodScenarioEvent("fixture-setup",{operation="provided-shelter-test-city",owner=owner,id=c:GetID(),x=c:GetX(),y=c:GetY()});return c
   end
@@ -39,29 +39,55 @@ function LekmodScenario.step(player)
   LekmodScenarioRecord("shelter-unit-config","PASS","one shipped level2 missile;100hit points; civilian death threshold6; no synthesized level1 unit")
   phase="prepare"
  elseif phase=="prepare"then
-  local spec=cases[index];local city=found(1);used[#used+1]=city:Plot();city:SetPopulation(12,true)
+  local spec=cases[index];local city=targetCityID and Players[1]:GetCityByID(targetCityID)or found(1)
+  assert(city);targetCityID=city:GetID()
+  -- Preserve prior survivors by staging only those supplied probes outside the
+  -- next blast. Reuse one city so map density cannot exhaust fixture space.
+  for _,oldID in ipairs(previousWarriors)do local old=Players[1]:GetUnitByID(oldID)
+   if alive(old)and distance(old,city)<=3 then
+    local safe
+    for i=0,Map.GetNumPlots()-1 do local q=Map.GetPlotByIndex(i)
+     if not q:IsWater()and not q:IsMountain()and not q:IsCity()and q:GetNumUnits()==0 and distance(q,city)>=5 then safe=q;break end
+    end
+    assert(safe);local damage=old:GetDamage();old:SetXY(safe:GetX(),safe:GetY(),false,true,false,false)
+    assert(old:GetX()==safe:GetX()and old:GetY()==safe:GetY()and old:GetDamage()==damage)
+    LekmodScenarioEvent("fixture-setup",{operation="stage-prior-survivor-outside-blast",unit=oldID,damage=damage,x=old:GetX(),y=old:GetY()})
+   end
+  end
+  city:SetPopulation(12,true);city:SetDamage(0)
+  LekmodScenarioEvent("fixture-setup",{operation="reset-reused-target-city-inputs",city=targetCityID,population=12,damage=0})
   city:SetNumRealBuilding(GameInfoTypes.BUILDING_BOMB_SHELTER,spec.shelter and 1 or 0)
   assert(city:GetNukeModifier()==(spec.shelter and -75 or 0))
   local warrior=assert(Players[1]:InitUnit(GameInfoTypes.UNIT_WARRIOR,city:GetX(),city:GetY()));local worker=assert(Players[1]:InitUnit(GameInfoTypes.UNIT_WORKER,city:GetX(),city:GetY()))
   for _,u in ipairs({warrior,worker})do assert(alive(u)and u:GetX()==city:GetX()and u:GetY()==city:GetY()and not u:IsNukeImmune()and u:GetMaxHitPoints()==100)end
+  previousWarriors[#previousWarriors+1]=warrior:GetID()
   warrior:SetDamage(spec.wound);assert(worker:GetDamage()==0)
   assert(warrior:NukeDamageLevel()==-1 and not warrior:CanNukeAt(city:GetX(),city:GetY()),"ordinary unit has nuclear capability")
-  local target=city:Plot()
-  if spec.adjacent then
-   target=nil
-   for direction=0,5 do local q=Map.PlotDirection(city:GetX(),city:GetY(),direction)
-    if q and not q:IsCity()and q:GetNumUnits()==0 and not q:IsWater()and not q:IsMountain()then target=q;break end
-   end
-   assert(target and distance(target,city)==1)
-  end
   local launch
-  for c in player:Cities()do if distance(c,target)>=4 and distance(c,target)<=12 then launch=c;break end end
-  launch=launch or found(0,target)
+  for c in player:Cities()do if distance(c,city)>=4 and distance(c,city)<=10 then launch=c;break end end
+  launch=launch or found(0,city:Plot())
   local countBefore=player:GetNumNukeUnits()
   local missile=assert(player:InitUnit(GameInfoTypes.UNIT_NUCLEAR_MISSILE,launch:GetX(),launch:GetY()))
   assert(player:GetNumNukeUnits()==countBefore+1,"nuclear creation count mismatch")
+  -- Nuclear targeting has no land-only rule. Choose and check the later
+  -- adjacent target before the first strike, including range/diplomacy gates.
+  if not adjacentTarget then
+   local candidates={}
+   for direction=0,5 do local q=Map.PlotDirection(city:GetX(),city:GetY(),direction)
+    if q and not q:IsCity()and q:GetNumUnits()==0 then
+     q:SetRevealed(player:GetTeam(),true)
+     local allowed=missile:CanNukeAt(q:GetX(),q:GetY())
+     candidates[#candidates+1]={x=q:GetX(),y=q:GetY(),water=q:IsWater(),allowed=allowed}
+     if allowed and not adjacentTarget then adjacentTarget=q end
+    end
+   end
+   LekmodScenarioEvent("shelter-target-preflight",{candidates=candidates})
+   assert(adjacentTarget,"no native-eligible adjacent target before any strike")
+  end
+  local target=spec.adjacent and adjacentTarget or city:Plot()
   target:SetRevealed(player:GetTeam(),true)
-  assert(missile:NukeDamageLevel()==2 and missile:CanNukeAt(target:GetX(),target:GetY()))
+  assert(not spec.adjacent or distance(target,city)==1)
+  assert(missile:NukeDamageLevel()==2 and missile:CanNukeAt(target:GetX(),target:GetY()),"planned nuclear target no longer eligible")
   local damage=math.floor(100*(100+city:GetNukeModifier())/100)
   probe={nukes_before=countBefore,city=city:GetID(),plot=city:Plot(),target=target,missile=missile:GetID(),warrior=warrior:GetID(),worker=worker:GetID(),damage=damage,before=spec.wound,explosions=Game.GetNukesExploded()};ended=false
   LekmodScenarioEvent("fixture-setup",{operation="provided-shelter-units-and-wounds",case=spec.item,city=probe.city,warrior=probe.warrior,worker=probe.worker,wound=spec.wound,modifier=city:GetNukeModifier(),expected_damage=damage,adjacent=spec.adjacent==true})

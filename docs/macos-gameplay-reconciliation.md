@@ -323,3 +323,23 @@ all52 checks and15 exact replays passed in788.3seconds, with one install/restore
 and no inter-stage restart. It closes the eight ready cases and adds current-core
 Moorish/Mughal old-save regressions. All42 currently specified cases have scoped
 passes/retained evidence; G0 remains open at1,288 surfaces/121 document rows.
+
+## Shelter consumer and spaceship-hurry closure
+
+The [reward-boundary report](macos-reward-boundaries-validation.md) verifies20
+native assertions/three exact replays across explicit successful stages/runs.
+The original combined batch remains failed for a fixture-space error; the two
+independent passing stages use strict isolated-stage contracts. Shelter combat
+and civilian damage, nuclear-unit accounting, health99/lethal100 boundaries,
+spaceship policy/doubling/cap/completion and current-candidate counterspy outcomes
+are now covered. No product code changed. The current register has45 scoped
+passes/retained cases,1,285 untriaged surfaces and121 pending document rows.
+
+A compiled-AST retrieval study found143 generic one-dimensional cache loads,
+139 with candidate indexed getters, including SetYields/SetFlavors wrappers.
+This is not runtime parity or gameplay coverage. The next broader diagnostic
+requires careful distinction between boolean membership, integer compact-ID
+lists and indexed values, plus default/count/duplicate/nullable-getter review.
+The existing utility's integer existence overload produces a compact ID list
+with−1 padding; treating it as a boolean or ID-indexed mask would be wrong.
+Candidate data is retained under `build/macos/config-array-audit-20261002/`.

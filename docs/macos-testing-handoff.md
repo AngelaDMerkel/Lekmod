@@ -2,6 +2,16 @@
 
 ## October2 continuation
 
+The [reward-boundary continuation](macos-reward-boundaries-validation.md) has20
+scoped native assertions/three exact replays across explicitly identified stages
+and runs. Shelter unit damage and99/100-health outcomes, Engineer spaceship
+policy/doubling/cap/completion, and counterspy interception pass. Two fixture
+failures retain their verdicts; the combined failed batch is not relabeled.
+No product fix. Stock/current data/backups are verified, no game remains.
+The register is now45 specified scoped passes, with1,285 surface/121 document
+reviews pending. An ACTIVE unbudgeted goal tracks the user's explicit request
+to continue until full acceptance; do not stop merely at a round boundary.
+
 The [longer acceptance session](macos-long-session-validation.md) is complete:
 52checks/15exact replays in one788.3-second process,12aggregate fixture turns,
 normal exit0 and no Lua/synchronization/crash errors. All874 pre-test manifest
