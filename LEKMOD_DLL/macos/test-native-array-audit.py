@@ -26,9 +26,14 @@ class ArrayAuditTests(unittest.TestCase):
         self.assertIsNone(indexed_getter(m,s))
         m,s=self.getter();m['inner'][1]['inner'][0]['inner'][0]['inner'][1]['referencedDecl']['id']='different';self.assertIsNone(indexed_getter(m,s))
     def test_side_effects_missing_bounds_and_nonconst_rejected(self):
-        for prefix in ['mutate();','', 'CvAssert(i++ < 5);']:
+        for prefix in ['mutate();','CvAssert(i < unreviewed());', 'CvAssert(i++ < 5);']:
             m,s=self.getter(prefix=prefix);self.assertIsNone(indexed_getter(m,s))
         m,s=self.getter();m['type']['qualType']='int (int)';self.assertIsNone(indexed_getter(m,s))
+    def test_nullable_assertion_free_getter_requires_loader_bound(self):
+        m,s=self.getter(prefix='\n\t');value=m['inner'][1]['inner'][0]['inner'][0]
+        m['inner'][1]['inner'][0]['inner']=[node('ConditionalOperator',inner=[member(),value,node('IntegerLiteral',value='0')])]
+        result=indexed_getter(m,s);self.assertTrue(result['requires_loader_bound']);self.assertEqual(result['bounds'],[])
+        m,s=self.getter(prefix='');self.assertIsNone(indexed_getter(m,s))
     def test_default_and_boolean_literals_remain_distinct(self):
         self.assertEqual(literal(node('CXXDefaultArgExpr'),7),7)
         self.assertEqual(literal(node('CXXBoolLiteralExpr',value=False)),0)

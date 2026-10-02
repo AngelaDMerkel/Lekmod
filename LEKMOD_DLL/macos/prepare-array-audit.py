@@ -35,7 +35,8 @@ for table in json.loads(a.bindings.read_text())['tables']:
  if not m or count not in globals:rejected.append({'table':table['table'],'reason':'no verified global owner accessor'});continue
  owner_table=table['table'];owner_types={r[0]for r in db.execute('select Type from '+quote(owner_table))}
  for b in table['bindings']:
-  key=owner_table+'.'+b['member'];axis=b['index_table'];relation=b['relation_table']
+  b=dict(b);key=owner_table+'.'+b['member'];axis=b['index_table'];relation=b['relation_table']
+  if b.get('requires_loader_bound'):b['bounds']=[dims[axis]]
   try:
    axis_size=maxrows(axis);limit=min(axis_size,*[bounds(x)for x in b['bounds']])
    assert axis_size>0 and limit>0

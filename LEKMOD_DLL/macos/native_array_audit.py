@@ -53,13 +53,15 @@ def indexed_getter(method,source):
     if not body_text or not return_text or not body_text.startswith('{')or not body_text.endswith('}'):return None
     before,sep,after=body_text[1:-1].partition(return_text)
     if not sep or strip_comments(after).strip()not in {'',';'}:return None
-    prefix=strip_comments(before)
+    prefix=strip_comments(before).strip()
     if not re.fullmatch(r'(?:\s*CvAssert(?:Msg)?\s*\([^;]*\);\s*)*',prefix)or '++'in prefix or '--'in prefix:return None
     name=re.escape(params[0]['name']);bounds=[]
     for match in re.finditer(r'\b'+name+r'\s*<\s*(GC\.\w+\(\)|NUM_\w+|\d+)',prefix):bounds.append(match[1])
-    if not bounds:return None # Every generated access must respect an explicit reviewed bound.
+    if not bounds and (prefix.strip() or guard is None):return None
+    # A pure nullable accessor without assertions can use its proven loader
+    # allocation bound; an unrecognized asserted bound must never be ignored.
     return dict(member=member['name'],getter=method['name'],return_type=method['type']['qualType'],
-                nullable=guard is not None,null_fallback=fallback,bounds=sorted(set(bounds)),parameter_type=params[0].get('type',{}).get('qualType','int'))
+                nullable=guard is not None,null_fallback=fallback,bounds=sorted(set(bounds)),requires_loader_bound=not bool(bounds),parameter_type=params[0].get('type',{}).get('qualType','int'))
 
 def owned_type_variables(cache):
     result=set()
@@ -83,7 +85,11 @@ def array_mapping(ast_path,source):
         if cache.get('name')!='CacheResults':continue
         body=next((n for n in cache.get('inner',[])if n.get('kind')=='CompoundStmt'),None)
         if not body:continue
-        top={id(unwrap(n))for n in body.get('inner',[])};owner_vars=owned_type_variables(cache)
+        def unconditional(block):
+            for child in block.get('inner',[]):
+                child=unwrap(child);yield id(child)
+                if child.get('kind')=='CompoundStmt':yield from unconditional(child)
+        top=set(unconditional(body));owner_vars=owned_type_variables(cache)
         for node in walk(body):
             if node.get('kind')!='CXXMemberCallExpr':continue
             fn=unwrap(node['inner'][0]);kind=fn.get('name')
@@ -99,9 +105,9 @@ def array_mapping(ast_path,source):
             for candidate in walk(body):
                 if candidate.get('range',{}).get('begin',{}).get('offset',-1)<=end:continue
                 if candidate.get('kind')in {'BinaryOperator','CompoundAssignOperator'} and candidate.get('opcode')in {'=','+=','-=','*=','/='}:
-                    if any(n.get('kind')=='MemberExpr'and n.get('name')==label for n in walk(candidate.get('inner',[{}])[0])):later_writes.append(candidate)
-                if candidate.get('kind')=='CXXMemberCallExpr':
-                    if any(n.get('kind')=='MemberExpr'and n.get('name')==label for arg in candidate.get('inner',[])[1:]for n in walk(arg)):later_writes.append(candidate)
+                    if any(this_member(n) is not None and n.get('referencedMemberDecl')==member.get('referencedMemberDecl') for n in walk(candidate.get('inner',[{}])[0])):later_writes.append(candidate)
+                if candidate.get('kind')in {'CXXMemberCallExpr','CallExpr'}:
+                    if any(this_member(n) is not None and n.get('referencedMemberDecl')==member.get('referencedMemberDecl') for arg in candidate.get('inner',[])[1:]for n in walk(arg)):later_writes.append(candidate)
             if later_writes:reject('member has a subsequent write or escapes to another call');continue
             if kind in {'SetYields','SetFlavors'}:
                 relation,owner=map(text_literal,args[1:3]);owner_arg=unwrap(args[3])

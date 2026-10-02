@@ -7136,11 +7136,11 @@
       "source_references": [
         {
           "path": "LEKMOD_DLL/macos/info-array-audit.cpp",
-          "sha256": "914fdc30bca455cb659095122d4bebb4294fb3b2f722ec087f29211231e9e921"
+          "sha256": "4b540055ca522199f6cf4a3b7e630bf506c87e86ff4fc93ef53c8102aa5ae710"
         },
         {
           "path": "LEKMOD_DLL/macos/info-array-audit-bindings.json",
-          "sha256": "7d6ea5d68cdaa4da7d4feffd040be979daf75be18d89af471bbb2b209017f508"
+          "sha256": "217f992072886cd05d45aa88640bc5ba19b1cefb3a17febb4159fcea8fec6722"
         },
         {
           "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvDatabaseUtility.cpp",
@@ -7148,9 +7148,9 @@
         }
       ],
       "owners": [
-        "all resolved entries in the15 mapped globally cached owner tables"
+        "all resolved entries in the16 mapped globally cached owner tables"
       ],
-      "expected_result": "116 arrays across15 tables produce969758 exact cached-value comparisons against resolved GameInfo and an independent pinned immutable SQLite verifier. Membership is boolean; indexed values honor defaults; compact ID lists compare as multisets within native getter bounds. Invalid owner IDs/keys reject. World observation and repeated cache fingerprints remain unchanged.",
+      "expected_result": "132 arrays across16 tables produce1075256 exact cached-value comparisons against resolved GameInfo and an independent pinned immutable SQLite verifier. Membership is boolean; indexed values honor defaults; compact ID lists compare as multisets within native getter bounds. Invalid owner IDs/keys reject. World observation and repeated cache fingerprints remain unchanged.",
       "units": "native cached integers, booleans and reference IDs; not gameplay outcomes",
       "supplied_inputs": [
         "explicit process-only LEKMOD_CONFIG_AUDIT=1",
@@ -7190,7 +7190,7 @@
         },
         {
           "path": "LEKMOD_DLL/macos/playtest-scenario-array-cache.lua",
-          "sha256": "ff9d727ea963557c29fa1dc6b0af2aa15b1788d614c2862e8daf0d24ada8df4d"
+          "sha256": "f0c85c742b5192ac6321f37c898423418bdf0e0eba320d737a451d39319a5e4f"
         },
         {
           "path": "LEKMOD_DLL/macos/verify-array-cache-log.py",

@@ -6,8 +6,8 @@
     "sha256": "8c0f687004e87d239e2bfae9c84c7cb485c48d892a97e66a983230927428427c"
   },
   "input": {
-    "path": "build/macos/config-array-audit-20261002/reviewed-bindings.json",
-    "sha256": "f04e380ad99c0b12f637f6a1a591efd7f54c4e8788a74447f272839ba1d45ea9"
+    "path": "build/macos/config-array-audit-20261002/reviewed-bindings-v2.json",
+    "sha256": "43e43e7e2c5ff8797fa21a890acae91d28b6936e8f6d5424a794b3e7fea14d61"
   },
   "utility": {
     "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvDatabaseUtility.cpp",
@@ -33,6 +33,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Buildings.m_piSeaPlotYieldChange",
       "table": "Buildings",
@@ -68,6 +69,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Buildings.m_piRiverPlotYieldChange",
       "table": "Buildings",
@@ -103,6 +105,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Buildings.m_piLakePlotYieldChange",
       "table": "Buildings",
@@ -138,6 +141,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Buildings.m_piSeaResourceYieldChange",
       "table": "Buildings",
@@ -173,6 +177,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Buildings.m_piYieldChange",
       "table": "Buildings",
@@ -208,6 +213,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Buildings.m_piYieldChangePerPop",
       "table": "Buildings",
@@ -243,6 +249,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Buildings.m_piYieldChangePerReligion",
       "table": "Buildings",
@@ -278,6 +285,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Buildings.m_piYieldModifier",
       "table": "Buildings",
@@ -313,6 +321,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Buildings.m_piAreaYieldModifier",
       "table": "Buildings",
@@ -348,6 +357,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Buildings.m_piGlobalYieldModifier",
       "table": "Buildings",
@@ -383,6 +393,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Buildings.m_piTechEnhancedYieldChange",
       "table": "Buildings",
@@ -418,6 +429,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Buildings.m_piSameLandMassYieldChange",
       "table": "Buildings",
@@ -453,6 +465,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Buildings.m_piDifferentLandMassYieldChange",
       "table": "Buildings",
@@ -488,6 +501,7 @@
       "bounds": [
         "GC.getNumResourceInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Buildings.m_piResourceQuantityRequirements",
       "table": "Buildings",
@@ -523,6 +537,7 @@
       "bounds": [
         "GC.getNumResourceInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Buildings.m_piResourceQuantity",
       "table": "Buildings",
@@ -558,6 +573,7 @@
       "bounds": [
         "GC.getNumHurryInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Buildings.m_paiHurryModifier",
       "table": "Buildings",
@@ -593,6 +609,7 @@
       "bounds": [
         "GC.getNumUnitCombatClassInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Buildings.m_piUnitCombatFreeExperience",
       "table": "Buildings",
@@ -628,6 +645,7 @@
       "bounds": [
         "GC.getNumUnitCombatClassInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Buildings.m_piUnitCombatProductionModifiers",
       "table": "Buildings",
@@ -663,6 +681,7 @@
       "bounds": [
         "NUM_DOMAIN_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Buildings.m_piDomainFreeExperience",
       "table": "Buildings",
@@ -698,6 +717,7 @@
       "bounds": [
         "NUM_DOMAIN_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Buildings.m_piDomainFreeExperiencePerGreatWork",
       "table": "Buildings",
@@ -733,6 +753,7 @@
       "bounds": [
         "NUM_DOMAIN_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Buildings.m_piDomainProductionModifier",
       "table": "Buildings",
@@ -768,6 +789,7 @@
       "bounds": [
         "GC.getNumBuildingClassInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Buildings.m_piPrereqNumOfBuildingClass",
       "table": "Buildings",
@@ -803,6 +825,7 @@
       "bounds": [
         "GC.getNumBuildingClassInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Buildings.m_pbBuildingClassNeededInCity",
       "table": "Buildings",
@@ -838,6 +861,7 @@
       "bounds": [
         "GC.getNumUnitInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Buildings.m_piNumFreeUnits",
       "table": "Buildings",
@@ -873,6 +897,7 @@
       "bounds": [
         "GC.getNumBuildingClassInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Buildings.m_paiBuildingClassHappiness",
       "table": "Buildings",
@@ -908,6 +933,7 @@
       "bounds": [
         "GC.getNumBuildingClassInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Buildings.m_piLockedBuildingClasses",
       "table": "Buildings",
@@ -943,6 +969,7 @@
       "bounds": [
         "GC.getNUM_BUILDING_AND_TECH_PREREQS()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Buildings.m_piPrereqAndTechs",
       "table": "Buildings",
@@ -978,6 +1005,7 @@
       "bounds": [
         "GC.getNUM_BUILDING_RESOURCE_PREREQS()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Buildings.m_piLocalResourceAnds",
       "table": "Buildings",
@@ -1013,6 +1041,7 @@
       "bounds": [
         "GC.getNUM_BUILDING_RESOURCE_PREREQS()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Buildings.m_piLocalResourceOrs",
       "table": "Buildings",
@@ -1048,6 +1077,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Buildings.m_piGarrisonYieldChange",
       "table": "Buildings",
@@ -1083,6 +1113,7 @@
       "bounds": [
         "GC.getNumTraitInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Units.m_piProductionTraits",
       "table": "Units",
@@ -1118,6 +1149,7 @@
       "bounds": [
         "GC.getNumResourceInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Units.m_piResourceQuantityRequirements",
       "table": "Units",
@@ -1153,6 +1185,7 @@
       "bounds": [
         "GC.getNumBuildingInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "BuildingTypes",
       "key": "Units.m_piProductionModifierBuildings",
       "table": "Units",
@@ -1188,6 +1221,7 @@
       "bounds": [
         "GC.getNumPromotionInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Units.m_pbFreePromotions",
       "table": "Units",
@@ -1223,6 +1257,7 @@
       "bounds": [
         "GC.getNumUnitClassInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Units.m_pbUpgradeUnitClass",
       "table": "Units",
@@ -1258,6 +1293,7 @@
       "bounds": [
         "NUM_UNITAI_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Units.m_pbUnitAIType",
       "table": "Units",
@@ -1293,6 +1329,7 @@
       "bounds": [
         "NUM_UNITAI_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Units.m_pbNotUnitAIType",
       "table": "Units",
@@ -1328,6 +1365,7 @@
       "bounds": [
         "GC.getNumBuildInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Units.m_pbBuilds",
       "table": "Units",
@@ -1363,6 +1401,7 @@
       "bounds": [
         "GC.getNumSpecialistInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Units.m_pbGreatPeoples",
       "table": "Units",
@@ -1398,6 +1437,7 @@
       "bounds": [
         "GC.getNumBuildingInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Units.m_pbBuildings",
       "table": "Units",
@@ -1433,6 +1473,7 @@
       "bounds": [
         "GC.getNumBuildingClassInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Units.m_pbBuildingClassRequireds",
       "table": "Units",
@@ -1453,6 +1494,222 @@
       "member_type": "int *",
       "loader": "SetYields",
       "index_table": "Yields",
+      "relation_table": "Trait_ExtraYieldThresholds",
+      "index_column": "YieldType",
+      "owner_column": "TraitType",
+      "value_column": "Yield",
+      "mode": "indexed-value",
+      "default": 0,
+      "min_size": 0,
+      "member": "m_paiExtraYieldThreshold",
+      "getter": "GetExtraYieldThreshold",
+      "return_type": "int (int) const",
+      "nullable": true,
+      "null_fallback": -1,
+      "bounds": [
+        "NUM_YIELD_TYPES"
+      ],
+      "requires_loader_bound": true,
+      "parameter_type": "int",
+      "key": "Traits.m_paiExtraYieldThreshold",
+      "table": "Traits",
+      "class_name": "CvTraitEntry",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTraitClasses.cpp",
+      "source_sha256": "d6dd5261df9ef25ac73f82ac747d40d732b0b04397572d1b8b1c51c2b9763611",
+      "owner_getter": "getTraitInfo",
+      "owner_count": "getNumTraitInfos",
+      "owner_index_type": "TraitTypes",
+      "owner_slots": 115,
+      "owner_rows": 115,
+      "dimension_expression": "NUM_YIELD_TYPES",
+      "dimension_slots": 8,
+      "length": 8,
+      "comparisons": 920
+    },
+    {
+      "member_type": "int *",
+      "loader": "SetYields",
+      "index_table": "Yields",
+      "relation_table": "Trait_YieldChanges",
+      "index_column": "YieldType",
+      "owner_column": "TraitType",
+      "value_column": "Yield",
+      "mode": "indexed-value",
+      "default": 0,
+      "min_size": 0,
+      "member": "m_paiYieldChange",
+      "getter": "GetYieldChange",
+      "return_type": "int (int) const",
+      "nullable": true,
+      "null_fallback": -1,
+      "bounds": [
+        "NUM_YIELD_TYPES"
+      ],
+      "requires_loader_bound": true,
+      "parameter_type": "int",
+      "key": "Traits.m_paiYieldChange",
+      "table": "Traits",
+      "class_name": "CvTraitEntry",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTraitClasses.cpp",
+      "source_sha256": "d6dd5261df9ef25ac73f82ac747d40d732b0b04397572d1b8b1c51c2b9763611",
+      "owner_getter": "getTraitInfo",
+      "owner_count": "getNumTraitInfos",
+      "owner_index_type": "TraitTypes",
+      "owner_slots": 115,
+      "owner_rows": 115,
+      "dimension_expression": "NUM_YIELD_TYPES",
+      "dimension_slots": 8,
+      "length": 8,
+      "comparisons": 920
+    },
+    {
+      "member_type": "int *",
+      "loader": "SetYields",
+      "index_table": "Yields",
+      "relation_table": "Trait_YieldChangesNaturalWonder",
+      "index_column": "YieldType",
+      "owner_column": "TraitType",
+      "value_column": "Yield",
+      "mode": "indexed-value",
+      "default": 0,
+      "min_size": 0,
+      "member": "m_paiYieldChangeNaturalWonder",
+      "getter": "GetYieldChangeNaturalWonder",
+      "return_type": "int (int) const",
+      "nullable": true,
+      "null_fallback": -1,
+      "bounds": [
+        "NUM_YIELD_TYPES"
+      ],
+      "requires_loader_bound": true,
+      "parameter_type": "int",
+      "key": "Traits.m_paiYieldChangeNaturalWonder",
+      "table": "Traits",
+      "class_name": "CvTraitEntry",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTraitClasses.cpp",
+      "source_sha256": "d6dd5261df9ef25ac73f82ac747d40d732b0b04397572d1b8b1c51c2b9763611",
+      "owner_getter": "getTraitInfo",
+      "owner_count": "getNumTraitInfos",
+      "owner_index_type": "TraitTypes",
+      "owner_slots": 115,
+      "owner_rows": 115,
+      "dimension_expression": "NUM_YIELD_TYPES",
+      "dimension_slots": 8,
+      "length": 8,
+      "comparisons": 920
+    },
+    {
+      "member_type": "int *",
+      "loader": "SetYields",
+      "index_table": "Yields",
+      "relation_table": "Trait_YieldModifiers",
+      "index_column": "YieldType",
+      "owner_column": "TraitType",
+      "value_column": "Yield",
+      "mode": "indexed-value",
+      "default": 0,
+      "min_size": 0,
+      "member": "m_paiYieldModifier",
+      "getter": "GetYieldModifier",
+      "return_type": "int (int) const",
+      "nullable": true,
+      "null_fallback": -1,
+      "bounds": [
+        "NUM_YIELD_TYPES"
+      ],
+      "requires_loader_bound": true,
+      "parameter_type": "int",
+      "key": "Traits.m_paiYieldModifier",
+      "table": "Traits",
+      "class_name": "CvTraitEntry",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTraitClasses.cpp",
+      "source_sha256": "d6dd5261df9ef25ac73f82ac747d40d732b0b04397572d1b8b1c51c2b9763611",
+      "owner_getter": "getTraitInfo",
+      "owner_count": "getNumTraitInfos",
+      "owner_index_type": "TraitTypes",
+      "owner_slots": 115,
+      "owner_rows": 115,
+      "dimension_expression": "NUM_YIELD_TYPES",
+      "dimension_slots": 8,
+      "length": 8,
+      "comparisons": 920
+    },
+    {
+      "member_type": "int *",
+      "loader": "SetYields",
+      "index_table": "Yields",
+      "relation_table": "Trait_CapitalYieldChange",
+      "index_column": "YieldType",
+      "owner_column": "TraitType",
+      "value_column": "Yield",
+      "mode": "indexed-value",
+      "default": 0,
+      "min_size": 0,
+      "member": "m_piCapitalYieldChange",
+      "getter": "GetCapitalYieldChange",
+      "return_type": "int (int) const",
+      "nullable": true,
+      "null_fallback": 0,
+      "bounds": [
+        "NUM_YIELD_TYPES"
+      ],
+      "requires_loader_bound": true,
+      "parameter_type": "int",
+      "key": "Traits.m_piCapitalYieldChange",
+      "table": "Traits",
+      "class_name": "CvTraitEntry",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTraitClasses.cpp",
+      "source_sha256": "d6dd5261df9ef25ac73f82ac747d40d732b0b04397572d1b8b1c51c2b9763611",
+      "owner_getter": "getTraitInfo",
+      "owner_count": "getNumTraitInfos",
+      "owner_index_type": "TraitTypes",
+      "owner_slots": 115,
+      "owner_rows": 115,
+      "dimension_expression": "NUM_YIELD_TYPES",
+      "dimension_slots": 8,
+      "length": 8,
+      "comparisons": 920
+    },
+    {
+      "member_type": "int *",
+      "loader": "SetYields",
+      "index_table": "Yields",
+      "relation_table": "Trait_CityYieldChange",
+      "index_column": "YieldType",
+      "owner_column": "TraitType",
+      "value_column": "Yield",
+      "mode": "indexed-value",
+      "default": 0,
+      "min_size": 0,
+      "member": "m_piCityYieldChange",
+      "getter": "GetCityYieldChange",
+      "return_type": "int (int) const",
+      "nullable": true,
+      "null_fallback": 0,
+      "bounds": [
+        "NUM_YIELD_TYPES"
+      ],
+      "requires_loader_bound": true,
+      "parameter_type": "int",
+      "key": "Traits.m_piCityYieldChange",
+      "table": "Traits",
+      "class_name": "CvTraitEntry",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTraitClasses.cpp",
+      "source_sha256": "d6dd5261df9ef25ac73f82ac747d40d732b0b04397572d1b8b1c51c2b9763611",
+      "owner_getter": "getTraitInfo",
+      "owner_count": "getNumTraitInfos",
+      "owner_index_type": "TraitTypes",
+      "owner_slots": 115,
+      "owner_rows": 115,
+      "dimension_expression": "NUM_YIELD_TYPES",
+      "dimension_slots": 8,
+      "length": 8,
+      "comparisons": 920
+    },
+    {
+      "member_type": "int *",
+      "loader": "SetYields",
+      "index_table": "Yields",
       "relation_table": "WorldWonderYieldChanges",
       "index_column": "YieldType",
       "owner_column": "TraitType",
@@ -1468,6 +1725,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Traits.m_piWorldWonderYieldChanges",
       "table": "Traits",
@@ -1503,8 +1761,117 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Traits.m_piPuppetYieldModifiers",
+      "table": "Traits",
+      "class_name": "CvTraitEntry",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTraitClasses.cpp",
+      "source_sha256": "d6dd5261df9ef25ac73f82ac747d40d732b0b04397572d1b8b1c51c2b9763611",
+      "owner_getter": "getTraitInfo",
+      "owner_count": "getNumTraitInfos",
+      "owner_index_type": "TraitTypes",
+      "owner_slots": 115,
+      "owner_rows": 115,
+      "dimension_expression": "NUM_YIELD_TYPES",
+      "dimension_slots": 8,
+      "length": 8,
+      "comparisons": 920
+    },
+    {
+      "member_type": "int *",
+      "loader": "PopulateArrayByValue",
+      "index_table": "Resources",
+      "relation_table": "Trait_ResourceQuantityModifiers",
+      "index_column": "ResourceType",
+      "owner_column": "TraitType",
+      "value_column": "ResourceQuantityModifier",
+      "mode": "indexed-value",
+      "default": 0,
+      "min_size": 0,
+      "member": "m_piResourceQuantityModifiers",
+      "getter": "GetResourceQuantityModifier",
+      "return_type": "int (int) const",
+      "nullable": true,
+      "null_fallback": -1,
+      "bounds": [
+        "GC.getNumResourceInfos()"
+      ],
+      "requires_loader_bound": false,
+      "parameter_type": "int",
+      "key": "Traits.m_piResourceQuantityModifiers",
+      "table": "Traits",
+      "class_name": "CvTraitEntry",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTraitClasses.cpp",
+      "source_sha256": "d6dd5261df9ef25ac73f82ac747d40d732b0b04397572d1b8b1c51c2b9763611",
+      "owner_getter": "getTraitInfo",
+      "owner_count": "getNumTraitInfos",
+      "owner_index_type": "TraitTypes",
+      "owner_slots": 115,
+      "owner_rows": 115,
+      "dimension_expression": "GC.getNumResourceInfos()",
+      "dimension_slots": 57,
+      "length": 57,
+      "comparisons": 6555
+    },
+    {
+      "member_type": "int *",
+      "loader": "PopulateArrayByValue",
+      "index_table": "BuildingClasses",
+      "relation_table": "Trait_BuildingClassProductionModifiers",
+      "index_column": "BuildingClassType",
+      "owner_column": "TraitType",
+      "value_column": "ProductionModifier",
+      "mode": "indexed-value",
+      "default": 0,
+      "min_size": 0,
+      "member": "m_paiBuildingClassProductionModifiers",
+      "getter": "GetBuildingClassProductionModifier",
+      "return_type": "int (int) const",
+      "nullable": true,
+      "null_fallback": 0,
+      "bounds": [
+        "GC.getNumBuildingClassInfos()"
+      ],
+      "requires_loader_bound": false,
+      "parameter_type": "int",
+      "key": "Traits.m_paiBuildingClassProductionModifiers",
+      "table": "Traits",
+      "class_name": "CvTraitEntry",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTraitClasses.cpp",
+      "source_sha256": "d6dd5261df9ef25ac73f82ac747d40d732b0b04397572d1b8b1c51c2b9763611",
+      "owner_getter": "getTraitInfo",
+      "owner_count": "getNumTraitInfos",
+      "owner_index_type": "TraitTypes",
+      "owner_slots": 115,
+      "owner_rows": 115,
+      "dimension_expression": "GC.getNumBuildingClassInfos()",
+      "dimension_slots": 176,
+      "length": 176,
+      "comparisons": 20240
+    },
+    {
+      "member_type": "int *",
+      "loader": "SetYields",
+      "index_table": "Yields",
+      "relation_table": "Trait_FreeResourceCityYieldChanges",
+      "index_column": "YieldType",
+      "owner_column": "TraitType",
+      "value_column": "Yield",
+      "mode": "indexed-value",
+      "default": 0,
+      "min_size": 0,
+      "member": "m_piFreeResourceCityYieldChange",
+      "getter": "GetFreeResourceCityYieldChange",
+      "return_type": "int (int) const",
+      "nullable": true,
+      "null_fallback": 0,
+      "bounds": [
+        "NUM_YIELD_TYPES"
+      ],
+      "requires_loader_bound": true,
+      "parameter_type": "int",
+      "key": "Traits.m_piFreeResourceCityYieldChange",
       "table": "Traits",
       "class_name": "CvTraitEntry",
       "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTraitClasses.cpp",
@@ -1538,6 +1905,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Policies.m_piYieldModifier",
       "table": "Policies",
@@ -1573,6 +1941,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Policies.m_piCityYieldChange",
       "table": "Policies",
@@ -1608,6 +1977,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Policies.m_piCoastalCityYieldChange",
       "table": "Policies",
@@ -1643,6 +2013,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Policies.m_piCapitalYieldChange",
       "table": "Policies",
@@ -1678,6 +2049,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Policies.m_piCapitalYieldPerPopChange",
       "table": "Policies",
@@ -1713,6 +2085,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Policies.m_piCapitalYieldModifier",
       "table": "Policies",
@@ -1748,6 +2121,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Policies.m_piGreatWorkYieldChange",
       "table": "Policies",
@@ -1783,6 +2157,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Policies.m_piSpecialistExtraYield",
       "table": "Policies",
@@ -1818,6 +2193,7 @@
       "bounds": [
         "GC.getNumHurryInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Policies.m_paiHurryModifier",
       "table": "Policies",
@@ -1853,6 +2229,7 @@
       "bounds": [
         "GC.getNumSpecialistInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Policies.m_pabSpecialistValid",
       "table": "Policies",
@@ -1868,6 +2245,42 @@
       "dimension_slots": 7,
       "length": 7,
       "comparisons": 854
+    },
+    {
+      "member_type": "bool *",
+      "loader": "PopulateArrayByExistence",
+      "index_table": "UnitPromotions",
+      "relation_table": "Policy_FreePromotions",
+      "index_column": "PromotionType",
+      "owner_column": "PolicyType",
+      "value_column": null,
+      "mode": "membership",
+      "default": 0,
+      "min_size": 0,
+      "member": "m_pabFreePromotion",
+      "getter": "IsFreePromotion",
+      "return_type": "int (int) const",
+      "nullable": true,
+      "null_fallback": -1,
+      "bounds": [
+        "GC.getNumPromotionInfos()"
+      ],
+      "requires_loader_bound": true,
+      "parameter_type": "int",
+      "key": "Policies.m_pabFreePromotion",
+      "table": "Policies",
+      "class_name": "CvPolicyEntry",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPolicyClasses.cpp",
+      "source_sha256": "7a409a449b69feab94f617d423985048f8414ee4761f5dba36d743c9c343dfe8",
+      "owner_getter": "getPolicyInfo",
+      "owner_count": "getNumPolicyInfos",
+      "owner_index_type": "PolicyTypes",
+      "owner_slots": 136,
+      "owner_rows": 122,
+      "dimension_expression": "GC.getNumPromotionInfos()",
+      "dimension_slots": 343,
+      "length": 343,
+      "comparisons": 41846
     },
     {
       "member_type": "int *",
@@ -1888,6 +2301,7 @@
       "bounds": [
         "GC.getNumUnitCombatClassInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Policies.m_paiUnitCombatFreeExperiences",
       "table": "Policies",
@@ -1923,6 +2337,7 @@
       "bounds": [
         "GC.getNumUnitCombatClassInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Policies.m_paiUnitCombatProductionModifiers",
       "table": "Policies",
@@ -1958,6 +2373,7 @@
       "bounds": [
         "GC.getNumBuildingClassInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Policies.m_paiBuildingClassCultureChanges",
       "table": "Policies",
@@ -1993,6 +2409,7 @@
       "bounds": [
         "GC.getNumBuildingClassInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Policies.m_paiBuildingClassProductionModifiers",
       "table": "Policies",
@@ -2028,6 +2445,7 @@
       "bounds": [
         "GC.getNumBuildingClassInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Policies.m_paiBuildingClassTourismModifiers",
       "table": "Policies",
@@ -2063,6 +2481,7 @@
       "bounds": [
         "GC.getNumBuildingClassInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Policies.m_paiBuildingClassHappiness",
       "table": "Policies",
@@ -2098,6 +2517,7 @@
       "bounds": [
         "GC.getNumUnitClassInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Policies.m_paiFreeUnitClasses",
       "table": "Policies",
@@ -2133,6 +2553,7 @@
       "bounds": [
         "GC.getNumUnitClassInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Policies.m_paiTourismOnUnitCreation",
       "table": "Policies",
@@ -2168,6 +2589,7 @@
       "bounds": [
         "GC.getNumResourceInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Policies.m_piPolicyResourceQuantity",
       "table": "Policies",
@@ -2203,6 +2625,7 @@
       "bounds": [
         "GC.getNumImprovementInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Policies.m_piImprovementCultureChange",
       "table": "Policies",
@@ -2223,6 +2646,78 @@
       "member_type": "int *",
       "loader": "SetYields",
       "index_table": "Yields",
+      "relation_table": "Belief_CityYieldChanges",
+      "index_column": "YieldType",
+      "owner_column": "BeliefType",
+      "value_column": "Yield",
+      "mode": "indexed-value",
+      "default": 0,
+      "min_size": 0,
+      "member": "m_paiCityYieldChange",
+      "getter": "GetCityYieldChange",
+      "return_type": "int (int) const",
+      "nullable": true,
+      "null_fallback": -1,
+      "bounds": [
+        "NUM_YIELD_TYPES"
+      ],
+      "requires_loader_bound": true,
+      "parameter_type": "int",
+      "key": "Beliefs.m_paiCityYieldChange",
+      "table": "Beliefs",
+      "class_name": "CvBeliefEntry",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvBeliefClasses.cpp",
+      "source_sha256": "cac6cfd7bce7ec20e87edb14ff0263cbbe1c373db1b5f61f445e3aefb1121cb4",
+      "owner_getter": "getBeliefInfo",
+      "owner_count": "getNumBeliefInfos",
+      "owner_index_type": "BeliefTypes",
+      "owner_slots": 94,
+      "owner_rows": 92,
+      "dimension_expression": "NUM_YIELD_TYPES",
+      "dimension_slots": 8,
+      "length": 8,
+      "comparisons": 736
+    },
+    {
+      "member_type": "int *",
+      "loader": "SetYields",
+      "index_table": "Yields",
+      "relation_table": "Belief_HolyCityYieldChanges",
+      "index_column": "YieldType",
+      "owner_column": "BeliefType",
+      "value_column": "Yield",
+      "mode": "indexed-value",
+      "default": 0,
+      "min_size": 0,
+      "member": "m_paiHolyCityYieldChange",
+      "getter": "GetHolyCityYieldChange",
+      "return_type": "int (int) const",
+      "nullable": true,
+      "null_fallback": -1,
+      "bounds": [
+        "NUM_YIELD_TYPES"
+      ],
+      "requires_loader_bound": true,
+      "parameter_type": "int",
+      "key": "Beliefs.m_paiHolyCityYieldChange",
+      "table": "Beliefs",
+      "class_name": "CvBeliefEntry",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvBeliefClasses.cpp",
+      "source_sha256": "cac6cfd7bce7ec20e87edb14ff0263cbbe1c373db1b5f61f445e3aefb1121cb4",
+      "owner_getter": "getBeliefInfo",
+      "owner_count": "getNumBeliefInfos",
+      "owner_index_type": "BeliefTypes",
+      "owner_slots": 94,
+      "owner_rows": 92,
+      "dimension_expression": "NUM_YIELD_TYPES",
+      "dimension_slots": 8,
+      "length": 8,
+      "comparisons": 736
+    },
+    {
+      "member_type": "int *",
+      "loader": "SetYields",
+      "index_table": "Yields",
       "relation_table": "Belief_YieldChangeAnySpecialist",
       "index_column": "YieldType",
       "owner_column": "BeliefType",
@@ -2238,6 +2733,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Beliefs.m_piYieldChangeAnySpecialist",
       "table": "Beliefs",
@@ -2273,6 +2769,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Beliefs.m_piYieldChangeTradeRoute",
       "table": "Beliefs",
@@ -2308,6 +2805,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Beliefs.m_piYieldChangeNaturalWonder",
       "table": "Beliefs",
@@ -2343,6 +2841,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Beliefs.m_piYieldModifierNaturalWonder",
       "table": "Beliefs",
@@ -2378,6 +2877,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Beliefs.m_piMaxYieldModifierPerFollower",
       "table": "Beliefs",
@@ -2413,6 +2913,7 @@
       "bounds": [
         "GC.getNumResourceInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Beliefs.m_piResourceHappiness",
       "table": "Beliefs",
@@ -2448,6 +2949,7 @@
       "bounds": [
         "GC.getNumResourceInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Beliefs.m_piResourceQuantityModifiers",
       "table": "Beliefs",
@@ -2483,6 +2985,7 @@
       "bounds": [
         "GC.getNumBuildingClassInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Beliefs.m_paiBuildingClassHappiness",
       "table": "Beliefs",
@@ -2518,6 +3021,7 @@
       "bounds": [
         "GC.getNumBuildingClassInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Beliefs.m_paiBuildingClassTourism",
       "table": "Beliefs",
@@ -2553,6 +3057,7 @@
       "bounds": [
         "GC.getNumEraInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Beliefs.m_pbFaithPurchaseUnitEraEnabled",
       "table": "Beliefs",
@@ -2588,6 +3093,7 @@
       "bounds": [
         "GC.getNumBuildingClassInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Beliefs.m_pbBuildingClassEnabled",
       "table": "Beliefs",
@@ -2623,6 +3129,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Beliefs.m_piYieldChangeWorldWonder",
       "table": "Beliefs",
@@ -2658,6 +3165,7 @@
       "bounds": [
         "GC.getNumTerrainInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Improvements.m_pbTerrainMakesValid",
       "table": "Improvements",
@@ -2693,6 +3201,7 @@
       "bounds": [
         "GC.getNumFeatureInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Improvements.m_pbFeatureMakesValid",
       "table": "Improvements",
@@ -2728,6 +3237,7 @@
       "bounds": [
         "GC.getNumImprovementInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Improvements.m_pbImprovementMakesValid",
       "table": "Improvements",
@@ -2748,6 +3258,42 @@
       "member_type": "int *",
       "loader": "SetYields",
       "index_table": "Yields",
+      "relation_table": "Improvement_Yields",
+      "index_column": "YieldType",
+      "owner_column": "ImprovementType",
+      "value_column": "Yield",
+      "mode": "indexed-value",
+      "default": 0,
+      "min_size": 0,
+      "member": "m_piYieldChange",
+      "getter": "GetYieldChange",
+      "return_type": "int (int) const",
+      "nullable": true,
+      "null_fallback": 0,
+      "bounds": [
+        "NUM_YIELD_TYPES"
+      ],
+      "requires_loader_bound": false,
+      "parameter_type": "int",
+      "key": "Improvements.m_piYieldChange",
+      "table": "Improvements",
+      "class_name": "CvImprovementEntry",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvImprovementClasses.cpp",
+      "source_sha256": "26c2b5812bc08962a46cee2246954f58a83b7a0117ce116470e63fd62eafed8d",
+      "owner_getter": "getImprovementInfo",
+      "owner_count": "getNumImprovementInfos",
+      "owner_index_type": "ImprovementTypes",
+      "owner_slots": 46,
+      "owner_rows": 44,
+      "dimension_expression": "NUM_YIELD_TYPES",
+      "dimension_slots": 8,
+      "length": 8,
+      "comparisons": 352
+    },
+    {
+      "member_type": "int *",
+      "loader": "SetYields",
+      "index_table": "Yields",
       "relation_table": "Improvement_YieldPerEra",
       "index_column": "YieldType",
       "owner_column": "ImprovementType",
@@ -2763,6 +3309,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Improvements.m_piYieldPerEra",
       "table": "Improvements",
@@ -2798,6 +3345,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Improvements.m_piAdjacentCityYieldChange",
       "table": "Improvements",
@@ -2833,6 +3381,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Improvements.m_piAdjacentMountainYieldChange",
       "table": "Improvements",
@@ -2868,6 +3417,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Improvements.m_piCoastalLandYieldChange",
       "table": "Improvements",
@@ -2903,6 +3453,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Improvements.m_piFreshWaterChange",
       "table": "Improvements",
@@ -2938,6 +3489,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Improvements.m_piHillsYieldChange",
       "table": "Improvements",
@@ -2973,6 +3525,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Improvements.m_piRiverSideYieldChange",
       "table": "Improvements",
@@ -3008,6 +3561,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Improvements.m_piPrereqNatureYield",
       "table": "Improvements",
@@ -3043,6 +3597,7 @@
       "bounds": [
         "GC.getNumFlavorTypes()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Improvements.m_piFlavorValue",
       "table": "Improvements",
@@ -3058,6 +3613,114 @@
       "dimension_slots": 39,
       "length": 39,
       "comparisons": 1716
+    },
+    {
+      "member_type": "int *",
+      "loader": "PopulateArrayByValue",
+      "index_table": "Domains",
+      "relation_table": "Technology_DomainExtraMoves",
+      "index_column": "DomainType",
+      "owner_column": "TechType",
+      "value_column": "Moves",
+      "mode": "indexed-value",
+      "default": 0,
+      "min_size": "NUM_DOMAIN_TYPES",
+      "member": "m_piDomainExtraMoves",
+      "getter": "GetDomainExtraMoves",
+      "return_type": "int (int) const",
+      "nullable": true,
+      "null_fallback": -1,
+      "bounds": [
+        "NUM_DOMAIN_TYPES"
+      ],
+      "requires_loader_bound": true,
+      "parameter_type": "int",
+      "key": "Technologies.m_piDomainExtraMoves",
+      "table": "Technologies",
+      "class_name": "CvTechEntry",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTechClasses.cpp",
+      "source_sha256": "501083b7377a0a6191152cb99164a04b4ab1459324545a532c7324a670a57306",
+      "owner_getter": "getTechInfo",
+      "owner_count": "getNumTechInfos",
+      "owner_index_type": "TechTypes",
+      "owner_slots": 81,
+      "owner_rows": 81,
+      "dimension_expression": "NUM_DOMAIN_TYPES",
+      "dimension_slots": 5,
+      "length": 5,
+      "comparisons": 405
+    },
+    {
+      "member_type": "int *",
+      "loader": "PopulateArrayByValue",
+      "index_table": "Domains",
+      "relation_table": "Technology_TradeRouteDomainExtraRange",
+      "index_column": "DomainType",
+      "owner_column": "TechType",
+      "value_column": "Range",
+      "mode": "indexed-value",
+      "default": 0,
+      "min_size": "NUM_DOMAIN_TYPES",
+      "member": "m_piTradeRouteDomainExtraRange",
+      "getter": "GetTradeRouteDomainExtraRange",
+      "return_type": "int (int) const",
+      "nullable": true,
+      "null_fallback": -1,
+      "bounds": [
+        "NUM_DOMAIN_TYPES"
+      ],
+      "requires_loader_bound": true,
+      "parameter_type": "int",
+      "key": "Technologies.m_piTradeRouteDomainExtraRange",
+      "table": "Technologies",
+      "class_name": "CvTechEntry",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTechClasses.cpp",
+      "source_sha256": "501083b7377a0a6191152cb99164a04b4ab1459324545a532c7324a670a57306",
+      "owner_getter": "getTechInfo",
+      "owner_count": "getNumTechInfos",
+      "owner_index_type": "TechTypes",
+      "owner_slots": 81,
+      "owner_rows": 81,
+      "dimension_expression": "NUM_DOMAIN_TYPES",
+      "dimension_slots": 5,
+      "length": 5,
+      "comparisons": 405
+    },
+    {
+      "member_type": "bool *",
+      "loader": "PopulateArrayByExistence",
+      "index_table": "UnitPromotions",
+      "relation_table": "Technology_FreePromotions",
+      "index_column": "PromotionType",
+      "owner_column": "TechType",
+      "value_column": null,
+      "mode": "membership",
+      "default": 0,
+      "min_size": 0,
+      "member": "m_pabFreePromotion",
+      "getter": "IsFreePromotion",
+      "return_type": "int (int) const",
+      "nullable": true,
+      "null_fallback": -1,
+      "bounds": [
+        "GC.getNumPromotionInfos()"
+      ],
+      "requires_loader_bound": true,
+      "parameter_type": "int",
+      "key": "Technologies.m_pabFreePromotion",
+      "table": "Technologies",
+      "class_name": "CvTechEntry",
+      "source": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTechClasses.cpp",
+      "source_sha256": "501083b7377a0a6191152cb99164a04b4ab1459324545a532c7324a670a57306",
+      "owner_getter": "getTechInfo",
+      "owner_count": "getNumTechInfos",
+      "owner_index_type": "TechTypes",
+      "owner_slots": 81,
+      "owner_rows": 81,
+      "dimension_expression": "GC.getNumPromotionInfos()",
+      "dimension_slots": 343,
+      "length": 343,
+      "comparisons": 27783
     },
     {
       "member_type": "int *",
@@ -3078,6 +3741,7 @@
       "bounds": [
         "GC.getNumFlavorTypes()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Specialists.m_piFlavorValue",
       "table": "Specialists",
@@ -3113,6 +3777,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Specialists.m_piYieldChange",
       "table": "Specialists",
@@ -3148,6 +3813,7 @@
       "bounds": [
         "GC.getNumTechInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "HandicapInfos.m_pbFreeTechs",
       "table": "HandicapInfos",
@@ -3183,6 +3849,7 @@
       "bounds": [
         "GC.getNumTechInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "HandicapInfos.m_pbAIFreeTechs",
       "table": "HandicapInfos",
@@ -3218,6 +3885,7 @@
       "bounds": [
         "NUM_MAJOR_CIV_APPROACHES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Leaders.m_piMajorCivApproachBiases",
       "table": "Leaders",
@@ -3253,6 +3921,7 @@
       "bounds": [
         "NUM_MINOR_CIV_APPROACHES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Leaders.m_piMinorCivApproachBiases",
       "table": "Leaders",
@@ -3288,6 +3957,7 @@
       "bounds": [
         "GC.getNumTraitInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Leaders.m_pbTraits",
       "table": "Leaders",
@@ -3323,6 +3993,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Terrains.m_piYields",
       "table": "Terrains",
@@ -3358,6 +4029,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Terrains.m_piRiverYieldChange",
       "table": "Terrains",
@@ -3393,6 +4065,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Terrains.m_piHillsYieldChange",
       "table": "Terrains",
@@ -3428,6 +4101,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Terrains.m_piMountainYieldChange",
       "table": "Terrains",
@@ -3463,6 +4137,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Features.m_piYieldChange",
       "table": "Features",
@@ -3498,6 +4173,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Features.m_piRiverYieldChange",
       "table": "Features",
@@ -3533,6 +4209,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Features.m_piHillsYieldChange",
       "table": "Features",
@@ -3568,6 +4245,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Features.m_piMountainYieldChange",
       "table": "Features",
@@ -3603,6 +4281,7 @@
       "bounds": [
         "GC.getNumTerrainInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Features.m_pbTerrain",
       "table": "Features",
@@ -3638,6 +4317,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Resources.m_piYieldChange",
       "table": "Resources",
@@ -3673,6 +4353,7 @@
       "bounds": [
         "GC.getNumFlavorTypes()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Resources.m_piFlavor",
       "table": "Resources",
@@ -3708,6 +4389,7 @@
       "bounds": [
         "GC.getNumTerrainInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Resources.m_pbTerrain",
       "table": "Resources",
@@ -3743,6 +4425,7 @@
       "bounds": [
         "GC.getNumFeatureInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Resources.m_pbFeature",
       "table": "Resources",
@@ -3778,6 +4461,7 @@
       "bounds": [
         "GC.getNumTerrainInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Resources.m_pbFeatureTerrain",
       "table": "Resources",
@@ -3813,6 +4497,7 @@
       "bounds": [
         "GC.getNumTechInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Builds.m_paiTechTimeChange",
       "table": "Builds",
@@ -3848,6 +4533,7 @@
       "bounds": [
         "NUM_YIELD_TYPES"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Routes.m_piYieldChange",
       "table": "Routes",
@@ -3883,6 +4569,7 @@
       "bounds": [
         "GC.getNumTechInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Routes.m_piTechMovementChange",
       "table": "Routes",
@@ -3918,6 +4605,7 @@
       "bounds": [
         "GC.getNumResourceInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Routes.m_piResourceQuantityRequirements",
       "table": "Routes",
@@ -3953,6 +4641,7 @@
       "bounds": [
         "GC.getNumBuildingClassInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Civilizations.m_pbCivilizationFreeBuildingClass",
       "table": "Civilizations",
@@ -3988,6 +4677,7 @@
       "bounds": [
         "GC.getNumTechInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Civilizations.m_pbCivilizationFreeTechs",
       "table": "Civilizations",
@@ -4023,6 +4713,7 @@
       "bounds": [
         "GC.getNumTechInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Civilizations.m_pbCivilizationDisableTechs",
       "table": "Civilizations",
@@ -4058,6 +4749,7 @@
       "bounds": [
         "GC.getNumLeaderHeadInfos()"
       ],
+      "requires_loader_bound": false,
       "parameter_type": "int",
       "key": "Civilizations.m_pbLeaders",
       "table": "Civilizations",

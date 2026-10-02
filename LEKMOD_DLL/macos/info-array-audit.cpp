@@ -627,6 +627,96 @@ int LekmodMacReadInfoArray(lua_State* L)
   }
   return 1;
  }
+ if (std::strcmp(key,"Traits.m_paiExtraYieldThreshold") == 0)
+ {
+  if (static_cast<int>(GC.getNumTraitInfos())!=115 || id>=115) return luaL_error(L,"array owner bounds/data shape changed");
+  if (static_cast<int>(NUM_YIELD_TYPES)!=8) return luaL_error(L,"array dimension changed");
+  if (static_cast<int>(NUM_YIELD_TYPES)<8) return luaL_error(L,"array getter bound changed");
+  const CvTraitEntry* info=GC.getTraitInfo(static_cast<TraitTypes>(id));
+  if (!info) return luaL_error(L,"array owner entry missing");
+  lua_createtable(L,8,0);
+  for (int i=0;i<8;++i)
+  {
+   lua_pushinteger(L,info->GetExtraYieldThreshold(static_cast<int>(i)));
+   lua_rawseti(L,-2,i+1);
+  }
+  return 1;
+ }
+ if (std::strcmp(key,"Traits.m_paiYieldChange") == 0)
+ {
+  if (static_cast<int>(GC.getNumTraitInfos())!=115 || id>=115) return luaL_error(L,"array owner bounds/data shape changed");
+  if (static_cast<int>(NUM_YIELD_TYPES)!=8) return luaL_error(L,"array dimension changed");
+  if (static_cast<int>(NUM_YIELD_TYPES)<8) return luaL_error(L,"array getter bound changed");
+  const CvTraitEntry* info=GC.getTraitInfo(static_cast<TraitTypes>(id));
+  if (!info) return luaL_error(L,"array owner entry missing");
+  lua_createtable(L,8,0);
+  for (int i=0;i<8;++i)
+  {
+   lua_pushinteger(L,info->GetYieldChange(static_cast<int>(i)));
+   lua_rawseti(L,-2,i+1);
+  }
+  return 1;
+ }
+ if (std::strcmp(key,"Traits.m_paiYieldChangeNaturalWonder") == 0)
+ {
+  if (static_cast<int>(GC.getNumTraitInfos())!=115 || id>=115) return luaL_error(L,"array owner bounds/data shape changed");
+  if (static_cast<int>(NUM_YIELD_TYPES)!=8) return luaL_error(L,"array dimension changed");
+  if (static_cast<int>(NUM_YIELD_TYPES)<8) return luaL_error(L,"array getter bound changed");
+  const CvTraitEntry* info=GC.getTraitInfo(static_cast<TraitTypes>(id));
+  if (!info) return luaL_error(L,"array owner entry missing");
+  lua_createtable(L,8,0);
+  for (int i=0;i<8;++i)
+  {
+   lua_pushinteger(L,info->GetYieldChangeNaturalWonder(static_cast<int>(i)));
+   lua_rawseti(L,-2,i+1);
+  }
+  return 1;
+ }
+ if (std::strcmp(key,"Traits.m_paiYieldModifier") == 0)
+ {
+  if (static_cast<int>(GC.getNumTraitInfos())!=115 || id>=115) return luaL_error(L,"array owner bounds/data shape changed");
+  if (static_cast<int>(NUM_YIELD_TYPES)!=8) return luaL_error(L,"array dimension changed");
+  if (static_cast<int>(NUM_YIELD_TYPES)<8) return luaL_error(L,"array getter bound changed");
+  const CvTraitEntry* info=GC.getTraitInfo(static_cast<TraitTypes>(id));
+  if (!info) return luaL_error(L,"array owner entry missing");
+  lua_createtable(L,8,0);
+  for (int i=0;i<8;++i)
+  {
+   lua_pushinteger(L,info->GetYieldModifier(static_cast<int>(i)));
+   lua_rawseti(L,-2,i+1);
+  }
+  return 1;
+ }
+ if (std::strcmp(key,"Traits.m_piCapitalYieldChange") == 0)
+ {
+  if (static_cast<int>(GC.getNumTraitInfos())!=115 || id>=115) return luaL_error(L,"array owner bounds/data shape changed");
+  if (static_cast<int>(NUM_YIELD_TYPES)!=8) return luaL_error(L,"array dimension changed");
+  if (static_cast<int>(NUM_YIELD_TYPES)<8) return luaL_error(L,"array getter bound changed");
+  const CvTraitEntry* info=GC.getTraitInfo(static_cast<TraitTypes>(id));
+  if (!info) return luaL_error(L,"array owner entry missing");
+  lua_createtable(L,8,0);
+  for (int i=0;i<8;++i)
+  {
+   lua_pushinteger(L,info->GetCapitalYieldChange(static_cast<int>(i)));
+   lua_rawseti(L,-2,i+1);
+  }
+  return 1;
+ }
+ if (std::strcmp(key,"Traits.m_piCityYieldChange") == 0)
+ {
+  if (static_cast<int>(GC.getNumTraitInfos())!=115 || id>=115) return luaL_error(L,"array owner bounds/data shape changed");
+  if (static_cast<int>(NUM_YIELD_TYPES)!=8) return luaL_error(L,"array dimension changed");
+  if (static_cast<int>(NUM_YIELD_TYPES)<8) return luaL_error(L,"array getter bound changed");
+  const CvTraitEntry* info=GC.getTraitInfo(static_cast<TraitTypes>(id));
+  if (!info) return luaL_error(L,"array owner entry missing");
+  lua_createtable(L,8,0);
+  for (int i=0;i<8;++i)
+  {
+   lua_pushinteger(L,info->GetCityYieldChange(static_cast<int>(i)));
+   lua_rawseti(L,-2,i+1);
+  }
+  return 1;
+ }
  if (std::strcmp(key,"Traits.m_piWorldWonderYieldChanges") == 0)
  {
   if (static_cast<int>(GC.getNumTraitInfos())!=115 || id>=115) return luaL_error(L,"array owner bounds/data shape changed");
@@ -653,6 +743,51 @@ int LekmodMacReadInfoArray(lua_State* L)
   for (int i=0;i<8;++i)
   {
    lua_pushinteger(L,info->GetPuppetYieldModifiers(static_cast<int>(i)));
+   lua_rawseti(L,-2,i+1);
+  }
+  return 1;
+ }
+ if (std::strcmp(key,"Traits.m_piResourceQuantityModifiers") == 0)
+ {
+  if (static_cast<int>(GC.getNumTraitInfos())!=115 || id>=115) return luaL_error(L,"array owner bounds/data shape changed");
+  if (static_cast<int>(GC.getNumResourceInfos())!=57) return luaL_error(L,"array dimension changed");
+  if (static_cast<int>(GC.getNumResourceInfos())<57) return luaL_error(L,"array getter bound changed");
+  const CvTraitEntry* info=GC.getTraitInfo(static_cast<TraitTypes>(id));
+  if (!info) return luaL_error(L,"array owner entry missing");
+  lua_createtable(L,57,0);
+  for (int i=0;i<57;++i)
+  {
+   lua_pushinteger(L,info->GetResourceQuantityModifier(static_cast<int>(i)));
+   lua_rawseti(L,-2,i+1);
+  }
+  return 1;
+ }
+ if (std::strcmp(key,"Traits.m_paiBuildingClassProductionModifiers") == 0)
+ {
+  if (static_cast<int>(GC.getNumTraitInfos())!=115 || id>=115) return luaL_error(L,"array owner bounds/data shape changed");
+  if (static_cast<int>(GC.getNumBuildingClassInfos())!=176) return luaL_error(L,"array dimension changed");
+  if (static_cast<int>(GC.getNumBuildingClassInfos())<176) return luaL_error(L,"array getter bound changed");
+  const CvTraitEntry* info=GC.getTraitInfo(static_cast<TraitTypes>(id));
+  if (!info) return luaL_error(L,"array owner entry missing");
+  lua_createtable(L,176,0);
+  for (int i=0;i<176;++i)
+  {
+   lua_pushinteger(L,info->GetBuildingClassProductionModifier(static_cast<int>(i)));
+   lua_rawseti(L,-2,i+1);
+  }
+  return 1;
+ }
+ if (std::strcmp(key,"Traits.m_piFreeResourceCityYieldChange") == 0)
+ {
+  if (static_cast<int>(GC.getNumTraitInfos())!=115 || id>=115) return luaL_error(L,"array owner bounds/data shape changed");
+  if (static_cast<int>(NUM_YIELD_TYPES)!=8) return luaL_error(L,"array dimension changed");
+  if (static_cast<int>(NUM_YIELD_TYPES)<8) return luaL_error(L,"array getter bound changed");
+  const CvTraitEntry* info=GC.getTraitInfo(static_cast<TraitTypes>(id));
+  if (!info) return luaL_error(L,"array owner entry missing");
+  lua_createtable(L,8,0);
+  for (int i=0;i<8;++i)
+  {
+   lua_pushinteger(L,info->GetFreeResourceCityYieldChange(static_cast<int>(i)));
    lua_rawseti(L,-2,i+1);
   }
   return 1;
@@ -807,6 +942,21 @@ int LekmodMacReadInfoArray(lua_State* L)
   }
   return 1;
  }
+ if (std::strcmp(key,"Policies.m_pabFreePromotion") == 0)
+ {
+  if (static_cast<int>(GC.getNumPolicyInfos())!=136 || id>=136) return luaL_error(L,"array owner bounds/data shape changed");
+  if (static_cast<int>(GC.getNumPromotionInfos())!=343) return luaL_error(L,"array dimension changed");
+  if (static_cast<int>(GC.getNumPromotionInfos())<343) return luaL_error(L,"array getter bound changed");
+  const CvPolicyEntry* info=GC.getPolicyInfo(static_cast<PolicyTypes>(id));
+  if (!info) return luaL_error(L,"array owner entry missing");
+  lua_createtable(L,343,0);
+  for (int i=0;i<343;++i)
+  {
+   lua_pushboolean(L,info->IsFreePromotion(static_cast<int>(i)));
+   lua_rawseti(L,-2,i+1);
+  }
+  return 1;
+ }
  if (std::strcmp(key,"Policies.m_paiUnitCombatFreeExperiences") == 0)
  {
   if (static_cast<int>(GC.getNumPolicyInfos())!=136 || id>=136) return luaL_error(L,"array owner bounds/data shape changed");
@@ -953,6 +1103,36 @@ int LekmodMacReadInfoArray(lua_State* L)
   for (int i=0;i<46;++i)
   {
    lua_pushinteger(L,info->GetImprovementCultureChanges(static_cast<int>(i)));
+   lua_rawseti(L,-2,i+1);
+  }
+  return 1;
+ }
+ if (std::strcmp(key,"Beliefs.m_paiCityYieldChange") == 0)
+ {
+  if (static_cast<int>(GC.getNumBeliefInfos())!=94 || id>=94) return luaL_error(L,"array owner bounds/data shape changed");
+  if (static_cast<int>(NUM_YIELD_TYPES)!=8) return luaL_error(L,"array dimension changed");
+  if (static_cast<int>(NUM_YIELD_TYPES)<8) return luaL_error(L,"array getter bound changed");
+  const CvBeliefEntry* info=GC.getBeliefInfo(static_cast<BeliefTypes>(id));
+  if (!info) return luaL_error(L,"array owner entry missing");
+  lua_createtable(L,8,0);
+  for (int i=0;i<8;++i)
+  {
+   lua_pushinteger(L,info->GetCityYieldChange(static_cast<int>(i)));
+   lua_rawseti(L,-2,i+1);
+  }
+  return 1;
+ }
+ if (std::strcmp(key,"Beliefs.m_paiHolyCityYieldChange") == 0)
+ {
+  if (static_cast<int>(GC.getNumBeliefInfos())!=94 || id>=94) return luaL_error(L,"array owner bounds/data shape changed");
+  if (static_cast<int>(NUM_YIELD_TYPES)!=8) return luaL_error(L,"array dimension changed");
+  if (static_cast<int>(NUM_YIELD_TYPES)<8) return luaL_error(L,"array getter bound changed");
+  const CvBeliefEntry* info=GC.getBeliefInfo(static_cast<BeliefTypes>(id));
+  if (!info) return luaL_error(L,"array owner entry missing");
+  lua_createtable(L,8,0);
+  for (int i=0;i<8;++i)
+  {
+   lua_pushinteger(L,info->GetHolyCityYieldChange(static_cast<int>(i)));
    lua_rawseti(L,-2,i+1);
   }
   return 1;
@@ -1182,6 +1362,21 @@ int LekmodMacReadInfoArray(lua_State* L)
   }
   return 1;
  }
+ if (std::strcmp(key,"Improvements.m_piYieldChange") == 0)
+ {
+  if (static_cast<int>(GC.getNumImprovementInfos())!=46 || id>=46) return luaL_error(L,"array owner bounds/data shape changed");
+  if (static_cast<int>(NUM_YIELD_TYPES)!=8) return luaL_error(L,"array dimension changed");
+  if (static_cast<int>(NUM_YIELD_TYPES)<8) return luaL_error(L,"array getter bound changed");
+  const CvImprovementEntry* info=GC.getImprovementInfo(static_cast<ImprovementTypes>(id));
+  if (!info) return luaL_error(L,"array owner entry missing");
+  lua_createtable(L,8,0);
+  for (int i=0;i<8;++i)
+  {
+   lua_pushinteger(L,info->GetYieldChange(static_cast<int>(i)));
+   lua_rawseti(L,-2,i+1);
+  }
+  return 1;
+ }
  if (std::strcmp(key,"Improvements.m_piYieldPerEra") == 0)
  {
   if (static_cast<int>(GC.getNumImprovementInfos())!=46 || id>=46) return luaL_error(L,"array owner bounds/data shape changed");
@@ -1313,6 +1508,51 @@ int LekmodMacReadInfoArray(lua_State* L)
   for (int i=0;i<39;++i)
   {
    lua_pushinteger(L,info->GetFlavorValue(static_cast<int>(i)));
+   lua_rawseti(L,-2,i+1);
+  }
+  return 1;
+ }
+ if (std::strcmp(key,"Technologies.m_piDomainExtraMoves") == 0)
+ {
+  if (static_cast<int>(GC.getNumTechInfos())!=81 || id>=81) return luaL_error(L,"array owner bounds/data shape changed");
+  if (static_cast<int>(NUM_DOMAIN_TYPES)!=5) return luaL_error(L,"array dimension changed");
+  if (static_cast<int>(NUM_DOMAIN_TYPES)<5) return luaL_error(L,"array getter bound changed");
+  const CvTechEntry* info=GC.getTechInfo(static_cast<TechTypes>(id));
+  if (!info) return luaL_error(L,"array owner entry missing");
+  lua_createtable(L,5,0);
+  for (int i=0;i<5;++i)
+  {
+   lua_pushinteger(L,info->GetDomainExtraMoves(static_cast<int>(i)));
+   lua_rawseti(L,-2,i+1);
+  }
+  return 1;
+ }
+ if (std::strcmp(key,"Technologies.m_piTradeRouteDomainExtraRange") == 0)
+ {
+  if (static_cast<int>(GC.getNumTechInfos())!=81 || id>=81) return luaL_error(L,"array owner bounds/data shape changed");
+  if (static_cast<int>(NUM_DOMAIN_TYPES)!=5) return luaL_error(L,"array dimension changed");
+  if (static_cast<int>(NUM_DOMAIN_TYPES)<5) return luaL_error(L,"array getter bound changed");
+  const CvTechEntry* info=GC.getTechInfo(static_cast<TechTypes>(id));
+  if (!info) return luaL_error(L,"array owner entry missing");
+  lua_createtable(L,5,0);
+  for (int i=0;i<5;++i)
+  {
+   lua_pushinteger(L,info->GetTradeRouteDomainExtraRange(static_cast<int>(i)));
+   lua_rawseti(L,-2,i+1);
+  }
+  return 1;
+ }
+ if (std::strcmp(key,"Technologies.m_pabFreePromotion") == 0)
+ {
+  if (static_cast<int>(GC.getNumTechInfos())!=81 || id>=81) return luaL_error(L,"array owner bounds/data shape changed");
+  if (static_cast<int>(GC.getNumPromotionInfos())!=343) return luaL_error(L,"array dimension changed");
+  if (static_cast<int>(GC.getNumPromotionInfos())<343) return luaL_error(L,"array getter bound changed");
+  const CvTechEntry* info=GC.getTechInfo(static_cast<TechTypes>(id));
+  if (!info) return luaL_error(L,"array owner entry missing");
+  lua_createtable(L,343,0);
+  for (int i=0;i<343;++i)
+  {
+   lua_pushboolean(L,info->IsFreePromotion(static_cast<int>(i)));
    lua_rawseti(L,-2,i+1);
   }
   return 1;
