@@ -12,7 +12,10 @@ New scenarios that call only GameCore objects with colon syntax can declare
 absent from the C++ Lua registrations. `check-scenario-native-methods.py` also
 runs this check directly on selected files. This catches C++-only methods such
 as `IsGreatGeneral`; it does not establish receiver types, parameter signatures
-or callback timing. Gameplay assertions still require native execution.
+or callback timing. Optional `-- @native-receiver u Unit` declarations additionally
+check colon methods against the specified class for that exact simple variable;
+they are not general Lua type inference or argument validation. Gameplay assertions
+still require native execution.
 
 `civilization-startup-matrix.py --roster CIVILIZATION_CZECHIA,CIVILIZATION_ROME`
 creates a normal human-first fixture. Repeat `--roster` for independent starts;
@@ -1357,3 +1360,21 @@ last branch. [The report](../../docs/macos-maori-lifetime-validation.md) identif
 all passing stage pairs and retained failures; no intact full-plan pass is claimed.
 Preflight now also rejects oversized anonymous UnitCreated callback signatures
 against the actual four-argument native hook. It is not a general type checker.
+
+## Historical evidence retrieval
+
+`index-native-evidence.py --output build/macos/native-evidence-index.json` scans
+retained process reports and validates eligible run/reload pairs with the same
+strict acceptance checker. It also indexes stages from passing completed batches.
+Rejected contract candidates remain listed with their reasons; an overall failed
+batch requires explicit separate review and is not automatically reused here.
+
+The index is for finding relevant evidence efficiently. It does not map effects,
+prove unchanged-component applicability, resolve an old failure, or close G0.
+Current process reports that are still running cannot qualify.
+
+For the user's longer-session workflow, use the reviewed
+`batch-plans/acceptance-lifetime-long.json`:15 fixtures,52 assertions,15 exact
+replays,26 aggregate bounded turns and a45-minute wall-clock cap. The wrapper
+installs/restores once for the whole run, with no reinstall between stages.
+Consult the case register and latest native report for actual results.
