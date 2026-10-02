@@ -285,3 +285,35 @@ unchanged; no game/launcher process. Evidence is in
 `build/macos/locked-merchant-preservation-20260927.json`. The register now has34
 specified cases (32passed/retained, two ready),1,297 untriaged review surfaces
 and121 pending document rows. Final acceptance is still open.
+
+## October2 resumption and longer-session workflow
+
+The [independent Merchant/Engineer batch](macos-great-person-rewards-validation.md)
+passed12 assertions/two exact replays. Its two speed-scaling fields are mapped
+through the sole shared native consumer of each getter, with all five configured
+percentages verified by the earlier native cache audit. Only Quick-speed mission
+outcomes are newly claimed; no five-speed gameplay run is implied.
+
+The user requested longer useful sessions. The prepared
+`acceptance-lifetime-long.json` combines52 assertions/15replays under one process
+and one install/restoration, retaining the existing26-total-turn and45-minute
+limits. Eight new current-candidate cases are ready; the long run must complete
+and preserve state before they are marked passed. Historical evidence remains
+separately valid at its original scope.
+
+A strict retrieval index verified117 historical standalone run/reload pairs and
+119 stages from completed passing batches across649 inspected reports. It is
+an aid to reconciliation, not an automatic coverage or candidate-applicability
+claim. The reusable `index-native-evidence.py` now builds this index. Current-source
+Tonga13, unit-owner66 and Venice8 isolated checks pass. An initial unit-owner
+invocation used the wrong source directory and is retained separately.
+
+`GameOptions.SupportsMultiplayer` is excluded solely as an explicitly deferred
+network-multiplayer display filter. Standard single-player display filters and
+the individual game-option effects remain open. Direct source review also found
+a real coverage gap: Bomb Shelter modifies stationed-unit damage as well as city
+population loss. Existing city assertions do not establish those unit outcomes;
+the surface remains untriaged with a concrete next-batch design action.
+
+There are42 specified cases and1,288 untriaged review surfaces;121 document rows
+remain. This is still a review inventory, not a frozen test denominator.

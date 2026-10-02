@@ -5446,7 +5446,8 @@
         "data:Units.NumGoldPerEra",
         "data:Policies.TradeMissionGoldModifier",
         "data:UnitPromotions.TradeMissionGoldModifier",
-        "data:UnitPromotions.TradeMissionInfluenceModifier"
+        "data:UnitPromotions.TradeMissionInfluenceModifier",
+        "data:GameSpeeds.UnitTradePercent"
       ],
       "implementation_references": [
         {
@@ -5742,7 +5743,8 @@
       ],
       "surface_ids": [
         "data:Units.BaseHurry",
-        "data:Units.HurryMultiplier"
+        "data:Units.HurryMultiplier",
+        "data:GameSpeeds.UnitHurryPercent"
       ],
       "implementation_references": [
         {
@@ -9374,8 +9376,23 @@
     {
       "id": "data:GameOptions.SupportsMultiplayer",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "out-of-scope",
+      "case_ids": [],
+      "reason": "This field filters option display in network multiplayer. Standard AdvancedSetup filters SupportsSinglePlayer instead, and GameMenu selects SupportsMultiplayer only in its network-multiplayer branch. Multiplayer, hotseat and PBEM are explicitly deferred. Individual game-option effects and SupportsSinglePlayer/Visible remain separately reviewed.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/UI/MPGameOptions.lua",
+          "sha256": "d3ca7197f06c1e5ed162f008df7c83125ec23b9ee23757af97a4c3723434c58c"
+        },
+        {
+          "path": "LEKMOD/Lua/tmp/ui/Lobby/AdvancedSetup.lua.ignore",
+          "sha256": "270ec0717e0f82053f004d95ccb56bb804b2d1a894a28d9808eee72de8ea1ab5"
+        },
+        {
+          "path": "LEKMOD/Lua/tmp/ui/Replays/GameMenu.lua.ignore",
+          "sha256": "5b82ea29eb53e8b0230ee2f2f3a5f188c3c1002a1abe043ee136da478874d463"
+        }
+      ]
     },
     {
       "id": "data:GameSpeed_Turns",
@@ -9546,22 +9563,50 @@
     {
       "id": "data:GameSpeeds.UnitHurryPercent",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": [],
+      "status": "mapped",
+      "case_ids": [
+        "MISSION-ENGINEER-INDEPENDENT-HURRY",
+        "CFG-COMPILED-SCALAR-CACHES"
+      ],
       "supporting_case_ids": [
         "CFG-COMPILED-SCALAR-CACHES"
       ],
-      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent."
+      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnit.cpp",
+          "sha256": "16914a686126292c64ed110df3fda674c136858392053cccee3940a3fbac5e73"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvInfos.cpp",
+          "sha256": "83e4176806f5e4e1e3c7bd2791bf61fb53291b1eed6467c11680500cde059cfd"
+        }
+      ],
+      "reason": "All five configured50/67/100/150/300 values are verified by native cache parity. The sole gameplay getter consumer is the same multiply-then-integer-divide contribution in CvUnit (no speed-name/ID branch). The independent native Quick67 case exercises nonintegral truncation, actual reward/consumption and applicable cap/additive-modifier controls. This shared-path mapping covers speed scaling, not untested spaceship doubling, acquisition or AI decisions. It does not claim five separate native mission-speed runs."
     },
     {
       "id": "data:GameSpeeds.UnitTradePercent",
       "suggested_group": "G5",
-      "status": "untriaged",
-      "case_ids": [],
+      "status": "mapped",
+      "case_ids": [
+        "MISSION-MERCHANT-INDEPENDENT-REWARDS",
+        "CFG-COMPILED-SCALAR-CACHES"
+      ],
       "supporting_case_ids": [
         "CFG-COMPILED-SCALAR-CACHES"
       ],
-      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent."
+      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnit.cpp",
+          "sha256": "16914a686126292c64ed110df3fda674c136858392053cccee3940a3fbac5e73"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvInfos.cpp",
+          "sha256": "83e4176806f5e4e1e3c7bd2791bf61fb53291b1eed6467c11680500cde059cfd"
+        }
+      ],
+      "reason": "All five configured50/67/100/150/300 values are verified by native cache parity. The sole gameplay getter consumer is the same multiply-then-integer-divide contribution in CvUnit (no speed-name/ID branch). The independent native Quick67 case exercises nonintegral truncation, actual reward/consumption and applicable cap/additive-modifier controls. This shared-path mapping covers speed scaling, not untested spaceship doubling, acquisition or AI decisions. It does not claim five separate native mission-speed runs."
     },
     {
       "id": "data:GameSpeeds.GoldenAgePercent",
@@ -25255,6 +25300,19 @@
       "native_failure": "20260927T184447Z",
       "verified_run": "20260927T185946Z",
       "fix_commit": "3ea165d6"
+    },
+    {
+      "id": "SC-NUCLEAR-SHELTER-UNIT-DAMAGE",
+      "classification": "uncovered-consumer-not-confirmed-defect",
+      "surface_id": "data:Buildings.NukeModifier",
+      "source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnitCombat.cpp",
+          "sha256": "6e92a006256f9d47549a90a1faf1577953acab9ece87f44828f847413d8fe7d7"
+        }
+      ],
+      "finding": "The shelter modifier affects city population loss AND unit damage on a city plot. Current city cases assert population/HP outcomes but do not assert stationed combat/civilian unit damage or civilian death-threshold behavior.",
+      "next_action": "Prepare level1/level2, direct/adjacent target and sheltered/unsheltered combat/civilian controls for the next larger batch. Keep Buildings.NukeModifier untriaged until both consumers are covered."
     }
   ],
   "dependency_review": [
@@ -25362,9 +25420,10 @@
     "pending_document_rows": 121,
     "final_case_denominator_frozen": false,
     "surface_statuses": {
-      "untriaged": 1291,
-      "mapped": 30,
-      "presentation-only": 19
+      "untriaged": 1288,
+      "mapped": 32,
+      "presentation-only": 19,
+      "out-of-scope": 1
     },
     "indexed_civilizations": 114,
     "native_parameter_fields_verified": 724
