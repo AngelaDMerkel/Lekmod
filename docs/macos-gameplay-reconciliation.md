@@ -343,3 +343,14 @@ lists and indexed values, plus default/count/duplicate/nullable-getter review.
 The existing utility's integer existence overload produces a compact ID list
 with−1 padding; treating it as a boolean or ID-indexed mask would be wrong.
 Candidate data is retained under `build/macos/config-array-audit-20261002/`.
+
+## Broader cache preparation while the desktop is locked
+
+The [132-array diagnostic](macos-array-cache-audit.md) is compiled, ABI-validated
+and packaged from clean source, with tested bounds/type/default contracts and an
+independent verifier. It plans1,075,256 comparisons across16 tables. Native launch
+was refused before changing settings because the desktop is locked; the case
+remains ready. Five conflicting AI-flavor arrays and orphan input rows remain
+explicit review findings. No surface is closed merely from this preparation.
+The register now contains46 cases:45 scoped passes/retained evidence and one ready
+configuration case. G0 still has1,285 untriaged surfaces/121 document rows.

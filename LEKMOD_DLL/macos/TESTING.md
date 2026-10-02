@@ -1378,3 +1378,12 @@ For the user's longer-session workflow, use the reviewed
 replays,26 aggregate bounded turns and a45-minute wall-clock cap. The wrapper
 installs/restores once for the whole run, with no reinstall between stages.
 Consult the case register and latest native report for actual results.
+
+## Compiled relation-cache parity
+
+See [the bounded array diagnostic](../../docs/macos-array-cache-audit.md) for the
+source/loader safety contract, immutable verifier, excluded duplicate flavor rows
+and native-execution status. `cache-and-reward-regression.json` combines the
+132-array audit with scalar and gameplay regressions:68 checks/six replays in one
+process. It requires process-only `LEKMOD_CONFIG_AUDIT=1` and the identified candidate.
+Configuration parity must not be presented as consumer/gameplay acceptance.
