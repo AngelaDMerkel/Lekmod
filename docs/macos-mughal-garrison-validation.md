@@ -61,7 +61,7 @@ Clean source `0445cde5058d5023f94b8af868bc4b6df4405699` produced archive
 `build/macos/Lekmod-mughal-garrison-20260927.zip`, SHA-256
 `79239c0ece59f1687f76e49663f9ff914fc561874a151c730cb8a266945e53ec`.
 Signed/ABI-validated core:
-`4756df05c8e9d7bbed7c1e36fd2a8ea1c5dd5209da57a304bc37d22fe69d8659`.
+`c8afcadc49da838b3243edd401b6f37ada3bf63b600df6af2e666788c6bf7452`.
 The payload and startup correction are unchanged. This is the candidate for
 subsequent tests; historical results retain their own original core identities.
 

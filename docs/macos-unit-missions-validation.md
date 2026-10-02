@@ -55,7 +55,7 @@ preprocessor output. No pass is claimed for that inactive rule.
 Clean source `175d8c65fe66da3a50c7d6bba1e69cdde3d58f5c`:
 `build/macos/Lekmod-config-edge-20260927.zip`, SHA-256
 `0726506aaaffde2f2ef9cc32b86f036a4bc6d611bf420910a946174e3c549339`;
-core `8a101700206a9ef1febe0cff910e9a88098b6edcb84c68c356193b75f54ea9cd`.
+core `6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f`.
 Earlier accepted stages retain their original candidate identities; final F/R
 applicability and qualification are still required.
 

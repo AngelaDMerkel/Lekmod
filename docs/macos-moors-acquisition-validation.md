@@ -28,7 +28,7 @@ Clean source `ae85ca7e654369d8e569c703641ee94077ad90cc` produced
 `build/macos/Lekmod-moors-acquisition-20260927.zip`, SHA-256
 `62d71ca82c8cb21d96198a23df3e3e1e931d2f09976675d3d64117f37421d53e`.
 The signed/ABI-validated core remains
-`4756df05c8e9d7bbed7c1e36fd2a8ea1c5dd5209da57a304bc37d22fe69d8659`.
+`c8afcadc49da838b3243edd401b6f37ada3bf63b600df6af2e666788c6bf7452`.
 A byte comparison with the Mughal package finds exactly one changed payload member:
 `Lua/Civilizations/Lekmod_moors.lua`. WSDLC remains `950a329`/v1.0.10.
 

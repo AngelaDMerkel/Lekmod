@@ -2,7 +2,7 @@
 
 The specified upgrade, civilian capture, naval and embarkation branches now have
 **25 passing native assertions and five exact resulting-state replays** on the
-Mughal-fixed candidate (archive `79239c0e…e53ec`, core `4756df05…d8659`).
+Mughal-fixed candidate (archive `79239c0e…e53ec`, core `c8afcadc…f7452`).
 The case register contains full hashes. No Maori product change was needed.
 An intact all-stage pass is not claimed: the successful stages are identified
 separately from the retained failed commissioning runs.

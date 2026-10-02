@@ -1,5 +1,23 @@
 # Lekmod macOS single-player testing handoff
 
+## October2 continuation
+
+[Independent great-person rewards](macos-great-person-rewards-validation.md) passed12
+assertions/two exact replays in127.1seconds on the pinned current archive. Two
+commissioning fixture mistakes retain their original failed verdict. No product
+change. The user requested longer sessions: the committed
+`acceptance-lifetime-long.json` combines52 checks/15replays in one game process,
+26aggregate bounded turns and a45-minute wall-clock limit. Inspect ignored
+continuation state before touching the installation: this longer run may be active.
+Stock restoration occurs once at run completion/stop, not between stages.
+
+The archive manifests and actual members confirm the current core is
+`6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f`.
+Some earlier prose quoted incorrect core hashes; those prose values have been
+corrected against the original retained archives. Native reports/register contracts
+already held the correct identities and were not altered. The audit is
+`build/macos/artifact-hash-corrections-20261002.json`. G0/F/R remain incomplete.
+
 **Resumed by the user. Continue on local `main` until asked to stop.**
 Follow the [final acceptance plan](macos-final-acceptance-plan.md): reconcile and
 close gameplay cases first, freeze the candidate, then qualify reliability and
@@ -45,7 +63,7 @@ in `20260927T185946Z`, including the authentic failed save without refunds or
 movement changes. The pending wording above is historical. Use the new clean
 candidate `build/macos/Lekmod-mughal-garrison-20260927.zip`, SHA-256
 `79239c0ece59f1687f76e49663f9ff914fc561874a151c730cb8a266945e53ec`, core
-`4756df05c8e9d7bbed7c1e36fd2a8ea1c5dd5209da57a304bc37d22fe69d8659`.
+`c8afcadc49da838b3243edd401b6f37ada3bf63b600df6af2e666788c6bf7452`.
 Stock/restoration verified; next Maori/Moors lifetime and G0, then F/R gates.
 
 [Maori lifetime](macos-maori-lifetime-validation.md) now closes25 assertions/five
@@ -60,7 +78,7 @@ inspect continuation state before launching anything else.
 30 assertions/six exact replays in `20260927T201419Z`. New current candidate:
 `build/macos/Lekmod-moors-acquisition-20260927.zip`, SHA-256
 `62d71ca82c8cb21d96198a23df3e3e1e931d2f09976675d3d64117f37421d53e`;
-core remains `4756df05…d8659`. Only Moorish Lua changed from the Mughal payload.
+core remains `c8afcadc…f7452`. Only Moorish Lua changed from the Mughal payload.
 Next: Aksum ordinary healing, remaining missions, G0 reconciliation, then F/R.
 The inventory adds two mapped Moorish subscriptions; raw review surfaces are1340.
 
@@ -72,7 +90,7 @@ values/1657 rows, with no gameplay-consumer claim. Combined run `220858Z` passes
 assertions/five replays, exit0 and full preservation. Current clean candidate:
 `build/macos/Lekmod-config-edge-20260927.zip`, SHA-256
 `0726506aaaffde2f2ef9cc32b86f036a4bc6d611bf420910a946174e3c549339`, core
-`8a101700206a9ef1febe0cff910e9a88098b6edcb84c68c356193b75f54ea9cd`.
+`6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f`.
 All28 currently defined cases have scoped passes, but G0 is NOT complete:1321 raw
 surfaces/122 document rows still need effect/consumer reconciliation. The final
 case denominator is not frozen. Continue until the user's full acceptance scope
