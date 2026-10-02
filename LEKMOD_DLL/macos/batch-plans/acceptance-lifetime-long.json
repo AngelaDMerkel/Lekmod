@@ -1,0 +1,120 @@
+{
+  "schema": 1,
+  "name": "acceptance-lifetime-long",
+  "stages": [
+    {
+      "id": "defender-zoc",
+      "scenario": "defender-zoc",
+      "fixture": "build/macos/playtests/20260919T123456Z/Lekmod-Functional-20260919T123456Z.Civ5Save",
+      "sha256": "91586434b2476e3cd1e981c26c2c2a5cb2e462d714bdc76b29855fbc68667db6",
+      "max_turns": 1
+    },
+    {
+      "id": "nuclear-production",
+      "scenario": "nuclear-production",
+      "fixture": "build/macos/playtests/20260918T101851Z/Lekmod-Functional-20260918T101851Z.Civ5Save",
+      "sha256": "2a0c33f643d2d13ac839392a4cada955eec4caa17ac4dd255ca8dab8d89a0d6d",
+      "max_turns": 3
+    },
+    {
+      "id": "nuclear-cleanup",
+      "scenario": "nuclear-cleanup",
+      "fixture": "build/macos/playtests/20260919T041001Z/Lekmod-Functional-20260919T041001Z.Civ5Save",
+      "sha256": "56d1809c8a412ce157fb2b5ad419995efa6fdf5af16904c2ca3c852f80d4a3d7",
+      "max_turns": 4
+    },
+    {
+      "id": "nuclear-cities",
+      "scenario": "nuclear-cities",
+      "fixture": "build/macos/playtests/20260918T101851Z/Lekmod-Functional-20260918T101851Z.Civ5Save",
+      "sha256": "2a0c33f643d2d13ac839392a4cada955eec4caa17ac4dd255ca8dab8d89a0d6d",
+      "max_turns": 0
+    },
+    {
+      "id": "polynesia-upgrade",
+      "scenario": "polynesia-upgrade",
+      "fixture": "build/macos/playtests/20260919T080442Z/autosaves-after/AutoSave_Initial_0082 AD-0260.Civ5Save",
+      "sha256": "967891ad71dbb518bcb0939996654850f3e3b0ea6269e61903bb75f756caea9d",
+      "max_turns": 3
+    },
+    {
+      "id": "polynesia-gifts",
+      "scenario": "polynesia-gifts",
+      "fixture": "build/macos/playtests/20260919T084518Z/Lekmod-Functional-20260919T084518Z.Civ5Save",
+      "sha256": "f1513b42163cb82506c1310a4929a719a9fe8288f80336b935a0cb3c2f3d658a",
+      "max_turns": 2
+    },
+    {
+      "id": "polynesia-load",
+      "scenario": "polynesia-load",
+      "fixture": "build/macos/playtests/20260919T083635Z/Lekmod-Functional-20260919T083635Z.Civ5Save",
+      "sha256": "52e1b29e1524896365636acd61839a539d1894d1c5a85301cd16399ea8b14db3",
+      "max_turns": 0
+    },
+    {
+      "id": "venice",
+      "scenario": "venice",
+      "fixture": "build/macos/playtests/20260918T014611Z/autosaves-after/AutoSave_Initial_0000 BC-4000.Civ5Save",
+      "sha256": "c7b6fdc28681c2781e59a40c175df395ceea41ea38494925622f66922e6d5d7f",
+      "max_turns": 2
+    },
+    {
+      "id": "venice-known-compass",
+      "scenario": "venice-known-compass",
+      "fixture": "build/macos/playtests/20260918T014048Z/Lekmod-Functional-20260918T014048Z.Civ5Save",
+      "sha256": "d69fe6e6d7ac8d0c77bfbd2ca73dcf5409d7debb1ab5f565ed69e6f983e377a7",
+      "max_turns": 0
+    },
+    {
+      "id": "tonga-vision",
+      "scenario": "tonga-vision",
+      "fixture": "build/macos/playtests/20260918T233544Z/Lekmod-Functional-20260918T233544Z.Civ5Save",
+      "sha256": "392ce7695d8c6c794a5b016a5a181da5800fd3cab086074c3ca1d0b4d22d55cc",
+      "max_turns": 0
+    },
+    {
+      "fixture": "build/macos/playtests/20260926T164719Z/Lekmod-Functional-20260926T164719Z.Civ5Save",
+      "sha256": "ece8c06036ba7099625e7c96057f159db0a74f8ce90a178c20be157816f977a2",
+      "id": "swiss-human-training",
+      "scenario": "swiss-human-training",
+      "max_turns": 5
+    },
+    {
+      "id": "swiss-migration-load",
+      "scenario": "swiss-migration-load",
+      "fixture": "build/macos/playtests/20260926T165522Z/checkpoints/Lekmod-Batch-20260926T165522Z-swiss-human-training-run.Civ5Save",
+      "sha256": "a3d06b887e714071e1ce2e3b64890c56a7b16e76a37ced91b0d0ce04fefc404d",
+      "max_turns": 0
+    },
+    {
+      "id": "moors-capture-in-load",
+      "scenario": "moors-acquisition-load",
+      "fixture": "build/macos/playtests/20260927T195635Z/checkpoints/Lekmod-Batch-20260927T195635Z-moors-capture-in-run.Civ5Save",
+      "sha256": "7e4ab527fcf88aa967a773fd9867452426ffdaeac0f4bd4195f037a8c4f7931f",
+      "max_turns": 2,
+      "parameters": {
+        "expected_state": "{\"owners\":{\"0\":{\"cities\":{\"8192\":{\"marker\":2,\"market\":0,\"market_modifier\":30,\"production\":0,\"puppet\":false,\"resistance\":0,\"wonder_modifier\":15,\"x\":42,\"y\":13}},\"civilization\":102,\"era\":2},\"1\":{\"cities\":{\"16385\":{\"marker\":2,\"market\":0,\"market_modifier\":30,\"production\":0,\"puppet\":true,\"resistance\":1,\"wonder_modifier\":0,\"x\":33,\"y\":14},\"8192\":{\"marker\":2,\"market\":0,\"market_modifier\":30,\"production\":780,\"puppet\":false,\"resistance\":0,\"wonder_modifier\":0,\"x\":38,\"y\":24}},\"civilization\":102,\"era\":2},\"2\":{\"cities\":{\"8192\":{\"marker\":0,\"market\":0,\"market_modifier\":0,\"production\":900,\"puppet\":false,\"resistance\":0,\"wonder_modifier\":0,\"x\":24,\"y\":19}},\"civilization\":14,\"era\":2}},\"turn\":84}"
+      }
+    },
+    {
+      "id": "moors-gift-in-load",
+      "scenario": "moors-acquisition-load",
+      "fixture": "build/macos/playtests/20260927T195635Z/checkpoints/Lekmod-Batch-20260927T195635Z-moors-gift-in-run.Civ5Save",
+      "sha256": "950c484236a1a9f7eb42281ce85dd43d5ba0fb19393d814a9ee755a25ae8ba8a",
+      "max_turns": 2,
+      "parameters": {
+        "expected_state": "{\"owners\":{\"0\":{\"cities\":{\"8192\":{\"marker\":1,\"market\":0,\"market_modifier\":15,\"production\":0,\"puppet\":false,\"resistance\":0,\"wonder_modifier\":0,\"x\":42,\"y\":13}},\"civilization\":102,\"era\":3},\"1\":{\"cities\":{\"16385\":{\"marker\":1,\"market\":0,\"market_modifier\":15,\"production\":0,\"puppet\":true,\"resistance\":1,\"wonder_modifier\":0,\"x\":33,\"y\":14},\"8192\":{\"marker\":1,\"market\":0,\"market_modifier\":15,\"production\":0,\"puppet\":false,\"resistance\":0,\"wonder_modifier\":0,\"x\":38,\"y\":24}},\"civilization\":102,\"era\":3},\"2\":{\"cities\":{\"8192\":{\"marker\":0,\"market\":0,\"market_modifier\":0,\"production\":0,\"puppet\":false,\"resistance\":0,\"wonder_modifier\":0,\"x\":24,\"y\":19}},\"civilization\":14,\"era\":2}},\"turn\":83}"
+      }
+    },
+    {
+      "id": "mughal-garrison-oldsave",
+      "scenario": "mughal-garrison-load",
+      "fixture": "build/macos/playtests/20260927T184447Z/checkpoints/Lekmod-Batch-20260927T184447Z-mughal-garrison-run.Civ5Save",
+      "sha256": "3d8de2804282b85eb52b52922fcb2f55f822c5184f72c2b3dcf6a7a01ab010d7",
+      "max_turns": 2,
+      "parameters": {
+        "expected_state": "{\"owners\":{\"0\":{\"cities\":{\"8192\":{\"building\":1,\"ordinary\":0,\"strength\":6396,\"x\":4,\"y\":8}},\"gold\":5000,\"units\":{\"106507\":{\"garrison\":false,\"moves\":120,\"type\":83,\"x\":2,\"y\":7},\"114700\":{\"garrison\":false,\"moves\":120,\"type\":83,\"x\":3,\"y\":7},\"122893\":{\"garrison\":false,\"moves\":120,\"type\":83,\"x\":4,\"y\":7},\"16385\":{\"garrison\":false,\"moves\":120,\"type\":83,\"x\":4,\"y\":9},\"24576\":{\"garrison\":true,\"moves\":300,\"type\":23,\"x\":4,\"y\":8},\"32770\":{\"garrison\":false,\"moves\":120,\"type\":83,\"x\":2,\"y\":4},\"40963\":{\"garrison\":false,\"moves\":120,\"type\":83,\"x\":3,\"y\":4},\"49156\":{\"garrison\":false,\"moves\":120,\"type\":83,\"x\":2,\"y\":5},\"57349\":{\"garrison\":false,\"moves\":120,\"type\":83,\"x\":3,\"y\":5},\"65542\":{\"garrison\":false,\"moves\":120,\"type\":83,\"x\":4,\"y\":5},\"73735\":{\"garrison\":false,\"moves\":120,\"type\":83,\"x\":2,\"y\":6},\"81928\":{\"garrison\":false,\"moves\":120,\"type\":83,\"x\":3,\"y\":6},\"90121\":{\"garrison\":false,\"moves\":120,\"type\":83,\"x\":4,\"y\":6},\"98314\":{\"garrison\":false,\"moves\":120,\"type\":83,\"x\":5,\"y\":6}}}},\"turn\":2}"
+      }
+    }
+  ]
+}

@@ -263,3 +263,24 @@ or synchronization flag is altered. Each stage records `save_verification`.
 Seven save-handling tests and 24 dispatcher tests pass; the three-stage native
 plunder retest passed all nine checks/three reloads with verified full copies.
 Standalone runner copies occur after its owned game process exits.
+
+## Longer acceptance round (October2)
+
+The user requested fewer installation/restart cycles and longer useful sessions.
+`batch-plans/acceptance-lifetime-long.json` combines15 independent fixtures,
+52 declared assertions and15 exact checkpoint comparisons under one native process.
+The maximum is26 ordinary turns across separate fixtures, within the existing
+30-turn aggregate guard, and45 wall-clock minutes. It is not another long campaign.
+
+The selected current-candidate regressions cover Defender ZOC/old-save repair;
+Manhattan/missile production, real fallout cleanup and city blast effects; Polynesian
+upgrades/gifts/load repair; Venice research/load repair; Tonga generated-map vision;
+Swiss training/load repair; Moorish and Mughal affected saves. Older successful
+results retain their original scope. This integrated plan is initially prepared,
+not yet a passing result or final GateF while G0 is incomplete.
+
+The existing wrapper installs once, runs all stage/replay pairs, and restores stock
+only after the entire run or a requested stop. It does not restore/reinstall between
+stages. Per-stage assertion/turn/stall checks, isolated hashed fixtures and async
+closed-writer checks remain active. Individual functional failures stay failed while
+independent fixtures continue. No synchronization/wait flags are cleared.
