@@ -56,7 +56,7 @@ end
 function LekmodScenario.step(player)
  assert(player:GetCivilizationType()==GameInfoTypes.CIVILIZATION_ROME,"requires Roman control fixture")
  if phase=="init"then
-  startEra=player:GetCurrentEra();assert(startEra<GameInfoTypes.ERA_ATOMIC,"fixture must precede Atomic")
+  startEra=player:GetCurrentEra();assert(startEra<GameInfoTypes.ERA_POSTMODERN,"fixture must precede Atomic")
   assert(not player:HasPolicy(policy),"fixture already has Commerce finisher")
   for i=0,Map.GetNumPlots()-1 do local p=Map.GetPlotByIndex(i)
    if not p:IsWater()and not p:IsMountain()and not p:IsCity()and p:GetNumUnits()==0 then
@@ -90,7 +90,7 @@ function LekmodScenario.step(player)
    return true
   end
  elseif phase=="era"then
-  assert(player:GetCurrentEra()==GameInfoTypes.ERA_ATOMIC and player:GetCurrentEra()>startEra)
+  assert(player:GetCurrentEra()==GameInfoTypes.ERA_POSTMODERN and player:GetCurrentEra()>startEra)
   phase="supply"
  end
  return false

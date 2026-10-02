@@ -23,7 +23,12 @@ end
 function LekmodScenario.step(player)
  local c=cityID and player:GetCityByID(cityID)or player:GetCapitalCity();assert(c)
  if phase=="init"then
-  cityID=c:GetID();local cost=0
+  cityID=c:GetID()
+  -- Ancient-start fixture keeps ordinary build costs. Computers supplies a
+  -- legal expensive construction for the unchanged population12 uncapped case.
+  assert(Game.GetStartEra()==GameInfoTypes.ERA_ANCIENT,"requires Ancient-start fixture")
+  LekmodScenarioGrantTech(player,"TECH_COMPUTERS")
+  local cost=0
   for b in GameInfo.Buildings()do if c:CanConstruct(b.ID)and b.Cost>cost then building=b.ID;cost=b.Cost end end
   assert(building,"fixture has no legal construction")
   for i=0,Map.GetNumPlots()-1 do local p=Map.GetPlotByIndex(i)
