@@ -485,6 +485,18 @@
         {
           "path": "build/macos/mughal-preservation-20260927.json",
           "sha256": "d250838122099b0c79006ea7f2dc45fbace0f325caa125810359b4ebeb7714d1"
+        },
+        {
+          "path": "build/macos/playtests/20261002T213706Z/report.json",
+          "sha256": "114ba5755dbe02bf05ab57de8320880d6002af97f32f4d9b4791681f9d9ee49d"
+        },
+        {
+          "path": "build/macos/playtests/20261002T213706Z/batch-report.json",
+          "sha256": "a1b3f7306135206e81784eff85920e5d98e8e3094fc8bb8a09d51aa6d45705b1"
+        },
+        {
+          "path": "build/macos/acceptance-long-preservation-20261002.json",
+          "sha256": "9edfecb6b82236e9e9e8ff27dbd3bff46384db4ef3c33d228596d8a6c487aeda"
         }
       ],
       "surface_ids": [
@@ -587,10 +599,24 @@
               "garrison-loaded-unrelated-state"
             ],
             "gamecore_sha256": "c8afcadc49da838b3243edd401b6f37ada3bf63b600df6af2e666788c6bf7452"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261002T213706Z/report.json",
+            "batch_report": "build/macos/playtests/20261002T213706Z/batch-report.json",
+            "stage": "mughal-garrison-oldsave",
+            "required_assertions": [
+              "garrison-loaded-cache-control",
+              "garrison-loaded-cache-repair",
+              "garrison-loaded-next-turn",
+              "garrison-loaded-unrelated-state"
+            ],
+            "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f"
           }
         ]
       },
-      "validation_document": "docs/macos-mughal-garrison-validation.md"
+      "validation_document": "docs/macos-mughal-garrison-validation.md",
+      "latest_candidate_regression_scope": "20261002T213706Z re-ran only mughal-garrison-oldsave. Earlier full acquisition/movement/production contracts retain their original tested binary identities."
     },
     {
       "id": "LIFE-MAORI-UPGRADE-CAPTURE-NAVAL",
@@ -927,6 +953,18 @@
         {
           "path": "build/macos/moors-preservation-20260927.json",
           "sha256": "63b66ca3be7e32f77fc050ad8faea319d0852efa92b88c553df40f328aff007e"
+        },
+        {
+          "path": "build/macos/playtests/20261002T213706Z/report.json",
+          "sha256": "114ba5755dbe02bf05ab57de8320880d6002af97f32f4d9b4791681f9d9ee49d"
+        },
+        {
+          "path": "build/macos/playtests/20261002T213706Z/batch-report.json",
+          "sha256": "a1b3f7306135206e81784eff85920e5d98e8e3094fc8bb8a09d51aa6d45705b1"
+        },
+        {
+          "path": "build/macos/acceptance-long-preservation-20261002.json",
+          "sha256": "9edfecb6b82236e9e9e8ff27dbd3bff46384db4ef3c33d228596d8a6c487aeda"
         }
       ],
       "surface_ids": [
@@ -1064,10 +1102,35 @@
               "moors-loaded-production-preserved"
             ],
             "gamecore_sha256": "c8afcadc49da838b3243edd401b6f37ada3bf63b600df6af2e666788c6bf7452"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261002T213706Z/report.json",
+            "batch_report": "build/macos/playtests/20261002T213706Z/batch-report.json",
+            "stage": "moors-capture-in-load",
+            "required_assertions": [
+              "moors-loaded-era-repair",
+              "moors-loaded-next-owner-turn",
+              "moors-loaded-production-preserved"
+            ],
+            "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261002T213706Z/report.json",
+            "batch_report": "build/macos/playtests/20261002T213706Z/batch-report.json",
+            "stage": "moors-gift-in-load",
+            "required_assertions": [
+              "moors-loaded-era-repair",
+              "moors-loaded-next-owner-turn",
+              "moors-loaded-production-preserved"
+            ],
+            "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f"
           }
         ]
       },
-      "validation_document": "docs/macos-moors-acquisition-validation.md"
+      "validation_document": "docs/macos-moors-acquisition-validation.md",
+      "latest_candidate_regression_scope": "20261002T213706Z re-ran only moors-capture-in-load, moors-gift-in-load. Earlier full acquisition/movement/production contracts retain their original tested binary identities."
     },
     {
       "id": "LIFE-CUBA-CAPITAL-TRANSFER",
@@ -5798,7 +5861,7 @@
       "id": "REG-DEFENDER-ZOC",
       "group": "G3",
       "title": "Defender affected-save recovery and actual ZOC movement",
-      "status": "ready",
+      "status": "passed",
       "source_references": [
         {
           "path": "LEKMOD/Lua/Civilizations/Lekmod_newzealand.lua",
@@ -5840,7 +5903,20 @@
       "stage": [
         "defender-zoc"
       ],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20261002T213706Z/report.json",
+          "sha256": "114ba5755dbe02bf05ab57de8320880d6002af97f32f4d9b4791681f9d9ee49d"
+        },
+        {
+          "path": "build/macos/playtests/20261002T213706Z/batch-report.json",
+          "sha256": "a1b3f7306135206e81784eff85920e5d98e8e3094fc8bb8a09d51aa6d45705b1"
+        },
+        {
+          "path": "build/macos/acceptance-long-preservation-20261002.json",
+          "sha256": "9edfecb6b82236e9e9e8ff27dbd3bff46384db4ef3c33d228596d8a6c487aeda"
+        }
+      ],
       "surface_ids": [],
       "implementation_references": [
         {
@@ -5855,13 +5931,37 @@
       "implementation_limits": [
         "Previously scoped historical passes remain in their reports. This run qualifies the current candidate and shared-process isolation; it is not final Gate F while G0 remains open.",
         "AI command outcomes do not establish autonomous strategic choices; supplied prerequisites do not establish earned acquisition of those prerequisites."
-      ]
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261002T213706Z/report.json",
+            "batch_report": "build/macos/playtests/20261002T213706Z/batch-report.json",
+            "stage": "defender-zoc",
+            "required_assertions": [
+              "Defender-active-ZOC-movement",
+              "Defender-inactive-ZOC-stop",
+              "Defender-normal-ZOC-stop",
+              "Defender-oldsave-owner-turn-recovery"
+            ],
+            "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f"
+          }
+        ]
+      },
+      "execution_result": {
+        "run": "20261002T213706Z",
+        "native_assertions": 4,
+        "exact_replays": 1,
+        "product_change": false
+      }
     },
     {
       "id": "REG-NUCLEAR-PRODUCTION",
       "group": "G3",
       "title": "Manhattan project and nuclear-missile production",
-      "status": "ready",
+      "status": "passed",
       "source_references": [
         {
           "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvCity.cpp",
@@ -5907,7 +6007,20 @@
       "stage": [
         "nuclear-production"
       ],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20261002T213706Z/report.json",
+          "sha256": "114ba5755dbe02bf05ab57de8320880d6002af97f32f4d9b4791681f9d9ee49d"
+        },
+        {
+          "path": "build/macos/playtests/20261002T213706Z/batch-report.json",
+          "sha256": "a1b3f7306135206e81784eff85920e5d98e8e3094fc8bb8a09d51aa6d45705b1"
+        },
+        {
+          "path": "build/macos/acceptance-long-preservation-20261002.json",
+          "sha256": "9edfecb6b82236e9e9e8ff27dbd3bff46384db4ef3c33d228596d8a6c487aeda"
+        }
+      ],
       "surface_ids": [],
       "implementation_references": [
         {
@@ -5922,13 +6035,36 @@
       "implementation_limits": [
         "Previously scoped historical passes remain in their reports. This run qualifies the current candidate and shared-process isolation; it is not final Gate F while G0 remains open.",
         "AI command outcomes do not establish autonomous strategic choices; supplied prerequisites do not establish earned acquisition of those prerequisites."
-      ]
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261002T213706Z/report.json",
+            "batch_report": "build/macos/playtests/20261002T213706Z/batch-report.json",
+            "stage": "nuclear-production",
+            "required_assertions": [
+              "nuclear-Manhattan-production",
+              "nuclear-missile-production",
+              "nuclear-project-gate"
+            ],
+            "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f"
+          }
+        ]
+      },
+      "execution_result": {
+        "run": "20261002T213706Z",
+        "native_assertions": 3,
+        "exact_replays": 1,
+        "product_change": false
+      }
     },
     {
       "id": "REG-NUCLEAR-CLEANUP",
       "group": "G4",
       "title": "Actual blast fallout removal and farm repair",
-      "status": "ready",
+      "status": "passed",
       "source_references": [
         {
           "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnit.cpp",
@@ -5974,7 +6110,20 @@
       "stage": [
         "nuclear-cleanup"
       ],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20261002T213706Z/report.json",
+          "sha256": "114ba5755dbe02bf05ab57de8320880d6002af97f32f4d9b4791681f9d9ee49d"
+        },
+        {
+          "path": "build/macos/playtests/20261002T213706Z/batch-report.json",
+          "sha256": "a1b3f7306135206e81784eff85920e5d98e8e3094fc8bb8a09d51aa6d45705b1"
+        },
+        {
+          "path": "build/macos/acceptance-long-preservation-20261002.json",
+          "sha256": "9edfecb6b82236e9e9e8ff27dbd3bff46384db4ef3c33d228596d8a6c487aeda"
+        }
+      ],
       "surface_ids": [],
       "implementation_references": [
         {
@@ -5989,13 +6138,36 @@
       "implementation_limits": [
         "Previously scoped historical passes remain in their reports. This run qualifies the current candidate and shared-process isolation; it is not final Gate F while G0 remains open.",
         "AI command outcomes do not establish autonomous strategic choices; supplied prerequisites do not establish earned acquisition of those prerequisites."
-      ]
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261002T213706Z/report.json",
+            "batch_report": "build/macos/playtests/20261002T213706Z/batch-report.json",
+            "stage": "nuclear-cleanup",
+            "required_assertions": [
+              "nuclear-cleanup-restrictions",
+              "nuclear-fallout-cleanup",
+              "nuclear-farm-repair"
+            ],
+            "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f"
+          }
+        ]
+      },
+      "execution_result": {
+        "run": "20261002T213706Z",
+        "native_assertions": 3,
+        "exact_replays": 1,
+        "product_change": false
+      }
     },
     {
       "id": "REG-NUCLEAR-CITIES",
       "group": "G3",
       "title": "Capital protection, city destruction and nuclear shelter outcomes",
-      "status": "ready",
+      "status": "passed",
       "source_references": [
         {
           "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnitCombat.cpp",
@@ -6043,7 +6215,20 @@
       "stage": [
         "nuclear-cities"
       ],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20261002T213706Z/report.json",
+          "sha256": "114ba5755dbe02bf05ab57de8320880d6002af97f32f4d9b4791681f9d9ee49d"
+        },
+        {
+          "path": "build/macos/playtests/20261002T213706Z/batch-report.json",
+          "sha256": "a1b3f7306135206e81784eff85920e5d98e8e3094fc8bb8a09d51aa6d45705b1"
+        },
+        {
+          "path": "build/macos/acceptance-long-preservation-20261002.json",
+          "sha256": "9edfecb6b82236e9e9e8ff27dbd3bff46384db4ef3c33d228596d8a6c487aeda"
+        }
+      ],
       "surface_ids": [],
       "implementation_references": [
         {
@@ -6058,13 +6243,38 @@
       "implementation_limits": [
         "Previously scoped historical passes remain in their reports. This run qualifies the current candidate and shared-process isolation; it is not final Gate F while G0 remains open.",
         "AI command outcomes do not establish autonomous strategic choices; supplied prerequisites do not establish earned acquisition of those prerequisites."
-      ]
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261002T213706Z/report.json",
+            "batch_report": "build/macos/playtests/20261002T213706Z/batch-report.json",
+            "stage": "nuclear-cities",
+            "required_assertions": [
+              "nuclear-large-city-damage",
+              "nuclear-original-capital-survival",
+              "nuclear-shelter-population",
+              "nuclear-small-city-destruction",
+              "nuclear-war-and-diplomacy"
+            ],
+            "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f"
+          }
+        ]
+      },
+      "execution_result": {
+        "run": "20261002T213706Z",
+        "native_assertions": 5,
+        "exact_replays": 1,
+        "product_change": false
+      }
     },
     {
       "id": "LIFE-POLYNESIA-OCEAN",
       "group": "G2",
       "title": "Polynesian creation, conversion and old-save ocean access",
-      "status": "ready",
+      "status": "passed",
       "source_references": [
         {
           "path": "LEKMOD/Lua/Civilizations/Lekmod_polynesia.lua",
@@ -6118,7 +6328,20 @@
         "polynesia-gifts",
         "polynesia-load"
       ],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20261002T213706Z/report.json",
+          "sha256": "114ba5755dbe02bf05ab57de8320880d6002af97f32f4d9b4791681f9d9ee49d"
+        },
+        {
+          "path": "build/macos/playtests/20261002T213706Z/batch-report.json",
+          "sha256": "a1b3f7306135206e81784eff85920e5d98e8e3094fc8bb8a09d51aa6d45705b1"
+        },
+        {
+          "path": "build/macos/acceptance-long-preservation-20261002.json",
+          "sha256": "9edfecb6b82236e9e9e8ff27dbd3bff46384db4ef3c33d228596d8a6c487aeda"
+        }
+      ],
       "surface_ids": [
         "lua:Lua/Civilizations/Lekmod_polynesia.lua:Events.SequenceGameInitComplete:restore_polynesia_ocean_access",
         "lua:Lua/Civilizations/Lekmod_polynesia.lua:GameEvents.UnitCreated:lekmod_polynesia_ua_ocean_impassable_fix",
@@ -6145,13 +6368,62 @@
       "implementation_limits": [
         "Previously scoped historical passes remain in their reports. This run qualifies the current candidate and shared-process isolation; it is not final Gate F while G0 remains open.",
         "AI command outcomes do not establish autonomous strategic choices; supplied prerequisites do not establish earned acquisition of those prerequisites."
-      ]
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261002T213706Z/report.json",
+            "batch_report": "build/macos/playtests/20261002T213706Z/batch-report.json",
+            "stage": "polynesia-upgrade",
+            "required_assertions": [
+              "polynesia-converted-ocean-access",
+              "polynesia-fresh-ocean-access",
+              "polynesia-ocean-movement",
+              "polynesia-paid-upgrades",
+              "polynesia-roman-ocean-control"
+            ],
+            "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261002T213706Z/report.json",
+            "batch_report": "build/macos/playtests/20261002T213706Z/batch-report.json",
+            "stage": "polynesia-gifts",
+            "required_assertions": [
+              "polynesia-gift-away",
+              "polynesia-gift-incoming",
+              "polynesia-gift-ocean-move"
+            ],
+            "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261002T213706Z/report.json",
+            "batch_report": "build/macos/playtests/20261002T213706Z/batch-report.json",
+            "stage": "polynesia-load",
+            "required_assertions": [
+              "polynesia-saved-ocean-move",
+              "polynesia-saved-restrictions",
+              "polynesia-saved-roman-control"
+            ],
+            "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f"
+          }
+        ]
+      },
+      "execution_result": {
+        "run": "20261002T213706Z",
+        "native_assertions": 11,
+        "exact_replays": 3,
+        "product_change": false
+      }
     },
     {
       "id": "LIFE-VENICE-COMPASS",
       "group": "G5",
       "title": "Independent Venetian Compass awards and old-save repair",
-      "status": "ready",
+      "status": "passed",
       "source_references": [
         {
           "path": "LEKMOD/Lua/Civilizations/Lekmod_venice.lua",
@@ -6198,7 +6470,20 @@
         "venice",
         "venice-known-compass"
       ],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20261002T213706Z/report.json",
+          "sha256": "114ba5755dbe02bf05ab57de8320880d6002af97f32f4d9b4791681f9d9ee49d"
+        },
+        {
+          "path": "build/macos/playtests/20261002T213706Z/batch-report.json",
+          "sha256": "a1b3f7306135206e81784eff85920e5d98e8e3094fc8bb8a09d51aa6d45705b1"
+        },
+        {
+          "path": "build/macos/acceptance-long-preservation-20261002.json",
+          "sha256": "9edfecb6b82236e9e9e8ff27dbd3bff46384db4ef3c33d228596d8a6c487aeda"
+        }
+      ],
       "surface_ids": [
         "lua:Lua/Civilizations/Lekmod_venice.lua:GameEvents.TeamTechResearched:lekmod_venice_route_compass",
         "lua:Lua/Civilizations/Lekmod_venice.lua:Events.SequenceGameInitComplete:restore_known_compass_routes"
@@ -6220,13 +6505,46 @@
       "implementation_limits": [
         "Previously scoped historical passes remain in their reports. This run qualifies the current candidate and shared-process isolation; it is not final Gate F while G0 remains open.",
         "AI command outcomes do not establish autonomous strategic choices; supplied prerequisites do not establish earned acquisition of those prerequisites."
-      ]
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261002T213706Z/report.json",
+            "batch_report": "build/macos/playtests/20261002T213706Z/batch-report.json",
+            "stage": "venice",
+            "required_assertions": [
+              "venice-first-compass",
+              "venice-idempotent-tech",
+              "venice-second-compass"
+            ],
+            "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261002T213706Z/report.json",
+            "batch_report": "build/macos/playtests/20261002T213706Z/batch-report.json",
+            "stage": "venice-known-compass",
+            "required_assertions": [
+              "venice-known-compass-awards"
+            ],
+            "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f"
+          }
+        ]
+      },
+      "execution_result": {
+        "run": "20261002T213706Z",
+        "native_assertions": 4,
+        "exact_replays": 2,
+        "product_change": false
+      }
     },
     {
       "id": "LIFE-TONGA-INITIAL-VISION",
       "group": "G2",
       "title": "Generated Tongan singleton islands and owner-specific vision",
-      "status": "ready",
+      "status": "passed",
       "source_references": [
         {
           "path": "LEKMOD/Lua/Civilizations/Lekmod_tonga.lua",
@@ -6270,7 +6588,20 @@
       "stage": [
         "tonga-vision"
       ],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20261002T213706Z/report.json",
+          "sha256": "114ba5755dbe02bf05ab57de8320880d6002af97f32f4d9b4791681f9d9ee49d"
+        },
+        {
+          "path": "build/macos/playtests/20261002T213706Z/batch-report.json",
+          "sha256": "a1b3f7306135206e81784eff85920e5d98e8e3094fc8bb8a09d51aa6d45705b1"
+        },
+        {
+          "path": "build/macos/acceptance-long-preservation-20261002.json",
+          "sha256": "9edfecb6b82236e9e9e8ff27dbd3bff46384db4ef3c33d228596d8a6c487aeda"
+        }
+      ],
       "surface_ids": [
         "lua:Lua/Civilizations/Lekmod_tonga.lua:Events.SequenceGameInitComplete:lekmod_tonga_ua"
       ],
@@ -6287,13 +6618,37 @@
       "implementation_limits": [
         "Previously scoped historical passes remain in their reports. This run qualifies the current candidate and shared-process isolation; it is not final Gate F while G0 remains open.",
         "AI command outcomes do not establish autonomous strategic choices; supplied prerequisites do not establish earned acquisition of those prerequisites."
-      ]
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261002T213706Z/report.json",
+            "batch_report": "build/macos/playtests/20261002T213706Z/batch-report.json",
+            "stage": "tonga-vision",
+            "required_assertions": [
+              "tonga-native-area-identity",
+              "tonga-near-islands",
+              "tonga-other-owner-vision",
+              "tonga-singleton-islands"
+            ],
+            "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f"
+          }
+        ]
+      },
+      "execution_result": {
+        "run": "20261002T213706Z",
+        "native_assertions": 4,
+        "exact_replays": 1,
+        "product_change": false
+      }
     },
     {
       "id": "REG-SWISS-TRAINING-MIGRATION",
       "group": "G2",
       "title": "Swiss human training and authentic saved-movement repair",
-      "status": "ready",
+      "status": "passed",
       "source_references": [
         {
           "path": "LEKMOD/Lua/Civilizations/Lekmod_switzerland.lua",
@@ -6341,7 +6696,20 @@
         "swiss-human-training",
         "swiss-migration-load"
       ],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20261002T213706Z/report.json",
+          "sha256": "114ba5755dbe02bf05ab57de8320880d6002af97f32f4d9b4791681f9d9ee49d"
+        },
+        {
+          "path": "build/macos/playtests/20261002T213706Z/batch-report.json",
+          "sha256": "a1b3f7306135206e81784eff85920e5d98e8e3094fc8bb8a09d51aa6d45705b1"
+        },
+        {
+          "path": "build/macos/acceptance-long-preservation-20261002.json",
+          "sha256": "9edfecb6b82236e9e9e8ff27dbd3bff46384db4ef3c33d228596d8a6c487aeda"
+        }
+      ],
       "surface_ids": [],
       "implementation_references": [
         {
@@ -6360,7 +6728,44 @@
       "implementation_limits": [
         "Previously scoped historical passes remain in their reports. This run qualifies the current candidate and shared-process isolation; it is not final Gate F while G0 remains open.",
         "AI command outcomes do not establish autonomous strategic choices; supplied prerequisites do not establish earned acquisition of those prerequisites."
-      ]
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261002T213706Z/report.json",
+            "batch_report": "build/macos/playtests/20261002T213706Z/batch-report.json",
+            "stage": "swiss-human-training",
+            "required_assertions": [
+              "swiss-human-armory",
+              "swiss-human-free-reward",
+              "swiss-human-trained-movement",
+              "swiss-human-trained-promotion"
+            ],
+            "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261002T213706Z/report.json",
+            "batch_report": "build/macos/playtests/20261002T213706Z/batch-report.json",
+            "stage": "swiss-migration-load",
+            "required_assertions": [
+              "mountaineer-repaired-move",
+              "mountaineer-saved-control",
+              "mountaineer-saved-no-refund",
+              "mountaineer-saved-repair"
+            ],
+            "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f"
+          }
+        ]
+      },
+      "execution_result": {
+        "run": "20261002T213706Z",
+        "native_assertions": 8,
+        "exact_replays": 2,
+        "product_change": false
+      }
     }
   ],
   "surface_review": [
@@ -17287,7 +17692,7 @@
           "sha256": "30fba08019f6123c0df6b39ce69811783599c1789ce40d0bae5782586a92c778"
         }
       ],
-      "reason": "Source-reviewed current-candidate case covers this shared handler via explicit positive/control/transition/replay assertions. Case is ready, not passed, until the long native batch completes. Additional whole-civilization effects remain separate surfaces."
+      "reason": "Source-reviewed current-candidate case covers this shared handler via explicit positive/control/transition/replay assertions. The corresponding stages and exact replays passed in the full52-check/15-replay run20261002T213706Z. Additional whole-civilization effects remain separate surfaces."
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_philippines.lua:GameEvents.PlayerCityFounded:lekmod_philippine_expand_population",
@@ -17559,7 +17964,7 @@
           "sha256": "4d3dda852bab0d19209a72fdf90219427438908925360f96cf075d7fb341bda5"
         }
       ],
-      "reason": "Source-reviewed current-candidate case covers this shared handler via explicit positive/control/transition/replay assertions. Case is ready, not passed, until the long native batch completes. Additional whole-civilization effects remain separate surfaces."
+      "reason": "Source-reviewed current-candidate case covers this shared handler via explicit positive/control/transition/replay assertions. The corresponding stages and exact replays passed in the full52-check/15-replay run20261002T213706Z. Additional whole-civilization effects remain separate surfaces."
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_venice.lua:Events.SequenceGameInitComplete:restore_known_compass_routes",
@@ -17574,7 +17979,7 @@
           "sha256": "4d3dda852bab0d19209a72fdf90219427438908925360f96cf075d7fb341bda5"
         }
       ],
-      "reason": "Source-reviewed current-candidate case covers this shared handler via explicit positive/control/transition/replay assertions. Case is ready, not passed, until the long native batch completes. Additional whole-civilization effects remain separate surfaces."
+      "reason": "Source-reviewed current-candidate case covers this shared handler via explicit positive/control/transition/replay assertions. The corresponding stages and exact replays passed in the full52-check/15-replay run20261002T213706Z. Additional whole-civilization effects remain separate surfaces."
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_palmyra.lua:GameEvents.PlayerCityFounded:lekmod_ua_palmyra_add_fresh_water",
@@ -17651,7 +18056,7 @@
           "sha256": "fb199a0662f782a89627b3976d8ad3092602d45b1895eee25e11f8c90d78fc94"
         }
       ],
-      "reason": "Source-reviewed current-candidate case covers this shared handler via explicit positive/control/transition/replay assertions. Case is ready, not passed, until the long native batch completes. Additional whole-civilization effects remain separate surfaces."
+      "reason": "Source-reviewed current-candidate case covers this shared handler via explicit positive/control/transition/replay assertions. The corresponding stages and exact replays passed in the full52-check/15-replay run20261002T213706Z. Additional whole-civilization effects remain separate surfaces."
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_polynesia.lua:GameEvents.UnitCreated:lekmod_polynesia_ua_ocean_impassable_fix",
@@ -17666,7 +18071,7 @@
           "sha256": "fb199a0662f782a89627b3976d8ad3092602d45b1895eee25e11f8c90d78fc94"
         }
       ],
-      "reason": "Source-reviewed current-candidate case covers this shared handler via explicit positive/control/transition/replay assertions. Case is ready, not passed, until the long native batch completes. Additional whole-civilization effects remain separate surfaces."
+      "reason": "Source-reviewed current-candidate case covers this shared handler via explicit positive/control/transition/replay assertions. The corresponding stages and exact replays passed in the full52-check/15-replay run20261002T213706Z. Additional whole-civilization effects remain separate surfaces."
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_polynesia.lua:GameEvents.UnitConverted:anonymous-1",
@@ -17681,7 +18086,7 @@
           "sha256": "fb199a0662f782a89627b3976d8ad3092602d45b1895eee25e11f8c90d78fc94"
         }
       ],
-      "reason": "Source-reviewed current-candidate case covers this shared handler via explicit positive/control/transition/replay assertions. Case is ready, not passed, until the long native batch completes. Additional whole-civilization effects remain separate surfaces."
+      "reason": "Source-reviewed current-candidate case covers this shared handler via explicit positive/control/transition/replay assertions. The corresponding stages and exact replays passed in the full52-check/15-replay run20261002T213706Z. Additional whole-civilization effects remain separate surfaces."
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_mexico.lua:Events.SequenceGameInitComplete:lekmod_mexico_initial_locations",
@@ -25412,9 +25817,8 @@
   "summary": {
     "designed_cases": 42,
     "case_statuses": {
-      "passed": 14,
-      "covered-by-evidence": 20,
-      "ready": 8
+      "passed": 22,
+      "covered-by-evidence": 20
     },
     "review_surfaces": 1340,
     "pending_document_rows": 121,

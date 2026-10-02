@@ -2,6 +2,16 @@
 
 ## October2 continuation
 
+The [longer acceptance session](macos-long-session-validation.md) is complete:
+52checks/15exact replays in one788.3-second process,12aggregate fixture turns,
+normal exit0 and no Lua/synchronization/crash errors. All874 pre-test manifest
+files and32 captured stock UI originals are unchanged; stock is active and no
+game/launcher remains. Eight ready cases are now passed. The register has42
+scoped passes/retained cases, but1,288 surfaces and121 document rows remain
+untriaged; these are review counts, not a final test denominator. Continue
+reconciliation and prepare larger batches of genuine gaps. The stationed-unit
+Bomb Shelter effect is an explicitly identified next-batch gap.
+
 [Independent great-person rewards](macos-great-person-rewards-validation.md) passed12
 assertions/two exact replays in127.1seconds on the pinned current archive. Two
 commissioning fixture mistakes retain their original failed verdict. No product

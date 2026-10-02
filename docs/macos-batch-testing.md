@@ -284,3 +284,8 @@ only after the entire run or a requested stop. It does not restore/reinstall bet
 stages. Per-stage assertion/turn/stall checks, isolated hashed fixtures and async
 closed-writer checks remain active. Individual functional failures stay failed while
 independent fixtures continue. No synchronization/wait flags are cleared.
+
+The first complete execution now passes: `20261002T213706Z`,52checks/15replays,
+12aggregate turns and788.3seconds in one process. See
+[the longer-session report](macos-long-session-validation.md) for limits and
+preservation. This supersedes only the prepared/not-yet-run wording above.

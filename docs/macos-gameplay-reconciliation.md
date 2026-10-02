@@ -317,3 +317,9 @@ the surface remains untriaged with a concrete next-batch design action.
 
 There are42 specified cases and1,288 untriaged review surfaces;121 document rows
 remain. This is still a review inventory, not a frozen test denominator.
+
+The October2 [longer run](macos-long-session-validation.md) has now completed:
+all52 checks and15 exact replays passed in788.3seconds, with one install/restore
+and no inter-stage restart. It closes the eight ready cases and adds current-core
+Moorish/Mughal old-save regressions. All42 currently specified cases have scoped
+passes/retained evidence; G0 remains open at1,288 surfaces/121 document rows.
