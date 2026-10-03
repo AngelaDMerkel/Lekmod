@@ -1,5 +1,28 @@
 # Lekmod macOS single-player testing handoff
 
+## Current October 3 checkpoint
+
+Testing continues on local `main`; full single-player acceptance is **not yet
+confirmed**. The [Consulates ownership fix](macos-consulates-validation.md) passed
+the full88-assertion/11-replay cache/reward round, including both authentic
+failed-save repairs. The [policy-effect checks](macos-policy-effects-validation.md)
+now pass32scoped assertions/four replays across a mixed batch and focused recovery;
+the original wrong-happiness-query failure remains recorded.
+
+Current tested archive: `build/macos/Lekmod-consulates-fixed-20261003.zip`, SHA-256
+`52778f2971c77ac4bc2fdfc2f6ce6e2b753cf24d438b5821bf86dace6935130c`.
+Source `ddf38d06`, unchanged core `c8f1723c…9687aa2`. Final candidate F is not frozen.
+Stock is restored, no game process is running, and954baseline files were verified
+unchanged after the latest native round. The preexisting Aspyr launcher is separate.
+
+The register has71scoped passing/retained cases, but G0 still has1,243untriaged
+review surfaces and121document rows. These are not a count of required new tests
+or an overall completion percentage. Continue reconciliation and remaining
+gameplay work before final F/R1–R5 qualification. Latest ignored resume record:
+`build/macos/next-actions-current.md`. Older sections below retain their historical
+artifact/status context.
+
+
 ## October2 continuation
 
 The [reward-boundary continuation](macos-reward-boundaries-validation.md) has20
