@@ -14,19 +14,25 @@ GameEvents=setmetatable({},{__index=function(t,key)
  rawset(t,key,e);return e
 end})
 GameInfoTypes={POLICY_CONSULATES=26,ERA_INDUSTRIAL=4,ERA_MODERN=5,ERA_POSTMODERN=6,ERA_FUTURE=7}
-GameInfo={Policy_FreePromotionUnitCombats=function()return function()end end}
+GameDefines={MAX_MAJOR_CIVS=22}
+local policyRows={{ID=26,NumExtraLeagueVotes=1},{ID=99,NumExtraLeagueVotes=3}}
+GameInfo={Policy_FreePromotionUnitCombats=function()return function()end end,
+ Policies=setmetatable({[26]=policyRows[1],[99]=policyRows[2]},{__call=function()local i=0;return function()i=i+1;return policyRows[i]end end})}
+Events=setmetatable({},{__index=getmetatable(GameEvents).__index})
 local function player(team,era,alive)
- local p={team=team,era=era,owned=false,votes=0,alive=alive~=false}
+ local p={team=team,era=era,owned=false,votes=0,other=false,blocked=false,alive=alive~=false}
  function p:GetTeam()return self.team end
  function p:GetCurrentEra()return self.era end
  function p:IsAlive()return self.alive end
- function p:HasPolicy(id)return id==26 and self.owned end
+ function p:HasPolicy(id)return (id==26 and self.owned)or(id==99 and self.other)end
+ function p:IsPolicyBlocked(id)return id==99 and self.blocked end
  function p:GetNumPolicyLeagueVotes()return self.votes end
  function p:ChangeNumPolicyLeagueVotes(n)self.votes=self.votes+n end
  function p:Units()return function()end end
  return p
 end
 local function setup()
+ Events=setmetatable({},{__index=getmetatable(GameEvents).__index})
  GameEvents=setmetatable({},{__index=getmetatable(GameEvents).__index})
  Players=setmetatable({[0]=player(0,4),[1]=player(1,4),[2]=player(2,3)},{__index=function(t,id)local p=player(id,0,false);rawset(t,id,p);return p end})
  assert(loadfile(arg[1]))()
@@ -54,6 +60,19 @@ check('all-owners-on-affected-team',function()Players[0].team=7;Players[1].team=
 check('unrelated-player-index-not-rewarded',function()Players[0].team=7;Players[2].team=0;Players[0].era=3;adopt(0);era(0,4);assert(Players[0].votes==1,'team0 event credited unrelated player0')end)
 check('dead-first-owner-does-not-consume-handler',function()Players[0].alive=false;GameEvents.PlayerAdoptPolicy.emit(0,26);adopt(1);assert(Players[1].votes==2)end)
 check('nonowner-era-no-award',function()era(2,4);assert(Players[2].votes==0)end)
+for value=0,7 do
+ check('adoption-era-'..value,function()Players[0].era=value;adopt(0);assert(Players[0].votes==1+math.max(0,value-3))end)
+end
+check('duplicate-adoption-callback-idempotent',function()adopt(0);GameEvents.PlayerAdoptPolicy.emit(0,26);assert(Players[0].votes==2)end)
+check('duplicate-era-callback-idempotent',function()adopt(0);era(0,5);era(0,5);assert(Players[0].votes==3)end)
+check('multi-era-native-transition',function()Players[0].era=3;adopt(0);era(0,7);assert(Players[0].votes==5)end)
+check('affected-save-underaward-repair',function()Players[0].owned=true;Players[0].era=5;Players[0].votes=2;Events.SequenceGameInitComplete.emit();assert(Players[0].votes==3)end)
+check('affected-save-overaward-repair',function()Players[0].owned=true;Players[0].era=4;Players[0].votes=4;Events.SequenceGameInitComplete.emit();assert(Players[0].votes==2)end)
+check('load-repair-idempotent',function()adopt(0);Events.SequenceGameInitComplete.emit();Events.SequenceGameInitComplete.emit();assert(Players[0].votes==2)end)
+check('other-policy-base-votes-preserved',function()Players[0].other=true;Players[0].votes=3;adopt(0);era(0,5);Events.SequenceGameInitComplete.emit();assert(Players[0].votes==6)end)
+check('blocked-policy-base-not-reintroduced',function()Players[0].other=true;Players[0].blocked=true;adopt(0);era(0,5);Events.SequenceGameInitComplete.emit();assert(Players[0].votes==3)end)
+check('load-does-not-alter-nonowner',function()Players[2].votes=9;Events.SequenceGameInitComplete.emit();assert(Players[2].votes==9)end)
+check('load-does-not-alter-dead-owner',function()Players[0].alive=false;Players[0].owned=true;Players[0].votes=9;Events.SequenceGameInitComplete.emit();assert(Players[0].votes==9)end)
 print(count..' cases, '..failed..' failures');os.exit(failed==0 and 0 or 1)
 '''
 with tempfile.TemporaryDirectory(prefix='lekmod-consulates-')as d:

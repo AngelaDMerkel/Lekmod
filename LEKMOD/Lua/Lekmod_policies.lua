@@ -61,37 +61,52 @@ end
 GameEvents.PlayerAdoptPolicy.Add(lekmod_policy_free_promotion_unit_combats_on_adopt)
 GameEvents.UnitCreated.Add(lekmod_policy_free_promotion_unit_combats)
 ------------------------------------------------------------------------------------------------------------------------
-local function AwardConsulatesVotesForEra(player, eraID)
-    if eraID >= GameInfoTypes["ERA_INDUSTRIAL"] then   player:ChangeNumPolicyLeagueVotes(1) end
-    if eraID >= GameInfoTypes["ERA_MODERN"] then       player:ChangeNumPolicyLeagueVotes(1) end
-    if eraID >= GameInfoTypes["ERA_POSTMODERN"] then   player:ChangeNumPolicyLeagueVotes(1) end
-    if eraID >= GameInfoTypes["ERA_FUTURE"] then       player:ChangeNumPolicyLeagueVotes(1) end
+-- The saved policy-vote counter contains active policy base votes plus this
+-- Consulates era bonus. Recompute that derived total so repeated notifications
+-- cannot stack and old saves with a missed adopter recover their entitlement.
+local function RefreshConsulatesVotes(player)
+    local consulates = GameInfoTypes["POLICY_CONSULATES"]
+    if not player or not player:IsAlive() or not player:HasPolicy(consulates) then return end
+
+    local expected = 0
+    for policy in GameInfo.Policies() do
+        if player:HasPolicy(policy.ID) and not player:IsPolicyBlocked(policy.ID) then
+            expected = expected + (policy.NumExtraLeagueVotes or 0)
+        end
+    end
+    if not player:IsPolicyBlocked(consulates) then
+        local era = player:GetCurrentEra()
+        for _, threshold in ipairs({GameInfoTypes["ERA_INDUSTRIAL"],
+            GameInfoTypes["ERA_MODERN"], GameInfoTypes["ERA_POSTMODERN"],
+            GameInfoTypes["ERA_FUTURE"]}) do
+            if era >= threshold then expected = expected + 1 end
+        end
+    end
+    local difference = expected - player:GetNumPolicyLeagueVotes()
+    if difference ~= 0 then player:ChangeNumPolicyLeagueVotes(difference) end
 end
--- 1) On policy adoption: backfill votes for all eras you've already passed if applicable
+
 function Lekmod_OnAdoptConsulates(playerID, policyID)
-    if policyID ~= GameInfoTypes["POLICY_CONSULATES"] then return end
-    local player = Players[playerID]
-    if not player:IsAlive() then return end
-
-    local currentEra = player:GetCurrentEra()
-    AwardConsulatesVotesForEra(player, currentEra)
-    GameEvents.PlayerAdoptPolicy.Remove(Lekmod_OnAdoptConsulates) -- This is a one-time event, so we remove it after processing
+    if policyID == GameInfoTypes["POLICY_CONSULATES"] then
+        RefreshConsulatesVotes(Players[playerID])
+    end
 end
--- 2) On era change: if you already have Consulates, give +1 vote for that new era
-function Lekmod_OnEraChangeGiveConsulatesVote(playerID, newEraID)
-    local player = Players[playerID]
-    if not player:IsAlive() then return end
-    if not player:HasPolicy(GameInfoTypes["POLICY_CONSULATES"]) then return end
 
-    -- Only give the incremental vote for the *new* era
-    if     newEraID == GameInfoTypes["ERA_INDUSTRIAL"]
-        or newEraID == GameInfoTypes["ERA_MODERN"]
-        or newEraID == GameInfoTypes["ERA_POSTMODERN"]
-        or newEraID == GameInfoTypes["ERA_FUTURE"]
-    then
-        player:ChangeNumPolicyLeagueVotes(1)
+function Lekmod_OnEraChangeGiveConsulatesVote(teamID, newEraID)
+    -- TeamSetEra supplies a team ID. Single-player teammates need independent
+    -- rewards, and a different player's matching numeric ID is not an owner.
+    for playerID = 0, GameDefines.MAX_MAJOR_CIVS - 1 do
+        local player = Players[playerID]
+        if player and player:GetTeam() == teamID then RefreshConsulatesVotes(player) end
+    end
+end
+
+function Lekmod_RefreshConsulatesOnLoad()
+    for playerID = 0, GameDefines.MAX_MAJOR_CIVS - 1 do
+        RefreshConsulatesVotes(Players[playerID])
     end
 end
 
 GameEvents.PlayerAdoptPolicy.Add(Lekmod_OnAdoptConsulates)
 GameEvents.TeamSetEra.Add(Lekmod_OnEraChangeGiveConsulatesVote)
+Events.SequenceGameInitComplete.Add(Lekmod_RefreshConsulatesOnLoad)

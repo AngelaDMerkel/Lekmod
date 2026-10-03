@@ -70,6 +70,26 @@
       "fixture": "build/macos/playtests/20260918T065530Z/Lekmod-Functional-20260918T065530Z.Civ5Save",
       "sha256": "574511e03f58fc064d98b15fa57b4acf24072fdbfe434ec62db2230a6e7f0e3d",
       "max_turns": 3
+    },
+    {
+      "id": "old-human-first",
+      "scenario": "consulates-load",
+      "fixture": "build/macos/playtests/20261003T003911Z/checkpoints/Lekmod-Batch-20261003T003911Z-consulates-human-first-run.Civ5Save",
+      "sha256": "7039a7701c853905ecbdfb560ea33fa3fe4fed1381e73e9a8dcf48b3f67c5d19",
+      "max_turns": 2,
+      "parameters": {
+        "expected_state": "{\"owners\":{\"0\":{\"consulates\":true,\"era\":5,\"free\":0,\"team\":0,\"votes\":3},\"1\":{\"consulates\":true,\"era\":5,\"free\":0,\"team\":1,\"votes\":3}},\"turn\":3}"
+      }
+    },
+    {
+      "id": "old-ai-first",
+      "scenario": "consulates-load",
+      "fixture": "build/macos/playtests/20261003T003911Z/checkpoints/Lekmod-Batch-20261003T003911Z-consulates-ai-first-run.Civ5Save",
+      "sha256": "7fa289925137f0a8676e06fe6191adac1003270e97fd37fe767f66af045218e0",
+      "max_turns": 2,
+      "parameters": {
+        "expected_state": "{\"owners\":{\"0\":{\"consulates\":true,\"era\":5,\"free\":0,\"team\":0,\"votes\":3},\"1\":{\"consulates\":true,\"era\":5,\"free\":0,\"team\":1,\"votes\":3}},\"turn\":3}"
+      }
     }
   ]
 }
