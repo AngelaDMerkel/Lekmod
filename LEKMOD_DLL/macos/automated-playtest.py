@@ -161,6 +161,7 @@ FUNCTIONAL_ITEMS = {"script-data", "science-overflow", "unit-position-flags", "c
                     "production-unit", "production-building", "production-wonder", "production-process"}
 PRODUCTION_COMPLETION_ITEMS = {"production-completion-unit", "production-completion-building"}
 SCENARIO_ITEMS = {
+    "building-perpop": {'perpop-removal', 'perpop-BUILDING_LIBRARY', 'perpop-unrelated-yields', 'perpop-BUILDING_PAPER_MAKER', 'perpop-configured-values', 'perpop-BUILDING_AKKAD_LIBRARY', 'perpop-BUILDING_ROYAL_LIBRARY', 'perpop-population-rates', 'perpop-BUILDING_SERAI', 'perpop-BUILDING_UC_HALKEVLERI', 'perpop-BUILDING_DUMMY_MUGHALS', 'perpop-BUILDING_PUBLIC_SCHOOL', 'perpop-positive-save'},
     "aksum-founding": {"aksum-founding-prerequisites","aksum-native-found-event","aksum-all-owned-followers","aksum-foreign-control","aksum-repeat-rejection"},
     "hover-shores": {"hover-native-birth","hover-shore-entry","hover-land-return","hover-ordinary-turn","hover-embark-control","hover-movement-debit"},
     "workboat-training": {"workboat-tech-gate","workboat-human-AI-gate","workboat-inland-control","workboat-other-unit-control","workboat-native-production","workboat-native-continuation"},
