@@ -161,6 +161,8 @@ FUNCTIONAL_ITEMS = {"script-data", "science-overflow", "unit-position-flags", "c
                     "production-unit", "production-building", "production-wonder", "production-process"}
 PRODUCTION_COMPLETION_ITEMS = {"production-completion-unit", "production-completion-building"}
 SCENARIO_ITEMS = {
+    'minor-trade-influence': {'merchant-first-route', 'merchant-owner-controls', 'merchant-native-adoption', 'merchant-two-route-nonstack', 'merchant-positive-persistence', 'merchant-before-condition', 'merchant-native-settlement', 'merchant-inputs'},
+    'minor-trade-removal': {'merchant-loaded-positive', 'merchant-first-removal', 'merchant-disconnected-settlement', 'merchant-native-plunder', 'merchant-removal-persistence', 'merchant-final-removal'},
     "religion-passive-pressure": {'passive-pressure-removal', 'passive-pressure-nonfounder-control', 'passive-pressure-persistence', 'passive-pressure-baseline', 'passive-pressure-data', 'passive-pressure-friend-threshold', 'passive-pressure-owner-controls', 'passive-pressure-building-catalogue', 'passive-pressure-native-settlement'},
     "minor-influence-modifiers": {'minor-religion-owner-controls', 'minor-ordinary-settlement', 'minor-modifier-data', 'minor-trait-baseline', 'minor-policy-owner-control', 'minor-fractional-persistence', 'minor-independent-rates', 'minor-religion-transition', 'minor-policy-adoption'},
     "minor-influence-recovery": {'influence-load-protected-state', 'influence-load-corrected-rate', 'influence-load-stability', 'influence-load-natural-recovery'},
