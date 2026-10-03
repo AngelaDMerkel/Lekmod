@@ -522,3 +522,20 @@ references remain untriaged for other configured rows; the partial case links
 do not close those entire relations. G0 now has78specified cases and1,237
 untriaged surfaces/121document rows. Native execution is pending after the
 current73-check global/policy correction regression.
+
+## UI listener source classification
+
+Twenty-one literal InGame/Bombardment event listeners were reviewed with their
+called display helpers and classified as presentation/selection behavior. Their
+source bytes match the installed standard-UI package. They manage cursors,
+city/world panel visibility, recommendations, yield icons, alerts, targeting
+arrows and range highlights; these listeners do not execute the gameplay
+missions whose eligibility they display. The mouse input/command handlers
+elsewhere in InGame remain separate.
+
+This is source classification, not a new native UI pass. G7 still must reconcile
+actual standard/EUI input, cancel/selection/error-state flows and saved-state
+continuation. A rendering or null-selection problem could still fail that gate.
+No presentation obligation or the pending system-UI ledger row was waived.
+The register has1,214untriaged surfaces and121document rows; no final acceptance
+or complete gameplay denominator is inferred from those review counts.

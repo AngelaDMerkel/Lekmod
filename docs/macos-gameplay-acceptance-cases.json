@@ -9833,7 +9833,7 @@
       ],
       "implementation_limits": [
         "Both native original-order retests and both authentic-save repairs passed, including ordinary next round and exact replay.",
-        "Nonmatching player/team IDs, shared teams, skipped eras and overaward repair are isolated actual-Lua tests; native Congress voting UI is not covered.",
+        "Nonmatching/shared teams and unrelated-team events now pass in POL-CONSULATES-SHARED-TEAM. Skipped eras and overaward repair remain isolated actual-Lua coverage; no physical Congress voting claim.",
         "Final-candidate applicability remains required at F."
       ],
       "evidence_contract": {
@@ -9895,7 +9895,7 @@
       },
       "remaining_scope": [
         "Both native original-order retests and both authentic-save repairs passed, including ordinary next round and exact replay.",
-        "Nonmatching player/team IDs, shared teams, skipped eras and overaward repair are isolated actual-Lua tests; native Congress voting UI is not covered.",
+        "Nonmatching/shared teams and unrelated-team events now pass in POL-CONSULATES-SHARED-TEAM. Skipped eras and overaward repair remain isolated actual-Lua coverage; no physical Congress voting claim.",
         "Final-candidate applicability remains required at F."
       ]
     },
@@ -10746,7 +10746,7 @@
       "implementation_limits": [
         "Corrected whole native batch022959Z passed73assertions/12replays, including this case, normal exit0 and full975-file preservation. Positive policy costs and native free-tenet accounting are retained in the corrected snapshots.",
         "This is callback routing/marker delivery, not all configured marker yield/production/trade consumers.",
-        "Ukraine/Colombia tech predicates, capture/capital changes, golden-age and branch transitions remain separately untriaged; Global_Dummy_Buildings data surface is not closed by these representative rows."
+        "Ukraine/Colombia predicates and full building yield/route consumers remain separate. Capital capture is the ready LIFE-GLOBAL-TEAM-CAPTURE case; branch transitions have current Yugoslav evidence and the no-configured-golden-age predicate has an explicit shared-body disposition."
       ],
       "evidence_contract": {
         "kind": "native-batch-stages",
@@ -10807,7 +10807,7 @@
       "remaining_scope": [
         "Corrected whole native batch022959Z passed73assertions/12replays, including this case, normal exit0 and full975-file preservation. Positive policy costs and native free-tenet accounting are retained in the corrected snapshots.",
         "This is callback routing/marker delivery, not all configured marker yield/production/trade consumers.",
-        "Ukraine/Colombia tech predicates, capture/capital changes, golden-age and branch transitions remain separately untriaged; Global_Dummy_Buildings data surface is not closed by these representative rows."
+        "Ukraine/Colombia predicates and full building yield/route consumers remain separate. Capital capture is the ready LIFE-GLOBAL-TEAM-CAPTURE case; branch transitions have current Yugoslav evidence and the no-configured-golden-age predicate has an explicit shared-body disposition."
       ]
     },
     {
@@ -21994,98 +21994,210 @@
     {
       "id": "lua:Lua/UI/InGame.lua:LuaEvents.OnRecommendationCheckChanged:SetRecommendationCheck",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "presentation-only",
+      "case_ids": [],
+      "reason": "Toggles the local worker-recommendation display and calls the display-only selection refresh. This classification separates display/selection behavior from numeric gameplay effects; it is not a UI correctness, mouse, cancellation, null-selection or final G7 pass. Those user flows and input handlers remain required in the G7 ledger.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/tmp/ui/InGame.lua.ignore",
+          "sha256": "c91b423238731e740f72108b8434e2a80a420a5ba7127ee26547fb1de18c35f2"
+        }
+      ]
     },
     {
       "id": "lua:Lua/UI/InGame.lua:Events.GameOptionsChanged:OnGameOptionsChanged",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "presentation-only",
+      "case_ids": [],
+      "reason": "Reads NoTileRecommendations and refreshes recommendation anchors; it does not set a gameplay option. This classification separates display/selection behavior from numeric gameplay effects; it is not a UI correctness, mouse, cancellation, null-selection or final G7 pass. Those user flows and input handlers remain required in the G7 ledger.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/tmp/ui/InGame.lua.ignore",
+          "sha256": "c91b423238731e740f72108b8434e2a80a420a5ba7127ee26547fb1de18c35f2"
+        }
+      ]
     },
     {
       "id": "lua:Lua/UI/InGame.lua:Events.SerialEventEnterCityScreen:OnEnterCityScreen",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "presentation-only",
+      "case_ids": [],
+      "reason": "Hides/shows city/world panels, yield icons, recommendation anchors and hex grid; stores selected-city presentation state. This classification separates display/selection behavior from numeric gameplay effects; it is not a UI correctness, mouse, cancellation, null-selection or final G7 pass. Those user flows and input handlers remain required in the G7 ledger.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/tmp/ui/InGame.lua.ignore",
+          "sha256": "c91b423238731e740f72108b8434e2a80a420a5ba7127ee26547fb1de18c35f2"
+        }
+      ]
     },
     {
       "id": "lua:Lua/UI/InGame.lua:Events.SerialEventExitCityScreen:OnExitCityScreen",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "presentation-only",
+      "case_ids": [],
+      "reason": "Restores panels/grid/anchors, camera and local city selection and marks UI dirty; it does not issue city tasks. This classification separates display/selection behavior from numeric gameplay effects; it is not a UI correctness, mouse, cancellation, null-selection or final G7 pass. Those user flows and input handlers remain required in the G7 ledger.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/tmp/ui/InGame.lua.ignore",
+          "sha256": "c91b423238731e740f72108b8434e2a80a420a5ba7127ee26547fb1de18c35f2"
+        }
+      ]
     },
     {
       "id": "lua:Lua/UI/InGame.lua:Events.GameplayAlertMessage:OnGameplayAlertMessage",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "presentation-only",
+      "case_ids": [],
+      "reason": "Queues timed alert text and a UI refresh flag only. This classification separates display/selection behavior from numeric gameplay effects; it is not a UI correctness, mouse, cancellation, null-selection or final G7 pass. Those user flows and input handlers remain required in the G7 ledger.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/tmp/ui/InGame.lua.ignore",
+          "sha256": "c91b423238731e740f72108b8434e2a80a420a5ba7127ee26547fb1de18c35f2"
+        }
+      ]
     },
     {
       "id": "lua:Lua/UI/InGame.lua:Events.InterfaceModeChanged:OnInterfaceModeChanged",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "presentation-only",
+      "case_ids": [],
+      "reason": "Dispatches cursor/range/highlight setup and cleanup. Reviewed helper tables call eligibility queries and draw arrows/borders/path previews; gameplay mouse command handlers elsewhere remain separate. This classification separates display/selection behavior from numeric gameplay effects; it is not a UI correctness, mouse, cancellation, null-selection or final G7 pass. Those user flows and input handlers remain required in the G7 ledger.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/tmp/ui/InGame.lua.ignore",
+          "sha256": "c91b423238731e740f72108b8434e2a80a420a5ba7127ee26547fb1de18c35f2"
+        }
+      ]
     },
     {
       "id": "lua:Lua/UI/InGame.lua:Events.ActivePlayerTurnEnd:OnActivePlayerTurnEnd",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "presentation-only",
+      "case_ids": [],
+      "reason": "Changes the cursor to busy only. This classification separates display/selection behavior from numeric gameplay effects; it is not a UI correctness, mouse, cancellation, null-selection or final G7 pass. Those user flows and input handlers remain required in the G7 ledger.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/tmp/ui/InGame.lua.ignore",
+          "sha256": "c91b423238731e740f72108b8434e2a80a420a5ba7127ee26547fb1de18c35f2"
+        }
+      ]
     },
     {
       "id": "lua:Lua/UI/InGame.lua:Events.ActivePlayerTurnStart:OnActivePlayerTurnStart",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "presentation-only",
+      "case_ids": [],
+      "reason": "Selects a cursor from the current interface mode only. This classification separates display/selection behavior from numeric gameplay effects; it is not a UI correctness, mouse, cancellation, null-selection or final G7 pass. Those user flows and input handlers remain required in the G7 ledger.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/tmp/ui/InGame.lua.ignore",
+          "sha256": "c91b423238731e740f72108b8434e2a80a420a5ba7127ee26547fb1de18c35f2"
+        }
+      ]
     },
     {
       "id": "lua:Lua/UI/InGame.lua:Events.GameplaySetActivePlayer:OnActivePlayerChanged",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "presentation-only",
+      "case_ids": [],
+      "reason": "Clears alert/popup instances and display flags; no player gameplay state is changed. This classification separates display/selection behavior from numeric gameplay effects; it is not a UI correctness, mouse, cancellation, null-selection or final G7 pass. Those user flows and input handlers remain required in the G7 ledger.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/tmp/ui/InGame.lua.ignore",
+          "sha256": "c91b423238731e740f72108b8434e2a80a420a5ba7127ee26547fb1de18c35f2"
+        }
+      ]
     },
     {
       "id": "lua:Lua/UI/InGame.lua:Events.UnitSelectionChanged:OnUnitSelectionChange",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "presentation-only",
+      "case_ids": [],
+      "reason": "Clears visual highlights, resets local interface mode and refreshes yield/recommendation display. This classification separates display/selection behavior from numeric gameplay effects; it is not a UI correctness, mouse, cancellation, null-selection or final G7 pass. Those user flows and input handlers remain required in the G7 ledger.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/tmp/ui/InGame.lua.ignore",
+          "sha256": "c91b423238731e740f72108b8434e2a80a420a5ba7127ee26547fb1de18c35f2"
+        }
+      ]
     },
     {
       "id": "lua:Lua/UI/InGame.lua:Events.UnitSelectionCleared:OnUnitSelectionCleared",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "presentation-only",
+      "case_ids": [],
+      "reason": "Removes worker/settler recommendation anchors and refreshes yield display. This classification separates display/selection behavior from numeric gameplay effects; it is not a UI correctness, mouse, cancellation, null-selection or final G7 pass. Those user flows and input handlers remain required in the G7 ledger.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/tmp/ui/InGame.lua.ignore",
+          "sha256": "c91b423238731e740f72108b8434e2a80a420a5ba7127ee26547fb1de18c35f2"
+        }
+      ]
     },
     {
       "id": "lua:Lua/UI/InGame.lua:Events.SerialEventUnitDestroyed:OnUnitDestroyed",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "presentation-only",
+      "case_ids": [],
+      "reason": "Refreshes yield display for the active player; unit destruction itself occurs elsewhere. This classification separates display/selection behavior from numeric gameplay effects; it is not a UI correctness, mouse, cancellation, null-selection or final G7 pass. Those user flows and input handlers remain required in the G7 ledger.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/tmp/ui/InGame.lua.ignore",
+          "sha256": "c91b423238731e740f72108b8434e2a80a420a5ba7127ee26547fb1de18c35f2"
+        }
+      ]
     },
     {
       "id": "lua:Lua/UI/InGame.lua:Events.AddPopupTextEvent:AddPopupText",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "presentation-only",
+      "case_ids": [],
+      "reason": "Creates animated text anchors with position/delay and release callbacks; no reward is granted by displaying its text. This classification separates display/selection behavior from numeric gameplay effects; it is not a UI correctness, mouse, cancellation, null-selection or final G7 pass. Those user flows and input handlers remain required in the G7 ledger.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/tmp/ui/InGame.lua.ignore",
+          "sha256": "c91b423238731e740f72108b8434e2a80a420a5ba7127ee26547fb1de18c35f2"
+        }
+      ]
     },
     {
       "id": "lua:Lua/UI/InGame.lua:Events.UnitHexHighlight:OnUnitHexHighlight",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "presentation-only",
+      "case_ids": [],
+      "reason": "Requests nearby yield icons for a selected founder; it does not alter plot yields. This classification separates display/selection behavior from numeric gameplay effects; it is not a UI correctness, mouse, cancellation, null-selection or final G7 pass. Those user flows and input handlers remain required in the G7 ledger.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/tmp/ui/InGame.lua.ignore",
+          "sha256": "c91b423238731e740f72108b8434e2a80a420a5ba7127ee26547fb1de18c35f2"
+        }
+      ]
     },
     {
       "id": "lua:Lua/UI/InGame.lua:Events.SystemUpdateUI:SystemUpdateUIHandler",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "presentation-only",
+      "case_ids": [],
+      "reason": "Bulk hides/shows the UI control group only. This classification separates display/selection behavior from numeric gameplay effects; it is not a UI correctness, mouse, cancellation, null-selection or final G7 pass. Those user flows and input handlers remain required in the G7 ledger.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/tmp/ui/InGame.lua.ignore",
+          "sha256": "c91b423238731e740f72108b8434e2a80a420a5ba7127ee26547fb1de18c35f2"
+        }
+      ]
     },
     {
       "id": "lua:Lua/UI/InGame.lua:Events.GameViewTypeChanged:OnGameViewTypeChanged",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "presentation-only",
+      "case_ids": [],
+      "reason": "Changes world/staging panel visibility based on render-view type only. This classification separates display/selection behavior from numeric gameplay effects; it is not a UI correctness, mouse, cancellation, null-selection or final G7 pass. Those user flows and input handlers remain required in the G7 ledger.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/tmp/ui/InGame.lua.ignore",
+          "sha256": "c91b423238731e740f72108b8434e2a80a420a5ba7127ee26547fb1de18c35f2"
+        }
+      ]
     },
     {
       "id": "lua:Art/No Quitters Mod (v 11)/social_policies/8_exploration/Exploration1_Colonialism.lua:GameEvents.PlayerCityFounded:NQMP_Exploration_Colonialism_OnFoundCity",
@@ -23109,32 +23221,67 @@
     {
       "id": "lua:Lua/UI/Bombardment.lua:Events.SerialEventMouseOverHex:DisplayBombardArrow",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "presentation-only",
+      "case_ids": [],
+      "reason": "Queries selected attacker eligibility and draws/removes an aiming arrow; does not send an attack. This classification separates display/selection behavior from numeric gameplay effects; it is not a UI correctness, mouse, cancellation, null-selection or final G7 pass. Those user flows and input handlers remain required in the G7 ledger.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/tmp/ui/Bombardment.lua.ignore",
+          "sha256": "340f4766b5cac76410564b6e9730e6b63712eee41daacd889197c2b303ad6c8d"
+        }
+      ]
     },
     {
       "id": "lua:Lua/UI/Bombardment.lua:Events.SerialEventCityInfoDirty:OnCityInfoDirty",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "presentation-only",
+      "case_ids": [],
+      "reason": "Resets targeting interface mode when its selected city changed; no city task or attack is issued. This classification separates display/selection behavior from numeric gameplay effects; it is not a UI correctness, mouse, cancellation, null-selection or final G7 pass. Those user flows and input handlers remain required in the G7 ledger.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/tmp/ui/Bombardment.lua.ignore",
+          "sha256": "340f4766b5cac76410564b6e9730e6b63712eee41daacd889197c2b303ad6c8d"
+        }
+      ]
     },
     {
       "id": "lua:Lua/UI/Bombardment.lua:Events.SerialEventMouseOverHex:DisplayNukeArrow",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "presentation-only",
+      "case_ids": [],
+      "reason": "Queries nuke targeting eligibility and draws/removes an aiming arrow; the actual mission is elsewhere. This classification separates display/selection behavior from numeric gameplay effects; it is not a UI correctness, mouse, cancellation, null-selection or final G7 pass. Those user flows and input handlers remain required in the G7 ledger.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/tmp/ui/Bombardment.lua.ignore",
+          "sha256": "340f4766b5cac76410564b6e9730e6b63712eee41daacd889197c2b303ad6c8d"
+        }
+      ]
     },
     {
       "id": "lua:Lua/UI/Bombardment.lua:Events.InterfaceModeChanged:AirSweepHighlightHB",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "presentation-only",
+      "case_ids": [],
+      "reason": "Draws range fill/border highlights for the selected air unit; no sweep mission or combat occurs. This classification separates display/selection behavior from numeric gameplay effects; it is not a UI correctness, mouse, cancellation, null-selection or final G7 pass. Those user flows and input handlers remain required in the G7 ledger.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/tmp/ui/Bombardment.lua.ignore",
+          "sha256": "340f4766b5cac76410564b6e9730e6b63712eee41daacd889197c2b303ad6c8d"
+        }
+      ]
     },
     {
       "id": "lua:Lua/UI/Bombardment.lua:Events.InterfaceModeChanged:ClearHBCustomHex",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "presentation-only",
+      "case_ids": [],
+      "reason": "Clears air-sweep highlight styles outside that interface mode. This classification separates display/selection behavior from numeric gameplay effects; it is not a UI correctness, mouse, cancellation, null-selection or final G7 pass. Those user flows and input handlers remain required in the G7 ledger.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/tmp/ui/Bombardment.lua.ignore",
+          "sha256": "340f4766b5cac76410564b6e9730e6b63712eee41daacd889197c2b303ad6c8d"
+        }
+      ]
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_moors.lua:GameEvents.CityCaptureComplete:lekmod_moors_on_city_capture",
@@ -31003,9 +31150,9 @@
     "pending_document_rows": 121,
     "final_case_denominator_frozen": false,
     "surface_statuses": {
-      "untriaged": 1235,
+      "untriaged": 1214,
       "mapped": 85,
-      "presentation-only": 19,
+      "presentation-only": 40,
       "out-of-scope": 3
     },
     "indexed_civilizations": 114,
