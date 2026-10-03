@@ -8017,6 +8017,10 @@
         {
           "path": "LEKMOD/Lua/Civilizations/Lekmod_yugoslavia.lua",
           "sha256": "17f54154787e7fb9238895e44db9a311962f6bd81ed83626f7ce6c50c6590d69"
+        },
+        {
+          "path": "LEKMOD/Lua/Lekmod_global_dummies.lua",
+          "sha256": "09f8b0abe2141a69cb7bad658fb99389915498125d385aa667598fe0834e3eb6"
         }
       ],
       "owners": [
@@ -8077,12 +8081,84 @@
         {
           "path": "build/macos/playtests/20260926T171658Z/batch-report.json",
           "sha256": "0d042df8fcc14f45c310a4c9b35916de5e1d5b6b940fac296c09945e5eedb0b1"
+        },
+        {
+          "path": "build/macos/playtests/20261003T022959Z/report.json",
+          "sha256": "46650c0a885d151d0cb9db23ca4353078883dcf2064d93e160c5f44a7331c872"
+        },
+        {
+          "path": "build/macos/playtests/20261003T022959Z/batch-report.json",
+          "sha256": "002b47db89bd8a2ba6bb82ac694c263278231aab96e96aef6432716c9e687032"
+        },
+        {
+          "path": "build/macos/global-policy-corrected-preservation-20261003.json",
+          "sha256": "b42848fec9c50d9d350502c0274b4f82119bdba713fc404fd654db6f4f5e5885"
         }
       ],
       "surface_ids": [
-        "lua:Lua/Civilizations/Lekmod_yugoslavia.lua:GameEvents.PlayerPolicyBranchUnlocked:lekmod_yugoslavia_ideology_tenet"
+        "lua:Lua/Civilizations/Lekmod_yugoslavia.lua:GameEvents.PlayerPolicyBranchUnlocked:lekmod_yugoslavia_ideology_tenet",
+        "lua:Lua/Lekmod_global_dummies.lua:GameEvents.PlayerPolicyBranchUnlocked:lekmod_add_global_dummy_buildings"
       ],
       "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261003T022959Z/report.json",
+            "batch_report": "build/macos/playtests/20261003T022959Z/batch-report.json",
+            "stage": "yugoslavia-ideology",
+            "required_assertions": [
+              "ideology-cancel",
+              "revolution-cancel",
+              "revolution-content-rejection",
+              "yugo-Freedom-markers",
+              "yugo-Order-markers",
+              "yugo-adoption-tenet",
+              "yugo-anarchy-expiry",
+              "yugo-concert-pressure",
+              "yugo-foreign-control",
+              "yugo-switch-anarchy",
+              "yugo-switch-tenet"
+            ],
+            "gamecore_sha256": "c8f1723c7588fdf54465781ebbca9d8de009e3e11c76ba6375b5200fd9687aa2"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261003T022959Z/report.json",
+            "batch_report": "build/macos/playtests/20261003T022959Z/batch-report.json",
+            "stage": "yugo-revolution-cycle",
+            "required_assertions": [
+              "revolution-cancel",
+              "revolution-content-rejection",
+              "yugo-Autocracy-expiry",
+              "yugo-Autocracy-markers",
+              "yugo-Autocracy-pressure",
+              "yugo-Autocracy-tenet",
+              "yugo-Freedom-expiry",
+              "yugo-Freedom-markers",
+              "yugo-Freedom-pressure",
+              "yugo-Freedom-tenet"
+            ],
+            "gamecore_sha256": "c8f1723c7588fdf54465781ebbca9d8de009e3e11c76ba6375b5200fd9687aa2"
+          }
+        ]
+      },
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-yugoslavia-ideology.lua",
+          "sha256": "b7c06c0d4725733efeb59f6fcdb22e6d81bd88ae1ab28ac4e042f12e1059b2f9"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-yugoslav-revolution-cycle.lua",
+          "sha256": "c4877767ce92fe95c191a44f8df66f19a2a6df3241a88526f94f60f6c1fa3af4"
+        }
+      ],
+      "remaining_scope": [
+        "Native initial adoption covers Freedom; initial adoption of other branches and AI-specific callback inputs retain isolated-test limits.",
+        "Marker presence is not a claim for every specialist yield/production settlement. No human ideology/anarchy/event was assigned to manufacture a pass.",
+        "Final-candidate applicability and affected regressions remain required at Gate F."
+      ],
+      "historical_evidence_contract_before_global_team_fix": {
         "kind": "native-batch-stages",
         "stages": [
           {
@@ -8125,22 +8201,7 @@
             "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
           }
         ]
-      },
-      "implementation_references": [
-        {
-          "path": "LEKMOD_DLL/macos/playtest-scenario-yugoslavia-ideology.lua",
-          "sha256": "b7c06c0d4725733efeb59f6fcdb22e6d81bd88ae1ab28ac4e042f12e1059b2f9"
-        },
-        {
-          "path": "LEKMOD_DLL/macos/playtest-scenario-yugoslav-revolution-cycle.lua",
-          "sha256": "c4877767ce92fe95c191a44f8df66f19a2a6df3241a88526f94f60f6c1fa3af4"
-        }
-      ],
-      "remaining_scope": [
-        "Native initial adoption covers Freedom; initial adoption of other branches and AI-specific callback inputs retain isolated-test limits.",
-        "Marker presence is not a claim for every specialist yield/production settlement. No human ideology/anarchy/event was assigned to manufacture a pass.",
-        "Final-candidate applicability and affected regressions remain required at Gate F."
-      ]
+      }
     },
     {
       "id": "TRADE-KILWA-ROUTE-LIFETIME",
@@ -9842,7 +9903,7 @@
       "id": "POL-COMBAT-CLASS-PROMOTIONS",
       "group": "G6",
       "title": "Policy adoption and creation promotions for all four configured combat classes",
-      "status": "ready",
+      "status": "passed",
       "source_references": [
         {
           "path": "LEKMOD/Lua/Lekmod_policies.lua",
@@ -9919,6 +9980,18 @@
         {
           "path": "build/macos/policy-effects-preservation-20261003.json",
           "sha256": "d37edae04ae7630b04fdae1b02cdd921086f40058fff67f455fa343f1a0e517a"
+        },
+        {
+          "path": "build/macos/playtests/20261003T022959Z/report.json",
+          "sha256": "46650c0a885d151d0cb9db23ca4353078883dcf2064d93e160c5f44a7331c872"
+        },
+        {
+          "path": "build/macos/playtests/20261003T022959Z/batch-report.json",
+          "sha256": "002b47db89bd8a2ba6bb82ac694c263278231aab96e96aef6432716c9e687032"
+        },
+        {
+          "path": "build/macos/global-policy-corrected-preservation-20261003.json",
+          "sha256": "b42848fec9c50d9d350502c0274b4f82119bdba713fc404fd654db6f4f5e5885"
         }
       ],
       "surface_ids": [
@@ -9941,12 +10014,12 @@
         }
       ],
       "implementation_limits": [
-        "Policy fixture review: previous direct clearing of native awarded tenets could leave lifetime policy accounting inconsistent. Preserve old outputs, rerun corrected helper with available-choice accounting and positive next-policy-cost checks. Colonialism has no ideology award to discard, but its strengthened snapshot/helper will also be reverified.",
+        "Corrected whole native batch022959Z passed73assertions/12replays, including this case, normal exit0 and full975-file preservation. Positive policy costs and native free-tenet accounting are retained in the corrected snapshots.",
         "native modifier queries are not actual battle damage comparisons",
         "policy free Foreign Legions, upkeep and production bonuses are separate effects"
       ],
       "remaining_scope": [
-        "Native isolated stage/replay passed in20261003T011152Z; whole batch remains failed for reviewed unrelated Colonialism oracle error.",
+        "Corrected whole native batch022959Z passed73assertions/12replays, including this case, normal exit0 and full975-file preservation. Positive policy costs and native free-tenet accounting are retained in the corrected snapshots.",
         "native modifier queries are not actual battle damage comparisons",
         "policy free Foreign Legions, upkeep and production bonuses are separate effects"
       ],
@@ -9978,13 +10051,35 @@
             ]
           }
         ]
+      },
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261003T022959Z/report.json",
+            "batch_report": "build/macos/playtests/20261003T022959Z/batch-report.json",
+            "stage": "promotion-both-owners",
+            "required_assertions": [
+              "policy-promotion-AI-existing",
+              "policy-promotion-AI-new",
+              "policy-promotion-choice-accounting",
+              "policy-promotion-class-controls",
+              "policy-promotion-foreign-control",
+              "policy-promotion-human-existing",
+              "policy-promotion-human-new",
+              "policy-promotion-no-repeat"
+            ],
+            "gamecore_sha256": "c8f1723c7588fdf54465781ebbca9d8de009e3e11c76ba6375b5200fd9687aa2"
+          }
+        ]
       }
     },
     {
       "id": "POL-RESETTLEMENT-FOUNDING",
       "group": "G6",
       "title": "Resettlement founding buildings, replacement lookup, population and territory",
-      "status": "ready",
+      "status": "passed",
       "source_references": [
         {
           "path": "LEKMOD/Lua/Lekmod_policies.lua",
@@ -10066,6 +10161,18 @@
         {
           "path": "build/macos/policy-effects-preservation-20261003.json",
           "sha256": "d37edae04ae7630b04fdae1b02cdd921086f40058fff67f455fa343f1a0e517a"
+        },
+        {
+          "path": "build/macos/playtests/20261003T022959Z/report.json",
+          "sha256": "46650c0a885d151d0cb9db23ca4353078883dcf2064d93e160c5f44a7331c872"
+        },
+        {
+          "path": "build/macos/playtests/20261003T022959Z/batch-report.json",
+          "sha256": "002b47db89bd8a2ba6bb82ac694c263278231aab96e96aef6432716c9e687032"
+        },
+        {
+          "path": "build/macos/global-policy-corrected-preservation-20261003.json",
+          "sha256": "b42848fec9c50d9d350502c0274b4f82119bdba713fc404fd654db6f4f5e5885"
         }
       ],
       "surface_ids": [
@@ -10088,12 +10195,12 @@
         }
       ],
       "implementation_limits": [
-        "Policy fixture review: previous direct clearing of native awarded tenets could leave lifetime policy accounting inconsistent. Preserve old outputs, rerun corrected helper with available-choice accounting and positive next-policy-cost checks. Colonialism has no ideology award to discard, but its strengthened snapshot/helper will also be reverified.",
+        "Corrected whole native batch022959Z passed73assertions/12replays, including this case, normal exit0 and full975-file preservation. Positive policy costs and native free-tenet accounting are retained in the corrected snapshots.",
         "Akkad is the native unique-class representative; other replacement lookup parameters require shared-path applicability review",
         "crowded or unavailable extra-territory selection is not covered by the deliberately clear-radius fixture"
       ],
       "remaining_scope": [
-        "Native isolated stage/replay passed in20261003T011152Z; whole batch remains failed for reviewed unrelated Colonialism oracle error.",
+        "Corrected whole native batch022959Z passed73assertions/12replays, including this case, normal exit0 and full975-file preservation. Positive policy costs and native free-tenet accounting are retained in the corrected snapshots.",
         "Akkad is the native unique-class representative; other replacement lookup parameters require shared-path applicability review",
         "crowded or unavailable extra-territory selection is not covered by the deliberately clear-radius fixture"
       ],
@@ -10149,13 +10256,52 @@
             ]
           }
         ]
+      },
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261003T022959Z/report.json",
+            "batch_report": "build/macos/playtests/20261003T022959Z/batch-report.json",
+            "stage": "resettlement-rome",
+            "required_assertions": [
+              "policy-found-adoption",
+              "policy-found-before-control",
+              "policy-found-buildings",
+              "policy-found-owner-city-controls",
+              "policy-found-population",
+              "policy-found-repeat-no-stack",
+              "policy-found-territory",
+              "policy-found-worker-happiness"
+            ],
+            "gamecore_sha256": "c8f1723c7588fdf54465781ebbca9d8de009e3e11c76ba6375b5200fd9687aa2"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261003T022959Z/report.json",
+            "batch_report": "build/macos/playtests/20261003T022959Z/batch-report.json",
+            "stage": "resettlement-akkad",
+            "required_assertions": [
+              "policy-found-adoption",
+              "policy-found-before-control",
+              "policy-found-buildings",
+              "policy-found-owner-city-controls",
+              "policy-found-population",
+              "policy-found-repeat-no-stack",
+              "policy-found-territory",
+              "policy-found-worker-happiness"
+            ],
+            "gamecore_sha256": "c8f1723c7588fdf54465781ebbca9d8de009e3e11c76ba6375b5200fd9687aa2"
+          }
+        ]
       }
     },
     {
       "id": "POL-COLONIALISM-FOUNDING",
       "group": "G6",
       "title": "Colonialism founding population, territory, Worker and happiness",
-      "status": "ready",
+      "status": "passed",
       "source_references": [
         {
           "path": "LEKMOD/Lua/Lekmod_policies.lua",
@@ -10244,6 +10390,18 @@
         {
           "path": "build/macos/colonialism-preservation-20261003.json",
           "sha256": "76073fd1862c5fb3879c5c62bfb69f09d409e363782a566da129f624b724df8d"
+        },
+        {
+          "path": "build/macos/playtests/20261003T022959Z/report.json",
+          "sha256": "46650c0a885d151d0cb9db23ca4353078883dcf2064d93e160c5f44a7331c872"
+        },
+        {
+          "path": "build/macos/playtests/20261003T022959Z/batch-report.json",
+          "sha256": "002b47db89bd8a2ba6bb82ac694c263278231aab96e96aef6432716c9e687032"
+        },
+        {
+          "path": "build/macos/global-policy-corrected-preservation-20261003.json",
+          "sha256": "b42848fec9c50d9d350502c0274b4f82119bdba713fc404fd654db6f4f5e5885"
         }
       ],
       "surface_ids": [
@@ -10266,12 +10424,12 @@
         }
       ],
       "implementation_limits": [
-        "Policy fixture review: previous direct clearing of native awarded tenets could leave lifetime policy accounting inconsistent. Preserve old outputs, rerun corrected helper with available-choice accounting and positive next-policy-cost checks. Colonialism has no ideology award to discard, but its strengthened snapshot/helper will also be reverified.",
+        "Corrected whole native batch022959Z passed73assertions/12replays, including this case, normal exit0 and full975-file preservation. Positive policy costs and native free-tenet accounting are retained in the corrected snapshots.",
         "Native reward delivery and calculated building happiness are not physical policy UI or earned culture coverage",
         "crowded or unavailable extra-territory selection remains a separate boundary"
       ],
       "remaining_scope": [
-        "Corrected local2/unmodded0 oracle and exact replay passed in20261003T011819Z; original query failure retained as a harness error.",
+        "Corrected whole native batch022959Z passed73assertions/12replays, including this case, normal exit0 and full975-file preservation. Positive policy costs and native free-tenet accounting are retained in the corrected snapshots.",
         "Native reward delivery and calculated building happiness are not physical policy UI or earned culture coverage",
         "crowded or unavailable extra-territory selection remains a separate boundary"
       ],
@@ -10291,13 +10449,35 @@
           "policy-found-worker-happiness"
         ],
         "gamecore_sha256": "c8f1723c7588fdf54465781ebbca9d8de009e3e11c76ba6375b5200fd9687aa2"
+      },
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261003T022959Z/report.json",
+            "batch_report": "build/macos/playtests/20261003T022959Z/batch-report.json",
+            "stage": "colonialism-rome",
+            "required_assertions": [
+              "policy-found-adoption",
+              "policy-found-before-control",
+              "policy-found-buildings",
+              "policy-found-owner-city-controls",
+              "policy-found-population",
+              "policy-found-repeat-no-stack",
+              "policy-found-territory",
+              "policy-found-worker-happiness"
+            ],
+            "gamecore_sha256": "c8f1723c7588fdf54465781ebbca9d8de009e3e11c76ba6375b5200fd9687aa2"
+          }
+        ]
       }
     },
     {
       "id": "POL-CONSULATES-SHARED-TEAM",
       "group": "G6",
       "title": "Native shared/nonmatching-team Consulates events",
-      "status": "ready",
+      "status": "passed",
       "source_references": [
         {
           "path": "LEKMOD/Lua/Lekmod_policies.lua",
@@ -10362,6 +10542,18 @@
         {
           "path": "build/macos/team-events-preservation-20261003.json",
           "sha256": "678963a54814fdcf324ba2945b1ba041c33f9ad2e9fe3f2f416db7e61bef6cc2"
+        },
+        {
+          "path": "build/macos/playtests/20261003T022959Z/report.json",
+          "sha256": "46650c0a885d151d0cb9db23ca4353078883dcf2064d93e160c5f44a7331c872"
+        },
+        {
+          "path": "build/macos/playtests/20261003T022959Z/batch-report.json",
+          "sha256": "002b47db89bd8a2ba6bb82ac694c263278231aab96e96aef6432716c9e687032"
+        },
+        {
+          "path": "build/macos/global-policy-corrected-preservation-20261003.json",
+          "sha256": "b42848fec9c50d9d350502c0274b4f82119bdba713fc404fd654db6f4f5e5885"
         }
       ],
       "surface_ids": [],
@@ -10376,7 +10568,30 @@
         }
       ],
       "implementation_limits": [
-        "Original shared-team Consulates stage and exact replay passed within a globally failed product batch; rerun on fixed shared-handler package before admitting a whole-pass contract.",
+        "Corrected whole native batch022959Z passed73assertions/12replays, including this case, normal exit0 and full975-file preservation. Positive policy costs and native free-tenet accounting are retained in the corrected snapshots.",
+        "Non-native skipped-era and excess-award migration boundaries remain in the28case actual-Lua suite."
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261003T022959Z/report.json",
+            "batch_report": "build/macos/playtests/20261003T022959Z/batch-report.json",
+            "stage": "consulates-teams",
+            "required_assertions": [
+              "consulates-shared-era",
+              "consulates-team-adoptions",
+              "consulates-team-choice",
+              "consulates-team-repeat",
+              "consulates-unrelated-team"
+            ],
+            "gamecore_sha256": "c8f1723c7588fdf54465781ebbca9d8de009e3e11c76ba6375b5200fd9687aa2"
+          }
+        ]
+      },
+      "remaining_scope": [
+        "Corrected whole native batch022959Z passed73assertions/12replays, including this case, normal exit0 and full975-file preservation. Positive policy costs and native free-tenet accounting are retained in the corrected snapshots.",
         "Non-native skipped-era and excess-award migration boundaries remain in the28case actual-Lua suite."
       ]
     },
@@ -10384,7 +10599,7 @@
       "id": "LIFE-GLOBAL-TEAM-DISPATCH",
       "group": "G2",
       "title": "Global building rewards distinguish player and team callbacks",
-      "status": "ready",
+      "status": "passed",
       "source_references": [
         {
           "path": "LEKMOD/Lua/Lekmod_global_dummies.lua",
@@ -10484,13 +10699,27 @@
         {
           "path": "build/macos/policy-ledger-preservation-20261003.json",
           "sha256": "a4a5c30b90ce04a17c266a01d603f6700898422c0b3799236f7463d04504ee44"
+        },
+        {
+          "path": "build/macos/playtests/20261003T022959Z/report.json",
+          "sha256": "46650c0a885d151d0cb9db23ca4353078883dcf2064d93e160c5f44a7331c872"
+        },
+        {
+          "path": "build/macos/playtests/20261003T022959Z/batch-report.json",
+          "sha256": "002b47db89bd8a2ba6bb82ac694c263278231aab96e96aef6432716c9e687032"
+        },
+        {
+          "path": "build/macos/global-policy-corrected-preservation-20261003.json",
+          "sha256": "b42848fec9c50d9d350502c0274b4f82119bdba713fc404fd654db6f4f5e5885"
         }
       ],
       "surface_ids": [
         "lua:Lua/Lekmod_global_dummies.lua:GameEvents.PlayerCityFounded:lekmod_add_global_dummy_buildings",
         "lua:Lua/Lekmod_global_dummies.lua:GameEvents.TeamSetHasTech:lekmod_global_dummy_buildings_on_tech",
         "lua:Lua/Lekmod_global_dummies.lua:GameEvents.PlayerAdoptPolicy:lekmod_add_global_dummy_buildings",
-        "lua:Lua/Lekmod_global_dummies.lua:Events.SequenceGameInitComplete:lekmod_global_dummy_buildings_on_load"
+        "lua:Lua/Lekmod_global_dummies.lua:Events.SequenceGameInitComplete:lekmod_global_dummy_buildings_on_load",
+        "lua:Lua/Lekmod_global_dummies.lua:GameEvents.PlayerPolicyBranchUnlocked:lekmod_add_global_dummy_buildings",
+        "lua:Lua/Lekmod_global_dummies.lua:GameEvents.PlayerSetGoldenAge:lekmod_add_global_dummy_buildings"
       ],
       "implementation_references": [
         {
@@ -10515,7 +10744,68 @@
         }
       ],
       "implementation_limits": [
-        "Valid-accounting original reward failure regenerated in021936Z (cost15/culture3); corrected marker-only expected state and positive-cost guard replace malformed a67fixture for continuation. Full combined native retest pending.",
+        "Corrected whole native batch022959Z passed73assertions/12replays, including this case, normal exit0 and full975-file preservation. Positive policy costs and native free-tenet accounting are retained in the corrected snapshots.",
+        "This is callback routing/marker delivery, not all configured marker yield/production/trade consumers.",
+        "Ukraine/Colombia tech predicates, capture/capital changes, golden-age and branch transitions remain separately untriaged; Global_Dummy_Buildings data surface is not closed by these representative rows."
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261003T022959Z/report.json",
+            "batch_report": "build/macos/playtests/20261003T022959Z/batch-report.json",
+            "stage": "global-team-initial",
+            "required_assertions": [
+              "global-initial-capital-award",
+              "global-initial-owner-tech-controls"
+            ],
+            "gamecore_sha256": "c8f1723c7588fdf54465781ebbca9d8de009e3e11c76ba6375b5200fd9687aa2"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261003T022959Z/report.json",
+            "batch_report": "build/macos/playtests/20261003T022959Z/batch-report.json",
+            "stage": "global-team-policy",
+            "required_assertions": [
+              "global-AI-policy-award",
+              "global-human-policy-award",
+              "global-new-city-award",
+              "global-policy-choice-accounting",
+              "global-policy-foreign-control",
+              "global-team-capital-only",
+              "global-team-tech-awards"
+            ],
+            "gamecore_sha256": "c8f1723c7588fdf54465781ebbca9d8de009e3e11c76ba6375b5200fd9687aa2"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261003T022959Z/report.json",
+            "batch_report": "build/macos/playtests/20261003T022959Z/batch-report.json",
+            "stage": "global-old-initial",
+            "required_assertions": [
+              "global-load-next-turn",
+              "global-load-protected-state",
+              "global-load-repair"
+            ],
+            "gamecore_sha256": "c8f1723c7588fdf54465781ebbca9d8de009e3e11c76ba6375b5200fd9687aa2"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261003T022959Z/report.json",
+            "batch_report": "build/macos/playtests/20261003T022959Z/batch-report.json",
+            "stage": "global-old-policy",
+            "required_assertions": [
+              "global-load-next-turn",
+              "global-load-protected-state",
+              "global-load-repair"
+            ],
+            "gamecore_sha256": "c8f1723c7588fdf54465781ebbca9d8de009e3e11c76ba6375b5200fd9687aa2"
+          }
+        ]
+      },
+      "remaining_scope": [
+        "Corrected whole native batch022959Z passed73assertions/12replays, including this case, normal exit0 and full975-file preservation. Positive policy costs and native free-tenet accounting are retained in the corrected snapshots.",
         "This is callback routing/marker delivery, not all configured marker yield/production/trade consumers.",
         "Ukraine/Colombia tech predicates, capture/capital changes, golden-age and branch transitions remain separately untriaged; Global_Dummy_Buildings data surface is not closed by these representative rows."
       ]
@@ -21851,14 +22141,49 @@
     {
       "id": "lua:Lua/Lekmod_global_dummies.lua:GameEvents.PlayerPolicyBranchUnlocked:lekmod_add_global_dummy_buildings",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "POL-YUGOSLAV-IDEOLOGY-REWARDS",
+        "LIFE-GLOBAL-TEAM-DISPATCH"
+      ],
+      "reason": "Native current-package Yugoslav branch transitions cover all three configured branch predicates and multiple-row OR/removal behavior. The identical owner function also passes nonmatching-ID adoption/founding cases; CvPolicyClasses emits numeric owner ID before branch ID.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Lekmod_global_dummies.lua",
+          "sha256": "09f8b0abe2141a69cb7bad658fb99389915498125d385aa667598fe0834e3eb6"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPlayer.cpp",
+          "sha256": "31dd845837800229e4c4e2708e471996f03858f722b8cbf14bdfa2a8ed67c788"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPolicyClasses.cpp",
+          "sha256": "7a409a449b69feab94f617d423985048f8414ee4761f5dba36d743c9c343dfe8"
+        }
+      ]
     },
     {
       "id": "lua:Lua/Lekmod_global_dummies.lua:GameEvents.PlayerSetGoldenAge:lekmod_add_global_dummy_buildings",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "LIFE-GLOBAL-TEAM-DISPATCH"
+      ],
+      "reason": "All12shipped Global_Dummy_Buildings rows have RequiresGoldenAge=false; this subscription adds no golden-age-dependent predicate. CvPlayer emits owner ID first and calls the exact same owner helper verified by native nonmatching-ID adoption/founding and repeat/load checks. The source predicate ignores the extra boolean. This is explicitly shared-body/event-contract coverage, not a separate native golden-age marker test; full row consumers remain open.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Lekmod_global_dummies.lua",
+          "sha256": "09f8b0abe2141a69cb7bad658fb99389915498125d385aa667598fe0834e3eb6"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPlayer.cpp",
+          "sha256": "31dd845837800229e4c4e2708e471996f03858f722b8cbf14bdfa2a8ed67c788"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPolicyClasses.cpp",
+          "sha256": "7a409a449b69feab94f617d423985048f8414ee4761f5dba36d743c9c343dfe8"
+        }
+      ]
     },
     {
       "id": "lua:Lua/Lekmod_global_dummies.lua:Events.SequenceGameInitComplete:lekmod_add_dummy_policies",
@@ -30445,7 +30770,7 @@
     },
     {
       "id": "SC-GLOBAL-PLAYER-TEAM-DISPATCH",
-      "classification": "native-product-failure-fixed-pending-retest",
+      "classification": "native-confirmed-fixed-and-retested",
       "case_id": "LIFE-GLOBAL-TEAM-DISPATCH",
       "source_references": [
         {
@@ -30481,14 +30806,26 @@
         {
           "path": "build/macos/global-team-source-fixed-20261003.log",
           "sha256": "ffbad2824d82c9bcf390703b3d923d40783ec7aaf38c9a1fadee193e2f9f4110"
+        },
+        {
+          "path": "build/macos/playtests/20261003T022959Z/report.json",
+          "sha256": "46650c0a885d151d0cb9db23ca4353078883dcf2064d93e160c5f44a7331c872"
+        },
+        {
+          "path": "build/macos/playtests/20261003T022959Z/batch-report.json",
+          "sha256": "002b47db89bd8a2ba6bb82ac694c263278231aab96e96aef6432716c9e687032"
+        },
+        {
+          "path": "build/macos/global-policy-corrected-preservation-20261003.json",
+          "sha256": "b42848fec9c50d9d350502c0274b4f82119bdba713fc404fd654db6f4f5e5885"
         }
       ],
       "finding": "Native nonmatching/shared team fixture confirms missing Timurids capital marker, missing human/AI Economic Union markers, missed subsequent founding and unrelated player refresh. The old helper compared a Player object to numeric player ID and otherwise routed by team.19actual-Lua controls, including correct native-style owner0 enumeration, fail8before and pass after scoped routing/load repair.",
-      "next_action": "Run same input and both genuine failed saves, plus Yugoslav normal-team shared-path regression on clean new package. Refresh discovery for renamed team callback/new load listener. New normal-start founding must also be reverified after fix; retain failed baseline."
+      "next_action": "Corrected combined022959Z passed73assertions/12replays with normal exit0/fullpreservation. Retain all original failures and malformed diagnostic fixture. Further global capture/data consumers and final F/R qualification remain separate."
     },
     {
       "id": "SC-FIXTURE-DISCARDED-TENETS",
-      "classification": "native-confirmed-harness-fixture-error-corrected-pending-retest",
+      "classification": "native-confirmed-fixed-and-retested",
       "source_references": [
         {
           "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPolicyClasses.cpp",
@@ -30543,10 +30880,22 @@
         {
           "path": "LEKMOD_DLL/macos/test-policy-fixture-choice.py",
           "sha256": "49c52b49c437ac3f2ebb4c72fc0e8ae74659bfad78adfe2752e5b69400d22be0"
+        },
+        {
+          "path": "build/macos/playtests/20261003T022959Z/report.json",
+          "sha256": "46650c0a885d151d0cb9db23ca4353078883dcf2064d93e160c5f44a7331c872"
+        },
+        {
+          "path": "build/macos/playtests/20261003T022959Z/batch-report.json",
+          "sha256": "002b47db89bd8a2ba6bb82ac694c263278231aab96e96aef6432716c9e687032"
+        },
+        {
+          "path": "build/macos/global-policy-corrected-preservation-20261003.json",
+          "sha256": "b42848fec9c50d9d350502c0274b4f82119bdba713fc404fd654db6f4f5e5885"
         }
       ],
       "finding": "Native read-only observation confirms malformed old human fixture cost=-14388120 at culture3/free0/tenets0/owned1. Preserving native tenets regenerates the original global reward failure with cost15/culture3. The corrected helper passes24precedence/debit/negative-control cases and preflight rejects literal clearing of awarded tenets.",
-      "next_action": "Rerun all affected policy cases and global fixed regression, using valid becd9a0 failure save. Keep a67bad fixture only as diagnostic evidence. Full previous interrupted batch remains failed and unaccepted."
+      "next_action": "Corrected combined022959Z passed73assertions/12replays with normal exit0/fullpreservation. Retain all original failures and malformed diagnostic fixture. Further global capture/data consumers and final F/R qualification remain separate."
     }
   ],
   "dependency_review": [
@@ -30646,16 +30995,16 @@
   "summary": {
     "designed_cases": 78,
     "case_statuses": {
-      "passed": 28,
+      "passed": 33,
       "covered-by-evidence": 40,
-      "ready": 10
+      "ready": 5
     },
     "review_surfaces": 1342,
     "pending_document_rows": 121,
     "final_case_denominator_frozen": false,
     "surface_statuses": {
-      "untriaged": 1237,
-      "mapped": 83,
+      "untriaged": 1235,
+      "mapped": 85,
       "presentation-only": 19,
       "out-of-scope": 3
     },
