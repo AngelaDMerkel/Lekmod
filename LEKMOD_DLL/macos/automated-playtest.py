@@ -161,6 +161,9 @@ FUNCTIONAL_ITEMS = {"script-data", "science-overflow", "unit-position-flags", "c
                     "production-unit", "production-building", "production-wonder", "production-process"}
 PRODUCTION_COMPLETION_ITEMS = {"production-completion-unit", "production-completion-building"}
 SCENARIO_ITEMS = {
+    'bolivia-capital-events': {'bolivia-native-capital-loss', 'bolivia-happiness-restored', 'bolivia-next-owner-turn', 'bolivia-native-founding', 'bolivia-relocated-food-marker', 'bolivia-unhappy-strength-floor', 'bolivia-native-writer-history', 'bolivia-foreign-marker-control', 'bolivia-happiness-removal', 'bolivia-happiness-rise'},
+    'mughal-city-events': {'mughal-native-founding', 'mughal-second-contributor', 'mughal-foreign-holy-cleanup', 'mughal-native-city-loss', 'mughal-last-contributor-cleanup', 'mughal-retained-holy-benefit', 'mughal-following-owner-turn', 'mughal-native-owner-turn'},
+    'uae-wonder-rewards': {'uae-wonder-save-state', 'uae-foreign-wonder-control', 'uae-nonwonder-control', 'uae-second-wonder-stack', 'uae-first-wonder-reward', 'uae-native-production-events'},
     "building-perpop": {'perpop-removal', 'perpop-BUILDING_LIBRARY', 'perpop-unrelated-yields', 'perpop-BUILDING_PAPER_MAKER', 'perpop-configured-values', 'perpop-BUILDING_AKKAD_LIBRARY', 'perpop-BUILDING_ROYAL_LIBRARY', 'perpop-population-rates', 'perpop-BUILDING_SERAI', 'perpop-BUILDING_UC_HALKEVLERI', 'perpop-BUILDING_DUMMY_MUGHALS', 'perpop-BUILDING_PUBLIC_SCHOOL', 'perpop-positive-save'},
     "aksum-founding": {"aksum-founding-prerequisites","aksum-native-found-event","aksum-all-owned-followers","aksum-foreign-control","aksum-repeat-rejection"},
     "hover-shores": {"hover-native-birth","hover-shore-entry","hover-land-return","hover-ordinary-turn","hover-embark-control","hover-movement-debit"},
