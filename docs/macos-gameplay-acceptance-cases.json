@@ -7142,7 +7142,7 @@
       "id": "CFG-COMPILED-ARRAY-CACHES",
       "group": "G0",
       "title": "Read-only compiled relation-cache parity",
-      "status": "ready",
+      "status": "passed",
       "source_references": [
         {
           "path": "LEKMOD_DLL/macos/info-array-audit.cpp",
@@ -7191,7 +7191,28 @@
       ],
       "batch": "LEKMOD_DLL/macos/batch-plans/cache-and-reward-regression.json",
       "stage": "array-cache",
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20261003T005557Z/report.json",
+          "sha256": "65971f5c15edbcddf58e9b268721a2afb10b87dfc84da2f691b1b9e21829c97b"
+        },
+        {
+          "path": "build/macos/playtests/20261003T005557Z/batch-report.json",
+          "sha256": "90d295c84fb1c653f59c7de191c3bebf123abc46cfe28878b5566797daae1425"
+        },
+        {
+          "path": "build/macos/consulates-fixed-preservation-20261003.json",
+          "sha256": "a3af62f7c8bcae26e11361399e07d297ca19ab00ff05b484a059d8e9438c5f74"
+        },
+        {
+          "path": "build/macos/config-array-audit-20261002/native-array-20261003T005557Z.json",
+          "sha256": "7f7e9dc291e4e85bdc87e819809c92d9df06bbdf4c3113b56bf3540e507046dc"
+        },
+        {
+          "path": "build/macos/config-array-audit-20261002/native-scalar-20261003T005557Z.json",
+          "sha256": "cbaae6c3cf84d45f1ac868bace19118e9ddf5a69594bd70e7d85907d916f60cf"
+        }
+      ],
       "surface_ids": [],
       "implementation_references": [
         {
@@ -7208,6 +7229,44 @@
         }
       ],
       "implementation_limits": [
+        "No consumer/gameplay/AI strategy pass follows from parameter parity.",
+        "Five ambiguous duplicate AI-flavor arrays are excluded pending review; orphan input rows remain explicitly listed.",
+        "Compact-list order is not asserted as gameplay semantics; native repeated raw rows must nevertheless remain identical.",
+        "Other nontrivial, conditional and two-dimensional cache paths remain unreviewed."
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261003T005557Z/report.json",
+            "batch_report": "build/macos/playtests/20261003T005557Z/batch-report.json",
+            "stage": "array-cache",
+            "required_assertions": [
+              "arrays-Beliefs",
+              "arrays-Buildings",
+              "arrays-Builds",
+              "arrays-Civilizations",
+              "arrays-Features",
+              "arrays-HandicapInfos",
+              "arrays-Improvements",
+              "arrays-Leaders",
+              "arrays-Policies",
+              "arrays-Resources",
+              "arrays-Routes",
+              "arrays-Specialists",
+              "arrays-Technologies",
+              "arrays-Terrains",
+              "arrays-Traits",
+              "arrays-Units",
+              "arrays-boundary-guards",
+              "arrays-read-only"
+            ],
+            "gamecore_sha256": "c8f1723c7588fdf54465781ebbca9d8de009e3e11c76ba6375b5200fd9687aa2"
+          }
+        ]
+      },
+      "remaining_scope": [
         "No consumer/gameplay/AI strategy pass follows from parameter parity.",
         "Five ambiguous duplicate AI-flavor arrays are excluded pending review; orphan input rows remain explicitly listed.",
         "Compact-list order is not asserted as gameplay semantics; native repeated raw rows must nevertheless remain identical.",
@@ -9487,7 +9546,7 @@
       "id": "LIFE-PHILIPPINES-POSITIVE-QUOTA",
       "group": "G2",
       "title": "Philippine first-two expansion awards with exact replay",
-      "status": "ready",
+      "status": "passed",
       "source_references": [
         {
           "path": "LEKMOD/Lua/Civilizations/Lekmod_philippines.lua",
@@ -9533,7 +9592,20 @@
       ],
       "batch": "LEKMOD_DLL/macos/batch-plans/cache-and-reward-regression.json",
       "stage": "philippines-founding",
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20261003T005557Z/report.json",
+          "sha256": "65971f5c15edbcddf58e9b268721a2afb10b87dfc84da2f691b1b9e21829c97b"
+        },
+        {
+          "path": "build/macos/playtests/20261003T005557Z/batch-report.json",
+          "sha256": "90d295c84fb1c653f59c7de191c3bebf123abc46cfe28878b5566797daae1425"
+        },
+        {
+          "path": "build/macos/consulates-fixed-preservation-20261003.json",
+          "sha256": "a3af62f7c8bcae26e11361399e07d297ca19ab00ff05b484a059d8e9438c5f74"
+        }
+      ],
       "surface_ids": [
         "lua:Lua/Civilizations/Lekmod_philippines.lua:GameEvents.PlayerCityFounded:lekmod_philippine_expand_population"
       ],
@@ -9548,15 +9620,39 @@
         }
       ],
       "implementation_limits": [
-        "Historical090810positive native run passed but has no matching exact replay; it is not silently upgraded to complete evidence.",
-        "Lost-city lifetime behavior is independently covered by LIFE-PHILIPPINES-LOST-CITY-QUOTA."
+        "The previously missing matching positive-founding exact replay passed in20261003T005557Z.",
+        "Supplied Settlers/positions and scripted Found actions; no physical mouse or earned-settler claim.",
+        "Lost-city lifetime behavior remains independently covered; final candidate applicability required at F."
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261003T005557Z/report.json",
+            "batch_report": "build/macos/playtests/20261003T005557Z/batch-report.json",
+            "stage": "philippines-founding",
+            "required_assertions": [
+              "philippines-capital",
+              "philippines-first-two",
+              "philippines-other-owner",
+              "philippines-third-excluded"
+            ],
+            "gamecore_sha256": "c8f1723c7588fdf54465781ebbca9d8de009e3e11c76ba6375b5200fd9687aa2"
+          }
+        ]
+      },
+      "remaining_scope": [
+        "The previously missing matching positive-founding exact replay passed in20261003T005557Z.",
+        "Supplied Settlers/positions and scripted Found actions; no physical mouse or earned-settler claim.",
+        "Lost-city lifetime behavior remains independently covered; final candidate applicability required at F."
       ]
     },
     {
       "id": "POL-CONSULATES-OWNER-ADOPTION",
       "group": "G6",
       "title": "Consulates owner adoption, era transitions and affected-save repair",
-      "status": "ready",
+      "status": "passed",
       "source_references": [
         {
           "path": "LEKMOD/Lua/Lekmod_policies.lua",
@@ -9641,6 +9737,18 @@
         {
           "path": "build/macos/cache-consulates-preservation-20261003.json",
           "sha256": "9a92c909cf4fe3be236c2d67e3e5c52d9516793b90f61317bd9073cdfa12caa0"
+        },
+        {
+          "path": "build/macos/playtests/20261003T005557Z/report.json",
+          "sha256": "65971f5c15edbcddf58e9b268721a2afb10b87dfc84da2f691b1b9e21829c97b"
+        },
+        {
+          "path": "build/macos/playtests/20261003T005557Z/batch-report.json",
+          "sha256": "90d295c84fb1c653f59c7de191c3bebf123abc46cfe28878b5566797daae1425"
+        },
+        {
+          "path": "build/macos/consulates-fixed-preservation-20261003.json",
+          "sha256": "a3af62f7c8bcae26e11361399e07d297ca19ab00ff05b484a059d8e9438c5f74"
         }
       ],
       "surface_ids": [
@@ -9663,9 +9771,71 @@
         }
       ],
       "implementation_limits": [
-        "Native original failure confirmed for whichever owner adopts second; both authentic failed saves retained. Product fix passes28isolated cases, native retest still required.",
-        "Nonmatching player/team IDs and multi-owner teams remain isolated callback coverage; these are not native team-game results.",
-        "Native changed source and affected-save repair must pass before this ready case closes."
+        "Both native original-order retests and both authentic-save repairs passed, including ordinary next round and exact replay.",
+        "Nonmatching player/team IDs, shared teams, skipped eras and overaward repair are isolated actual-Lua tests; native Congress voting UI is not covered.",
+        "Final-candidate applicability remains required at F."
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261003T005557Z/report.json",
+            "batch_report": "build/macos/playtests/20261003T005557Z/batch-report.json",
+            "stage": "consulates-human-first",
+            "required_assertions": [
+              "consulates-AI-award",
+              "consulates-choice-accounting",
+              "consulates-era-increments",
+              "consulates-human-award",
+              "consulates-repeat-rejection"
+            ],
+            "gamecore_sha256": "c8f1723c7588fdf54465781ebbca9d8de009e3e11c76ba6375b5200fd9687aa2"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261003T005557Z/report.json",
+            "batch_report": "build/macos/playtests/20261003T005557Z/batch-report.json",
+            "stage": "consulates-ai-first",
+            "required_assertions": [
+              "consulates-AI-award",
+              "consulates-choice-accounting",
+              "consulates-era-increments",
+              "consulates-human-award",
+              "consulates-repeat-rejection"
+            ],
+            "gamecore_sha256": "c8f1723c7588fdf54465781ebbca9d8de009e3e11c76ba6375b5200fd9687aa2"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261003T005557Z/report.json",
+            "batch_report": "build/macos/playtests/20261003T005557Z/batch-report.json",
+            "stage": "old-human-first",
+            "required_assertions": [
+              "consulates-load-next-turn",
+              "consulates-load-protected-state",
+              "consulates-load-repair"
+            ],
+            "gamecore_sha256": "c8f1723c7588fdf54465781ebbca9d8de009e3e11c76ba6375b5200fd9687aa2"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261003T005557Z/report.json",
+            "batch_report": "build/macos/playtests/20261003T005557Z/batch-report.json",
+            "stage": "old-ai-first",
+            "required_assertions": [
+              "consulates-load-next-turn",
+              "consulates-load-protected-state",
+              "consulates-load-repair"
+            ],
+            "gamecore_sha256": "c8f1723c7588fdf54465781ebbca9d8de009e3e11c76ba6375b5200fd9687aa2"
+          }
+        ]
+      },
+      "remaining_scope": [
+        "Both native original-order retests and both authentic-save repairs passed, including ordinary next round and exact replay.",
+        "Nonmatching player/team IDs, shared teams, skipped eras and overaward repair are isolated actual-Lua tests; native Congress voting UI is not covered.",
+        "Final-candidate applicability remains required at F."
       ]
     },
     {
@@ -9790,7 +9960,7 @@
         "human Rome and AI control/adopter as specified",
         "human Akkad in replacement-building stage"
       ],
-      "expected_result": "Two normal post-adoption Found actions grant exactly one Workshop, Granary, Aqueduct, Monument and owner-specific Library; native library-class lookup resolves Royal Tablet Library for Akkad and ordinary Library for Rome. Each new city has5population and13owned plots versus pre-policy1/7; no Worker grant. Prior human cities and foreign-owner snapshot remain unchanged. Normal adoption/Found consume choice/Settlers once.",
+      "expected_result": "Two normal post-adoption Found actions grant exactly one Workshop, Granary, Aqueduct, Monument and owner-specific Library; native library-class lookup resolves Akkadian Library for Akkad and ordinary Library for Rome. Each new city has5population and13owned plots versus pre-policy1/7; no Worker grant. Prior human cities and foreign-owner snapshot remain unchanged. Normal adoption/Found consume choice/Settlers once.",
       "units": "unit promotion flags/native modifier percentage points; building/unit counts, population, plots and happiness",
       "supplied_inputs": [
         "preserved hashed Ancient fixture",
@@ -20982,7 +21152,7 @@
           "sha256": "5d1fd2eb11435696985a2c73dfdb7007ca11848c50720e05ab990e2837a51ed1"
         }
       ],
-      "reason": "Native baseline20261003T003911Z confirms second-adopter underaward in both human/AI orders. Reviewed fix retains listener, routes era events by team and derives entitlement; the ready case requires both same-input retests and authentic-save repairs. No native fixed pass yet."
+      "reason": "Consulates same-input human/AI orderings and both authentic affected-save repairs passed in20261003T005557Z. Era callbacks use native team IDs; mismatched/shared-team and repeated/skipped-era boundary controls remain isolated actual-Lua evidence."
     },
     {
       "id": "lua:Lua/Lekmod_policies.lua:GameEvents.TeamSetEra:Lekmod_OnEraChangeGiveConsulatesVote",
@@ -21013,7 +21183,7 @@
           "sha256": "5d1fd2eb11435696985a2c73dfdb7007ca11848c50720e05ab990e2837a51ed1"
         }
       ],
-      "reason": "Native baseline20261003T003911Z confirms second-adopter underaward in both human/AI orders. Reviewed fix retains listener, routes era events by team and derives entitlement; the ready case requires both same-input retests and authentic-save repairs. No native fixed pass yet."
+      "reason": "Consulates same-input human/AI orderings and both authentic affected-save repairs passed in20261003T005557Z. Era callbacks use native team IDs; mismatched/shared-team and repeated/skipped-era boundary controls remain isolated actual-Lua evidence."
     },
     {
       "id": "lua:Lua/Lekmod_improvements.lua:GameEvents.BuildFinished:improvement_adjacent_bonus",
@@ -21869,7 +22039,7 @@
       "case_ids": [
         "POL-CONSULATES-OWNER-ADOPTION"
       ],
-      "reason": "New product load repair is explicitly covered by both authentic failure saves, counter-only expected snapshots, next ordinary turn and exact replay in the ready Consulates case."
+      "reason": "Consulates same-input human/AI orderings and both authentic affected-save repairs passed in20261003T005557Z. Era callbacks use native team IDs; mismatched/shared-team and repeated/skipped-era boundary controls remain isolated actual-Lua evidence."
     }
   ],
   "pending_doc_entries": [
@@ -29406,7 +29576,7 @@
     },
     {
       "id": "SC-CONSULATES-EVENT-OWNERS",
-      "classification": "native-product-failure-fixed-pending-retest",
+      "classification": "native-confirmed-fixed-and-retested",
       "case_id": "POL-CONSULATES-OWNER-ADOPTION",
       "source_references": [
         {
@@ -29458,10 +29628,18 @@
         {
           "path": "build/macos/consulates-fixed-source-20261003.log",
           "sha256": "2f66576bef6b6b0a655bc5dfcc53318faa55f98d96cc27b7212edc19f898c764"
+        },
+        {
+          "path": "build/macos/playtests/20261003T005557Z/report.json",
+          "sha256": "65971f5c15edbcddf58e9b268721a2afb10b87dfc84da2f691b1b9e21829c97b"
+        },
+        {
+          "path": "build/macos/playtests/20261003T005557Z/batch-report.json",
+          "sha256": "90d295c84fb1c653f59c7de191c3bebf123abc46cfe28878b5566797daae1425"
         }
       ],
       "finding": "Native20261003T003911Z confirmed first Industrial adopter2votes and second1 in both human/AI orderings; Modern increment retained a3/2 discrepancy. Both failed saves are verified and retained. Team-ID ownership, duplicate events and migration controls are isolated-source evidence.",
-      "next_action": "Rebuild from clean fix source and run all combined stages plus both authentic affected-save cases. Source fix derives active-policy base plus entitled era votes, routes era callbacks by team and repairs on load;28isolated checks pass. Full acceptance remains blocked on native retest and G0/F/R."
+      "next_action": "Scoped defect closed: both native orderings and both authentic missing-award saves pass after fixddf38d06, including next round/replay. Retain isolated-only team/overaward boundaries and final F applicability."
     }
   ],
   "dependency_review": [
@@ -29561,9 +29739,9 @@
   "summary": {
     "designed_cases": 71,
     "case_statuses": {
-      "passed": 25,
+      "passed": 28,
       "covered-by-evidence": 40,
-      "ready": 6
+      "ready": 3
     },
     "review_surfaces": 1341,
     "pending_document_rows": 121,
@@ -29575,7 +29753,8 @@
       "out-of-scope": 3
     },
     "indexed_civilizations": 114,
-    "native_parameter_fields_verified": 724
+    "native_parameter_fields_verified": 724,
+    "native_parameter_arrays_verified": 132
   },
   "execution_policy": {
     "revision": 2,

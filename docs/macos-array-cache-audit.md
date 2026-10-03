@@ -100,3 +100,19 @@ founding/replay case:72 assertions/seven replays, six aggregate ordinary turns,
 40-minute ceiling. The diagnostic binary/payload is unchanged, so the identified
 clean132-array package remains applicable. Read the latest case register for
 the unexecuted obligations; earlier68-check plan counts are historical.
+
+## Completed native parameter verification
+
+The later fixed-package round `20261003T005557Z` passed88assertions/11replays
+intact, normal exit0 and full preservation. The132-array stage and exact reload
+passed. The independent immutable-database verifier compared17,586native rows
+and1,075,256values, with a minimum of four matching observations per row. The
+scalar stage independently matched1,657rows/103,221values. Final reports are
+`build/macos/config-array-audit-20261002/native-{array,scalar}-20261003T005557Z.json`.
+
+Archive `52778f29…35130c` carries the Consulates Lua correction and unchanged
+GameCore `c8f1723c…9687aa2`; full identities and whole-round evidence are in
+[the Consulates report](macos-consulates-validation.md). Original mixed baseline
+`20261003T003911Z` remains failed for the two second-adopter awards, even though
+its independent parameter checks passed. Duplicate flavors, orphan rows and
+consumer/gameplay applicability remain separate obligations.

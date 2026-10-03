@@ -57,3 +57,31 @@ saves. Before scenario mutation, loaded owner/team/era/policy/free-choice/turn
 fields must match the saved snapshot with only the missing counter corrected
 to3. A further ordinary round and exact replay must remain stable. Final G0,
 candidate applicability and F/R acceptance remain open.
+
+## Fixed native qualification
+
+Clean source `ddf38d069662997eba0937364932b1bd3801a686` produced
+`build/macos/Lekmod-consulates-fixed-20261003.zip`, SHA-256
+`52778f2971c77ac4bc2fdfc2f6ce6e2b753cf24d438b5821bf86dace6935130c`.
+GameCore is unchanged at `c8f1723c…9687aa2`; payload SHA-256 is
+`b95011503cf9ad78c941ac585b84bdf3a635e69a48ea03279bb5a0c372fc15f1`.
+
+Run `20261003T005557Z` passed all88 assertions/11exact replays in758.0seconds
+with seven aggregate ordinary turns and normal exit0. Each Industrial adopter
+received2delegates in both orderings and advanced to3 at Modern. Loading each
+authentic failed save corrected only the declared missing counter in the recorded
+owner/team/era/policy/free-choice/turn snapshot, before scenario mutation. Both
+owners stayed at3 through one ordinary round and exact reload. The already
+correct first adopter did not gain an extra vote.
+
+Independent SQL comparison passed1,075,256array values and103,221scalar values.
+The remaining reward/shelter/space/Philippine stages also passed; no Lua runtime,
+synchronization or new crash diagnostic was recorded. Independent preservation
+verified925baseline files and all22closed checkpoint copies, stock restoration
+and no game process. Evidence: `build/macos/consulates-fixed-preservation-20261003.json`
+and the native reports/checkpoints under the run directory.
+
+This closes the documented second-adopter defect and missing-award save repair.
+Nonmatching/shared teams, skipped eras and excess-award repair remain isolated
+actual-Lua tests. Full single-player acceptance still requires the remaining
+G0/gameplay/F/R gates.
