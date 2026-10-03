@@ -10519,6 +10519,376 @@
         "This is callback routing/marker delivery, not all configured marker yield/production/trade consumers.",
         "Ukraine/Colombia tech predicates, capture/capital changes, golden-age and branch transitions remain separately untriaged; Global_Dummy_Buildings data surface is not closed by these representative rows."
       ]
+    },
+    {
+      "id": "LIFE-GLOBAL-TEAM-CAPTURE",
+      "group": "G2",
+      "title": "Global building rewards after single-player capital capture",
+      "status": "ready",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Lekmod_global_dummies.lua",
+          "sha256": "09f8b0abe2141a69cb7bad658fb99389915498125d385aa667598fe0834e3eb6"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPlayer.cpp",
+          "sha256": "31dd845837800229e4c4e2708e471996f03858f722b8cbf14bdfa2a8ed67c788"
+        }
+      ],
+      "owners": [
+        "one human and actual AI owner turns as specified"
+      ],
+      "expected_result": "Real AI2/team0 capture of human0/team7 capital must refresh the surviving Wales capital marker, preserve its Economic Union, clear foreign/capital-only markers from the captured noncapital, preserve Timurids original-capital Ulug and leave teammate1 markers unchanged. One subsequent ordinary round and exact replay must remain correct.",
+      "units": "native markers/counts, ownership, pressure, delegates, yields or faith as specified",
+      "supplied_inputs": [
+        "Provided upkeep/uranium and full-health adjacent GDR; genuine normal war and repeated owner-turn attacks within3turn cap, no damage/ownership assignment."
+      ],
+      "actual_trigger": "Ordinary network/mission/task/production paths and real engine events; script inputs remain distinct from outcomes.",
+      "negative_controls": [
+        "unrelated owner/civilization",
+        "excluded state as specified",
+        "unchanged comparison fields",
+        "repeat or civilian control as applicable"
+      ],
+      "transitions": [
+        "specified native action/outcome",
+        "ordinary round where required",
+        "exact checkpoint replay"
+      ],
+      "persistence_requirement": "Completed current-package stage/replay, closed source/copy bytes, normal exit and full preservation. Historical individually passing Vatican stages lack current writer metadata and are not silently upgraded.",
+      "required_evidence_level": [
+        "scripted-command",
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20261003T021936Z/checkpoints/Lekmod-Batch-20261003T021936Z-global-team-policy-run.Civ5Save",
+          "sha256": "becd9a0688bc84fee4fe46745c35b893326c870791492fe8bb21db95dfab298f"
+        }
+      ],
+      "batch": "LEKMOD_DLL/macos/batch-plans/global-capture-and-vatican.json",
+      "stage": [
+        "global-team-capture"
+      ],
+      "evidence": [],
+      "surface_ids": [
+        "lua:Lua/Lekmod_global_dummies.lua:GameEvents.CityCaptureComplete:lekmod_add_global_dummy_buildings_on_capture"
+      ],
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/batch-plans/global-capture-and-vatican.json",
+          "sha256": "53867f45280ebebd5b7db7f9fa3adef462022d952cde9129b0f63fd474cd945b"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-global-team-capture.lua",
+          "sha256": "f3deae6ca938b92e22216b4acac152266bcddbbdce7113ca6ee1c6d4c87e1bcd"
+        }
+      ],
+      "implementation_limits": [
+        "Preflight passed; current native run pending.",
+        "Gift and other global dummy civilizations/predicates remain separate."
+      ]
+    },
+    {
+      "id": "REL-VATICAN-COURTHOUSE",
+      "group": "G6",
+      "title": "Vatican Courthouse capture and conversion",
+      "status": "ready",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_vatican.lua",
+          "sha256": "7a56d2ef439f803e2066a7722aa88ecafc42584e1c3afc1b77d228b4fff3df9b"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPlayer.cpp",
+          "sha256": "31dd845837800229e4c4e2708e471996f03858f722b8cbf14bdfa2a8ed67c788"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvCity.cpp",
+          "sha256": "bc6c14e34329d88978ded1969875b4eed39be171e819bf200fa313d0a0b24030"
+        }
+      ],
+      "owners": [
+        "one human and actual AI owner turns as specified"
+      ],
+      "expected_result": "Real AI capture grants exactly1 Courthouse only for own-religion occupied/puppet city. Other fixture starts0, then a legal Prophet spread and native conversion grant1. Normal annex preserves occupation-unhappiness exemption; unoccupied holy city/pre-capture foreign owner are excluded.",
+      "units": "native markers/counts, ownership, pressure, delegates, yields or faith as specified",
+      "supplied_inputs": [
+        "Religion, survival city, attackers/resources, Prophet staging and one branch pre-conversion supplied; capture/spread/annex are outcomes."
+      ],
+      "actual_trigger": "Ordinary network/mission/task/production paths and real engine events; script inputs remain distinct from outcomes.",
+      "negative_controls": [
+        "unrelated owner/civilization",
+        "excluded state as specified",
+        "unchanged comparison fields",
+        "repeat or civilian control as applicable"
+      ],
+      "transitions": [
+        "specified native action/outcome",
+        "ordinary round where required",
+        "exact checkpoint replay"
+      ],
+      "persistence_requirement": "Completed current-package stage/replay, closed source/copy bytes, normal exit and full preservation. Historical individually passing Vatican stages lack current writer metadata and are not silently upgraded.",
+      "required_evidence_level": [
+        "scripted-command",
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260924T214605Z/Lekmod-Functional-20260924T214605Z.Civ5Save",
+          "sha256": "cee385a99258c682176b8396600f3a27eafc0b98d81bb49e3e36ea95451bcd1a"
+        },
+        {
+          "path": "build/macos/playtests/20260924T220405Z/checkpoints/Lekmod-Batch-20260924T220405Z-vatican-stpeters-run.Civ5Save",
+          "sha256": "0ae3aaf16c70c192a118160b96cae9dd144123353afb350d3cb0962d00a40cc7"
+        }
+      ],
+      "batch": "LEKMOD_DLL/macos/batch-plans/global-capture-and-vatican.json",
+      "stage": [
+        "vatican-conversion",
+        "vatican-capture"
+      ],
+      "evidence": [],
+      "surface_ids": [
+        "lua:Lua/Civilizations/Lekmod_vatican.lua:GameEvents.CityConvertsReligion:lekmod_ua_courthouse",
+        "lua:Lua/Civilizations/Lekmod_vatican.lua:GameEvents.CityCaptureComplete:lekmod_ua_courthouse_on_capture"
+      ],
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/batch-plans/global-capture-and-vatican.json",
+          "sha256": "53867f45280ebebd5b7db7f9fa3adef462022d952cde9129b0f63fd474cd945b"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-vatican-courthouse.lua",
+          "sha256": "1373cc1fd4f3599a0bbdb51485da2bed96044ed4bb4053da1d4b89b1c7182629"
+        }
+      ],
+      "implementation_limits": [
+        "Preflight passed; current native run pending.",
+        "Conversion away, recapture/gifting and every owner permutation remain separate."
+      ]
+    },
+    {
+      "id": "REL-STPETERS-PRESSURE-DELEGATES",
+      "group": "G6",
+      "title": "St Peters pressure and delegate calculation",
+      "status": "ready",
+      "source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvCity.cpp",
+          "sha256": "bc6c14e34329d88978ded1969875b4eed39be171e819bf200fa313d0a0b24030"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvReligionClasses.cpp",
+          "sha256": "2c6935a6eaeff0f87051e17b97a65c2ef688b339538d1c33a10732b5456fd3e4"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvVotingClasses.cpp",
+          "sha256": "9783711c0e1fa7c58a363b89b065e81131bf6de28479b4b11a146665513ed906"
+        }
+      ],
+      "owners": [
+        "one human and actual AI owner turns as specified"
+      ],
+      "expected_result": "Ordinary Congress formation and actual St Peters production double nontrade outgoing pressure and add2 calculated owner delegates. Host/human votes and distant zero-pressure city remain unchanged. Next ordinary turn increases stored pressure by exactly the quote, then exact replay matches.",
+      "units": "native markers/counts, ownership, pressure, delegates, yields or faith as specified",
+      "supplied_inputs": [
+        "Research/contact/religion/Temple/nearby target and cost-minus-one production supplied."
+      ],
+      "actual_trigger": "Ordinary network/mission/task/production paths and real engine events; script inputs remain distinct from outcomes.",
+      "negative_controls": [
+        "unrelated owner/civilization",
+        "excluded state as specified",
+        "unchanged comparison fields",
+        "repeat or civilian control as applicable"
+      ],
+      "transitions": [
+        "specified native action/outcome",
+        "ordinary round where required",
+        "exact checkpoint replay"
+      ],
+      "persistence_requirement": "Completed current-package stage/replay, closed source/copy bytes, normal exit and full preservation. Historical individually passing Vatican stages lack current writer metadata and are not silently upgraded.",
+      "required_evidence_level": [
+        "scripted-command",
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260924T214605Z/Lekmod-Functional-20260924T214605Z.Civ5Save",
+          "sha256": "cee385a99258c682176b8396600f3a27eafc0b98d81bb49e3e36ea95451bcd1a"
+        }
+      ],
+      "batch": "LEKMOD_DLL/macos/batch-plans/global-capture-and-vatican.json",
+      "stage": [
+        "vatican-pressure-votes"
+      ],
+      "evidence": [],
+      "surface_ids": [],
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/batch-plans/global-capture-and-vatican.json",
+          "sha256": "53867f45280ebebd5b7db7f9fa3adef462022d952cde9129b0f63fd474cd945b"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-vatican-pressure-votes.lua",
+          "sha256": "37b02a89624219201d7a70c1edc16c9890bb35b1e76b47df39cb93cebe968f98"
+        }
+      ],
+      "implementation_limits": [
+        "Preflight passed; current native run pending.",
+        "Delegate calculation is not a newly allocated voting session or physical ballot interaction."
+      ]
+    },
+    {
+      "id": "REL-VATICAN-GREAT-SITES",
+      "group": "G4",
+      "title": "Vatican Great Person improvement yields",
+      "status": "ready",
+      "source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPlot.cpp",
+          "sha256": "782c58aa69bcdfb2f978d33209398e026befe81e421ef595a1a7ec0e2dad9d0c"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTraitClasses.cpp",
+          "sha256": "d6dd5261df9ef25ac73f82ac747d40d732b0b04397572d1b8b1c51c2b9763611"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnit.cpp",
+          "sha256": "16914a686126292c64ed110df3fda674c136858392053cccee3940a3fbac5e73"
+        }
+      ],
+      "owners": [
+        "one human and actual AI owner turns as specified"
+      ],
+      "expected_result": "Fourteen normal owner-turn Great Person build missions consume units and emit native BuildFinished. Each of seven Vatican/Roman improvement pairs has Vatican delta+2food/+1gold/+1culture, preserving underlying terrain/resources/roads. All resulting site and unit/owner state exactly replays.",
+      "units": "native markers/counts, ownership, pressure, delegates, yields or faith as specified",
+      "supplied_inputs": [
+        "Research, natural legal coastal cities and Great People on owned eligible plots supplied."
+      ],
+      "actual_trigger": "Ordinary network/mission/task/production paths and real engine events; script inputs remain distinct from outcomes.",
+      "negative_controls": [
+        "unrelated owner/civilization",
+        "excluded state as specified",
+        "unchanged comparison fields",
+        "repeat or civilian control as applicable"
+      ],
+      "transitions": [
+        "specified native action/outcome",
+        "ordinary round where required",
+        "exact checkpoint replay"
+      ],
+      "persistence_requirement": "Completed current-package stage/replay, closed source/copy bytes, normal exit and full preservation. Historical individually passing Vatican stages lack current writer metadata and are not silently upgraded.",
+      "required_evidence_level": [
+        "scripted-command",
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260924T214605Z/Lekmod-Functional-20260924T214605Z.Civ5Save",
+          "sha256": "cee385a99258c682176b8396600f3a27eafc0b98d81bb49e3e36ea95451bcd1a"
+        }
+      ],
+      "batch": "LEKMOD_DLL/macos/batch-plans/global-capture-and-vatican.json",
+      "stage": [
+        "vatican-great-sites"
+      ],
+      "evidence": [],
+      "surface_ids": [
+        "data:Trait_ImprovementYieldChanges"
+      ],
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/batch-plans/global-capture-and-vatican.json",
+          "sha256": "53867f45280ebebd5b7db7f9fa3adef462022d952cde9129b0f63fd474cd945b"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-vatican-great-improvements.lua",
+          "sha256": "f73028efd7973cdf068b50f5dfb73ece0dedc0e8d56772fa392d30bca849ea63"
+        }
+      ],
+      "implementation_limits": [
+        "Preflight passed; current native run pending.",
+        "Tile yields are not proof every site was worked or city income settled. Other configured traits/rows remain open."
+      ]
+    },
+    {
+      "id": "REL-VATICAN-KILL-FAITH",
+      "group": "G3",
+      "title": "Vatican capped military-kill faith",
+      "status": "ready",
+      "source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnitCombat.cpp",
+          "sha256": "6e92a006256f9d47549a90a1faf1577953acab9ece87f44828f847413d8fe7d7"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPlayer.cpp",
+          "sha256": "31dd845837800229e4c4e2708e471996f03858f722b8cbf14bdfa2a8ed67c788"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTraitClasses.cpp",
+          "sha256": "d6dd5261df9ef25ac73f82ac747d40d732b0b04397572d1b8b1c51c2b9763611"
+        }
+      ],
+      "owners": [
+        "one human and actual AI owner turns as specified"
+      ],
+      "expected_result": "Actual military kills grant Vatican min(max(defender melee,ranged strength),30)faith: Warrior8, Archer7, Rifleman30. Civilian capture grants0 and matched Roman cases all give0. Native deaths/capture and attacker XP are observed; exact reward state replays.",
+      "units": "native markers/counts, ownership, pressure, delegates, yields or faith as specified",
+      "supplied_inputs": [
+        "Full-health units on legal flat plots, noncombat religion, uranium and upkeep supplied; no damage/death/reward assignment."
+      ],
+      "actual_trigger": "Ordinary network/mission/task/production paths and real engine events; script inputs remain distinct from outcomes.",
+      "negative_controls": [
+        "unrelated owner/civilization",
+        "excluded state as specified",
+        "unchanged comparison fields",
+        "repeat or civilian control as applicable"
+      ],
+      "transitions": [
+        "specified native action/outcome",
+        "ordinary round where required",
+        "exact checkpoint replay"
+      ],
+      "persistence_requirement": "Completed current-package stage/replay, closed source/copy bytes, normal exit and full preservation. Historical individually passing Vatican stages lack current writer metadata and are not silently upgraded.",
+      "required_evidence_level": [
+        "scripted-command",
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260924T214605Z/Lekmod-Functional-20260924T214605Z.Civ5Save",
+          "sha256": "cee385a99258c682176b8396600f3a27eafc0b98d81bb49e3e36ea95451bcd1a"
+        }
+      ],
+      "batch": "LEKMOD_DLL/macos/batch-plans/global-capture-and-vatican.json",
+      "stage": [
+        "vatican-kill-faith"
+      ],
+      "evidence": [],
+      "surface_ids": [
+        "data:Trait_YieldFromKills"
+      ],
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/batch-plans/global-capture-and-vatican.json",
+          "sha256": "53867f45280ebebd5b7db7f9fa3adef462022d952cde9129b0f63fd474cd945b"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-vatican-kill-faith.lua",
+          "sha256": "461290e3eed3deff1b63e046dc53c30117173c320291eee66c8f91a430b94a9f"
+        }
+      ],
+      "implementation_limits": [
+        "Preflight passed; current native run pending.",
+        "City attacks, religion-disabled option, promotion stacking and other trait rows remain separate."
+      ]
     }
   ],
   "surface_review": [
@@ -18138,7 +18508,10 @@
       "id": "data:Trait_ImprovementYieldChanges",
       "suggested_group": "G7",
       "status": "untriaged",
-      "case_ids": []
+      "case_ids": [
+        "REL-VATICAN-GREAT-SITES"
+      ],
+      "reason": "Partial Vatican parameter-row coverage only; other configured rows remain untriaged and this reference does not close the whole relation."
     },
     {
       "id": "data:Trait_IncomingTradeConnectionYieldChange",
@@ -18264,7 +18637,10 @@
       "id": "data:Trait_YieldFromKills",
       "suggested_group": "G7",
       "status": "untriaged",
-      "case_ids": []
+      "case_ids": [
+        "REL-VATICAN-KILL-FAITH"
+      ],
+      "reason": "Partial Vatican parameter-row coverage only; other configured rows remain untriaged and this reference does not close the whole relation."
     },
     {
       "id": "data:Traits.LevelExperienceModifier",
@@ -21448,8 +21824,11 @@
     {
       "id": "lua:Lua/Lekmod_global_dummies.lua:GameEvents.CityCaptureComplete:lekmod_add_global_dummy_buildings_on_capture",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "LIFE-GLOBAL-TEAM-CAPTURE"
+      ],
+      "reason": "Explicit native capture/conversion/owner design with pinned fixture and exact replay is ready; source-only and incomplete historical evidence are not treated as a current pass."
     },
     {
       "id": "lua:Lua/Lekmod_global_dummies.lua:GameEvents.TeamSetHasTech:lekmod_global_dummy_buildings_on_tech",
@@ -22294,14 +22673,20 @@
     {
       "id": "lua:Lua/Civilizations/Lekmod_vatican.lua:GameEvents.CityConvertsReligion:lekmod_ua_courthouse",
       "suggested_group": "G2",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "REL-VATICAN-COURTHOUSE"
+      ],
+      "reason": "Explicit native capture/conversion/owner design with pinned fixture and exact replay is ready; source-only and incomplete historical evidence are not treated as a current pass."
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_vatican.lua:GameEvents.CityCaptureComplete:lekmod_ua_courthouse_on_capture",
       "suggested_group": "G2",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "REL-VATICAN-COURTHOUSE"
+      ],
+      "reason": "Explicit native capture/conversion/owner design with pinned fixture and exact replay is ready; source-only and incomplete historical evidence are not treated as a current pass."
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_georgia.lua:GameEvents.PlayerDoTurn:lekmod_georgia_uu_golden_age",
@@ -30259,18 +30644,18 @@
     }
   ],
   "summary": {
-    "designed_cases": 73,
+    "designed_cases": 78,
     "case_statuses": {
       "passed": 28,
       "covered-by-evidence": 40,
-      "ready": 5
+      "ready": 10
     },
     "review_surfaces": 1342,
     "pending_document_rows": 121,
     "final_case_denominator_frozen": false,
     "surface_statuses": {
-      "untriaged": 1240,
-      "mapped": 80,
+      "untriaged": 1237,
+      "mapped": 83,
       "presentation-only": 19,
       "out-of-scope": 3
     },

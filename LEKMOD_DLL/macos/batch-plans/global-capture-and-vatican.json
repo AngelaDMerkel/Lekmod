@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "name": "global-capture-and-vatican",
+  "stages": [
+    {
+      "id": "global-team-capture",
+      "scenario": "global-team-capture",
+      "fixture": "build/macos/playtests/20261003T021936Z/checkpoints/Lekmod-Batch-20261003T021936Z-global-team-policy-run.Civ5Save",
+      "sha256": "becd9a0688bc84fee4fe46745c35b893326c870791492fe8bb21db95dfab298f",
+      "max_turns": 3
+    },
+    {
+      "fixture": "build/macos/playtests/20260924T214605Z/Lekmod-Functional-20260924T214605Z.Civ5Save",
+      "sha256": "cee385a99258c682176b8396600f3a27eafc0b98d81bb49e3e36ea95451bcd1a",
+      "id": "vatican-pressure-votes",
+      "scenario": "vatican-pressure-votes",
+      "max_turns": 7
+    },
+    {
+      "fixture": "build/macos/playtests/20260924T214605Z/Lekmod-Functional-20260924T214605Z.Civ5Save",
+      "sha256": "cee385a99258c682176b8396600f3a27eafc0b98d81bb49e3e36ea95451bcd1a",
+      "id": "vatican-conversion",
+      "scenario": "vatican-courthouse",
+      "max_turns": 5
+    },
+    {
+      "id": "vatican-capture",
+      "scenario": "vatican-courthouse",
+      "max_turns": 5,
+      "fixture": "build/macos/playtests/20260924T220405Z/checkpoints/Lekmod-Batch-20260924T220405Z-vatican-stpeters-run.Civ5Save",
+      "sha256": "0ae3aaf16c70c192a118160b96cae9dd144123353afb350d3cb0962d00a40cc7"
+    },
+    {
+      "id": "vatican-great-sites",
+      "scenario": "vatican-great-improvements",
+      "fixture": "build/macos/playtests/20260924T214605Z/Lekmod-Functional-20260924T214605Z.Civ5Save",
+      "sha256": "cee385a99258c682176b8396600f3a27eafc0b98d81bb49e3e36ea95451bcd1a",
+      "max_turns": 4
+    },
+    {
+      "id": "vatican-kill-faith",
+      "scenario": "vatican-kill-faith",
+      "fixture": "build/macos/playtests/20260924T214605Z/Lekmod-Functional-20260924T214605Z.Civ5Save",
+      "sha256": "cee385a99258c682176b8396600f3a27eafc0b98d81bb49e3e36ea95451bcd1a",
+      "max_turns": 6
+    }
+  ]
+}

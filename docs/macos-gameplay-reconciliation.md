@@ -499,3 +499,26 @@ that test-only error was corrected before launch. Native outcomes are pending.
 The Consulates fix adds one explicitly mapped load listener, bringing discovery
 to1,341 surfaces. With these cases, the register has71specified cases and1,243
 untriaged surfaces. The final denominator remains unfrozen.
+
+## Prepared capture and Vatican continuation
+
+Five case designs now cover the remaining global capital-transfer boundary and
+five retained Vatican scenarios (capture/conversion share one case). The plan
+`global-capture-and-vatican.json` combines six independent fixtures with29declared
+assertions, seven further per-improvement comparisons, six exact replays and a
+30-turn aggregate cap. Global capture uses the regenerated valid-accounting
+`becd9a0…` fixture; normal AI attacks may repeat on the actual owner turn within
+its three-turn cap. It assigns no city damage, owner, promotion or reward state.
+
+Vatican expectations retain the earlier quantified pressure/settlement/delegate,
+Courthouse capture/conversion, all seven Great Person improvement comparisons
+and capped faith-kill controls. Their original mixed batches lack current save
+writer metadata; new execution will establish current closed-source/copy checks
+in one process. No old incomplete batch was silently upgraded. The conversion
+stage cap is5turns versus its previously observed3, keeping the total bounded.
+
+Three Lua surfaces have explicit cases assigned. The two Vatican trait-table
+references remain untriaged for other configured rows; the partial case links
+do not close those entire relations. G0 now has78specified cases and1,237
+untriaged surfaces/121document rows. Native execution is pending after the
+current73-check global/policy correction regression.

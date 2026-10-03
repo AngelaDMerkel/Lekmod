@@ -161,6 +161,7 @@ FUNCTIONAL_ITEMS = {"script-data", "science-overflow", "unit-position-flags", "c
                     "production-unit", "production-building", "production-wonder", "production-process"}
 PRODUCTION_COMPLETION_ITEMS = {"production-completion-unit", "production-completion-building"}
 SCENARIO_ITEMS = {
+    "global-team-capture": {"global-capture-prerequisites","global-native-capital-capture","global-old-owner-capital-refresh","global-new-owner-cleanup","global-teammate-control","global-capture-next-round"},
     "policy-ledger": {"policy-ledger-read-only"},
     "global-team-load": {"global-load-repair","global-load-protected-state","global-load-next-turn"},
     "consulates-teams": {"consulates-team-adoptions","consulates-shared-era","consulates-unrelated-team","consulates-team-repeat","consulates-team-choice"},
