@@ -56,6 +56,16 @@ class MatrixTests(unittest.TestCase):
         r=subprocess.run(tool+['--roster','CIVILIZATION_MISSING,CIVILIZATION_ROME','--allow-duplicate-civilizations','--preflight-only'],capture_output=True,text=True)
         self.assertEqual(r.returncode,2,r.stderr)
 
+    def test_minor_fixture_counts_preserve_catalogue_and_refuse_invalid_scope(self):
+        tool=[sys.executable,str(PORT/'civilization-startup-matrix.py')]
+        r=subprocess.run(tool+['--all','--preflight-only'],capture_output=True,text=True)
+        self.assertEqual(r.returncode,0,r.stderr);self.assertEqual(json.loads(r.stdout)['city_states'],0)
+        r=subprocess.run(tool+['--roster','CIVILIZATION_MAURYA,CIVILIZATION_ROME','--minors','1','--preflight-only'],capture_output=True,text=True)
+        self.assertEqual(r.returncode,0,r.stderr);self.assertEqual(json.loads(r.stdout)['city_states'],1)
+        for args in (['--all','--minors','1'],['--roster','CIVILIZATION_MAURYA,CIVILIZATION_ROME','--minors','-1'],['--roster','CIVILIZATION_MAURYA,CIVILIZATION_ROME','--minors','42']):
+            r=subprocess.run(tool+args+['--preflight-only'],capture_output=True,text=True)
+            self.assertEqual(r.returncode,2,r.stderr)
+
     def test_wrong_package_data_refuses_before_native_prerequisites(self):
         with tempfile.TemporaryDirectory()as directory:
             package=Path(directory)/'wrong.zip'

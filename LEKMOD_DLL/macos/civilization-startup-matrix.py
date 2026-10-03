@@ -24,6 +24,7 @@ def main():
     p.add_argument('--map-script',choices=('Continents.lua','Pangaea.lua','Archipelago.lua','Fractal.lua','SmallContinents.lua','Lakes.lua','InlandSea.lua'),help='normal map selection for a custom fixture roster')
     p.add_argument('--game-speed',choices=('GAMESPEED_ONLINE','GAMESPEED_QUICK','GAMESPEED_STANDARD','GAMESPEED_EPIC','GAMESPEED_MARATHON'),help='normal speed selection for an explicit single-player fixture roster')
     p.add_argument('--game-option',action='append',type=runner.parse_game_option,default=[],help='explicit reviewed setup option for a custom roster, GAMEOPTION_TYPE=0|1')
+    p.add_argument('--minors',type=int,help='0–41 city-states for an explicit custom roster; catalogue remains at0')
     p.add_argument('--teams',help='comma-separated team IDs for exactly one explicit single-player roster; no extra humans')
     p.add_argument('--minutes',type=int,default=45)
     p.add_argument('--preflight-only',action='store_true')
@@ -36,6 +37,9 @@ def main():
     if hashlib.sha256((ROOT/'LEKMOD/Override/CIV5Units.xml').read_bytes()).hexdigest()!=plan['source_xml_sha256']:p.error('Gameplay XML changed; review and regenerate groups')
     flat=[c for g in plan['groups']for c in g]
     if len(flat)!=114 or len(set(flat))!=114 or any(not 2<=len(g)<=12 for g in plan['groups']):p.error('Invalid civilization group inventory')
+    if a.minors is not None and not a.roster:p.error('--minors requires an explicit --roster; catalogue minors stay fixed')
+    if a.minors is not None and not 0<=a.minors<=41:p.error('Use 0–41 city-states')
+    minors=0 if a.minors is None else a.minors
     if a.map_script and not a.roster:p.error('--map-script requires an explicit --roster; catalogue map stays fixed')
     if a.map_script:plan={**plan,'map':a.map_script}
     if a.game_speed and not a.roster:p.error('--game-speed requires an explicit --roster; catalogue speed stays fixed')
@@ -61,7 +65,7 @@ def main():
     if a.group is not None and a.from_group!=1:p.error('--from-group is for --all')
     selected=[a.group]if a.group is not None else list(range(a.from_group,len(plan['groups'])+1))
     subprocess.run([str(ROOT/'build/macos/test-deps/lua-5.1.4/src/luac'),'-p',str(PORT/'playtest-scenario-civilization-start.lua')],check=True)
-    print(json.dumps({'groups':selected,'civilizations':sum(len(plan['groups'][i-1])for i in selected),'maximum_functional_turns':3*len(selected),'replay':'separate single-process plan emitted after verified saves'},indent=2),flush=True)
+    print(json.dumps({'groups':selected,'city_states':minors,'civilizations':sum(len(plan['groups'][i-1])for i in selected),'maximum_functional_turns':3*len(selected),'replay':'separate single-process plan emitted after verified saves'},indent=2),flush=True)
     if a.preflight_only:return 0
     if not a.all and a.group is None and not a.roster:p.error('Choose --group, --all or --roster explicitly')
     if not a.package or not a.sha256 or playtest_batch.sha(a.package)!=a.sha256:p.error('Verified package/hash required')
@@ -72,7 +76,7 @@ def main():
     sys.path.insert(0,str(a.installer.parent));import civ5_gamecore
     if civ5_gamecore.ProductManager(runner.APP,runner.DATA).status().get('product')!='stock':p.error('Matrix requires stock initially')
     stamp=datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ');out=ROOT/'build/macos/civilization-matrices'/stamp;out.mkdir(parents=True)
-    result={'started_utc':stamp,'package_sha256':a.sha256,'selected_groups':selected,'requested_rosters':plan['groups'],'custom_rosters':bool(a.roster),'requested_teams':teams,'requested_game_options':game_options,'duplicate_civilizations_allowed':a.allow_duplicate_civilizations,'groups':[],'passed':False}
+    result={'started_utc':stamp,'package_sha256':a.sha256,'selected_groups':selected,'requested_rosters':plan['groups'],'custom_rosters':bool(a.roster),'requested_teams':teams,'requested_city_states':minors,'requested_game_options':game_options,'duplicate_civilizations_allowed':a.allow_duplicate_civilizations,'groups':[],'passed':False}
     replays={'schema':1,'name':'civilization-start-state-replays','stages':[]}
     installed=False;deadline=time.monotonic()+60*a.minutes
     try:
@@ -82,7 +86,7 @@ def main():
             remaining=int(deadline-time.monotonic())
             if remaining<180:result['stop_reason']='matrix wall-clock budget before next launch';break
             group=plan['groups'][number-1];old=set((ROOT/'build/macos/playtests').iterdir())
-            cmd=[sys.executable,str(PORT/'automated-playtest.py'),'--mode','single-player-smoke','--turns','3','--timeout',str(min(600,remaining)),'--stall-seconds','180','--scenario','civilization-start','--scenario-turns','3','--save-and-exit','--majors',str(len(group)),'--minors','0','--world-size',plan['world'],'--map-script',plan['map'],'--start-era',plan['era'],'--game-speed',plan['speed'],'--handicap',plan['human_handicap'],'--civilization',group[0]]
+            cmd=[sys.executable,str(PORT/'automated-playtest.py'),'--mode','single-player-smoke','--turns','3','--timeout',str(min(600,remaining)),'--stall-seconds','180','--scenario','civilization-start','--scenario-turns','3','--save-and-exit','--majors',str(len(group)),'--minors',str(minors),'--world-size',plan['world'],'--map-script',plan['map'],'--start-era',plan['era'],'--game-speed',plan['speed'],'--handicap',plan['human_handicap'],'--civilization',group[0]]
             for name,value in sorted(game_options.items()):cmd+=['--game-option',name+'='+str(value)]
             for slot,team in sorted(teams.items()):cmd+=['--slot-team',str(slot)+'='+str(team)]
             if a.trace_loaded_libraries:cmd+=['--trace-loaded-libraries']
