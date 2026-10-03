@@ -161,6 +161,10 @@ FUNCTIONAL_ITEMS = {"script-data", "science-overflow", "unit-position-flags", "c
                     "production-unit", "production-building", "production-wonder", "production-process"}
 PRODUCTION_COMPLETION_ITEMS = {"production-completion-unit", "production-completion-building"}
 SCENARIO_ITEMS = {
+    "aksum-founding": {"aksum-founding-prerequisites","aksum-native-found-event","aksum-all-owned-followers","aksum-foreign-control","aksum-repeat-rejection"},
+    "hover-shores": {"hover-native-birth","hover-shore-entry","hover-land-return","hover-ordinary-turn","hover-embark-control","hover-movement-debit"},
+    "workboat-training": {"workboat-tech-gate","workboat-human-AI-gate","workboat-inland-control","workboat-other-unit-control","workboat-native-production","workboat-native-continuation"},
+    "initial-civ-policies": {"initial-policy-owner","initial-policy-native-civilian","initial-policy-foreign-control","initial-policy-held-choice"},
     "global-team-capture": {"global-capture-prerequisites","global-native-capital-capture","global-old-owner-capital-refresh","global-new-owner-cleanup","global-teammate-control","global-capture-next-round"},
     "policy-ledger": {"policy-ledger-read-only"},
     "global-team-load": {"global-load-repair","global-load-protected-state","global-load-next-turn"},
