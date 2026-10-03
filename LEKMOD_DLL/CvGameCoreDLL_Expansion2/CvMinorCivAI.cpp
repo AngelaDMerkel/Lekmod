@@ -564,6 +564,13 @@ bool CvMinorCivQuest::IsComplete()
 /// Is this quest now revoked (ie. because the player bullied us)?
 bool CvMinorCivQuest::IsRevoked()
 {
+#if defined(LEKMOD_POLICY_MINOR_BULLY_TRIBUTE)
+	// Protection also applies during ordinary quest updates and after reload.
+	// Keep the recent-tribute timer intact for demand eligibility and cooldowns.
+	if(GET_PLAYER(m_eAssignedPlayer).GetPlayerPolicies()->IsMinorBullyNoPenalty())
+		return false;
+#endif
+
 	if(GET_PLAYER(m_eMinor).GetMinorCivAI()->IsRecentlyBulliedByMajor(m_eAssignedPlayer))
 	{
 		if(m_eType == MINOR_CIV_QUEST_ROUTE)
