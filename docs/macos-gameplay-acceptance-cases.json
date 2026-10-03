@@ -1613,7 +1613,9 @@
         }
       ],
       "applicability": "GameCore and DLC hashes equal the starting Steam package. Process-only correction instrumentation in this older run is not installation/Steam evidence; candidate-freeze regression remains required.",
-      "surface_ids": [],
+      "surface_ids": [
+        "lua:Lua/Civilizations/Lekmod_newzealand.lua:GameEvents.PlayerDoTurn:lekmod_new_zealand_uu_defender"
+      ],
       "evidence_contract": {
         "kind": "native-batch-stage",
         "report": "build/macos/playtests/20260927T223201Z/report.json",
@@ -5917,7 +5919,9 @@
           "sha256": "9edfecb6b82236e9e9e8ff27dbd3bff46384db4ef3c33d228596d8a6c487aeda"
         }
       ],
-      "surface_ids": [],
+      "surface_ids": [
+        "lua:Lua/Civilizations/Lekmod_newzealand.lua:GameEvents.PlayerDoTurn:lekmod_new_zealand_uu_defender"
+      ],
       "implementation_references": [
         {
           "path": "LEKMOD_DLL/macos/batch-plans/acceptance-lifetime-long.json",
@@ -6710,7 +6714,13 @@
           "sha256": "9edfecb6b82236e9e9e8ff27dbd3bff46384db4ef3c33d228596d8a6c487aeda"
         }
       ],
-      "surface_ids": [],
+      "surface_ids": [
+        "lua:Lua/Civilizations/Lekmod_switzerland.lua:GameEvents.UnitSetXY:lekmod_switzerland_uu_mountain_bonus",
+        "lua:Lua/Civilizations/Lekmod_switzerland.lua:GameEvents.UnitCreated:anonymous-1",
+        "lua:Lua/Civilizations/Lekmod_switzerland.lua:GameEvents.CityTrained:anonymous-1",
+        "lua:Lua/Civilizations/Lekmod_switzerland.lua:GameEvents.UnitConverted:anonymous-1",
+        "lua:Lua/Civilizations/Lekmod_switzerland.lua:Events.SequenceGameInitComplete:anonymous-1"
+      ],
       "implementation_references": [
         {
           "path": "LEKMOD_DLL/macos/batch-plans/acceptance-lifetime-long.json",
@@ -7616,6 +7626,1072 @@
       "remaining_scope": [
         "Only UnitPlundered is mapped. Improvement pillage via UnitPillaged, foreign-owner Raiders, wonder rewards and stationed-unit trade rewards remain open.",
         "Original binary/process-control identities remain recorded. Final-candidate applicability is still required at Gate F."
+      ]
+    },
+    {
+      "id": "LIFE-SWISS-BIRTH-MOVE-PURCHASE",
+      "group": "G2",
+      "title": "Swiss native birth, training, movement, conversion and purchase locking",
+      "status": "covered-by-evidence",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_switzerland.lua",
+          "sha256": "bfe8b30883ff29fdf004f179d5cdc073bc8494150358b8132649ff82a82dd73a"
+        }
+      ],
+      "owners": [
+        "specific human/AI/foreign roles stated by the pinned native scenarios"
+      ],
+      "expected_result": "Normal Armory production grants one Reislaufer with240/240 near mountains; stationary trained Longswordsman gets180/180 and active Mountaineer, Spanish Armory control120/120. Foreign Reislaufer moves out/in:240->180 then180->120 current movement, with maxima180/240 and no refund. Paid305-gold upgrade and gift preserve base Mountaineer but zero movement. Cost-minus-one purchase rejects; exact-budget purchase debits exactly, grants active promotion/max180, retains zero current moves. Legacy nonstale save preserves recorded120/240 budgets; actual stale repair is covered by the separate current-candidate migration case.",
+      "units": "native points, turns, movement points, counts, ownership and policy/promotion flags",
+      "supplied_inputs": [
+        "cities/Barracks/technologies/resources/upkeep",
+        "near-complete Armory/unit production",
+        "natural mountain boundaries, units and legal staging",
+        "exact purchase/upgrade budgets"
+      ],
+      "actual_trigger": "Original registered events following ordinary synchronized gameplay/UI callbacks and real owner turns; supplies and outcomes remain separate.",
+      "negative_controls": [
+        "Spanish standard Armory",
+        "mountain versus outside range",
+        "spent and zero movement preserved",
+        "insufficient purchase gold",
+        "foreign owner retains unit ability"
+      ],
+      "transitions": [
+        "specified native acquisition/ownership/reward/removal transitions",
+        "exact checkpoint replay per stage"
+      ],
+      "persistence_requirement": "Every selected stage has matching exact replay state and pinned completed checkpoint bytes.",
+      "required_evidence_level": [
+        "scripted-callback",
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260922T234627Z/Lekmod-Functional-20260922T234627Z.Civ5Save",
+          "sha256": "81fb0432eeb5737ed7446a89500e097422b565eab4e87273ff6e104d9b6c6d5c"
+        },
+        {
+          "path": "build/macos/playtests/20260926T164719Z/Lekmod-Functional-20260926T164719Z.Civ5Save",
+          "sha256": "ece8c06036ba7099625e7c96057f159db0a74f8ce90a178c20be157816f977a2"
+        },
+        {
+          "path": "build/macos/playtests/20260926T043437Z/checkpoints/Lekmod-Batch-20260926T043437Z-swiss-armory-run.Civ5Save",
+          "sha256": "1cc54bc04a358eb18bf4512a54ca0f514da24dde65ef17482d5ac4d6e6cfcfc2"
+        }
+      ],
+      "batch": "retained-reviewed-native-batches",
+      "stage": [
+        "swiss-armory",
+        "swiss-boundaries",
+        "swiss-purchase",
+        "swiss-legacy-load"
+      ],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20260926T163851Z/report.json",
+          "sha256": "bf3a69511e3e41430db60d8168f9effaaefb2054530ed4de7dd0174460f8bb74"
+        },
+        {
+          "path": "build/macos/playtests/20260926T163851Z/batch-report.json",
+          "sha256": "c518238d893144ba21d2ba5f03dc2b5883d865ee38d7355aadf5e809b03cb415"
+        },
+        {
+          "path": "build/macos/playtests/20260926T164435Z/report.json",
+          "sha256": "697528a720cf2e43e8e29fb38feb5b01c7516c7de1b19e3fa7fce29ef184c96a"
+        },
+        {
+          "path": "build/macos/playtests/20260926T164435Z/batch-report.json",
+          "sha256": "034b1b5e91aba160bf35211d353fcf1d97c024ddb517dc0d465b0a30e6aae286"
+        },
+        {
+          "path": "build/macos/playtests/20260926T164936Z/report.json",
+          "sha256": "cc623e507e4895db442d5b6df6c938422dde6ccd9b10cf4369b17d28e1439f58"
+        },
+        {
+          "path": "build/macos/playtests/20260926T164936Z/batch-report.json",
+          "sha256": "d64fad7f089c0ab180cc04aa27f15ec43c156d2ee0f2a191ed5291f7a917c63d"
+        }
+      ],
+      "surface_ids": [
+        "lua:Lua/Civilizations/Lekmod_switzerland.lua:GameEvents.UnitSetXY:lekmod_switzerland_uu_mountain_bonus",
+        "lua:Lua/Civilizations/Lekmod_switzerland.lua:GameEvents.UnitCreated:anonymous-1",
+        "lua:Lua/Civilizations/Lekmod_switzerland.lua:GameEvents.CityTrained:anonymous-1",
+        "lua:Lua/Civilizations/Lekmod_switzerland.lua:GameEvents.UnitConverted:anonymous-1",
+        "lua:Lua/Civilizations/Lekmod_switzerland.lua:Events.SequenceGameInitComplete:anonymous-1"
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20260926T163851Z/report.json",
+            "batch_report": "build/macos/playtests/20260926T163851Z/batch-report.json",
+            "stage": "swiss-armory",
+            "required_assertions": [
+              "swiss-armory-birth-movement",
+              "swiss-armory-free-unit",
+              "swiss-armory-owner-gate",
+              "swiss-armory-production",
+              "swiss-armory-terrain-at-training",
+              "swiss-armory-trained-movement",
+              "swiss-armory-trained-promotion"
+            ],
+            "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20260926T164435Z/report.json",
+            "batch_report": "build/macos/playtests/20260926T164435Z/batch-report.json",
+            "stage": "swiss-boundaries",
+            "required_assertions": [
+              "mountaineer-foreign-birth",
+              "mountaineer-gift",
+              "mountaineer-move-in",
+              "mountaineer-move-out",
+              "mountaineer-paid-upgrade",
+              "mountaineer-upgrade-movement-lock"
+            ],
+            "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20260926T164936Z/report.json",
+            "batch_report": "build/macos/playtests/20260926T164936Z/batch-report.json",
+            "stage": "swiss-purchase",
+            "required_assertions": [
+              "swiss-human-armory",
+              "swiss-human-free-reward",
+              "swiss-purchase-budget",
+              "swiss-purchase-mountaineer",
+              "swiss-purchase-movement-lock",
+              "swiss-purchase-payment"
+            ],
+            "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20260926T164936Z/report.json",
+            "batch_report": "build/macos/playtests/20260926T164936Z/batch-report.json",
+            "stage": "swiss-legacy-load",
+            "required_assertions": [
+              "mountaineer-old-save-control",
+              "mountaineer-old-save-moves",
+              "mountaineer-old-save-terrain"
+            ],
+            "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+          }
+        ]
+      },
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-swiss-armory.lua",
+          "sha256": "d04a7a0b5aa59c2cb313f30895d46bbde8f6b3284e9a8cad2d6ed63deec6c6ed"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-swiss-boundaries.lua",
+          "sha256": "d15ca9f7d2f03abd27ad3d3ddb36c1e575b65dca6cefa28bc330495e32ca1566"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-swiss-purchase.lua",
+          "sha256": "de70c04eb1fca76192b06aeae91a63a80d2fa37e87324152d2f00de9d60800ea"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-swiss-legacy-load.lua",
+          "sha256": "b18661aec79c0e9e3067d2400f206a5d88493adcb61311f23c9374ddeed06669"
+        }
+      ],
+      "remaining_scope": [
+        "Historical cases retain their original tested core. Current human training and actual stale-save migration are separately pinned in REG-SWISS-TRAINING-MIGRATION.",
+        "The legacy-load stage repairs zero stale flags; it is compatibility evidence only.",
+        "Minor-owner and some terrain combinations remain isolated callback controls; no mouse or autonomous upgrade-choice claim.",
+        "Final-candidate applicability and affected regressions remain required at Gate F."
+      ]
+    },
+    {
+      "id": "LIFE-ROMANIA-ACQUISITION-REWARDS",
+      "group": "G2",
+      "title": "Romanian conquest, peaceful gift and both liberation roles",
+      "status": "covered-by-evidence",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_romania.lua",
+          "sha256": "a50203d06e9d29787e3c188e9586232801e0029174149708e29cb56400e889dd"
+        }
+      ],
+      "owners": [
+        "specific human/AI/foreign roles stated by the pinned native scenarios"
+      ],
+      "expected_result": "At Quick speed, real conquest grants Romanian new owner100 golden-age points; peaceful city gift grants0. Romania as liberator receives its capture100 once and no extra return reward. A foreign liberator and Romanian peaceful recipient receive0. Actual original Liberate callbacks return cities; exact resulting ownership/reward state replays.",
+      "units": "native points, turns, movement points, counts, ownership and policy/promotion flags",
+      "supplied_inputs": [
+        "legal cities/occupation fixture",
+        "contact/uranium/upkeep",
+        "staged attacker without supplied damage or ownership"
+      ],
+      "actual_trigger": "Original registered events following ordinary synchronized gameplay/UI callbacks and real owner turns; supplies and outcomes remain separate.",
+      "negative_controls": [
+        "peaceful gift",
+        "previous foreign owner",
+        "foreign liberator",
+        "Romanian liberation recipient",
+        "peaceful entry rejected"
+      ],
+      "transitions": [
+        "specified native acquisition/ownership/reward/removal transitions",
+        "exact checkpoint replay per stage"
+      ],
+      "persistence_requirement": "Every selected stage has matching exact replay state and pinned completed checkpoint bytes.",
+      "required_evidence_level": [
+        "scripted-callback",
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260922T234507Z/Lekmod-Functional-20260922T234507Z.Civ5Save",
+          "sha256": "7eeef6df14b51bcc7a21810c416b40695a3c54207c9543e7bce1df79dd48b9e0"
+        },
+        {
+          "path": "build/macos/playtests/20260926T175541Z/Lekmod-Functional-20260926T175541Z.Civ5Save",
+          "sha256": "2df81f4392d837428f6cfa204102b7c1a128a4001c35435f748bdea2596c6f57"
+        }
+      ],
+      "batch": "retained-reviewed-native-batches",
+      "stage": [
+        "romania-acquisition",
+        "romanian-liberator",
+        "romanian-recipient"
+      ],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20260926T175250Z/report.json",
+          "sha256": "c071ba08ca5ce3fc24e7c7e7552b6b0a854da6ef35a47a83790ee9181a7af03b"
+        },
+        {
+          "path": "build/macos/playtests/20260926T175250Z/batch-report.json",
+          "sha256": "bbdf70d8b337d5373d0b38c2884644ee4edaa18a1317c36f203409c17a77a489"
+        },
+        {
+          "path": "build/macos/playtests/20260926T181244Z/report.json",
+          "sha256": "f6c54d544f8dd1d3b3b58f2b776029a22179cdcc81bd68d3f4c0de3da4d4e989"
+        },
+        {
+          "path": "build/macos/playtests/20260926T181244Z/batch-report.json",
+          "sha256": "d21eece54a3924ecf5bcdc4a2d02a0041440a9b9b59e5ec4a8d7b46705db0f6e"
+        }
+      ],
+      "surface_ids": [
+        "lua:Lua/Civilizations/Lekmod_romania.lua:GameEvents.CityCaptureComplete:lekmod_romania_ua_on_capture"
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20260926T175250Z/report.json",
+            "batch_report": "build/macos/playtests/20260926T175250Z/batch-report.json",
+            "stage": "romania-acquisition",
+            "required_assertions": [
+              "romania-city-gift",
+              "romania-conquest",
+              "romania-conquest-reward",
+              "romania-gift-no-capture-reward",
+              "romania-previous-owner-control"
+            ],
+            "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20260926T181244Z/report.json",
+            "batch_report": "build/macos/playtests/20260926T181244Z/batch-report.json",
+            "stage": "romanian-liberator",
+            "required_assertions": [
+              "romania-liberated-recipient-control",
+              "romania-liberation-conquest",
+              "romania-liberation-peace-gate",
+              "romania-liberation-return",
+              "romania-liberator-reward"
+            ],
+            "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20260926T181244Z/report.json",
+            "batch_report": "build/macos/playtests/20260926T181244Z/batch-report.json",
+            "stage": "romanian-recipient",
+            "required_assertions": [
+              "romania-liberated-recipient-control",
+              "romania-liberation-conquest",
+              "romania-liberation-peace-gate",
+              "romania-liberation-return",
+              "romania-liberator-reward"
+            ],
+            "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+          }
+        ]
+      },
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-romania-acquisition.lua",
+          "sha256": "f60e10d46d269b67ecc746f318ca6f7d52fa4b8fa9dbd69c2cc05a6d30f26b6d"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-romania-liberation.lua",
+          "sha256": "6bbd8955cafb93631135dc4e991fbf3283559652bdac90a5272710a958471263"
+        }
+      ],
+      "remaining_scope": [
+        "Detailed wounded-combat/golden-age culture and other unique effects remain separate.",
+        "Scripted original diplomacy/liberation callbacks are not physical mouse coverage; ordinary happiness progress is separated from the capture reward.",
+        "Final-candidate applicability and affected regressions remain required at Gate F."
+      ]
+    },
+    {
+      "id": "POL-YUGOSLAV-IDEOLOGY-REWARDS",
+      "group": "G6",
+      "title": "Yugoslav adoption and all three real revolution destinations",
+      "status": "covered-by-evidence",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_yugoslavia.lua",
+          "sha256": "17f54154787e7fb9238895e44db9a311962f6bd81ed83626f7ce6c50c6590d69"
+        }
+      ],
+      "owners": [
+        "specific human/AI/foreign roles stated by the pinned native scenarios"
+      ],
+      "expected_result": "Normal human Freedom adoption and pressure-driven switches into Order, Autocracy and Freedom each add exactly one Yugoslav free tenet beyond the normal native allowance. Original cancel/confirm paths, content rejection and foreign-owner control pass. Native anarchy is retained and expires through ordinary turns; rival-ideology effect-building sets update and culture remains preserved. Exact saved state replays.",
+      "units": "native points, turns, movement points, counts, ownership and policy/promotion flags",
+      "supplied_inputs": [
+        "Radio prerequisites/population/culture/contact",
+        "opponent ideologies and prerequisite tenets",
+        "positioned AI musicians; concerts and turns generate actual pressure"
+      ],
+      "actual_trigger": "Original registered events following ordinary synchronized gameplay/UI callbacks and real owner turns; supplies and outcomes remain separate.",
+      "negative_controls": [
+        "cancel adoption/revolution",
+        "content state rejects revolution",
+        "foreign owner no Yugoslav reward",
+        "native anarchy duration preserved"
+      ],
+      "transitions": [
+        "specified native acquisition/ownership/reward/removal transitions",
+        "exact checkpoint replay per stage"
+      ],
+      "persistence_requirement": "Every selected stage has matching exact replay state and pinned completed checkpoint bytes.",
+      "required_evidence_level": [
+        "scripted-callback",
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260926T170320Z/Lekmod-Functional-20260926T170320Z.Civ5Save",
+          "sha256": "c5e4d974273b9306c9330398a81757e0ec3b64ffa21cedcbe1aee7dac53b44e5"
+        },
+        {
+          "path": "build/macos/playtests/20260926T171207Z/checkpoints/Lekmod-Batch-20260926T171207Z-yugoslavia-ideology-run.Civ5Save",
+          "sha256": "3df895cafa3b70858e9e804eee2f2fc8cc979e93409d0283c453cc4345cc8fb1"
+        }
+      ],
+      "batch": "retained-reviewed-native-batches",
+      "stage": [
+        "yugoslavia-ideology",
+        "yugo-revolution-cycle"
+      ],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20260926T171207Z/report.json",
+          "sha256": "1a9ca01a001c80aed9155f6c508143a588a2aa6710852e52c93c0e9cfb0fbc32"
+        },
+        {
+          "path": "build/macos/playtests/20260926T171207Z/batch-report.json",
+          "sha256": "6a9b30d65b1f0eabfd58a9dc3bbec0137186905ac7944fa78efb65e4ee9516b4"
+        },
+        {
+          "path": "build/macos/playtests/20260926T171658Z/report.json",
+          "sha256": "ab80f19934e0c7f501ffe6448aa73ca8028cb541ce17996fe6b7314ecff28f55"
+        },
+        {
+          "path": "build/macos/playtests/20260926T171658Z/batch-report.json",
+          "sha256": "0d042df8fcc14f45c310a4c9b35916de5e1d5b6b940fac296c09945e5eedb0b1"
+        }
+      ],
+      "surface_ids": [
+        "lua:Lua/Civilizations/Lekmod_yugoslavia.lua:GameEvents.PlayerPolicyBranchUnlocked:lekmod_yugoslavia_ideology_tenet"
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20260926T171207Z/report.json",
+            "batch_report": "build/macos/playtests/20260926T171207Z/batch-report.json",
+            "stage": "yugoslavia-ideology",
+            "required_assertions": [
+              "ideology-cancel",
+              "revolution-cancel",
+              "revolution-content-rejection",
+              "yugo-Freedom-markers",
+              "yugo-Order-markers",
+              "yugo-adoption-tenet",
+              "yugo-anarchy-expiry",
+              "yugo-concert-pressure",
+              "yugo-foreign-control",
+              "yugo-switch-anarchy",
+              "yugo-switch-tenet"
+            ],
+            "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20260926T171658Z/report.json",
+            "batch_report": "build/macos/playtests/20260926T171658Z/batch-report.json",
+            "stage": "yugo-revolution-cycle",
+            "required_assertions": [
+              "revolution-cancel",
+              "revolution-content-rejection",
+              "yugo-Autocracy-expiry",
+              "yugo-Autocracy-markers",
+              "yugo-Autocracy-pressure",
+              "yugo-Autocracy-tenet",
+              "yugo-Freedom-expiry",
+              "yugo-Freedom-markers",
+              "yugo-Freedom-pressure",
+              "yugo-Freedom-tenet"
+            ],
+            "gamecore_sha256": "2dcc90942588da45f5c8c04d38aec131a33e3a07333075fdb03df63054c8abc1"
+          }
+        ]
+      },
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-yugoslavia-ideology.lua",
+          "sha256": "b7c06c0d4725733efeb59f6fcdb22e6d81bd88ae1ab28ac4e042f12e1059b2f9"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-yugoslav-revolution-cycle.lua",
+          "sha256": "c4877767ce92fe95c191a44f8df66f19a2a6df3241a88526f94f60f6c1fa3af4"
+        }
+      ],
+      "remaining_scope": [
+        "Native initial adoption covers Freedom; initial adoption of other branches and AI-specific callback inputs retain isolated-test limits.",
+        "Marker presence is not a claim for every specialist yield/production settlement. No human ideology/anarchy/event was assigned to manufacture a pass.",
+        "Final-candidate applicability and affected regressions remain required at Gate F."
+      ]
+    },
+    {
+      "id": "TRADE-KILWA-ROUTE-LIFETIME",
+      "group": "G5",
+      "title": "Kilwan international-route food creation, settlement and removal",
+      "status": "covered-by-evidence",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_kilwa.lua",
+          "sha256": "32a319f299d63e028c6e5a494149fef2b8f6134dafd0052b9e9482cb72edbb78"
+        },
+        {
+          "path": "LEKMOD/Lua/Utilities/Lekmod_utilities.lua",
+          "sha256": "ac16892e49d2df889104552fd30f05ce83bc44e681caa65c31f8b0340fb00b6a"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTradeClasses.cpp",
+          "sha256": "914a17b68ecb5a7ed25b2c94ecba02f1b0aba3bfbb75dbf3201590bb3e216f3b"
+        }
+      ],
+      "owners": [
+        "explicit native human/AI/foreign roles described in the case"
+      ],
+      "expected_result": "Human outgoing international routes0/1/2 produce markers0/1/2 and food modifiers100/105/110%; internal route is excluded while showing400 gold/175 food hundredths. A normal turn stores500 food hundredths with marker2 and no stacking. Natural expiry removes markers/cargo and returns three caravans. War removes foreign routes but preserves internal. Real AI sea-route creation gives+5%; unrelated war preserves it; real naval plunder removes it and clears marker/rate immediately after the post-removal event. Actual stale war/plunder saves recover on the next normal owner turn.",
+      "units": "native food/gold hundredths, modifier percentages, faith, population/counts and plot flags",
+      "supplied_inputs": [
+        "legal cities/contact/range reveal",
+        "Caravansary/Harbor where required",
+        "caravans/cargo ship/Privateer and staging",
+        "explicit peace/no-barbarian options for the natural-expiry fixture"
+      ],
+      "actual_trigger": "Original callbacks/ordinary synchronized actions and owner turns; fixture inputs are explicitly distinguished from outcomes.",
+      "negative_controls": [
+        "internal route",
+        "other cities and Roman owners",
+        "unrelated war",
+        "zero-route stale saves",
+        "no marker/yield/route/duration assignment"
+      ],
+      "transitions": [
+        "specified actual creation/removal/reward transitions",
+        "exact resulting-state replay for each run"
+      ],
+      "persistence_requirement": "Distinct native replay processes match complete recorded states and retained/live source checkpoint hashes.",
+      "required_evidence_level": [
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260919T062052Z/autosaves-after/AutoSave_Initial_0165 AD-1700.Civ5Save",
+          "sha256": "0188f0f85281832ab5a71eb8f758f911531fffe6d51566c31f5a8268324d5ce7"
+        },
+        {
+          "path": "build/macos/playtests/20260919T064355Z/Lekmod-Functional-20260919T064355Z.Civ5Save",
+          "sha256": "1463c9a99c6e093e7ab236dd4a9cdeecc600a7e21eae1016427cc89b4b224a7b"
+        },
+        {
+          "path": "build/macos/playtests/20260919T062930Z/Lekmod-Functional-20260919T062930Z.Civ5Save",
+          "sha256": "4e6cb4ab905dda16f6a98bf86aba58f1a38f81a80ec5f15ba54d81009049e794"
+        },
+        {
+          "path": "build/macos/playtests/20260919T065839Z/Lekmod-Functional-20260919T065839Z.Civ5Save",
+          "sha256": "e33d388cf0f7bd990b45bf7878ef8c6e7a488308f838af99116aed2448547060"
+        },
+        {
+          "path": "build/macos/playtests/20260919T072202Z/autosaves-after/AutoSave_Initial_0165 AD-1700.Civ5Save",
+          "sha256": "e46a100ac5b1adfe543f58180edea5295e50c90f75183ef89b883126eeb60746"
+        },
+        {
+          "path": "build/macos/playtests/20260919T072202Z/Lekmod-Functional-20260919T072202Z.Civ5Save",
+          "sha256": "a4fe7dea61a2ea54cf7f75f49386d3d06c6814f1852f67dd467fd58c991d1305"
+        }
+      ],
+      "batch": "historical-separate-process-pairs",
+      "stage": [
+        "kilwa-routes",
+        "kilwa-expiry",
+        "kilwa-war",
+        "kilwa-war-continue",
+        "kilwa-sea-plunder",
+        "kilwa-sea-continue"
+      ],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20260919T062930Z/report.json",
+          "sha256": "63f764c270418d75c98be4cf8fe86f792a401aa15d169342df2d7175dfe7df2d"
+        },
+        {
+          "path": "build/macos/playtests/20260919T063128Z/report.json",
+          "sha256": "2b68421f2a521f5056187dc79488eb6836e2ee8cfea16850e95afe934aaad82a"
+        },
+        {
+          "path": "build/macos/playtests/20260919T064632Z/report.json",
+          "sha256": "8e144727b605b6c0dc0e692ba862f18d1f1e1d1b5fb78b1fde777f17675d9285"
+        },
+        {
+          "path": "build/macos/playtests/20260919T065236Z/report.json",
+          "sha256": "fae2af171960ec78510f08d56820c504858ef3e232c9c5426fb5c73c04b3c4d6"
+        },
+        {
+          "path": "build/macos/playtests/20260919T070417Z/report.json",
+          "sha256": "89b65a43b4d36bb88e8b177734353573172babdfb60838088d9a9fefae43abf2"
+        },
+        {
+          "path": "build/macos/playtests/20260919T070759Z/report.json",
+          "sha256": "a4405620b460ff84f3b26b881f9588134d37737d7a493c43db6c00d1c342be20"
+        },
+        {
+          "path": "build/macos/playtests/20260919T070930Z/report.json",
+          "sha256": "1e9d18cbb0fdd029825a82de2ede9d089f5ff6a3c957e1d5a3e5b0c2edaffea8"
+        },
+        {
+          "path": "build/macos/playtests/20260919T071156Z/report.json",
+          "sha256": "a0c22352e9d13a7a0c68a89bca9e7d51f276ff0279b862601d506701db0b5a20"
+        },
+        {
+          "path": "build/macos/playtests/20260919T073048Z/report.json",
+          "sha256": "c0c471c60e748839804c57914e262f5b71c6a11d5571ee5e2f67b628a891aa42"
+        },
+        {
+          "path": "build/macos/playtests/20260919T073425Z/report.json",
+          "sha256": "091f41b84c0bfff1bc334bf70a9a5369c4f3ad41479c20fa1043ca72d56c59e1"
+        },
+        {
+          "path": "build/macos/playtests/20260919T074043Z/report.json",
+          "sha256": "347e9f1bebd14651c7ab341c2e14222fc633357c64f6aee21b48448df21fbebf"
+        },
+        {
+          "path": "build/macos/playtests/20260919T074658Z/report.json",
+          "sha256": "2afef69ccbe0649139cae4984f10e0a463dca82ad8b3f89b814f7f39aaeca3e6"
+        }
+      ],
+      "surface_ids": [
+        "lua:Lua/Civilizations/Lekmod_kilwa.lua:GameEvents.PlayerDoTurn:lekmod_kilwa_ua_food",
+        "lua:Lua/Civilizations/Lekmod_kilwa.lua:GameEvents.UnitPrekill:lekmod_kilwa_ua_food",
+        "lua:Lua/Civilizations/Lekmod_kilwa.lua:GameEvents.TradeRouteRemoved:lekmod_kilwa_ua_food",
+        "lua:Lua/Civilizations/Lekmod_kilwa.lua:GameEvents.DeclareWar:lekmod_kilwa_on_war"
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260919T062930Z/report.json",
+            "replay_report": "build/macos/playtests/20260919T063128Z/report.json",
+            "scenario": "kilwa-routes",
+            "required_assertions": [
+              "kilwa-first-route",
+              "kilwa-second-route",
+              "kilwa-internal-exclusion",
+              "kilwa-internal-gold",
+              "kilwa-owner-city-controls",
+              "kilwa-food-settlement"
+            ],
+            "gamecore_sha256": "689df45d69b4b772e408155c4f443d09ad6a936039205cee6e62747fd8cca3d6"
+          },
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260919T064632Z/report.json",
+            "replay_report": "build/macos/playtests/20260919T065236Z/report.json",
+            "scenario": "kilwa-expiry",
+            "required_assertions": [
+              "kilwa-natural-expiry",
+              "kilwa-expiry-markers",
+              "kilwa-returned-caravans",
+              "kilwa-expired-cargo"
+            ],
+            "gamecore_sha256": "689df45d69b4b772e408155c4f443d09ad6a936039205cee6e62747fd8cca3d6"
+          },
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260919T070417Z/report.json",
+            "replay_report": "build/macos/playtests/20260919T070759Z/report.json",
+            "scenario": "kilwa-war",
+            "required_assertions": [
+              "kilwa-war-route-cancellation",
+              "kilwa-war-internal-preserved",
+              "kilwa-war-food-removed"
+            ],
+            "gamecore_sha256": "689df45d69b4b772e408155c4f443d09ad6a936039205cee6e62747fd8cca3d6"
+          },
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260919T070930Z/report.json",
+            "replay_report": "build/macos/playtests/20260919T071156Z/report.json",
+            "scenario": "kilwa-war-continue",
+            "required_assertions": [
+              "kilwa-old-war-load",
+              "kilwa-old-war-refresh"
+            ],
+            "gamecore_sha256": "689df45d69b4b772e408155c4f443d09ad6a936039205cee6e62747fd8cca3d6"
+          },
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260919T073048Z/report.json",
+            "replay_report": "build/macos/playtests/20260919T073425Z/report.json",
+            "scenario": "kilwa-sea-plunder",
+            "required_assertions": [
+              "kilwa-AI-sea-route",
+              "kilwa-sea-owner-controls",
+              "kilwa-unrelated-war-route",
+              "kilwa-sea-plunder",
+              "kilwa-sea-plunder-marker"
+            ],
+            "gamecore_sha256": "7a4a5abb38928278e940bdd83ee05d234972d1ffceef4125d46b637e8c8fdca9"
+          },
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260919T074043Z/report.json",
+            "replay_report": "build/macos/playtests/20260919T074658Z/report.json",
+            "scenario": "kilwa-sea-continue",
+            "required_assertions": [
+              "kilwa-old-sea-load",
+              "kilwa-old-sea-refresh"
+            ],
+            "gamecore_sha256": "7a4a5abb38928278e940bdd83ee05d234972d1ffceef4125d46b637e8c8fdca9"
+          }
+        ]
+      },
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-kilwa-routes.lua",
+          "sha256": "51ad1c7a45291262d0cc93fefcdede063294a3a87ed1d1513fd6e66fb1932c15"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-kilwa-expiry.lua",
+          "sha256": "10e59ae792e74dc6cecdc0ab603706cc01a322fad6b06193a4f48c528ad95327"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-kilwa-war.lua",
+          "sha256": "d3764bc9a672c29e0ee421bbf34ec561bc96f0bc2a902ddfb912badfe4ec2d29"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-kilwa-war-continue.lua",
+          "sha256": "d9b0438a763760db5342961f582fc26ad31121dea3200f632dd82e97acde20aa"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-kilwa-sea-plunder.lua",
+          "sha256": "c0f19c059dce27c257c13de500dcbaaaeab5d9b830b9a5a93fc9c513e0d6bc16"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-kilwa-sea-continue.lua",
+          "sha256": "6626a429d03df3c5744750eab41070b16ba8efd030e13375325e0e4d50d8c9be"
+        }
+      ],
+      "remaining_scope": [
+        "This does not claim isolated treasury settlement of internal-route gold, immediate stale-save repair on load, all city-transfer cases or other Kilwan uniques.",
+        "The18-turn natural expiry is retained historical evidence; it was not rerun and the accepted long campaign remains closed.",
+        "Original binary/source chronology remains recorded. Gate F must still establish final-candidate applicability."
+      ]
+    },
+    {
+      "id": "LIFE-PALMYRA-FOUNDING-CAPTURE",
+      "group": "G2",
+      "title": "Palmyran founding and surviving duplicate-owner capture freshwater",
+      "status": "covered-by-evidence",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_palmyra.lua",
+          "sha256": "258869fa0e2dd8e0810ffe61fd6c593119ffebf0d0ddc5d290134a20ae31d77c"
+        }
+      ],
+      "owners": [
+        "explicit native human/AI/foreign roles described in the case"
+      ],
+      "expected_result": "A supplied legal secondary Palmyran city on naturally dry land triggers the actual founding event and makes its adjacent dry plots fresh. Real human attack and original Puppet callback transfer it between living Palmyran owners without removing the freshwater. Exact city/plot state replays.",
+      "units": "native food/gold hundredths, modifier percentages, faith, population/counts and plot flags",
+      "supplied_inputs": [
+        "legal AI secondary city",
+        "uranium/attacker and legal staging"
+      ],
+      "actual_trigger": "Original callbacks/ordinary synchronized actions and owner turns; fixture inputs are explicitly distinguished from outcomes.",
+      "negative_controls": [
+        "naturally dry plots recorded before founding",
+        "old owner retains its capital/life",
+        "no assigned freshness or city damage/ownership"
+      ],
+      "transitions": [
+        "specified actual creation/removal/reward transitions",
+        "exact resulting-state replay for each run"
+      ],
+      "persistence_requirement": "Distinct native replay processes match complete recorded states and retained/live source checkpoint hashes.",
+      "required_evidence_level": [
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260916T081118Z/autosaves-after/AutoSave_0165 AD-1700.Civ5Save",
+          "sha256": "dcf584f8bf8631dc7affd382dca627407dea6103ef4f20b5bb3f8ede4bc30b55"
+        }
+      ],
+      "batch": "historical-separate-process-pairs",
+      "stage": [
+        "palmyra"
+      ],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20260916T082254Z/report.json",
+          "sha256": "202fa0c90dfcc9aff447850df7ccf4b9cd25039a7b1abd67c5a8bd0b258452c5"
+        },
+        {
+          "path": "build/macos/playtests/20260916T082529Z/report.json",
+          "sha256": "e85b7e4338bbe7c609c33ff78f0a71219172bd71af431fe58091c765ba489241"
+        }
+      ],
+      "surface_ids": [
+        "lua:Lua/Civilizations/Lekmod_palmyra.lua:GameEvents.PlayerCityFounded:lekmod_ua_palmyra_add_fresh_water",
+        "lua:Lua/Civilizations/Lekmod_palmyra.lua:GameEvents.CityCaptureComplete:lekmod_ua_palmyra_add_fresh_water_city_capture"
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260916T082254Z/report.json",
+            "replay_report": "build/macos/playtests/20260916T082529Z/report.json",
+            "scenario": "palmyra",
+            "required_assertions": [
+              "palmyra-founded-water",
+              "palmyra-capture-water"
+            ],
+            "gamecore_sha256": "30227e5184acc20bde6e634bccd29e4d9046f96a93588f71143d6385fae6b80c"
+          }
+        ]
+      },
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-palmyra.lua",
+          "sha256": "3b586cbc8132d914f427460f34209a243ce14af1e451aad3de020bd1102671db"
+        }
+      ],
+      "remaining_scope": [
+        "Supplied founding through native Found is event integration, not a Settler-earned or physical mouse claim.",
+        "Eliminated/foreign owner and natural freshwater controls are verified by the separate newer Palmyra cases.",
+        "Original binary/source chronology remains recorded. Gate F must still establish final-candidate applicability."
+      ]
+    },
+    {
+      "id": "REL-OTTOMAN-PROMOTION-FAITH",
+      "group": "G6",
+      "title": "Ottoman human/AI promotion faith and Roman control",
+      "status": "covered-by-evidence",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_ottomans.lua",
+          "sha256": "208e81149a68fcb93f61fd4f4e9a88c5b4c8b79651c5c017f75463f28176864e"
+        }
+      ],
+      "owners": [
+        "explicit native human/AI/foreign roles described in the case"
+      ],
+      "expected_result": "Real human promotions at event-time next-XP thresholds30 and60 award10 and20 faith. A normally promoting Ottoman AI gains10 at threshold30; Roman AI at the same threshold gains0. Exact faith/level/XP/promotion state replays.",
+      "units": "native food/gold hundredths, modifier percentages, faith, population/counts and plot flags",
+      "supplied_inputs": [
+        "Warriors",
+        "XP at thresholds",
+        "normal religion-enabled/no-ruins/no-barbarian setup"
+      ],
+      "actual_trigger": "Original callbacks/ordinary synchronized actions and owner turns; fixture inputs are explicitly distinguished from outcomes.",
+      "negative_controls": [
+        "Roman AI",
+        "no faith/promotion-readiness/turn assignment",
+        "two successive human thresholds"
+      ],
+      "transitions": [
+        "specified actual creation/removal/reward transitions",
+        "exact resulting-state replay for each run"
+      ],
+      "persistence_requirement": "Distinct native replay processes match complete recorded states and retained/live source checkpoint hashes.",
+      "required_evidence_level": [
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260918T103807Z/autosaves-after/AutoSave_Initial_0000 BC-4000.Civ5Save",
+          "sha256": "e5f3491d1f8fc219ab608a7757bd9eaf780ff9d5e881dfdf64d55ec002ca2b36"
+        }
+      ],
+      "batch": "historical-separate-process-pairs",
+      "stage": [
+        "ottoman-promotions"
+      ],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20260918T103807Z/report.json",
+          "sha256": "8a23d91d72951625b1cecbc2d916d0f4efa11f39825d138aca9933eecd6397cd"
+        },
+        {
+          "path": "build/macos/playtests/20260918T104058Z/report.json",
+          "sha256": "8574dd3adebf86785570da89cb23bb6413234eb19955064fb249f70938a1cfce"
+        }
+      ],
+      "surface_ids": [
+        "lua:Lua/Civilizations/Lekmod_ottomans.lua:GameEvents.UnitPromoted:lekmod_ottoman_ua_promotion_faith"
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260918T103807Z/report.json",
+            "replay_report": "build/macos/playtests/20260918T104058Z/report.json",
+            "scenario": "ottoman-promotions",
+            "required_assertions": [
+              "ottoman-human-first",
+              "ottoman-human-second",
+              "ottoman-AI-faith",
+              "promotion-other-owner-no-faith"
+            ],
+            "gamecore_sha256": "e5804484ab9743361d5819058c29606d1463bbbaf973c6f5b1adbf3f2dd08b22"
+          }
+        ]
+      },
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-ottoman-promotions.lua",
+          "sha256": "f82a2a8689edaf9e39c3ecde20afc591511c790d1e1e27cbb45c651726da9d52"
+        }
+      ],
+      "remaining_scope": [
+        "Experience is supplied, not earned combat XP; this does not establish other Ottoman uniques or physical promotion controls.",
+        "Original binary/source chronology remains recorded. Gate F must still establish final-candidate applicability."
+      ]
+    },
+    {
+      "id": "LIFE-PHOENICIA-OPTICS-FOUNDING",
+      "group": "G2",
+      "title": "Phoenician Optics founding population/gold reward",
+      "status": "covered-by-evidence",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_phoenicia.lua",
+          "sha256": "04fc84f850ae3598b566c170ed62a55bb29d56010cb77a1241a4af3d34765177"
+        }
+      ],
+      "owners": [
+        "explicit native human/AI/foreign roles described in the case"
+      ],
+      "expected_result": "Before Optics, capital/expansion receive no marker/reward. Optics grants no retroactive marker. A later normal Settler Found yields population1->2,50 gold,one marker and consumption. Normally founding Phoenician AI gets the same result; Ayyubid control knowing Optics gets no reward. Exact city/technology/treasury state replays.",
+      "units": "native food/gold hundredths, modifier percentages, faith, population/counts and plot flags",
+      "supplied_inputs": [
+        "extra Settlers and legal ruin-free sites",
+        "Optics prerequisites"
+      ],
+      "actual_trigger": "Original callbacks/ordinary synchronized actions and owner turns; fixture inputs are explicitly distinguished from outcomes.",
+      "negative_controls": [
+        "pre-Optics city",
+        "existing cities after technology",
+        "non-Phoenician owner",
+        "ruins excluded by site choice rather than removed"
+      ],
+      "transitions": [
+        "specified actual creation/removal/reward transitions",
+        "exact resulting-state replay for each run"
+      ],
+      "persistence_requirement": "Distinct native replay processes match complete recorded states and retained/live source checkpoint hashes.",
+      "required_evidence_level": [
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260918T081644Z/autosaves-after/AutoSave_Initial_0000 BC-4000.Civ5Save",
+          "sha256": "0d1ed133b5b7bf9632e5de08bec7275d60d7ba45d1fa21df2a401fcb9eacacb7"
+        }
+      ],
+      "batch": "historical-separate-process-pairs",
+      "stage": [
+        "phoenicia-founding"
+      ],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20260918T083648Z/report.json",
+          "sha256": "a9b9424eb4c8bf605619700069b39f6f6de473f8d01540ee9eeffc70c7562df2"
+        },
+        {
+          "path": "build/macos/playtests/20260918T083956Z/report.json",
+          "sha256": "07de9c789cbcf3936f941d11e328fff3ee50dcace1884af9e313be7765b9a91e"
+        }
+      ],
+      "surface_ids": [
+        "lua:Lua/Civilizations/Lekmod_phoenicia.lua:GameEvents.PlayerCityFounded:lekmod_phoenicia_ua_new_city_bonus",
+        "data:Buildings.Gold"
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260918T083648Z/report.json",
+            "replay_report": "build/macos/playtests/20260918T083956Z/report.json",
+            "scenario": "phoenicia-founding",
+            "required_assertions": [
+              "phoenicia-before-Optics",
+              "phoenicia-existing-city",
+              "phoenicia-after-Optics",
+              "phoenicia-AI-owner",
+              "phoenicia-other-owner"
+            ],
+            "gamecore_sha256": "cf5273574eb622c53b700d6a0dbfa1e2ff882f5475d4c9a486aa4cdac740e798"
+          }
+        ]
+      },
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-phoenicia-founding.lua",
+          "sha256": "b38319b3e75b51c8be590cb05d3186fb24f89be5570b28f957a5a71283065620"
+        }
+      ],
+      "remaining_scope": [
+        "Sailing free ship, Trade Harbour, capture and other native traits remain separate. Research/Settlers are supplied and no mouse interaction is claimed.",
+        "Original binary/source chronology remains recorded. Gate F must still establish final-candidate applicability."
+      ]
+    },
+    {
+      "id": "REL-OTTOMAN-DIVERSITY-CACHE",
+      "group": "G6",
+      "title": "Ottoman minority-religion happiness refresh and owner controls",
+      "status": "covered-by-evidence",
+      "source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvCity.cpp",
+          "sha256": "bc6c14e34329d88978ded1969875b4eed39be171e819bf200fa313d0a0b24030"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvReligionClasses.cpp",
+          "sha256": "2c6935a6eaeff0f87051e17b97a65c2ef688b339538d1c33a10732b5456fd3e4"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTraitClasses.cpp",
+          "sha256": "d6dd5261df9ef25ac73f82ac747d40d732b0b04397572d1b8b1c51c2b9763611"
+        }
+      ],
+      "owners": [
+        "human and AI Ottomans",
+        "Roman control"
+      ],
+      "expected_result": "Each world religion with followers contributes1 local happiness to Ottomans. Minority addition while majority/count remain unchanged changes local1->2 and empire-13->-12 without a conversion event; third religion adds1, removal of two minorities removes2. Pantheon and Roman controls add no trait bonus; AI single-religion bonus works. Exact follower/majority/happiness/faith/population replay.",
+      "units": "local/empire happiness points and follower counts",
+      "supplied_inputs": [
+        "population20",
+        "pantheon and three world religions without happiness beliefs",
+        "explicit pressure/follower transfers"
+      ],
+      "actual_trigger": "Native follower recomputation and cache refresh after supplied religion inputs; no happiness/turn/conversion-event assignment.",
+      "negative_controls": [
+        "pantheon excluded",
+        "Roman three-religion control",
+        "unchanged majority does not emit conversion",
+        "minority removal reverses contributions"
+      ],
+      "transitions": [
+        "one/two/three world religions",
+        "minority-only changes",
+        "removal",
+        "exact replay"
+      ],
+      "persistence_requirement": "All recorded owners/followers/majorities/local and empire happiness/faith/population exactly replay. Saved final state has one world religion in each Ottoman capital; no saved three-religion Ottoman state is claimed.",
+      "required_evidence_level": [
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260918T103807Z/Lekmod-Functional-20260918T103807Z.Civ5Save",
+          "sha256": "1553df5f0383eb9bd0adcfcc278b962fa9f661c085b9ab48ac09c46735627db3"
+        }
+      ],
+      "batch": "historical-separate-process-pairs",
+      "stage": "ottoman-diversity",
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20260918T233755Z/report.json",
+          "sha256": "a260ed0d052cc16467893727f4401b2131141a1cb9bb578ccaed770dd136b59b"
+        },
+        {
+          "path": "build/macos/playtests/20260918T233947Z/report.json",
+          "sha256": "dcd423ae36e4f4e36a5f4ec4fb49d6d62ae18157984869495ef4e4550a7ec5fa"
+        }
+      ],
+      "evidence_contract": {
+        "kind": "native-run-replay",
+        "report": "build/macos/playtests/20260918T233755Z/report.json",
+        "replay_report": "build/macos/playtests/20260918T233947Z/report.json",
+        "scenario": "ottoman-diversity",
+        "required_assertions": [
+          "ottoman-pantheon-excluded",
+          "ottoman-one-religion",
+          "ottoman-minority-happiness",
+          "ottoman-three-religions",
+          "ottoman-diversity-removal",
+          "diversity-other-owner-control"
+        ],
+        "gamecore_sha256": "54b4b9564b2a801e4203542e30cb6e993c248621126295e7cfc632f10a0bc7c5"
+      },
+      "surface_ids": [
+        "data:Traits.HappinessPerReligion"
+      ],
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-ottoman-diversity.lua",
+          "sha256": "014f5fe9aaede52446131b361ea24f225595057a6bc7a186dd10e8df969af3e7"
+        }
+      ],
+      "remaining_scope": [
+        "Supplied pressure is not earned spread or mouse interaction. Other belief-specific thresholds and happiness caps remain separate.",
+        "Original tested binary is retained; final-candidate applicability remains required at F."
       ]
     }
   ],
@@ -9029,12 +10105,26 @@
     {
       "id": "data:Buildings.Gold",
       "suggested_group": "G4",
-      "status": "untriaged",
-      "case_ids": [],
+      "status": "mapped",
+      "case_ids": [
+        "LIFE-PHOENICIA-OPTICS-FOUNDING",
+        "CFG-COMPILED-SCALAR-CACHES"
+      ],
       "supporting_case_ids": [
         "CFG-COMPILED-SCALAR-CACHES"
       ],
-      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent."
+      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPlayer.cpp",
+          "sha256": "31dd845837800229e4c4e2708e471996f03858f722b8cbf14bdfa2a8ed67c788"
+        },
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_phoenicia.lua",
+          "sha256": "04fc84f850ae3598b566c170ed62a55bb29d56010cb77a1241a4af3d34765177"
+        }
+      ],
+      "reason": "Only BUILDING_PHOENICIAN_TRAIT configures Gold=50. CvPlayer::processBuilding applies this one-shot under bFirst && iChange>0. Native pre/post-Optics founding, human/AI and foreign-owner controls observe exact50 treasury credit and no retroactive award; exact reload preserves treasury without re-award. Capture and other acquisition semantics remain separate source surfaces."
     },
     {
       "id": "data:Buildings.AllowsRangeStrike",
@@ -15960,12 +17050,30 @@
     {
       "id": "data:Traits.HappinessPerReligion",
       "suggested_group": "G6",
-      "status": "untriaged",
-      "case_ids": [],
+      "status": "mapped",
+      "case_ids": [
+        "REL-OTTOMAN-DIVERSITY-CACHE",
+        "CFG-COMPILED-SCALAR-CACHES"
+      ],
       "supporting_case_ids": [
         "CFG-COMPILED-SCALAR-CACHES"
       ],
-      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent."
+      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvCity.cpp",
+          "sha256": "bc6c14e34329d88978ded1969875b4eed39be171e819bf200fa313d0a0b24030"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvReligionClasses.cpp",
+          "sha256": "2c6935a6eaeff0f87051e17b97a65c2ef688b339538d1c33a10732b5456fd3e4"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTraitClasses.cpp",
+          "sha256": "d6dd5261df9ef25ac73f82ac747d40d732b0b04397572d1b8b1c51c2b9763611"
+        }
+      ],
+      "reason": "The sole configured coefficient is TRAIT_OTTOMANS=1. Native human/AI/Roman/pantheon and1/2/3/removal controls verify CvCity local happiness contribution and majority-unchanged follower-cache refresh, with exact persistence. Other happiness consumers/limits remain separate."
     },
     {
       "id": "data:Traits.CapitalFreeBuildingPrereqTech",
@@ -18747,8 +19855,17 @@
     {
       "id": "lua:Lua/Civilizations/Lekmod_romania.lua:GameEvents.CityCaptureComplete:lekmod_romania_ua_on_capture",
       "suggested_group": "G2",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "LIFE-ROMANIA-ACQUISITION-REWARDS"
+      ],
+      "reason": "Native conquest/peaceful gift/liberator/recipient cases explicitly verify the conquest flag, new owner and exact reward accounting. Other Romanian trait consumers remain separate.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_romania.lua",
+          "sha256": "a50203d06e9d29787e3c188e9586232801e0029174149708e29cb56400e889dd"
+        }
+      ]
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_maori.lua:GameEvents.PlayerDoTurn:lekmod_maori_ua",
@@ -18807,8 +19924,18 @@
     {
       "id": "lua:Lua/Civilizations/Lekmod_newzealand.lua:GameEvents.PlayerDoTurn:lekmod_new_zealand_uu_defender",
       "suggested_group": "G2",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "BASE-DEFENDER",
+        "REG-DEFENDER-ZOC"
+      ],
+      "reason": "Current-candidate native owned/DoF two-tile and three-tile boundaries, ordinary/far controls, old-save owner-turn repair and actual active/inactive ZOC movement cover this updater. Remaining combat modifiers and other New Zealand effects are separate.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_newzealand.lua",
+          "sha256": "960dd336801e11dc9c843e14941c84335151071df5e4298504690ed953a3433d"
+        }
+      ]
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_aksum.lua:GameEvents.ReligionFounded:lekmod_aksum_ua_follow_religion",
@@ -18834,32 +19961,109 @@
     {
       "id": "lua:Lua/Civilizations/Lekmod_kilwa.lua:GameEvents.PlayerDoTurn:lekmod_kilwa_ua_food",
       "suggested_group": "G2",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "TRADE-KILWA-ROUTE-LIFETIME"
+      ],
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_kilwa.lua",
+          "sha256": "32a319f299d63e028c6e5a494149fef2b8f6134dafd0052b9e9482cb72edbb78"
+        },
+        {
+          "path": "LEKMOD/Lua/Utilities/Lekmod_utilities.lua",
+          "sha256": "ac16892e49d2df889104552fd30f05ce83bc44e681caa65c31f8b0340fb00b6a"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTradeClasses.cpp",
+          "sha256": "914a17b68ecb5a7ed25b2c94ecba02f1b0aba3bfbb75dbf3201590bb3e216f3b"
+        }
+      ],
+      "reason": "Reviewed source/event timing and the exact historical assertion/replay contracts support the stated handler contribution. Unrelated abilities, unexecuted transitions and physical UI claims remain explicitly separate."
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_kilwa.lua:GameEvents.UnitPrekill:lekmod_kilwa_ua_food",
       "suggested_group": "G2",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "TRADE-KILWA-ROUTE-LIFETIME"
+      ],
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_kilwa.lua",
+          "sha256": "32a319f299d63e028c6e5a494149fef2b8f6134dafd0052b9e9482cb72edbb78"
+        },
+        {
+          "path": "LEKMOD/Lua/Utilities/Lekmod_utilities.lua",
+          "sha256": "ac16892e49d2df889104552fd30f05ce83bc44e681caa65c31f8b0340fb00b6a"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTradeClasses.cpp",
+          "sha256": "914a17b68ecb5a7ed25b2c94ecba02f1b0aba3bfbb75dbf3201590bb3e216f3b"
+        }
+      ],
+      "reason": "Reviewed source/event timing and the exact historical assertion/replay contracts support the stated handler contribution. Unrelated abilities, unexecuted transitions and physical UI claims remain explicitly separate."
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_kilwa.lua:GameEvents.TradeRouteRemoved:lekmod_kilwa_ua_food",
       "suggested_group": "G2",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "TRADE-KILWA-ROUTE-LIFETIME"
+      ],
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_kilwa.lua",
+          "sha256": "32a319f299d63e028c6e5a494149fef2b8f6134dafd0052b9e9482cb72edbb78"
+        },
+        {
+          "path": "LEKMOD/Lua/Utilities/Lekmod_utilities.lua",
+          "sha256": "ac16892e49d2df889104552fd30f05ce83bc44e681caa65c31f8b0340fb00b6a"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTradeClasses.cpp",
+          "sha256": "914a17b68ecb5a7ed25b2c94ecba02f1b0aba3bfbb75dbf3201590bb3e216f3b"
+        }
+      ],
+      "reason": "Reviewed source/event timing and the exact historical assertion/replay contracts support the stated handler contribution. Unrelated abilities, unexecuted transitions and physical UI claims remain explicitly separate."
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_kilwa.lua:GameEvents.DeclareWar:lekmod_kilwa_on_war",
       "suggested_group": "G2",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "TRADE-KILWA-ROUTE-LIFETIME"
+      ],
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_kilwa.lua",
+          "sha256": "32a319f299d63e028c6e5a494149fef2b8f6134dafd0052b9e9482cb72edbb78"
+        },
+        {
+          "path": "LEKMOD/Lua/Utilities/Lekmod_utilities.lua",
+          "sha256": "ac16892e49d2df889104552fd30f05ce83bc44e681caa65c31f8b0340fb00b6a"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTradeClasses.cpp",
+          "sha256": "914a17b68ecb5a7ed25b2c94ecba02f1b0aba3bfbb75dbf3201590bb3e216f3b"
+        }
+      ],
+      "reason": "Reviewed source/event timing and the exact historical assertion/replay contracts support the stated handler contribution. Unrelated abilities, unexecuted transitions and physical UI claims remain explicitly separate."
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_ottomans.lua:GameEvents.UnitPromoted:lekmod_ottoman_ua_promotion_faith",
       "suggested_group": "G2",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "REL-OTTOMAN-PROMOTION-FAITH"
+      ],
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_ottomans.lua",
+          "sha256": "208e81149a68fcb93f61fd4f4e9a88c5b4c8b79651c5c017f75463f28176864e"
+        }
+      ],
+      "reason": "Reviewed source/event timing and the exact historical assertion/replay contracts support the stated handler contribution. Unrelated abilities, unexecuted transitions and physical UI claims remain explicitly separate."
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_venice.lua:GameEvents.TeamTechResearched:lekmod_venice_route_compass",
@@ -18894,52 +20098,129 @@
     {
       "id": "lua:Lua/Civilizations/Lekmod_palmyra.lua:GameEvents.PlayerCityFounded:lekmod_ua_palmyra_add_fresh_water",
       "suggested_group": "G2",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "LIFE-PALMYRA-FOUNDING-CAPTURE"
+      ],
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_palmyra.lua",
+          "sha256": "258869fa0e2dd8e0810ffe61fd6c593119ffebf0d0ddc5d290134a20ae31d77c"
+        }
+      ],
+      "reason": "Reviewed source/event timing and the exact historical assertion/replay contracts support the stated handler contribution. Unrelated abilities, unexecuted transitions and physical UI claims remain explicitly separate."
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_palmyra.lua:GameEvents.CityCaptureComplete:lekmod_ua_palmyra_add_fresh_water_city_capture",
       "suggested_group": "G2",
-      "status": "untriaged",
+      "status": "mapped",
       "case_ids": [
-        "LIFE-PALMYRA-ELIMINATED-OWNER"
-      ]
+        "LIFE-PALMYRA-FOUNDING-CAPTURE",
+        "LIFE-PALMYRA-ELIMINATED-OWNER",
+        "LIFE-PALMYRA-ELIMINATED-FOREIGN-OWNERSHIP"
+      ],
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_palmyra.lua",
+          "sha256": "258869fa0e2dd8e0810ffe61fd6c593119ffebf0d0ddc5d290134a20ae31d77c"
+        }
+      ],
+      "reason": "Combined native surviving-duplicate, eliminated-duplicate and foreign current-owner capture cases verify current ownership, natural freshwater controls, immediate callback timing, later owner turn and exact persistence. No data/owner/freshwater result was assigned."
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_yugoslavia.lua:GameEvents.PlayerPolicyBranchUnlocked:lekmod_yugoslavia_ideology_tenet",
       "suggested_group": "G2",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "POL-YUGOSLAV-IDEOLOGY-REWARDS"
+      ],
+      "reason": "Native initial adoption, all three revolution destinations, foreign control and actual anarchy timing verify the reward callback. Initial branch alternatives/AI inputs retain isolated control limits; effect-building yields are separate consumers.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_yugoslavia.lua",
+          "sha256": "17f54154787e7fb9238895e44db9a311962f6bd81ed83626f7ce6c50c6590d69"
+        }
+      ]
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_switzerland.lua:GameEvents.UnitSetXY:lekmod_switzerland_uu_mountain_bonus",
       "suggested_group": "G2",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "LIFE-SWISS-BIRTH-MOVE-PURCHASE",
+        "REG-SWISS-TRAINING-MIGRATION"
+      ],
+      "reason": "Combined native birth/training, terrain movement, foreign upgrade/gift, zero-move purchase and authentic saved-state repair exercise the shared promotion/allowance updater. Minor-specific guards retain isolated-source limits; no whole-civilization or physical input claim.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_switzerland.lua",
+          "sha256": "bfe8b30883ff29fdf004f179d5cdc073bc8494150358b8132649ff82a82dd73a"
+        }
+      ]
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_switzerland.lua:GameEvents.UnitCreated:anonymous-1",
       "suggested_group": "G2",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "LIFE-SWISS-BIRTH-MOVE-PURCHASE",
+        "REG-SWISS-TRAINING-MIGRATION"
+      ],
+      "reason": "Combined native birth/training, terrain movement, foreign upgrade/gift, zero-move purchase and authentic saved-state repair exercise the shared promotion/allowance updater. Minor-specific guards retain isolated-source limits; no whole-civilization or physical input claim.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_switzerland.lua",
+          "sha256": "bfe8b30883ff29fdf004f179d5cdc073bc8494150358b8132649ff82a82dd73a"
+        }
+      ]
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_switzerland.lua:GameEvents.CityTrained:anonymous-1",
       "suggested_group": "G2",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "LIFE-SWISS-BIRTH-MOVE-PURCHASE",
+        "REG-SWISS-TRAINING-MIGRATION"
+      ],
+      "reason": "Combined native birth/training, terrain movement, foreign upgrade/gift, zero-move purchase and authentic saved-state repair exercise the shared promotion/allowance updater. Minor-specific guards retain isolated-source limits; no whole-civilization or physical input claim.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_switzerland.lua",
+          "sha256": "bfe8b30883ff29fdf004f179d5cdc073bc8494150358b8132649ff82a82dd73a"
+        }
+      ]
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_switzerland.lua:GameEvents.UnitConverted:anonymous-1",
       "suggested_group": "G2",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "LIFE-SWISS-BIRTH-MOVE-PURCHASE",
+        "REG-SWISS-TRAINING-MIGRATION"
+      ],
+      "reason": "Combined native birth/training, terrain movement, foreign upgrade/gift, zero-move purchase and authentic saved-state repair exercise the shared promotion/allowance updater. Minor-specific guards retain isolated-source limits; no whole-civilization or physical input claim.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_switzerland.lua",
+          "sha256": "bfe8b30883ff29fdf004f179d5cdc073bc8494150358b8132649ff82a82dd73a"
+        }
+      ]
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_switzerland.lua:Events.SequenceGameInitComplete:anonymous-1",
       "suggested_group": "G2",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "LIFE-SWISS-BIRTH-MOVE-PURCHASE",
+        "REG-SWISS-TRAINING-MIGRATION"
+      ],
+      "reason": "Combined native birth/training, terrain movement, foreign upgrade/gift, zero-move purchase and authentic saved-state repair exercise the shared promotion/allowance updater. Minor-specific guards retain isolated-source limits; no whole-civilization or physical input claim.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_switzerland.lua",
+          "sha256": "bfe8b30883ff29fdf004f179d5cdc073bc8494150358b8132649ff82a82dd73a"
+        }
+      ]
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_italy.lua:GameEvents.PlayerAdoptPolicy:lekmod_italy_ua_on_policy_adopt",
@@ -18959,8 +20240,17 @@
     {
       "id": "lua:Lua/Civilizations/Lekmod_phoenicia.lua:GameEvents.PlayerCityFounded:lekmod_phoenicia_ua_new_city_bonus",
       "suggested_group": "G2",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "LIFE-PHOENICIA-OPTICS-FOUNDING"
+      ],
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_phoenicia.lua",
+          "sha256": "04fc84f850ae3598b566c170ed62a55bb29d56010cb77a1241a4af3d34765177"
+        }
+      ],
+      "reason": "Reviewed source/event timing and the exact historical assertion/replay contracts support the stated handler contribution. Unrelated abilities, unexecuted transitions and physical UI claims remain explicitly separate."
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_polynesia.lua:Events.SequenceGameInitComplete:restore_polynesia_ocean_access",
@@ -26799,18 +28089,18 @@
     }
   ],
   "summary": {
-    "designed_cases": 50,
+    "designed_cases": 58,
     "case_statuses": {
       "passed": 25,
-      "covered-by-evidence": 24,
+      "covered-by-evidence": 32,
       "ready": 1
     },
     "review_surfaces": 1340,
     "pending_document_rows": 121,
     "final_case_denominator_frozen": false,
     "surface_statuses": {
-      "untriaged": 1278,
-      "mapped": 42,
+      "untriaged": 1260,
+      "mapped": 60,
       "presentation-only": 19,
       "out-of-scope": 1
     },

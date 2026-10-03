@@ -383,3 +383,34 @@ checked by the acceptance validator.
 The register contains50 cases (49scoped passes/retained, one ready cache case),
 1,278 untriaged surfaces and121 pending document rows. The Mac is still locked;
 the ready68-check cache/reward batch remains unexecuted and stock is unchanged.
+
+## Reward, route-lifetime and religion evidence reconciliation
+
+Eight more historical cases have been incorporated with97 declared native
+assertions and19 exact replay contracts. They cover Swiss birth/training/terrain
+movement/upgrade/gift/purchase locking, Romanian conquest/gift/liberation roles,
+Yugoslav adoption and all revolution destinations, Kilwan route creation/food
+settlement/expiry/war/naval plunder, Palmyran founding/capture, Ottoman promotion
+faith and minority-religion happiness refresh, and Phoenician Optics founding.
+These are reverified retained results, not new native runs.
+
+Sixteen event-handler surfaces are now tied to those cases and the already
+verified Defender/Palmyra saved-state regressions. The sole configured Ottoman
+`HappinessPerReligion=1` and Phoenician building `Gold=50` fields also have
+source-consumer mappings with exact native amounts and parameter-cache support.
+`LocalPopulationChange` is deliberately still open: its−1/+6 cases and associated
+boundaries cannot be inferred from the two+1 founding rewards.
+
+The evidence retains distinctions that affect acceptance: Swiss legacy-load
+compatibility corrected zero stale flags; the separate authentic failure save
+proved actual repair. Kilwan stale saves repair on an ordinary owner turn, not
+immediately at load. The naval plunder failure was fixed and retested before
+its successful contract is used. Supplied religion/XP/research/production inputs
+are not relabeled as naturally earned gameplay. No additional long campaign
+was run, and no new mouse interaction is claimed.
+
+There are58 specified cases (57scoped passes/retained, one ready array audit),
+1,260 untriaged surfaces and121 document rows. The ready native batch remains
+blocked by the locked-desktop guard; no game or settings change was started.
+The acceptance goal remains active because meaningful offline reconciliation
+work remains. Full G0, final-candidate applicability and F/R gates are unfinished.
