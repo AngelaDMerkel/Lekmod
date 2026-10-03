@@ -161,6 +161,8 @@ FUNCTIONAL_ITEMS = {"script-data", "science-overflow", "unit-position-flags", "c
                     "production-unit", "production-building", "production-wonder", "production-process"}
 PRODUCTION_COMPLETION_ITEMS = {"production-completion-unit", "production-completion-building"}
 SCENARIO_ITEMS = {
+    'religion-strength-retention': {'prophet-preview-holy-retention', 'retention-inquisitor-outcome', 'retention-foreign-native-spread', 'prophet-strength-owner-controls', 'retention-inquisitor-boundaries', 'prophet-native-pressure', 'religion-strength-inputs'},
+    'religion-spread-charges': {'spread-founder-control', 'spread-charge-inputs', 'spread-constructor-bonuses', 'spread-pressure-preview', 'spread-final-consumption', 'spread-prophet-inquisitor-controls', 'spread-complete-charge-life', 'spread-native-purchase'},
     'prophet-cost-births': {'prophet-zero-faith-control', 'prophet-owner-debits', 'prophet-native-belief-inputs', 'prophet-first-cost-birth', 'prophet-first-only-expiry', 'prophet-second-cost-birth'},
     'faith-cost-modifiers': {'faith-budget-debits', 'faith-founder-owner-control', 'faith-native-policy', 'faith-building-purchases', 'faith-prophet-price-sequence', 'faith-unit-purchases', 'faith-positive-exclusions', 'faith-religion-gates', 'faith-baseline-prices', 'faith-era-gate', 'faith-modifier-data'},
     'turkey-great-work-yields': {'turkey-native-people-works', 'turkey-foreign-owner', 'turkey-four-class-yields', 'turkey-returned-owner', 'turkey-work-movement', 'turkey-native-artifact', 'turkey-work-data'},
