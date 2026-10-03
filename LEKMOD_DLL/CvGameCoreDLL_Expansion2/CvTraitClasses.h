@@ -1425,6 +1425,7 @@ public:
 	const std::vector<TraitTypes> GetPotentiallyActiveTraits() { return m_vPotentiallyActiveLeaderTraits; }
 
 private:
+	void RebuildResourceGrantRules();
 	bool ConvertBarbarianCamp(CvPlot* pPlot);
 	bool ConvertBarbarianNavalUnit(UnitHandle pUnit);
 

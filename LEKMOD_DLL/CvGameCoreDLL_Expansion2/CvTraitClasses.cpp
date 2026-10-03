@@ -3844,17 +3844,6 @@ void CvPlayerTraits::InitPlayerTraits()
 #endif
 			}
 
-			const std::vector<FreeResourceCities>& vRules = trait->GetFreeResourceCities();
-			for (size_t i = 0; i < vRules.size(); ++i)
-			{
-				m_vFreeResourceCities.push_back(vRules[i]);
-			}
-#if defined(LEKMOD_FREE_RESOURCE_CITY_GRANT)
-			for (int iYield = 0; iYield < NUM_YIELD_TYPES; iYield++)
-			{
-				m_aiFreeResourceCityYieldChange[iYield] += trait->GetFreeResourceCityYieldChange(iYield);
-			}
-#endif
 #if defined(LEKMOD_GOLDEN_AGE_YIELD_THRESHOLD)
 			const std::vector<GoldenAgeYieldThreshold>& vThresholds = trait->GetGoldenAgeYieldThresholds();
 			for (size_t i = 0; i < vThresholds.size(); ++i)
@@ -3863,6 +3852,33 @@ void CvPlayerTraits::InitPlayerTraits()
 			}
 #endif
 		}
+	}
+	RebuildResourceGrantRules();
+}
+
+// These values come from active trait definitions, not the save stream. Rebuild
+// them after load without resetting serialized reward priorities or used areas.
+void CvPlayerTraits::RebuildResourceGrantRules()
+{
+	m_vFreeResourceCities.clear();
+#if defined(LEKMOD_FREE_RESOURCE_CITY_GRANT)
+	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+		m_aiFreeResourceCityYieldChange[iYield] = 0;
+#endif
+	if (!m_pPlayer || m_pPlayer->getLeaderType() == NO_LEADER)
+		return;
+	for (int i = 0; i < GC.getNumTraitInfos(); ++i)
+	{
+		const TraitTypes eTrait = static_cast<TraitTypes>(i);
+		const CvTraitEntry* trait = GC.getTraitInfo(eTrait);
+		if (!trait || !HasTrait(eTrait))
+			continue;
+		const std::vector<FreeResourceCities>& rules = trait->GetFreeResourceCities();
+		m_vFreeResourceCities.insert(m_vFreeResourceCities.end(), rules.begin(), rules.end());
+#if defined(LEKMOD_FREE_RESOURCE_CITY_GRANT)
+		for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+			m_aiFreeResourceCityYieldChange[iYield] += trait->GetFreeResourceCityYieldChange(iYield);
+#endif
 	}
 }
 
@@ -6232,6 +6248,7 @@ void CvPlayerTraits::Read(FDataStream& kStream)
 #endif
 	kStream >> m_vUsedGroupAreas;
 	kStream >> m_vGroupPriority;
+	RebuildResourceGrantRules();
 }
 
 /// Serialization write
