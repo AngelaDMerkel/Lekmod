@@ -7,7 +7,8 @@
     "lekmod_diagnostics.cpp",
     "info-cache-audit.cpp",
     "info-array-audit.cpp",
-    "resource-grant-audit.cpp"
+    "resource-grant-audit.cpp",
+    "minor-influence-audit.cpp"
   ],
   "extra_flags": []
 }

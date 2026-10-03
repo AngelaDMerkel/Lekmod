@@ -31,6 +31,7 @@
 extern int LekmodMacReadInfoCache(lua_State* L);
 extern int LekmodMacReadInfoArray(lua_State* L);
 extern int LekmodMacReadResourceGrants(lua_State* L);
+extern int LekmodMacReadMinorInfluence(lua_State* L);
 #endif
 
 #define Method(func) RegisterMethod(L, l##func, #func);
@@ -56,6 +57,7 @@ void CvLuaGame::RegisterMembers(lua_State* L)
 	RegisterMethod(L, LekmodMacReadInfoCache, "ReadInfoCacheForTest");
 	RegisterMethod(L, LekmodMacReadInfoArray, "ReadInfoArrayForTest");
 	RegisterMethod(L, LekmodMacReadResourceGrants, "ReadResourceGrantsForTest");
+	RegisterMethod(L, LekmodMacReadMinorInfluence, "ReadMinorInfluenceForTest");
 #endif
 	Method(CanHandleAction);
 	Method(HandleAction);
