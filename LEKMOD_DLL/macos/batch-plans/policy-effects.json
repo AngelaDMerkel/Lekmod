@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "name": "policy-effects",
+  "stages": [
+    {
+      "id": "promotion-both-owners",
+      "scenario": "policy-promotions",
+      "fixture": "build/macos/playtests/20260918T065530Z/Lekmod-Functional-20260918T065530Z.Civ5Save",
+      "sha256": "574511e03f58fc064d98b15fa57b4acf24072fdbfe434ec62db2230a6e7f0e3d",
+      "max_turns": 3,
+      "parameters": {}
+    },
+    {
+      "id": "resettlement-rome",
+      "scenario": "policy-founding",
+      "fixture": "build/macos/playtests/20260918T065530Z/Lekmod-Functional-20260918T065530Z.Civ5Save",
+      "sha256": "574511e03f58fc064d98b15fa57b4acf24072fdbfe434ec62db2230a6e7f0e3d",
+      "max_turns": 1,
+      "parameters": {
+        "mode": "resettlement"
+      }
+    },
+    {
+      "id": "resettlement-akkad",
+      "scenario": "policy-founding",
+      "fixture": "build/macos/playtests/20260922T233312Z/Lekmod-Functional-20260922T233312Z.Civ5Save",
+      "sha256": "903a1a869d99c11a2e7079995bbf0293b321035d2d1803a2912da05face90f1d",
+      "max_turns": 1,
+      "parameters": {
+        "mode": "resettlement"
+      }
+    },
+    {
+      "id": "colonialism-rome",
+      "scenario": "policy-founding",
+      "fixture": "build/macos/playtests/20260918T065530Z/Lekmod-Functional-20260918T065530Z.Civ5Save",
+      "sha256": "574511e03f58fc064d98b15fa57b4acf24072fdbfe434ec62db2230a6e7f0e3d",
+      "max_turns": 1,
+      "parameters": {
+        "mode": "colonialism"
+      }
+    }
+  ]
+}

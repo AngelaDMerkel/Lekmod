@@ -13,27 +13,27 @@
   },
   "discovery": {
     "report": {
-      "path": "build/macos/acceptance-g0-20260926/discovery-moors-fixed.json",
-      "sha256": "d44acb537ae54c91f616e96651c67fff18538327b8c1fbca8ab8fdcbd104ebe4"
+      "path": "build/macos/acceptance-g0-20260926/discovery-consulates-fixed.json",
+      "sha256": "006b5a0216c66e10c401b7e7ff63c836fd00c055799558087f492eafe9ed507b"
     },
     "parameters": {
-      "path": "build/macos/acceptance-g0-20260926/parameters-moors-fixed.json",
+      "path": "build/macos/acceptance-g0-20260926/parameters-consulates-fixed.json",
       "sha256": "3788cd3b427c0bdc05841d60f5d3902a7debea45cbd781640df63903635e725e"
     },
     "summary": {
       "candidate_kinds": {
-        "lua-listener": 97,
+        "lua-listener": 100,
         "scalar-field": 938,
         "table": 303
       },
       "playable_civilizations": 114,
       "suggested_groups": {
-        "G2": 57,
+        "G2": 59,
         "G3": 193,
         "G4": 277,
         "G5": 148,
         "G6": 239,
-        "G7": 424
+        "G7": 425
       },
       "table_dispositions": {
         "empty-table-no-configured-rows": 75,
@@ -9645,7 +9645,8 @@
       ],
       "surface_ids": [
         "lua:Lua/Lekmod_policies.lua:GameEvents.PlayerAdoptPolicy:Lekmod_OnAdoptConsulates",
-        "lua:Lua/Lekmod_policies.lua:GameEvents.TeamSetEra:Lekmod_OnEraChangeGiveConsulatesVote"
+        "lua:Lua/Lekmod_policies.lua:GameEvents.TeamSetEra:Lekmod_OnEraChangeGiveConsulatesVote",
+        "lua:Lua/Lekmod_policies.lua:Events.SequenceGameInitComplete:Lekmod_RefreshConsulatesOnLoad"
       ],
       "implementation_references": [
         {
@@ -9665,6 +9666,288 @@
         "Native original failure confirmed for whichever owner adopts second; both authentic failed saves retained. Product fix passes28isolated cases, native retest still required.",
         "Nonmatching player/team IDs and multi-owner teams remain isolated callback coverage; these are not native team-game results.",
         "Native changed source and affected-save repair must pass before this ready case closes."
+      ]
+    },
+    {
+      "id": "POL-COMBAT-CLASS-PROMOTIONS",
+      "group": "G6",
+      "title": "Policy adoption and creation promotions for all four configured combat classes",
+      "status": "ready",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Lekmod_policies.lua",
+          "sha256": "96d6e839a23c80b4b575fcc5746d06576fe85db9ddfa4213caae4fef9b918749"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPlayer.cpp",
+          "sha256": "31dd845837800229e4c4e2708e471996f03858f722b8cbf14bdfa2a8ed67c788"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvCity.cpp",
+          "sha256": "bc6c14e34329d88978ded1969875b4eed39be171e819bf200fa313d0a0b24030"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/Lua/CvLuaCity.cpp",
+          "sha256": "d5af403a2ce7e273cfbf0c0a3a3ba20b74b91b5e7a97ca39f903ac6bd81860d0"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPolicyClasses.cpp",
+          "sha256": "7a409a449b69feab94f617d423985048f8414ee4761f5dba36d743c9c343dfe8"
+        }
+      ],
+      "owners": [
+        "human Rome",
+        "AI first opponent as adopter or unchanged control"
+      ],
+      "expected_result": "Volunteer Army grants Morale to existing and new melee/gun/paradrop units; Arsenal of Democracy grants Dogfighting I to fighters. Both owners receive exact flags and native modifiers15/33. Archer/Worker and not-yet-adopting foreign owner remain excluded; refresh does not stack; legal choices debit once.",
+      "units": "unit promotion flags/native modifier percentage points; building/unit counts, population, plots and happiness",
+      "supplied_inputs": [
+        "preserved hashed Ancient fixture",
+        "research, branch/prerequisite flags and free choices",
+        "units/Settlers and legal staging; upkeep buffer",
+        "clear unowned radius two for exact territory-count oracle when founding"
+      ],
+      "actual_trigger": "Normal human Network.SendUpdatePolicies/Found actions; AI target policies only through DoAdoptPolicy on actual owner turn; native UnitCreated dispatch. No reward flags/counters assigned.",
+      "negative_controls": [
+        "pre-policy state",
+        "unrelated combat class or prior city",
+        "foreign owner",
+        "already owned policy ineligible",
+        "repeated normal creation/founding does not stack existing reward"
+      ],
+      "transitions": [
+        "native policy adoption",
+        "existing vs new units/cities",
+        "human and applicable AI dispatch",
+        "exact checkpoint replay"
+      ],
+      "persistence_requirement": "All declared state must exactly replay from a completed checkpoint with normal exit and preservation.",
+      "required_evidence_level": [
+        "scripted-command",
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260918T065530Z/Lekmod-Functional-20260918T065530Z.Civ5Save",
+          "sha256": "574511e03f58fc064d98b15fa57b4acf24072fdbfe434ec62db2230a6e7f0e3d"
+        }
+      ],
+      "batch": "LEKMOD_DLL/macos/batch-plans/policy-effects.json",
+      "stage": [
+        "promotion-both-owners"
+      ],
+      "evidence": [],
+      "surface_ids": [
+        "data:Policy_FreePromotionUnitCombats",
+        "lua:Lua/Lekmod_policies.lua:GameEvents.PlayerAdoptPolicy:lekmod_policy_free_promotion_unit_combats_on_adopt",
+        "lua:Lua/Lekmod_policies.lua:GameEvents.UnitCreated:lekmod_policy_free_promotion_unit_combats"
+      ],
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/batch-plans/policy-effects.json",
+          "sha256": "b5643a33600fc03c1ec3a69986706331cc050e3895e0f809427a48485a1787dc"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-policy-promotions.lua",
+          "sha256": "149fc387c5e639b1634a5d44873a4ef42e39bd2ee82c8eb980cb602f76016c71"
+        }
+      ],
+      "implementation_limits": [
+        "Preflight passed; no native result yet.",
+        "native modifier queries are not actual battle damage comparisons",
+        "policy free Foreign Legions, upkeep and production bonuses are separate effects"
+      ]
+    },
+    {
+      "id": "POL-RESETTLEMENT-FOUNDING",
+      "group": "G6",
+      "title": "Resettlement founding buildings, replacement lookup, population and territory",
+      "status": "ready",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Lekmod_policies.lua",
+          "sha256": "96d6e839a23c80b4b575fcc5746d06576fe85db9ddfa4213caae4fef9b918749"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPlayer.cpp",
+          "sha256": "31dd845837800229e4c4e2708e471996f03858f722b8cbf14bdfa2a8ed67c788"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvCity.cpp",
+          "sha256": "bc6c14e34329d88978ded1969875b4eed39be171e819bf200fa313d0a0b24030"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/Lua/CvLuaCity.cpp",
+          "sha256": "d5af403a2ce7e273cfbf0c0a3a3ba20b74b91b5e7a97ca39f903ac6bd81860d0"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPolicyClasses.cpp",
+          "sha256": "7a409a449b69feab94f617d423985048f8414ee4761f5dba36d743c9c343dfe8"
+        }
+      ],
+      "owners": [
+        "human Rome and AI control/adopter as specified",
+        "human Akkad in replacement-building stage"
+      ],
+      "expected_result": "Two normal post-adoption Found actions grant exactly one Workshop, Granary, Aqueduct, Monument and owner-specific Library; native library-class lookup resolves Royal Tablet Library for Akkad and ordinary Library for Rome. Each new city has5population and13owned plots versus pre-policy1/7; no Worker grant. Prior human cities and foreign-owner snapshot remain unchanged. Normal adoption/Found consume choice/Settlers once.",
+      "units": "unit promotion flags/native modifier percentage points; building/unit counts, population, plots and happiness",
+      "supplied_inputs": [
+        "preserved hashed Ancient fixture",
+        "research, branch/prerequisite flags and free choices",
+        "units/Settlers and legal staging; upkeep buffer",
+        "clear unowned radius two for exact territory-count oracle when founding"
+      ],
+      "actual_trigger": "Normal human Network.SendUpdatePolicies/Found actions; AI target policies only through DoAdoptPolicy on actual owner turn; native UnitCreated dispatch. No reward flags/counters assigned.",
+      "negative_controls": [
+        "pre-policy state",
+        "unrelated combat class or prior city",
+        "foreign owner",
+        "already owned policy ineligible",
+        "repeated normal creation/founding does not stack existing reward"
+      ],
+      "transitions": [
+        "native policy adoption",
+        "existing vs new units/cities",
+        "human and applicable AI dispatch",
+        "exact checkpoint replay"
+      ],
+      "persistence_requirement": "All declared state must exactly replay from a completed checkpoint with normal exit and preservation.",
+      "required_evidence_level": [
+        "scripted-command",
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260918T065530Z/Lekmod-Functional-20260918T065530Z.Civ5Save",
+          "sha256": "574511e03f58fc064d98b15fa57b4acf24072fdbfe434ec62db2230a6e7f0e3d"
+        },
+        {
+          "path": "build/macos/playtests/20260922T233312Z/Lekmod-Functional-20260922T233312Z.Civ5Save",
+          "sha256": "903a1a869d99c11a2e7079995bbf0293b321035d2d1803a2912da05face90f1d"
+        }
+      ],
+      "batch": "LEKMOD_DLL/macos/batch-plans/policy-effects.json",
+      "stage": [
+        "resettlement-rome",
+        "resettlement-akkad"
+      ],
+      "evidence": [],
+      "surface_ids": [
+        "lua:Lua/Lekmod_policies.lua:GameEvents.PlayerCityFounded:lekmod_resettlements_policy_new_buildings",
+        "data:Policies.NewCityExtraPopulation",
+        "data:Policies.ExtraTerritoryClaim"
+      ],
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/batch-plans/policy-effects.json",
+          "sha256": "b5643a33600fc03c1ec3a69986706331cc050e3895e0f809427a48485a1787dc"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-policy-founding.lua",
+          "sha256": "f820b08c950b2f6351c9c21e659704800b16c3692210c6c259197fd3f84458b1"
+        }
+      ],
+      "implementation_limits": [
+        "Preflight passed; no native result yet.",
+        "Akkad is the native unique-class representative; other replacement lookup parameters require shared-path applicability review",
+        "crowded or unavailable extra-territory selection is not covered by the deliberately clear-radius fixture"
+      ]
+    },
+    {
+      "id": "POL-COLONIALISM-FOUNDING",
+      "group": "G6",
+      "title": "Colonialism founding population, territory, Worker and happiness",
+      "status": "ready",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Lekmod_policies.lua",
+          "sha256": "96d6e839a23c80b4b575fcc5746d06576fe85db9ddfa4213caae4fef9b918749"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPlayer.cpp",
+          "sha256": "31dd845837800229e4c4e2708e471996f03858f722b8cbf14bdfa2a8ed67c788"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvCity.cpp",
+          "sha256": "bc6c14e34329d88978ded1969875b4eed39be171e819bf200fa313d0a0b24030"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/Lua/CvLuaCity.cpp",
+          "sha256": "d5af403a2ce7e273cfbf0c0a3a3ba20b74b91b5e7a97ca39f903ac6bd81860d0"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPolicyClasses.cpp",
+          "sha256": "7a409a449b69feab94f617d423985048f8414ee4761f5dba36d743c9c343dfe8"
+        },
+        {
+          "path": "LEKMOD/Art/No Quitters Mod (v 11)/social_policies/8_exploration/Exploration1_Colonialism.lua",
+          "sha256": "66eac152a9bc48c4d40fb278c3db9713b23ae1ef4a758fa52f07ffc77300adcb"
+        }
+      ],
+      "owners": [
+        "human Rome",
+        "AI first opponent as adopter or unchanged control"
+      ],
+      "expected_result": "Two normal post-adoption Found actions each grant one Governor mansion, one Worker,2building happiness,3population and13owned plots. Before adoption, normal Found gives no mansion or Worker,1population and7plots. Prior human cities and foreign-owner snapshot stay unchanged; choice/Settler spending and duplicate-policy rejection are checked.",
+      "units": "unit promotion flags/native modifier percentage points; building/unit counts, population, plots and happiness",
+      "supplied_inputs": [
+        "preserved hashed Ancient fixture",
+        "research, branch/prerequisite flags and free choices",
+        "units/Settlers and legal staging; upkeep buffer",
+        "clear unowned radius two for exact territory-count oracle when founding"
+      ],
+      "actual_trigger": "Normal human Network.SendUpdatePolicies/Found actions; AI target policies only through DoAdoptPolicy on actual owner turn; native UnitCreated dispatch. No reward flags/counters assigned.",
+      "negative_controls": [
+        "pre-policy state",
+        "unrelated combat class or prior city",
+        "foreign owner",
+        "already owned policy ineligible",
+        "repeated normal creation/founding does not stack existing reward"
+      ],
+      "transitions": [
+        "native policy adoption",
+        "existing vs new units/cities",
+        "human and applicable AI dispatch",
+        "exact checkpoint replay"
+      ],
+      "persistence_requirement": "All declared state must exactly replay from a completed checkpoint with normal exit and preservation.",
+      "required_evidence_level": [
+        "scripted-command",
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260918T065530Z/Lekmod-Functional-20260918T065530Z.Civ5Save",
+          "sha256": "574511e03f58fc064d98b15fa57b4acf24072fdbfe434ec62db2230a6e7f0e3d"
+        }
+      ],
+      "batch": "LEKMOD_DLL/macos/batch-plans/policy-effects.json",
+      "stage": [
+        "colonialism-rome"
+      ],
+      "evidence": [],
+      "surface_ids": [
+        "lua:Art/No Quitters Mod (v 11)/social_policies/8_exploration/Exploration1_Colonialism.lua:GameEvents.PlayerCityFounded:NQMP_Exploration_Colonialism_OnFoundCity",
+        "data:Policies.NewCityExtraPopulation",
+        "data:Policies.ExtraTerritoryClaim"
+      ],
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/batch-plans/policy-effects.json",
+          "sha256": "b5643a33600fc03c1ec3a69986706331cc050e3895e0f809427a48485a1787dc"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-policy-founding.lua",
+          "sha256": "f820b08c950b2f6351c9c21e659704800b16c3692210c6c259197fd3f84458b1"
+        }
+      ],
+      "implementation_limits": [
+        "Preflight passed; no native result yet.",
+        "Native reward delivery and calculated building happiness are not physical policy UI or earned culture coverage",
+        "crowded or unavailable extra-territory selection remains a separate boundary"
       ]
     }
   ],
@@ -15264,12 +15547,16 @@
     {
       "id": "data:Policies.NewCityExtraPopulation",
       "suggested_group": "G6",
-      "status": "untriaged",
-      "case_ids": [],
+      "status": "mapped",
+      "case_ids": [
+        "POL-RESETTLEMENT-FOUNDING",
+        "POL-COLONIALISM-FOUNDING"
+      ],
       "supporting_case_ids": [
         "CFG-COMPILED-SCALAR-CACHES"
       ],
-      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent."
+      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent.",
+      "reason": "Reviewed policy-effects native design covers configured rows and explicit positive/negative owner/state boundaries. These cases are ready, not passed; final native evidence and applicability are still required."
     },
     {
       "id": "data:Policies.HappinessToScience",
@@ -15652,12 +15939,16 @@
     {
       "id": "data:Policies.ExtraTerritoryClaim",
       "suggested_group": "G6",
-      "status": "untriaged",
-      "case_ids": [],
+      "status": "mapped",
+      "case_ids": [
+        "POL-RESETTLEMENT-FOUNDING",
+        "POL-COLONIALISM-FOUNDING"
+      ],
       "supporting_case_ids": [
         "CFG-COMPILED-SCALAR-CACHES"
       ],
-      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent."
+      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent.",
+      "reason": "Reviewed policy-effects native design covers configured rows and explicit positive/negative owner/state boundaries. These cases are ready, not passed; final native evidence and applicability are still required."
     },
     {
       "id": "data:Policies.IdeologyPressureUnhappinessModifier",
@@ -15883,8 +16174,11 @@
     {
       "id": "data:Policy_FreePromotionUnitCombats",
       "suggested_group": "G6",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "POL-COMBAT-CLASS-PROMOTIONS"
+      ],
+      "reason": "Reviewed policy-effects native design covers configured rows and explicit positive/negative owner/state boundaries. These cases are ready, not passed; final native evidence and applicability are still required."
     },
     {
       "id": "data:Policy_FreePromotions",
@@ -20560,8 +20854,11 @@
     {
       "id": "lua:Art/No Quitters Mod (v 11)/social_policies/8_exploration/Exploration1_Colonialism.lua:GameEvents.PlayerCityFounded:NQMP_Exploration_Colonialism_OnFoundCity",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "POL-COLONIALISM-FOUNDING"
+      ],
+      "reason": "Reviewed policy-effects native design covers configured rows and explicit positive/negative owner/state boundaries. These cases are ready, not passed; final native evidence and applicability are still required."
     },
     {
       "id": "lua:Lua/UI/prophetreplace.lua:Events.SequenceGameInitComplete:PlaceExtraJuice",
@@ -20632,20 +20929,29 @@
     {
       "id": "lua:Lua/Lekmod_policies.lua:GameEvents.PlayerCityFounded:lekmod_resettlements_policy_new_buildings",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "POL-RESETTLEMENT-FOUNDING"
+      ],
+      "reason": "Reviewed policy-effects native design covers configured rows and explicit positive/negative owner/state boundaries. These cases are ready, not passed; final native evidence and applicability are still required."
     },
     {
       "id": "lua:Lua/Lekmod_policies.lua:GameEvents.PlayerAdoptPolicy:lekmod_policy_free_promotion_unit_combats_on_adopt",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "POL-COMBAT-CLASS-PROMOTIONS"
+      ],
+      "reason": "Reviewed policy-effects native design covers configured rows and explicit positive/negative owner/state boundaries. These cases are ready, not passed; final native evidence and applicability are still required."
     },
     {
       "id": "lua:Lua/Lekmod_policies.lua:GameEvents.UnitCreated:lekmod_policy_free_promotion_unit_combats",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "POL-COMBAT-CLASS-PROMOTIONS"
+      ],
+      "reason": "Reviewed policy-effects native design covers configured rows and explicit positive/negative owner/state boundaries. These cases are ready, not passed; final native evidence and applicability are still required."
     },
     {
       "id": "lua:Lua/Lekmod_policies.lua:GameEvents.PlayerAdoptPolicy:Lekmod_OnAdoptConsulates",
@@ -21556,6 +21862,14 @@
         "LIFE-MOORS-CAPTURE-PRODUCTION"
       ],
       "reason": "Added by verified acquisition/load repair e8a3fabd; native normal acquisition and affected-save regressions cover these new subscriptions."
+    },
+    {
+      "id": "lua:Lua/Lekmod_policies.lua:Events.SequenceGameInitComplete:Lekmod_RefreshConsulatesOnLoad",
+      "status": "mapped",
+      "case_ids": [
+        "POL-CONSULATES-OWNER-ADOPTION"
+      ],
+      "reason": "New product load repair is explicitly covered by both authentic failure saves, counter-only expected snapshots, next ordinary turn and exact replay in the ready Consulates case."
     }
   ],
   "pending_doc_entries": [
@@ -29245,18 +29559,18 @@
     }
   ],
   "summary": {
-    "designed_cases": 68,
+    "designed_cases": 71,
     "case_statuses": {
       "passed": 25,
       "covered-by-evidence": 40,
-      "ready": 3
+      "ready": 6
     },
-    "review_surfaces": 1340,
+    "review_surfaces": 1341,
     "pending_document_rows": 121,
     "final_case_denominator_frozen": false,
     "surface_statuses": {
-      "untriaged": 1250,
-      "mapped": 68,
+      "untriaged": 1243,
+      "mapped": 76,
       "presentation-only": 19,
       "out-of-scope": 3
     },
@@ -29291,6 +29605,18 @@
       "gamecore_sha256": "6c7aafb11d9e5aea80d1e7b95c6b8f3498820385f6e132abea81bad0b3b8cf6f",
       "source_commit": "175d8c65fe66da3a50c7d6bba1e69cdde3d58f5c",
       "change": "Tutorial edge-plot guard and explicitly opt-in read-only native cache diagnostic; final F/R qualification still required."
+    },
+    {
+      "reason": "Confirmed native Consulates second-owner failure repaired; adds one reviewed load listener without changing gameplay XML or native GameCore. Native retest pending.",
+      "package": {
+        "path": "build/macos/Lekmod-consulates-fixed-20261003.zip",
+        "sha256": "52778f2971c77ac4bc2fdfc2f6ce6e2b753cf24d438b5821bf86dace6935130c"
+      },
+      "source_commit": "ddf38d069662997eba0937364932b1bd3801a686",
+      "gamecore_sha256": "c8f1723c7588fdf54465781ebbca9d8de009e3e11c76ba6375b5200fd9687aa2",
+      "added_surfaces": [
+        "lua:Lua/Lekmod_policies.lua:Events.SequenceGameInitComplete:Lekmod_RefreshConsulatesOnLoad"
+      ]
     }
   ]
 }

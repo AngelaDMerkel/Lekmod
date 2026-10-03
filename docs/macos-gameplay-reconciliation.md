@@ -480,3 +480,22 @@ or native database entry, and its guard returns before applying effects. The
 differently named, populated native adjacency tables remain in scope. Existing
 warning logs are preserved. This source/database review leaves1,250 untriaged
 surfaces; it does not establish any new native gameplay pass.
+
+## Prepared policy-effect batch
+
+Three reviewed cases now cover the four configured policy/combat-class promotion
+rows, Resettlement and Colonialism founding rewards. One four-stage plan declares
+32 assertions/four exact replays with a six-turn aggregate cap. It uses actual
+human policy commands/Found actions and actual AI owner-turn policy adoption;
+research, prerequisite flags, units/Settlers, free choices and staging are
+explicit fixture inputs. Both configured extra-population/territory rows have
+quantified oracles. Ordinary Rome and unique-library Akkad are separate founding
+fixtures; other replacement parameters still require shared-path applicability.
+Native promotion modifiers are not battle-damage tests.
+
+The scenarios passed Lua, native-binding and fixture preflight. The method-name
+preflight caught a C++ getter name that is exposed to Lua as `AirSweepCombatMod`;
+that test-only error was corrected before launch. Native outcomes are pending.
+The Consulates fix adds one explicitly mapped load listener, bringing discovery
+to1,341 surfaces. With these cases, the register has71specified cases and1,243
+untriaged surfaces. The final denominator remains unfrozen.
