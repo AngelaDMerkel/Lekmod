@@ -161,6 +161,7 @@ FUNCTIONAL_ITEMS = {"script-data", "science-overflow", "unit-position-flags", "c
                     "production-unit", "production-building", "production-wonder", "production-process"}
 PRODUCTION_COMPLETION_ITEMS = {"production-completion-unit", "production-completion-building"}
 SCENARIO_ITEMS = {
+    "minor-influence-modifiers": {'minor-religion-owner-controls', 'minor-ordinary-settlement', 'minor-modifier-data', 'minor-trait-baseline', 'minor-policy-owner-control', 'minor-fractional-persistence', 'minor-independent-rates', 'minor-religion-transition', 'minor-policy-adoption'},
     "minor-influence-recovery": {'influence-load-protected-state', 'influence-load-corrected-rate', 'influence-load-stability', 'influence-load-natural-recovery'},
     "minor-influence-anchor": {'influence-repeated-boundary', 'influence-input-guards', 'influence-anchor-clamp', 'influence-far-decay', 'influence-below-recovery', 'influence-native-quotes'},
     "free-building-grants": {'free-grant-positive', 'free-grant-next-turn', 'free-grant-data', 'free-grant-transition', 'free-grant-controls', 'free-grant-nonstack', 'free-grant-initial'},
