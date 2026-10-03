@@ -8093,11 +8093,16 @@
         {
           "path": "build/macos/global-policy-corrected-preservation-20261003.json",
           "sha256": "b42848fec9c50d9d350502c0274b4f82119bdba713fc404fd654db6f4f5e5885"
+        },
+        {
+          "path": "build/macos/global-team-source-fixed-20261003.log",
+          "sha256": "ffbad2824d82c9bcf390703b3d923d40783ec7aaf38c9a1fadee193e2f9f4110"
         }
       ],
       "surface_ids": [
         "lua:Lua/Civilizations/Lekmod_yugoslavia.lua:GameEvents.PlayerPolicyBranchUnlocked:lekmod_yugoslavia_ideology_tenet",
-        "lua:Lua/Lekmod_global_dummies.lua:GameEvents.PlayerPolicyBranchUnlocked:lekmod_add_global_dummy_buildings"
+        "lua:Lua/Lekmod_global_dummies.lua:GameEvents.PlayerPolicyBranchUnlocked:lekmod_add_global_dummy_buildings",
+        "data:Global_Dummy_Buildings"
       ],
       "evidence_contract": {
         "kind": "native-batch-stages",
@@ -10711,6 +10716,10 @@
         {
           "path": "build/macos/global-policy-corrected-preservation-20261003.json",
           "sha256": "b42848fec9c50d9d350502c0274b4f82119bdba713fc404fd654db6f4f5e5885"
+        },
+        {
+          "path": "build/macos/global-team-source-fixed-20261003.log",
+          "sha256": "ffbad2824d82c9bcf390703b3d923d40783ec7aaf38c9a1fadee193e2f9f4110"
         }
       ],
       "surface_ids": [
@@ -10719,7 +10728,8 @@
         "lua:Lua/Lekmod_global_dummies.lua:GameEvents.PlayerAdoptPolicy:lekmod_add_global_dummy_buildings",
         "lua:Lua/Lekmod_global_dummies.lua:Events.SequenceGameInitComplete:lekmod_global_dummy_buildings_on_load",
         "lua:Lua/Lekmod_global_dummies.lua:GameEvents.PlayerPolicyBranchUnlocked:lekmod_add_global_dummy_buildings",
-        "lua:Lua/Lekmod_global_dummies.lua:GameEvents.PlayerSetGoldenAge:lekmod_add_global_dummy_buildings"
+        "lua:Lua/Lekmod_global_dummies.lua:GameEvents.PlayerSetGoldenAge:lekmod_add_global_dummy_buildings",
+        "data:Global_Dummy_Buildings"
       ],
       "implementation_references": [
         {
@@ -10746,7 +10756,7 @@
       "implementation_limits": [
         "Corrected whole native batch022959Z passed73assertions/12replays, including this case, normal exit0 and full975-file preservation. Positive policy costs and native free-tenet accounting are retained in the corrected snapshots.",
         "This is callback routing/marker delivery, not all configured marker yield/production/trade consumers.",
-        "Ukraine/Colombia predicates and full building yield/route consumers remain separate. Capital capture is the ready LIFE-GLOBAL-TEAM-CAPTURE case; branch transitions have current Yugoslav evidence and the no-configured-golden-age predicate has an explicit shared-body disposition."
+        "Ukraine/Colombia assignment parameters are isolated actual-Lua/shared-loop coverage. Native capital capture now passes its separate case; full building yield/resource/trade/combat consumers remain open."
       ],
       "evidence_contract": {
         "kind": "native-batch-stages",
@@ -10807,14 +10817,14 @@
       "remaining_scope": [
         "Corrected whole native batch022959Z passed73assertions/12replays, including this case, normal exit0 and full975-file preservation. Positive policy costs and native free-tenet accounting are retained in the corrected snapshots.",
         "This is callback routing/marker delivery, not all configured marker yield/production/trade consumers.",
-        "Ukraine/Colombia predicates and full building yield/route consumers remain separate. Capital capture is the ready LIFE-GLOBAL-TEAM-CAPTURE case; branch transitions have current Yugoslav evidence and the no-configured-golden-age predicate has an explicit shared-body disposition."
+        "Ukraine/Colombia assignment parameters are isolated actual-Lua/shared-loop coverage. Native capital capture now passes its separate case; full building yield/resource/trade/combat consumers remain open."
       ]
     },
     {
       "id": "LIFE-GLOBAL-TEAM-CAPTURE",
       "group": "G2",
       "title": "Global building rewards after single-player capital capture",
-      "status": "ready",
+      "status": "passed",
       "source_references": [
         {
           "path": "LEKMOD/Lua/Lekmod_global_dummies.lua",
@@ -10861,9 +10871,27 @@
       "stage": [
         "global-team-capture"
       ],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20261003T025118Z/report.json",
+          "sha256": "34d6aad79c9cd5f69aebee87db8635b1d2d612db080dade7b4e9c44874ab5b32"
+        },
+        {
+          "path": "build/macos/playtests/20261003T025118Z/batch-report.json",
+          "sha256": "acb6902a79053aa7aeee15e1797b2dca3c483bf893c96c1c5e09375746d3b3d3"
+        },
+        {
+          "path": "build/macos/capture-vatican-preservation-20261003.json",
+          "sha256": "abba30537c5cd71cf8cee5e530ad4c26353941333de301c443829cc308b4acaa"
+        },
+        {
+          "path": "build/macos/global-team-source-fixed-20261003.log",
+          "sha256": "ffbad2824d82c9bcf390703b3d923d40783ec7aaf38c9a1fadee193e2f9f4110"
+        }
+      ],
       "surface_ids": [
-        "lua:Lua/Lekmod_global_dummies.lua:GameEvents.CityCaptureComplete:lekmod_add_global_dummy_buildings_on_capture"
+        "lua:Lua/Lekmod_global_dummies.lua:GameEvents.CityCaptureComplete:lekmod_add_global_dummy_buildings_on_capture",
+        "data:Global_Dummy_Buildings"
       ],
       "implementation_references": [
         {
@@ -10876,7 +10904,31 @@
         }
       ],
       "implementation_limits": [
-        "Preflight passed; current native run pending.",
+        "Current025118Z complete batch passed36assertions/6exactreplays, native exit0 and998-file preservation; all12checkpoint writers/copies verified.",
+        "Gift and other global dummy civilizations/predicates remain separate."
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261003T025118Z/report.json",
+            "batch_report": "build/macos/playtests/20261003T025118Z/batch-report.json",
+            "stage": "global-team-capture",
+            "required_assertions": [
+              "global-capture-next-round",
+              "global-capture-prerequisites",
+              "global-native-capital-capture",
+              "global-new-owner-cleanup",
+              "global-old-owner-capital-refresh",
+              "global-teammate-control"
+            ],
+            "gamecore_sha256": "c8f1723c7588fdf54465781ebbca9d8de009e3e11c76ba6375b5200fd9687aa2"
+          }
+        ]
+      },
+      "remaining_scope": [
+        "Current025118Z complete batch passed36assertions/6exactreplays, native exit0 and998-file preservation; all12checkpoint writers/copies verified.",
         "Gift and other global dummy civilizations/predicates remain separate."
       ]
     },
@@ -10884,7 +10936,7 @@
       "id": "REL-VATICAN-COURTHOUSE",
       "group": "G6",
       "title": "Vatican Courthouse capture and conversion",
-      "status": "ready",
+      "status": "passed",
       "source_references": [
         {
           "path": "LEKMOD/Lua/Civilizations/Lekmod_vatican.lua",
@@ -10940,7 +10992,20 @@
         "vatican-conversion",
         "vatican-capture"
       ],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20261003T025118Z/report.json",
+          "sha256": "34d6aad79c9cd5f69aebee87db8635b1d2d612db080dade7b4e9c44874ab5b32"
+        },
+        {
+          "path": "build/macos/playtests/20261003T025118Z/batch-report.json",
+          "sha256": "acb6902a79053aa7aeee15e1797b2dca3c483bf893c96c1c5e09375746d3b3d3"
+        },
+        {
+          "path": "build/macos/capture-vatican-preservation-20261003.json",
+          "sha256": "abba30537c5cd71cf8cee5e530ad4c26353941333de301c443829cc308b4acaa"
+        }
+      ],
       "surface_ids": [
         "lua:Lua/Civilizations/Lekmod_vatican.lua:GameEvents.CityConvertsReligion:lekmod_ua_courthouse",
         "lua:Lua/Civilizations/Lekmod_vatican.lua:GameEvents.CityCaptureComplete:lekmod_ua_courthouse_on_capture"
@@ -10956,7 +11021,44 @@
         }
       ],
       "implementation_limits": [
-        "Preflight passed; current native run pending.",
+        "Current025118Z complete batch passed36assertions/6exactreplays, native exit0 and998-file preservation; all12checkpoint writers/copies verified.",
+        "Conversion away, recapture/gifting and every owner permutation remain separate."
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261003T025118Z/report.json",
+            "batch_report": "build/macos/playtests/20261003T025118Z/batch-report.json",
+            "stage": "vatican-conversion",
+            "required_assertions": [
+              "vatican-annex-preservation",
+              "vatican-courthouse-award",
+              "vatican-courthouse-gate",
+              "vatican-foreign-owner-control",
+              "vatican-real-capture"
+            ],
+            "gamecore_sha256": "c8f1723c7588fdf54465781ebbca9d8de009e3e11c76ba6375b5200fd9687aa2"
+          },
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261003T025118Z/report.json",
+            "batch_report": "build/macos/playtests/20261003T025118Z/batch-report.json",
+            "stage": "vatican-capture",
+            "required_assertions": [
+              "vatican-annex-preservation",
+              "vatican-courthouse-award",
+              "vatican-courthouse-gate",
+              "vatican-foreign-owner-control",
+              "vatican-real-capture"
+            ],
+            "gamecore_sha256": "c8f1723c7588fdf54465781ebbca9d8de009e3e11c76ba6375b5200fd9687aa2"
+          }
+        ]
+      },
+      "remaining_scope": [
+        "Current025118Z complete batch passed36assertions/6exactreplays, native exit0 and998-file preservation; all12checkpoint writers/copies verified.",
         "Conversion away, recapture/gifting and every owner permutation remain separate."
       ]
     },
@@ -10964,7 +11066,7 @@
       "id": "REL-STPETERS-PRESSURE-DELEGATES",
       "group": "G6",
       "title": "St Peters pressure and delegate calculation",
-      "status": "ready",
+      "status": "passed",
       "source_references": [
         {
           "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvCity.cpp",
@@ -11015,7 +11117,20 @@
       "stage": [
         "vatican-pressure-votes"
       ],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20261003T025118Z/report.json",
+          "sha256": "34d6aad79c9cd5f69aebee87db8635b1d2d612db080dade7b4e9c44874ab5b32"
+        },
+        {
+          "path": "build/macos/playtests/20261003T025118Z/batch-report.json",
+          "sha256": "acb6902a79053aa7aeee15e1797b2dca3c483bf893c96c1c5e09375746d3b3d3"
+        },
+        {
+          "path": "build/macos/capture-vatican-preservation-20261003.json",
+          "sha256": "abba30537c5cd71cf8cee5e530ad4c26353941333de301c443829cc308b4acaa"
+        }
+      ],
       "surface_ids": [],
       "implementation_references": [
         {
@@ -11028,7 +11143,30 @@
         }
       ],
       "implementation_limits": [
-        "Preflight passed; current native run pending.",
+        "Current025118Z complete batch passed36assertions/6exactreplays, native exit0 and998-file preservation; all12checkpoint writers/copies verified.",
+        "Delegate calculation is not a newly allocated voting session or physical ballot interaction."
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261003T025118Z/report.json",
+            "batch_report": "build/macos/playtests/20261003T025118Z/batch-report.json",
+            "stage": "vatican-pressure-votes",
+            "required_assertions": [
+              "stpeters-extra-delegates",
+              "stpeters-pressure-control",
+              "stpeters-pressure-double",
+              "stpeters-pressure-settlement",
+              "vatican-natural-congress"
+            ],
+            "gamecore_sha256": "c8f1723c7588fdf54465781ebbca9d8de009e3e11c76ba6375b5200fd9687aa2"
+          }
+        ]
+      },
+      "remaining_scope": [
+        "Current025118Z complete batch passed36assertions/6exactreplays, native exit0 and998-file preservation; all12checkpoint writers/copies verified.",
         "Delegate calculation is not a newly allocated voting session or physical ballot interaction."
       ]
     },
@@ -11036,7 +11174,7 @@
       "id": "REL-VATICAN-GREAT-SITES",
       "group": "G4",
       "title": "Vatican Great Person improvement yields",
-      "status": "ready",
+      "status": "passed",
       "source_references": [
         {
           "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPlot.cpp",
@@ -11087,7 +11225,20 @@
       "stage": [
         "vatican-great-sites"
       ],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20261003T025118Z/report.json",
+          "sha256": "34d6aad79c9cd5f69aebee87db8635b1d2d612db080dade7b4e9c44874ab5b32"
+        },
+        {
+          "path": "build/macos/playtests/20261003T025118Z/batch-report.json",
+          "sha256": "acb6902a79053aa7aeee15e1797b2dca3c483bf893c96c1c5e09375746d3b3d3"
+        },
+        {
+          "path": "build/macos/capture-vatican-preservation-20261003.json",
+          "sha256": "abba30537c5cd71cf8cee5e530ad4c26353941333de301c443829cc308b4acaa"
+        }
+      ],
       "surface_ids": [
         "data:Trait_ImprovementYieldChanges"
       ],
@@ -11102,7 +11253,35 @@
         }
       ],
       "implementation_limits": [
-        "Preflight passed; current native run pending.",
+        "Current025118Z complete batch passed36assertions/6exactreplays, native exit0 and998-file preservation; all12checkpoint writers/copies verified.",
+        "Tile yields are not proof every site was worked or city income settled. Other configured traits/rows remain open."
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261003T025118Z/report.json",
+            "batch_report": "build/macos/playtests/20261003T025118Z/batch-report.json",
+            "stage": "vatican-great-sites",
+            "required_assertions": [
+              "great-improvement-native-builds",
+              "great-improvement-roman-controls",
+              "great-improvement-vatican-bonuses",
+              "yield-BUILD_ACADEMY",
+              "yield-BUILD_CITADEL",
+              "yield-BUILD_CONCERT",
+              "yield-BUILD_CUSTOMS_HOUSE",
+              "yield-BUILD_DOCK",
+              "yield-BUILD_HOLY_SITE",
+              "yield-BUILD_MANUFACTORY"
+            ],
+            "gamecore_sha256": "c8f1723c7588fdf54465781ebbca9d8de009e3e11c76ba6375b5200fd9687aa2"
+          }
+        ]
+      },
+      "remaining_scope": [
+        "Current025118Z complete batch passed36assertions/6exactreplays, native exit0 and998-file preservation; all12checkpoint writers/copies verified.",
         "Tile yields are not proof every site was worked or city income settled. Other configured traits/rows remain open."
       ]
     },
@@ -11110,7 +11289,7 @@
       "id": "REL-VATICAN-KILL-FAITH",
       "group": "G3",
       "title": "Vatican capped military-kill faith",
-      "status": "ready",
+      "status": "passed",
       "source_references": [
         {
           "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvUnitCombat.cpp",
@@ -11161,7 +11340,20 @@
       "stage": [
         "vatican-kill-faith"
       ],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20261003T025118Z/report.json",
+          "sha256": "34d6aad79c9cd5f69aebee87db8635b1d2d612db080dade7b4e9c44874ab5b32"
+        },
+        {
+          "path": "build/macos/playtests/20261003T025118Z/batch-report.json",
+          "sha256": "acb6902a79053aa7aeee15e1797b2dca3c483bf893c96c1c5e09375746d3b3d3"
+        },
+        {
+          "path": "build/macos/capture-vatican-preservation-20261003.json",
+          "sha256": "abba30537c5cd71cf8cee5e530ad4c26353941333de301c443829cc308b4acaa"
+        }
+      ],
       "surface_ids": [
         "data:Trait_YieldFromKills"
       ],
@@ -11176,7 +11368,30 @@
         }
       ],
       "implementation_limits": [
-        "Preflight passed; current native run pending.",
+        "Current025118Z complete batch passed36assertions/6exactreplays, native exit0 and998-file preservation; all12checkpoint writers/copies verified.",
+        "City attacks, religion-disabled option, promotion stacking and other trait rows remain separate."
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-batch-stage",
+            "report": "build/macos/playtests/20261003T025118Z/report.json",
+            "batch_report": "build/macos/playtests/20261003T025118Z/batch-report.json",
+            "stage": "vatican-kill-faith",
+            "required_assertions": [
+              "roman-kill-faith-control",
+              "vatican-civilian-no-faith",
+              "vatican-kill-faith-cap",
+              "vatican-kill-faith-low",
+              "vatican-kill-faith-ranged"
+            ],
+            "gamecore_sha256": "c8f1723c7588fdf54465781ebbca9d8de009e3e11c76ba6375b5200fd9687aa2"
+          }
+        ]
+      },
+      "remaining_scope": [
+        "Current025118Z complete batch passed36assertions/6exactreplays, native exit0 and998-file preservation; all12checkpoint writers/copies verified.",
         "City attacks, religion-disabled option, promotion stacking and other trait rows remain separate."
       ]
     }
@@ -14579,8 +14794,23 @@
     {
       "id": "data:Global_Dummy_Buildings",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "LIFE-GLOBAL-TEAM-DISPATCH",
+        "LIFE-GLOBAL-TEAM-CAPTURE",
+        "POL-YUGOSLAV-IDEOLOGY-REWARDS"
+      ],
+      "reason": "All12rows use the same reviewed owner/predicate/OR/capital loop.19actual-Lua tests use the pinned shipped rows and assert all four tech predicates, all three Yugoslav branch combinations/removal, owner exclusions, idempotence and repair. Current native tests cover team7/shared/nonmatching IDs, Wales/Mongol research, Timurids unconditional founding, Economic Union policy/new-city delivery, actual old/new capital capture, all three Yugoslav transitions and exact saves. Ukraine/Wheel and Colombia/Chemistry assignment parameters have isolated actual-Lua coverage through that identical loop, not separate native civilization runs. Building yield/resource/trade/combat effects remain separately enumerated and unclosed by this assignment-table mapping.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Lekmod_global_dummies.lua",
+          "sha256": "09f8b0abe2141a69cb7bad658fb99389915498125d385aa667598fe0834e3eb6"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/test-global-dummy-events.py",
+          "sha256": "6008c336779f4d9a0bcbef3d0f4acd8331cc255a3b52bafd642244764568c161"
+        }
+      ]
     },
     {
       "id": "data:GoodyHuts.ChooseDescription",
@@ -31142,16 +31372,15 @@
   "summary": {
     "designed_cases": 78,
     "case_statuses": {
-      "passed": 33,
-      "covered-by-evidence": 40,
-      "ready": 5
+      "passed": 38,
+      "covered-by-evidence": 40
     },
     "review_surfaces": 1342,
     "pending_document_rows": 121,
     "final_case_denominator_frozen": false,
     "surface_statuses": {
-      "untriaged": 1214,
-      "mapped": 85,
+      "untriaged": 1213,
+      "mapped": 86,
       "presentation-only": 40,
       "out-of-scope": 3
     },

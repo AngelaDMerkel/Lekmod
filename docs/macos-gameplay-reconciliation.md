@@ -539,3 +539,17 @@ continuation. A rendering or null-selection problem could still fail that gate.
 No presentation obligation or the pending system-UI ledger row was waived.
 The register has1,214untriaged surfaces and121document rows; no final acceptance
 or complete gameplay denominator is inferred from those review counts.
+
+## Completed team/policy/capture continuation
+
+The corrected73-check/12-replay global/policy batch and36-check/six-replay
+capture/Vatican batch completed with normal exits and independent preservation.
+The policy-fixture accounting failure and all original product failures remain
+retained; corrected snapshots include available choices, culture and positive
+next-policy costs. Source-grounded shared-loop review maps all12global assignment
+rows while keeping child-building numerical consumers separate.
+
+There are78scoped passing/retained cases (38passed,40covered-by-evidence), with
+1,213untriaged review surfaces and121pending document rows. No ready native case
+remains at this checkpoint. The overall denominator is still unfrozen; complete
+G0 reconciliation and remaining gameplay designs before final F/R acceptance.

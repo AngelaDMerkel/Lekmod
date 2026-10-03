@@ -110,3 +110,26 @@ clean product source `aff628c29916fe714eba203e1925c35cd99d977b`; GameCore
 Independent evidence: `build/macos/global-policy-corrected-preservation-20261003.json`.
 Native capital transfer, remaining configured consumers and final G0/F/R gates
 remain separate work.
+
+## Real capital-transfer boundary
+
+`20261003T025118Z` passed six global-capture assertions and exact replay. An
+actual AI2/team0 GDR attack captured human0/team7's original capital while its
+second city kept the human alive. The surviving Welsh capital received its
+capital-only marker and retained Economic Union. The captured noncapital had
+no foreign or capital-only markers; Timurids kept Ulug in its own capital, and
+the Mongol teammate's city-marker state stayed exact. One further ordinary round
+preserved the results. No city damage, owner or reward was assigned.
+
+That full six-stage process passed36assertions/six exact replays in426.6seconds
+with16aggregate ordinary turns, normal exit0, no Lua/synchronization/new crash
+diagnostics, all12closed source/copy checkpoint identities and998baseline files
+verified. Stock was restored. It also refreshes the Vatican cases described in
+[their report](macos-vatican-validation.md). Evidence:
+`build/macos/capture-vatican-preservation-20261003.json`.
+
+The twelve global assignment rows are now mapped using the common predicate
+loop, all-row actual-Lua checks and these native representative/owner/transition
+checks. Ukraine/Wheel and Colombia/Chemistry remain isolated parameter coverage
+through that same implementation, not native civilization-specific runs. Each
+dummy building's numerical effects remain separately in scope.

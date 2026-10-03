@@ -189,3 +189,25 @@ source/copy hash equality were independently checked. Final stock/backups,
 no game process remained. Full paths/hashes:
 `build/macos/upgrade-faith-validation-20260926.json`.
 This does not cover every upgrade/purchase/owner variant or resolve startup255.
+
+## Current-package combined regression (October 3)
+
+`20261003T025118Z` passed all five Vatican stages and exact replays in one
+process alongside the new global capital-capture boundary. The entire session
+passed36assertions/six replays in426.6seconds/16aggregate turns, normal exit0,
+no Lua/synchronization/new crash diagnostics and full998-file preservation.
+All12checkpoint writers were closed and original/copy hashes verified.
+
+The original quantified St Peter's pressure/delegate/settlement, both Courthouse
+capture/conversion/annex paths,14Great Person builds/seven paired yield comparisons
+and capped military-kill faith/civilian controls passed again. The previous mixed
+commissioning reports retain their original failures; this new completed batch
+supplies current strict save evidence without retroactively adding metadata.
+
+Package `build/macos/Lekmod-global-teams-fixed-20261003.zip`, SHA-256
+`7325b13ec0873c055c38d4a8711a21478a11c4f930354299017f2d725d74e746`,
+GameCore `c8f1723c7588fdf54465781ebbca9d8de009e3e11c76ba6375b5200fd9687aa2`,
+clean product source `aff628c2`. Native reports/checkpoints are under
+`build/macos/playtests/20261003T025118Z/`; independent preservation is
+`build/macos/capture-vatican-preservation-20261003.json`. These are scripted
+actions/native outcomes, not new physical mouse coverage or full acceptance.
