@@ -161,6 +161,7 @@ FUNCTIONAL_ITEMS = {"script-data", "science-overflow", "unit-position-flags", "c
                     "production-unit", "production-building", "production-wonder", "production-process"}
 PRODUCTION_COMPLETION_ITEMS = {"production-completion-unit", "production-completion-building"}
 SCENARIO_ITEMS = {
+    "mongol-horses": {'mongol-active-rule', 'mongol-claim-and-food', 'mongol-new-city-after-tech', 'mongol-repeat-tech', 'mongol-protected-plots', 'mongol-no-tech-control', 'mongol-all-city-grants'},
     "sanctified-national-purchases": {'sanctified-city-count-price', 'sanctified-native-enhancement', 'sanctified-repeat-rejected', 'sanctified-foreign-owner-price', 'sanctified-no-belief-control', 'sanctified-native-purchase', 'sanctified-budget-boundary', 'sanctified-one-city-price', 'sanctified-city-religion-control', 'sanctified-configured-row'},
     "first-purchase-discount": {'first-discount-all-quotes', 'first-discount-first-debit', 'first-discount-owner-reset', 'first-discount-city-scope', 'first-discount-reset-debit', 'first-discount-spent-save', 'first-discount-shared-counter', 'first-discount-second-debit', 'first-discount-baseline', 'first-discount-project-disabled'},
     "purchase-policy-discounts": {'purchase-policy-baseline', 'purchase-policy-price-effects', 'purchase-policy-second-debit', 'purchase-policy-exclusions', 'purchase-policy-adopted', 'purchase-policy-foreign-control', 'purchase-policy-save-state', 'purchase-policy-first-debit', 'purchase-policy-choice-history'},
