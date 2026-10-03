@@ -445,3 +445,29 @@ failures and later source applicability obligations remain separate.
 The register now has67 cases:65 scoped passes/retained and two ready cases.
 There remain1,254 untriaged surfaces and121 document rows; G0 is still open.
 No live installation or native run occurred during this locked-desktop review.
+
+## Consulates ownership reproducer
+
+Source review found two concerns in the unchanged Consulates policy Lua: the
+first adoption removes the shared adoption listener, and the era callback treats
+a team ID as a player ID. The native `CvTeam::setCurrentEra` hook supplies a team
+ID. Executing the actual unchanged Lua with that contract produces five failures
+in ten isolated cases, including reversed adoption order and unrelated/shared
+teams. These are source-level reproductions, not native gameplay confirmation.
+The raw output is retained in
+`build/macos/consulates-source-reproducer-20261002.log`.
+
+`POL-CONSULATES-OWNER-ADOPTION` adds two native single-player orderings to the
+combined cache/reward plan. Each supplies research, prerequisites and one free
+policy choice, then uses the normal human command or actual AI owner turn to
+adopt Consulates. Each Industrial adoption should grant two policy delegates
+(native base one plus era one); subsequent Modern research should add one.
+Failed counters are recorded without assigning a replacement result, allowing
+authentic affected saves to be retained. Team-ID mismatch currently has only
+isolated coverage. Product code remains unchanged pending native confirmation.
+
+The combined plan now declares82 assertions/nine exact replays, a12-turn
+aggregate cap and40-minute ceiling. The register contains68 cases:25 passed,
+40 covered by retained evidence and three ready. There remain1,252 untriaged
+surfaces and121 pending document rows. These are review counts, not an overall
+completion percentage; G0 and final F/R acceptance remain open.

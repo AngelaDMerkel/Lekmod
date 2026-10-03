@@ -7196,7 +7196,7 @@
       "implementation_references": [
         {
           "path": "LEKMOD_DLL/macos/batch-plans/cache-and-reward-regression.json",
-          "sha256": "dd98f3f78dcee75fa63334d4aa1057191c7f21a45f137b4034f3a40f76552e54"
+          "sha256": "558dc4dfad54a4623a8ce9392b7f7416c895c77ba27c7f4138cf9fc1a5e69227"
         },
         {
           "path": "LEKMOD_DLL/macos/playtest-scenario-array-cache.lua",
@@ -9540,7 +9540,7 @@
       "implementation_references": [
         {
           "path": "LEKMOD_DLL/macos/batch-plans/cache-and-reward-regression.json",
-          "sha256": "dd98f3f78dcee75fa63334d4aa1057191c7f21a45f137b4034f3a40f76552e54"
+          "sha256": "558dc4dfad54a4623a8ce9392b7f7416c895c77ba27c7f4138cf9fc1a5e69227"
         },
         {
           "path": "LEKMOD_DLL/macos/playtest-scenario-philippines-founding.lua",
@@ -9550,6 +9550,94 @@
       "implementation_limits": [
         "Historical090810positive native run passed but has no matching exact replay; it is not silently upgraded to complete evidence.",
         "Lost-city lifetime behavior is independently covered by LIFE-PHILIPPINES-LOST-CITY-QUOTA."
+      ]
+    },
+    {
+      "id": "POL-CONSULATES-OWNER-ADOPTION",
+      "group": "G6",
+      "title": "Consulates native adoption rewards for both owners/orderings",
+      "status": "ready",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Lekmod_policies.lua",
+          "sha256": "6ddf7d3eed0666c799b24e3cf43d2d68d9cd5f686ed7bc96c5b545855b9dfbf1"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTeam.cpp",
+          "sha256": "49d6fdd96e4e9e602b2426ac629d16a9a7fa8d453ba7989bc3e49fab1a9d17d0"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPlayer.cpp",
+          "sha256": "31dd845837800229e4c4e2708e471996f03858f722b8cbf14bdfa2a8ed67c788"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/Lua/CvLuaPlayer.cpp",
+          "sha256": "656556092485bafc70f6b71cdfe07ad2263d2d91d64ec6936dfddd92d6898a0f"
+        },
+        {
+          "path": "LEKMOD/Override/CIV5Units_Mongol.xml",
+          "sha256": "5d1fd2eb11435696985a2c73dfdb7007ca11848c50720e05ab990e2837a51ed1"
+        }
+      ],
+      "owners": [
+        "human0",
+        "AI1 on separate single-player team"
+      ],
+      "expected_result": "In either adoption order, each legal Industrial Consulates adoption grants2 policy delegates: native base1 plus one post-Renaissance era. Each subsequent native Modern transition adds1, and already-owned/known policy/research do not repeat awards. Exact counter/policy/era/free-choice state must replay after a passing run.",
+      "units": "policy delegate counter, not physical Congress vote-casting UI",
+      "supplied_inputs": [
+        "preserved Ancient Roman fixture",
+        "research to Industrial then Modern",
+        "Patronage prerequisites/opener and one free choice per owner"
+      ],
+      "actual_trigger": "Human Network.SendUpdatePolicies and real-AI-turn DoAdoptPolicy, followed by native research/TeamSetEra; no delegate/event/turn state assigned.",
+      "negative_controls": [
+        "two ownership orderings",
+        "other owner not yet adopted",
+        "already owned policy ineligible",
+        "already known research no repeat"
+      ],
+      "transitions": [
+        "human and AI legal adoption",
+        "real era advancement",
+        "exact checkpoint replay"
+      ],
+      "persistence_requirement": "Passing state must exactly replay; failed counter state must be preserved for a later repair test if native failure is confirmed.",
+      "required_evidence_level": [
+        "scripted-command",
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260918T065530Z/Lekmod-Functional-20260918T065530Z.Civ5Save",
+          "sha256": "574511e03f58fc064d98b15fa57b4acf24072fdbfe434ec62db2230a6e7f0e3d"
+        }
+      ],
+      "batch": "LEKMOD_DLL/macos/batch-plans/cache-and-reward-regression.json",
+      "stage": [
+        "consulates-human-first",
+        "consulates-ai-first"
+      ],
+      "evidence": [],
+      "surface_ids": [
+        "lua:Lua/Lekmod_policies.lua:GameEvents.PlayerAdoptPolicy:Lekmod_OnAdoptConsulates",
+        "lua:Lua/Lekmod_policies.lua:GameEvents.TeamSetEra:Lekmod_OnEraChangeGiveConsulatesVote"
+      ],
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/batch-plans/cache-and-reward-regression.json",
+          "sha256": "558dc4dfad54a4623a8ce9392b7f7416c895c77ba27c7f4138cf9fc1a5e69227"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-consulates-owners.lua",
+          "sha256": "7b737ea4e00485e53bdfb5c2edcaff649571e5c04009a119d0c9e22665fdc63b"
+        }
+      ],
+      "implementation_limits": [
+        "Unmodified actual Lua currently fails5/10 isolated cases; native baseline is still required before a product fix.",
+        "Nonmatching player/team IDs and multi-owner teams are isolated callback evidence at this point, not native team-game coverage.",
+        "A repaired old-save case must be added after retaining an authentic native failure; do not reset policy-vote counters to manufacture a pass."
       ]
     }
   ],
@@ -20535,14 +20623,64 @@
     {
       "id": "lua:Lua/Lekmod_policies.lua:GameEvents.PlayerAdoptPolicy:Lekmod_OnAdoptConsulates",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "POL-CONSULATES-OWNER-ADOPTION"
+      ],
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Lekmod_policies.lua",
+          "sha256": "6ddf7d3eed0666c799b24e3cf43d2d68d9cd5f686ed7bc96c5b545855b9dfbf1"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTeam.cpp",
+          "sha256": "49d6fdd96e4e9e602b2426ac629d16a9a7fa8d453ba7989bc3e49fab1a9d17d0"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPlayer.cpp",
+          "sha256": "31dd845837800229e4c4e2708e471996f03858f722b8cbf14bdfa2a8ed67c788"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/Lua/CvLuaPlayer.cpp",
+          "sha256": "656556092485bafc70f6b71cdfe07ad2263d2d91d64ec6936dfddd92d6898a0f"
+        },
+        {
+          "path": "LEKMOD/Override/CIV5Units_Mongol.xml",
+          "sha256": "5d1fd2eb11435696985a2c73dfdb7007ca11848c50720e05ab990e2837a51ed1"
+        }
+      ],
+      "reason": "Source review and actual-Lua reproducer show lost later-owner adoption backfill and team/player routing concerns. The native two-order reproducer is fully prepared but not passed. Nonmatching-team and save-repair obligations remain explicit."
     },
     {
       "id": "lua:Lua/Lekmod_policies.lua:GameEvents.TeamSetEra:Lekmod_OnEraChangeGiveConsulatesVote",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "POL-CONSULATES-OWNER-ADOPTION"
+      ],
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Lekmod_policies.lua",
+          "sha256": "6ddf7d3eed0666c799b24e3cf43d2d68d9cd5f686ed7bc96c5b545855b9dfbf1"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTeam.cpp",
+          "sha256": "49d6fdd96e4e9e602b2426ac629d16a9a7fa8d453ba7989bc3e49fab1a9d17d0"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPlayer.cpp",
+          "sha256": "31dd845837800229e4c4e2708e471996f03858f722b8cbf14bdfa2a8ed67c788"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/Lua/CvLuaPlayer.cpp",
+          "sha256": "656556092485bafc70f6b71cdfe07ad2263d2d91d64ec6936dfddd92d6898a0f"
+        },
+        {
+          "path": "LEKMOD/Override/CIV5Units_Mongol.xml",
+          "sha256": "5d1fd2eb11435696985a2c73dfdb7007ca11848c50720e05ab990e2837a51ed1"
+        }
+      ],
+      "reason": "Source review and actual-Lua reproducer show lost later-owner adoption backfill and team/player routing concerns. The native two-order reproducer is fully prepared but not passed. Nonmatching-team and save-repair obligations remain explicit."
     },
     {
       "id": "lua:Lua/Lekmod_improvements.lua:GameEvents.BuildFinished:improvement_adjacent_bonus",
@@ -28910,6 +29048,45 @@
       ],
       "finding": "Exactly five conflicting owner/flavor cells are present verbatim in the shipped XML. The loader assigns each query row, so last returned value wins; the query has no ORDER BY. Offline reversed unordered queries change all five winners.",
       "next_action": "Measure actual native cached values and native query ordering on the pinned host, retain original source values, and review applicability/intent before accepting or changing these five arrays. The offline normal winners are not a native pass or an inferred balancing specification."
+    },
+    {
+      "id": "SC-CONSULATES-EVENT-OWNERS",
+      "classification": "isolated-handler-failure-native-reproducer-ready",
+      "case_id": "POL-CONSULATES-OWNER-ADOPTION",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Lekmod_policies.lua",
+          "sha256": "6ddf7d3eed0666c799b24e3cf43d2d68d9cd5f686ed7bc96c5b545855b9dfbf1"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTeam.cpp",
+          "sha256": "49d6fdd96e4e9e602b2426ac629d16a9a7fa8d453ba7989bc3e49fab1a9d17d0"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPlayer.cpp",
+          "sha256": "31dd845837800229e4c4e2708e471996f03858f722b8cbf14bdfa2a8ed67c788"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/Lua/CvLuaPlayer.cpp",
+          "sha256": "656556092485bafc70f6b71cdfe07ad2263d2d91d64ec6936dfddd92d6898a0f"
+        },
+        {
+          "path": "LEKMOD/Override/CIV5Units_Mongol.xml",
+          "sha256": "5d1fd2eb11435696985a2c73dfdb7007ca11848c50720e05ab990e2837a51ed1"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "build/macos/consulates-source-reproducer-20261002.log",
+          "sha256": "f1238df76354345c6025df2bb25a819a1212db5b3d2b88f7d83668c34a51de29"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/test-consulates-events.py",
+          "sha256": "4d06ca6f300c4638783f77f3002d58fab64c7ca449b88ef988ae37684bd09acd"
+        }
+      ],
+      "finding": "Actual unmodified Lua fails5of10 cases: listener removal loses second-owner backfill; TeamSetEra passes team ID but handler indexes Players directly, missing matching owners and potentially rewarding an unrelated player.",
+      "next_action": "Run both normal single-player adoption orderings on the preserved unmodified package, retain failure saves, then fix confirmed native behavior and verify owner/team/replay controls. No product change yet."
     }
   ],
   "dependency_review": [
@@ -29007,18 +29184,18 @@
     }
   ],
   "summary": {
-    "designed_cases": 67,
+    "designed_cases": 68,
     "case_statuses": {
       "passed": 25,
       "covered-by-evidence": 40,
-      "ready": 2
+      "ready": 3
     },
     "review_surfaces": 1340,
     "pending_document_rows": 121,
     "final_case_denominator_frozen": false,
     "surface_statuses": {
-      "untriaged": 1254,
-      "mapped": 66,
+      "untriaged": 1252,
+      "mapped": 68,
       "presentation-only": 19,
       "out-of-scope": 1
     },
