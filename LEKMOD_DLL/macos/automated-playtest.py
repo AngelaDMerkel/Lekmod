@@ -161,6 +161,8 @@ FUNCTIONAL_ITEMS = {"script-data", "science-overflow", "unit-position-flags", "c
                     "production-unit", "production-building", "production-wonder", "production-process"}
 PRODUCTION_COMPLETION_ITEMS = {"production-completion-unit", "production-completion-building"}
 SCENARIO_ITEMS = {
+    "minor-influence-recovery": {'influence-load-protected-state', 'influence-load-corrected-rate', 'influence-load-stability', 'influence-load-natural-recovery'},
+    "minor-influence-anchor": {'influence-repeated-boundary', 'influence-input-guards', 'influence-anchor-clamp', 'influence-far-decay', 'influence-below-recovery', 'influence-native-quotes'},
     "free-building-grants": {'free-grant-positive', 'free-grant-next-turn', 'free-grant-data', 'free-grant-transition', 'free-grant-controls', 'free-grant-nonstack', 'free-grant-initial'},
     "religious-attrition": {'attrition-fourth-turn-boundary', 'attrition-border-state', 'attrition-territory-controls', 'attrition-native-death', 'attrition-fixture-and-data', 'attrition-initial-strengths', 'attrition-base-strength-loss'},
     'religion-strength-retention': {'prophet-preview-holy-retention', 'retention-inquisitor-outcome', 'retention-foreign-native-spread', 'prophet-strength-owner-controls', 'retention-inquisitor-boundaries', 'prophet-native-pressure', 'religion-strength-inputs'},

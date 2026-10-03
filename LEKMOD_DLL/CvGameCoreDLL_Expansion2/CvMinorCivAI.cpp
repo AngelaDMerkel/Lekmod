@@ -5928,7 +5928,12 @@ void CvMinorCivAI::DoFriendship()
 			int iChangeThisTurn = GetFriendshipChangePerTurnTimes100(ePlayer);
 			int iFriendshipAnchor = GetFriendshipAnchorWithMajor(ePlayer);
 			int iNewFriendship = iOldFriendship + (iChangeThisTurn / 100);
-			if(iOldFriendship >= iFriendshipAnchor && iNewFriendship < iFriendshipAnchor)
+			// Compare the stored precision before clamping. Whole-point truncation
+			// can otherwise turn 21.00 - 1.25 into 19.75 below an anchor of 20.
+			const int iOldFriendshipTimes100 = GetBaseFriendshipWithMajorTimes100(ePlayer);
+			const int iAnchorTimes100 = iFriendshipAnchor * 100;
+			if(iOldFriendshipTimes100 >= iAnchorTimes100 &&
+			        iOldFriendshipTimes100 + iChangeThisTurn < iAnchorTimes100)
 			{
 				// If we are at or above anchor, don't let the decay dip us below it
 				SetFriendshipWithMajor(ePlayer, iFriendshipAnchor);
@@ -6050,13 +6055,15 @@ int CvMinorCivAI::GetFriendshipChangePerTurnTimes100(PlayerTypes ePlayer)
 #endif
 
 	// Relation to anchor point?
-	int iBaseFriendship = GetBaseFriendshipWithMajor(ePlayer);
-	int iFriendshipAnchor = GetFriendshipAnchorWithMajor(ePlayer);
-	if (iBaseFriendship == iFriendshipAnchor)
+	// Saved fractional values must continue toward the anchor, including
+	// values left just below it by an older whole-point comparison.
+	const int iBaseFriendshipTimes100 = GetBaseFriendshipWithMajorTimes100(ePlayer);
+	const int iFriendshipAnchorTimes100 = GetFriendshipAnchorWithMajor(ePlayer) * 100;
+	if (iBaseFriendshipTimes100 == iFriendshipAnchorTimes100)
 	{
 		// Change rate is 0
 	}
-	else if (iBaseFriendship > iFriendshipAnchor)
+	else if (iBaseFriendshipTimes100 > iFriendshipAnchorTimes100)
 	{
 #ifdef LEKMOD_MINOR_CIV_PERSONALITIES
 		if(pkPersonalityInfo && pkPersonalityInfo->GetFriendshipDropPerTurn() != 0)
