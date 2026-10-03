@@ -23,6 +23,7 @@ def main():
     p.add_argument('--allow-duplicate-civilizations',action='store_true',help='explicit custom ownership fixture only; catalogue uniqueness remains required')
     p.add_argument('--map-script',choices=('Continents.lua','Pangaea.lua','Archipelago.lua','Fractal.lua','SmallContinents.lua','Lakes.lua','InlandSea.lua'),help='normal map selection for a custom fixture roster')
     p.add_argument('--game-speed',choices=('GAMESPEED_ONLINE','GAMESPEED_QUICK','GAMESPEED_STANDARD','GAMESPEED_EPIC','GAMESPEED_MARATHON'),help='normal speed selection for an explicit single-player fixture roster')
+    p.add_argument('--game-option',action='append',type=runner.parse_game_option,default=[],help='explicit reviewed setup option for a custom roster, GAMEOPTION_TYPE=0|1')
     p.add_argument('--teams',help='comma-separated team IDs for exactly one explicit single-player roster; no extra humans')
     p.add_argument('--minutes',type=int,default=45)
     p.add_argument('--preflight-only',action='store_true')
@@ -39,6 +40,9 @@ def main():
     if a.map_script:plan={**plan,'map':a.map_script}
     if a.game_speed and not a.roster:p.error('--game-speed requires an explicit --roster; catalogue speed stays fixed')
     if a.game_speed:plan={**plan,'speed':a.game_speed}
+    if a.game_option and not a.roster:p.error('--game-option requires an explicit --roster; catalogue options stay fixed')
+    if len(dict(a.game_option))!=len(a.game_option):p.error('Specify each game option once')
+    game_options={'GAMEOPTION_NO_BARBARIANS':1,'GAMEOPTION_NO_GOODY_HUTS':1,**dict(a.game_option)}
     if a.allow_duplicate_civilizations and not a.roster:p.error('--allow-duplicate-civilizations requires an explicit --roster')
     if a.roster:
         known=set(flat);rosters=[row.split(',')for row in a.roster]
@@ -68,7 +72,7 @@ def main():
     sys.path.insert(0,str(a.installer.parent));import civ5_gamecore
     if civ5_gamecore.ProductManager(runner.APP,runner.DATA).status().get('product')!='stock':p.error('Matrix requires stock initially')
     stamp=datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ');out=ROOT/'build/macos/civilization-matrices'/stamp;out.mkdir(parents=True)
-    result={'started_utc':stamp,'package_sha256':a.sha256,'selected_groups':selected,'requested_rosters':plan['groups'],'custom_rosters':bool(a.roster),'requested_teams':teams,'duplicate_civilizations_allowed':a.allow_duplicate_civilizations,'groups':[],'passed':False}
+    result={'started_utc':stamp,'package_sha256':a.sha256,'selected_groups':selected,'requested_rosters':plan['groups'],'custom_rosters':bool(a.roster),'requested_teams':teams,'requested_game_options':game_options,'duplicate_civilizations_allowed':a.allow_duplicate_civilizations,'groups':[],'passed':False}
     replays={'schema':1,'name':'civilization-start-state-replays','stages':[]}
     installed=False;deadline=time.monotonic()+60*a.minutes
     try:
@@ -78,7 +82,8 @@ def main():
             remaining=int(deadline-time.monotonic())
             if remaining<180:result['stop_reason']='matrix wall-clock budget before next launch';break
             group=plan['groups'][number-1];old=set((ROOT/'build/macos/playtests').iterdir())
-            cmd=[sys.executable,str(PORT/'automated-playtest.py'),'--mode','single-player-smoke','--turns','3','--timeout',str(min(600,remaining)),'--stall-seconds','180','--scenario','civilization-start','--scenario-turns','3','--save-and-exit','--majors',str(len(group)),'--minors','0','--world-size',plan['world'],'--map-script',plan['map'],'--start-era',plan['era'],'--game-speed',plan['speed'],'--handicap',plan['human_handicap'],'--civilization',group[0],'--game-option','GAMEOPTION_NO_BARBARIANS=1','--game-option','GAMEOPTION_NO_GOODY_HUTS=1']
+            cmd=[sys.executable,str(PORT/'automated-playtest.py'),'--mode','single-player-smoke','--turns','3','--timeout',str(min(600,remaining)),'--stall-seconds','180','--scenario','civilization-start','--scenario-turns','3','--save-and-exit','--majors',str(len(group)),'--minors','0','--world-size',plan['world'],'--map-script',plan['map'],'--start-era',plan['era'],'--game-speed',plan['speed'],'--handicap',plan['human_handicap'],'--civilization',group[0]]
+            for name,value in sorted(game_options.items()):cmd+=['--game-option',name+'='+str(value)]
             for slot,team in sorted(teams.items()):cmd+=['--slot-team',str(slot)+'='+str(team)]
             if a.trace_loaded_libraries:cmd+=['--trace-loaded-libraries']
             for slot,civ in enumerate(group[1:],1):cmd+=['--slot-civilization',str(slot)+'='+civ]
