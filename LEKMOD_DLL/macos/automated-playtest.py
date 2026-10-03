@@ -161,6 +161,8 @@ FUNCTIONAL_ITEMS = {"script-data", "science-overflow", "unit-position-flags", "c
                     "production-unit", "production-building", "production-wonder", "production-process"}
 PRODUCTION_COMPLETION_ITEMS = {"production-completion-unit", "production-completion-building"}
 SCENARIO_ITEMS = {
+    'uae-route-guards': {'uae-guard-repeat', 'uae-guard-civilian-control', 'uae-guard-real-movement', 'uae-guard-removal', 'uae-guard-route-created', 'uae-guard-gold', 'uae-guard-experience', 'uae-guard-offroute-control', 'uae-guard-save-state'},
+    'uae-improvement-pillage': {'uae-pillage-xp', 'uae-pillage-own-rejection', 'uae-pillage-repeat-rejection', 'uae-pillage-peace-rejection', 'uae-pillage-save-state', 'uae-pillage-ordinary-unit', 'uae-native-improvement-pillage', 'uae-pillage-movement'},
     'bolivia-capital-events': {'bolivia-native-capital-loss', 'bolivia-happiness-restored', 'bolivia-next-owner-turn', 'bolivia-native-founding', 'bolivia-relocated-food-marker', 'bolivia-unhappy-strength-floor', 'bolivia-native-writer-history', 'bolivia-foreign-marker-control', 'bolivia-happiness-removal', 'bolivia-happiness-rise'},
     'mughal-city-events': {'mughal-native-founding', 'mughal-second-contributor', 'mughal-foreign-holy-cleanup', 'mughal-native-city-loss', 'mughal-last-contributor-cleanup', 'mughal-retained-holy-benefit', 'mughal-following-owner-turn', 'mughal-native-owner-turn'},
     'uae-wonder-rewards': {'uae-wonder-save-state', 'uae-foreign-wonder-control', 'uae-nonwonder-control', 'uae-second-wonder-stack', 'uae-first-wonder-reward', 'uae-native-production-events'},
