@@ -56,6 +56,28 @@ function LekmodScenarioGrantTech(player, techType, visited)
     visited[techType]=nil
 end
 
+-- Preserve native ideology awards and their lifetime accounting. Discarding
+-- unspent tenets leaves GetNumFreePoliciesEver unchanged and can make the
+-- policy-cost exponent receive a negative policy count.
+function LekmodScenarioPolicyChoice(player, policy)
+    assert(player:GetNextPolicyCost()>0,"fixture has a nonpositive policy cost; stop before adoption")
+    local tenet=(GameInfo.Policies[policy].Level or 0)>0
+    if not(tenet and player:GetNumFreeTenets()>0)and player:GetNumFreePolicies()==0 then
+        player:SetNumFreePolicies(1)
+        LekmodScenarioEvent("fixture-setup",{operation="provided-one-policy-choice",owner=player:GetID(),policy=policy})
+    end
+    assert(player:CanAdoptPolicy(policy),"prepared target policy is not eligible")
+    return {free=player:GetNumFreePolicies(),tenets=player:GetNumFreeTenets(),culture=player:GetJONSCulture(),cost=player:GetNextPolicyCost()}
+end
+
+function LekmodScenarioVerifyPolicyChoice(player, policy, before)
+    local useTenet=(GameInfo.Policies[policy].Level or 0)>0 and before.tenets>0
+    assert(player:HasPolicy(policy)and not player:CanAdoptPolicy(policy),"target policy was not adopted exactly once")
+    assert(player:GetNumFreeTenets()==before.tenets-(useTenet and 1 or 0)and player:GetNumFreePolicies()==before.free-(useTenet and 0 or 1),"native choice debit differs")
+    assert(player:GetJONSCulture()==before.culture,"free choice unexpectedly changed culture")
+    assert(player:GetNextPolicyCost()>0,"native adoption left a nonpositive policy cost")
+end
+
 function LekmodScenarioStart()
     local ready, stopped, started, elapsed, startTurn = false, false, false, 0, nil
     local turnLimit=__TEST_SCENARIO_TURN_LIMIT__ or 0

@@ -13,16 +13,16 @@
   },
   "discovery": {
     "report": {
-      "path": "build/macos/acceptance-g0-20260926/discovery-consulates-fixed.json",
-      "sha256": "006b5a0216c66e10c401b7e7ff63c836fd00c055799558087f492eafe9ed507b"
+      "path": "build/macos/acceptance-g0-20260926/discovery-global-teams-fixed.json",
+      "sha256": "5fb1c3d55700e06f4a441bd07dd4af7abced52f6bd952f9cb507399438a1c77c"
     },
     "parameters": {
-      "path": "build/macos/acceptance-g0-20260926/parameters-consulates-fixed.json",
+      "path": "build/macos/acceptance-g0-20260926/parameters-global-teams-fixed.json",
       "sha256": "3788cd3b427c0bdc05841d60f5d3902a7debea45cbd781640df63903635e725e"
     },
     "summary": {
       "candidate_kinds": {
-        "lua-listener": 100,
+        "lua-listener": 101,
         "scalar-field": 938,
         "table": 303
       },
@@ -33,7 +33,7 @@
         "G4": 277,
         "G5": 148,
         "G6": 239,
-        "G7": 425
+        "G7": 426
       },
       "table_dispositions": {
         "empty-table-no-configured-rows": 75,
@@ -9842,7 +9842,7 @@
       "id": "POL-COMBAT-CLASS-PROMOTIONS",
       "group": "G6",
       "title": "Policy adoption and creation promotions for all four configured combat classes",
-      "status": "passed",
+      "status": "ready",
       "source_references": [
         {
           "path": "LEKMOD/Lua/Lekmod_policies.lua",
@@ -9903,7 +9903,7 @@
           "sha256": "574511e03f58fc064d98b15fa57b4acf24072fdbfe434ec62db2230a6e7f0e3d"
         }
       ],
-      "batch": "LEKMOD_DLL/macos/batch-plans/policy-effects.json",
+      "batch": "LEKMOD_DLL/macos/batch-plans/global-team-fixed-regression.json",
       "stage": [
         "promotion-both-owners"
       ],
@@ -9928,20 +9928,29 @@
       ],
       "implementation_references": [
         {
-          "path": "LEKMOD_DLL/macos/batch-plans/policy-effects.json",
-          "sha256": "b5643a33600fc03c1ec3a69986706331cc050e3895e0f809427a48485a1787dc"
+          "path": "LEKMOD_DLL/macos/playtest-scenario-policy-promotions.lua",
+          "sha256": "e481305afa5acddf09deb2a0784f3e4483dd6b718f2ece957875264066678b94"
         },
         {
-          "path": "LEKMOD_DLL/macos/playtest-scenario-policy-promotions.lua",
-          "sha256": "149fc387c5e639b1634a5d44873a4ef42e39bd2ee82c8eb980cb602f76016c71"
+          "path": "LEKMOD_DLL/macos/playtest-scenario-core.lua",
+          "sha256": "e49f668ad97a7a1bb14605530bd46d162db7ec05f3c093beff566288f26cc061"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/batch-plans/global-team-fixed-regression.json",
+          "sha256": "f79c309ca155c7c4dab8717a68d8000641c8e2ca6ba109f13d6adaf2578ffa6a"
         }
       ],
       "implementation_limits": [
+        "Policy fixture review: previous direct clearing of native awarded tenets could leave lifetime policy accounting inconsistent. Preserve old outputs, rerun corrected helper with available-choice accounting and positive next-policy-cost checks. Colonialism has no ideology award to discard, but its strengthened snapshot/helper will also be reverified.",
+        "native modifier queries are not actual battle damage comparisons",
+        "policy free Foreign Legions, upkeep and production bonuses are separate effects"
+      ],
+      "remaining_scope": [
         "Native isolated stage/replay passed in20261003T011152Z; whole batch remains failed for reviewed unrelated Colonialism oracle error.",
         "native modifier queries are not actual battle damage comparisons",
         "policy free Foreign Legions, upkeep and production bonuses are separate effects"
       ],
-      "evidence_contract": {
+      "historical_evidence_contract_before_fixture_review": {
         "kind": "native-batch-stages",
         "stages": [
           {
@@ -9969,18 +9978,13 @@
             ]
           }
         ]
-      },
-      "remaining_scope": [
-        "Native isolated stage/replay passed in20261003T011152Z; whole batch remains failed for reviewed unrelated Colonialism oracle error.",
-        "native modifier queries are not actual battle damage comparisons",
-        "policy free Foreign Legions, upkeep and production bonuses are separate effects"
-      ]
+      }
     },
     {
       "id": "POL-RESETTLEMENT-FOUNDING",
       "group": "G6",
       "title": "Resettlement founding buildings, replacement lookup, population and territory",
-      "status": "passed",
+      "status": "ready",
       "source_references": [
         {
           "path": "LEKMOD/Lua/Lekmod_policies.lua",
@@ -10045,7 +10049,7 @@
           "sha256": "903a1a869d99c11a2e7079995bbf0293b321035d2d1803a2912da05face90f1d"
         }
       ],
-      "batch": "LEKMOD_DLL/macos/batch-plans/policy-effects.json",
+      "batch": "LEKMOD_DLL/macos/batch-plans/global-team-fixed-regression.json",
       "stage": [
         "resettlement-rome",
         "resettlement-akkad"
@@ -10071,20 +10075,29 @@
       ],
       "implementation_references": [
         {
-          "path": "LEKMOD_DLL/macos/batch-plans/policy-effects.json",
-          "sha256": "b5643a33600fc03c1ec3a69986706331cc050e3895e0f809427a48485a1787dc"
+          "path": "LEKMOD_DLL/macos/playtest-scenario-policy-founding.lua",
+          "sha256": "0adad068e626ba1dd091540d1dd9e7451f0a875c13ab44b73e4391078ff437eb"
         },
         {
-          "path": "LEKMOD_DLL/macos/playtest-scenario-policy-founding.lua",
-          "sha256": "e95f4bd975f64ddf3da88c2b592fb6d9c3684469e781e525d652c1e0bdcefc11"
+          "path": "LEKMOD_DLL/macos/playtest-scenario-core.lua",
+          "sha256": "e49f668ad97a7a1bb14605530bd46d162db7ec05f3c093beff566288f26cc061"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/batch-plans/global-team-fixed-regression.json",
+          "sha256": "f79c309ca155c7c4dab8717a68d8000641c8e2ca6ba109f13d6adaf2578ffa6a"
         }
       ],
       "implementation_limits": [
+        "Policy fixture review: previous direct clearing of native awarded tenets could leave lifetime policy accounting inconsistent. Preserve old outputs, rerun corrected helper with available-choice accounting and positive next-policy-cost checks. Colonialism has no ideology award to discard, but its strengthened snapshot/helper will also be reverified.",
+        "Akkad is the native unique-class representative; other replacement lookup parameters require shared-path applicability review",
+        "crowded or unavailable extra-territory selection is not covered by the deliberately clear-radius fixture"
+      ],
+      "remaining_scope": [
         "Native isolated stage/replay passed in20261003T011152Z; whole batch remains failed for reviewed unrelated Colonialism oracle error.",
         "Akkad is the native unique-class representative; other replacement lookup parameters require shared-path applicability review",
         "crowded or unavailable extra-territory selection is not covered by the deliberately clear-radius fixture"
       ],
-      "evidence_contract": {
+      "historical_evidence_contract_before_fixture_review": {
         "kind": "native-batch-stages",
         "stages": [
           {
@@ -10136,18 +10149,13 @@
             ]
           }
         ]
-      },
-      "remaining_scope": [
-        "Native isolated stage/replay passed in20261003T011152Z; whole batch remains failed for reviewed unrelated Colonialism oracle error.",
-        "Akkad is the native unique-class representative; other replacement lookup parameters require shared-path applicability review",
-        "crowded or unavailable extra-territory selection is not covered by the deliberately clear-radius fixture"
-      ]
+      }
     },
     {
       "id": "POL-COLONIALISM-FOUNDING",
       "group": "G6",
       "title": "Colonialism founding population, territory, Worker and happiness",
-      "status": "passed",
+      "status": "ready",
       "source_references": [
         {
           "path": "LEKMOD/Lua/Lekmod_policies.lua",
@@ -10212,7 +10220,7 @@
           "sha256": "574511e03f58fc064d98b15fa57b4acf24072fdbfe434ec62db2230a6e7f0e3d"
         }
       ],
-      "batch": "LEKMOD_DLL/macos/batch-plans/policy-effects.json",
+      "batch": "LEKMOD_DLL/macos/batch-plans/global-team-fixed-regression.json",
       "stage": [
         "colonialism-rome"
       ],
@@ -10245,20 +10253,29 @@
       ],
       "implementation_references": [
         {
-          "path": "LEKMOD_DLL/macos/batch-plans/policy-effects.json",
-          "sha256": "b5643a33600fc03c1ec3a69986706331cc050e3895e0f809427a48485a1787dc"
+          "path": "LEKMOD_DLL/macos/playtest-scenario-policy-founding.lua",
+          "sha256": "0adad068e626ba1dd091540d1dd9e7451f0a875c13ab44b73e4391078ff437eb"
         },
         {
-          "path": "LEKMOD_DLL/macos/playtest-scenario-policy-founding.lua",
-          "sha256": "e95f4bd975f64ddf3da88c2b592fb6d9c3684469e781e525d652c1e0bdcefc11"
+          "path": "LEKMOD_DLL/macos/playtest-scenario-core.lua",
+          "sha256": "e49f668ad97a7a1bb14605530bd46d162db7ec05f3c093beff566288f26cc061"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/batch-plans/global-team-fixed-regression.json",
+          "sha256": "f79c309ca155c7c4dab8717a68d8000641c8e2ca6ba109f13d6adaf2578ffa6a"
         }
       ],
       "implementation_limits": [
+        "Policy fixture review: previous direct clearing of native awarded tenets could leave lifetime policy accounting inconsistent. Preserve old outputs, rerun corrected helper with available-choice accounting and positive next-policy-cost checks. Colonialism has no ideology award to discard, but its strengthened snapshot/helper will also be reverified.",
+        "Native reward delivery and calculated building happiness are not physical policy UI or earned culture coverage",
+        "crowded or unavailable extra-territory selection remains a separate boundary"
+      ],
+      "remaining_scope": [
         "Corrected local2/unmodded0 oracle and exact replay passed in20261003T011819Z; original query failure retained as a harness error.",
         "Native reward delivery and calculated building happiness are not physical policy UI or earned culture coverage",
         "crowded or unavailable extra-territory selection remains a separate boundary"
       ],
-      "evidence_contract": {
+      "historical_evidence_contract_before_fixture_review": {
         "kind": "native-batch-stage",
         "report": "build/macos/playtests/20261003T011819Z/report.json",
         "batch_report": "build/macos/playtests/20261003T011819Z/batch-report.json",
@@ -10274,12 +10291,7 @@
           "policy-found-worker-happiness"
         ],
         "gamecore_sha256": "c8f1723c7588fdf54465781ebbca9d8de009e3e11c76ba6375b5200fd9687aa2"
-      },
-      "remaining_scope": [
-        "Corrected local2/unmodded0 oracle and exact replay passed in20261003T011819Z; original query failure retained as a harness error.",
-        "Native reward delivery and calculated building happiness are not physical policy UI or earned culture coverage",
-        "crowded or unavailable extra-territory selection remains a separate boundary"
-      ]
+      }
     },
     {
       "id": "POL-CONSULATES-SHARED-TEAM",
@@ -10355,12 +10367,12 @@
       "surface_ids": [],
       "implementation_references": [
         {
-          "path": "LEKMOD_DLL/macos/batch-plans/global-team-fixed-regression.json",
-          "sha256": "60c34251d44a82c127ceabb2c0389e53a5cb5f01568c1f7095153d5cf336f0f0"
-        },
-        {
           "path": "LEKMOD_DLL/macos/playtest-scenario-consulates-teams.lua",
           "sha256": "7eeadf3253161bec97b24aace88aa572abfe1ab2683d5bc41338bc380b7a1475"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/batch-plans/global-team-fixed-regression.json",
+          "sha256": "f79c309ca155c7c4dab8717a68d8000641c8e2ca6ba109f13d6adaf2578ffa6a"
         }
       ],
       "implementation_limits": [
@@ -10429,8 +10441,8 @@
           "sha256": "975a10724f13d85a198c2c7a3bdd8050d7a89e4fce9a8411368bd376ad54bcb0"
         },
         {
-          "path": "build/macos/playtests/20261003T013721Z/checkpoints/Lekmod-Batch-20261003T013721Z-global-team-policy-run.Civ5Save",
-          "sha256": "a67fab63fda2de8bf558f0f860da73ba242c2c5d7d91ba9e2071f894056b13be"
+          "path": "build/macos/playtests/20261003T021936Z/checkpoints/Lekmod-Batch-20261003T021936Z-global-team-policy-run.Civ5Save",
+          "sha256": "becd9a0688bc84fee4fe46745c35b893326c870791492fe8bb21db95dfab298f"
         }
       ],
       "batch": "LEKMOD_DLL/macos/batch-plans/global-team-fixed-regression.json",
@@ -10452,33 +10464,58 @@
         {
           "path": "build/macos/team-events-preservation-20261003.json",
           "sha256": "678963a54814fdcf324ba2945b1ba041c33f9ad2e9fe3f2f416db7e61bef6cc2"
+        },
+        {
+          "path": "build/macos/playtests/20261003T015024Z/report.json",
+          "sha256": "1d765d228001f216ef024bb9f3c88a5ba40726d21354c3dc1a9b61bf45aee94c"
+        },
+        {
+          "path": "build/macos/global-team-fresh-preservation-20261003.json",
+          "sha256": "e75fe4cdbc323ca9a6cf2726b2145bee7058253c523c098e836ea9ddb79e0eda"
+        },
+        {
+          "path": "build/macos/playtests/20261003T021936Z/report.json",
+          "sha256": "96e9f2e605c835a3e149b8795e395afe3129612bff6ae6a05ceaf8dee15e7756"
+        },
+        {
+          "path": "build/macos/playtests/20261003T021936Z/batch-report.json",
+          "sha256": "e08a567f29f62638dc01fd607164f08002353795227eb82ebb34495ed8d958f2"
+        },
+        {
+          "path": "build/macos/policy-ledger-preservation-20261003.json",
+          "sha256": "a4a5c30b90ce04a17c266a01d603f6700898422c0b3799236f7463d04504ee44"
         }
       ],
       "surface_ids": [
         "lua:Lua/Lekmod_global_dummies.lua:GameEvents.PlayerCityFounded:lekmod_add_global_dummy_buildings",
-        "lua:Lua/Lekmod_global_dummies.lua:GameEvents.TeamSetHasTech:lekmod_add_global_dummy_buildings",
-        "lua:Lua/Lekmod_global_dummies.lua:GameEvents.PlayerAdoptPolicy:lekmod_add_global_dummy_buildings"
+        "lua:Lua/Lekmod_global_dummies.lua:GameEvents.TeamSetHasTech:lekmod_global_dummy_buildings_on_tech",
+        "lua:Lua/Lekmod_global_dummies.lua:GameEvents.PlayerAdoptPolicy:lekmod_add_global_dummy_buildings",
+        "lua:Lua/Lekmod_global_dummies.lua:Events.SequenceGameInitComplete:lekmod_global_dummy_buildings_on_load"
       ],
       "implementation_references": [
-        {
-          "path": "LEKMOD_DLL/macos/batch-plans/global-team-fixed-regression.json",
-          "sha256": "60c34251d44a82c127ceabb2c0389e53a5cb5f01568c1f7095153d5cf336f0f0"
-        },
         {
           "path": "LEKMOD_DLL/macos/playtest-scenario-global-team-initial.lua",
           "sha256": "b4218c5479a111741679e6223e7647f1ea4bed7da0dea4fad64cf9917d7ff84e"
         },
         {
           "path": "LEKMOD_DLL/macos/playtest-scenario-global-team-policy.lua",
-          "sha256": "3e03905a6b24a745454bec8392a9e168a3aca3c198d6bb2cd5371d430a41e248"
+          "sha256": "482361bf8a9dbb77642178a5ca7a95cd19683966a5d6adefe51964f444bacd38"
         },
         {
           "path": "LEKMOD_DLL/macos/playtest-scenario-global-team-load.lua",
-          "sha256": "3f9b8cefe28ec150872291b7c5d4616bebbef49dde058bd9d522703b2f47beb1"
+          "sha256": "a497b0939192bd48a15204b94b547fd27b5abaf9b4a0ae0e8f423e6b3018b2c6"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-core.lua",
+          "sha256": "e49f668ad97a7a1bb14605530bd46d162db7ec05f3c093beff566288f26cc061"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/batch-plans/global-team-fixed-regression.json",
+          "sha256": "f79c309ca155c7c4dab8717a68d8000641c8e2ca6ba109f13d6adaf2578ffa6a"
         }
       ],
       "implementation_limits": [
-        "Original native owner/team misrouting confirmed in20261003T013721Z; focused correction passes19actual-Lua cases, native same-input/old-save/Yugoslav regression pending.",
+        "Valid-accounting original reward failure regenerated in021936Z (cost15/culture3); corrected marker-only expected state and positive-cost guard replace malformed a67fixture for continuation. Full combined native retest pending.",
         "This is callback routing/marker delivery, not all configured marker yield/production/trade consumers.",
         "Ukraine/Colombia tech predicates, capture/capital changes, golden-age and branch transitions remain separately untriaged; Global_Dummy_Buildings data surface is not closed by these representative rows."
       ]
@@ -21415,7 +21452,7 @@
       "case_ids": []
     },
     {
-      "id": "lua:Lua/Lekmod_global_dummies.lua:GameEvents.TeamSetHasTech:lekmod_add_global_dummy_buildings",
+      "id": "lua:Lua/Lekmod_global_dummies.lua:GameEvents.TeamSetHasTech:lekmod_global_dummy_buildings_on_tech",
       "suggested_group": "G7",
       "status": "mapped",
       "case_ids": [
@@ -22412,6 +22449,14 @@
         "POL-CONSULATES-OWNER-ADOPTION"
       ],
       "reason": "Consulates same-input human/AI orderings and both authentic affected-save repairs passed in20261003T005557Z. Era callbacks use native team IDs; mismatched/shared-team and repeated/skipped-era boundary controls remain isolated actual-Lua evidence."
+    },
+    {
+      "id": "lua:Lua/Lekmod_global_dummies.lua:Events.SequenceGameInitComplete:lekmod_global_dummy_buildings_on_load",
+      "status": "mapped",
+      "case_ids": [
+        "LIFE-GLOBAL-TEAM-DISPATCH"
+      ],
+      "reason": "New derived-marker load repair has two authentic failed fixtures, independently specified marker-only expected state, next ordinary round and exact replay in the prepared fixed regression."
     }
   ],
   "pending_doc_entries": [
@@ -30055,6 +30100,68 @@
       ],
       "finding": "Native nonmatching/shared team fixture confirms missing Timurids capital marker, missing human/AI Economic Union markers, missed subsequent founding and unrelated player refresh. The old helper compared a Player object to numeric player ID and otherwise routed by team.19actual-Lua controls, including correct native-style owner0 enumeration, fail8before and pass after scoped routing/load repair.",
       "next_action": "Run same input and both genuine failed saves, plus Yugoslav normal-team shared-path regression on clean new package. Refresh discovery for renamed team callback/new load listener. New normal-start founding must also be reverified after fix; retain failed baseline."
+    },
+    {
+      "id": "SC-FIXTURE-DISCARDED-TENETS",
+      "classification": "native-confirmed-harness-fixture-error-corrected-pending-retest",
+      "source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPolicyClasses.cpp",
+          "sha256": "7a409a449b69feab94f617d423985048f8414ee4761f5dba36d743c9c343dfe8"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPlayer.cpp",
+          "sha256": "31dd845837800229e4c4e2708e471996f03858f722b8cbf14bdfa2a8ed67c788"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-core.lua",
+          "sha256": "e49f668ad97a7a1bb14605530bd46d162db7ec05f3c093beff566288f26cc061"
+        },
+        {
+          "path": "build/macos/fixture-before-policy-promotions-20261003.lua",
+          "sha256": "149fc387c5e639b1634a5d44873a4ef42e39bd2ee82c8eb980cb602f76016c71"
+        },
+        {
+          "path": "build/macos/fixture-before-policy-founding-20261003.lua",
+          "sha256": "e95f4bd975f64ddf3da88c2b592fb6d9c3684469e781e525d652c1e0bdcefc11"
+        },
+        {
+          "path": "build/macos/fixture-before-global-team-policy-20261003.lua",
+          "sha256": "3e03905a6b24a745454bec8392a9e168a3aca3c198d6bb2cd5371d430a41e248"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20261003T015353Z/report.json",
+          "sha256": "ce0366c1e9f558e5a15dc27f75b31bc6665e4c8efc6390365dc0949b2b1bad1e"
+        },
+        {
+          "path": "build/macos/playtests/20261003T015353Z/batch-report.json",
+          "sha256": "46f2ce25597fc1638a7ff79ceda1861e78589910e00da354f00522714c8608f4"
+        },
+        {
+          "path": "build/macos/global-team-interrupted-preservation-20261003.json",
+          "sha256": "86917ebb7632d6f6868fbbef46a03b7171ec69aa82ed9198d435b0164bb72c56"
+        },
+        {
+          "path": "build/macos/playtests/20261003T021936Z/report.json",
+          "sha256": "96e9f2e605c835a3e149b8795e395afe3129612bff6ae6a05ceaf8dee15e7756"
+        },
+        {
+          "path": "build/macos/playtests/20261003T021936Z/batch-report.json",
+          "sha256": "e08a567f29f62638dc01fd607164f08002353795227eb82ebb34495ed8d958f2"
+        },
+        {
+          "path": "build/macos/policy-ledger-preservation-20261003.json",
+          "sha256": "a4a5c30b90ce04a17c266a01d603f6700898422c0b3799236f7463d04504ee44"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/test-policy-fixture-choice.py",
+          "sha256": "49c52b49c437ac3f2ebb4c72fc0e8ae74659bfad78adfe2752e5b69400d22be0"
+        }
+      ],
+      "finding": "Native read-only observation confirms malformed old human fixture cost=-14388120 at culture3/free0/tenets0/owned1. Preserving native tenets regenerates the original global reward failure with cost15/culture3. The corrected helper passes24precedence/debit/negative-control cases and preflight rejects literal clearing of awarded tenets.",
+      "next_action": "Rerun all affected policy cases and global fixed regression, using valid becd9a0 failure save. Keep a67bad fixture only as diagnostic evidence. Full previous interrupted batch remains failed and unaccepted."
     }
   ],
   "dependency_review": [
@@ -30154,16 +30261,16 @@
   "summary": {
     "designed_cases": 73,
     "case_statuses": {
-      "passed": 31,
+      "passed": 28,
       "covered-by-evidence": 40,
-      "ready": 2
+      "ready": 5
     },
-    "review_surfaces": 1341,
+    "review_surfaces": 1342,
     "pending_document_rows": 121,
     "final_case_denominator_frozen": false,
     "surface_statuses": {
       "untriaged": 1240,
-      "mapped": 79,
+      "mapped": 80,
       "presentation-only": 19,
       "out-of-scope": 3
     },
@@ -30210,6 +30317,21 @@
       "gamecore_sha256": "c8f1723c7588fdf54465781ebbca9d8de009e3e11c76ba6375b5200fd9687aa2",
       "added_surfaces": [
         "lua:Lua/Lekmod_policies.lua:Events.SequenceGameInitComplete:Lekmod_RefreshConsulatesOnLoad"
+      ]
+    },
+    {
+      "reason": "Native-confirmed global player/team misrouting; separate team dispatcher and saved derived-marker repair, native fixed verification pending.",
+      "package": {
+        "path": "build/macos/Lekmod-global-teams-fixed-20261003.zip",
+        "sha256": "7325b13ec0873c055c38d4a8711a21478a11c4f930354299017f2d725d74e746"
+      },
+      "source_commit": "aff628c29916fe714eba203e1925c35cd99d977b",
+      "gamecore_sha256": "c8f1723c7588fdf54465781ebbca9d8de009e3e11c76ba6375b5200fd9687aa2",
+      "replaced_surfaces": {
+        "lua:Lua/Lekmod_global_dummies.lua:GameEvents.TeamSetHasTech:lekmod_add_global_dummy_buildings": "lua:Lua/Lekmod_global_dummies.lua:GameEvents.TeamSetHasTech:lekmod_global_dummy_buildings_on_tech"
+      },
+      "added_surfaces": [
+        "lua:Lua/Lekmod_global_dummies.lua:Events.SequenceGameInitComplete:lekmod_global_dummy_buildings_on_load"
       ]
     }
   ]

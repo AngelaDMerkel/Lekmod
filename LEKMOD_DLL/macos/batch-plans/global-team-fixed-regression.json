@@ -3,6 +3,15 @@
   "name": "global-team-fixed-regression",
   "stages": [
     {
+      "id": "fixed-team-fresh-replay",
+      "scenario": "civilization-start",
+      "fixture": "build/macos/playtests/20261003T015024Z/Lekmod-Functional-20261003T015024Z.Civ5Save",
+      "sha256": "1d8bad7a4ae84fbb636c18e918325538472517b12a486832e74553d6df423532",
+      "expected_report": "build/macos/playtests/20261003T015024Z/report.json",
+      "expected_report_sha256": "1d765d228001f216ef024bb9f3c88a5ba40726d21354c3dc1a9b61bf45aee94c",
+      "max_turns": 0
+    },
+    {
       "id": "consulates-teams",
       "scenario": "consulates-teams",
       "fixture": "build/macos/playtests/20261003T012818Z/Lekmod-Functional-20261003T012818Z.Civ5Save",
@@ -37,12 +46,12 @@
     {
       "id": "global-old-policy",
       "scenario": "global-team-load",
-      "fixture": "build/macos/playtests/20261003T013721Z/checkpoints/Lekmod-Batch-20261003T013721Z-global-team-policy-run.Civ5Save",
-      "sha256": "a67fab63fda2de8bf558f0f860da73ba242c2c5d7d91ba9e2071f894056b13be",
+      "fixture": "build/macos/playtests/20261003T021936Z/checkpoints/Lekmod-Batch-20261003T021936Z-global-team-policy-run.Civ5Save",
+      "sha256": "becd9a0688bc84fee4fe46745c35b893326c870791492fe8bb21db95dfab298f",
       "max_turns": 1,
       "parameters": {
         "mode": "policy",
-        "expected_state": "{\"owners\":{\"0\":{\"cities\":{\"16385\":{\"mongol\":0,\"ulug\":0,\"union\":1,\"wales\":0},\"8192\":{\"mongol\":0,\"ulug\":0,\"union\":1,\"wales\":1}},\"civilization\":87,\"era\":5,\"free\":0,\"team\":7,\"union\":true},\"1\":{\"cities\":{\"8192\":{\"mongol\":1,\"ulug\":0,\"union\":1,\"wales\":0}},\"civilization\":20,\"era\":5,\"free\":0,\"team\":7,\"union\":true},\"2\":{\"cities\":{\"8192\":{\"mongol\":0,\"ulug\":1,\"union\":0,\"wales\":0}},\"civilization\":51,\"era\":0,\"free\":0,\"team\":0,\"union\":false}},\"turn\":3}"
+        "expected_state": "{\"owners\":{\"0\":{\"cities\":{\"16385\":{\"mongol\":0,\"ulug\":0,\"union\":1,\"wales\":0},\"8192\":{\"mongol\":0,\"ulug\":0,\"union\":1,\"wales\":1}},\"civilization\":87,\"culture\":3,\"era\":5,\"free\":0,\"next_cost\":15,\"team\":7,\"tenets\":0,\"union\":true},\"1\":{\"cities\":{\"8192\":{\"mongol\":1,\"ulug\":0,\"union\":1,\"wales\":0}},\"civilization\":20,\"culture\":2,\"era\":5,\"free\":0,\"next_cost\":10,\"team\":7,\"tenets\":0,\"union\":true},\"2\":{\"cities\":{\"8192\":{\"mongol\":0,\"ulug\":1,\"union\":0,\"wales\":0}},\"civilization\":51,\"culture\":2,\"era\":0,\"free\":0,\"next_cost\":10,\"team\":0,\"tenets\":0,\"union\":false}},\"turn\":3}"
       }
     },
     {
@@ -50,14 +59,52 @@
       "sha256": "c5e4d974273b9306c9330398a81757e0ec3b64ffa21cedcbe1aee7dac53b44e5",
       "id": "yugoslavia-ideology",
       "scenario": "yugoslavia-ideology",
-      "max_turns": 12
+      "max_turns": 8
     },
     {
       "id": "yugo-revolution-cycle",
       "scenario": "yugoslav-revolution-cycle",
       "fixture": "build/macos/playtests/20260926T171207Z/checkpoints/Lekmod-Batch-20260926T171207Z-yugoslavia-ideology-run.Civ5Save",
       "sha256": "3df895cafa3b70858e9e804eee2f2fc8cc979e93409d0283c453cc4345cc8fb1",
-      "max_turns": 12
+      "max_turns": 8
+    },
+    {
+      "id": "promotion-both-owners",
+      "scenario": "policy-promotions",
+      "fixture": "build/macos/playtests/20260918T065530Z/Lekmod-Functional-20260918T065530Z.Civ5Save",
+      "sha256": "574511e03f58fc064d98b15fa57b4acf24072fdbfe434ec62db2230a6e7f0e3d",
+      "max_turns": 3,
+      "parameters": {}
+    },
+    {
+      "id": "resettlement-rome",
+      "scenario": "policy-founding",
+      "fixture": "build/macos/playtests/20260918T065530Z/Lekmod-Functional-20260918T065530Z.Civ5Save",
+      "sha256": "574511e03f58fc064d98b15fa57b4acf24072fdbfe434ec62db2230a6e7f0e3d",
+      "max_turns": 1,
+      "parameters": {
+        "mode": "resettlement"
+      }
+    },
+    {
+      "id": "resettlement-akkad",
+      "scenario": "policy-founding",
+      "fixture": "build/macos/playtests/20260922T233312Z/Lekmod-Functional-20260922T233312Z.Civ5Save",
+      "sha256": "903a1a869d99c11a2e7079995bbf0293b321035d2d1803a2912da05face90f1d",
+      "max_turns": 1,
+      "parameters": {
+        "mode": "resettlement"
+      }
+    },
+    {
+      "id": "colonialism-rome",
+      "scenario": "policy-founding",
+      "fixture": "build/macos/playtests/20260918T065530Z/Lekmod-Functional-20260918T065530Z.Civ5Save",
+      "sha256": "574511e03f58fc064d98b15fa57b4acf24072fdbfe434ec62db2230a6e7f0e3d",
+      "max_turns": 1,
+      "parameters": {
+        "mode": "colonialism"
+      }
     }
   ]
 }

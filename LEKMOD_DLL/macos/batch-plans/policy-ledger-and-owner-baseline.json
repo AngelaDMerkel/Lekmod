@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "name": "policy-ledger-and-owner-baseline",
+  "stages": [
+    {
+      "id": "old-policy-ledger",
+      "scenario": "policy-ledger",
+      "fixture": "build/macos/playtests/20261003T013721Z/checkpoints/Lekmod-Batch-20261003T013721Z-global-team-policy-run.Civ5Save",
+      "sha256": "a67fab63fda2de8bf558f0f860da73ba242c2c5d7d91ba9e2071f894056b13be",
+      "max_turns": 0
+    },
+    {
+      "id": "global-team-policy",
+      "scenario": "global-team-policy",
+      "fixture": "build/macos/playtests/20261003T012818Z/Lekmod-Functional-20261003T012818Z.Civ5Save",
+      "sha256": "8d352e069d418a8a1b9cd75d4f87ed41657214a1c81fd11c3ce8ddfd41086d9b",
+      "max_turns": 2
+    }
+  ]
+}

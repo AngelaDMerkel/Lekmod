@@ -21,7 +21,7 @@ local function counts(c)
 end
 local function state(p)
  local cities={};for c in p:Cities()do cities[c:GetID()]={x=c:GetX(),y=c:GetY(),buildings=counts(c),population=c:GetPopulation(),happiness=c:GetHappinessFromBuildings(),local_happiness=mode=="colonialism"and c:GetLocalHappiness()or nil}end
- return {policy=p:HasPolicy(policy),free=p:GetNumFreePolicies(),cities=cities,plots=p:GetNumPlots(),workers=workers(p)}
+ return {policy=p:HasPolicy(policy),free=p:GetNumFreePolicies(),tenets=p:GetNumFreeTenets(),culture=p:GetJONSCulture(),next_cost=p:GetNextPolicyCost(),cities=cities,plots=p:GetNumPlots(),workers=workers(p)}
 end
 function LekmodScenario.snapshot(p)return {turn=Game.GetGameTurn(),owners={[0]=state(p),[1]=state(Players[1])}}end
 local function found(p)
@@ -67,13 +67,13 @@ function LekmodScenario.step(p)
   controls=LekmodScenario.snapshot(p)
   local branch=GameInfoTypes[GameInfo.Policies[policy].PolicyBranchType];p:SetPolicyBranchUnlocked(branch,true,false)
   local opener=GameInfo.PolicyBranchTypes[branch].FreePolicy;if opener then p:SetHasPolicy(GameInfoTypes[opener],true)end
-  prerequisites(p,policy);p:SetNumFreeTenets(0);free=p:GetNumFreePolicies()+1;p:SetNumFreePolicies(free)
-  assert(p:CanAdoptPolicy(policy));LekmodScenarioEvent("fixture-setup",{operation="provided-policy-founding-prerequisites",policy=policy,free=free})
+  prerequisites(p,policy);free=LekmodScenarioPolicyChoice(p,policy)
+  assert(p:CanAdoptPolicy(policy));LekmodScenarioEvent("fixture-setup",{operation="provided-policy-founding-prerequisites",policy=policy,free=free.free,tenets=free.tenets})
   Network.SendUpdatePolicies(policy,true,true);phase="adopted"
  elseif phase=="adopted"then
   if not LekmodScenarioAwait("founding-policy-adopted",p:HasPolicy(policy))then return false end
-  assert(p:GetNumFreePolicies()==free-1 and p:GetNumFreeTenets()==0 and not p:CanAdoptPolicy(policy))
-  LekmodScenarioRecord("policy-found-adoption","PASS","legal human adoption consumes one supplied choice and rejects duplicate adoption")
+  LekmodScenarioVerifyPolicyChoice(p,policy,free)
+  LekmodScenarioRecord("policy-found-adoption","PASS","legal human adoption consumes one available choice without discarding native ideology awards and rejects duplicate adoption")
   found(p);ordinal=1;phase="after"
  elseif phase=="after"then
   local c=site:GetPlotCity();if not LekmodScenarioAwait("policy-city-"..ordinal,c and c:GetOwner()==0)then return false end

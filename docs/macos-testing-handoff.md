@@ -1,5 +1,18 @@
 # Lekmod macOS single-player testing handoff
 
+## Latest qualification correction
+
+The shared global-building player/team routing defect is fixed in `aff628c2`;
+fresh native founding passes. Full regression is pending after an unrelated
+fixture error: three tests discarded native ideology tenets, leaving inconsistent
+policy history. That negative-cost save is retained for diagnosis, and a valid
+original reward-failure save has been regenerated. The corrected combined plan
+has73assertions/12replays. The three affected policy cases are reopened; earlier
+pass counts below are historical. See [the global-team report](macos-global-team-validation.md)
+and [policy fixture correction](macos-policy-effects-validation.md). G0/F/R
+acceptance is still open.
+
+
 ## Current October 3 checkpoint
 
 Testing continues on local `main`; full single-player acceptance is **not yet

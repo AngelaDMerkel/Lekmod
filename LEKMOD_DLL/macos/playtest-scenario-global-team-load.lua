@@ -12,7 +12,7 @@ function LekmodScenario.snapshot(player)
    if mode=="initial"then row.x=c:GetX();row.y=c:GetY()end;cities[c:GetID()]=row
   end
   local row={team=p:GetTeam(),civilization=p:GetCivilizationType(),cities=cities}
-  if mode=="policy"then row.era=p:GetCurrentEra();row.free=p:GetNumFreePolicies();row.union=p:HasPolicy(GameInfoTypes.POLICY_ECONOMIC_UNION)end
+  if mode=="policy"then row.era=p:GetCurrentEra();row.free=p:GetNumFreePolicies();row.tenets=p:GetNumFreeTenets();row.culture=p:GetJONSCulture();row.next_cost=p:GetNextPolicyCost();row.union=p:HasPolicy(GameInfoTypes.POLICY_ECONOMIC_UNION)end
   owners[owner]=row
  end
  return {turn=Game.GetGameTurn(),owners=owners}
@@ -30,6 +30,7 @@ end
 function LekmodScenario.step(player)
  assert(not Game.IsGameMultiPlayer()and player:GetID()==0 and player:GetTeam()==7 and Players[1]:GetTeam()==7 and Players[2]:GetTeam()==0)
  if phase=="init"then
+  assert(player:GetNextPolicyCost()>0,"invalid policy-history fixture: nonpositive next cost")
   assert(LekmodScenarioJSON(LekmodScenario.snapshot(player))==LekmodScenarioParameters.expected_state,"native load repair differs from declared marker-only correction")
   check();LekmodScenarioRecord("global-load-repair","PASS","authentic failed "..mode.." checkpoint now has required markers before any test mutation")
   LekmodScenarioRecord("global-load-protected-state","PASS","all recorded owner/team/civilization/city fields and applicable era/policy/choice/coordinates match except the specified corrected markers")

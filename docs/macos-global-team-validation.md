@@ -60,3 +60,31 @@ both authentic failed saves and existing Yugoslav adoption/revolution regression
 The pre-fix initialization snapshot is retained instead of requiring it unchanged
 after an intentional Ulug repair. Fresh normal founding must also be checked on
 the new package. Native fixed results are pending; G0/F/R acceptance remains open.
+
+## Interrupted qualification and fixture correction
+
+`20261003T015353Z` reached the old policy save after passing earlier stage
+assertions/replays, but its next-round driver repeatedly adopted policies and
+then had no valid choice. The runner terminated its process (SIGTERM/SIGKILL,
+return−9); the incomplete batch is not admitted as acceptance evidence. Settings,
+UI, stock,963baseline files and no game process were independently verified.
+The two marker-repair assertions had passed before the unrelated policy failure.
+
+Source review traced the fixture's discarded native ideology tenets to retained
+lifetime policy history. Native read-only diagnostic `20261003T021936Z` confirmed
+the original human next-policy cost was−14,388,120 at culture3/free0/tenets0.
+The new helper preserves native awards and checks exact debit/positive cost.
+On the unchanged pre-global-fix package, it reproduces the same missing-marker
+defect with valid next cost15/culture3. That run exited normally and preserved
+972baseline files. The new authentic policy failure save is
+`becd9a0688bc84fee4fe46745c35b893326c870791492fe8bb21db95dfab298f`;
+the malformed `a67…` save is retained for diagnosis only.
+
+The fixed regression now includes all affected policy tests:73assertions and
+12replays,28aggregate maximum turns and40minutes. The two deterministic Yugoslav
+cases retain8-turn caps, compared with their previously observed4/6turns. Both
+original failed global states remain documented; valid-accounting policy repair
+uses the new failure save and protects its culture/choice/cost fields. Normal
+fresh founding on the fixed package already passed in `20261003T015024Z`,
+79.6seconds, two ordinary turns, with Ulug1/foreign0 and full962-file preservation.
+Full fixed acceptance remains pending.

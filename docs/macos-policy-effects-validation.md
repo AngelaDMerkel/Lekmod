@@ -1,5 +1,26 @@
 # Policy promotion and founding effects
 
+## Policy accounting qualification reopened
+
+A later continuation test found that fixture code discarded native ideology
+tenets without adjusting lifetime free-policy history. Native read-only
+inspection of the affected global-policy save found next-policy cost−14,388,120
+at culture3, free0 and tenets0. This is a supplied-fixture bookkeeping defect,
+not evidence that the normal policy workflow produced that state. Earlier
+promotion/Resettlement reward observations remain recorded, but those acceptance
+cases have been reopened for corrected fixtures and stronger saved-state checks.
+Colonialism has no ideology tenets to discard; its shared helper/snapshot is also
+being reverified.
+
+The corrected helper preserves native awards, supplies a policy choice only
+when none is available, checks native tenet-first debit and unchanged culture,
+and requires a positive next-policy cost.24helper cases pass; batch preflight
+rejects literal clearing of awarded tenets. The known global reward defect was
+regenerated on its original package with valid cost15/culture3. The corrected
+73-assertion/12-replay combined regression is pending. No cost or wait flag was
+patched to manufacture a pass.
+
+
 The current native policy batch uses clean Consulates package
 `build/macos/Lekmod-consulates-fixed-20261003.zip`, archive SHA-256
 `52778f2971c77ac4bc2fdfc2f6ce6e2b753cf24d438b5821bf86dace6935130c`,

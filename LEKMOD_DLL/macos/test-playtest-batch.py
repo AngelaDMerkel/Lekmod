@@ -63,6 +63,11 @@ class BatchTests(unittest.TestCase):
         stage['parameters']={'mode':'human','expected_state':snapshot}
         self.assertEqual(self.load()['stages'][0]['parameters']['expected_state'],snapshot)
 
+    def test_fixture_cannot_discard_native_tenets(self):
+        (self.code/'playtest-scenario-inventory.lua').write_text('player:SetNumFreeTenets(0)')
+        with self.assertRaisesRegex(ValueError,'free-tenet lifetime accounting'):
+            self.load()
+
     def test_unreviewed_scenario_cannot_accept_parameters(self):
         self.raw['stages'][0]['parameters']={'mode':'human'}
         with self.assertRaisesRegex(ValueError,'scenario parameters'):self.load()

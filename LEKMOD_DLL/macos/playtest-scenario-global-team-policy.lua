@@ -10,12 +10,12 @@ local function markers(p)
  local cities={};for c in p:Cities()do cities[c:GetID()]={ulug=c:GetNumRealBuilding(GameInfoTypes.BUILDING_ULUG),wales=c:GetNumRealBuilding(GameInfoTypes.BUILDING_WALES_TRAIT),mongol=c:GetNumRealBuilding(GameInfoTypes.BUILDING_MONGOL_TRAIT),union=c:GetNumRealBuilding(union)}end;return cities
 end
 local function choice(p)
- assert(not p:HasPolicy(policy));p:SetPolicyBranchUnlocked(GameInfoTypes.POLICY_BRANCH_FREEDOM,true,false);p:SetNumFreeTenets(0)
- free[p:GetID()]=p:GetNumFreePolicies()+1;p:SetNumFreePolicies(free[p:GetID()]);assert(p:CanAdoptPolicy(policy))
- LekmodScenarioEvent("fixture-setup",{operation="provided-Economic-Union-prerequisites-and-choice",owner=p:GetID(),team=p:GetTeam(),free=free[p:GetID()]})
+ assert(not p:HasPolicy(policy));p:SetPolicyBranchUnlocked(GameInfoTypes.POLICY_BRANCH_FREEDOM,true,false)
+ free[p:GetID()]=LekmodScenarioPolicyChoice(p,policy)
+ LekmodScenarioEvent("fixture-setup",{operation="provided-Economic-Union-prerequisites-and-choice",owner=p:GetID(),team=p:GetTeam(),free=free[p:GetID()].free,tenets=free[p:GetID()].tenets})
 end
 local function adopted(p,item)
- assert(p:HasPolicy(policy)and p:GetNumFreePolicies()==free[p:GetID()]-1 and p:GetNumFreeTenets()==0 and not p:CanAdoptPolicy(policy))
+ LekmodScenarioVerifyPolicyChoice(p,policy,free[p:GetID()])
  local n=p:GetCapitalCity():GetNumRealBuilding(union)
  LekmodScenarioRecord(item,n==1 and"PASS"or"FAIL","owner="..p:GetID().." team="..p:GetTeam().." native adoption requires capital marker1; actual="..n)
 end
@@ -26,7 +26,7 @@ GameEvents.PlayerDoTurn.Add(function(owner)
 end)
 function LekmodScenario.snapshot(player)
  local owners={}
- for owner=0,2 do local p=Players[owner];owners[owner]={team=p:GetTeam(),civilization=p:GetCivilizationType(),cities=markers(p),union=p:HasPolicy(policy),free=p:GetNumFreePolicies(),era=p:GetCurrentEra()}end
+ for owner=0,2 do local p=Players[owner];owners[owner]={team=p:GetTeam(),civilization=p:GetCivilizationType(),cities=markers(p),union=p:HasPolicy(policy),free=p:GetNumFreePolicies(),tenets=p:GetNumFreeTenets(),culture=p:GetJONSCulture(),next_cost=p:GetNextPolicyCost(),era=p:GetCurrentEra()}end
  return {turn=Game.GetGameTurn(),owners=owners}
 end
 local function found(p)
@@ -64,7 +64,7 @@ function LekmodScenario.step(p)
  elseif phase=="AI"then
   if not done then return "turn"end
   assert(not Players[2]:HasPolicy(policy)and Players[2]:CountNumBuildings(union)==0)
-  LekmodScenarioRecord("global-policy-choice-accounting","PASS","human and actual AI owner-turn adoption consume one supplied choice; foreign nonowner unmarked")
+  LekmodScenarioRecord("global-policy-choice-accounting","PASS","human and actual AI owner-turn adoption consume one available choice without discarding native ideology awards; foreign nonowner unmarked")
   return true
  end
  return false

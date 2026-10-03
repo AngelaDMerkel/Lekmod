@@ -49,13 +49,12 @@ local function prepareChoice(p,id)
    if row.Level==1 and row.ID~=policies[1] and not p:HasPolicy(row.ID)then p:SetHasPolicy(row.ID,true);count=count+1 end
   end
  end
- p:SetNumFreeTenets(0);local n=p:GetNumFreePolicies();p:SetNumFreePolicies(n+1)
- assert(p:CanAdoptPolicy(id));spending[p:GetID()]={free=n+1,policy=id}
- LekmodScenarioEvent("fixture-setup",{operation="provided-policy-choice-and-prerequisites",owner=p:GetID(),policy=id,free=n+1})
+ spending[p:GetID()]=LekmodScenarioPolicyChoice(p,id)
+ LekmodScenarioEvent("fixture-setup",{operation="provided-policy-choice-and-prerequisites",owner=p:GetID(),policy=id,free=p:GetNumFreePolicies(),tenets=p:GetNumFreeTenets(),culture=p:GetJONSCulture(),next_cost=p:GetNextPolicyCost()})
 end
 local function adoptedResult(p,id)
  local r=spending[p:GetID()]
- assert(p:HasPolicy(id)and adopted[p:GetID()..":"..id]and p:GetNumFreePolicies()==r.free-1 and p:GetNumFreeTenets()==0,"adoption event or choice spending differs")
+ assert(adopted[p:GetID()..":"..id],"native adoption event missing");LekmodScenarioVerifyPolicyChoice(p,id,r)
  assert(not p:CanAdoptPolicy(id),"already owned policy still adoptable")
 end
 GameEvents.PlayerAdoptPolicy.Add(function(owner,id)adopted[owner..":"..id]=true end)
@@ -72,7 +71,7 @@ function LekmodScenario.snapshot(player)
  local owners={}
  for owner=0,1 do local p=Players[owner];local units={}
   for u in p:Units()do units[u:GetID()]={type=u:GetUnitType(),morale=u:IsHasPromotion(morale),dogfight=u:IsHasPromotion(dogfight),extra=u:GetExtraCombatPercent(),sweep=u:AirSweepCombatMod()}end
-  owners[owner]={units=units,first=p:HasPolicy(policies[1]),second=p:HasPolicy(policies[2]),free=p:GetNumFreePolicies(),tenets=p:GetNumFreeTenets()}
+  owners[owner]={units=units,first=p:HasPolicy(policies[1]),second=p:HasPolicy(policies[2]),free=p:GetNumFreePolicies(),tenets=p:GetNumFreeTenets(),culture=p:GetJONSCulture(),next_cost=p:GetNextPolicyCost()}
  end
  return {turn=Game.GetGameTurn(),owners=owners}
 end
@@ -103,7 +102,7 @@ function LekmodScenario.step(p)
   LekmodScenarioRecord("policy-promotion-AI-new","PASS","new AI units receive expected flags and native modifiers")
   LekmodScenarioRecord("policy-promotion-class-controls","PASS","Archer and Worker excluded for both owners before/after adoption and creation")
   LekmodScenarioRecord("policy-promotion-no-repeat","PASS","later adoption/creation refresh leaves each existing modifier at15 or33; duplicate policy ineligible")
-  LekmodScenarioRecord("policy-promotion-choice-accounting","PASS","each target adoption emitted native event and consumed one supplied free choice")
+  LekmodScenarioRecord("policy-promotion-choice-accounting","PASS","each target adoption emitted native event and consumed one available choice with native lifetime accounting preserved")
   return true
  end
  return false
