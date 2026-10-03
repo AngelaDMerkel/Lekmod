@@ -161,6 +161,8 @@ FUNCTIONAL_ITEMS = {"script-data", "science-overflow", "unit-position-flags", "c
                     "production-unit", "production-building", "production-wonder", "production-process"}
 PRODUCTION_COMPLETION_ITEMS = {"production-completion-unit", "production-completion-building"}
 SCENARIO_ITEMS = {
+    'gunboat-tribute': {'tribute-quest-input', 'tribute-influence-change', 'tribute-fixture', 'tribute-score-modifier', 'tribute-cooldown-and-repeat', 'tribute-immediate-quest', 'tribute-native-reward', 'tribute-policy-choice'},
+    'gunboat-continuation': {'tribute-loaded-state', 'tribute-next-turn-influence', 'tribute-continued-cooldown', 'tribute-next-turn-quest'},
     'minor-trade-influence': {'merchant-first-route', 'merchant-owner-controls', 'merchant-native-adoption', 'merchant-two-route-nonstack', 'merchant-positive-persistence', 'merchant-before-condition', 'merchant-native-settlement', 'merchant-inputs'},
     'minor-trade-removal': {'merchant-loaded-positive', 'merchant-first-removal', 'merchant-disconnected-settlement', 'merchant-native-plunder', 'merchant-removal-persistence', 'merchant-final-removal'},
     "religion-passive-pressure": {'passive-pressure-removal', 'passive-pressure-nonfounder-control', 'passive-pressure-persistence', 'passive-pressure-baseline', 'passive-pressure-data', 'passive-pressure-friend-threshold', 'passive-pressure-owner-controls', 'passive-pressure-building-catalogue', 'passive-pressure-native-settlement'},
