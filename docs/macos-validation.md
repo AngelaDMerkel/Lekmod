@@ -1,5 +1,29 @@
 # macOS validation status
 
+## Latest completed checkpoint (October 3 UTC)
+
+The corrected global/policy regression passed73assertions/12exact replays in
+`20261003T022959Z`; the following capital-capture/Vatican batch passed36checks/
+six replays in `20261003T025118Z`. Both exited normally with independent save,
+settings, UI, stock and backup verification. Stock is active and no game process
+is running;998baseline files were unchanged after the latest round.
+
+Current tested package is `build/macos/Lekmod-global-teams-fixed-20261003.zip`,
+SHA-256 `7325b13ec0873c055c38d4a8711a21478a11c4f930354299017f2d725d74e746`,
+clean product source `aff628c2`, unchanged GameCore `c8f1723c…9687aa2`.
+The native player/team routing and Consulates defects are fixed and retested.
+The discarded-tenet fixture error is also corrected; its negative-cost save
+and interrupted run remain retained and excluded from acceptance.
+
+**Full single-player acceptance remains open.** All78specified cases currently
+have scoped passing/retained evidence, but G0 still has1,213untriaged review
+surfaces and121document rows. These are not a count of required new tests or an
+overall percentage. Continue source/consumer/evidence reconciliation, then
+remaining gameplay and final F/R1–R5 qualification. Final candidate F is not frozen.
+Latest ignored continuation: `build/macos/next-actions-current.md`. Older sections
+below are historical where superseded.
+
+
 ## Latest qualification correction
 
 The shared global-building player/team routing defect is fixed in `aff628c2`;

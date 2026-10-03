@@ -25,6 +25,18 @@ within one roster require the explicit `--allow-duplicate-civilizations` fixture
 option. That option requires `--roster`; it cannot change the unique catalogue. The original `--group` / `--all` matrix remains
 unchanged. All launch/lock, package, save and stock-restoration guards apply.
 
+## Policy fixture accounting
+
+Use `LekmodScenarioPolicyChoice` and `LekmodScenarioVerifyPolicyChoice` from the
+scenario core for supplied policy choices. Preserve native ideology tenets and
+their lifetime free-policy history; the helper supplies one choice only when
+none is available, verifies the real tenet-first debit, unchanged culture and a
+positive next-policy cost. Batch preflight rejects literal `SetNumFreeTenets(0)`.
+Clearing native awards without the lifetime history created a negative-cost
+fixture and an interrupted driver run; both are retained in the policy/global
+reports. The corrected73-check/12-replay regression passed. Regression command:
+`python3 LEKMOD_DLL/macos/test-policy-fixture-choice.py` (24cases).
+
 ## Single-player team fixtures
 
 `civilization-startup-matrix.py --roster CIVILIZATION_WALES,CIVILIZATION_MONGOL,CIVILIZATION_TIMURIDS --teams 7,7,0 --minutes 10` creates one bounded normal single-player fixture with one human and two AI players. The explicit team list requires exactly one custom roster and a complete assignment with at least two opposing teams. It cannot alter a loaded save or add human slots. Each native owner/team identity is checked; ordinary initialization/founding stays capped at three turns and emits the usual pinned exact-replay plan. This is a single-player event-ownership fixture, not multiplayer qualification.
