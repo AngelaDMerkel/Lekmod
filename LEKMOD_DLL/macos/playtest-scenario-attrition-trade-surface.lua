@@ -1,0 +1,2 @@
+-- TradeLogic owns this scoped test update callback. Keep the ordinary
+-- DiploTrade context active instead of installing the generic test auto-close.
