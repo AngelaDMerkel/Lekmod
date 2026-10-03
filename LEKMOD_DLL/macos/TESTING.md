@@ -25,6 +25,10 @@ within one roster require the explicit `--allow-duplicate-civilizations` fixture
 option. That option requires `--roster`; it cannot change the unique catalogue. The original `--group` / `--all` matrix remains
 unchanged. All launch/lock, package, save and stock-restoration guards apply.
 
+## Single-player team fixtures
+
+`civilization-startup-matrix.py --roster CIVILIZATION_WALES,CIVILIZATION_MONGOL,CIVILIZATION_TIMURIDS --teams 7,7,0 --minutes 10` creates one bounded normal single-player fixture with one human and two AI players. The explicit team list requires exactly one custom roster and a complete assignment with at least two opposing teams. It cannot alter a loaded save or add human slots. Each native owner/team identity is checked; ordinary initialization/founding stays capped at three turns and emits the usual pinned exact-replay plan. This is a single-player event-ownership fixture, not multiplayer qualification.
+
 ## Multi-scenario batches
 
 Use [the batch operator guide](../../docs/macos-batch-testing.md) for longer runs.

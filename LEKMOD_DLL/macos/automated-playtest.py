@@ -428,6 +428,26 @@ def parse_slot_civilization(value):
     return int(match[1]), match[2]
 
 
+def parse_slot_team(value):
+    match = re.fullmatch(r"([0-9]|1[01])=([0-9]|1[0-9]|2[01])", value)
+    if not match:
+        raise argparse.ArgumentTypeError("Use SLOT=TEAM with slot 0-11 and team 0-21")
+    return int(match[1]), int(match[2])
+
+
+def validate_slot_teams(values, majors, loading=False):
+    if not values:
+        return {}
+    teams = dict(values)
+    if loading:
+        raise ValueError("Team assignments are new-game setup only; never change a loaded game")
+    if len(teams) != len(values) or set(teams) != set(range(majors)):
+        raise ValueError("Assign every enabled major slot exactly once for a team fixture")
+    if len(set(teams.values())) < 2:
+        raise ValueError("A bounded single-player fixture needs at least two opposing teams")
+    return teams
+
+
 def parse_start_era(value):
     # The shipped Atomic/Information UI eras retain their older internal IDs.
     value = {"ERA_ATOMIC": "ERA_POSTMODERN", "ERA_INFORMATION": "ERA_FUTURE"}.get(value, value)
@@ -458,6 +478,7 @@ def main():
     parser.add_argument("--start-era", type=parse_start_era, default="ERA_ANCIENT", help="Normal starting era; Atomic/Information aliases map to POSTMODERN/FUTURE; ignored when loading")
     parser.add_argument("--civilization", default="CIVILIZATION_ROME", help="Normal player-zero civilization selection for new fixtures")
     parser.add_argument("--opponent-civilization", default="", help="Optional normal AI slot-one civilization selection for new single-player fixtures")
+    parser.add_argument("--slot-team", type=parse_slot_team, action="append", default=[], help="explicit new-game team fixture; assign every enabled major, with only slot zero human")
     parser.add_argument("--slot-civilization", action="append", type=parse_slot_civilization, default=[], help="Normal civilization selection for a specific AI slot, SLOT=CIVILIZATION_TYPE")
     parser.add_argument("--window-size", type=parse_window_size, help="Temporary windowed resolution, with GraphicsSettingsDX9.ini restored afterward")
     parser.add_argument("--majors", type=int, default=12)
@@ -497,6 +518,10 @@ def main():
             parser.error("Batch load-save must match the first hashed fixture")
     elif args.scenario == "batch":
         parser.error("Batch scenario requires --batch-plan")
+    try:
+        slot_teams = validate_slot_teams(args.slot_team, args.majors, bool(args.load_save))
+    except ValueError as error:
+        parser.error(str(error))
     if len(dict(args.game_option)) != len(args.game_option):
         parser.error("Do not specify a game option more than once")
     if len(dict(args.slot_civilization)) != len(args.slot_civilization):
@@ -822,6 +847,7 @@ def main():
               "civilization": args.civilization if not args.load_save else None,
               "opponent_civilization": args.opponent_civilization if not args.load_save else None,
               "slot_civilizations": dict(args.slot_civilization) if not args.load_save else None,
+              "slot_teams": slot_teams if not args.load_save else None,
               "binary_sha256": hashlib.sha256((APP / "Contents/MacOS/libCvGameCoreDLL_Expansion2_DLL.dylib").read_bytes()).hexdigest()}
     if args.load_save:
         report["loaded_from"] = str(args.load_save)
@@ -887,6 +913,7 @@ def main():
                 ("UserSettings", "WindowResX"): args.window_size[0],
                 ("UserSettings", "WindowResY"): args.window_size[1]}).encode())
         replacements = {"__TEST_WORLD_SIZE__": args.world_size,
+                        "__TEST_SLOT_TEAMS__": "{" + ",".join("[" + str(slot) + "]=" + str(team) for slot, team in sorted(slot_teams.items())) + "}",
                         "__TEST_CIVILIZATION__": args.civilization,
                         "__TEST_OPPONENT_CIVILIZATION__": args.opponent_civilization,
                         "__TEST_SLOT_CIVILIZATIONS__": "{" + ",".join("[" + str(slot) + "]=" + json.dumps(civ) for slot, civ in args.slot_civilization) + "}",

@@ -37,6 +37,7 @@ do
         for i = 0, 21 do
             PreGame.SetSlotStatus(i, i == 0 and SlotStatus.SS_TAKEN or
                 (i < __TEST_MAJORS__ and SlotStatus.SS_COMPUTER or SlotStatus.SS_CLOSED))
+            PreGame.SetTeam(i, i)
             PreGame.SetCivilization(i, -1)
             PreGame.SetHandicap(i, GameInfo.HandicapInfos["HANDICAP_PRINCE"].ID)
         end
@@ -63,6 +64,10 @@ do
             assert(civ.Playable,"AI-slot civilization is not playable")
             PreGame.SetCivilization(slot,civ.ID)
             print("[LEKMOD_TEST] fixture-setup normal-AI-slot="..slot.." civilization="..civType)
+        end
+        for slot,team in pairs(__TEST_SLOT_TEAMS__) do
+            PreGame.SetTeam(slot,team)
+            print("[LEKMOD_TEST] fixture-setup normal-team-slot="..slot.." team="..team)
         end
         Events.SerialEventStartGame()
         UIManager:SetUICursor(1)

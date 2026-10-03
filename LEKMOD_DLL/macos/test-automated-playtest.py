@@ -87,6 +87,18 @@ class PlaytestEvidenceTests(unittest.TestCase):
             self.assertEqual(result.returncode, 2)
             self.assertIn("error:", result.stderr)
 
+    def test_single_player_team_fixture_is_complete_and_setup_only(self):
+        self.assertEqual(playtest.parse_slot_team("0=7"), (0,7))
+        for value in ("12=0", "0=22", "0=-1", "-1=0", "0=7;bad"):
+            with self.assertRaises(playtest.argparse.ArgumentTypeError):
+                playtest.parse_slot_team(value)
+        self.assertEqual(playtest.validate_slot_teams([(0,7),(1,7),(2,0)],3), {0:7,1:7,2:0})
+        self.assertEqual(playtest.validate_slot_teams([],3), {})
+        for values,majors,loading in [([(0,7)],2,False), ([(0,7),(0,0)],2,False),
+                ([(0,7),(1,7)],2,False), ([(0,7),(1,0)],2,True)]:
+            with self.assertRaises(ValueError):
+                playtest.validate_slot_teams(values,majors,loading)
+
     def test_window_size_is_explicit_and_bounded(self):
         self.assertEqual(playtest.parse_window_size("1280x800"), (1280, 800))
         for value in ("auto", "1280", "100x100", "9000x800"):

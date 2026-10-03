@@ -22,6 +22,7 @@ def main():
     p.add_argument('--from-group',type=int,default=1,help='with --all, start at the first unfinished one-based group')
     p.add_argument('--allow-duplicate-civilizations',action='store_true',help='explicit custom ownership fixture only; catalogue uniqueness remains required')
     p.add_argument('--map-script',choices=('Continents.lua','Pangaea.lua','Archipelago.lua','Fractal.lua','SmallContinents.lua','Lakes.lua','InlandSea.lua'),help='normal map selection for a custom fixture roster')
+    p.add_argument('--teams',help='comma-separated team IDs for exactly one explicit single-player roster; no extra humans')
     p.add_argument('--minutes',type=int,default=45)
     p.add_argument('--preflight-only',action='store_true')
     p.add_argument('--trace-loaded-libraries',action='store_true')
@@ -41,6 +42,13 @@ def main():
         if len(rosters)>10 or any(not 2<=len(g)<=12 or (not a.allow_duplicate_civilizations and len(set(g))!=len(g))or any(c not in known for c in g)for g in rosters):
             p.error('Custom rosters require 1–10 independent groups of 2–12 reviewed playable civilizations; duplicates need --allow-duplicate-civilizations')
         plan={**plan,'groups':rosters}
+    teams={}
+    if a.teams:
+        if not a.roster or len(a.roster)!=1:p.error('--teams requires exactly one explicit --roster')
+        try:
+            values=[runner.parse_slot_team(str(slot)+'='+value)for slot,value in enumerate(a.teams.split(','))]
+            teams=runner.validate_slot_teams(values,len(plan['groups'][0]))
+        except (ValueError,argparse.ArgumentTypeError)as error:p.error(str(error))
     if not 1<=a.from_group<=len(plan['groups']):p.error('Invalid starting group')
     if a.group is not None and not 1<=a.group<=len(plan['groups']):p.error('Invalid group')
     if a.group is not None and a.from_group!=1:p.error('--from-group is for --all')
@@ -57,7 +65,7 @@ def main():
     sys.path.insert(0,str(a.installer.parent));import civ5_gamecore
     if civ5_gamecore.ProductManager(runner.APP,runner.DATA).status().get('product')!='stock':p.error('Matrix requires stock initially')
     stamp=datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ');out=ROOT/'build/macos/civilization-matrices'/stamp;out.mkdir(parents=True)
-    result={'started_utc':stamp,'package_sha256':a.sha256,'selected_groups':selected,'requested_rosters':plan['groups'],'custom_rosters':bool(a.roster),'duplicate_civilizations_allowed':a.allow_duplicate_civilizations,'groups':[],'passed':False}
+    result={'started_utc':stamp,'package_sha256':a.sha256,'selected_groups':selected,'requested_rosters':plan['groups'],'custom_rosters':bool(a.roster),'requested_teams':teams,'duplicate_civilizations_allowed':a.allow_duplicate_civilizations,'groups':[],'passed':False}
     replays={'schema':1,'name':'civilization-start-state-replays','stages':[]}
     installed=False;deadline=time.monotonic()+60*a.minutes
     try:
@@ -68,6 +76,7 @@ def main():
             if remaining<180:result['stop_reason']='matrix wall-clock budget before next launch';break
             group=plan['groups'][number-1];old=set((ROOT/'build/macos/playtests').iterdir())
             cmd=[sys.executable,str(PORT/'automated-playtest.py'),'--mode','single-player-smoke','--turns','3','--timeout',str(min(600,remaining)),'--stall-seconds','180','--scenario','civilization-start','--scenario-turns','3','--save-and-exit','--majors',str(len(group)),'--minors','0','--world-size',plan['world'],'--map-script',plan['map'],'--start-era',plan['era'],'--game-speed',plan['speed'],'--handicap',plan['human_handicap'],'--civilization',group[0],'--game-option','GAMEOPTION_NO_BARBARIANS=1','--game-option','GAMEOPTION_NO_GOODY_HUTS=1']
+            for slot,team in sorted(teams.items()):cmd+=['--slot-team',str(slot)+'='+str(team)]
             if a.trace_loaded_libraries:cmd+=['--trace-loaded-libraries']
             for slot,civ in enumerate(group[1:],1):cmd+=['--slot-civilization',str(slot)+'='+civ]
             with (out/('group-%02d.log'%number)).open('w')as log:code=playtest_batch.run_owned_runner(cmd,cwd=ROOT,stdout=log,stderr=subprocess.STDOUT)

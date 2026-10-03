@@ -29,12 +29,14 @@ function LekmodScenario.step(player)
   began=Game.GetGameTurn()
   assert(not Game.IsGameMultiPlayer()and Game.GetAIAutoPlay()==0)
   local expected={[0]="__TEST_CIVILIZATION__"};for slot,kind in pairs(__TEST_SLOT_CIVILIZATIONS__)do expected[slot]=kind end
+  local expectedTeams=__TEST_SLOT_TEAMS__
   local count,colors=0,{}
   for owner=0,GameDefines.MAX_MAJOR_CIVS-1 do local p=Players[owner]
    if p and p:IsAlive()then
     count=count+1;local kind=assert(expected[owner],"unexpected living major slot")
     assert(p:GetCivilizationType()==GameInfoTypes[kind],"native civilization differs from requested slot")
     assert(p:IsHuman()==(owner==0),"human/AI ownership changed")
+    assert(p:GetTeam()==(expectedTeams[owner]or owner),"native team differs from reviewed normal setup")
     local leader=assert(GameInfo.Leaders[p:GetLeaderType()]);assert(leader.ArtDefineTag,"leader scene undefined")
     local color=p:GetPlayerColor();local entry=assert(GameInfo.PlayerColors[color],"native color row missing")
     assert(GameInfo.Colors[entry.PrimaryColor]and GameInfo.Colors[entry.SecondaryColor]and GameInfo.Colors[entry.TextColor])
