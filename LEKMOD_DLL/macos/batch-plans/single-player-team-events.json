@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "name": "single-player-team-events",
+  "stages": [
+    {
+      "id": "team-fixture-replay",
+      "scenario": "civilization-start",
+      "fixture": "build/macos/playtests/20261003T012818Z/Lekmod-Functional-20261003T012818Z.Civ5Save",
+      "sha256": "8d352e069d418a8a1b9cd75d4f87ed41657214a1c81fd11c3ce8ddfd41086d9b",
+      "expected_report": "build/macos/playtests/20261003T012818Z/report.json",
+      "expected_report_sha256": "7dafd69997a0f37ecad68d1439d6344ced00602caaa41a6717bb71b1c5ade510",
+      "max_turns": 0
+    },
+    {
+      "id": "consulates-teams",
+      "scenario": "consulates-teams",
+      "fixture": "build/macos/playtests/20261003T012818Z/Lekmod-Functional-20261003T012818Z.Civ5Save",
+      "sha256": "8d352e069d418a8a1b9cd75d4f87ed41657214a1c81fd11c3ce8ddfd41086d9b",
+      "max_turns": 2
+    },
+    {
+      "id": "global-team-initial",
+      "scenario": "global-team-initial",
+      "fixture": "build/macos/playtests/20261003T012818Z/Lekmod-Functional-20261003T012818Z.Civ5Save",
+      "sha256": "8d352e069d418a8a1b9cd75d4f87ed41657214a1c81fd11c3ce8ddfd41086d9b",
+      "max_turns": 0
+    },
+    {
+      "id": "global-team-policy",
+      "scenario": "global-team-policy",
+      "fixture": "build/macos/playtests/20261003T012818Z/Lekmod-Functional-20261003T012818Z.Civ5Save",
+      "sha256": "8d352e069d418a8a1b9cd75d4f87ed41657214a1c81fd11c3ce8ddfd41086d9b",
+      "max_turns": 2
+    }
+  ]
+}

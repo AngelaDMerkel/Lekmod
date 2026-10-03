@@ -10280,6 +10280,168 @@
         "Native reward delivery and calculated building happiness are not physical policy UI or earned culture coverage",
         "crowded or unavailable extra-territory selection remains a separate boundary"
       ]
+    },
+    {
+      "id": "POL-CONSULATES-SHARED-TEAM",
+      "group": "G6",
+      "title": "Native shared/nonmatching-team Consulates events",
+      "status": "ready",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Lekmod_policies.lua",
+          "sha256": "96d6e839a23c80b4b575fcc5746d06576fe85db9ddfa4213caae4fef9b918749"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTeam.cpp",
+          "sha256": "49d6fdd96e4e9e602b2426ac629d16a9a7fa8d453ba7989bc3e49fab1a9d17d0"
+        }
+      ],
+      "owners": [
+        "one human Wales0/team7",
+        "AI Mongols1/team7",
+        "AI Timurids2/team0"
+      ],
+      "expected_result": "Legal human0/AI1 Industrial adoptions on shared team7 each give2delegates. One real Modern team7 transition increments both to3. Actual team0 era transitions by unrelated nonowner2 leave player0/team7 unchanged and award nothing to nonowner2. Known research and owned policy cannot repeat; choices debit once.",
+      "units": "native policy delegates or city marker counts, choices and era/team/owner identities",
+      "supplied_inputs": [
+        "normal three-civilization single-player fixture, teams7/7/0 chosen before StartGame",
+        "research and prerequisites/free choices for specified legal adoptions",
+        "Settler and legal position only in the global-policy stage"
+      ],
+      "actual_trigger": "Real native team research/era events, human policy command, actual AI owner-turn adoption and normal Found. Initial marker case is read-only. No reward counter, building marker, midgame team, synchronization flag or turn is assigned.",
+      "negative_controls": [
+        "other civilization/owner",
+        "same numeric team ID as unrelated player",
+        "missing technology/policy",
+        "capital-only marker excluded from secondary city",
+        "duplicate policy/research as applicable"
+      ],
+      "transitions": [
+        "initialization/founding",
+        "shared-team research/era",
+        "native human/AI policy adoption",
+        "exact save/reload"
+      ],
+      "persistence_requirement": "Each passing stage must exactly replay; any failing stage must retain its true checkpoint for repair testing.",
+      "required_evidence_level": [
+        "scripted-command",
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20261003T012818Z/Lekmod-Functional-20261003T012818Z.Civ5Save",
+          "sha256": "8d352e069d418a8a1b9cd75d4f87ed41657214a1c81fd11c3ce8ddfd41086d9b"
+        }
+      ],
+      "batch": "LEKMOD_DLL/macos/batch-plans/single-player-team-events.json",
+      "stage": [
+        "consulates-teams"
+      ],
+      "evidence": [],
+      "surface_ids": [],
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/batch-plans/single-player-team-events.json",
+          "sha256": "9a161416b3273fb60c6ba468872c667306a20d16b2a33603883bf789e33ef424"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-consulates-teams.lua",
+          "sha256": "7eeadf3253161bec97b24aace88aa572abfe1ab2683d5bc41338bc380b7a1475"
+        }
+      ],
+      "implementation_limits": [
+        "Preflight passed; native outcomes pending.",
+        "Non-native skipped-era and excess-award migration boundaries remain in the28case actual-Lua suite."
+      ]
+    },
+    {
+      "id": "LIFE-GLOBAL-TEAM-DISPATCH",
+      "group": "G2",
+      "title": "Global building rewards distinguish player and team callbacks",
+      "status": "ready",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Lekmod_global_dummies.lua",
+          "sha256": "2f4bc354fab34b709b75465940674a76fe5394715d6d307ac071a59139a4b0ed"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTechClasses.cpp",
+          "sha256": "501083b7377a0a6191152cb99164a04b4ab1459324545a532c7324a670a57306"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPlayer.cpp",
+          "sha256": "31dd845837800229e4c4e2708e471996f03858f722b8cbf14bdfa2a8ed67c788"
+        }
+      ],
+      "owners": [
+        "one human Wales0/team7",
+        "AI Mongols1/team7",
+        "AI Timurids2/team0"
+      ],
+      "expected_result": "Normal Timurids owner2/team0 founding requires capital Ulug1. Team7 research grants Wales/Mongol capital markers only to the respective civilization. Human0 and AI1 Economic Union adoption and normal subsequent human Found require one marker in each owned city; unrelated owner2 markers must not change from player0 adoption. Capital-only traits exclude the new secondary city; legal choices debit once.",
+      "units": "native policy delegates or city marker counts, choices and era/team/owner identities",
+      "supplied_inputs": [
+        "normal three-civilization single-player fixture, teams7/7/0 chosen before StartGame",
+        "research and prerequisites/free choices for specified legal adoptions",
+        "Settler and legal position only in the global-policy stage"
+      ],
+      "actual_trigger": "Real native team research/era events, human policy command, actual AI owner-turn adoption and normal Found. Initial marker case is read-only. No reward counter, building marker, midgame team, synchronization flag or turn is assigned.",
+      "negative_controls": [
+        "other civilization/owner",
+        "same numeric team ID as unrelated player",
+        "missing technology/policy",
+        "capital-only marker excluded from secondary city",
+        "duplicate policy/research as applicable"
+      ],
+      "transitions": [
+        "initialization/founding",
+        "shared-team research/era",
+        "native human/AI policy adoption",
+        "exact save/reload"
+      ],
+      "persistence_requirement": "Each passing stage must exactly replay; any failing stage must retain its true checkpoint for repair testing.",
+      "required_evidence_level": [
+        "scripted-command",
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20261003T012818Z/Lekmod-Functional-20261003T012818Z.Civ5Save",
+          "sha256": "8d352e069d418a8a1b9cd75d4f87ed41657214a1c81fd11c3ce8ddfd41086d9b"
+        }
+      ],
+      "batch": "LEKMOD_DLL/macos/batch-plans/single-player-team-events.json",
+      "stage": [
+        "global-team-initial",
+        "global-team-policy"
+      ],
+      "evidence": [],
+      "surface_ids": [
+        "lua:Lua/Lekmod_global_dummies.lua:GameEvents.PlayerCityFounded:lekmod_add_global_dummy_buildings",
+        "lua:Lua/Lekmod_global_dummies.lua:GameEvents.TeamSetHasTech:lekmod_add_global_dummy_buildings",
+        "lua:Lua/Lekmod_global_dummies.lua:GameEvents.PlayerAdoptPolicy:lekmod_add_global_dummy_buildings"
+      ],
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/batch-plans/single-player-team-events.json",
+          "sha256": "9a161416b3273fb60c6ba468872c667306a20d16b2a33603883bf789e33ef424"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-global-team-initial.lua",
+          "sha256": "b4218c5479a111741679e6223e7647f1ea4bed7da0dea4fad64cf9917d7ff84e"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-global-team-policy.lua",
+          "sha256": "3e03905a6b24a745454bec8392a9e168a3aca3c198d6bb2cd5371d430a41e248"
+        }
+      ],
+      "implementation_limits": [
+        "Preflight passed; native outcomes pending.",
+        "This is callback routing/marker delivery, not all configured marker yield/production/trade consumers.",
+        "Ukraine/Colombia tech predicates, capture/capital changes, golden-age and branch transitions remain separately untriaged; Global_Dummy_Buildings data surface is not closed by these representative rows."
+      ]
     }
   ],
   "surface_review": [
@@ -21200,8 +21362,11 @@
     {
       "id": "lua:Lua/Lekmod_global_dummies.lua:GameEvents.PlayerCityFounded:lekmod_add_global_dummy_buildings",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "LIFE-GLOBAL-TEAM-DISPATCH"
+      ],
+      "reason": "Reviewed native player/team dispatch case is ready on a normal single-player fixture with mismatched/shared teams. Representative predicates and marker delivery only; the full configured data relation and remaining event/consumer boundaries remain open."
     },
     {
       "id": "lua:Lua/Lekmod_global_dummies.lua:GameEvents.CityCaptureComplete:lekmod_add_global_dummy_buildings_on_capture",
@@ -21212,14 +21377,20 @@
     {
       "id": "lua:Lua/Lekmod_global_dummies.lua:GameEvents.TeamSetHasTech:lekmod_add_global_dummy_buildings",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "LIFE-GLOBAL-TEAM-DISPATCH"
+      ],
+      "reason": "Reviewed native player/team dispatch case is ready on a normal single-player fixture with mismatched/shared teams. Representative predicates and marker delivery only; the full configured data relation and remaining event/consumer boundaries remain open."
     },
     {
       "id": "lua:Lua/Lekmod_global_dummies.lua:GameEvents.PlayerAdoptPolicy:lekmod_add_global_dummy_buildings",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "LIFE-GLOBAL-TEAM-DISPATCH"
+      ],
+      "reason": "Reviewed native player/team dispatch case is ready on a normal single-player fixture with mismatched/shared teams. Representative predicates and marker delivery only; the full configured data relation and remaining event/consumer boundaries remain open."
     },
     {
       "id": "lua:Lua/Lekmod_global_dummies.lua:GameEvents.PlayerPolicyBranchUnlocked:lekmod_add_global_dummy_buildings",
@@ -29898,17 +30069,18 @@
     }
   ],
   "summary": {
-    "designed_cases": 71,
+    "designed_cases": 73,
     "case_statuses": {
       "passed": 31,
-      "covered-by-evidence": 40
+      "covered-by-evidence": 40,
+      "ready": 2
     },
     "review_surfaces": 1341,
     "pending_document_rows": 121,
     "final_case_denominator_frozen": false,
     "surface_statuses": {
-      "untriaged": 1243,
-      "mapped": 76,
+      "untriaged": 1240,
+      "mapped": 79,
       "presentation-only": 19,
       "out-of-scope": 3
     },
