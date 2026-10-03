@@ -20685,14 +20685,28 @@
     {
       "id": "lua:Lua/Lekmod_improvements.lua:GameEvents.BuildFinished:improvement_adjacent_bonus",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "out-of-scope",
+      "case_ids": [],
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Lekmod_improvements.lua",
+          "sha256": "6277403eb0e0dc90b85865fbc6cb06ac0689ac874b4ed2ef9b214d5d48455661"
+        }
+      ],
+      "reason": "Inactive scaffolding in the shipped configuration: its exact Improvement_Adjacency_Yields table has no schema or rows in the pinned native resolved database, and shipped XML/SQL has no definition. The guard returns before effects. This does not exclude the separately configured native Improvement_AdjacencyYield or Improvement_AdjacencyYieldCivilization tables; those remain in scope. Existing warning remains visible and is not relabeled as a gameplay pass."
     },
     {
       "id": "lua:Lua/Lekmod_improvements.lua:GameEvents.CityCaptureComplete:improvement_adjacent_bonus_on_capture",
       "suggested_group": "G7",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "out-of-scope",
+      "case_ids": [],
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Lekmod_improvements.lua",
+          "sha256": "6277403eb0e0dc90b85865fbc6cb06ac0689ac874b4ed2ef9b214d5d48455661"
+        }
+      ],
+      "reason": "Inactive scaffolding in the shipped configuration: its exact Improvement_Adjacency_Yields table has no schema or rows in the pinned native resolved database, and shipped XML/SQL has no definition. The guard returns before effects. This does not exclude the separately configured native Improvement_AdjacencyYield or Improvement_AdjacencyYieldCivilization tables; those remain in scope. Existing warning remains visible and is not relabeled as a gameplay pass."
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_tonga.lua:Events.SequenceGameInitComplete:lekmod_tonga_ua",
@@ -29194,10 +29208,10 @@
     "pending_document_rows": 121,
     "final_case_denominator_frozen": false,
     "surface_statuses": {
-      "untriaged": 1252,
+      "untriaged": 1250,
       "mapped": 68,
       "presentation-only": 19,
-      "out-of-scope": 1
+      "out-of-scope": 3
     },
     "indexed_civilizations": 114,
     "native_parameter_fields_verified": 724

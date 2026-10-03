@@ -471,3 +471,12 @@ aggregate cap and40-minute ceiling. The register contains68 cases:25 passed,
 40 covered by retained evidence and three ready. There remain1,252 untriaged
 surfaces and121 pending document rows. These are review counts, not an overall
 completion percentage; G0 and final F/R acceptance remain open.
+
+## Inactive adjacency scaffold review
+
+The two listeners in `Lekmod_improvements.lua` are excluded only as inactive
+scaffolding: the exact `Improvement_Adjacency_Yields` table has no shipped schema
+or native database entry, and its guard returns before applying effects. The
+differently named, populated native adjacency tables remain in scope. Existing
+warning logs are preserved. This source/database review leaves1,250 untriaged
+surfaces; it does not establish any new native gameplay pass.
