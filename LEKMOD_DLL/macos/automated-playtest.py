@@ -488,7 +488,7 @@ def main():
     parser.add_argument("--skip-intro", type=int, choices=(0, 1), default=1, help="Temporary SkipIntroVideo setting for startup controls")
     parser.add_argument("--world-size", default="WORLDSIZE_HUGE")
     parser.add_argument("--map-script", choices=("Continents.lua", "Pangaea.lua", "Archipelago.lua", "Fractal.lua", "SmallContinents.lua", "Lakes.lua", "InlandSea.lua"), default="Continents.lua")
-    parser.add_argument("--game-speed", choices=tuple("GAMESPEED_" + s for s in ("QUICK", "STANDARD", "EPIC", "MARATHON")), default="GAMESPEED_QUICK")
+    parser.add_argument("--game-speed", choices=tuple("GAMESPEED_" + s for s in ("ONLINE", "QUICK", "STANDARD", "EPIC", "MARATHON")), default="GAMESPEED_QUICK")
     parser.add_argument("--handicap", choices=tuple("HANDICAP_" + s for s in ("SETTLER", "CHIEFTAIN", "WARLORD", "PRINCE", "KING", "EMPEROR", "IMMORTAL", "DEITY")), default="HANDICAP_PRINCE", help="Normal human difficulty selection; AI slot defaults remain Prince")
     parser.add_argument("--game-option", action="append", type=parse_game_option, default=[], help="Explicit single-player setup option, GAMEOPTION_TYPE=0|1; repeat for distinct options")
     parser.add_argument("--start-era", type=parse_start_era, default="ERA_ANCIENT", help="Normal starting era; Atomic/Information aliases map to POSTMODERN/FUTURE; ignored when loading")

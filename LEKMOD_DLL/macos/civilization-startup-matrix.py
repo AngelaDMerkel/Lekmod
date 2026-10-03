@@ -22,6 +22,7 @@ def main():
     p.add_argument('--from-group',type=int,default=1,help='with --all, start at the first unfinished one-based group')
     p.add_argument('--allow-duplicate-civilizations',action='store_true',help='explicit custom ownership fixture only; catalogue uniqueness remains required')
     p.add_argument('--map-script',choices=('Continents.lua','Pangaea.lua','Archipelago.lua','Fractal.lua','SmallContinents.lua','Lakes.lua','InlandSea.lua'),help='normal map selection for a custom fixture roster')
+    p.add_argument('--game-speed',choices=('GAMESPEED_ONLINE','GAMESPEED_QUICK','GAMESPEED_STANDARD','GAMESPEED_EPIC','GAMESPEED_MARATHON'),help='normal speed selection for an explicit single-player fixture roster')
     p.add_argument('--teams',help='comma-separated team IDs for exactly one explicit single-player roster; no extra humans')
     p.add_argument('--minutes',type=int,default=45)
     p.add_argument('--preflight-only',action='store_true')
@@ -36,6 +37,8 @@ def main():
     if len(flat)!=114 or len(set(flat))!=114 or any(not 2<=len(g)<=12 for g in plan['groups']):p.error('Invalid civilization group inventory')
     if a.map_script and not a.roster:p.error('--map-script requires an explicit --roster; catalogue map stays fixed')
     if a.map_script:plan={**plan,'map':a.map_script}
+    if a.game_speed and not a.roster:p.error('--game-speed requires an explicit --roster; catalogue speed stays fixed')
+    if a.game_speed:plan={**plan,'speed':a.game_speed}
     if a.allow_duplicate_civilizations and not a.roster:p.error('--allow-duplicate-civilizations requires an explicit --roster')
     if a.roster:
         known=set(flat);rosters=[row.split(',')for row in a.roster]
