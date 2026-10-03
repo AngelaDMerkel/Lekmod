@@ -161,6 +161,8 @@ FUNCTIONAL_ITEMS = {"script-data", "science-overflow", "unit-position-flags", "c
                     "production-unit", "production-building", "production-wonder", "production-process"}
 PRODUCTION_COMPLETION_ITEMS = {"production-completion-unit", "production-completion-building"}
 SCENARIO_ITEMS = {
+    'turkey-great-work-yields': {'turkey-native-people-works', 'turkey-foreign-owner', 'turkey-four-class-yields', 'turkey-returned-owner', 'turkey-work-movement', 'turkey-native-artifact', 'turkey-work-data'},
+    'trait-build-times': {'build-resource-visibility', 'build-resource-class-controls', 'build-native-completions', 'build-configured-rows', 'build-foreign-control', 'build-native-orders', 'build-scaled-prices'},
     'indonesia-resources': {'spice-foreign-control', 'spice-same-area-control', 'spice-founding-sequence', 'spice-loaded-boundary', 'spice-city-gold-and-tile', 'spice-data-rules', 'spice-owner-accounting'},
     'global-resource-yields': {'resource-no-stacking', 'resource-owner-transition', 'resource-data-rows', 'resource-both-cities', 'resource-new-city', 'resource-before-tech', 'resource-foreign-and-type-controls'},
     "mongol-horses": {'mongol-active-rule', 'mongol-claim-and-food', 'mongol-new-city-after-tech', 'mongol-repeat-tech', 'mongol-protected-plots', 'mongol-no-tech-control', 'mongol-all-city-grants'},
