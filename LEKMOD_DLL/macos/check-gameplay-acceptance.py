@@ -64,13 +64,74 @@ def native_run_replay_contract(case, root):
         raise ValueError('run/replay loaded checkpoint bytes differ')
 
 
+def native_run_batch_replay_contract(case, root):
+    """Link a standalone scenario result to a later replay-only batch stage."""
+    contract = case['evidence_contract']
+    if contract.get('scenario_sha256') not in {r['sha256'] for r in case['source_references']}:
+        raise ValueError('run/batch replay needs pinned scenario source')
+    keys = ['report', 'replay_report', 'batch_report', 'batch_plan']
+    paths = [contract[key] for key in keys]
+    if len(set(paths)) != len(paths) or not set(paths) <= {r['path'] for r in case['evidence']}:
+        raise ValueError('run/batch replay needs distinct pinned reports and plan')
+    run, replay, batch, plan = [json.loads(resolve(root, path).read_text()) for path in paths]
+    for report, scenario in [(run, contract['scenario']), (replay, 'batch')]:
+        checks = report.get('functional_checks', {})
+        if not (report.get('status') == 'passed-scenario-checks-only'
+                and report.get('normal_exit_verified') is True and report.get('process_returncode') == 0
+                and report.get('binary_sha256') == contract['gamecore_sha256']
+                and report.get('scenario') == scenario and report.get('save_file_verified') is True
+                and report.get('settings_restored') is True and report.get('temporary_ui_hooks_restored') is True
+                and report.get('manual_saves_preserved') is True and not report.get('lua_runtime_errors')
+                and report.get('synchronization_checks') and not any(report['synchronization_checks'].values())
+                and not report.get('new_diagnostics') and not report.get('localization_startup_failure')
+                and not report.get('unclassified_stall_requires_review')
+                and checks.get('verified') is True and checks.get('complete') is True
+                and checks.get('failed') is False and not checks.get('skipped')
+                and checks.get('outcomes') and all(v == 'PASS' for v in checks['outcomes'].values())):
+            raise ValueError('run/batch replay pass/exit/preservation contract failed: ' + case['id'])
+    required = contract.get('required_assertions', [])
+    if not required or not set(required) <= set(run['functional_checks']['outcomes']):
+        raise ValueError('run/batch replay missing required assertions')
+    stages = [s for s in plan.get('stages', []) if s.get('id') == contract['stage']]
+    results = [s for s in batch.get('results', []) if s.get('id') == contract['stage']]
+    if len(stages) != 1 or len(results) != 1:
+        raise ValueError('run/batch replay needs exactly one planned stage and result')
+    stage, result = stages[0], results[0]
+    if not (batch.get('complete') is True and batch.get('failed') is False
+            and replay.get('batch_complete') is True and result.get('failed') is False
+            and result.get('mode') == 'reload' and result.get('turns') == 0
+            and result.get('outcomes') == {'save-reload': 'PASS'}
+            and replay['functional_checks']['outcomes'].get(contract['stage'] + '::save-reload') == 'PASS'
+            and stage.get('replay_only') is True and stage.get('max_turns') == 0
+            and stage.get('scenario') == contract['scenario']
+            and stage.get('source_sha256') == contract['scenario_sha256']
+            and stage.get('expected_report_sha256') == sha(resolve(root, contract['report']))
+            and Path(stage.get('expected_report', '')).resolve() == resolve(root, contract['report']).resolve()
+            and Path(stage.get('fixture', '')).resolve() == Path(run.get('saved_copy', '')).resolve()
+            and stage.get('sha256') == run.get('saved_sha256')
+            and run.get('saved_state') and run['saved_state'] == stage.get('expected') == result.get('state')
+            and run.get('started_utc') and replay.get('started_utc')
+            and run['started_utc'] != replay['started_utc']):
+        raise ValueError('run/batch replay plan, input or exact state differs: ' + case['id'])
+    # Historical batches saved before the later writer-probe feature. They must
+    # have exited normally, and all retained source/output bytes must still match.
+    # This evidence cannot claim the newer writer-probe instrumentation.
+    for path, digest in [(run.get('generated_save'), run.get('saved_sha256')),
+                         (run.get('saved_copy'), run.get('saved_sha256')),
+                         (result.get('saved_copy'), result.get('saved_sha256'))]:
+        if not path or not Path(path).is_file() or sha(Path(path)) != digest:
+            raise ValueError('run/batch replay checkpoint bytes differ: ' + case['id'])
+
+
 def native_batch_contract(case, root):
     contract=case.get('evidence_contract',{})
+    if contract.get('kind') == 'native-run-batch-replay':
+        return native_run_batch_replay_contract(case, root)
     if contract.get('kind') == 'native-run-replay':
         return native_run_replay_contract(case, root)
     if contract.get('kind')=='native-batch-stages':
         stages=contract.get('stages',[])
-        if not stages or any(c.get('kind')not in {'native-batch-stage','native-isolated-stage','native-run-replay'} for c in stages):
+        if not stages or any(c.get('kind')not in {'native-batch-stage','native-isolated-stage','native-run-replay','native-run-batch-replay'} for c in stages):
             raise ValueError('composite evidence needs nonempty native stage contracts')
         identities=[(c['kind'],c['report'],c.get('replay_report',c.get('batch_report')),c.get('stage')) for c in stages]
         if len(set(identities))!=len(identities):

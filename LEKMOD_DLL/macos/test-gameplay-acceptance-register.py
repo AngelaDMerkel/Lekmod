@@ -256,6 +256,84 @@ class RegisterTests(unittest.TestCase):
         self.put('parameters.json',{'changed':True})
         with self.assertRaisesRegex(ValueError,'changed/missing'):check.validate(self.reg,self.root)
 
+    def run_batch_evidence(self):
+        run, replay = self.separate_evidence()
+        scenario_sha = self.ref('source.lua')['sha256']
+        stage = dict(id='startup', scenario='bonus', replay_only=True, max_turns=0,
+                     source_sha256=scenario_sha, fixture=run['saved_copy'], sha256=run['saved_sha256'],
+                     expected=run['saved_state'], expected_report=str(self.root/'report.json'),
+                     expected_report_sha256=self.ref('report.json')['sha256'])
+        result = dict(id='startup', mode='reload', failed=False, turns=0,
+                      outcomes={'save-reload':'PASS'}, state=run['saved_state'],
+                      saved_copy=run['saved_copy'], saved_sha256=run['saved_sha256'])
+        replay.update(status='passed-scenario-checks-only', scenario='batch', batch_complete=True)
+        replay['functional_checks']['outcomes']={'startup::save-reload':'PASS','batch-complete':'PASS'}
+        batch = dict(complete=True, failed=False, results=[result])
+        plan = {'stages':[stage]}
+        self.put('replay.json', replay); self.put('batch.json', batch); self.put('plan.json', plan)
+        self.case['evidence_contract']=dict(kind='native-run-batch-replay',report='report.json',
+            replay_report='replay.json',batch_report='batch.json',batch_plan='plan.json',
+            stage='startup',scenario='bonus',scenario_sha256=scenario_sha,
+            required_assertions=['bonus'],gamecore_sha256='a'*64)
+        self.pin_run_batch()
+        return run,replay,batch,plan
+
+    def pin_run_batch(self):
+        self.case['evidence']=[self.ref(n) for n in ['report.json','replay.json','batch.json','plan.json']]
+
+    def test_standalone_run_with_later_batch_replay(self):
+        self.run_batch_evidence()
+        self.assertTrue(check.validate(self.reg,self.root)['valid'])
+        contract=copy.deepcopy(self.case['evidence_contract'])
+        self.case['evidence_contract']={'kind':'native-batch-stages','stages':[contract]}
+        self.assertTrue(check.validate(self.reg,self.root)['valid'])
+
+    def test_run_batch_replay_rejects_native_failure_or_incomplete_cleanup(self):
+        for target in ['report.json','replay.json']:
+            for field,value in [('normal_exit_verified',False),('process_returncode',-9),
+                ('lua_runtime_errors',['error']),('synchronization_checks',{'forced_resync':True}),
+                ('settings_restored',False),('temporary_ui_hooks_restored',False),
+                ('manual_saves_preserved',False),('new_diagnostics',['crash']),
+                ('save_file_verified',False),('scenario','wrong'),('binary_sha256','b'*64)]:
+                with self.subTest(target=target,field=field):
+                    self.run_batch_evidence();report=json.loads((self.root/target).read_text())
+                    report[field]=value;self.put(target,report);self.pin_run_batch()
+                    with self.assertRaisesRegex(ValueError,'pass/exit'):check.validate(self.reg,self.root)
+
+    def test_run_batch_replay_rejects_wrong_input_plan_and_missing_state(self):
+        for field,value in [('fixture','wrong'),('sha256','b'*64),('expected_report','wrong'),
+            ('expected_report_sha256','b'*64),('expected','{}'),('source_sha256','b'*64),
+            ('scenario','wrong'),('replay_only',False),('max_turns',1)]:
+            with self.subTest(field=field):
+                run,replay,batch,plan=self.run_batch_evidence();plan['stages'][0][field]=value
+                self.put('plan.json',plan);self.pin_run_batch()
+                with self.assertRaisesRegex(ValueError,'plan, input or exact state'):check.validate(self.reg,self.root)
+
+    def test_run_batch_replay_rejects_partial_duplicate_and_changed_results(self):
+        for field,value in [('failed',True),('state','{}'),('mode','run'),('turns',1),('outcomes',{})]:
+            with self.subTest(field=field):
+                run,replay,batch,plan=self.run_batch_evidence();batch['results'][0][field]=value
+                self.put('batch.json',batch);self.pin_run_batch()
+                with self.assertRaisesRegex(ValueError,'plan, input or exact state'):check.validate(self.reg,self.root)
+        for target,key in [('batch.json','results'),('plan.json','stages')]:
+            for duplicate in [True,False]:
+                self.run_batch_evidence();data=json.loads((self.root/target).read_text())
+                data[key]=data[key]*2 if duplicate else []
+                self.put(target,data);self.pin_run_batch()
+                with self.assertRaisesRegex(ValueError,'exactly one'):check.validate(self.reg,self.root)
+
+    def test_run_batch_replay_requires_pinned_inputs_and_assertions(self):
+        self.run_batch_evidence();self.case['evidence']=self.case['evidence'][:-1]
+        with self.assertRaisesRegex(ValueError,'distinct pinned'):check.validate(self.reg,self.root)
+        self.run_batch_evidence();self.case['evidence_contract']['required_assertions']=[]
+        with self.assertRaisesRegex(ValueError,'missing required'):check.validate(self.reg,self.root)
+        self.run_batch_evidence();self.case['evidence_contract']['scenario_sha256']='b'*64
+        with self.assertRaisesRegex(ValueError,'pinned scenario'):check.validate(self.reg,self.root)
+
+    def test_run_batch_replay_rejects_changed_save_bytes(self):
+        self.run_batch_evidence();self.put('checkpoint.Civ5Save','truncated')
+        with self.assertRaisesRegex(ValueError,'checkpoint bytes'):check.validate(self.reg,self.root)
+
     def test_source_concern_evidence_is_pinned(self):
         self.reg['source_concerns']=[{'id':'REVIEW','source_references':[self.ref('source.lua')],
                                       'evidence':[self.ref('parameters.json')]}]
