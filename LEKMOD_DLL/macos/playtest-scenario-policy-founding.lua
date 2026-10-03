@@ -20,7 +20,7 @@ local function counts(c)
  return v
 end
 local function state(p)
- local cities={};for c in p:Cities()do cities[c:GetID()]={x=c:GetX(),y=c:GetY(),buildings=counts(c),population=c:GetPopulation(),happiness=c:GetHappinessFromBuildings()}end
+ local cities={};for c in p:Cities()do cities[c:GetID()]={x=c:GetX(),y=c:GetY(),buildings=counts(c),population=c:GetPopulation(),happiness=c:GetHappinessFromBuildings(),local_happiness=mode=="colonialism"and c:GetLocalHappiness()or nil}end
  return {policy=p:HasPolicy(policy),free=p:GetNumFreePolicies(),cities=cities,plots=p:GetNumPlots(),workers=workers(p)}
 end
 function LekmodScenario.snapshot(p)return {turn=Game.GetGameTurn(),owners={[0]=state(p),[1]=state(Players[1])}}end
@@ -81,7 +81,7 @@ function LekmodScenario.step(p)
   assert(c:GetPopulation()==(mode=="resettlement"and 5 or 3),"new city extra population differs from4/2")
   assert(p:GetNumPlots()-landBefore==13,"new city must claim base7 plus6 additional plots")
   assert(workers(p)-workersBefore==(mode=="colonialism"and 1 or 0),"founding Worker reward differs")
-  if mode=="colonialism"then assert(c:GetHappinessFromBuildings()==2,"Governor mansion happiness differs")end
+  if mode=="colonialism"then assert(c:GetLocalHappiness()==2 and c:GetHappinessFromBuildings()==0,"Governor mansion local/unmodded happiness differs")end
   for kind,id in pairs(kinds)do assert(c:GetNumRealBuilding(id)==1 and counts(c)[kind]==1,"founding policy gave wrong class, replacement or count")end
   for id,r in pairs(controls.owners[0].cities)do assert(LekmodScenarioJSON(counts(p:GetCityByID(id)))==LekmodScenarioJSON(r.buildings),"preexisting human city was retroactively granted policy buildings")end
   assert(LekmodScenarioJSON(state(Players[1]))==LekmodScenarioJSON(controls.owners[1]),"foreign owner changed during human founding")
@@ -91,7 +91,7 @@ function LekmodScenario.step(p)
   LekmodScenarioRecord("policy-found-repeat-no-stack","PASS","second distinct normal Found grants one per class and consumes its Settler")
   LekmodScenarioRecord("policy-found-population","PASS","both normal new cities have4/2 extra population over the pre-policy1 control")
   LekmodScenarioRecord("policy-found-territory","PASS","pre-policy normal founding claims7; both policy foundings claim13 with clear radius-two input")
-  LekmodScenarioRecord("policy-found-worker-happiness","PASS",mode=="colonialism"and"one native Worker grant and2 building happiness per new city"or"no unconfigured Worker reward")
+  LekmodScenarioRecord("policy-found-worker-happiness","PASS",mode=="colonialism"and"one native Worker grant and2 local happiness (zero unmodded) per new city"or"no unconfigured Worker reward")
   return true
  end
  return false

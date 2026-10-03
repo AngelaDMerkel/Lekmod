@@ -9842,7 +9842,7 @@
       "id": "POL-COMBAT-CLASS-PROMOTIONS",
       "group": "G6",
       "title": "Policy adoption and creation promotions for all four configured combat classes",
-      "status": "ready",
+      "status": "passed",
       "source_references": [
         {
           "path": "LEKMOD/Lua/Lekmod_policies.lua",
@@ -9907,7 +9907,20 @@
       "stage": [
         "promotion-both-owners"
       ],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20261003T011152Z/report.json",
+          "sha256": "957cbe4c560fae28fda65bef3f8ab78337fdf0a3b9ee05830a67c0cacb8cde36"
+        },
+        {
+          "path": "build/macos/playtests/20261003T011152Z/batch-report.json",
+          "sha256": "a07eb569ab04897d0144b30304796b598fa50f81fd1ce74dcba663d7d6a784e1"
+        },
+        {
+          "path": "build/macos/policy-effects-preservation-20261003.json",
+          "sha256": "d37edae04ae7630b04fdae1b02cdd921086f40058fff67f455fa343f1a0e517a"
+        }
+      ],
       "surface_ids": [
         "data:Policy_FreePromotionUnitCombats",
         "lua:Lua/Lekmod_policies.lua:GameEvents.PlayerAdoptPolicy:lekmod_policy_free_promotion_unit_combats_on_adopt",
@@ -9924,7 +9937,41 @@
         }
       ],
       "implementation_limits": [
-        "Preflight passed; no native result yet.",
+        "Native isolated stage/replay passed in20261003T011152Z; whole batch remains failed for reviewed unrelated Colonialism oracle error.",
+        "native modifier queries are not actual battle damage comparisons",
+        "policy free Foreign Legions, upkeep and production bonuses are separate effects"
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-isolated-stage",
+            "report": "build/macos/playtests/20261003T011152Z/report.json",
+            "batch_report": "build/macos/playtests/20261003T011152Z/batch-report.json",
+            "stage": "promotion-both-owners",
+            "required_assertions": [
+              "policy-promotion-AI-existing",
+              "policy-promotion-AI-new",
+              "policy-promotion-choice-accounting",
+              "policy-promotion-class-controls",
+              "policy-promotion-foreign-control",
+              "policy-promotion-human-existing",
+              "policy-promotion-human-new",
+              "policy-promotion-no-repeat"
+            ],
+            "gamecore_sha256": "c8f1723c7588fdf54465781ebbca9d8de009e3e11c76ba6375b5200fd9687aa2",
+            "unrelated_failures": [
+              {
+                "stage": "colonialism-rome",
+                "classification": "harness-oracle-error",
+                "reason": "The valid GetHappinessFromBuildings getter returns unmodded happiness, whereas the configured Happiness2 enters GetLocalHappiness. No product failure inferred; native source CvCity.cpp11824 and11604 confirms the test chose the wrong quantity. Original failed report retained."
+              }
+            ]
+          }
+        ]
+      },
+      "remaining_scope": [
+        "Native isolated stage/replay passed in20261003T011152Z; whole batch remains failed for reviewed unrelated Colonialism oracle error.",
         "native modifier queries are not actual battle damage comparisons",
         "policy free Foreign Legions, upkeep and production bonuses are separate effects"
       ]
@@ -9933,7 +9980,7 @@
       "id": "POL-RESETTLEMENT-FOUNDING",
       "group": "G6",
       "title": "Resettlement founding buildings, replacement lookup, population and territory",
-      "status": "ready",
+      "status": "passed",
       "source_references": [
         {
           "path": "LEKMOD/Lua/Lekmod_policies.lua",
@@ -10003,7 +10050,20 @@
         "resettlement-rome",
         "resettlement-akkad"
       ],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20261003T011152Z/report.json",
+          "sha256": "957cbe4c560fae28fda65bef3f8ab78337fdf0a3b9ee05830a67c0cacb8cde36"
+        },
+        {
+          "path": "build/macos/playtests/20261003T011152Z/batch-report.json",
+          "sha256": "a07eb569ab04897d0144b30304796b598fa50f81fd1ce74dcba663d7d6a784e1"
+        },
+        {
+          "path": "build/macos/policy-effects-preservation-20261003.json",
+          "sha256": "d37edae04ae7630b04fdae1b02cdd921086f40058fff67f455fa343f1a0e517a"
+        }
+      ],
       "surface_ids": [
         "lua:Lua/Lekmod_policies.lua:GameEvents.PlayerCityFounded:lekmod_resettlements_policy_new_buildings",
         "data:Policies.NewCityExtraPopulation",
@@ -10016,11 +10076,69 @@
         },
         {
           "path": "LEKMOD_DLL/macos/playtest-scenario-policy-founding.lua",
-          "sha256": "f820b08c950b2f6351c9c21e659704800b16c3692210c6c259197fd3f84458b1"
+          "sha256": "e95f4bd975f64ddf3da88c2b592fb6d9c3684469e781e525d652c1e0bdcefc11"
         }
       ],
       "implementation_limits": [
-        "Preflight passed; no native result yet.",
+        "Native isolated stage/replay passed in20261003T011152Z; whole batch remains failed for reviewed unrelated Colonialism oracle error.",
+        "Akkad is the native unique-class representative; other replacement lookup parameters require shared-path applicability review",
+        "crowded or unavailable extra-territory selection is not covered by the deliberately clear-radius fixture"
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-isolated-stage",
+            "report": "build/macos/playtests/20261003T011152Z/report.json",
+            "batch_report": "build/macos/playtests/20261003T011152Z/batch-report.json",
+            "stage": "resettlement-rome",
+            "required_assertions": [
+              "policy-found-adoption",
+              "policy-found-before-control",
+              "policy-found-buildings",
+              "policy-found-owner-city-controls",
+              "policy-found-population",
+              "policy-found-repeat-no-stack",
+              "policy-found-territory",
+              "policy-found-worker-happiness"
+            ],
+            "gamecore_sha256": "c8f1723c7588fdf54465781ebbca9d8de009e3e11c76ba6375b5200fd9687aa2",
+            "unrelated_failures": [
+              {
+                "stage": "colonialism-rome",
+                "classification": "harness-oracle-error",
+                "reason": "The valid GetHappinessFromBuildings getter returns unmodded happiness, whereas the configured Happiness2 enters GetLocalHappiness. No product failure inferred; native source CvCity.cpp11824 and11604 confirms the test chose the wrong quantity. Original failed report retained."
+              }
+            ]
+          },
+          {
+            "kind": "native-isolated-stage",
+            "report": "build/macos/playtests/20261003T011152Z/report.json",
+            "batch_report": "build/macos/playtests/20261003T011152Z/batch-report.json",
+            "stage": "resettlement-akkad",
+            "required_assertions": [
+              "policy-found-adoption",
+              "policy-found-before-control",
+              "policy-found-buildings",
+              "policy-found-owner-city-controls",
+              "policy-found-population",
+              "policy-found-repeat-no-stack",
+              "policy-found-territory",
+              "policy-found-worker-happiness"
+            ],
+            "gamecore_sha256": "c8f1723c7588fdf54465781ebbca9d8de009e3e11c76ba6375b5200fd9687aa2",
+            "unrelated_failures": [
+              {
+                "stage": "colonialism-rome",
+                "classification": "harness-oracle-error",
+                "reason": "The valid GetHappinessFromBuildings getter returns unmodded happiness, whereas the configured Happiness2 enters GetLocalHappiness. No product failure inferred; native source CvCity.cpp11824 and11604 confirms the test chose the wrong quantity. Original failed report retained."
+              }
+            ]
+          }
+        ]
+      },
+      "remaining_scope": [
+        "Native isolated stage/replay passed in20261003T011152Z; whole batch remains failed for reviewed unrelated Colonialism oracle error.",
         "Akkad is the native unique-class representative; other replacement lookup parameters require shared-path applicability review",
         "crowded or unavailable extra-territory selection is not covered by the deliberately clear-radius fixture"
       ]
@@ -10029,7 +10147,7 @@
       "id": "POL-COLONIALISM-FOUNDING",
       "group": "G6",
       "title": "Colonialism founding population, territory, Worker and happiness",
-      "status": "ready",
+      "status": "passed",
       "source_references": [
         {
           "path": "LEKMOD/Lua/Lekmod_policies.lua",
@@ -10060,7 +10178,7 @@
         "human Rome",
         "AI first opponent as adopter or unchanged control"
       ],
-      "expected_result": "Two normal post-adoption Found actions each grant one Governor mansion, one Worker,2building happiness,3population and13owned plots. Before adoption, normal Found gives no mansion or Worker,1population and7plots. Prior human cities and foreign-owner snapshot stay unchanged; choice/Settler spending and duplicate-policy rejection are checked.",
+      "expected_result": "Two normal post-adoption Found actions each grant one Governor mansion, one Worker,2local happiness and0unmodded building happiness,3population and13owned plots. Before adoption, normal Found gives no mansion or Worker,1population and7plots. Prior human cities and foreign-owner snapshot stay unchanged; choice/Settler spending and duplicate-policy rejection are checked.",
       "units": "unit promotion flags/native modifier percentage points; building/unit counts, population, plots and happiness",
       "supplied_inputs": [
         "preserved hashed Ancient fixture",
@@ -10098,7 +10216,28 @@
       "stage": [
         "colonialism-rome"
       ],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20261003T011152Z/report.json",
+          "sha256": "957cbe4c560fae28fda65bef3f8ab78337fdf0a3b9ee05830a67c0cacb8cde36"
+        },
+        {
+          "path": "build/macos/playtests/20261003T011152Z/batch-report.json",
+          "sha256": "a07eb569ab04897d0144b30304796b598fa50f81fd1ce74dcba663d7d6a784e1"
+        },
+        {
+          "path": "build/macos/playtests/20261003T011819Z/report.json",
+          "sha256": "83ef9d4afa4f71e0a0a15999c386e94055f45a085bbde6bf0460a24314ef3700"
+        },
+        {
+          "path": "build/macos/playtests/20261003T011819Z/batch-report.json",
+          "sha256": "86bbf845eff3910224b7cf820b7a4b66db37943dfd3f58c2e84eaf0fa565508e"
+        },
+        {
+          "path": "build/macos/colonialism-preservation-20261003.json",
+          "sha256": "76073fd1862c5fb3879c5c62bfb69f09d409e363782a566da129f624b724df8d"
+        }
+      ],
       "surface_ids": [
         "lua:Art/No Quitters Mod (v 11)/social_policies/8_exploration/Exploration1_Colonialism.lua:GameEvents.PlayerCityFounded:NQMP_Exploration_Colonialism_OnFoundCity",
         "data:Policies.NewCityExtraPopulation",
@@ -10111,11 +10250,33 @@
         },
         {
           "path": "LEKMOD_DLL/macos/playtest-scenario-policy-founding.lua",
-          "sha256": "f820b08c950b2f6351c9c21e659704800b16c3692210c6c259197fd3f84458b1"
+          "sha256": "e95f4bd975f64ddf3da88c2b592fb6d9c3684469e781e525d652c1e0bdcefc11"
         }
       ],
       "implementation_limits": [
-        "Preflight passed; no native result yet.",
+        "Corrected local2/unmodded0 oracle and exact replay passed in20261003T011819Z; original query failure retained as a harness error.",
+        "Native reward delivery and calculated building happiness are not physical policy UI or earned culture coverage",
+        "crowded or unavailable extra-territory selection remains a separate boundary"
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stage",
+        "report": "build/macos/playtests/20261003T011819Z/report.json",
+        "batch_report": "build/macos/playtests/20261003T011819Z/batch-report.json",
+        "stage": "colonialism-rome",
+        "required_assertions": [
+          "policy-found-adoption",
+          "policy-found-before-control",
+          "policy-found-buildings",
+          "policy-found-owner-city-controls",
+          "policy-found-population",
+          "policy-found-repeat-no-stack",
+          "policy-found-territory",
+          "policy-found-worker-happiness"
+        ],
+        "gamecore_sha256": "c8f1723c7588fdf54465781ebbca9d8de009e3e11c76ba6375b5200fd9687aa2"
+      },
+      "remaining_scope": [
+        "Corrected local2/unmodded0 oracle and exact replay passed in20261003T011819Z; original query failure retained as a harness error.",
         "Native reward delivery and calculated building happiness are not physical policy UI or earned culture coverage",
         "crowded or unavailable extra-territory selection remains a separate boundary"
       ]
@@ -29739,9 +29900,8 @@
   "summary": {
     "designed_cases": 71,
     "case_statuses": {
-      "passed": 28,
-      "covered-by-evidence": 40,
-      "ready": 3
+      "passed": 31,
+      "covered-by-evidence": 40
     },
     "review_surfaces": 1341,
     "pending_document_rows": 121,
