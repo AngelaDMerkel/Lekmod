@@ -6,7 +6,8 @@
   "extra_sources": [
     "lekmod_diagnostics.cpp",
     "info-cache-audit.cpp",
-    "info-array-audit.cpp"
+    "info-array-audit.cpp",
+    "resource-grant-audit.cpp"
   ],
   "extra_flags": []
 }

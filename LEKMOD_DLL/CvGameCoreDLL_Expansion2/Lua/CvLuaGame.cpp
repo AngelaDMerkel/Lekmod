@@ -30,6 +30,7 @@
 #if defined(__APPLE__)
 extern int LekmodMacReadInfoCache(lua_State* L);
 extern int LekmodMacReadInfoArray(lua_State* L);
+extern int LekmodMacReadResourceGrants(lua_State* L);
 #endif
 
 #define Method(func) RegisterMethod(L, l##func, #func);
@@ -54,6 +55,7 @@ void CvLuaGame::RegisterMembers(lua_State* L)
 #if defined(__APPLE__)
 	RegisterMethod(L, LekmodMacReadInfoCache, "ReadInfoCacheForTest");
 	RegisterMethod(L, LekmodMacReadInfoArray, "ReadInfoArrayForTest");
+	RegisterMethod(L, LekmodMacReadResourceGrants, "ReadResourceGrantsForTest");
 #endif
 	Method(CanHandleAction);
 	Method(HandleAction);
