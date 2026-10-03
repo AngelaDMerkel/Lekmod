@@ -10334,16 +10334,29 @@
           "sha256": "8d352e069d418a8a1b9cd75d4f87ed41657214a1c81fd11c3ce8ddfd41086d9b"
         }
       ],
-      "batch": "LEKMOD_DLL/macos/batch-plans/single-player-team-events.json",
+      "batch": "LEKMOD_DLL/macos/batch-plans/global-team-fixed-regression.json",
       "stage": [
         "consulates-teams"
       ],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20261003T013721Z/report.json",
+          "sha256": "10ed367bbc6f478212320ad9008bc3ade33beed4985a5a120ca717517e686c0d"
+        },
+        {
+          "path": "build/macos/playtests/20261003T013721Z/batch-report.json",
+          "sha256": "0ef4914e993ebe3240fd8973bf05cfbb4a8d87b34e63dd31cf6c38da4bd12285"
+        },
+        {
+          "path": "build/macos/team-events-preservation-20261003.json",
+          "sha256": "678963a54814fdcf324ba2945b1ba041c33f9ad2e9fe3f2f416db7e61bef6cc2"
+        }
+      ],
       "surface_ids": [],
       "implementation_references": [
         {
-          "path": "LEKMOD_DLL/macos/batch-plans/single-player-team-events.json",
-          "sha256": "9a161416b3273fb60c6ba468872c667306a20d16b2a33603883bf789e33ef424"
+          "path": "LEKMOD_DLL/macos/batch-plans/global-team-fixed-regression.json",
+          "sha256": "60c34251d44a82c127ceabb2c0389e53a5cb5f01568c1f7095153d5cf336f0f0"
         },
         {
           "path": "LEKMOD_DLL/macos/playtest-scenario-consulates-teams.lua",
@@ -10351,7 +10364,7 @@
         }
       ],
       "implementation_limits": [
-        "Preflight passed; native outcomes pending.",
+        "Original shared-team Consulates stage and exact replay passed within a globally failed product batch; rerun on fixed shared-handler package before admitting a whole-pass contract.",
         "Non-native skipped-era and excess-award migration boundaries remain in the28case actual-Lua suite."
       ]
     },
@@ -10363,7 +10376,7 @@
       "source_references": [
         {
           "path": "LEKMOD/Lua/Lekmod_global_dummies.lua",
-          "sha256": "2f4bc354fab34b709b75465940674a76fe5394715d6d307ac071a59139a4b0ed"
+          "sha256": "09f8b0abe2141a69cb7bad658fb99389915498125d385aa667598fe0834e3eb6"
         },
         {
           "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTechClasses.cpp",
@@ -10379,7 +10392,7 @@
         "AI Mongols1/team7",
         "AI Timurids2/team0"
       ],
-      "expected_result": "Normal Timurids owner2/team0 founding requires capital Ulug1. Team7 research grants Wales/Mongol capital markers only to the respective civilization. Human0 and AI1 Economic Union adoption and normal subsequent human Found require one marker in each owned city; unrelated owner2 markers must not change from player0 adoption. Capital-only traits exclude the new secondary city; legal choices debit once.",
+      "expected_result": "Normal Timurids owner2/team0 founding requires capital Ulug1. Team7 research grants Wales/Mongol capital markers only to the respective civilization. Human0 and AI1 Economic Union adoption and normal subsequent human Found require one marker in each owned city; unrelated owner2 markers must not change from player0 adoption. Capital-only traits exclude the new secondary city; legal choices debit once. Both genuine old failure saves repair only the declared marker counts before mutation, retain recorded owner/team/civilization/city and applicable policy/choice/era/position state, remain stable for one ordinary round and replay exactly.",
       "units": "native policy delegates or city marker counts, choices and era/team/owner identities",
       "supplied_inputs": [
         "normal three-civilization single-player fixture, teams7/7/0 chosen before StartGame",
@@ -10410,14 +10423,37 @@
         {
           "path": "build/macos/playtests/20261003T012818Z/Lekmod-Functional-20261003T012818Z.Civ5Save",
           "sha256": "8d352e069d418a8a1b9cd75d4f87ed41657214a1c81fd11c3ce8ddfd41086d9b"
+        },
+        {
+          "path": "build/macos/playtests/20261003T013721Z/checkpoints/Lekmod-Batch-20261003T013721Z-global-team-initial-run.Civ5Save",
+          "sha256": "975a10724f13d85a198c2c7a3bdd8050d7a89e4fce9a8411368bd376ad54bcb0"
+        },
+        {
+          "path": "build/macos/playtests/20261003T013721Z/checkpoints/Lekmod-Batch-20261003T013721Z-global-team-policy-run.Civ5Save",
+          "sha256": "a67fab63fda2de8bf558f0f860da73ba242c2c5d7d91ba9e2071f894056b13be"
         }
       ],
-      "batch": "LEKMOD_DLL/macos/batch-plans/single-player-team-events.json",
+      "batch": "LEKMOD_DLL/macos/batch-plans/global-team-fixed-regression.json",
       "stage": [
         "global-team-initial",
-        "global-team-policy"
+        "global-team-policy",
+        "global-old-initial",
+        "global-old-policy"
       ],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20261003T013721Z/report.json",
+          "sha256": "10ed367bbc6f478212320ad9008bc3ade33beed4985a5a120ca717517e686c0d"
+        },
+        {
+          "path": "build/macos/playtests/20261003T013721Z/batch-report.json",
+          "sha256": "0ef4914e993ebe3240fd8973bf05cfbb4a8d87b34e63dd31cf6c38da4bd12285"
+        },
+        {
+          "path": "build/macos/team-events-preservation-20261003.json",
+          "sha256": "678963a54814fdcf324ba2945b1ba041c33f9ad2e9fe3f2f416db7e61bef6cc2"
+        }
+      ],
       "surface_ids": [
         "lua:Lua/Lekmod_global_dummies.lua:GameEvents.PlayerCityFounded:lekmod_add_global_dummy_buildings",
         "lua:Lua/Lekmod_global_dummies.lua:GameEvents.TeamSetHasTech:lekmod_add_global_dummy_buildings",
@@ -10425,8 +10461,8 @@
       ],
       "implementation_references": [
         {
-          "path": "LEKMOD_DLL/macos/batch-plans/single-player-team-events.json",
-          "sha256": "9a161416b3273fb60c6ba468872c667306a20d16b2a33603883bf789e33ef424"
+          "path": "LEKMOD_DLL/macos/batch-plans/global-team-fixed-regression.json",
+          "sha256": "60c34251d44a82c127ceabb2c0389e53a5cb5f01568c1f7095153d5cf336f0f0"
         },
         {
           "path": "LEKMOD_DLL/macos/playtest-scenario-global-team-initial.lua",
@@ -10435,10 +10471,14 @@
         {
           "path": "LEKMOD_DLL/macos/playtest-scenario-global-team-policy.lua",
           "sha256": "3e03905a6b24a745454bec8392a9e168a3aca3c198d6bb2cd5371d430a41e248"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-global-team-load.lua",
+          "sha256": "3f9b8cefe28ec150872291b7c5d4616bebbef49dde058bd9d522703b2f47beb1"
         }
       ],
       "implementation_limits": [
-        "Preflight passed; native outcomes pending.",
+        "Original native owner/team misrouting confirmed in20261003T013721Z; focused correction passes19actual-Lua cases, native same-input/old-save/Yugoslav regression pending.",
         "This is callback routing/marker delivery, not all configured marker yield/production/trade consumers.",
         "Ukraine/Colombia tech predicates, capture/capital changes, golden-age and branch transitions remain separately untriaged; Global_Dummy_Buildings data surface is not closed by these representative rows."
       ]
@@ -29972,6 +30012,49 @@
       ],
       "finding": "Native20261003T003911Z confirmed first Industrial adopter2votes and second1 in both human/AI orderings; Modern increment retained a3/2 discrepancy. Both failed saves are verified and retained. Team-ID ownership, duplicate events and migration controls are isolated-source evidence.",
       "next_action": "Scoped defect closed: both native orderings and both authentic missing-award saves pass after fixddf38d06, including next round/replay. Retain isolated-only team/overaward boundaries and final F applicability."
+    },
+    {
+      "id": "SC-GLOBAL-PLAYER-TEAM-DISPATCH",
+      "classification": "native-product-failure-fixed-pending-retest",
+      "case_id": "LIFE-GLOBAL-TEAM-DISPATCH",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Lekmod_global_dummies.lua",
+          "sha256": "09f8b0abe2141a69cb7bad658fb99389915498125d385aa667598fe0834e3eb6"
+        },
+        {
+          "path": "build/macos/global-dummies-before-20261003.lua",
+          "sha256": "2f4bc354fab34b709b75465940674a76fe5394715d6d307ac071a59139a4b0ed"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTechClasses.cpp",
+          "sha256": "501083b7377a0a6191152cb99164a04b4ab1459324545a532c7324a670a57306"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20261003T013721Z/report.json",
+          "sha256": "10ed367bbc6f478212320ad9008bc3ade33beed4985a5a120ca717517e686c0d"
+        },
+        {
+          "path": "build/macos/playtests/20261003T013721Z/batch-report.json",
+          "sha256": "0ef4914e993ebe3240fd8973bf05cfbb4a8d87b34e63dd31cf6c38da4bd12285"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/test-global-dummy-events.py",
+          "sha256": "6008c336779f4d9a0bcbef3d0f4acd8331cc255a3b52bafd642244764568c161"
+        },
+        {
+          "path": "build/macos/global-team-source-before-20261003.log",
+          "sha256": "9e648d937158245801df24e530a80cd65c35b00ed40d5cfd9a956edd33463903"
+        },
+        {
+          "path": "build/macos/global-team-source-fixed-20261003.log",
+          "sha256": "ffbad2824d82c9bcf390703b3d923d40783ec7aaf38c9a1fadee193e2f9f4110"
+        }
+      ],
+      "finding": "Native nonmatching/shared team fixture confirms missing Timurids capital marker, missing human/AI Economic Union markers, missed subsequent founding and unrelated player refresh. The old helper compared a Player object to numeric player ID and otherwise routed by team.19actual-Lua controls, including correct native-style owner0 enumeration, fail8before and pass after scoped routing/load repair.",
+      "next_action": "Run same input and both genuine failed saves, plus Yugoslav normal-team shared-path regression on clean new package. Refresh discovery for renamed team callback/new load listener. New normal-start founding must also be reverified after fix; retain failed baseline."
     }
   ],
   "dependency_review": [

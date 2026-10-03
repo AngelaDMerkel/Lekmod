@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "name": "global-team-fixed-regression",
+  "stages": [
+    {
+      "id": "consulates-teams",
+      "scenario": "consulates-teams",
+      "fixture": "build/macos/playtests/20261003T012818Z/Lekmod-Functional-20261003T012818Z.Civ5Save",
+      "sha256": "8d352e069d418a8a1b9cd75d4f87ed41657214a1c81fd11c3ce8ddfd41086d9b",
+      "max_turns": 2
+    },
+    {
+      "id": "global-team-initial",
+      "scenario": "global-team-initial",
+      "fixture": "build/macos/playtests/20261003T012818Z/Lekmod-Functional-20261003T012818Z.Civ5Save",
+      "sha256": "8d352e069d418a8a1b9cd75d4f87ed41657214a1c81fd11c3ce8ddfd41086d9b",
+      "max_turns": 0
+    },
+    {
+      "id": "global-team-policy",
+      "scenario": "global-team-policy",
+      "fixture": "build/macos/playtests/20261003T012818Z/Lekmod-Functional-20261003T012818Z.Civ5Save",
+      "sha256": "8d352e069d418a8a1b9cd75d4f87ed41657214a1c81fd11c3ce8ddfd41086d9b",
+      "max_turns": 2
+    },
+    {
+      "id": "global-old-initial",
+      "scenario": "global-team-load",
+      "fixture": "build/macos/playtests/20261003T013721Z/checkpoints/Lekmod-Batch-20261003T013721Z-global-team-initial-run.Civ5Save",
+      "sha256": "975a10724f13d85a198c2c7a3bdd8050d7a89e4fce9a8411368bd376ad54bcb0",
+      "max_turns": 1,
+      "parameters": {
+        "mode": "initial",
+        "expected_state": "{\"owners\":{\"0\":{\"cities\":{\"8192\":{\"mongol\":0,\"ulug\":0,\"union\":0,\"wales\":0,\"x\":97,\"y\":29}},\"civilization\":87,\"team\":7},\"1\":{\"cities\":{\"8192\":{\"mongol\":0,\"ulug\":0,\"union\":0,\"wales\":0,\"x\":55,\"y\":50}},\"civilization\":20,\"team\":7},\"2\":{\"cities\":{\"8192\":{\"mongol\":0,\"ulug\":1,\"union\":0,\"wales\":0,\"x\":27,\"y\":43}},\"civilization\":51,\"team\":0}},\"turn\":2}"
+      }
+    },
+    {
+      "id": "global-old-policy",
+      "scenario": "global-team-load",
+      "fixture": "build/macos/playtests/20261003T013721Z/checkpoints/Lekmod-Batch-20261003T013721Z-global-team-policy-run.Civ5Save",
+      "sha256": "a67fab63fda2de8bf558f0f860da73ba242c2c5d7d91ba9e2071f894056b13be",
+      "max_turns": 1,
+      "parameters": {
+        "mode": "policy",
+        "expected_state": "{\"owners\":{\"0\":{\"cities\":{\"16385\":{\"mongol\":0,\"ulug\":0,\"union\":1,\"wales\":0},\"8192\":{\"mongol\":0,\"ulug\":0,\"union\":1,\"wales\":1}},\"civilization\":87,\"era\":5,\"free\":0,\"team\":7,\"union\":true},\"1\":{\"cities\":{\"8192\":{\"mongol\":1,\"ulug\":0,\"union\":1,\"wales\":0}},\"civilization\":20,\"era\":5,\"free\":0,\"team\":7,\"union\":true},\"2\":{\"cities\":{\"8192\":{\"mongol\":0,\"ulug\":1,\"union\":0,\"wales\":0}},\"civilization\":51,\"era\":0,\"free\":0,\"team\":0,\"union\":false}},\"turn\":3}"
+      }
+    },
+    {
+      "fixture": "build/macos/playtests/20260926T170320Z/Lekmod-Functional-20260926T170320Z.Civ5Save",
+      "sha256": "c5e4d974273b9306c9330398a81757e0ec3b64ffa21cedcbe1aee7dac53b44e5",
+      "id": "yugoslavia-ideology",
+      "scenario": "yugoslavia-ideology",
+      "max_turns": 12
+    },
+    {
+      "id": "yugo-revolution-cycle",
+      "scenario": "yugoslav-revolution-cycle",
+      "fixture": "build/macos/playtests/20260926T171207Z/checkpoints/Lekmod-Batch-20260926T171207Z-yugoslavia-ideology-run.Civ5Save",
+      "sha256": "3df895cafa3b70858e9e804eee2f2fc8cc979e93409d0283c453cc4345cc8fb1",
+      "max_turns": 12
+    }
+  ]
+}

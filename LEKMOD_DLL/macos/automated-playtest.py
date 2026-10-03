@@ -161,6 +161,7 @@ FUNCTIONAL_ITEMS = {"script-data", "science-overflow", "unit-position-flags", "c
                     "production-unit", "production-building", "production-wonder", "production-process"}
 PRODUCTION_COMPLETION_ITEMS = {"production-completion-unit", "production-completion-building"}
 SCENARIO_ITEMS = {
+    "global-team-load": {"global-load-repair","global-load-protected-state","global-load-next-turn"},
     "consulates-teams": {"consulates-team-adoptions","consulates-shared-era","consulates-unrelated-team","consulates-team-repeat","consulates-team-choice"},
     "global-team-policy": {"global-team-tech-awards","global-team-capital-only","global-human-policy-award","global-AI-policy-award","global-new-city-award","global-policy-foreign-control","global-policy-choice-accounting"},
     "global-team-initial": {"global-initial-capital-award","global-initial-owner-tech-controls"},

@@ -5,7 +5,7 @@
 -- Global dummy buildings. Adds a permanent dummy building to every city (or just the capital),
 -- Supports various checks. Data set in the xml (XML Overrides/civ5Units.xml)
 ------------------------------------------------------------------------------------------------------------------------
-function lekmod_add_global_dummy_buildings(player_or_team_id)
+function lekmod_add_global_dummy_buildings(player_id)
 
    local valid_buildings = {}
 
@@ -24,7 +24,7 @@ function lekmod_add_global_dummy_buildings(player_or_team_id)
       for _, player in ipairs(Players) do
 
          if player:IsAlive() and not player:IsBarbarian() and not player:IsMinorCiv() and
-         (player == player_or_team_id or player:GetTeam() == player_or_team_id) then
+         player:GetID() == player_id then
 
             -- first delete all instances of the building, then check if we can re-add it anywhere
             for city in player:Cities() do
@@ -90,9 +90,27 @@ function lekmod_add_global_dummy_buildings_on_capture(old_owner_id, _,_,_, new_o
    lekmod_add_global_dummy_buildings(new_owner_id)
 
 end
+-- Player events identify one owner; research events identify a team. Keep those
+-- dispatch paths distinct when a single-player game has AI teammates or team
+-- numbers that differ from player numbers.
+function lekmod_global_dummy_buildings_on_tech(team_id)
+   for player_id = 0, GameDefines.MAX_MAJOR_CIVS - 1 do
+      local player = Players[player_id]
+      if player and player:GetTeam() == team_id then
+         lekmod_add_global_dummy_buildings(player_id)
+      end
+   end
+end
+
+function lekmod_global_dummy_buildings_on_load()
+   for player_id = 0, GameDefines.MAX_MAJOR_CIVS - 1 do
+      lekmod_add_global_dummy_buildings(player_id)
+   end
+end
+
 GameEvents.PlayerCityFounded.Add(lekmod_add_global_dummy_buildings)
 GameEvents.CityCaptureComplete.Add(lekmod_add_global_dummy_buildings_on_capture)
-GameEvents.TeamSetHasTech.Add(lekmod_add_global_dummy_buildings)
+GameEvents.TeamSetHasTech.Add(lekmod_global_dummy_buildings_on_tech)
 GameEvents.PlayerAdoptPolicy.Add(lekmod_add_global_dummy_buildings)
 -- Note: PlayerPolicyBranchFinished is a Lekmod Event! Not available in the base game
 GameEvents.PlayerPolicyBranchUnlocked.Add(lekmod_add_global_dummy_buildings)
@@ -124,3 +142,6 @@ function lekmod_add_dummy_policies()
 end
 Events.SequenceGameInitComplete.Add(lekmod_add_dummy_policies)
 ------------------------------------------------------------------------------------------------------------------------
+
+-- Reconcile derived markers in old saves after civilization dummy policies load.
+Events.SequenceGameInitComplete.Add(lekmod_global_dummy_buildings_on_load)
