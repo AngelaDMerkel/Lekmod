@@ -161,6 +161,7 @@ FUNCTIONAL_ITEMS = {"script-data", "science-overflow", "unit-position-flags", "c
                     "production-unit", "production-building", "production-wonder", "production-process"}
 PRODUCTION_COMPLETION_ITEMS = {"production-completion-unit", "production-completion-building"}
 SCENARIO_ITEMS = {
+    "free-building-grants": {'free-grant-positive', 'free-grant-next-turn', 'free-grant-data', 'free-grant-transition', 'free-grant-controls', 'free-grant-nonstack', 'free-grant-initial'},
     "religious-attrition": {'attrition-fourth-turn-boundary', 'attrition-border-state', 'attrition-territory-controls', 'attrition-native-death', 'attrition-fixture-and-data', 'attrition-initial-strengths', 'attrition-base-strength-loss'},
     'religion-strength-retention': {'prophet-preview-holy-retention', 'retention-inquisitor-outcome', 'retention-foreign-native-spread', 'prophet-strength-owner-controls', 'retention-inquisitor-boundaries', 'prophet-native-pressure', 'religion-strength-inputs'},
     'religion-spread-charges': {'spread-founder-control', 'spread-charge-inputs', 'spread-constructor-bonuses', 'spread-pressure-preview', 'spread-final-consumption', 'spread-prophet-inquisitor-controls', 'spread-complete-charge-life', 'spread-native-purchase'},
@@ -450,7 +451,7 @@ SINGLE_PLAYER_SETUP_OPTIONS = frozenset({
     "GAMEOPTION_NO_BARBARIANS", "GAMEOPTION_RAGING_BARBARIANS", "GAMEOPTION_NO_GOODY_HUTS",
     "GAMEOPTION_NO_SCIENCE", "GAMEOPTION_NO_POLICIES", "GAMEOPTION_NO_RELIGION",
     "GAMEOPTION_NO_ESPIONAGE", "GAMEOPTION_ONE_CITY_CHALLENGE", "GAMEOPTION_NO_CITY_RAZING",
-    "GAMEOPTION_ALWAYS_PEACE",
+    "GAMEOPTION_ALWAYS_PEACE", "GAMEOPTION_COMPLETE_KILLS",
 })
 
 def parse_slot_civilization(value):
