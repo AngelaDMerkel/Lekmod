@@ -43,6 +43,13 @@
       "fixture": "build/macos/playtests/20260918T065530Z/Lekmod-Functional-20260918T065530Z.Civ5Save",
       "sha256": "574511e03f58fc064d98b15fa57b4acf24072fdbfe434ec62db2230a6e7f0e3d",
       "max_turns": 4
+    },
+    {
+      "id": "philippines-founding",
+      "scenario": "philippines-founding",
+      "fixture": "build/macos/playtests/20260918T084918Z/autosaves-after/AutoSave_Initial_0000 BC-4000.Civ5Save",
+      "sha256": "c8c13490602be7f9691e996e0d0dc397189a81eac32388771e369f0b0a99219c",
+      "max_turns": 2
     }
   ]
 }

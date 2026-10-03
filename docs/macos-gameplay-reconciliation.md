@@ -414,3 +414,34 @@ There are58 specified cases (57scoped passes/retained, one ready array audit),
 blocked by the locked-desktop guard; no game or settings change was started.
 The acceptance goal remains active because meaningful offline reconciliation
 work remains. Full G0, final-candidate applicability and F/R gates are unfinished.
+
+## Opening, exploration and quota reconciliation
+
+Eight retained cases add28 declared native assertions and10 exact replay
+contracts: Mexican initial minor discovery, Pottery Worker grants, Ranchero
+growth during production, Hacienda resource-class yields, tribute influence;
+foreign-owned Zabonah discovery/removal; Minaa damage; and Philippine city-loss
+quota persistence. Five corresponding Lua surfaces have cases assigned, with
+Philippine positive founding explicitly still ready. The sole Mexican600
+afraid-minor coefficient maps to met/eligible750-hundredth native rate, removal
+after tribute and the unmet-eligible zero control. Whole-point friendship views
+are not relabeled as exact fractional balances.
+
+Review identified a specific missing replay: `20260918T090810Z` passed the
+Philippine capital/first-two/third/foreign founding assertions, but no matching
+standalone exact replay was found. Loading that save for a different scenario
+is insufficient. `LIFE-PHILIPPINES-POSITIVE-QUOTA` is therefore ready, not passed,
+and joins the cache/reward plan using the original initial fixture and unchanged
+assertions. The planned session now has72 assertions/seven replays and a six-turn
+aggregate cap. The separate real city-loss/reload case remains accepted at its
+recorded scope.
+
+Nabatea's handler mapping includes real human/AI foreign owners, major/minor
+capital discovery, repeat rejection and normal disband without the prior off-map
+Lua error. No autonomous exploration claim follows. Minaa's supplied embarked
+Worker is a damage target, not evidence of an embark transition. All preserved
+failures and later source applicability obligations remain separate.
+
+The register now has67 cases:65 scoped passes/retained and two ready cases.
+There remain1,254 untriaged surfaces and121 document rows; G0 is still open.
+No live installation or native run occurred during this locked-desktop review.

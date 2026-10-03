@@ -94,3 +94,9 @@ checks. Evidence is `build/macos/config-array-audit-20261002/duplicate-flavor-re
 The normal SQLite winners are10/20/8/2/5; reversed unordered selection yields
 250/9/25/4/3. Neither sequence is promoted to an inferred author specification
 or a native gameplay pass. No source weights or live settings were changed.
+
+The reviewed plan was subsequently extended with the missing Philippine positive
+founding/replay case:72 assertions/seven replays, six aggregate ordinary turns,
+40-minute ceiling. The diagnostic binary/payload is unchanged, so the identified
+clean132-array package remains applicable. Read the latest case register for
+the unexecuted obligations; earlier68-check plan counts are historical.

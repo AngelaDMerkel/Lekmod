@@ -7196,7 +7196,7 @@
       "implementation_references": [
         {
           "path": "LEKMOD_DLL/macos/batch-plans/cache-and-reward-regression.json",
-          "sha256": "eeae239575ec004ddae4a5fdbb745270fdc0d2165defaaa3d15f6a3af2ef3332"
+          "sha256": "dd98f3f78dcee75fa63334d4aa1057191c7f21a45f137b4034f3a40f76552e54"
         },
         {
           "path": "LEKMOD_DLL/macos/playtest-scenario-array-cache.lua",
@@ -8692,6 +8692,864 @@
       "remaining_scope": [
         "Supplied pressure is not earned spread or mouse interaction. Other belief-specific thresholds and happiness caps remain separate.",
         "Original tested binary is retained; final-candidate applicability remains required at F."
+      ]
+    },
+    {
+      "id": "LIFE-MEXICO-OPENING-DISCOVERY",
+      "group": "G2",
+      "title": "Mexican opening minor starts and actual city visibility",
+      "status": "covered-by-evidence",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_mexico.lua",
+          "sha256": "517885bce13ff01aaa9155baf123a6924d4d5cebb0b3ceb50b9004ce138edda4"
+        }
+      ],
+      "owners": [
+        "native roles described in expected result and pinned scenarios"
+      ],
+      "expected_result": "Before minor founding, nearby starts for both Mexican teams are revealed. Actual opening minor foundations reveal their cities at distances8/9/10; eight farther controls remain hidden. One normal turn and exact reload preserve visibility.",
+      "units": "native population/counts, movement/damage, yields, gold/influence or reveal flags",
+      "supplied_inputs": [
+        "normal initial world; no supplied geography/visibility/city/elapsed-turn state"
+      ],
+      "actual_trigger": "Original native actions/events/owner turns with explicit supplied inputs; no physical mouse claim.",
+      "negative_controls": [
+        "two independent Mexican owners",
+        "farther minor controls",
+        "later/dead/major/missing-start exclusions have separate isolated tests"
+      ],
+      "transitions": [
+        "specified native cause/effect boundaries",
+        "exact checkpoint replay"
+      ],
+      "persistence_requirement": "Strict separate-process run/replay identity, state and retained/live save-byte verification.",
+      "required_evidence_level": [
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260918T070031Z/autosaves-after/AutoSave_Initial_0000 BC-4000.Civ5Save",
+          "sha256": "038fa2ab5118ea9b14474bec404d811ad4853f91ef6c63387e4ea965ecd47a3b"
+        }
+      ],
+      "batch": "historical-separate-process-pairs",
+      "stage": [
+        "mexico-discovery"
+      ],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20260918T070657Z/report.json",
+          "sha256": "9934b157a809ad107d12e0d69e25b673bff642f05e77ee26d3ba1b67a0dec736"
+        },
+        {
+          "path": "build/macos/playtests/20260918T071357Z/report.json",
+          "sha256": "d2e84a1f8d0580439ba4c2253b400b6a6cf3986873350a7e0fe494f8f410e84d"
+        }
+      ],
+      "surface_ids": [
+        "lua:Lua/Civilizations/Lekmod_mexico.lua:Events.SequenceGameInitComplete:lekmod_mexico_initial_locations",
+        "lua:Lua/Civilizations/Lekmod_mexico.lua:GameEvents.PlayerCityFounded:lekmod_mexico_initial_city"
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260918T070657Z/report.json",
+            "replay_report": "build/macos/playtests/20260918T071357Z/report.json",
+            "scenario": "mexico-discovery",
+            "required_assertions": [
+              "mexico-starting-locations",
+              "mexico-start-human",
+              "mexico-start-ai",
+              "mexico-distance-control"
+            ],
+            "gamecore_sha256": "cf5273574eb622c53b700d6a0dbfa1e2ff882f5475d4c9a486aa4cdac740e798"
+          }
+        ]
+      },
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-mexico-discovery.lua",
+          "sha256": "89cae994e3ea46eb570117cfe7c54a0291d5da3262725170220de26a8c947a9d"
+        }
+      ],
+      "remaining_scope": [
+        "No retroactive correction of missed visibility in old late saves; other Mexican rewards remain separate.",
+        "Final-candidate applicability remains required at F."
+      ]
+    },
+    {
+      "id": "TRAIT-MEXICO-POTTERY-WORKER",
+      "group": "G4",
+      "title": "Mexican Pottery Worker award and no repeat",
+      "status": "covered-by-evidence",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_mexico.lua",
+          "sha256": "517885bce13ff01aaa9155baf123a6924d4d5cebb0b3ceb50b9004ce138edda4"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPlayer.cpp",
+          "sha256": "31dd845837800229e4c4e2708e471996f03858f722b8cbf14bdfa2a8ed67c788"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTraitClasses.cpp",
+          "sha256": "d6dd5261df9ef25ac73f82ac747d40d732b0b04397572d1b8b1c51c2b9763611"
+        }
+      ],
+      "owners": [
+        "native roles described in expected result and pinned scenarios"
+      ],
+      "expected_result": "Each distinct Mexican team gaining Pottery creates exactly one Worker for its owner while the other owner count is unchanged. Re-sending already-known Pottery creates none. Exact owner-local identities/positions/movement replay.",
+      "units": "native population/counts, movement/damage, yields, gold/influence or reveal flags",
+      "supplied_inputs": [
+        "Pottery supplied through native technology API"
+      ],
+      "actual_trigger": "Original native actions/events/owner turns with explicit supplied inputs; no physical mouse claim.",
+      "negative_controls": [
+        "other team unchanged",
+        "already-known technology no repeat",
+        "no InitUnit Worker input"
+      ],
+      "transitions": [
+        "specified native cause/effect boundaries",
+        "exact checkpoint replay"
+      ],
+      "persistence_requirement": "Strict separate-process run/replay identity, state and retained/live save-byte verification.",
+      "required_evidence_level": [
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260918T070657Z/Lekmod-Functional-20260918T070657Z.Civ5Save",
+          "sha256": "1066f56dcb2685a1921c0e2f807c402b10581a37358ef36182e2b0af1dc0117a"
+        }
+      ],
+      "batch": "historical-separate-process-pairs",
+      "stage": [
+        "mexico-pottery"
+      ],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20260918T072049Z/report.json",
+          "sha256": "4190dd34eb1f37f06058783fa078e30520044a098dc9aff66cc7097bb4b1474b"
+        },
+        {
+          "path": "build/macos/playtests/20260918T072226Z/report.json",
+          "sha256": "1bfb36d6e11e3fc38d4d2c22770d0143ff3c0efd89b6184694581864a189d9cf"
+        }
+      ],
+      "surface_ids": [],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260918T072049Z/report.json",
+            "replay_report": "build/macos/playtests/20260918T072226Z/report.json",
+            "scenario": "mexico-pottery",
+            "required_assertions": [
+              "mexico-human-worker",
+              "mexico-AI-worker",
+              "mexico-worker-no-repeat"
+            ],
+            "gamecore_sha256": "cf5273574eb622c53b700d6a0dbfa1e2ff882f5475d4c9a486aa4cdac740e798"
+          }
+        ]
+      },
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-mexico-pottery.lua",
+          "sha256": "36909643db0d7455e3008c787f0e5564f98755f576a13bd6e63ac27a71e68379"
+        }
+      ],
+      "remaining_scope": [
+        "Research was supplied; generic FreeUnit/technology fields contain other definitions requiring independent review.",
+        "Final-candidate applicability remains required at F."
+      ]
+    },
+    {
+      "id": "UNIT-MEXICO-RANCHERO-GROWTH",
+      "group": "G3",
+      "title": "Ranchero production permits normal city growth",
+      "status": "covered-by-evidence",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_mexico.lua",
+          "sha256": "517885bce13ff01aaa9155baf123a6924d4d5cebb0b3ceb50b9004ce138edda4"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPlayer.cpp",
+          "sha256": "31dd845837800229e4c4e2708e471996f03858f722b8cbf14bdfa2a8ed67c788"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTraitClasses.cpp",
+          "sha256": "d6dd5261df9ef25ac73f82ac747d40d732b0b04397572d1b8b1c51c2b9763611"
+        }
+      ],
+      "owners": [
+        "native roles described in expected result and pinned scenarios"
+      ],
+      "expected_result": "Legal Ranchero order rejects the replaced Settler and reports IsFoodProduction=false. One normal turn grows population4->5 while production0->600hundredths toward71hammers and food28->4. No completed Ranchero is claimed.",
+      "units": "native population/counts, movement/damage, yields, gold/influence or reveal flags",
+      "supplied_inputs": [
+        "population4/Granary/food one below growth",
+        "normal Food Focus/AvoidGrowth-off and production order"
+      ],
+      "actual_trigger": "Original native actions/events/owner turns with explicit supplied inputs; no physical mouse claim.",
+      "negative_controls": [
+        "base Settler ineligible",
+        "no completed unit or growth outcome assigned"
+      ],
+      "transitions": [
+        "specified native cause/effect boundaries",
+        "exact checkpoint replay"
+      ],
+      "persistence_requirement": "Strict separate-process run/replay identity, state and retained/live save-byte verification.",
+      "required_evidence_level": [
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260918T072049Z/Lekmod-Functional-20260918T072049Z.Civ5Save",
+          "sha256": "783b89cd014b8ee3315f90ab52784402221aadc1d7a64e89872611344b7c2514"
+        }
+      ],
+      "batch": "historical-separate-process-pairs",
+      "stage": [
+        "mexico-ranchero"
+      ],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20260918T072920Z/report.json",
+          "sha256": "4145de0594251e4c0562b26bc5d4ce4961a540537fa436101d3d31a750f85085"
+        },
+        {
+          "path": "build/macos/playtests/20260918T073243Z/report.json",
+          "sha256": "c124d6040c12d3f13713b82c67f17c9846c0663f061f3c4b2bc41e69cc33fde2"
+        }
+      ],
+      "surface_ids": [],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260918T072920Z/report.json",
+            "replay_report": "build/macos/playtests/20260918T073243Z/report.json",
+            "scenario": "mexico-ranchero",
+            "required_assertions": [
+              "ranchero-selection",
+              "ranchero-growth-during-training"
+            ],
+            "gamecore_sha256": "cf5273574eb622c53b700d6a0dbfa1e2ff882f5475d4c9a486aa4cdac740e798"
+          }
+        ]
+      },
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-mexico-ranchero.lua",
+          "sha256": "ecc27f0a760fc925d910703837174ab3f7b582be8ba300ecf8ad7cc85eb1e155"
+        }
+      ],
+      "remaining_scope": [
+        "Completion/founding and owner boundaries remain separate; this is the distinct growth-during-production rule.",
+        "Final-candidate applicability remains required at F."
+      ]
+    },
+    {
+      "id": "BLD-MEXICO-HACIENDA-RESOURCES",
+      "group": "G4",
+      "title": "Hacienda construction and resource-class yield changes",
+      "status": "covered-by-evidence",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_mexico.lua",
+          "sha256": "517885bce13ff01aaa9155baf123a6924d4d5cebb0b3ceb50b9004ce138edda4"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPlayer.cpp",
+          "sha256": "31dd845837800229e4c4e2708e471996f03858f722b8cbf14bdfa2a8ed67c788"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTraitClasses.cpp",
+          "sha256": "d6dd5261df9ef25ac73f82ac747d40d732b0b04397572d1b8b1c51c2b9763611"
+        }
+      ],
+      "owners": [
+        "native roles described in expected result and pinned scenarios"
+      ],
+      "expected_result": "Ordinary Hacienda completion emits CityConstructed; wheat gains1gold,cotton1production,iron/coal1food, other measured yields unchanged. Replaced Windmill rejects and city building maintenance is unchanged. Exact resource/yield/building state replays.",
+      "units": "native population/counts, movement/damage, yields, gold/influence or reveal flags",
+      "supplied_inputs": [
+        "Economics/reveal technologies",
+        "two cleared plots and compatible resource inputs",
+        "production one below completion"
+      ],
+      "actual_trigger": "Original native actions/events/owner turns with explicit supplied inputs; no physical mouse claim.",
+      "negative_controls": [
+        "replacement building",
+        "other yields unchanged",
+        "zero added maintenance"
+      ],
+      "transitions": [
+        "specified native cause/effect boundaries",
+        "exact checkpoint replay"
+      ],
+      "persistence_requirement": "Strict separate-process run/replay identity, state and retained/live save-byte verification.",
+      "required_evidence_level": [
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260918T072920Z/Lekmod-Functional-20260918T072920Z.Civ5Save",
+          "sha256": "35856d6864b2b58c3595c028a0cf85c583089fb364bb033fc369de80940eda42"
+        }
+      ],
+      "batch": "historical-separate-process-pairs",
+      "stage": [
+        "mexico-hacienda"
+      ],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20260918T075444Z/report.json",
+          "sha256": "d6d3ec00ccba84c225fb55269299182ab63e61b899f87b48ec69c60d04884658"
+        },
+        {
+          "path": "build/macos/playtests/20260918T075847Z/report.json",
+          "sha256": "befd3c7f1474d8b6e56a7414977bd4a854bc7e8ff902f0bf0e9815d5f682ffe6"
+        }
+      ],
+      "surface_ids": [],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260918T075444Z/report.json",
+            "replay_report": "build/macos/playtests/20260918T075847Z/report.json",
+            "scenario": "mexico-hacienda",
+            "required_assertions": [
+              "hacienda-construction",
+              "hacienda-resource-classes",
+              "hacienda-no-maintenance"
+            ],
+            "gamecore_sha256": "cf5273574eb622c53b700d6a0dbfa1e2ff882f5475d4c9a486aa4cdac740e798"
+          }
+        ]
+      },
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-mexico-hacienda.lua",
+          "sha256": "28c8d7ff2a1646e533ffcd6a5b3ce8a35034214aef49b15b369bfa4db3d4b48f"
+        }
+      ],
+      "remaining_scope": [
+        "Capture/removal and complete modifier combinations remain separate. Cleared/resource plots are supplied, not Worker outcomes.",
+        "Final-candidate applicability remains required at F."
+      ]
+    },
+    {
+      "id": "TRAIT-MEXICO-TRIBUTE-INFLUENCE",
+      "group": "G5",
+      "title": "Mexican tribute eligibility and influence accrual",
+      "status": "covered-by-evidence",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_mexico.lua",
+          "sha256": "517885bce13ff01aaa9155baf123a6924d4d5cebb0b3ceb50b9004ce138edda4"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPlayer.cpp",
+          "sha256": "31dd845837800229e4c4e2708e471996f03858f722b8cbf14bdfa2a8ed67c788"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTraitClasses.cpp",
+          "sha256": "d6dd5261df9ef25ac73f82ac747d40d732b0b04397572d1b8b1c51c2b9763611"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvMinorCivAI.cpp",
+          "sha256": "5da0e3b9af73baf0cf0a510b0af05ad7e3dd8593f553a5050d1bb0fc4817426d"
+        }
+      ],
+      "owners": [
+        "native roles described in expected result and pinned scenarios"
+      ],
+      "expected_result": "Actual military calculation changes tribute eligibility from unavailable to score+90 and trait influence rate to750hundredths at Quick125-percent scaling. One ordinary turn without tribute yields whole friendship7 (fractional balance is not exposed). The next quoted rate is625 after normal decay. Native tribute pays quoted65gold, changes whole friendship to-7, removes eligibility and leaves125hundredths recovery rate. An unmet but tribute-eligible minor remains at0influence/0rate. Exact resulting state replays.",
+      "units": "native population/counts, movement/damage, yields, gold/influence or reveal flags",
+      "supplied_inputs": [
+        "contact",
+        "one staged GDR/uranium/upkeep"
+      ],
+      "actual_trigger": "Original native actions/events/owner turns with explicit supplied inputs; no physical mouse claim.",
+      "negative_controls": [
+        "initial no-tribute/no-rate state",
+        "no friendship/eligibility/rate assignment"
+      ],
+      "transitions": [
+        "specified native cause/effect boundaries",
+        "exact checkpoint replay"
+      ],
+      "persistence_requirement": "Strict separate-process run/replay identity, state and retained/live save-byte verification.",
+      "required_evidence_level": [
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260918T072049Z/Lekmod-Functional-20260918T072049Z.Civ5Save",
+          "sha256": "783b89cd014b8ee3315f90ab52784402221aadc1d7a64e89872611344b7c2514"
+        }
+      ],
+      "batch": "historical-separate-process-pairs",
+      "stage": [
+        "mexico-influence"
+      ],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20260918T080340Z/report.json",
+          "sha256": "99e729542c8415bb9a16992c66d982f2ebc8836938687123f16eb37959c7fe0d"
+        },
+        {
+          "path": "build/macos/playtests/20260918T080646Z/report.json",
+          "sha256": "656ccdc34fc0b02c39a84a5675b2f921740396d733f83fe950be1af8ebaa1b71"
+        },
+        {
+          "path": "build/macos/playtests/20260918T080340Z/unmet-influence-control.json",
+          "sha256": "2164b6c7dd40a1f43b03df5a0d17b5796172defa7e4cba09435d1773b9d44003"
+        }
+      ],
+      "surface_ids": [
+        "data:Traits.AfraidMinorPerTurnInfluence"
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260918T080340Z/report.json",
+            "replay_report": "build/macos/playtests/20260918T080646Z/report.json",
+            "scenario": "mexico-influence",
+            "required_assertions": [
+              "mexico-afraid-rate",
+              "mexico-afraid-accrual",
+              "mexico-tribute-boundary"
+            ],
+            "gamecore_sha256": "cf5273574eb622c53b700d6a0dbfa1e2ff882f5475d4c9a486aa4cdac740e798"
+          }
+        ]
+      },
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-mexico-influence.lua",
+          "sha256": "527eb66046fe61647feb6b4f1a6d4bbb9713403638206e385df5ab076a82f5d2"
+        }
+      ],
+      "remaining_scope": [
+        "No whole Mexican city-state/ownership coverage claim; reward details are restricted to the pinned scenario.",
+        "Final-candidate applicability remains required at F.",
+        "Whole-point friendship getters truncate hundredths; exact fractional friendship balance is not claimed. The65gold outcome is checked against the native quote, not an independent tribute-gold formula."
+      ]
+    },
+    {
+      "id": "UNIT-ZABONAH-DISCOVERY-LIFETIME",
+      "group": "G3",
+      "title": "Foreign-owned Zabonah discovery, repeat and off-map removal",
+      "status": "covered-by-evidence",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_nabatea.lua",
+          "sha256": "a006d8be0a1d8d521fd0367c63cb9368018f1287a7f6057ed171e59932262f90"
+        }
+      ],
+      "owners": [
+        "native roles described in expected result and pinned scenarios"
+      ],
+      "expected_result": "Normal disband pays4gold and causes no off-map Lua error. Human and actual-AI-turn movement reach a capital at distance5 with ordinary sight2 and gain exactly10gold; major/minor capitals reveal, Scout controls do not, and repeated moves do not repeat rewards. Nabatea is absent. Each state exactly replays.",
+      "units": "native population/counts, movement/damage, yields, gold/influence or reveal flags",
+      "supplied_inputs": [
+        "units and isolated native city/sight corridors",
+        "legal AI/human staging",
+        "peace/no-barbarian/no-ruin setup"
+      ],
+      "actual_trigger": "Original native actions/events/owner turns with explicit supplied inputs; no physical mouse claim.",
+      "negative_controls": [
+        "Scout",
+        "known capital no repeat",
+        "foreign unit owners",
+        "normal removal invalid-coordinate callback"
+      ],
+      "transitions": [
+        "specified native cause/effect boundaries",
+        "exact checkpoint replay"
+      ],
+      "persistence_requirement": "Strict separate-process run/replay identity, state and retained/live save-byte verification.",
+      "required_evidence_level": [
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260919T092209Z/autosaves-after/AutoSave_Initial_0000 BC-4000.Civ5Save",
+          "sha256": "037233f07af22d8d5b1f7204eff79a308805f69421d0c5a0e31b40766ad24c32"
+        },
+        {
+          "path": "build/macos/playtests/20260919T093455Z/autosaves-after/AutoSave_Initial_0000 BC-4000.Civ5Save",
+          "sha256": "aaf31901e91655564186e81b9ea1450314405c5cbfac6e1a794e7b4f576e4fd8"
+        },
+        {
+          "path": "build/macos/playtests/20260919T114525Z/autosaves-after/AutoSave_Initial_0000 BC-4000.Civ5Save",
+          "sha256": "86dd5fce97be0020d52f62683d054f7d140fef69746a406c74de3971854a6447"
+        }
+      ],
+      "batch": "historical-separate-process-pairs",
+      "stage": [
+        "nabatea-disband",
+        "nabatea-discovery",
+        "zabonah-ai-minor"
+      ],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20260919T093015Z/report.json",
+          "sha256": "cec3ca7349bf0cb1fb561616814f87cb9e67a77b692ec79cf3063d80c90bbc45"
+        },
+        {
+          "path": "build/macos/playtests/20260919T093907Z/report.json",
+          "sha256": "88933683490ddacef0f26f4d2ceeaf857d51f47bc45d9038d8d93260bdf230b3"
+        },
+        {
+          "path": "build/macos/playtests/20260919T093455Z/report.json",
+          "sha256": "b76af9693becb45cfacc42e3dfd529d619c3a75604a5db03c0211d2c2dbaa9d4"
+        },
+        {
+          "path": "build/macos/playtests/20260919T093713Z/report.json",
+          "sha256": "a9a57363d1bc4f8c21418fa08dcbde27ce21eafeb14612e8d3fcae6d4128e338"
+        },
+        {
+          "path": "build/macos/playtests/20260919T114525Z/report.json",
+          "sha256": "0597c579cabbefbbc46afd85bc0d0b1110ffc1a1ae4ea9529abc656de4c5a7bd"
+        },
+        {
+          "path": "build/macos/playtests/20260919T114711Z/report.json",
+          "sha256": "8d525d33989f9ed485e097de4dbd084e1bc863193eecaf735b725ed991deb630"
+        }
+      ],
+      "surface_ids": [
+        "lua:Lua/Civilizations/Lekmod_nabatea.lua:GameEvents.UnitSetXY:lekmod_nabatea_unit_exploration"
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260919T093015Z/report.json",
+            "replay_report": "build/macos/playtests/20260919T093907Z/report.json",
+            "scenario": "nabatea-disband",
+            "required_assertions": [
+              "zabonah-disband"
+            ],
+            "gamecore_sha256": "7a4a5abb38928278e940bdd83ee05d234972d1ffceef4125d46b637e8c8fdca9"
+          },
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260919T093455Z/report.json",
+            "replay_report": "build/macos/playtests/20260919T093713Z/report.json",
+            "scenario": "nabatea-discovery",
+            "required_assertions": [
+              "zabonah-scout-control",
+              "zabonah-capital-discovery",
+              "zabonah-no-repeat"
+            ],
+            "gamecore_sha256": "7a4a5abb38928278e940bdd83ee05d234972d1ffceef4125d46b637e8c8fdca9"
+          },
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260919T114525Z/report.json",
+            "replay_report": "build/macos/playtests/20260919T114711Z/report.json",
+            "scenario": "zabonah-ai-minor",
+            "required_assertions": [
+              "AI-Zabonah-Scout-control",
+              "AI-Zabonah-minor-capital",
+              "AI-Zabonah-no-repeat"
+            ],
+            "gamecore_sha256": "9fc0cdb769db894b425c5562c8cfb2bf1abd30912fec9f66514e3615d99f6a35"
+          }
+        ]
+      },
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-nabatea-disband.lua",
+          "sha256": "b1a4e97110247bf32ed29fe694e0bcbafee00e0241db23bdbda001df33f0ed7a"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-nabatea-discovery.lua",
+          "sha256": "ea4f08a3e2642a5db30a1fa0cf08a238133c281991a28e94598b8fe1ffb29f65"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-zabonah-ai-minor.lua",
+          "sha256": "0af0b5585746ef80e9aac07f6b87c849e734cd9abd141471ab3bafb30bc029c4"
+        }
+      ],
+      "remaining_scope": [
+        "No autonomous exploration strategy or every terrain/visibility geometry. Missing/dead/noncapital/multiple-capital guards retain isolated source evidence.",
+        "Final-candidate applicability remains required at F."
+      ]
+    },
+    {
+      "id": "BLD-OMAN-MINAA-DAMAGE",
+      "group": "G4",
+      "title": "Minaa periodic sea/embarked damage and lethal stacked-unit ordering",
+      "status": "covered-by-evidence",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_oman.lua",
+          "sha256": "40500ae5195583f2a14debdbc2ab2cfb786d0de0fbac85d736989419b27564c6"
+        }
+      ],
+      "owners": [
+        "native roles described in expected result and pinned scenarios"
+      ],
+      "expected_result": "At the next genuine Oman owner turn, adjacent enemy ship and supplied-embarked Worker take exactly30damage. A preceding20HP ship dies without preventing the stacked Worker damage. Own ship, ordinary enemy land unit and distance2 enemy ship remain undamaged. Exact surviving units/city/war state replays.",
+      "units": "native population/counts, movement/damage, yields, gold/influence or reveal flags",
+      "supplied_inputs": [
+        "Minaa/city/units/upkeep",
+        "starting80damage on lethal probe",
+        "Worker already embarked",
+        "enemy probes placed at genuine empty barbarian boundary after Rome moved"
+      ],
+      "actual_trigger": "Original native actions/events/owner turns with explicit supplied inputs; no physical mouse claim.",
+      "negative_controls": [
+        "own ship",
+        "unembarked land",
+        "distance2",
+        "lethal stack ordering"
+      ],
+      "transitions": [
+        "specified native cause/effect boundaries",
+        "exact checkpoint replay"
+      ],
+      "persistence_requirement": "Strict separate-process run/replay identity, state and retained/live save-byte verification.",
+      "required_evidence_level": [
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260918T101341Z/autosaves-after/AutoSave_Initial_0165 AD-1700.Civ5Save",
+          "sha256": "542f86c3acd9be060b06bb07a0eb909338c14c1de3c60ab231b2c9055e158767"
+        }
+      ],
+      "batch": "historical-separate-process-pairs",
+      "stage": [
+        "oman-minaa"
+      ],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20260918T101851Z/report.json",
+          "sha256": "353449b1357c1537738e160771d6d7236d612daa45e5c6376f179a55e51f7cad"
+        },
+        {
+          "path": "build/macos/playtests/20260918T102211Z/report.json",
+          "sha256": "575fbf3d1ba851425b4144566601b1e3008d8ea06b847a5b926d0723a15ba875"
+        }
+      ],
+      "surface_ids": [
+        "lua:Lua/Civilizations/Lekmod_oman.lua:GameEvents.PlayerDoTurn:lekmod_oman_ub_damage"
+      ],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260918T101851Z/report.json",
+            "replay_report": "build/macos/playtests/20260918T102211Z/report.json",
+            "scenario": "oman-minaa",
+            "required_assertions": [
+              "minaa-enemy-sea",
+              "minaa-embarked",
+              "minaa-lethal-stack",
+              "minaa-own-land-distance-controls"
+            ],
+            "gamecore_sha256": "e5804484ab9743361d5819058c29606d1463bbbaf973c6f5b1adbf3f2dd08b22"
+          }
+        ]
+      },
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-oman-minaa.lua",
+          "sha256": "d0d678c895e39d2e0d3c3829f8c5ba7931bee843201fa10a042ea8b7dcb17ae0"
+        }
+      ],
+      "remaining_scope": [
+        "Building acquisition and Worker embark transition are not claimed; peace/dead/foreign-civilization/absent-building controls are isolated source evidence.",
+        "Final-candidate applicability remains required at F."
+      ]
+    },
+    {
+      "id": "LIFE-PHILIPPINES-LOST-CITY-QUOTA",
+      "group": "G2",
+      "title": "Philippine founding quota survives real city loss and reload",
+      "status": "covered-by-evidence",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_philippines.lua",
+          "sha256": "3fcbe456bb32eefbacf9e283c40fc50e4a669bb56615155c2e0120fff1741209"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvPlayer.cpp",
+          "sha256": "31dd845837800229e4c4e2708e471996f03858f722b8cbf14bdfa2a8ed67c788"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTraitClasses.cpp",
+          "sha256": "d6dd5261df9ef25ac73f82ac747d40d732b0b04397572d1b8b1c51c2b9763611"
+        }
+      ],
+      "owners": [
+        "native roles described in expected result and pinned scenarios"
+      ],
+      "expected_result": "Real AI conquest removes an awarded noncapital while lifetime histories remain Philippines4/Rome1 despite owned counts3/2. A later ordinary Found increments human lifetime to5 but grants no marker or extra population. Exact owner/population/marker/war state replays with history5/1.",
+      "units": "native population/counts, movement/damage, yields, gold/influence or reveal flags",
+      "supplied_inputs": [
+        "preserved correct four-city baseline",
+        "AI attacker/uranium/upkeep",
+        "extra Settler at legal ruin-free site"
+      ],
+      "actual_trigger": "Original native actions/events/owner turns with explicit supplied inputs; no physical mouse claim.",
+      "negative_controls": [
+        "owned count differs from founded count",
+        "capturing player history unchanged",
+        "later expansion no renewed quota"
+      ],
+      "transitions": [
+        "specified native cause/effect boundaries",
+        "exact checkpoint replay"
+      ],
+      "persistence_requirement": "Strict separate-process run/replay identity, state and retained/live save-byte verification.",
+      "required_evidence_level": [
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260918T084918Z/Lekmod-Functional-20260918T084918Z.Civ5Save",
+          "sha256": "7c91faa6dde6728bb888cdd046fbe39d673b0f154a318436e8f09c86b238814c"
+        }
+      ],
+      "batch": "historical-separate-process-pairs",
+      "stage": [
+        "philippines-loss"
+      ],
+      "evidence": [
+        {
+          "path": "build/macos/playtests/20260918T090306Z/report.json",
+          "sha256": "23a7aab3df011785a6914a96cbdc4548dc2909eb98653472605cbf337f00bc46"
+        },
+        {
+          "path": "build/macos/playtests/20260918T090501Z/report.json",
+          "sha256": "7f193309c7f2807f631f79e5414e89f34625034cb766b21a3318e9c373a15464"
+        }
+      ],
+      "surface_ids": [],
+      "evidence_contract": {
+        "kind": "native-batch-stages",
+        "stages": [
+          {
+            "kind": "native-run-replay",
+            "report": "build/macos/playtests/20260918T090306Z/report.json",
+            "replay_report": "build/macos/playtests/20260918T090501Z/report.json",
+            "scenario": "philippines-loss",
+            "required_assertions": [
+              "philippines-real-city-loss",
+              "philippines-lifetime-quota"
+            ],
+            "gamecore_sha256": "e5804484ab9743361d5819058c29606d1463bbbaf973c6f5b1adbf3f2dd08b22"
+          }
+        ]
+      },
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-philippines-loss.lua",
+          "sha256": "40ce72a8a8fcc78608406d6c50937abc1518e9b8b057a239b455075c4c9152c6"
+        }
+      ],
+      "remaining_scope": [
+        "Positive first-two founding after the fix lacks a standalone exact replay in retained evidence; a separate ready case fills that gap. AI quota and older-DLL fallback are isolated checks.",
+        "Final-candidate applicability remains required at F."
+      ]
+    },
+    {
+      "id": "LIFE-PHILIPPINES-POSITIVE-QUOTA",
+      "group": "G2",
+      "title": "Philippine first-two expansion awards with exact replay",
+      "status": "ready",
+      "source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_philippines.lua",
+          "sha256": "3fcbe456bb32eefbacf9e283c40fc50e4a669bb56615155c2e0120fff1741209"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/Lua/CvLuaPlayer.cpp",
+          "sha256": "656556092485bafc70f6b71cdfe07ad2263d2d91d64ec6936dfddd92d6898a0f"
+        }
+      ],
+      "owners": [
+        "human Philippines",
+        "AI foreign control"
+      ],
+      "expected_result": "Capital receives0; first two normal Settler expansions each have population2/one marker; third has population1/no marker. Lifetime founded count increments exactly with real founding. Foreign city receives no marker. Exact city/population/marker snapshot must replay.",
+      "units": "population and building/founded-city counts",
+      "supplied_inputs": [
+        "preserved initial world",
+        "three Settlers and legal ruin-free staging"
+      ],
+      "actual_trigger": "Normal Found actions followed by ordinary owner turn, then exact checkpoint replay.",
+      "negative_controls": [
+        "capital",
+        "third expansion",
+        "foreign owner",
+        "nearby ruins excluded by site selection"
+      ],
+      "transitions": [
+        "first/second/third expansion",
+        "foreign founding",
+        "exact replay"
+      ],
+      "persistence_requirement": "Complete recorded city identities/positions/populations/markers/capital flags and turn match replay.",
+      "required_evidence_level": [
+        "native-gameplay-outcome",
+        "exact-save-reload"
+      ],
+      "fixtures": [
+        {
+          "path": "build/macos/playtests/20260918T084918Z/autosaves-after/AutoSave_Initial_0000 BC-4000.Civ5Save",
+          "sha256": "c8c13490602be7f9691e996e0d0dc397189a81eac32388771e369f0b0a99219c"
+        }
+      ],
+      "batch": "LEKMOD_DLL/macos/batch-plans/cache-and-reward-regression.json",
+      "stage": "philippines-founding",
+      "evidence": [],
+      "surface_ids": [
+        "lua:Lua/Civilizations/Lekmod_philippines.lua:GameEvents.PlayerCityFounded:lekmod_philippine_expand_population"
+      ],
+      "implementation_references": [
+        {
+          "path": "LEKMOD_DLL/macos/batch-plans/cache-and-reward-regression.json",
+          "sha256": "dd98f3f78dcee75fa63334d4aa1057191c7f21a45f137b4034f3a40f76552e54"
+        },
+        {
+          "path": "LEKMOD_DLL/macos/playtest-scenario-philippines-founding.lua",
+          "sha256": "1b8e6998844543a712ffef4a2dee427b08547e5d70389b581fca951c14ee4169"
+        }
+      ],
+      "implementation_limits": [
+        "Historical090810positive native run passed but has no matching exact replay; it is not silently upgraded to complete evidence.",
+        "Lost-city lifetime behavior is independently covered by LIFE-PHILIPPINES-LOST-CITY-QUOTA."
       ]
     }
   ],
@@ -16842,12 +17700,26 @@
     {
       "id": "data:Traits.AfraidMinorPerTurnInfluence",
       "suggested_group": "G5",
-      "status": "untriaged",
-      "case_ids": [],
+      "status": "mapped",
+      "case_ids": [
+        "TRAIT-MEXICO-TRIBUTE-INFLUENCE",
+        "CFG-COMPILED-SCALAR-CACHES"
+      ],
       "supporting_case_ids": [
         "CFG-COMPILED-SCALAR-CACHES"
       ],
-      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent."
+      "parameter_evidence": "Native loading/value parity passed; consumer/effect review remains independent.",
+      "review_source_references": [
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvMinorCivAI.cpp",
+          "sha256": "5da0e3b9af73baf0cf0a510b0af05ad7e3dd8593f553a5050d1bb0fc4817426d"
+        },
+        {
+          "path": "LEKMOD_DLL/CvGameCoreDLL_Expansion2/CvTraitClasses.cpp",
+          "sha256": "d6dd5261df9ef25ac73f82ac747d40d732b0b04397572d1b8b1c51c2b9763611"
+        }
+      ],
+      "reason": "Only TRAIT_MEXICO configures600. The native consumer adds it only for met/tribute-eligible majors, then scales by GoldGiftMod. Native0->750rate, ordinary-turn whole-point accrual, post-tribute removal and unmet-eligible0control cover the coefficient and predicates. This does not claim exact fractional friendship or all other influence terms."
     },
     {
       "id": "data:Traits.FightWellDamaged",
@@ -19706,14 +20578,33 @@
     {
       "id": "lua:Lua/Civilizations/Lekmod_philippines.lua:GameEvents.PlayerCityFounded:lekmod_philippine_expand_population",
       "suggested_group": "G2",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "LIFE-PHILIPPINES-POSITIVE-QUOTA",
+        "LIFE-PHILIPPINES-LOST-CITY-QUOTA"
+      ],
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_philippines.lua",
+          "sha256": "3fcbe456bb32eefbacf9e283c40fc50e4a669bb56615155c2e0120fff1741209"
+        }
+      ],
+      "reason": "Source-defined first-two quota, capital exclusion and serialized lifetime history are split between a fully specified positive/replay case (still ready) and the verified real city-loss/reload case. Native positive replay is not yet claimed."
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_nabatea.lua:GameEvents.UnitSetXY:lekmod_nabatea_unit_exploration",
       "suggested_group": "G2",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "UNIT-ZABONAH-DISCOVERY-LIFETIME"
+      ],
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_nabatea.lua",
+          "sha256": "a006d8be0a1d8d521fd0367c63cb9368018f1287a7f6057ed171e59932262f90"
+        }
+      ],
+      "reason": "Reviewed source matches the bounded native handler outcomes/replays stated by this case. Supplied inputs, isolated-only controls and remaining abilities are explicitly distinguished."
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_moors.lua:GameEvents.TeamSetEra:lekmod_moors_on_era_ua",
@@ -19797,8 +20688,17 @@
     {
       "id": "lua:Lua/Civilizations/Lekmod_oman.lua:GameEvents.PlayerDoTurn:lekmod_oman_ub_damage",
       "suggested_group": "G2",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "BLD-OMAN-MINAA-DAMAGE"
+      ],
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_oman.lua",
+          "sha256": "40500ae5195583f2a14debdbc2ab2cfb786d0de0fbac85d736989419b27564c6"
+        }
+      ],
+      "reason": "Reviewed source matches the bounded native handler outcomes/replays stated by this case. Supplied inputs, isolated-only controls and remaining abilities are explicitly distinguished."
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_cuba.lua:GameEvents.PlayerDoTurn:lekmod_cuba_ua_culture",
@@ -20300,14 +21200,32 @@
     {
       "id": "lua:Lua/Civilizations/Lekmod_mexico.lua:Events.SequenceGameInitComplete:lekmod_mexico_initial_locations",
       "suggested_group": "G2",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "LIFE-MEXICO-OPENING-DISCOVERY"
+      ],
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_mexico.lua",
+          "sha256": "517885bce13ff01aaa9155baf123a6924d4d5cebb0b3ceb50b9004ce138edda4"
+        }
+      ],
+      "reason": "Reviewed source matches the bounded native handler outcomes/replays stated by this case. Supplied inputs, isolated-only controls and remaining abilities are explicitly distinguished."
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_mexico.lua:GameEvents.PlayerCityFounded:lekmod_mexico_initial_city",
       "suggested_group": "G2",
-      "status": "untriaged",
-      "case_ids": []
+      "status": "mapped",
+      "case_ids": [
+        "LIFE-MEXICO-OPENING-DISCOVERY"
+      ],
+      "review_source_references": [
+        {
+          "path": "LEKMOD/Lua/Civilizations/Lekmod_mexico.lua",
+          "sha256": "517885bce13ff01aaa9155baf123a6924d4d5cebb0b3ceb50b9004ce138edda4"
+        }
+      ],
+      "reason": "Reviewed source matches the bounded native handler outcomes/replays stated by this case. Supplied inputs, isolated-only controls and remaining abilities are explicitly distinguished."
     },
     {
       "id": "lua:Lua/Civilizations/Lekmod_vatican.lua:GameEvents.CityConvertsReligion:lekmod_ua_courthouse",
@@ -28089,18 +29007,18 @@
     }
   ],
   "summary": {
-    "designed_cases": 58,
+    "designed_cases": 67,
     "case_statuses": {
       "passed": 25,
-      "covered-by-evidence": 32,
-      "ready": 1
+      "covered-by-evidence": 40,
+      "ready": 2
     },
     "review_surfaces": 1340,
     "pending_document_rows": 121,
     "final_case_denominator_frozen": false,
     "surface_statuses": {
-      "untriaged": 1260,
-      "mapped": 60,
+      "untriaged": 1254,
+      "mapped": 66,
       "presentation-only": 19,
       "out-of-scope": 1
     },
