@@ -10138,6 +10138,12 @@ void CvMinorCivAI::DoUnitGiftFromMajor(PlayerTypes eFromPlayer, CvUnit* pGiftUni
 	// We can't keep Great Person units
 	if(pGiftUnit->IsGreatPerson())
 	{
+#ifdef LEKMOD_GOLD_FROM_GIFTING_GP_TRAIT
+		// Pay only for an accepted gift, never when its influence is queried.
+		CvPlayer& kFromPlayer = GET_PLAYER(eFromPlayer);
+		const int iGoldToGift = kFromPlayer.GetPlayerTraits()->GetGreatPersonGiftInfluence() * 2;
+		kFromPlayer.GetTreasury()->ChangeGold(iGoldToGift);
+#endif
 		pGiftUnit->kill(false);
 	}
 }
@@ -10156,9 +10162,6 @@ int CvMinorCivAI::GetFriendshipFromUnitGift(PlayerTypes eFromPlayer, bool bGreat
 	{
 		int iGPInfluence = kFromPlayer.GetPlayerTraits()->GetGreatPersonGiftInfluence();
 #ifdef LEKMOD_GOLD_FROM_GIFTING_GP_TRAIT
-		//give the player double the gold of the influence they gain from gifting a great person
-		int iGoldtoGift = (kFromPlayer.GetPlayerTraits()->GetGreatPersonGiftInfluence()) * 2 ;
-		kFromPlayer.GetTreasury()->ChangeGold(iGoldtoGift);
 		if (iGPInfluence > 0)
 		{
 			iInfluence += iGPInfluence;
