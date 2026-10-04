@@ -1,7 +1,7 @@
 -- Native method surface: GameCore
 -- Units, contact and staging positions are inputs. Gifts run on their owner's
 -- actual turn; treasury/influence rewards and conversion/consumption are native.
-LekmodScenario={name="sweden-gift-actions",items={"gift-owner-controls","gift-great-person-payment","gift-great-person-consumption","gift-military-control","gift-civilian-rejection","gift-major-rejection","gift-post-action-quotes","gift-ordinary-settlement"}}
+LekmodScenario={name="sweden-gift-actions",items={"gift-owner-controls","gift-great-person-payment","gift-great-person-consumption","gift-military-control","gift-civilian-rejection","gift-major-control","gift-post-action-quotes","gift-ordinary-settlement"}}
 local phase,target,turn,err,swedenDone,romeDone,beforeSettlement="init",nil,nil,nil,false,false,nil
 local converted={}
 GameEvents.UnitConverted.Add(function(oldOwner,newOwner,oldID,newID,upgrade)if not upgrade then converted[oldOwner..":"..oldID]={owner=newOwner,id=newID}end end)
@@ -49,7 +49,13 @@ GameEvents.PlayerDoTurn.Add(function(owner)
    give(p,"UNIT_WARRIOR",false);LekmodScenarioRecord("gift-military-control","PASS","ordinary gift transfers one unit, gives5 influence and grants no Swedish great-person gold")
    for _,kind in ipairs({"UNIT_WORKER","UNIT_SCOUT","UNIT_SETTLER","UNIT_PROPHET"})do reject(p,kind,target)end
    LekmodScenarioRecord("gift-civilian-rejection","PASS","worker/scout/settler/religious Prophet commands reject without consuming units or granting rewards")
-   reject(p,"UNIT_SCIENTIST",2);LekmodScenarioRecord("gift-major-rejection","PASS","great-person gift to a major rejects without reward")
+   local majorUnit=input(p,"UNIT_SCIENTIST",2);local majorID=majorUnit:GetID();local beforeGold=p:GetGold();local beforeInfluence=influence(m,1)
+   assert(majorUnit:CanGift(),"compiled rules permit great-person gifts to majors");majorUnit:DoCommand(CommandTypes.COMMAND_GIFT,-1,-1)
+   local majorEvent=assert(converted["1:"..majorID]);local transferred=assert(Players[2]:GetUnitByID(majorEvent.id))
+   assert(majorEvent.owner==2 and transferred:GetUnitType()==GameInfoTypes.UNIT_SCIENTIST and alive(Players[2],majorEvent.id)and not alive(p,majorID))
+   assert(p:GetGold()==beforeGold and influence(m,1)==beforeInfluence)
+   LekmodScenarioEvent("native-major-gift-control",{source_owner=1,recipient=2,old_unit=majorID,new_unit=majorEvent.id,gold_before=beforeGold,gold_after=p:GetGold(),influence_before=beforeInfluence,influence_after=influence(m,1)})
+   LekmodScenarioRecord("gift-major-control","PASS","native major-recipient GP transfer preserves the recipient unit and grants no city-state influence or gold")
    beforeSettlement={raw100=influence(m,1),rate100=m:GetFriendshipChangePerTurnTimes100(1),anchor=m:GetMinorCivFriendshipAnchorWithMajor(1)};swedenDone=true
   elseif owner==2 and not romeDone then reject(p,"UNIT_SCIENTIST",target);romeDone=true end
  end)
