@@ -161,6 +161,7 @@ FUNCTIONAL_ITEMS = {"script-data", "science-overflow", "unit-position-flags", "c
                     "production-unit", "production-building", "production-wonder", "production-process"}
 PRODUCTION_COMPLETION_ITEMS = {"production-completion-unit", "production-completion-building"}
 SCENARIO_ITEMS = {
+    'unit-gift-restrictions': {'unit-gift-receiver','unit-gift-eligibility','unit-gift-command','unit-gift-accounting','unit-gift-arrival','unit-gift-persistence'},
     'minor-gold-gifts': {'gold-gift-availability', 'gold-gift-insufficient', 'gold-gift-persistence', 'gold-gift-policy', 'gold-gift-quotes', 'gold-gift-payments', 'gold-gift-inputs', 'gold-gift-owner-controls'},
     'horde-intimidation': {'horde-recency-control', 'horde-tribute-accounting', 'horde-additive-score', 'horde-local-strength', 'horde-owner-controls', 'horde-policy-choice', 'horde-trait-data', 'horde-settlement-persistence'},
     'sweden-gift-actions': {'gift-owner-controls','gift-great-person-payment','gift-great-person-consumption','gift-military-control','gift-civilian-rejection','gift-major-control','gift-post-action-quotes','gift-ordinary-settlement'},

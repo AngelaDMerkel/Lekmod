@@ -4518,6 +4518,13 @@ bool CvUnit::canGift(bool bTestVisible, bool bTestTransport) const
 	// Minors
 	if(GET_PLAYER(pPlot->getOwner()).isMinorCiv())
 	{
+#if defined(LEKMOD_MINOR_CIV_PERSONALITIES)
+		CvMinorCivAI* pMinorAI = GET_PLAYER(pPlot->getOwner()).GetMinorCivAI();
+		CvMinorCivPersonalityInfo* pPersonality = pMinorAI->GetPersonalityInfo();
+		if((pPersonality && pPersonality->IsNoGifts()) || pMinorAI->IsMajorBlockedByAlliedWar(getOwner()))
+			return false;
+#endif
+
 		// No settlers
 		if(isFound() || IsFoundAbroad())
 			return false;
@@ -4669,6 +4676,13 @@ bool CvUnit::CanDistanceGift(PlayerTypes eToPlayer) const
 	// Minors
 	if(GET_PLAYER(eToPlayer).isMinorCiv())
 	{
+#if defined(LEKMOD_MINOR_CIV_PERSONALITIES)
+		CvMinorCivAI* pMinorAI = GET_PLAYER(eToPlayer).GetMinorCivAI();
+		CvMinorCivPersonalityInfo* pPersonality = pMinorAI->GetPersonalityInfo();
+		if((pPersonality && pPersonality->IsNoGifts()) || pMinorAI->IsMajorBlockedByAlliedWar(getOwner()))
+			return false;
+#endif
+
 		// No settlers
 		if(isFound() || IsFoundAbroad())
 			return false;

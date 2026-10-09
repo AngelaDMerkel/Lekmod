@@ -116,6 +116,7 @@ jobs:
           python3 LEKMOD_DLL/macos/test-minor-influence-clamp.py
           python3 LEKMOD_DLL/macos/test-gunboat-quest-lifetime.py
           python3 LEKMOD_DLL/macos/test-unit-gift-quote-purity.py
+          python3 LEKMOD_DLL/macos/test-unit-gift-guards.py
           python3 LEKMOD_DLL/macos/test-gameplay-data.py
           python3 LEKMOD_DLL/macos/test-lua-stack-moves.py
           build/macos/test-deps/lua-5.1.4/src/lua LEKMOD_DLL/macos/test-maori-expiry.lua LEKMOD/Lua/Civilizations/Lekmod_maori.lua

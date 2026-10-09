@@ -23173,6 +23173,13 @@ void CvPlayer::DoDistanceGift(PlayerTypes eFromPlayer, CvUnit* pUnit)
 	}
 #endif
 
+	// Revalidate a queued UI/network request before consuming any unit.
+	// Minor-to-major buyouts use this function too and keep their existing path.
+	if(isMinorCiv() && !pUnit->CanDistanceGift(GetID()))
+	{
+		return;
+	}
+
 	// Also add any units this guy is transporting
 	IDInfo* pUnitNode = pPlot->headUnitNode();
 	while(pUnitNode != NULL)
